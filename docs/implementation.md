@@ -111,13 +111,14 @@
 | 5.CB | Combobox选值/query、清除、共框标签及弹层搜索 | 已提交 `e454b8a`；新增53项、377项隔离、77项独审与vet通过；禁用/IME旧缺陷、RTL/Tab/原生编辑/组合回归已修，源100ms保留退出另阶段完成 |
 | 5.CC | Gallery可清除/分组/内部搜索/多选Combobox | 已提交 `344311e`；新增17项、Gallery205项、全量1968项及vet通过；十张明暗/窄RTL/打开态图与三平台构建、实际选择回写验证 |
 | 5.CD | Material/Combobox同ZIP的独立消费者验收 | 已提交 `bfe9324`；`344311e`标准八步与第二外部模块15命令、4项Combo/13项图标检查通过；双轮空缓存/无replace、527份原文、实际按需裁剪/像素及缓存清理核验 |
-| 5.CE | Gallery全局搜索与示例草稿独立持有 | 本阶段提交；两条真实输入回归先红后绿，隔离Gallery207项及vet通过；网址、内嵌Command与组件搜索跨页互不修改 |
+| 5.CE | Gallery全局搜索与示例草稿独立持有 | 已提交 `b857d62`；两条真实输入回归先红后绿，隔离Gallery207项及vet通过；网址、内嵌Command与组件搜索跨页互不修改 |
+| 5.CF | Combobox源进退动画与原生搜索组 | 本阶段提交；新增24项、420项隔离与22项独审、全量1994项/vet/三平台编译通过；100ms/实际side和origin、退出inert/保留过滤及编辑选区、反转和32DIP搜索组 |
 
 用户已明确允许原生平台适配：Popover、menu、下拉菜单可以使用 MyGo 的系统菜单与独立 Flyout，超出父窗口范围；无需逐像素照搬网页浮层。Gallery 以 [shadcn/create](https://ui.shadcn.com/create) 的配置与实时预览流程为参考。完整组件功能、主题、动画范围保持不变。
 
 ## 下一轮的明确缺口
 
-- Combobox源100ms进退、退出层保留/反转与侧向原点，以及内部搜索框Vega32DIP样式；现有preset只算兼容动画。
+- Combobox Content的定位参数、anchor宽度偏移、独立复合槽位与空态结构；100ms源动画和内部32DIP搜索组已在5.CF完成，完整视觉/组合仍未完成。
 - macOS实窗无active Enter复验：本轮自动化出现旧bundle/AX目标失效及首次Return仍留列表的观测。补充12项公开settled输入检查全绿；Tester无公开batch接口，无帧输入时序仍未证实。先辨明实际进程、IME与事件时序，再依据实证修正。
 - 按parity表继续补齐Carousel多项/插件等高级组合、Chart高级配置及所有组件例子；Windows/Linux实际窗口、真实AT/IME、多显示器/缩放和完整视觉矩阵作为最终验收。
 

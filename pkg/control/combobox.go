@@ -83,6 +83,30 @@ type comboRuntime struct {
 	previousValue                                             ComboboxValue
 	pointerX, pointerY                                        float32
 	pointerOver                                               bool
+	closing                                                   bool
+	closeQuery                                                string
+	closeFiltering                                            bool
+	motion                                                    comboMotion
+}
+
+func (s *comboRuntime) captureClose(query string) {
+	if !s.closing {
+		s.closing = true
+		s.closeQuery, s.closeFiltering = query, s.filtering
+	}
+}
+
+func (s *comboRuntime) toggle(query string) {
+	if s.open {
+		s.captureClose(query)
+		s.open = false
+	} else {
+		s.open = true
+		if !s.closing {
+			s.filtering = false
+		}
+	}
+	s.hasActive = false
 }
 
 func (s *comboRuntime) eligible(i int) bool {
@@ -167,11 +191,17 @@ func (s *comboRuntime) inputEvent(ev ui.InputEvent) bool {
 			// An unhighlighted Enter dismisses suggestions but remains a
 			// native editor submission gesture for the enclosing form.
 			s.open = false
+			if s.popupInput {
+				s.trigger.Focus()
+			}
 		}
 	case ui.KeyEscape:
 		if s.open {
 			s.open = false
 			s.hasActive = false
+			if s.popupInput {
+				s.trigger.Focus()
+			}
 			return true
 		}
 		if len(s.selected) > 0 {
@@ -389,15 +419,32 @@ func selectionCombobox(c *ui.Context, single *ComboboxValue, selected *[]string,
 		s.hasActive = false
 		s.composing = false
 	}
-	if s.wasOpen && !s.open {
-		s.filtering = false
-		s.hasActive = false
-		if multiple || p.PopupInput || !single.Valid {
-			*query = ""
-		} else {
-			*query = comboLabel(p.Options, single.Value)
+	// Logical dismissal removes input and accessibility immediately; native
+	// editors and the filtered result stay mounted until their exit finishes.
+	syncMotion := func() (comboPose, bool) {
+		if s.wasOpen && !s.open {
+			s.captureClose(*query)
 		}
+		if s.open {
+			s.closing = false
+		}
+		pose, present := s.motion.update(c, s.open)
+		if s.closing {
+			if multiple && !p.PopupInput {
+				*query = ""
+			}
+			if !present {
+				s.closing, s.filtering, s.hasActive = false, false, false
+				if multiple || p.PopupInput || !single.Valid {
+					*query = ""
+				} else {
+					*query = comboLabel(p.Options, single.Value)
+				}
+			}
+		}
+		return pose, present
 	}
+	syncMotion()
 	setQuery := func(q string) {
 		if *query != q {
 			*query = q
@@ -493,6 +540,9 @@ func selectionCombobox(c *ui.Context, single *ComboboxValue, selected *[]string,
 			return
 		}
 		filtered := s.filtering && strings.TrimSpace(*query) != ""
+		if !multiple || filtered && !p.PopupInput {
+			s.captureClose(*query)
+		}
 		if multiple {
 			values := slices.Clone(*selected)
 			if slices.Contains(values, value) {
@@ -504,12 +554,12 @@ func selectionCombobox(c *ui.Context, single *ComboboxValue, selected *[]string,
 			if filtered && !p.PopupInput {
 				s.open = false
 			}
-			setQuery("")
+			if filtered {
+				setQuery("")
+			}
 		} else {
 			change([]string{value})
-			if p.PopupInput {
-				setQuery("")
-			} else {
+			if !p.PopupInput {
 				setQuery(optionLabel(option))
 			}
 			s.open = false
@@ -541,7 +591,7 @@ func selectionCombobox(c *ui.Context, single *ComboboxValue, selected *[]string,
 			if placeholder == "" {
 				placeholder = "Search…"
 			}
-			input.Placeholder(placeholder).Padding(6, 10).Height(36)
+			input.Placeholder(placeholder).Padding(4, 8).Height(max(float32(30), 20*scale+10)).FontSize(14).LineHeight(20.0 / 14)
 		}
 
 		input.OnChange(func() {
@@ -598,9 +648,7 @@ func selectionCombobox(c *ui.Context, single *ComboboxValue, selected *[]string,
 				indicator.ChevronDown(c).TextColor(t.MutedForeground)
 			})
 			if trigger.Clicked() && s.enabled {
-				s.open = !s.open
-				s.filtering = false
-				s.hasActive = false
+				s.toggle(*query)
 			}
 			trigger.HandleInput(func(ev ui.InputEvent) bool {
 				if s.enabled && ev.Kind == ui.InputKeyDown && ev.Mods == 0 && (ev.Key == ui.KeyDown || ev.Key == ui.KeyUp) {
@@ -659,9 +707,7 @@ func selectionCombobox(c *ui.Context, single *ComboboxValue, selected *[]string,
 		} else if !p.HideTrigger {
 			trigger := ui.ButtonBase(c.Key("trigger")).Size(min(float32(24), height-2), min(float32(24), height-2)).Shrink(0).KeepFocus().TabStop(false).Label("Show " + p.Label + " options").Disabled(!s.enabled).FocusRing(false).Children(func() { indicator.ChevronDown(c).TextColor(t.MutedForeground) })
 			if trigger.Clicked() {
-				s.open = !s.open
-				s.filtering = false
-				s.hasActive = false
+				s.toggle(*query)
 				s.input.Focus()
 			}
 		}
@@ -700,9 +746,18 @@ func selectionCombobox(c *ui.Context, single *ComboboxValue, selected *[]string,
 		s.open = false
 		s.composing = false
 	}
+	pose, present := syncMotion()
+	if s.closing {
+		s.items = comboEntries(p, s.closeQuery, s.closeFiltering, *selected)
+		for i := range s.items {
+			if s.items[i].option.Separator {
+				s.items[i].option.Disabled = true
+			}
+		}
+	}
 	maxHeight := p.MaxHeight
 	if maxHeight <= 0 || math.IsNaN(float64(maxHeight)) || math.IsInf(float64(maxHeight), 0) {
-		maxHeight = 280
+		maxHeight = 288
 	}
 	anchor := root
 	if p.PopupInput {
@@ -710,134 +765,146 @@ func selectionCombobox(c *ui.Context, single *ComboboxValue, selected *[]string,
 			anchor = trigger
 		}
 	}
-	panel := ui.PopoverBase(c, anchor, &s.open, func(panel ui.Element) {
-		panel.Key(s)
-		panel.MinWidth(max(float32(160), root.Bounds().W)).MaxHeight(maxHeight).Margin(6, 0, 0, 0).Padding(4).Radius(t.RadiusMD()).Border(1, t.Border).Background(t.Popover).TextColor(t.PopoverForeground).Shadow(0, 4, 12, 0, ui.RGBA(0, 0, 0, .12)).Transition(motion.Popup(c))
-		if !p.PopupInput {
-			panel.KeepFocus()
-		}
-		panel.Children(func() {
-			if p.PopupInput {
-				ui.Row(c.Key("popup-search")).FillWidth().AlignItems(ui.Center).Children(func() {
-					buildInput(c, true)
-					if p.ShowClear && len(*selected) > 0 {
-						clear := ui.ButtonBase(c.Key("clear")).Size(24, 24).MarginEnd(4).Shrink(0).KeepFocus().TabStop(false).Label("Clear " + p.Label).Disabled(!s.enabled).FocusRing(false).Children(func() { indicator.Close(c) })
-						if clear.Clicked() {
-							change(nil)
-							setQuery("")
-							s.hasActive = false
-							s.filtering = false
-							s.input.Focus()
-						}
-					}
-				})
+	var panel ui.Element
+	dismissed, outside := false, false
+	if present {
+		ui.Overlay(c, func() {
+			panel = ui.Box(c).Role(ui.RolePopup).AttachTo(anchor, ui.AnchorBottomStart, ui.AnchorTopStart)
+			panel.Key(s)
+			panel.Clicked() // The panel background participates in native hit testing.
+			panel.MinWidth(max(float32(144), root.Bounds().W)).MaxHeight(maxHeight).Margin(6, 0, 0, 0).Clip().Radius(t.RadiusMD()).Border(1, t.Foreground.Alpha(.1)).Background(t.Popover).TextColor(t.PopoverForeground).Shadow(0, 4, 12, 0, ui.RGBA(0, 0, 0, .12)).IgnoreInput(!s.open).AccessHidden(!s.open)
+			if !p.PopupInput {
+				panel.KeepFocus()
 			}
-			list := ui.Scroll(c.Key("list")).TabStop(false).FillWidth().MaxHeight(maxHeight).Role(ui.RoleListBox).Multiselectable(multiple).Label(p.Label + " options")
-			if input := c.Resolve(s.input); input.Valid() {
-				input.Controls(list).Expanded(s.open)
-			}
-			x, y, over := list.PointerPosition()
-			pointerMoved := over && (!s.pointerOver || s.pointerX != x || s.pointerY != y)
-			s.pointerX, s.pointerY, s.pointerOver = x, y, over
-			list.Children(func() {
-				n := 0
-				for _, e := range s.items {
-					if !e.option.Separator {
-						n++
-					}
-				}
-				if n == 0 {
-					empty := p.EmptyText
-					if empty == "" {
-						empty = "No items found."
-					}
-					ui.Text(c, empty).Padding(8, 10).FontSize(14).TextColor(t.MutedForeground).Role(ui.RoleStatus)
-				}
-				pos := 0
-				renderOption := func(entry comboEntry) {
-					o := entry.option
-					pos++
-					option := ui.ButtonBase(c.Key(choiceOptionKey{value: o.Value})).Role(ui.RoleOption).KeepFocus().TabStop(false).Disabled(o.Disabled || !s.enabled).DimDisabled(false).Label(optionLabel(o)).PositionInSet(pos, n).AccessSelected(entry.selected).FillWidth().MinWidth(0).MinHeight(32).Padding(6, 32, 6, 8).Gap(8).AlignItems(ui.Center).Radius(t.RadiusSM()).FontSize(14).FocusRing(false)
-					active := s.hasActive && s.active == o.Value
-					if pointerMoved && option.Hovered() && !o.Disabled && s.enabled {
-						s.active, s.hasActive = o.Value, true
-						active = true
-					}
-					if active {
-						option.Background(t.Accent).TextColor(t.AccentForeground)
-						if input := c.Resolve(s.input); input.Valid() {
-							input.ActiveDescendant(option)
-						}
-						if s.reveal {
-							option.ScrollIntoView()
-							s.reveal = false
-						}
-					}
-					if o.Disabled {
-						option.Opacity(.5)
-					}
-					option.Children(func() {
-						ui.Row(c).Grow(1).MinWidth(0).Children(func() {
-							if p.ItemContent != nil {
-								p.ItemContent(c, o)
-							} else {
-								ui.Text(c, optionLabel(o)).SingleLine()
+			panel.Children(func() {
+				if p.PopupInput {
+					ui.Row(c.Key("popup-search")).FillWidth().Margin(4, 4, 0, 4).Height(max(float32(32), 20*scale+12)).AlignItems(ui.Center).Radius(t.RadiusMD()).Background(t.Input.Alpha(.3)).Border(1, t.Input.Alpha(.3)).Children(func() {
+						buildInput(c, true)
+						if p.ShowClear && len(*selected) > 0 {
+							clear := ui.ButtonBase(c.Key("clear")).Size(24, 24).MarginEnd(4).Shrink(0).KeepFocus().TabStop(false).Label("Clear " + p.Label).Disabled(!s.enabled).FocusRing(false).Children(func() { indicator.Close(c) })
+							if clear.Clicked() {
+								change(nil)
+								setQuery("")
+								s.hasActive = false
+								s.filtering = false
+								s.input.Focus()
 							}
-						})
-						if entry.selected {
-							ui.Box(c).Absolute().Right(8).TopPercent(50).Size(16, 16).Translate(0, -8).Children(func() { indicator.Check(c) })
 						}
 					})
-					if option.Clicked() {
-						choose(o.Value)
-					}
 				}
-				for i := 0; i < len(s.items); {
-					if s.items[i].option.Separator {
-						ui.Box(c).Height(1).FillWidth().Margin(4, 0).Background(t.Border).Role(ui.RoleSeparator).Orientation(ui.Horizontal)
-						i++
-						continue
+				list := ui.Scroll(c.Key("list")).TabStop(false).FillWidth().Padding(4).MaxHeight(max(float32(1), maxHeight-36)).Role(ui.RoleListBox).Multiselectable(multiple).Label(p.Label + " options")
+				if input := c.Resolve(s.input); input.Valid() {
+					input.Controls(list).Expanded(s.open)
+				}
+				x, y, over := list.PointerPosition()
+				pointerMoved := over && (!s.pointerOver || s.pointerX != x || s.pointerY != y)
+				s.pointerX, s.pointerY, s.pointerOver = x, y, over
+				list.Children(func() {
+					n := 0
+					for _, e := range s.items {
+						if !e.option.Separator {
+							n++
+						}
 					}
-					start, end, name := i, i+1, s.items[i].option.Group
-					for end < len(s.items) && !s.items[end].option.Separator && s.items[end].option.Group == name {
-						end++
+					if n == 0 {
+						empty := p.EmptyText
+						if empty == "" {
+							empty = "No items found."
+						}
+						ui.Text(c, empty).Padding(8, 10).FontSize(14).TextColor(t.MutedForeground).Role(ui.RoleStatus)
 					}
-					if name != "" {
-						ui.Column(c.Key(struct {
-							Name  string
-							Start int
-						}{name, start})).FillWidth().Role(ui.RoleGroup).Label(name).Children(func() {
-							optionGroup(c, name)
+					pos := 0
+					renderOption := func(entry comboEntry) {
+						o := entry.option
+						pos++
+						option := ui.ButtonBase(c.Key(choiceOptionKey{value: o.Value})).Role(ui.RoleOption).KeepFocus().TabStop(false).Disabled(o.Disabled || !s.enabled).DimDisabled(false).Label(optionLabel(o)).PositionInSet(pos, n).AccessSelected(entry.selected).FillWidth().MinWidth(0).MinHeight(32).Padding(6, 32, 6, 8).Gap(8).AlignItems(ui.Center).Radius(t.RadiusSM()).FontSize(14).FocusRing(false)
+						active := s.hasActive && s.active == o.Value
+						if pointerMoved && option.Hovered() && !o.Disabled && s.enabled {
+							s.active, s.hasActive = o.Value, true
+							active = true
+						}
+						if active {
+							option.Background(t.Accent).TextColor(t.AccentForeground)
+							if input := c.Resolve(s.input); input.Valid() {
+								input.ActiveDescendant(option)
+							}
+							if s.reveal {
+								option.ScrollIntoView()
+								s.reveal = false
+							}
+						}
+						if o.Disabled {
+							option.Opacity(.5)
+						}
+						option.Children(func() {
+							ui.Row(c).Grow(1).MinWidth(0).Children(func() {
+								if p.ItemContent != nil {
+									p.ItemContent(c, o)
+								} else {
+									ui.Text(c, optionLabel(o)).SingleLine()
+								}
+							})
+							if entry.selected {
+								ui.Box(c).Absolute().Right(8).TopPercent(50).Size(16, 16).Translate(0, -8).Children(func() { indicator.Check(c) })
+							}
+						})
+						if option.Clicked() {
+							choose(o.Value)
+						}
+					}
+					for i := 0; i < len(s.items); {
+						if s.items[i].option.Separator {
+							ui.Box(c).Height(1).FillWidth().Margin(4, 0).Background(t.Border).Role(ui.RoleSeparator).Orientation(ui.Horizontal)
+							i++
+							continue
+						}
+						start, end, name := i, i+1, s.items[i].option.Group
+						for end < len(s.items) && !s.items[end].option.Separator && s.items[end].option.Group == name {
+							end++
+						}
+						if name != "" {
+							ui.Column(c.Key(struct {
+								Name  string
+								Start int
+							}{name, start})).FillWidth().Role(ui.RoleGroup).Label(name).Children(func() {
+								optionGroup(c, name)
+								for j := start; j < end; j++ {
+									renderOption(s.items[j])
+								}
+							})
+						} else {
 							for j := start; j < end; j++ {
 								renderOption(s.items[j])
 							}
-						})
-					} else {
-						for j := start; j < end; j++ {
-							renderOption(s.items[j])
 						}
+						i = end
 					}
-					i = end
-				}
+				})
 			})
+			if s.open {
+				outside = panel.PressedOutside()
+				if panel.OverlayShortcut(0, ui.KeyEscape) || outside {
+					s.captureClose(*query)
+					s.open, dismissed = false, true
+				}
+			}
 		})
-	})
+	}
+	if panel.Valid() {
+		s.motion.observe(anchor, panel)
+	}
+	pose, _ = syncMotion()
+	if panel.Valid() {
+		panel.IgnoreInput(!s.open).AccessHidden(!s.open)
+		s.motion.apply(c, anchor, panel, pose)
+	}
 	if p.PopupInput && s.open && !s.wasOpen {
 		if input := c.Resolve(s.input); input.Valid() && !input.IsDisabled() {
-			input.AutoFocus()
+			input.Focus()
 		}
 	}
-	if p.PopupInput && s.wasOpen && !s.open && panel.Valid() && panel.Dismissed() && !panel.PressedOutside() {
+	if p.PopupInput && s.wasOpen && !s.open && dismissed && !outside {
 		s.trigger.Focus()
-	}
-	if s.wasOpen && !s.open {
-		s.filtering = false
-		s.hasActive = false
-		if multiple || p.PopupInput || !single.Valid {
-			*query = ""
-		} else {
-			*query = comboLabel(p.Options, single.Value)
-		}
 	}
 	if s.wasOpen != s.open && p.OnOpenChange != nil {
 		p.OnOpenChange(s.open)

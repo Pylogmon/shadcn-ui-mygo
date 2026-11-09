@@ -9,6 +9,8 @@ collection, all twelve separate Base examples and the shadcn license.
 The Vega stylesheet and shared Tailwind animation rules are referenced through
 their existing, byte-verified menu archive instead of copied again. The manifest
 records those repository-relative archive paths and fixed upstream Git blobs.
+It also references the unchanged `tw-animate-css` 1.4.0 archive and its verified
+package metadata/license for the animation keyframes.
 
 `npm/base-ui-react` contains unmodified published files from `@base-ui/react`
 1.6.0. The entire cached official tarball was checked against its metadata SHA-1
@@ -28,6 +30,10 @@ JavaScript package is a dependency of the Go kit.
 | Default input includes a trigger; a visible clear button replaces that trigger | `shadcn/base/combobox.tsx` `ComboboxInput` |
 | Items have a selected check indicator and disabled behavior; groups, labels and separators are separate parts | `shadcn/base/combobox.tsx`, `item/ComboboxItem.js` |
 | Chips and the input share a wrapping field; visual remove buttons can be omitted | `shadcn/base/combobox.tsx`, `shadcn/examples/combobox-example.tsx`, existing Vega stylesheet |
+| Vega content enters/exits over 100ms using CSS `ease`, fade and 95% scale; entry alone translates 8 DIP from the observed side | existing Vega stylesheet, Tailwind rules and `tw-animate-css` archive |
+| A closing popup remains mounted but its positioner becomes inert; its query is cleaned after the exit completes | `popup/ComboboxPopup.js`, `positioner/ComboboxPositioner.js`, `root/AriaCombobox.js` |
+| Transform origin projects the anchor center through the default 5px arrow padding and includes the side offset | `positioner/ComboboxPositioner.js`, `utils/useAnchorPositioning.js` |
+| Popup input group has 4px outer margins (no bottom margin), 32px height and translucent input background/border | existing Vega stylesheet |
 | From input caret start, the logical previous arrow enters the last chip; empty-input Backspace deletes the last selection | `input/ComboboxInput.js` |
 | Chip arrows navigate logically in LTR/RTL; deletion selects the nearest remaining chip; Enter/Space returns to input; Up/Down opens the list | `chip/ComboboxChip.js` |
 | Popup trigger with internal search, custom object labels/content, InputGroup addons, invalid/disabled and RTL examples | `shadcn/examples/combobox-{popup,custom,input-group,invalid,disabled,rtl}.tsx` |

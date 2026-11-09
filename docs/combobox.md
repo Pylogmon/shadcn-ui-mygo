@@ -21,7 +21,7 @@ control.ComboboxWith(c, &selected, &query, control.ComboboxWithProps{
 
 实际应用应把`selected`和`query`放在自己的持久状态中。
 `Valid`区分合法的空字符串选项与未选择。选择写入Value，外部输入显示Label；
-输入过滤不会把未提交文字当成已选值。关闭恢复所选标签，弹层内部搜索则清空搜索文本。
+输入过滤不会把未提交文字当成已选值。退出动画完成后恢复所选标签，弹层内部搜索则清空搜索文本。
 程序更新选值/选项不触发用户值回调；动态标签在未编辑时同步显示。
 
 默认不自动高亮首个匹配项，`AutoHighlight`显式开启；方向键循环并跳过禁用项和分隔线，
@@ -72,9 +72,15 @@ Up/Down打开选项。`HideRemove`隐藏移除按钮，保留标签键盘删除�
 行为对照固定shadcn `bases/base`、Vega及Base UI1.6.0，原文、许可、Git blob和发布包完整性见
 [`testdata/shadcn-combobox`](../pkg/control/testdata/shadcn-combobox/README.md)。
 
-此阶段继续使用现有窗口内`motion.Popup`过渡。
-源100ms缩放/侧向进入、保留关闭层与连续反转，以及popup内部搜索框的Vega32DIP样式尚待独立阶段，未计为完整动画/视觉对齐。
-独立越窗编辑式Combobox、全部compound组合、平台IME候选窗、真实读屏及完整视觉矩阵仍需验收。
+With入口使用100ms CSS `ease`淡入淡出和95%缩放，进入时按实际布局侧向移动8DIP；
+变换原点根据公开布局测量投影到触发器，不能证明侧向时使用中心淡缩。
+关闭立即排除弹层输入和可访问性，原生编辑器与过滤结果保留至退出完成；
+快速重开从当前姿态反转并保留编辑选区。外部多选输入立即清空，但退出列表保留原过滤结果。
+减少动态效果或窗口隐藏时立即收敛。内部搜索组默认32DIP，文本缩放时可增高。
+
+源Content定位参数、独立compound槽位、anchor宽度偏移与空态结构仍待补齐。
+独立越窗编辑式Combobox、平台IME候选窗、真实读屏及完整视觉矩阵仍需验收；
+这些范围不因原生Tester和三平台编译通过而视为完成。
 
 Gallery的Forms & controls页提供可清除框架、国家/城市描述过滤、Office内部搜索、技术多选及
 只读/禁用/必填错误示例。搜索Combobox、MultiCombobox或Chips可匹配该页面；选择与草稿跨页保留。

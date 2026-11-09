@@ -52,8 +52,13 @@ func TestComboboxSelectionSeparatesValueLabelAndQuery(t *testing.T) {
 	}
 	r.Key(0, ui.KeyEnter)
 	r.Frame()
-	if value.Valid || q != "" || selectionComboInput(t, r, "Framework").Expanded {
+	if value.Valid || selectionComboInput(t, r, "Framework").Expanded {
 		t.Fatalf("unhighlighted Enter failed to dismiss/reset without selection: %+v %q", value, q)
+	}
+	r.Advance(comboMotionDuration)
+	r.Frame()
+	if q != "" {
+		t.Fatalf("completed Enter exit failed to reset query: %q", q)
 	}
 	openSelectionCombo(t, r, "Framework")
 	r.Type("Next")
@@ -143,6 +148,8 @@ func TestComboboxClearAutoHighlightAndDismissal(t *testing.T) {
 	if !r.Focused("Other") {
 		t.Fatalf("Tab did not reach Other: %+v", r.AccessAll())
 	}
+	r.Advance(comboMotionDuration)
+	r.Frame()
 	if q != "Rust" || value.Value != "rust" {
 		t.Fatalf("blur failed restore %+v %q", value, q)
 	}
@@ -265,7 +272,7 @@ func TestComboboxPopupSearchAndNativeFocusReturn(t *testing.T) {
 	r.Key(0, ui.KeyDown)
 	r.Key(0, ui.KeyEnter)
 	r.Frame()
-	if v != (ComboboxValue{"jp", true}) || q != "" {
+	if v != (ComboboxValue{"jp", true}) || q != "Japan" {
 		t.Fatalf("popup selection %+v %q", v, q)
 	}
 	if !r.Focused("Country") {
@@ -273,6 +280,11 @@ func TestComboboxPopupSearchAndNativeFocusReturn(t *testing.T) {
 	}
 	if !r.HasText("Japan") {
 		t.Fatal("trigger did not show selected label")
+	}
+	r.Advance(comboMotionDuration)
+	r.Frame()
+	if q != "" {
+		t.Fatalf("popup query survived completed exit: %q", q)
 	}
 }
 
@@ -894,11 +906,16 @@ func TestComboboxUnhighlightedEnterDismissesAndPreservesNativeSubmission(t *test
 			}
 			r.Key(0, ui.KeyEnter)
 			r.Frame()
-			if selectionComboInput(t, r, "Language").Expanded || value != tc.selected || query != tc.want || calls != 0 {
+			if selectionComboInput(t, r, "Language").Expanded || value != tc.selected || calls != 0 {
 				t.Fatalf("unhighlighted Enter selected=%+v q=%q want=%q calls%d", value, query, tc.want, calls)
 			}
 			if submits != 1 {
 				t.Fatalf("native Enter submission count=%d want1", submits)
+			}
+			r.Advance(comboMotionDuration)
+			r.Frame()
+			if query != tc.want || value != tc.selected || calls != 0 {
+				t.Fatalf("completed Enter exit selected=%+v query=%q want=%q calls%d", value, query, tc.want, calls)
 			}
 		})
 	}
@@ -935,8 +952,13 @@ func TestComboboxUnhighlightedEnterDismissesAndPreservesNativeSubmission(t *test
 		}
 		r.Key(0, ui.KeyEnter)
 		r.Frame()
-		if value.Valid || query != "" || selectionComboInput(t, r, "Language").Expanded {
+		if value.Valid || selectionComboInput(t, r, "Language").Expanded {
 			t.Fatalf("normal second Enter failed unhighlighted dismissal: %+v %q", value, query)
+		}
+		r.Advance(comboMotionDuration)
+		r.Frame()
+		if query != "" {
+			t.Fatalf("completed IME dismissal did not reset query: %q", query)
 		}
 	})
 }
