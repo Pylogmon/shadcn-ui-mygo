@@ -41,4 +41,6 @@ Toggle 可用 Icon/EndIcon 或 Content 定制视觉。所有 Content/ItemContent
 
 Select的窗口内、独立Flyout和系统菜单入口使用同一个16×16DIP SVG下箭头，保持主题MutedForeground。图标尺寸独立于字体与行高，长标签不压缩图标，RTL位于逻辑末端；自定义Trigger内容仍由外围真实控件处理点击与名称。独立窗口与系统菜单的组件对见[桌面浮层](native-adaptation.md)。
 
+可搜索单选/多选、清除、分组、自定义建议、共框标签与弹层内部搜索见[Combobox](combobox.md)。With入口区分选值和搜索文本；旧自由文本入口继续兼容。
+
 39 项针对性检查覆盖原生状态、键鼠、RTL、尺寸/变体明暗像素、焦点、无效/禁用、稳定身份、同事件回调和动态减少动画。完整平台、屏幕阅读器和示例视觉矩阵仍需验收；固定上游基线见 [upstream.md](upstream.md)。

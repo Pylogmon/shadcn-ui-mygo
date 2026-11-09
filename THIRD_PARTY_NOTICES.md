@@ -41,6 +41,8 @@ The shared Select chevron reuses the existing inline SVG from
 `pkg/control/select.go`, with the same Lucide/Feather license notice. Its local
 migration source, original literal digest and shared helper digest are recorded
 in `internal/indicator/manifest.json`.
+Combobox check/clear visuals reuse the already pinned exact Lucide assets,
+with original asset paths and digests recorded in that shared manifest.
 Toast status SVGs are archived in `pkg/overlay/assets/` with their own manifest.
 Attachment file/state/action SVGs and their manifest are in `pkg/conversation/assets/`.
 The Trace chevron uses the same pinned Lucide source with a separate manifest there.
@@ -68,6 +70,13 @@ files, metadata, MIT licenses and lockfile SHA-512 evidence are archived in
 `base-ui.txt` (Material-UI SAS), `radix-ui.txt` (WorkOS) and
 `tw-animate-css.txt` (Wombosvideo) under `Contents/Resources/licenses/`.
 No React, Base UI, Radix or CSS runtime is linked into the native application.
+
+Combobox selection, input, chips and popup behavior are independently compared
+against the same fixed shadcn Base wrappers, Vega rules and Base UI1.6.0.
+Exact registry/docs/examples, selected official published members, metadata,
+MIT licenses and Git-blob/SHA-512 evidence are archived under
+`pkg/control/testdata/shadcn-combobox/`. Its shadcn and Base UI licenses match
+the copies already included in the native application bundles.
 
 Chart geometry and configuration are independently implemented using MyGo's
 public native chart primitives. The pinned shadcn horizontal, mixed and negative

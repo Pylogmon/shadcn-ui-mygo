@@ -26,6 +26,22 @@
       "file": "LICENSE.lucide",
       "upstream_path": "LICENSE",
       "sha256": "1e7290b35280a048667bbf0ebabac1c7fd52a75300e8b2946ac165715997f2bc"
+    },
+    {
+      "file": "check.svg",
+      "upstream_path": "icons/check.svg",
+      "sha256": "7f33acc9a77a61659531044525fc008edebe215bf4dcf1c789c8674ad3277db0",
+      "source_kind": "existing-verified-asset",
+      "local_copy_source": "pkg/conversation/assets/attachment-check.svg",
+      "note": "Exact existing pinned Lucide0.474.0 asset bytes reused for native Combobox controls."
+    },
+    {
+      "file": "x.svg",
+      "upstream_path": "icons/x.svg",
+      "sha256": "4a9cdab38fbb96162e7dace28e33f4ca0e49d8963a6162abc3d4691b7d675117",
+      "source_kind": "existing-verified-asset",
+      "local_copy_source": "pkg/conversation/assets/attachment-x.svg",
+      "note": "Exact existing pinned Lucide0.474.0 asset bytes reused for native Combobox controls."
     }
   ]
 }

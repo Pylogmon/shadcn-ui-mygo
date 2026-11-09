@@ -1,0 +1,393 @@
+{
+  "repository": "https://github.com/shadcn-ui/ui",
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "primaryComponentBase": "bases/base",
+  "primaryVisualProfile": "vega",
+  "files": [
+    {
+      "archive": "shadcn/base/combobox.tsx",
+      "sha256": "214523dfe45facff2d8ddf4e07fe048a963278431bea997387fd5d21466e19fc",
+      "sourcePath": "apps/v4/registry/bases/base/ui/combobox.tsx",
+      "gitBlob": "8fc7ae799f00cec1cf4efa6ab8509717f64a7a91",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/ui/combobox.tsx",
+      "verification": "fixed official Git tree blob, byte-for-byte archive"
+    },
+    {
+      "archive": "shadcn/docs/combobox.mdx",
+      "sha256": "9ebdfbc6857a743beb988ea91c81e7345a659d414ac153a465fcb0efb40884e7",
+      "sourcePath": "apps/v4/content/docs/components/base/combobox.mdx",
+      "gitBlob": "ee721ca797cbb2332d615306b8c9ce095de37d5a",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/content/docs/components/base/combobox.mdx",
+      "verification": "fixed official Git tree blob, byte-for-byte archive"
+    },
+    {
+      "archive": "shadcn/examples/combobox-example.tsx",
+      "sha256": "6b63f6a5671af4738a91b738830ef645da299b5088e59a084ea1ca5d2748ff2a",
+      "sourcePath": "apps/v4/registry/bases/base/examples/combobox-example.tsx",
+      "gitBlob": "d6d15c6551814da340015854ae6df58a5d6c271f",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/examples/combobox-example.tsx",
+      "verification": "fixed official Git tree blob, byte-for-byte archive"
+    },
+    {
+      "archive": "shadcn/examples/combobox-auto-highlight.tsx",
+      "sha256": "c5b4b9f6548ccaf97e8acd572477a13f54ddf746481ac0ac32e4892a1af38c08",
+      "sourcePath": "apps/v4/examples/base/combobox-auto-highlight.tsx",
+      "gitBlob": "5986b891591225e857132cdea0fb3ebfd19bb010",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/combobox-auto-highlight.tsx",
+      "verification": "fixed official Git tree blob, byte-for-byte archive"
+    },
+    {
+      "archive": "shadcn/examples/combobox-basic.tsx",
+      "sha256": "9cb9c735fd4a30e9dde964860e110d6eb5c9bed52f44c3aa1cec60f30d42ca24",
+      "sourcePath": "apps/v4/examples/base/combobox-basic.tsx",
+      "gitBlob": "f2ac6a8b2a83e51f093444d435d8dd66ef0d2040",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/combobox-basic.tsx",
+      "verification": "fixed official Git tree blob, byte-for-byte archive"
+    },
+    {
+      "archive": "shadcn/examples/combobox-clear.tsx",
+      "sha256": "2367eaa6d835f95b0bcab955d89c371d469f2ba830964ef93ac52f5410e1186a",
+      "sourcePath": "apps/v4/examples/base/combobox-clear.tsx",
+      "gitBlob": "cf9cefa4706221021eef4a5e7d052e4e6f4a298b",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/combobox-clear.tsx",
+      "verification": "fixed official Git tree blob, byte-for-byte archive"
+    },
+    {
+      "archive": "shadcn/examples/combobox-custom.tsx",
+      "sha256": "b5a1a81a8d295a100ac0de85575cc8d17e8e90422bcdf9500f54513e3fd9be30",
+      "sourcePath": "apps/v4/examples/base/combobox-custom.tsx",
+      "gitBlob": "035e135dd867ce0cc53826691a1f0eb6518eaace",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/combobox-custom.tsx",
+      "verification": "fixed official Git tree blob, byte-for-byte archive"
+    },
+    {
+      "archive": "shadcn/examples/combobox-demo.tsx",
+      "sha256": "9cb9c735fd4a30e9dde964860e110d6eb5c9bed52f44c3aa1cec60f30d42ca24",
+      "sourcePath": "apps/v4/examples/base/combobox-demo.tsx",
+      "gitBlob": "f2ac6a8b2a83e51f093444d435d8dd66ef0d2040",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/combobox-demo.tsx",
+      "verification": "fixed official Git tree blob, byte-for-byte archive"
+    },
+    {
+      "archive": "shadcn/examples/combobox-disabled.tsx",
+      "sha256": "f993445bb803cb41e12a1d6d2952afbb186f7e22906d65dd38361f13ca4d6e75",
+      "sourcePath": "apps/v4/examples/base/combobox-disabled.tsx",
+      "gitBlob": "48cfb12a225404c5baea9f86fe088dbc9bd9c9d8",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/combobox-disabled.tsx",
+      "verification": "fixed official Git tree blob, byte-for-byte archive"
+    },
+    {
+      "archive": "shadcn/examples/combobox-groups.tsx",
+      "sha256": "6c0b501ef81f7f18f58bde3cb5f88e2ab07b4ac77a1a62f363f87347edf3c146",
+      "sourcePath": "apps/v4/examples/base/combobox-groups.tsx",
+      "gitBlob": "cad76ce03de78bfdb642a45bf69ab1d03dc8bc61",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/combobox-groups.tsx",
+      "verification": "fixed official Git tree blob, byte-for-byte archive"
+    },
+    {
+      "archive": "shadcn/examples/combobox-input-group.tsx",
+      "sha256": "f0e4118ddb94c82ecbb8bd9eef6f142f6776eb46c8272403222a052e75854c88",
+      "sourcePath": "apps/v4/examples/base/combobox-input-group.tsx",
+      "gitBlob": "c30bee65eb80d5bea050d9445eb53674a4144f0c",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/combobox-input-group.tsx",
+      "verification": "fixed official Git tree blob, byte-for-byte archive"
+    },
+    {
+      "archive": "shadcn/examples/combobox-invalid.tsx",
+      "sha256": "26b680c1fe2b4433f030146fbddbfbb51af15949d0287659a70299655103380c",
+      "sourcePath": "apps/v4/examples/base/combobox-invalid.tsx",
+      "gitBlob": "fb0482a2ec22a677fc1161e6df47ef6eeb141aed",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/combobox-invalid.tsx",
+      "verification": "fixed official Git tree blob, byte-for-byte archive"
+    },
+    {
+      "archive": "shadcn/examples/combobox-multiple.tsx",
+      "sha256": "90f60e0bcefc53844a48b01fdfc473e69ed3962c404a58c4cbf98590f5b6ac92",
+      "sourcePath": "apps/v4/examples/base/combobox-multiple.tsx",
+      "gitBlob": "60fa9195cc27d1336936e1e29139c26bebc04c8c",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/combobox-multiple.tsx",
+      "verification": "fixed official Git tree blob, byte-for-byte archive"
+    },
+    {
+      "archive": "shadcn/examples/combobox-popup.tsx",
+      "sha256": "8b824e8004dc6b9bb4af2e11e251f48c487c4da9437c30d8f0090cbaa2592de1",
+      "sourcePath": "apps/v4/examples/base/combobox-popup.tsx",
+      "gitBlob": "a2508bd86eb9c38b4690da57d237d8d241d119ec",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/combobox-popup.tsx",
+      "verification": "fixed official Git tree blob, byte-for-byte archive"
+    },
+    {
+      "archive": "shadcn/examples/combobox-rtl.tsx",
+      "sha256": "c2a6d689561547bba872a48a6d461b71c65a2eb7a3a968513c12ac325ec579ce",
+      "sourcePath": "apps/v4/examples/base/combobox-rtl.tsx",
+      "gitBlob": "9852261b2554ca3822953c7722e58ad5317aec62",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/combobox-rtl.tsx",
+      "verification": "fixed official Git tree blob, byte-for-byte archive"
+    },
+    {
+      "archive": "LICENSE.shadcn",
+      "sha256": "1564074e13439397221ffd522e2e504d56561994a23d371aa5e3ad43e4f5423f",
+      "sourcePath": "LICENSE.md",
+      "gitBlob": "fad4d887a681dd49233e5ed01ee2c7a1513089a0",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/LICENSE.md",
+      "verification": "fixed official Git tree blob, byte-for-byte archive"
+    },
+    {
+      "archive": "npm/base-ui-react/metadata.json",
+      "sha256": "0b780356653dc015f4594e62ac594e826753458cac157a10dc934a8ad6e10dfb",
+      "package": "@base-ui/react",
+      "sourcePath": "metadata",
+      "origin": "https://registry.npmjs.org/@base-ui/react/1.6.0",
+      "verification": "official fixed npm metadata; integrity cross-checked with fixed shadcn pnpm lock"
+    },
+    {
+      "archive": "npm/base-ui-react/LICENSE",
+      "sha256": "07fc1b39d69d14bc7d40482a628f47226258eb01265db68ae684944b916beb2a",
+      "package": "@base-ui/react",
+      "sourcePath": "package/LICENSE",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member bytes of full lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/package.json",
+      "sha256": "20cecb1f4eb5dd608eb62955486adc0bae6e219394ea0e04ff2b7c349e99eed0",
+      "package": "@base-ui/react",
+      "sourcePath": "package/package.json",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member bytes of full lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/combobox/root/ComboboxRoot.js",
+      "sha256": "82e5b3d7708adca05ed9728f692b3d78e79ce3c74d209e523e87cc07edec2ab4",
+      "package": "@base-ui/react",
+      "sourcePath": "package/combobox/root/ComboboxRoot.js",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member bytes of full lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/combobox/root/AriaCombobox.js",
+      "sha256": "95197e564cef446ff25871b7b24ebeb18d3b4f38d83e93c8916fe7e2364a6962",
+      "package": "@base-ui/react",
+      "sourcePath": "package/combobox/root/AriaCombobox.js",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member bytes of full lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/combobox/input/ComboboxInput.js",
+      "sha256": "0ff2a081fcadc0e63b90c5a1437d11e99dbd1c2e2e764bccc6e8540f57108679",
+      "package": "@base-ui/react",
+      "sourcePath": "package/combobox/input/ComboboxInput.js",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member bytes of full lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/combobox/clear/ComboboxClear.js",
+      "sha256": "8075ac28522f0a45cb3424236365870ffd003ea85b48b295b710992329a8ef27",
+      "package": "@base-ui/react",
+      "sourcePath": "package/combobox/clear/ComboboxClear.js",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member bytes of full lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/combobox/trigger/ComboboxTrigger.js",
+      "sha256": "c87462ac3df8c3bf5f00b5063d163b053540785bdfd3c412541200031fd6b4b1",
+      "package": "@base-ui/react",
+      "sourcePath": "package/combobox/trigger/ComboboxTrigger.js",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member bytes of full lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/combobox/item/ComboboxItem.js",
+      "sha256": "73d6c012b9878d613650db1cc09dc1ccb0ef8e64e3b03e1b10f907fb38dfb598",
+      "package": "@base-ui/react",
+      "sourcePath": "package/combobox/item/ComboboxItem.js",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member bytes of full lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/combobox/item-indicator/ComboboxItemIndicator.js",
+      "sha256": "05ea8a7d04a2098451bc9f2a71f52df0ea822702f7fd788c2a35afb89817e2de",
+      "package": "@base-ui/react",
+      "sourcePath": "package/combobox/item-indicator/ComboboxItemIndicator.js",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member bytes of full lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/combobox/chips/ComboboxChips.js",
+      "sha256": "c3407e2f736d8d3e0df1879d114e5668785f2a9e1db27c39f2c25228ca63c1be",
+      "package": "@base-ui/react",
+      "sourcePath": "package/combobox/chips/ComboboxChips.js",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member bytes of full lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/combobox/chip/ComboboxChip.js",
+      "sha256": "e4566b99adcc8c2c4ff6bb3414669fb81118cb2206c67904bbb441c878d05f37",
+      "package": "@base-ui/react",
+      "sourcePath": "package/combobox/chip/ComboboxChip.js",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member bytes of full lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/combobox/chip-remove/ComboboxChipRemove.js",
+      "sha256": "c45925a30ea75b4ace9a7f2a9960eb3fffe761d9f1071359d91bd980f35cb789",
+      "package": "@base-ui/react",
+      "sourcePath": "package/combobox/chip-remove/ComboboxChipRemove.js",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member bytes of full lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/combobox/popup/ComboboxPopup.js",
+      "sha256": "7f464019f9198170ffffe19b0f0dd67e80c15dbbf33ba204c83ae0eb5bf14b07",
+      "package": "@base-ui/react",
+      "sourcePath": "package/combobox/popup/ComboboxPopup.js",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member bytes of full lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/combobox/list/ComboboxList.js",
+      "sha256": "5dbfc5ac7de11d8e5a558054a44c5ca65d3bfd0b4a9739566be0957164b0dd91",
+      "package": "@base-ui/react",
+      "sourcePath": "package/combobox/list/ComboboxList.js",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member bytes of full lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/combobox/group/ComboboxGroup.js",
+      "sha256": "73f21f1365c43978150b6ae4c92702e093bf23a448843f765b138e0269225736",
+      "package": "@base-ui/react",
+      "sourcePath": "package/combobox/group/ComboboxGroup.js",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member bytes of full lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/combobox/group-label/ComboboxGroupLabel.js",
+      "sha256": "047e416339c3c04888f5ceb499acad5365bd001e42937004c14f4c2cd84cb976",
+      "package": "@base-ui/react",
+      "sourcePath": "package/combobox/group-label/ComboboxGroupLabel.js",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member bytes of full lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/combobox/collection/ComboboxCollection.js",
+      "sha256": "0192527d248a61311a6f85b7a5dc1515ff5fa13d7a231fb4e35384845e784ba6",
+      "package": "@base-ui/react",
+      "sourcePath": "package/combobox/collection/ComboboxCollection.js",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member bytes of full lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/combobox/empty/ComboboxEmpty.js",
+      "sha256": "94dfceb68aac6fa9f9ec74070abf91844cee0fb58aed6116728ca9bd9eeb03eb",
+      "package": "@base-ui/react",
+      "sourcePath": "package/combobox/empty/ComboboxEmpty.js",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member bytes of full lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/combobox/value/ComboboxValue.js",
+      "sha256": "e3e2a439985972216a95f9531736134f65cc5dbacdaf434f45bdc0b3ea80f89f",
+      "package": "@base-ui/react",
+      "sourcePath": "package/combobox/value/ComboboxValue.js",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member bytes of full lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/combobox/root/utils/useFilter.js",
+      "sha256": "4bb756ec2a07760eadf1cca2bf2149f5bef8d897461528dbc5d61ee725ce0b83",
+      "package": "@base-ui/react",
+      "sourcePath": "package/combobox/root/utils/useFilter.js",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member bytes of full lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/combobox/root/utils/useFilteredItems.js",
+      "sha256": "f7e7cf96fc789d37ec2ce26dde135c4d57611381d13589c162a8effd310e6f80",
+      "package": "@base-ui/react",
+      "sourcePath": "package/combobox/root/utils/useFilteredItems.js",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member bytes of full lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/combobox/store.js",
+      "sha256": "89b1863d57abd41280159512bb5e7e569a49fdb84ad261a58b336869528c5c11",
+      "package": "@base-ui/react",
+      "sourcePath": "package/combobox/store.js",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member bytes of full lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/internals/resolveValueLabel.js",
+      "sha256": "59ced631f9c0b2b21f0c1957a59f5ead0f4fcb669b253cbb6950be7a3da56721",
+      "package": "@base-ui/react",
+      "sourcePath": "package/internals/resolveValueLabel.js",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member bytes of full lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/internals/itemEquality.js",
+      "sha256": "b72865c12c7bcab05366a91ca0fe6a8f6f2ef849d2025db7bf6854591a5760e6",
+      "package": "@base-ui/react",
+      "sourcePath": "package/internals/itemEquality.js",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member bytes of full lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/combobox/root/ComboboxRoot.d.ts",
+      "sha256": "21d1c11f3eb20d8c4eeecad2a1b1ab48117f5cc8606deb0ada3e69d961b4272f",
+      "package": "@base-ui/react",
+      "sourcePath": "package/combobox/root/ComboboxRoot.d.ts",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member bytes of full lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/combobox/input/ComboboxInput.d.ts",
+      "sha256": "d0db671cc543e88f9759c1bb7c3d7434e3db899644b20058125635fdd0310573",
+      "package": "@base-ui/react",
+      "sourcePath": "package/combobox/input/ComboboxInput.d.ts",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member bytes of full lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/combobox/chip/ComboboxChip.d.ts",
+      "sha256": "569c96350d1f50807ca9142ca0f0071fe99d54b8d273decb0494a53d24acc7be",
+      "package": "@base-ui/react",
+      "sourcePath": "package/combobox/chip/ComboboxChip.d.ts",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member bytes of full lockfile SHA512-verified official npm tarball"
+    }
+  ],
+  "existingSourceReferences": [
+    {
+      "sourcePath": "apps/v4/registry/styles/style-vega.css",
+      "existingArchive": "pkg/desktop/testdata/shadcn-menu/shadcn/style-vega.css",
+      "sha256": "10fa07bd61b429ae2c14c572ba9975f6e991d68a04f8fec7e354a062597e0d4e",
+      "gitBlob": "9f03b3c6dc5a803db963a81743d47d5b5f8f9fe0",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/styles/style-vega.css",
+      "verification": "existing byte-for-byte archive checked against fixed official Git tree blob"
+    },
+    {
+      "sourcePath": "packages/shadcn/src/tailwind.css",
+      "existingArchive": "pkg/desktop/testdata/shadcn-menu/shadcn/tailwind.css",
+      "sha256": "4c371f7a1ff5d219ae2f7ff28bd256b4346fd546fe46fbae22092e57db2f0fae",
+      "gitBlob": "067bfc56fc086420835582f469e2c78d3942c69a",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/packages/shadcn/src/tailwind.css",
+      "verification": "existing byte-for-byte archive checked against fixed official Git tree blob"
+    }
+  ],
+  "packages": [
+    {
+      "name": "@base-ui/react",
+      "version": "1.6.0",
+      "metadataURL": "https://registry.npmjs.org/@base-ui/react/1.6.0",
+      "tarballURL": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "integrity": "sha512-/jzjTWJYXhRFO45Bev9lc3cHbmjzCMpUqbMZ2AgKy/z25mY9B6shGSNcXcjQar9n5doM0KYW1W8fcFv2jZBuMw==",
+      "tarballSHA1": "143a892157224a57046f3f4886c025eba173c258",
+      "tarballSHA256": "583e60023a77fed45caf8a2f980813e8a75e2f2a97f59c30380d2234cc3e0423",
+      "lockedBy": "shadcn-ui/ui@8ab27715521cbd4f87ae6886cd989cbb678f6de7:pnpm-lock.yaml",
+      "lockfileGitBlob": "5e588df5ffb2bfaec0673b426fb657d44200560b",
+      "lockfileSHA256": "5d1903905c5020aec5062fc18b4d1856a91914f9adb9226a9c069c0b4754bf82",
+      "tarballMembersVerified": 27
+    }
+  ]
+}

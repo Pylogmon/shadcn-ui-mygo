@@ -190,7 +190,13 @@ type ComboboxProps struct {
 func Combobox(c *ui.Context, value *string, p ComboboxProps) ui.Element {
 	t := theme.TokensOf(c)
 	parts := ui.ComboboxBase(c, value)
-	input := styleInput(c, parts.Input, InputProps{Placeholder: p.Placeholder, Label: p.Label, Disabled: p.Disabled, Invalid: p.Invalid})
+	input := styleInput(c, parts.Input, InputProps{Placeholder: p.Placeholder, Label: p.Label, Disabled: p.Disabled, Invalid: p.Invalid}).AutoComplete(ui.AutoCompleteList)
+	composition := ui.Local(input, "combobox-composition", func() comboboxComposition { return comboboxComposition{} })
+	input.ObserveInput(composition.observe)
+	composition.composing = input.Composing()
+	if input.IsDisabled() {
+		parts.SetOpen(false)
+	}
 	query := strings.ToLower(strings.TrimSpace(*value))
 	shown := make([]Option, 0, len(p.Options))
 	for _, o := range p.Options {
@@ -220,7 +226,13 @@ func Combobox(c *ui.Context, value *string, p ComboboxProps) ui.Element {
 						group = o.Group
 						optionGroup(c, group)
 					}
-					item := parts.Item(o.Value).Disabled(o.Disabled).Padding(6, 8).MinHeight(32).
+					var item ui.Element
+					if o.Disabled {
+						item = ui.Row(c.Key(choiceOptionKey{value: o.Value})).Role(ui.RoleListItem).Disabled(true)
+					} else {
+						item = parts.Item(o.Value)
+					}
+					item.Padding(6, 8).MinHeight(32).
 						Radius(t.Radius * .6).AlignSelf(ui.Stretch).FontSize(14).Label(optionLabel(o))
 					if item.Highlighted() {
 						item.Background(t.Accent).TextColor(t.AccentForeground)
@@ -239,8 +251,14 @@ func Combobox(c *ui.Context, value *string, p ComboboxProps) ui.Element {
 			})
 		})
 	})
-	if choice, ok := parts.Chosen(); ok {
-		*value = choice
+	if choice, ok := parts.Chosen(); ok && !input.IsDisabled() && !composition.suppressChoice {
+		for _, o := range p.Options {
+			if !o.Separator && !o.Disabled && o.Value == choice && *value != choice {
+				*value = choice
+				input.SetChanged()
+				break
+			}
+		}
 	}
 	return input
 }
@@ -282,7 +300,7 @@ func MultiCombobox(c *ui.Context, selected *[]string, query *string, p MultiComb
 							break
 						}
 					}
-					if Button(c, label+" ×", ButtonProps{Variant: Secondary, Size: ExtraSmall, Label: "Remove " + label, Disabled: p.Disabled}).Clicked() {
+					if Button(c.Key(choiceOptionKey{value: value}), label+" ×", ButtonProps{Variant: Secondary, Size: ExtraSmall, Label: "Remove " + label, Disabled: p.Disabled}).Clicked() {
 						*selected = slices.DeleteFunc(*selected, func(v string) bool { return v == value })
 						refocus = true
 					}
@@ -290,12 +308,18 @@ func MultiCombobox(c *ui.Context, selected *[]string, query *string, p MultiComb
 			})
 		}
 		parts := ui.ComboboxBase(c.Key("search"), query)
-		input = styleInput(c, parts.Input, InputProps{Placeholder: p.Placeholder, Label: p.Label, Disabled: p.Disabled, Invalid: p.Invalid}).Bind(handle).FillWidth()
+		input = styleInput(c, parts.Input, InputProps{Placeholder: p.Placeholder, Label: p.Label, Disabled: p.Disabled, Invalid: p.Invalid}).Bind(handle).FillWidth().AutoComplete(ui.AutoCompleteList)
 		if refocus {
 			input.Focus()
 		}
+		composition := ui.Local(input, "combobox-composition", func() comboboxComposition { return comboboxComposition{} })
+		if input.IsDisabled() {
+			parts.SetOpen(false)
+		}
+		composition.composing = input.Composing()
 		input.ObserveInput(func(ev ui.InputEvent) {
-			if !p.Disabled && ev.Kind == ui.InputKeyDown && ev.Key == ui.KeyBackspace && *query == "" && len(*selected) > 0 {
+			composition.observe(ev)
+			if !p.Disabled && !composition.composing && ev.Kind == ui.InputKeyDown && ev.Key == ui.KeyBackspace && *query == "" && len(*selected) > 0 {
 				*selected = (*selected)[:len(*selected)-1]
 			}
 		})
@@ -326,7 +350,13 @@ func MultiCombobox(c *ui.Context, selected *[]string, query *string, p MultiComb
 							optionGroup(c, group)
 						}
 						disabled := o.Disabled || p.MaxSelected > 0 && len(*selected) >= p.MaxSelected
-						item := parts.Item(o.Value).Label(optionLabel(o)).Disabled(disabled).Padding(6, 8).MinHeight(32).Radius(t.RadiusSM()).AlignSelf(ui.Stretch).FontSize(14)
+						var item ui.Element
+						if disabled {
+							item = ui.Row(c.Key(choiceOptionKey{value: o.Value})).Role(ui.RoleListItem).Disabled(true)
+						} else {
+							item = parts.Item(o.Value)
+						}
+						item.Label(optionLabel(o)).Padding(6, 8).MinHeight(32).Radius(t.RadiusSM()).AlignSelf(ui.Stretch).FontSize(14)
 						if item.Highlighted() {
 							item.Background(t.Accent).TextColor(t.AccentForeground)
 						}
@@ -344,7 +374,7 @@ func MultiCombobox(c *ui.Context, selected *[]string, query *string, p MultiComb
 				})
 			})
 		})
-		if value, ok := parts.Chosen(); ok && !p.Disabled && !slices.Contains(*selected, value) && (p.MaxSelected <= 0 || len(*selected) < p.MaxSelected) {
+		if value, ok := parts.Chosen(); ok && !input.IsDisabled() && !composition.suppressChoice && !slices.Contains(*selected, value) && (p.MaxSelected <= 0 || len(*selected) < p.MaxSelected) {
 			for _, o := range p.Options {
 				if !o.Separator && !o.Disabled && o.Value == value {
 					*selected = append(*selected, value)

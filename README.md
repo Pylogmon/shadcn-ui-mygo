@@ -69,6 +69,7 @@ Text & layout 页集中展示 [Typography/Kbd](docs/typography.md)、[CodeBlock]
 
 响应式导航布局见 [Sidebar](docs/sidebar.md)；对话框焦点、固定页脚与抽屉吸附手势见 [Modal API](docs/modals.md)。
 命令面板的虚拟列表、过滤、快捷键与自定义内容见 [Command](docs/command.md)。
+选值/搜索文本分离、可清除单选、多选标签与弹层内部搜索见[Combobox](docs/combobox.md)。
 通知的应用队列、六位置堆叠、loading更新、可阻止关闭的动作、原生滑动及完整自定义正文见 [Toast/Sonner](docs/toast.md)。
 可组合的原生文字扫光、颜色与字体传递见 [Shimmer](docs/shimmer.md)。
 静态共享列组合与原生虚拟表格见 [Table](docs/table.md)。
