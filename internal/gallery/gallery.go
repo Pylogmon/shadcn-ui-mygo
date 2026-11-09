@@ -55,6 +55,8 @@ type State struct {
 	lineTab, manualTab                                                             int
 	navRoute                                                                       string
 	sidebarRoute                                                                   string
+	contentAction, contentProject                                                  string
+	contentPinned, contentDismissed                                                bool
 	menuStates                                                                     map[string]*creatorMenu
 	pendingMenuAction                                                              string
 }
@@ -68,6 +70,7 @@ var pages = []navigation.NavItem{
 	{Key: "overview", Label: "Cards"},
 	{Key: "controls", Label: "Forms & controls"},
 	{Key: "display", Label: "Data & display"},
+	{Key: "content", Label: "Content & feedback"},
 	{Key: "overlays", Label: "Overlays"},
 	{Key: "conversation", Label: "Messages & questions"},
 	{Key: "navigation", Label: "Navigation"},
@@ -343,6 +346,8 @@ func (s *State) preview(c *ui.Context, t *theme.Tokens) {
 					s.controls(c)
 				case "display":
 					s.displays(c)
+				case "content":
+					s.contents(c)
 				case "overlays":
 					s.overlays(c)
 				case "conversation":
@@ -361,7 +366,11 @@ func (s *State) preview(c *ui.Context, t *theme.Tokens) {
 }
 
 func (s *State) creatorDialogs(c *ui.Context) {
-	if choice := overlay.CommandDialog(c, &s.Command, &s.Query, overlay.CommandProps{Items: []overlay.CommandItem{{Value: "overview", Label: "Cards"}, {Value: "controls", Label: "Forms & controls"}, {Value: "display", Label: "Data & display"}, {Value: "overlays", Label: "Overlays"}, {Value: "conversation", Label: "Messages & questions"}, {Value: "navigation", Label: "Navigation"}, {Value: "themes", Label: "Colors & themes"}}, Placeholder: "Find a preview…"}); choice != "" {
+	commands := make([]overlay.CommandItem, len(pages))
+	for i, page := range pages {
+		commands[i] = overlay.CommandItem{Key: page.Key, Value: page.Key, Label: page.Label}
+	}
+	if choice := overlay.CommandDialog(c, &s.Command, &s.Query, overlay.CommandProps{Items: commands, Placeholder: "Find a preview…"}); choice != "" {
 		s.Page = choice
 		s.Command = false
 	}

@@ -16,7 +16,7 @@ import (
 func main() {
 	snapshot := flag.String("snapshot", "", "write a PNG and exit")
 	dark := flag.Bool("dark", false, "start in dark mode")
-	page := flag.String("page", "overview", "overview, controls, display, overlays, conversation, navigation or themes")
+	page := flag.String("page", "overview", "overview, controls, display, content, overlays, conversation, navigation or themes")
 	preset := flag.String("preset", "", "load a creator preset JSON file")
 	flag.Parse()
 	state := gallery.New()
