@@ -17,10 +17,11 @@ are archived under `pkg/control/testdata/input-otp/` with a SHA-256 manifest.
 The macOS application bundles include this license under
 `Contents/Resources/licenses/input-otp.txt`.
 
-Loading indicators include Lucide's `loader-circle.svg`, version 0.474.0,
+Loading indicators and CodeBlock actions include Lucide SVGs, version 0.474.0,
 commit `97bbe1d6b2adc6767831e52f6b12b2886b6498d5`, matching the pinned
-shadcn app's direct icon dependency. The exact SVG, ISC license (including its
-Feather MIT notice) and SHA-256 manifest are in `internal/indicator/`.
+shadcn app's direct icon dependency. The loading SVG, ISC license (including its
+Feather MIT notice) and SHA-256 manifest are in `internal/indicator/`;
+exact CodeBlock copy/check SVGs and their manifest are in `pkg/display/assets/`.
 The macOS bundles include that license as `Contents/Resources/licenses/lucide.txt`.
 
 ## cmdk

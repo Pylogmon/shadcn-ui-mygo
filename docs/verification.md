@@ -162,3 +162,6 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 
 - Typography/Kbd：21项聚焦检查与display vet通过。先复现Kbd在Column内stretch、H2缺pb8/分隔线，以及局部mono父字体污染键帽；修复后完整body family/fluent font像素参考、原生RichText选择/复制/链接、代码背景padding、文档间距/Scope、RTL引用与列表标记、带稳定Key的交互列表/表格、empty callback身份、Tooltip明暗逆色及真实外层Button键鼠均通过。TypographyTable为等宽静态语义表格，不把此项当成完整HTML排版引擎。固定MDX blob为 `21953c1ed037c79181e7ca03e1898f31eefe4901`，与已缓存checkout tree一致。
 - Typography独立阶段：HEAD仅加入Typography/Kbd源码与正式测试、保留AspectRatio旧块，display/Gallery共296项通过；17个新增对照文件（MDX、15个base排版示例与globals.css）逐个git blob核对一致，再记录SHA-256。未依赖并行CodeBlock/ScrollArea或Gallery新页。
+
+- CodeBlock：33项正式检查通过，独立审计另5条探针通过并清理。先复现Language切换丢选区、没有确认后的两秒复制反馈、非有限Height进入AX；再覆盖readonly原生编辑、UTF-8局部Edit/流追加、折行/上下限、十万行与真实水平reveal、source variant/size、startLine与不进入复制的diff/highlight背景。独审实际像素复现浮动Copy缺背景/环及Destructive Footer错误继承红色，修复后明暗回归通过；title按当前Theme.Font恢复body字体。原生显示切换快捷键不覆盖受控Wrap/gutter，其他app bindings不增长。Copy/Check SVG另与不可变Lucide提交逐字节归档。
+- CodeBlock独立阶段：HEAD只加入CodeBlock源/测试与SVG assets后display/Gallery共328项通过；未依赖正在实施的ScrollArea/AspectRatio或Gallery新页。

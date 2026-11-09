@@ -63,7 +63,8 @@
 | 5.AF | Pagination长页码原生文本可读性 | 已提交 `fb340d4`；正式回归及41条独立像素审查通过 |
 | 5.AG | Gallery原生表单、混合选择、双菜单祖先及大页数接入 | 已提交 `3d7e3b1`；Gallery57项、6项新增集成、独立审计、明暗截图与macOS实窗通过 |
 | 5.AH | Spinner/Skeleton源图形、曲线与减少动画画面稳定性 | 已提交 `6d5e6ae`；8项loading、412项隔离检查及独立审查通过 |
-| 5.AI | Typography文档组合与原生Kbd | 21项聚焦检查及交叉审查通过，提交本子阶段 |
+| 5.AI | Typography文档组合与原生Kbd | 已提交 `5642cd5`；21项聚焦与296项隔离检查通过 |
+| 5.AJ | CodeBlock原生编辑保留、复合槽位及确认复制 | 33项正式检查与交叉审计通过，提交本子阶段 |
 
 用户已明确允许原生平台适配：Popover、menu、下拉菜单可以使用 MyGo 的系统菜单与独立 Flyout，超出父窗口范围；无需逐像素照搬网页浮层。Gallery 以 [shadcn/create](https://ui.shadcn.com/create) 的配置与实时预览流程为参考。完整组件功能、主题、动画范围保持不变。
 
