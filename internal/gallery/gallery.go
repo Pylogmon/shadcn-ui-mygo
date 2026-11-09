@@ -25,6 +25,7 @@ type State struct {
 	// The creator's Config controls the scoped live preview independently of chrome.
 	Theme                                                                          theme.Controller
 	Config                                                                         Preset
+	Window                                                                         *mygo.Window
 	Popovers                                                                       *desktop.Host
 	Page                                                                           string
 	Name, Email, Bio, Framework, Plan, OTP, Query                                  string
@@ -44,6 +45,8 @@ type State struct {
 	Table                                                                          display.DataTableState
 	tablePreview                                                                   tablePreviewState
 	recipes                                                                        recipeCompositionState
+	typedInputs                                                                    typedInputPreviewState
+	inputGroups                                                                    inputGroupPreviewState
 	chartPreview                                                                   chartPreviewState
 	chartCatalogue                                                                 chartcatalog.State
 	comboboxCompound                                                               comboboxCompoundPreviewState
@@ -102,7 +105,7 @@ type creatorPage struct {
 
 var pages = []creatorPage{
 	{Key: "overview", Label: "Cards"},
-	{Key: "controls", Label: "Forms & controls", Keywords: []string{"Combobox", "MultiCombobox", "Autocomplete", "RadioGroup", "Radio"}},
+	{Key: "controls", Label: "Forms & controls", Keywords: []string{"Combobox", "MultiCombobox", "Autocomplete", "RadioGroup", "Radio", "Field", "InputGroup", "NumberInput", "DateInput", "TimeInput", "FileInput", "DatePickerInput", "Booking", "Jalali", "Persian", "Slider", "Switch", "Checkbox", "Textarea", "InputOTP", "Select"}},
 	{Key: "display", Label: "Data & display", Keywords: []string{"Table", "DataTable", "Calendar", "Avatar", "Card", "Chart", "BarChart", "LineChart", "AreaChart", "PieChart", "DonutChart", "RadarChart", "RadialChart", "Carousel", "Slides", "Slideshow", "Progress", "Skeleton"}},
 	{Key: "content", Label: "Content & feedback"},
 	{Key: "text-layout", Label: "Text & layout", Keywords: []string{"Typography", "Kbd", "Keyboard", "CodeBlock", "Code", "Spinner", "Skeleton", "ScrollArea", "AspectRatio"}},
@@ -418,12 +421,22 @@ func (s *State) preview(c *ui.Context, t *theme.Tokens) {
 	})
 }
 
+// Each component name is an alternative way to find its page. Scoring a long
+// concatenation lets unrelated names jointly outrank an actual page title.
+func creatorPageScore(item overlay.CommandItem, query string) float64 {
+	score := max(overlay.CommandScore(item.Label, query), overlay.CommandScore(item.Value, query))
+	for _, keyword := range item.Keywords {
+		score = max(score, overlay.CommandScore(keyword, query))
+	}
+	return score
+}
+
 func (s *State) creatorDialogs(c *ui.Context) {
 	commands := make([]overlay.CommandItem, len(pages))
 	for i, page := range pages {
 		commands[i] = overlay.CommandItem{Key: page.Key, Value: page.Key, Label: page.Label, Keywords: page.Keywords}
 	}
-	if choice := overlay.CommandDialog(c, &s.Command, &s.Query, overlay.CommandProps{Items: commands, Placeholder: "Find a preview…"}); choice != "" {
+	if choice := overlay.CommandDialog(c, &s.Command, &s.Query, overlay.CommandProps{Items: commands, Filter: creatorPageScore, Placeholder: "Find a preview…"}); choice != "" {
 		s.Page = choice
 		s.Command = false
 	}

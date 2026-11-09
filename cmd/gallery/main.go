@@ -47,6 +47,7 @@ func main() {
 	}
 	mygo.App.WhenReady(func() {
 		window := mygo.NewWindow(mygo.WindowOptions{Title: "shadcn/ui — Native Go", Width: 1280, Height: 900, Hidden: true, Content: ui.View(state.View)})
+		state.Window = window
 		state.Popovers = desktop.NewHost(window)
 		window.Show()
 	})

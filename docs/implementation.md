@@ -133,7 +133,8 @@
 | 5.CX | Chart Tooltip/原始数据及完整目录整合 | 已提交 `157c3ca`；9种Tooltip、按检查定位/边缘翻转、类别反转与原始payload，70目录/文档8例/Create6例接入Gallery和独立应用 |
 | 5.CY | Persian历法与可编辑日期组合 | 已提交 `1b993fa`；固定33年Jalali模型、Farsi/RTL/历月导航与真实time.Time，应用Parse/Format、错误草稿、真实编辑器/Field/Submit及可操作示例 |
 | 5.CZ | 新增API的正常Go模块消费 | 已提交 `c4dedf8`；实际`1b993fa`的canonical ZIP/pseudo-version通过独立项目正常require，无replace；单条跨组件原生表单/图表/菜单流程首次通过，970份源码与Git/ZIP/modulecache一致 |
-| 5.DA | Gallery Progress/Radio/Avatar/Skeleton源组合 | 本阶段提交；同值进度slider、整卡及网格原生单选、真实灰度肖像、非交互form/table占位与共享暂停；保留原独立模型与旧流程 |
+| 5.DA | Gallery Progress/Radio/Avatar/Skeleton源组合 | 已提交 `1d77483`；同值进度slider、整卡及网格原生单选、真实灰度肖像、非交互form/table占位与共享暂停；保留原独立模型与旧流程 |
+| 5.DB | Gallery类型化预约与InputGroup动作组合 | 本阶段提交；同日期的原生/可编辑输入、文件选择与保存快照，真实clipboard/收藏/搜索/textarea动作、Flyout/OS菜单及窄栏跨页/搜索接线 |
 
 用户已明确允许原生平台适配：Popover、menu、下拉菜单可以使用 MyGo 的系统菜单与独立 Flyout，超出父窗口范围；无需逐像素照搬网页浮层。Gallery 以 [shadcn/create](https://ui.shadcn.com/create) 的配置与实时预览流程为参考。完整组件功能、主题、动画范围保持不变。
 
@@ -143,7 +144,7 @@
 - macOS实窗无active Enter复验：本轮自动化出现旧bundle/AX目标失效及首次Return仍留列表的观测。补充12项公开settled输入检查全绿；Tester无公开batch接口，无帧输入时序仍未证实。先辨明实际进程、IME与事件时序，再依据实证修正。
 - Carousel多项布局、controller/options/events及源物理/数值选项/背景拖动已在5.CG/5.CK/5.CN完成；Autoplay/插件与源Gallery配置已在5.CQ交付。从任意子控件起拖并抑制其click、完整多触点信息仍缺MyGo公开能力；保持原生子控件正常输入，未计完整源gesture闭环。按parity表补齐Chart高级配置及所有组件例子；Windows/Linux实际窗口、真实AT/IME、多显示器/缩放和完整视觉矩阵仍是最终验收要求。
 - Chart按[固定源需求清单](chart-source-coverage.json)实施三个完整模块：Cartesian30例的margin/曲线/渐变/标记/LabelList与既有动画已在5.CP交付；Polar31例的角度/半径/网格/扇区/中心内容已在5.CU交付；Tooltip9例及交互、docs/RTL/Create与Gallery目录整合在5.CX交付。Brush、ReferenceLine和额外显式动画参数未在132份固定原文中使用，列为Recharts扩展能力，不以其替代真正缺失的源例功能。该清单记录`1d50ec2`时的静态差距，不能当通过计数。
-- Select组合、独立Tabs、富Tooltip与类型化输入/历法/可编辑日期模块已在5.CR至5.CY交付。Gallery中的Progress标签/值、Radio cards、Avatar灰度及Skeleton表单/表格在5.DA交付；后续集中接入类型化预约表单和InputGroup动作/textarea/menu组合，保持原有SDK语义，不为可直接组合的示例增加重复状态机。
+- Select组合、独立Tabs、富Tooltip与类型化输入/历法/可编辑日期模块已在5.CR至5.CY交付。Gallery中的Progress标签/值、Radio cards、Avatar灰度及Skeleton表单/表格在5.DA交付；类型化预约表单和InputGroup动作/textarea/menu组合在5.DB交付，复用原有SDK语义。后续继续核对其余固定源组合与原生适配边界，实际平台/AT/IME验收保持独立记录。
 
 
 ## 实施约定

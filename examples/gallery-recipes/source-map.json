@@ -96,6 +96,30 @@
       ],
       "contract": "384 max width;5 rows16 high,flex1/96/80 columns,gaps16/8",
       "actualSHA256": "9527111993cfbf10bf769912f99a6e6f6deb922bb62557c86c6721660e1e9928"
+    },
+    {
+      "path": "apps/v4/examples/base/input-group-button.tsx",
+      "git_blob": "33cdcdaa3d4491cdd19760c5b1ce36fed8c0591a",
+      "sha256": "322e95a18440c816ba21bcefae608a853cf84e38bd036f3a36c80404f93a700c",
+      "bytes": 2601,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/input-group-button.tsx",
+      "contract": "Readonly link and actual clipboard receipt, favorite button, information popup and application search; native Material Symbols icons."
+    },
+    {
+      "path": "apps/v4/examples/base/input-group-dropdown.tsx",
+      "git_blob": "378a96870652bdae7465a1ac6e0eafac26b9cf31",
+      "sha256": "33e4a5e332babcc0a1a40d9cbdb8f4c1835905233d2f0e65ffbe27ac31da0142",
+      "bytes": 2247,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/input-group-dropdown.tsx",
+      "contract": "Target search and filename actions use independent Flyout or OS menu, retaining real editor state. Static source location/settings items adapt to real settings, copy and file details."
+    },
+    {
+      "path": "apps/v4/examples/base/input-group-textarea.tsx",
+      "git_blob": "66d41f11cb991ef7ff841de23b88c9189ffec921",
+      "sha256": "de3e2c46ca12b0a2bba30cbaf1235991b05cecfa6133c86d2c3bf62737468d4d",
+      "bytes": 1364,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/input-group-textarea.tsx",
+      "contract": "Native textarea with block-start/end actions, real caret position, copy/reset and an explicit text preview; no JavaScript execution engine."
     }
   ],
   "preserved": [

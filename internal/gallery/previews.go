@@ -128,6 +128,8 @@ func (s *State) controls(c *ui.Context) {
 	})
 	s.choiceVariantsPreview(c)
 	s.recipeChoicesPreview(c)
+	s.typedInputs.view(c, s.Window)
+	s.inputGroups.view(c, s.Popovers, s.Config.NativeMenus)
 	s.sliderRangesPreview(c)
 	s.comboboxPreview(c)
 	s.comboboxCompoundPreview(c)

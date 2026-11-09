@@ -48,3 +48,38 @@ uses public `SVG.Image` and `ui.NewBitmap` with ordinary grayscale image
 preprocessing, preserving alpha, then supplies that decoded image through
 `AvatarProps.Image`. This is an application recipe, not a new Avatar prop or a
 subtree CSS filter. Native rendering and fonts can differ from browser CSS.
+
+## Forms with typed values and actions
+
+The **Plan a booking** card on Forms & controls binds an amount, localized
+date/time, attachments and an editable departure query to one application
+model. The native date/time controls and parsed text share the same accepted
+date. An invalid query preserves that date and can be restored; browsing or
+switching Gregorian/Persian calendars preserves the accepted value. Save keeps
+an independent readable snapshot. Attachments open the real system chooser
+only after activation, parented to the Gallery window. Leaving the page keeps
+the model and rejects pending results from the removed file control.
+
+**Input groups with actions** combines a readonly share link, confirmed
+clipboard writes, a favorite address, a local search with a target menu,
+filename actions, and a native textarea with both block addons. Copy, reset and
+preview operate on the actual current draft; the editor and its selection stay
+mounted while those actions run. Preview displays a text snapshot. The small
+local search collection and filename details are application examples.
+
+The target/file menus use an independent styled Flyout or an OS menu according
+to the Gallery preference; site information uses the matching Popover pair.
+Opening a popup without a parent Host reports an activation error, while an
+inactive preview remains quiet. Changing pages retains drafts, choices and
+saved values. Component search includes NumberInput, DatePickerInput,
+InputGroup and the other form controls.
+
+Typed inputs and date parsing reuse their existing fixed references:
+[input archive](../../pkg/control/testdata/shadcn-input/README.md) and
+[calendar/date archive](../../pkg/display/testdata/shadcn-calendar/README.md).
+The InputGroup button, dropdown and textarea originals are recorded in
+[source-map.json](source-map.json). Their static Run/location examples are
+adapted to a text preview and real settings/copy/details actions, with Material
+Symbols replacing the web icons. Native Tester flows use an injected
+value-only file picker; actual OS chooser, IME and AT behavior require platform
+acceptance.
