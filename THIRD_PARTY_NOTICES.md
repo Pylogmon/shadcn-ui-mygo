@@ -22,7 +22,15 @@ commit `97bbe1d6b2adc6767831e52f6b12b2886b6498d5`, matching the pinned
 shadcn app's direct icon dependency. The loading SVG, ISC license (including its
 Feather MIT notice) and SHA-256 manifest are in `internal/indicator/`;
 exact CodeBlock copy/check SVGs and their manifest are in `pkg/display/assets/`.
+Toast status SVGs are archived in `pkg/overlay/assets/` with their own manifest.
 The macOS bundles include that license as `Contents/Resources/licenses/lucide.txt`.
+
+Toast behavior and styles are independently ported against Sonner 2.0.7,
+commit `3ba7aa17ab7e8101b9cf4893936f873b0d4769b3`, the version locked by
+the fixed shadcn reference. The exact source, MIT license (Copyright (c) 2023
+Emil Kowalski) and SHA-256 manifest are archived in `pkg/overlay/testdata/sonner/`.
+The Toast close SVG preserves Sonner's original geometry. The macOS bundles
+include its license as `Contents/Resources/licenses/sonner.txt`.
 
 ## cmdk
 

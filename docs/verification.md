@@ -178,3 +178,9 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 - 本次阶段收尾：全量823项检查、13个包通过；`go vet ./...`、`git diff --check`、macOS `.app`及Linux/Windows交叉构建通过。新增Gallery测试加强后另运行全包与vet复核。完整复刻仍在阶段5，未将测试数量视为最终验收。
 
 - Gallery下方实窗补验：在同一已构建应用中通过Workspace lookup后的Tab焦点自动滚入下方区域；End按钮键盘激活后实际显示Note 17–20，聚焦Preview notes并Page Up后显示Note 14–17，切换Use MyGo scrollbars后保留当前位置，Start返回Note 01–04。原生焦点环、加载组合、裁剪的16:9插画和两个滚动条样式均已实际观察。这补齐前条记录中未确认的Start/End、键盘滚动和样式切换路径；没有将其扩展为触控、指针拖拽或全平台验收。
+
+- Toast/Sonner：固定shadcn锁定的Sonner2.0.7官方tag/不可变提交、原始源码与MIT许可逐字节一致；四枚Lucide状态图标与同一固定提交一致，Sonner CloseIcon保留原几何。归档11个source/icon校验值与5个SVG XML核对，macOS bundle内Sonner/Lucide许可字节一致。
+- Toast公开运行时审计：13项临时原生API探针验证4秒/8秒便利API、准确剩余时间/整组暂停、三项上限、同ID更新/焦点、关闭回调、隐藏后台计时、无swipe、卸载fallback及原生减少动画差异；临时文件已清理。这些证据决定新队列使用显式应用状态，旧路径保留兼容语义。
+- Toast正式95项检查与交叉审查通过。覆盖默认无close、普通error中性色/富色明暗像素、Vega比例圆角、六物理位置/RTL/mobile、自定义visible数量/真实测量高度、窗口隐藏暂停与失焦区别、loading更新/原生控件身份、动作阻止关闭/取消/回调快照、ID碰撞和关闭重开、更新朗读、闭包清理、viewport卸载重挂及挂起关闭。自定义Hotkey使用实际原生KeyShortcuts并真正进入通知；Unstyled正文的编辑器、动作和更新焦点/选区检查通过。
+- Toast滑动包含51项正式检查：真实native捕获越界、按钮/选中文字/右键排除、六位置×LTR/RTL、45DIP及0.11DIP/ms边界、轴锁/反向阻尼、loading/不可手动关闭、取消/失焦、更新/卸载、减少动画、400ms归位与200ms退出。普通退出先复现直接透明后改为按源400ms曲线绘制前200ms，100ms仍可见且移除后无ghost；手势100ms无错误纵移叠加。原生最小1ms定时器唤醒窗口明确保留。
+- Toast独立阶段：已提交HEAD仅覆盖Toast源/正式测试、图标/参考归档和许可包脚本后，overlay/Gallery共236项检查通过；没有提前包含Gallery通知示例。Root另2项临时混合队列顺序/隐藏编辑器焦点探针通过并清理。当前全工作区929项检查、13个包（9个有测试、4个无测试）通过，vet/diff与macOS、Linux/Windows构建通过；完整原生平台/触控/辅助技术与视觉矩阵继续验收。

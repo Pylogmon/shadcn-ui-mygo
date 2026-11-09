@@ -1,0 +1,36 @@
+{
+  "repository": "https://github.com/lucide-icons/lucide",
+  "version": "0.474.0",
+  "commit": "97bbe1d6b2adc6767831e52f6b12b2886b6498d5",
+  "license": "../../../internal/indicator/LICENSE.lucide",
+  "files": [
+    {
+      "file": "toast-success.svg",
+      "upstream_path": "icons/circle-check.svg",
+      "sha256": "3e519680ab8e2a8ad8f56a340c10d61957d872237aaa868cf324b0900a74f384"
+    },
+    {
+      "file": "toast-info.svg",
+      "upstream_path": "icons/info.svg",
+      "sha256": "bc977a64eb96f3e9c1041ffd09a3fceb70e3e65c02b571f76064062ed31f3cb9"
+    },
+    {
+      "file": "toast-warning.svg",
+      "upstream_path": "icons/triangle-alert.svg",
+      "sha256": "4866f38b8560d410f21e3226413e0b77997b6dfbb6931fadfe0a0d5aef9ffeb4"
+    },
+    {
+      "file": "toast-error.svg",
+      "upstream_path": "icons/octagon-x.svg",
+      "sha256": "6ca17c136a1a8ae4c62449cfaf36b432f49f43c57d3f25b8ac61cfc60673c116"
+    }
+  ],
+  "sonner_close": {
+    "file": "toast-close.svg",
+    "upstream_path": "src/assets.tsx#CloseIcon",
+    "commit": "3ba7aa17ab7e8101b9cf4893936f873b0d4769b3",
+    "license": "../testdata/sonner/LICENSE.md",
+    "note": "Exact geometry and SVG attributes; React attribute spelling normalized to SVG XML.",
+    "sha256": "dbc8696a046bfebee31d27491a30e1f8370af7f2ff0210b6ce0b3761d8dda773"
+  }
+}

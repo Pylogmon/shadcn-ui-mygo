@@ -1,0 +1,45 @@
+{
+  "repository": "https://github.com/emilkowalski/sonner",
+  "version": "2.0.7",
+  "commit": "3ba7aa17ab7e8101b9cf4893936f873b0d4769b3",
+  "commit_evidence": "https://api.github.com/repos/emilkowalski/sonner/git/ref/tags/v2.0.7",
+  "dependency_evidence": {
+    "repository": "https://github.com/shadcn-ui/ui",
+    "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+    "path": "pnpm-lock.yaml",
+    "package": "sonner@2.0.7"
+  },
+  "license": "MIT",
+  "files": [
+    {
+      "file": "index.tsx",
+      "upstream_path": "src/index.tsx",
+      "sha256": "fb4744833e83a38ec0c61f379af463b784f30341704377872b6f80d9bfc33aed"
+    },
+    {
+      "file": "styles.css",
+      "upstream_path": "src/styles.css",
+      "sha256": "2d154c2ef1dc5ff05588eed4fabdf50d05f549a8147dd134d149a966dc6717a4"
+    },
+    {
+      "file": "assets.tsx",
+      "upstream_path": "src/assets.tsx",
+      "sha256": "11cb432c09408be49705ae7abee2759cd076c5b4a6deb1e7bbe7255a49511ecf"
+    },
+    {
+      "file": "types.ts",
+      "upstream_path": "src/types.ts",
+      "sha256": "c357df56457f05012d0e89d0439d3369baa853d8c3f1369d18c330f6c9c0a91e"
+    },
+    {
+      "file": "state.ts",
+      "upstream_path": "src/state.ts",
+      "sha256": "481574174d4190836a06aeabfcd6246c63f7420aa4e22029b258726549f2079a"
+    },
+    {
+      "file": "LICENSE.md",
+      "upstream_path": "LICENSE.md",
+      "sha256": "da9201378c36ffd81f51ad0b305f3f0981e90bc558789210ad65d1161eec3b7d"
+    }
+  ]
+}
