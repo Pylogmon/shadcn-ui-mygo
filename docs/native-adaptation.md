@@ -18,6 +18,7 @@
 | `DateRangePicker` | `NativeDateRangePicker` | 隔离未完成范围、完整范围提交 |
 | `Tooltip` | `NativeTooltip` | 鼠标穿透、不抢焦点的独立提示窗口 |
 | `HoverCard` | `NativeHoverCard` | 延迟预览、跨窗口指针保持、显式键盘进入 |
+| `navigation.NavigationMenuWith` | `navigation.NativeNavigationMenu` | 独立富内容导航面板与系统路由菜单组 |
 
 `NativeMenu` 家族和 `NativeSelect` 强制走 `ui.SystemMenus`，并在同一帧恢复调用方的菜单策略；不会因为预览设置而偷偷改成自绘菜单。`NativePopover` 在 macOS 使用 NSPopover 材质/箭头与平台主题；其他平台使用 MyGo 的原生 Flyout 和该窗口的平台默认主题，不声称存在对应的操作系统通用 Popover 控件。
 
@@ -73,6 +74,8 @@ Gallery 的日期、日期范围、Tooltip 和作者 HoverCard 已接入组件�
 HoverCard 仅在尚未确认的键盘交接期间使用应用活跃状态保持窗口；确认后按实际焦点或指针保持。两窗指针均离开、实际子焦点已丢失时按关闭延迟退出；原生关闭早于 blur 刷新的路径不会抢回父窗口新输入框的焦点。
 
 `Native*` 的平台适配范围在 API 和文档中明确；拥有系统控件 API 的菜单使用系统实现，其余采用上述平台主题和原生窗口能力。
+
+导航内容面板放在 `pkg/navigation`，通过明确的 Host 参数使用上述窗口能力。`NavigationMenuWith` 支持描述链接网格与任意 `Content(child,choose)`；同一窗口在标题间移动并调整实际宽高，350ms尺寸/位置与内容过渡服从减少动画偏好。`NativeNavigationMenu` 仅提供系统路由菜单组，复杂富内容不伪装成系统菜单。原 `NavigationMenu(c,items)` 是已废弃的窗口内兼容入口，显式名为 `InWindowNavigationMenu`。新 API 示例及边界见 [navigation.md](navigation.md)。
 
 ## 验证范围
 

@@ -88,3 +88,6 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 - 实际窗口焦点能力：Host的 `FocusState` / `ApplicationState` 与对应可选后端能力统一查询原生窗口焦点和应用活跃。2项专门检查验证app活跃但ShowInactive子窗口未聚焦、实际焦点/失活变化、关闭后不报告所有权、缺失key/后端能力为unknown及缺失原生父窗口为inactive。
 
 - HoverCard 停留/关闭补充：`-run 'Tooltip|HoverCard|InactiveHover'` 34项检查通过。先复现默认drawn-active子窗口在指针离开后永久保留，以及完成键盘交接后app仍活跃导致失焦窗口永久保留；改为真实focus与仅pending交接桥接。补充原生关闭通知先于blur时父输入框焦点不被抢回；最初的交接、应用失活及未知后端保守关闭仍通过。desktop全包114项及 vet 通过。
+
+- Navigation Menu：`go test ./pkg/navigation` 42项检查及 vet 通过，含新增33项和4项独立临时审计探针。覆盖独立Context、描述/当前路由、网格/自定义内容、一次选择、原生系统策略、hover intent/间隙/取消、RTL/兄弟/动态项、缺Host错误不重试、Revision、真实尺寸/位置350ms与减少动画、连续快速重定向像素/局部状态/caret、Tab首末/空内容/编辑器吞Tab、失焦后取消交接保活。审计先复现禁用分组后代仍可选、自定义Tab陷阱、选择后同hover重开和静止指针反抢键盘切换；修复后严格回归通过。未访问内容延迟构建，已访问隐藏内容动态显式AutoFocus的运行时限制继续保留。
+- macOS 最终构建实际启动：Menubar File→Right→Edit→Enter 后菜单关闭、焦点恢复Edit；Navigation Documentation独立窗口显示描述链接，Right切到更宽的Components富内容窗口，Tab/Enter激活Browse components后父界面显示`Selected: buttons`并恢复Components触发器。布局页读取一度超时，进程采样显示正常AppKit事件循环；改用应用完整路径连接后恢复读取。未将未完成的实窗面板拖动或所有窗口边缘行为记作通过。

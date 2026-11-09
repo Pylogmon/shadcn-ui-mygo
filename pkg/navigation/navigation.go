@@ -6,7 +6,6 @@ import (
 
 	"github.com/egoist/mygo/ui"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/motion"
-	"github.com/pylogmon/shadcn-ui-mygo/pkg/overlay"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/theme"
 )
 
@@ -104,40 +103,6 @@ type NavItem struct {
 	Icon                           *ui.SVG
 	Disabled                       bool
 	Children                       []NavItem
-}
-
-func menuItems(items []NavItem) []overlay.MenuItem {
-	out := make([]overlay.MenuItem, len(items))
-	for i, it := range items {
-		out[i] = overlay.MenuItem{Key: it.Key, Label: it.Label, Icon: it.Icon, Disabled: it.Disabled, Group: it.Group, Children: menuItems(it.Children)}
-	}
-	return out
-}
-
-type navMenuState struct{ open []bool }
-
-// NavigationMenu provides a horizontal route menu with keyboard accessible
-// dropdowns. Groups and nested items are represented by native menu semantics.
-func NavigationMenu(c *ui.Context, items []NavItem) string {
-	chosen := ""
-	root := ui.Row(c).Gap(4).Role(ui.RoleNavigation).Label("Main navigation").FocusGroup(ui.Horizontal)
-	s := ui.Local(root, "shadcn.navigation-menu", func() navMenuState { return navMenuState{} })
-	if len(s.open) != len(items) {
-		s.open = make([]bool, len(items))
-	}
-	root.Children(func() {
-		for i, it := range items {
-			if len(it.Children) > 0 {
-				key := overlay.DropdownMenu(c.Key(i), &s.open[i], overlay.MenuProps{Items: menuItems(it.Children)}, func(b ui.Element) { navButton(c, b.Disabled(it.Disabled), it.Label+" ⌄") })
-				if key != "" {
-					chosen = key
-				}
-			} else if navButton(c, ui.ButtonBase(c.Key(i)).Disabled(it.Disabled), it.Label).Clicked() {
-				chosen = it.Key
-			}
-		}
-	})
-	return chosen
 }
 
 type SidebarProps struct {
