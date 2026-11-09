@@ -30,13 +30,19 @@ case "${1:-gallery}" in
         identifier='dev.pylogmon.shadcn-cartesian'
         app_name='Shadcn Cartesian'
         ;;
+    tooltip-composition)
+        bundle='build/Shadcn Tooltips.app'
+        package='./examples/tooltip-composition'
+        identifier='dev.pylogmon.shadcn-tooltips'
+        app_name='Shadcn Tooltips'
+        ;;
     material-icons)
         bundle='build/Shadcn Symbols.app'
         package='./examples/material-icons'
         identifier='dev.pylogmon.shadcn-symbols'
         app_name='Shadcn Symbols'
         ;;
-    *) echo 'Expected gallery, native-popups, chart-composition, chart-cartesian or material-icons.' >&2; exit 1 ;;
+    *) echo 'Expected gallery, native-popups, chart-composition, chart-cartesian, tooltip-composition or material-icons.' >&2; exit 1 ;;
 esac
 mkdir -p "$bundle/Contents/MacOS"
 mkdir -p "$bundle/Contents/Resources/licenses"
@@ -53,9 +59,7 @@ cp pkg/display/testdata/shadcn-carousel/npm/LICENSE.embla "$bundle/Contents/Reso
 cp pkg/desktop/testdata/shadcn-menu/npm/base-ui-react/LICENSE "$bundle/Contents/Resources/licenses/base-ui.txt"
 cp pkg/desktop/testdata/shadcn-menu/npm/radix-ui-react-menu/LICENSE "$bundle/Contents/Resources/licenses/radix-ui.txt"
 cp pkg/desktop/testdata/shadcn-menu/npm/tw-animate-css/LICENSE "$bundle/Contents/Resources/licenses/tw-animate-css.txt"
-if [ "${1:-gallery}" = material-icons ]; then
-    cp pkg/icons/material/sources/LICENSE "$bundle/Contents/Resources/licenses/material-symbols.txt"
-fi
+cp pkg/icons/material/sources/LICENSE "$bundle/Contents/Resources/licenses/material-symbols.txt"
 CGO_ENABLED=0 go build -o "$bundle/Contents/MacOS/gallery" "$package"
 cat > "$bundle/Contents/Info.plist" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>

@@ -66,6 +66,8 @@ type Spec struct {
 }
 
 type PopoverProps struct {
+	// Tooltip owns its inverse bubble and transparent arrow gutter.
+	tooltipSurface bool
 	// Private profiles keep menu source motion separate from Popover's preset.
 	menuMotion                               menuMotionKind
 	menuIdentity                             string
@@ -450,6 +452,10 @@ func (h *Host) view(c *ui.Context, e *entry, generation uint64) {
 	if e.props.SystemStyle {
 		native := c.Theme()
 		root.Background(native.Surface).TextColor(native.Text).Radius(native.Radius)
+	}
+	if e.props.tooltipSurface {
+		root.Background(ui.Transparent).Radius(0).Gap(0).IgnoreInput(true).Disabled(true).DimDisabled(false)
+		c.Root().Background(ui.Transparent)
 	}
 	if !e.spec.FitContent {
 		root.Fill()

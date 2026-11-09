@@ -1,0 +1,42 @@
+{
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "files": [
+    {
+      "path": "apps/v4/registry/bases/base/ui/tooltip.tsx",
+      "archive": "tooltip.tsx",
+      "git_blob": "8fbd22dacb65913e7e31cde7ad800dce6f889116",
+      "sha256": "dc5ec917d8276af9d66e7c951b0608d67c149bcb311072166bc8ce67ee2b7488",
+      "bytes": 1959
+    },
+    {
+      "path": "apps/v4/registry/bases/base/examples/tooltip-example.tsx",
+      "archive": "tooltip-example.tsx",
+      "git_blob": "1353c9e4a8d31bbb6e739a90467e3b2a30c1521b",
+      "sha256": "c60557bd5445d1f6bf7065764d0323fe903d9ee49df702d7c56b2b3a16435d12",
+      "bytes": 4773
+    },
+    {
+      "path": "apps/v4/registry/styles/style-vega.css",
+      "reuse": "../shadcn-menu/shadcn/style-vega.css",
+      "sha256": "10fa07bd61b429ae2c14c572ba9975f6e991d68a04f8fec7e354a062597e0d4e",
+      "lines": [
+        1380,
+        1394
+      ]
+    },
+    {
+      "archive": "LICENSE.shadcn",
+      "sha256": "1564074e13439397221ffd522e2e504d56561994a23d371aa5e3ad43e4f5423f"
+    }
+  ],
+  "examples": {
+    "TooltipBasic": "basic",
+    "TooltipSides": "sides: six logical/physical buttons",
+    "TooltipWithIcon": "icon",
+    "TooltipLongContent": "long",
+    "TooltipDisabled": "disabled: wrapper around disabled button",
+    "TooltipWithKeyboard": "keyboard: actual Kbd",
+    "TooltipOnLink": "link",
+    "TooltipFormatted": "formatted: native paragraphs plus live revision"
+  }
+}

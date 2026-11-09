@@ -12,7 +12,13 @@ import (
 // TooltipProps configures a non-interactive, pointer-transparent native Flyout.
 // The default open and close delays are zero, as shadcn's TooltipProvider.
 type TooltipProps struct {
-	Placement             mygo.Placement
+	Placement mygo.Placement
+	// Side optionally overrides Placement's physical side. Logical sides use
+	// the parent reading direction; Placement still supplies start/end alignment.
+	Side TooltipSide
+	// Description is required by TooltipWith and NativeTooltipWith. Rich
+	// visuals do not replace the trigger's assistive-technology description.
+	Description           string
 	Gap, MaxWidth         int
 	OpenDelay, CloseDelay time.Duration
 	Disabled              bool
@@ -164,21 +170,44 @@ func advanceHover(c *ui.Context, s *hoverFlyoutState, anchorHot, immediate bool,
 // Tooltip uses an independent native Flyout with shadcn's inverse surface.
 // It never takes focus or mouse input and can extend beyond its parent window.
 func Tooltip(c *ui.Context, h *Host, key string, anchor ui.Element, text string, p TooltipProps) error {
-	return tooltip(c, h, key, anchor, text, p, false)
+	return tooltip(c, h, key, anchor, text, p, false, nil)
+}
+
+// TooltipWith builds inert rich content in the independent child Context.
+// Give Description and advance Revision when application content changes.
+// The callback must never capture a parent Context or Element.
+func TooltipWith(c *ui.Context, h *Host, key string, anchor ui.Element, p TooltipProps, content func(*ui.Context)) error {
+	if p.Description == "" {
+		return errors.New("desktop: rich Tooltip needs an accessible Description")
+	}
+	return tooltip(c, h, key, anchor, p.Description, p, false, content)
+}
+
+// NativeTooltipWith retains the independent window's platform theme for rich
+// inert visuals. Like NativeTooltip, it is not an OS tooltip-widget API.
+func NativeTooltipWith(c *ui.Context, h *Host, key string, anchor ui.Element, p TooltipProps, content func(*ui.Context)) error {
+	if p.Description == "" {
+		return errors.New("desktop: rich Tooltip needs an accessible Description")
+	}
+	return tooltip(c, h, key, anchor, p.Description, p, true, content)
 }
 
 // NativeTooltip uses a pointer-transparent native Flyout and its child's
 // platform theme. MyGo does not expose an operating-system tooltip-widget API;
 // this is deliberately a platform-themed native window, not such a widget.
 func NativeTooltip(c *ui.Context, h *Host, key string, anchor ui.Element, text string, p TooltipProps) error {
-	return tooltip(c, h, key, anchor, text, p, true)
+	return tooltip(c, h, key, anchor, text, p, true, nil)
 }
 
-func tooltip(c *ui.Context, h *Host, key string, anchor ui.Element, text string, p TooltipProps, native bool) error {
+func tooltip(c *ui.Context, h *Host, key string, anchor ui.Element, text string, p TooltipProps, native bool, content func(*ui.Context)) error {
 	if err := hoverArgs(c, key, anchor); err != nil {
 		return err
 	}
 	anchor.Description(text)
+	placement, err := tooltipPlacement(p, c.Direction())
+	if err != nil {
+		return err
+	}
 	s := ui.Local(anchor, hoverKey{"tooltip", key}, func() hoverFlyoutState { return hoverFlyoutState{} })
 	s.onOpenChange = p.OnOpenChange
 	if s.text != text || s.lastRevision != p.Revision {
@@ -201,19 +230,21 @@ func tooltip(c *ui.Context, h *Host, key string, anchor ui.Element, text string,
 		}
 		return nil
 	}
-	placement := p.Placement
-	if placement == "" {
-		placement = mygo.PlacementTop
-	}
 	maxWidth := p.MaxWidth
 	if maxWidth <= 0 {
 		maxWidth = 320
 	}
+	maxWidth = max(32, maxWidth)
+	windowWidth := maxWidth
+	if !native {
+		windowWidth += 2 * tooltipArrowInset
+	}
 	zero := float32(0)
-	err := h.Popover(c, key, anchor, &s.open, PopoverProps{
-		Label: text, Placement: placement, Width: maxWidth, Height: 32, Gap: p.Gap,
-		FitContent: true, MaxWidth: maxWidth, NonFocusable: true, Plain: true,
+	err = h.Popover(c, key, anchor, &s.open, PopoverProps{
+		Label: text, Placement: placement, Width: windowWidth, Height: 32, Gap: p.Gap,
+		FitContent: true, MaxWidth: windowWidth, NonFocusable: true, Plain: true,
 		SystemStyle: native, IgnoreMouseEvents: true, ShowInactive: true,
+		tooltipSurface: true,
 		ContentPadding: &zero, ContentRole: ui.RoleTooltip, ManualTrigger: true,
 		Revision: s.renderRevision, OnDismiss: s.dismiss, NoFocusRestore: true,
 	}, func(child *ui.Context) {
@@ -231,8 +262,13 @@ func tooltip(c *ui.Context, h *Host, key string, anchor ui.Element, text string,
 			t := theme.TokensOf(child)
 			background, foreground = t.Foreground, t.Background
 		}
-		ui.Column(child).MaxWidth(float32(maxWidth)).Padding(6, 12).Radius(6).Background(background).TextColor(foreground).
-			FontSize(12).Children(func() { ui.Text(child, text) })
+		tooltipContent(child, h, key, maxWidth, background, foreground, !native, func(child *ui.Context) {
+			if content != nil {
+				content(child)
+			} else {
+				ui.Text(child, text).MaxWidth(float32(maxWidth - 24))
+			}
+		})
 	})
 	if err != nil {
 		s.dismiss()

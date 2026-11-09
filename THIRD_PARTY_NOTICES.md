@@ -17,8 +17,12 @@ The exact license, upstream README, complete Git-blob/SHA-256 source index and
 deterministic generated-asset manifest are in `pkg/icons/material/sources/`.
 On-demand symbol functions retain only referenced SVG pairs; the separately
 imported `material/all` package embeds the full static catalog. The Material
-Symbols example bundle includes the original license as
+Symbols example and all native application bundles include the original license as
 `Contents/Resources/licenses/material-symbols.txt`.
+
+Tooltip wrappers and eight example configurations use the same fixed shadcn
+MIT reference; exact originals and hashes are archived in
+`pkg/desktop/testdata/shadcn-tooltip/`, reusing the verified Vega CSS.
 
 The native text shimmer ports the shared utility in the fixed shadcn commit
 `8ab27715521cbd4f87ae6886cd989cbb678f6de7`. Its exact CSS, documentation,

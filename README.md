@@ -90,6 +90,7 @@ Forms & controls页已接入框架搜索、国家分组/城市描述过滤、Off
 七类图表的数据几何动画、时序配置与减少动态效果见 [Chart动画](docs/chart-animation.md)。
 独立容器、配置与原生Tooltip/Legend内容见 [Chart自由组合](docs/chart-composition.md)，可直接搭配MyGo Plot、Rule、Anchor与原生控件。
 可运行的公开API示例见 [chart-composition](examples/chart-composition/README.md)，包含原生阈值线、柱顶标签、月份范围筛选及可编辑数据。
+独立窗口的富内容提示、Kbd与方向箭头见[Tooltip](docs/tooltips.md)，运行`go run ./examples/tooltip-composition`。
 菜单颜色、强调及透明材质可在 Gallery 实时切换，应用接入见[菜单预设](docs/menu-presets.md)。
 Material Symbols 提供按需函数与独立全量名称目录，包含4157名称、三种风格和填充状态；用法、尺寸/颜色及离线来源见[图标模块](docs/material-symbols.md)，可运行`go run ./examples/material-icons`。
 Gallery 的 Data & display 页提供可切换方向、数据模式、坐标和图例的访问量图表，以及 Line、Area、Pie、Donut、Radar、Radial 六类预览。
