@@ -2,11 +2,14 @@
 package display
 
 import (
+	"fmt"
+	"math"
 	"strings"
 	"time"
 	"unicode/utf8"
 
 	"github.com/egoist/mygo/ui"
+	"github.com/pylogmon/shadcn-ui-mygo/pkg/motion"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/theme"
 )
 
@@ -98,8 +101,30 @@ func Avatar(c *ui.Context, p AvatarProps) ui.Element {
 		}
 	})
 }
-func Separator(c *ui.Context, vertical bool) ui.Element {
+
+type SeparatorProps struct {
+	// Semantic exposes a named/oriented separator to assistive technology.
+	// The default is decorative, as in shadcn's separator primitive.
+	Semantic bool
+	Label    string
+}
+
+func Separator(c *ui.Context, vertical bool, props ...SeparatorProps) ui.Element {
 	e := ui.Box(c).Background(theme.TokensOf(c).Border).Shrink(0)
+	p := SeparatorProps{}
+	if len(props) > 0 {
+		p = props[0]
+	}
+	if p.Semantic {
+		e.Role(ui.RoleSeparator).Label(p.Label)
+		if vertical {
+			e.Orientation(ui.Vertical)
+		} else {
+			e.Orientation(ui.Horizontal)
+		}
+	} else {
+		e.AccessHidden(true)
+	}
 	if vertical {
 		return e.Width(1).AlignSelf(ui.Stretch)
 	}
@@ -137,13 +162,13 @@ func Typography(c *ui.Context, text string, style TextStyle) ui.Element {
 	e := ui.Text(c, text).TextColor(t.Foreground).FontSize(16).LineHeight(1.6)
 	switch style {
 	case H1:
-		e.FontSize(36).FontWeight(800).LineHeight(1.15)
+		e.FontSize(36).FontWeight(800).LineHeight(1.15).Role(ui.RoleHeading).Level(1)
 	case H2:
-		e.FontSize(30).FontWeight(600).LineHeight(1.2)
+		e.FontSize(30).FontWeight(600).LineHeight(1.2).Role(ui.RoleHeading).Level(2)
 	case H3:
-		e.FontSize(24).FontWeight(600).LineHeight(1.25)
+		e.FontSize(24).FontWeight(600).LineHeight(1.25).Role(ui.RoleHeading).Level(3)
 	case H4:
-		e.FontSize(20).FontWeight(600)
+		e.FontSize(20).FontWeight(600).Role(ui.RoleHeading).Level(4)
 	case Lead:
 		e.FontSize(20).TextColor(t.MutedForeground)
 	case Large:
@@ -197,9 +222,54 @@ func Item(c *ui.Context, p ItemProps) ui.Element {
 		}
 	})
 }
-func Progress(c *ui.Context, value float64) ui.Element {
+
+type ProgressProps struct {
+	Label, ValueText       string
+	Height                 float32
+	Indeterminate, Reverse bool
+}
+
+// Progress accepts fractions in 0..1; a negative value or Indeterminate shows
+// activity of unknown length without pretending zero percent is known.
+func Progress(c *ui.Context, value float64, props ...ProgressProps) ui.Element {
 	t := theme.TokensOf(c)
-	return ui.Progress(c, max(0, min(1, value))).Height(8).Radius(999).Background(t.Secondary).TextColor(t.Primary)
+	p := ProgressProps{}
+	if len(props) > 0 {
+		p = props[0]
+	}
+	if p.Indeterminate || math.IsNaN(value) || value < 0 {
+		value = -1
+	} else {
+		value = min(1, value)
+	}
+	height := p.Height
+	if height <= 0 || math.IsNaN(float64(height)) || math.IsInf(float64(height), 0) {
+		height = 6
+	}
+	label := p.Label
+	if label == "" {
+		label = "Progress"
+	}
+	text := p.ValueText
+	if text == "" {
+		if value < 0 {
+			text = "Loading"
+		} else {
+			text = fmt.Sprintf("%.0f%%", value*100)
+		}
+	}
+	e := ui.Progress(c, value).Height(height).Radius(999).Background(t.Muted).TextColor(t.Primary).Label(label).Value(text)
+	if p.Reverse {
+		e.Reverse()
+	}
+	if value < 0 && motion.Reduced(c) {
+		// A stable segment retains the unknown-progress cue without time-based
+		// movement on unrelated UI refreshes or scheduling any animation frames.
+		e.Draw(func(painter *ui.Painter, r ui.Rect) {
+			painter.Fill(ui.Rect{X: r.X + r.W*.35, Y: r.Y, W: r.W * .3, H: r.H}, t.Primary, r.H/2)
+		})
+	}
+	return e
 }
 func Spinner(c *ui.Context) ui.Element {
 	return ui.Spinner(c).Size(16, 16).TextColor(theme.TokensOf(c).Primary).Label("Loading")

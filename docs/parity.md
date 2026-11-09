@@ -79,13 +79,13 @@ composition; they do not automatically supply missing upstream behavior.
 | Navigation Menu | `navigation.NavigationMenu` | Native grouped dropdown route menus exist; shadcn content mega-panels, viewport/indicator motion, hover intent and sibling keyboard switching remain. |
 | Pagination | `navigation.Pagination` | One-based bounds, ellipsis and current page are tested; verify large page counts, responsiveness and full link composition. |
 | Popover | `overlay.Popover` | desktop.Popover/NativePopover now distinguish themed Flyout and platform-style popup. Independent context, theme/style policy, anchor, dismissal/focus and child state propagation are tested; macOS crossing two parent edges was observed. Complete nested/scale/display placement and exit-motion acceptance remain. |
-| Progress | `display.Progress` | Determinate native progress exists; verify accessible value text, indeterminate composition and reduced motion. |
+| Progress | `display.Progress` | Determinate/unknown progress retains finite native range semantics and custom value text; invalid values, reduced-motion stability and semantic announcements are tested. Verify all themed/native placement/contrast examples. |
 | Questionnaire | `conversation.Questionnaire` | Controlled answers/validation/step navigation exist; verify all keyboard/focus, custom question renderer, review/edit and conditional-flow examples. |
 | Radio Group | `control.RadioGroup` | Native selection/arrow behavior exists; verify every orientation, RTL and group/description association. |
 | Resizable | `display.Resizable` | Native two-pane split exists; verify min/max during drag, keyboard resizing, persistence, nested and multi-pane layouts. |
 | Scroll Area | `display.ScrollArea` | Native scrolling exists; verify horizontal/both axes, scrollbar variants, overscroll and nested scroll chaining. |
 | Select | `control.Select` | Grouped options, custom item/trigger content, keyboard and disabled behavior exist; complete align/collision/scroll examples and screenshots. |
-| Separator | `display.Separator` | Horizontal/vertical rule exists; verify decorative versus semantic separator roles. |
+| Separator | `display.Separator` | Decorative separators stay hidden from accessibility; optional semantic separators expose label/orientation and are tested. Complete platform screen-reader verification. |
 | Sheet | `overlay.Sheet` | Four-edge modal panel exists; verify every edge, constrained sizing, nested scroll, focus/exit and RTL logical-side behavior. |
 | Sidebar | `navigation.Sidebar` | Current route, grouping, collapse and separate sidebar semantic colors exist; responsive/off-canvas, nested collapsibles, icon tooltips, rail/inset/floating variants remain. |
 | Skeleton | `display.Skeleton` | Static/circle/pulse exists; verify contrast, reduced motion and loading accessibility without idle redraw. |
@@ -100,7 +100,7 @@ composition; they do not automatically supply missing upstream behavior.
 | Toggle Group | `control.ToggleGroup` | Controlled single/multiple values and horizontal keyboard grouping exist; verify vertical groups, RTL and group accessibility. |
 | Tooltip | `overlay.Tooltip` | Native delay/focus and trigger description exist; verify all placements, skip-delay groups, Escape and reduced-motion presence. |
 | Trace | `conversation.Trace` | Recursive controlled status/disclosure exists; verify running/failed transitions, unique nested IDs and all upstream detail/action compositions. |
-| Typography | `display.Typography` | Heading/paragraph/lead/quote/code styles exist; verify semantic heading levels, lists/tables/links, font metrics and complete typesetting examples. |
+| Typography | `display.Typography` | H1-H4 now expose native heading roles/ranks; paragraph/lead/quote/code styles exist. Lists/tables/links, complete font metrics/typesetting and profile visual examples remain. |
 
 ## Cross-cutting acceptance gates
 
