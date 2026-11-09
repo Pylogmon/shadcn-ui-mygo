@@ -75,3 +75,17 @@ Carousel多项组合与Combobox源动画阶段完成后，实际提交
 第二模块源码、日志和可重现脚本见同目录`external-carousel/README.audit.md`。
 此次不包含在途Combobox Base交互修正，也不把兼容EaseOut计作Embla物理、完整controller/Autoplay，
 更不代表公共发布或全平台GUI/AT验收。
+
+Carousel控制器与Combobox组合API提交`1d50ec226dd1c4246d1e4e73319b1bff614f7dff`
+以`v0.0.0-20261109172000-1d50ec226dd1`完成标准八步。ZIP SHA-256为
+`6f04af0ab5af92b7c0e3de87ea34c2f8fd38be4ccb0c991475484e6b99a6833e`。
+第二个真正外部模块使用另一套空缓存，从同一ZIP完成八步及一个公开集成流程：
+对象型Combobox选值、实际Editor.OnSubmit/FormValues、分组Carousel控制器事件，
+以及部分ReInit与下一条导航的FIFO处理。两个依赖图均无replace，GOWORK关闭；
+605份SDK文件同时匹配已提交原文、ZIP和实际外部模块缓存，两套独占缓存已删除。
+
+证据见`build/consumer-verification/run-1326536727/controller-compound-distribution-receipt.json`，
+外部Go源码与复制再运行脚本见其`external-native-controls/README.audit.md`。
+标准四图与此前实际查看的`run-1157201957`对应图逐字节相同；Root查看新的外部明暗两图，
+其中实际显示分组跳转后的Project03/04。静态图及本次集成流程使用减少动态效果，
+不充当新的源动画验收；本轮没有发布SDK，也未包含在途物理运动/菜单预设/Chart改动或替代平台GUI/AT验收。

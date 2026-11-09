@@ -1,0 +1,3847 @@
+{
+  "sourceCommit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "nativeBaseline": "1d50ec226dd1c4246d1e4e73319b1bff614f7dff",
+  "scope": "All Chart-named .tsx/.ts/.mdx paths in the fixed official recursive tree; canonical /charts catalog matches 70 ids. Includes base/radix/aria docs/examples/wrappers, Create examples, Chart blocks/cards, route/component consumers. Not all Recharts or unrelated dashboard files.",
+  "evidenceKind": "Static source/API requirement inventory, not native/render/platform/AT acceptance or a completion percentage",
+  "sourceFiles": [
+    {
+      "path": "apps/v4/app/(app)/(create)/components/chart-color-picker.tsx",
+      "gitBlob": "e65367e2ad7cbbe0ec2a3be36e646e2cfa16eb3c",
+      "sha256": "2b4b7fa2081abe67615a16ca78c576fbe5a762d9b9721e7627af98027b6c62d4",
+      "bytes": 4446
+    },
+    {
+      "path": "apps/v4/app/(app)/charts/[type]/page.tsx",
+      "gitBlob": "3272f25995d88e641160d97cd124b21311ef9616",
+      "sha256": "d525a0d64d37fdbe6c9025796b48c9f82395ae814adc611bd9936d8eccb5806c",
+      "bytes": 2979
+    },
+    {
+      "path": "apps/v4/app/(app)/charts/charts.tsx",
+      "gitBlob": "00220348e58f1aa05a18fe21576e688f2e638e6e",
+      "sha256": "0e0400b266f6626e98bd1bc67579ceacf645a91aac06212352c2e27066255fe0",
+      "bytes": 13004
+    },
+    {
+      "path": "apps/v4/app/(app)/charts/layout.tsx",
+      "gitBlob": "6b157e40ca53d39d64624c8af87e484aafc6778d",
+      "sha256": "a8a67e4a9c5a1008762a2cfe42ecbc597e5428738658b4f39e9bf4f7099c5a9a",
+      "bytes": 1977
+    },
+    {
+      "path": "apps/v4/app/(app)/examples/dashboard/components/chart-area-interactive.tsx",
+      "gitBlob": "6c3359d836dc994054f86b9396f0d276d49cae06",
+      "sha256": "17c29b5a7deb3769e87ddb6c6a956f4a0af04cc355206dab91a905648501b1ee",
+      "bytes": 10647
+    },
+    {
+      "path": "apps/v4/components/chart-code-viewer.tsx",
+      "gitBlob": "64c7f4a21b34595f1628b6c87fbb82871dd7782c",
+      "sha256": "63439cab6a779ea25df46a2f905f162a4491a168f319342306b549ba43766a06",
+      "bytes": 3677
+    },
+    {
+      "path": "apps/v4/components/chart-copy-button.tsx",
+      "gitBlob": "bfcb6f7628ad4156f9659354fbbfae69784b77be",
+      "sha256": "bf15d18713b653b8009e8e33e5d63e999f902232a99d79c979cb9d17efd4f6fe",
+      "bytes": 1464
+    },
+    {
+      "path": "apps/v4/components/chart-display.tsx",
+      "gitBlob": "7ff8a77574d41a4090e05cba623ea8447765c9bd",
+      "sha256": "7c60154c5f6128c348f0963f8e47d102c3b5d2e77abf6da5f3de5df6fc3732ba",
+      "bytes": 1490
+    },
+    {
+      "path": "apps/v4/components/chart-iframe.tsx",
+      "gitBlob": "b21198b75d9bc613ee64c45a9906f9fa87e46667",
+      "sha256": "e026b8c5afbb1d3db2335f76187ccbbc6333ec895e50ca9b68c93adb4ad1f11a",
+      "bytes": 525
+    },
+    {
+      "path": "apps/v4/components/chart-toolbar.tsx",
+      "gitBlob": "9ce8bba0583559929698767b65928e17dda66a1e",
+      "sha256": "c082e9b3327fab4c5922ad7254bd3b90ca170b64ef17854886b879845155294d",
+      "bytes": 2326
+    },
+    {
+      "path": "apps/v4/components/charts-nav.tsx",
+      "gitBlob": "32dda7bde96ffa7dd15d560cfc245d1e0d25208a",
+      "sha256": "1ba3ace18c4d075c9f4c17027da7861b3263a46243ed157db6a37d2fd96db907",
+      "bytes": 1598
+    },
+    {
+      "path": "apps/v4/content/docs/components/aria/chart.mdx",
+      "gitBlob": "45b756934aa3c1d39e95094a6b9bdb631560c07e",
+      "sha256": "8f5cf9510ad3a7fecaee25bec5f22869c6c65062dbc0eee3cb2e3502b558430a",
+      "bytes": 15520
+    },
+    {
+      "path": "apps/v4/content/docs/components/base/chart.mdx",
+      "gitBlob": "01861edb21ab52243d9f051d4b5029e4c9af4755",
+      "sha256": "2d2a256a5fa2f2dd71faabde8f78108910d65a864fc708d015880bd7d45b2043",
+      "bytes": 15941
+    },
+    {
+      "path": "apps/v4/content/docs/components/radix/chart.mdx",
+      "gitBlob": "8d9e1408881aea1d7c9fd9423b0708ca8a869cb0",
+      "sha256": "957f51fdb9a028843fa36f17e4f79e86cc6ecce8268bc2c5e2cfc1699b40cd43",
+      "bytes": 15950
+    },
+    {
+      "path": "apps/v4/examples/aria/chart-demo.tsx",
+      "gitBlob": "05cc82f6449a0059c5a822046594b897d7b721fd",
+      "sha256": "3b105467ce48e40d8712909ceb9c4adf78d6fd6c054e4efe7694eb6d17a6adfc",
+      "bytes": 5370
+    },
+    {
+      "path": "apps/v4/examples/aria/chart-example-axis.tsx",
+      "gitBlob": "ed15f4c5faf3311931d140a141f623cb32909d3c",
+      "sha256": "af3d09e0874cfd919911ae057ad4c1901dc68d14f075fde25b18342c10ba54b3",
+      "bytes": 1240
+    },
+    {
+      "path": "apps/v4/examples/aria/chart-example-grid.tsx",
+      "gitBlob": "56064d02768d2146ddb530ce90c73c7839b84ac3",
+      "sha256": "da9f67abcfeacdcda6a998e1c1af3f2d4c7f3e7ea7d943b67105d4672635d5b7",
+      "bytes": 1046
+    },
+    {
+      "path": "apps/v4/examples/aria/chart-example-legend.tsx",
+      "gitBlob": "5ffcd2cb5f25635cfc0381072395a7bc34a51b36",
+      "sha256": "1c36575580cc351b1d82d021685befe7dca1198add161178d0c902a36a535298",
+      "bytes": 1439
+    },
+    {
+      "path": "apps/v4/examples/aria/chart-example-tooltip.tsx",
+      "gitBlob": "a69dc52dd94c27aff6cd480b60e4a1d654e380e0",
+      "sha256": "2672b6dc6b61ae11a78610c467028cf1e3063e76df1ecc277d150ec2c06e81ed",
+      "bytes": 1346
+    },
+    {
+      "path": "apps/v4/examples/aria/chart-example.tsx",
+      "gitBlob": "16e107ae6a9f9a291a06bb0f0e4ea812352150c2",
+      "sha256": "0632928c62e9d2d3d0c48f52172f80f66d0df1729f11682564b8280615c8db90",
+      "bytes": 984
+    },
+    {
+      "path": "apps/v4/examples/aria/chart-rtl.tsx",
+      "gitBlob": "a8010d743508e1cc50a434c0933d6d98aa7048f4",
+      "sha256": "c8423b359203ef85505f94585b66af2bfcb7b0d24550a13e1b154f921c5b46dc",
+      "bytes": 2758
+    },
+    {
+      "path": "apps/v4/examples/aria/chart-tooltip.tsx",
+      "gitBlob": "411555a7688837cb6412bdacb03406f11e25d0cf",
+      "sha256": "62c2676cc479f95765245e25a38f62ce5e10cd600dbbbda5ad32f413dad849f3",
+      "bytes": 8099
+    },
+    {
+      "path": "apps/v4/examples/base/chart-demo.tsx",
+      "gitBlob": "a61706b82491ae3e8f02a967c75be54741a50ee1",
+      "sha256": "7d43821bc8556c7264b2d632afb6d5b4668b9fe169df958c72ed0f161ce74989",
+      "bytes": 5378
+    },
+    {
+      "path": "apps/v4/examples/base/chart-example-axis.tsx",
+      "gitBlob": "4e9eadf30b97ea6930a25ed36f72e2794b423bc7",
+      "sha256": "452ff0a2d6ea2d63c8b13901687018b6ba0e6b4ea6eb7a5940342b020d450510",
+      "bytes": 1240
+    },
+    {
+      "path": "apps/v4/examples/base/chart-example-grid.tsx",
+      "gitBlob": "388b0bc5eda2dac5100bfabb6234bf9da6a166f1",
+      "sha256": "6f96ddf8058aa475578bf7e902382e46560aed3f7da8a017e0406238c8187a3d",
+      "bytes": 1046
+    },
+    {
+      "path": "apps/v4/examples/base/chart-example-legend.tsx",
+      "gitBlob": "3ea3d37c4ab57646f801aa92f01bffc37df64577",
+      "sha256": "72332f904caedaa24ec929f9a50983ae44e3ed841a7c3790136fc1e5cca229b8",
+      "bytes": 1439
+    },
+    {
+      "path": "apps/v4/examples/base/chart-example-tooltip.tsx",
+      "gitBlob": "3b989a0f64552125dced9fe3c46ab844d253cfba",
+      "sha256": "f2c1aec10a7d4a4c691ac3cb29a571a742a8e30e3e9ab66afdc03193c99df970",
+      "bytes": 1346
+    },
+    {
+      "path": "apps/v4/examples/base/chart-example.tsx",
+      "gitBlob": "c8a8ead2718e53e1a2ab0e22634876d00a6b8434",
+      "sha256": "6399bac7205d2f4e750bcde19a0d794ab466d3f29080fc861e0ded1da7e14313",
+      "bytes": 984
+    },
+    {
+      "path": "apps/v4/examples/base/chart-rtl.tsx",
+      "gitBlob": "ae45c6b85193230d55d504104b64311198ad508b",
+      "sha256": "95695b4475abd49751c0cf596d166fcf4294b75f3a9ca71182dfb4f8a63ee86d",
+      "bytes": 2758
+    },
+    {
+      "path": "apps/v4/examples/base/chart-tooltip.tsx",
+      "gitBlob": "411555a7688837cb6412bdacb03406f11e25d0cf",
+      "sha256": "62c2676cc479f95765245e25a38f62ce5e10cd600dbbbda5ad32f413dad849f3",
+      "bytes": 8099
+    },
+    {
+      "path": "apps/v4/examples/radix/chart-demo.tsx",
+      "gitBlob": "a61706b82491ae3e8f02a967c75be54741a50ee1",
+      "sha256": "7d43821bc8556c7264b2d632afb6d5b4668b9fe169df958c72ed0f161ce74989",
+      "bytes": 5378
+    },
+    {
+      "path": "apps/v4/examples/radix/chart-example-axis.tsx",
+      "gitBlob": "a8a1047ebbf2656cf037d2b5bb716bf91019c5ac",
+      "sha256": "090ce38e9ffcc056395e4126c786c2875d40ac7e680e065af77fe9945635892b",
+      "bytes": 1241
+    },
+    {
+      "path": "apps/v4/examples/radix/chart-example-grid.tsx",
+      "gitBlob": "c37fba797ea285654d5e768e675472ac525c6a00",
+      "sha256": "dc7f6f926fd0ccdf38f84a284f3888308e32d2efe41687bce0dd8b935e626c03",
+      "bytes": 1047
+    },
+    {
+      "path": "apps/v4/examples/radix/chart-example-legend.tsx",
+      "gitBlob": "db3432d088243cd5554e0f1aef732635a56a481b",
+      "sha256": "f01ef8961dfe4261bee1eee349a45a51d05034f16a4b193f03cf877a24f0c099",
+      "bytes": 1440
+    },
+    {
+      "path": "apps/v4/examples/radix/chart-example-tooltip.tsx",
+      "gitBlob": "bc26d09330ffaaf8c0c659eb8ea043e5bedbcfd1",
+      "sha256": "6c958e598fc1b2a44033ef597af35fae029c2ddbfd69f20a60233ad184358d47",
+      "bytes": 1347
+    },
+    {
+      "path": "apps/v4/examples/radix/chart-example.tsx",
+      "gitBlob": "fa5bfbdeacde4d7c5505a81fd06909117c528a5e",
+      "sha256": "90b82966937d28e449434b3d4325c5420de70743e5f433b754051befe8142f73",
+      "bytes": 985
+    },
+    {
+      "path": "apps/v4/examples/radix/chart-rtl.tsx",
+      "gitBlob": "2ddca57eb1121d2184acc8d702cfbd50b5e67124",
+      "sha256": "7dd2430b7b6f88f329ff84717b31e7f95b6ff0117e542af6fae3ac18309473c0",
+      "bytes": 2759
+    },
+    {
+      "path": "apps/v4/examples/radix/chart-tooltip.tsx",
+      "gitBlob": "411555a7688837cb6412bdacb03406f11e25d0cf",
+      "sha256": "62c2676cc479f95765245e25a38f62ce5e10cd600dbbbda5ad32f413dad849f3",
+      "bytes": 8099
+    },
+    {
+      "path": "apps/v4/registry/bases/aria/blocks/dashboard-01/components/chart-area-interactive.tsx",
+      "gitBlob": "edb30979ea3e60c33d130fdeb25503a0e272b23f",
+      "sha256": "fe5cd00b804006464866478685d25e25c77913cb73a33bacb8d46947c341f487",
+      "bytes": 10905
+    },
+    {
+      "path": "apps/v4/registry/bases/aria/blocks/preview/cards/bar-chart-card.tsx",
+      "gitBlob": "6e8d1319c7230bc8a86c7d600418941286977525",
+      "sha256": "e7ce5a22479625b8f2494310909897fbb2d983ff5ecd44fa03873350b294ed24",
+      "bytes": 4179
+    },
+    {
+      "path": "apps/v4/registry/bases/aria/blocks/preview/cards/pie-chart-card.tsx",
+      "gitBlob": "254776c475ceffcd9ed38f469e313360c3d73996",
+      "sha256": "88b11f8dea44f115c726f5f57e5042fc4d6199553bb16585fe2e0df535e8d379",
+      "bytes": 4221
+    },
+    {
+      "path": "apps/v4/registry/bases/aria/examples/chart-example.tsx",
+      "gitBlob": "635d7a584da669c34be5844e6d5ac1db850cb5e6",
+      "sha256": "8d9827827920c945902f2c288b8a30dc1817181a2c078c5ed12a53a177170a68",
+      "bytes": 17515
+    },
+    {
+      "path": "apps/v4/registry/bases/aria/ui/chart.tsx",
+      "gitBlob": "7b783bf1db4670daaaf984e7efe2381e4db4640d",
+      "sha256": "1bbf2ff917b84dde3c715477618a244e374eaa490732c976dadf91c9b80328d7",
+      "bytes": 10417
+    },
+    {
+      "path": "apps/v4/registry/bases/base/blocks/dashboard-01/components/chart-area-interactive.tsx",
+      "gitBlob": "b826b4424c464218c6ee5b317fed4cf607a7c5b2",
+      "sha256": "e1942e184e55549ea7526d37c828ae6a0d9e4f01eaee1322bcb3fa213f7ddb8d",
+      "bytes": 10909
+    },
+    {
+      "path": "apps/v4/registry/bases/base/blocks/preview/cards/bar-chart-card.tsx",
+      "gitBlob": "bb79a8f5fa5be83e983887b46c7c4c074dd21577",
+      "sha256": "cb5f3013ca06fff0d6cc6373debaf4219015d500620106a7cb24173ca27f8cb0",
+      "bytes": 4212
+    },
+    {
+      "path": "apps/v4/registry/bases/base/blocks/preview/cards/pie-chart-card.tsx",
+      "gitBlob": "6acc9c1224bdf9f4c4fff5549e4fc10d8d817eb1",
+      "sha256": "ce361da71464c45b0b7b7ae7e6d8472f2536e3981e965b13e78b57f7b760b134",
+      "bytes": 4221
+    },
+    {
+      "path": "apps/v4/registry/bases/base/examples/chart-example.tsx",
+      "gitBlob": "cf948c73a0b6c2880c85fee90843c6fc63a41f1d",
+      "sha256": "70465e6e68a3a0471c4b1bb71072da8abc60b56e5f41a1907b8b065219e15a64",
+      "bytes": 17515
+    },
+    {
+      "path": "apps/v4/registry/bases/base/ui/chart.tsx",
+      "gitBlob": "fa460c956066fbc5720ebe4203ba7353628201d5",
+      "sha256": "cdaa7c2e82aaf7b233c4764cf506cd9912aa1a49d5a02d4fd2f9a8c134687877",
+      "bytes": 10404
+    },
+    {
+      "path": "apps/v4/registry/bases/radix/blocks/dashboard-01/components/chart-area-interactive.tsx",
+      "gitBlob": "f201fe59c03b3dfc266b8d48cf8a0ef989d3e789",
+      "sha256": "4b9d91a976204f754e377ce7ffd9b20f499338fd400aeca7b9fbca9872c79c6c",
+      "bytes": 10695
+    },
+    {
+      "path": "apps/v4/registry/bases/radix/blocks/preview/cards/bar-chart-card.tsx",
+      "gitBlob": "4d77786a804fd92cedfe08858bbd53a8c32143f8",
+      "sha256": "73d880b4a4cc459cab2ea2185a59ccd139c84f2f28ba7a1222891cb231bf6f49",
+      "bytes": 4215
+    },
+    {
+      "path": "apps/v4/registry/bases/radix/blocks/preview/cards/pie-chart-card.tsx",
+      "gitBlob": "a94b764ea4b2ee754cd4104a9ecaf9456f861646",
+      "sha256": "64d64cc88a13856662eece5027c29a350a0e5f7faff3f58dfa8b99186f930cdb",
+      "bytes": 4225
+    },
+    {
+      "path": "apps/v4/registry/bases/radix/examples/chart-example.tsx",
+      "gitBlob": "c7e0749f419a82f9b95fe8b07f984a20fbd17099",
+      "sha256": "ab2496490a0588f2a64d37d677f0bf70dc932f845dea6560130be001226e91ae",
+      "bytes": 17864
+    },
+    {
+      "path": "apps/v4/registry/bases/radix/ui/chart.tsx",
+      "gitBlob": "fa460c956066fbc5720ebe4203ba7353628201d5",
+      "sha256": "cdaa7c2e82aaf7b233c4764cf506cd9912aa1a49d5a02d4fd2f9a8c134687877",
+      "bytes": 10404
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/blocks/dashboard-01/components/chart-area-interactive.tsx",
+      "gitBlob": "46c767fb922f37edb01c9a14c15f09eab6707987",
+      "sha256": "5d6ec1ac623dbae184b63d2840cb4dc54ee7eb2ae754d5a42b319ae93a00170a",
+      "bytes": 10695
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/_registry.ts",
+      "gitBlob": "deeda2cba61a75fbfbb16437d56630d8785f4d44",
+      "sha256": "91b950617bbf9af2c66136a6a3d10b5ec41b58724654496af83d8c040e621b88",
+      "bytes": 19614
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-area-axes.tsx",
+      "gitBlob": "ee429429fbb7a8afeb411a386140e6406e08e06d",
+      "sha256": "9aae9d966c0cd069c1174810919e2240326cac13003d6e085e3ca50a2ad649b1",
+      "bytes": 2988
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-area-default.tsx",
+      "gitBlob": "3dfbcd3fc3c2f6861f4bb4211155710fec609b50",
+      "sha256": "b477e9e5366c89d6e95bf463586752cfadcb358ebf67914af09c7b9d313ae744",
+      "bytes": 2471
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-area-gradient.tsx",
+      "gitBlob": "648355c436faf0f3bb62d8954b5567a11b80424d",
+      "sha256": "45a85be38bfd7eaded3df1b4c3e592f9afdd42cb3451f6f3c0a4ea7927412d0e",
+      "bytes": 3724
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-area-icons.tsx",
+      "gitBlob": "295160e905f7fc05fcf138b9cc88efcc806574b2",
+      "sha256": "69ca202f4bb4c33bfc8667f5ca735385f5bdfb538ddef9f0a2740b42cb54df40",
+      "bytes": 3045
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-area-interactive.tsx",
+      "gitBlob": "8f6e69d40971e901b8b0d28b31a3dcf8580ac907",
+      "sha256": "81fcf9732a151a5e59703713044623a7e05dd97b6d0a31d1cfce49991b439a98",
+      "bytes": 9849
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-area-legend.tsx",
+      "gitBlob": "eddd6c255019fed830a3d58582afff55fcff7664",
+      "sha256": "b16d9ef9b2016c81e77516608ca86e56869b26690500c098a63b9a361b94ee28",
+      "bytes": 2990
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-area-linear.tsx",
+      "gitBlob": "5e2a36507de6c607f8c5639be11d0ea1179a5e2c",
+      "sha256": "e06cd4187d0276396be6c4f3973d7a879ef4d2c8c075cc21868439074b7a37c2",
+      "bytes": 2487
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-area-stacked-expand.tsx",
+      "gitBlob": "95a7851529d85cb9a7c171a1a56167752c54c2b1",
+      "sha256": "5df80ae409fa14f38c6b5cb6249a794231c59fc2a29a33966d49c0c8850ba658",
+      "bytes": 3345
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-area-stacked.tsx",
+      "gitBlob": "92dc3edd1417e0d6c1d99d5502414995f1060ad9",
+      "sha256": "db215c13b806e7328f124a364f6d1bfcff98ef5393f4e2f6c5a43c02a1a88c5c",
+      "bytes": 2886
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-area-step.tsx",
+      "gitBlob": "2c2dd581772d355c962924a00fd130a8c9b92a04",
+      "sha256": "967c57218247435bb287d729c526bf0db5596ce0ae82ddf16747d186f432948a",
+      "bytes": 2493
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-bar-active.tsx",
+      "gitBlob": "f76c5812e5e4f1beb32a2ec3fd51cafdcaa67870",
+      "sha256": "66f5fae5da3a6b4cefa88ec83e1a45e841dbba60b003613ff9a55860e7b0c688",
+      "bytes": 3144
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-bar-default.tsx",
+      "gitBlob": "dc921b04f9f34bede4a58dae8e308b582b9d6c4a",
+      "sha256": "e714948c1087af16be42ddc8266f0292e62fdbdf46765862979591cb203f714d",
+      "bytes": 2026
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-bar-horizontal.tsx",
+      "gitBlob": "2016a9785c6da00c39e86bdd014dc6d4f0c48d70",
+      "sha256": "0dccb76e8d82c6b113a074ef17a22bd06c5908da3bc42df2a24703d8d3b81f5b",
+      "bytes": 2214
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-bar-interactive.tsx",
+      "gitBlob": "124e381442e7872f5b49b75afcbfff09484f747f",
+      "sha256": "aa01c82fb2a4edc6ec458144422ed2a50403310b05c1d301ba6c3485bebbbf90",
+      "bytes": 8610
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-bar-label-custom.tsx",
+      "gitBlob": "bde2b2bfd8c5830824a2326ed44d3eac9af16101",
+      "sha256": "5cc3f8ce78a519ba9b3a187471db68590a6a8ab083bc6492ffe9dffd55347d33",
+      "bytes": 2964
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-bar-label.tsx",
+      "gitBlob": "390e1b03282fdbb51e86f1f19827290441bc8dce",
+      "sha256": "26cef730a6f2c9fccd15f5289880b4f3fc123d0db6daf648102d0702397bb442",
+      "bytes": 2343
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-bar-mixed.tsx",
+      "gitBlob": "bac07d75f0ac98f892ab4618471e085a2b1f1512",
+      "sha256": "b7e6ee25820af6a54cd995117db4747bda7970be48ce823f82f7c5ed5767d014",
+      "bytes": 2667
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-bar-multiple.tsx",
+      "gitBlob": "99b894f293093e1a88bab71ed1f3d5097d0e205c",
+      "sha256": "537e06323e0db1642c48e73b1245de8e72a5e69b498d3f7ab45b0856c8f8e4a9",
+      "bytes": 2275
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-bar-negative.tsx",
+      "gitBlob": "982bccdb9cd4ebb5010a10cbfd43bfff876dd94c",
+      "sha256": "22733cdd896a6f877170ea7e887b3331640c0727cee41aba87d5178526ed83f6",
+      "bytes": 2120
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-bar-stacked.tsx",
+      "gitBlob": "99ceda588e9b49e54f9c5e41c267314cc73d6dce",
+      "sha256": "5e1b682a5f8f90cc01d60c8f073190f3ecb66e0bc9854d91df002edc37fdf70c",
+      "bytes": 2511
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-line-default.tsx",
+      "gitBlob": "669ebf5022ac06d94a016b84dc4706d27d19595f",
+      "sha256": "d9632a0e955df05c43a5090a87c2f04dfb3e3c475e963efd74d371489d5f2a7a",
+      "bytes": 2270
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-line-dots-colors.tsx",
+      "gitBlob": "451c24fd34f9ccac3da83e2fb2c24eeefaa0aead",
+      "sha256": "740393cadcc4aa63a12b1c2da54d5b7f92d77568f58210777e171e1970098129",
+      "bytes": 3055
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-line-dots-custom.tsx",
+      "gitBlob": "355f23a1071b60c8c4563320e79e9f30ff36ec3d",
+      "sha256": "9d299f24f38d467f9cf508becc4c428bbb0893b69137614f3c37b08de2f41770",
+      "bytes": 3003
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-line-dots.tsx",
+      "gitBlob": "0d1df7b6e6ef141f599848faa14b0e2f342a21a3",
+      "sha256": "e41121b704b22277c5133ee53bedd252ead81c8c14b1c8a113c1290e1c7dffdf",
+      "bytes": 2552
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-line-interactive.tsx",
+      "gitBlob": "3feeb25b0d4452fb35e57299997b6e089e671460",
+      "sha256": "76a4f6f74fd18f18d2374def958ea08afe0d563e433c4f31556dbc55ab02f4a6",
+      "bytes": 8734
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-line-label-custom.tsx",
+      "gitBlob": "14aaa7f92af490d14ab6e4e36c112ed949c805b4",
+      "sha256": "e789387b957d5e223d6d02bd907401afaeb97cec41e7e91f5e147393265316a6",
+      "bytes": 3199
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-line-label.tsx",
+      "gitBlob": "7a333fc3a29b097f9918e7a5ead51a81073fe800",
+      "sha256": "7534f7965471603798c1de759dca7cad95a4cc7feeef39354305896bb3f8c371",
+      "bytes": 2792
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-line-linear.tsx",
+      "gitBlob": "e0c2d34ac8328611c6d572b19043ce95ca00f64d",
+      "sha256": "c120b438d13b32cc90973c947ba79e82e884753ef1e1ab4f59a2a7524e8e5577",
+      "bytes": 2284
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-line-multiple.tsx",
+      "gitBlob": "fb162420976cc77ce7a7fa3e36b7fdf63a9ab18e",
+      "sha256": "8d55a8b24aaefccd5770af5b82ca979f6f8d291ebb719faf90e6c54178cdb705",
+      "bytes": 2728
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-line-step.tsx",
+      "gitBlob": "5dce7fcbbcbc32f34441e3793bdbe152d91e45f7",
+      "sha256": "7de698cb7d6f1b1772b9cfa402a0b159185bb8fca0ba110f2e86a751602ee39d",
+      "bytes": 2281
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-pie-donut-active.tsx",
+      "gitBlob": "b2e41b5ebbd9fe392435e1f3417aecf2df35ae8b",
+      "sha256": "c8a88201e324eb09acdc3fa0ad1b42945c7df4b3e5b21082d58f02d4032ee9be",
+      "bytes": 2935
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-pie-donut-text.tsx",
+      "gitBlob": "c7e3d834954dbee3af6a33eac6a8cf74b333350f",
+      "sha256": "b4a6f121057f5363995682ad47df137a6ab6c858ac48088364deae231788d7fb",
+      "bytes": 3695
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-pie-donut.tsx",
+      "gitBlob": "c4ca8674ee42a22e9572fa385318cb4b42da2fac",
+      "sha256": "655444c98fb8f6738f9bf02a7058f0b5ba60e4930511b6cf4ac6678aada9ed42",
+      "bytes": 2381
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-pie-interactive.tsx",
+      "gitBlob": "dfe17b688b3dd35a36ccda5435966b9f4160c128",
+      "sha256": "da332a1b7a5bfc383162e3e77a726e82bae1cebd011d84cafb4c79a0bc445328",
+      "bytes": 5716
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-pie-label-custom.tsx",
+      "gitBlob": "465c78c2a8d83f4c924433db265f524bb4962a6e",
+      "sha256": "d6cd8f628cebcc435c33d998d5d449eaf7ae07d2a748e773148e10c76de0c9de",
+      "bytes": 2916
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-pie-label-list.tsx",
+      "gitBlob": "ff179593352b9f541743e50eb8303fcf92320913",
+      "sha256": "b57910a13d969e4098f22b2caf9bec8a4fc83ab9d90668605086a351918bb779",
+      "bytes": 2664
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-pie-label.tsx",
+      "gitBlob": "3257c585110fb58deb95c4d5d61fe15c5ec3bde5",
+      "sha256": "9473abe1c22d47fbc9676f38fcaf7b718ed5499bf9164d4f442fb2da51666039",
+      "bytes": 2308
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-pie-legend.tsx",
+      "gitBlob": "aa6ca2705c5bdd3a4e2f6be9fc08870298eb37ef",
+      "sha256": "2902062d5a46d853d9ed96d3ca837de48e8dc3c780847c4622fa89b4fee3842a",
+      "bytes": 1926
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-pie-separator-none.tsx",
+      "gitBlob": "e313ea46e768bf54d89ee2db59c8d6f519a40b46",
+      "sha256": "4811ddc719959d4b0a4d9013b0756131d4fc4f5322bacec3ed85f3fb9e5385a6",
+      "bytes": 2408
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-pie-simple.tsx",
+      "gitBlob": "1c90420f93ce32ecfa3810dfa264f51ad2e501c6",
+      "sha256": "9298f436da5adc7288c7b6ae10fb52bbcbcb99ea9c0d324bb47da61c5b8af518",
+      "bytes": 2294
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-pie-stacked.tsx",
+      "gitBlob": "e7e984972554d171a5a957a059558db827e0e307",
+      "sha256": "26d04271e4c0a752f4cd41f0c53cb6480db6d3ca540cf9dd35d1c9b1d446c59d",
+      "bytes": 3253
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-default.tsx",
+      "gitBlob": "425afde7ff3e7c972e20934b63218c537455f82d",
+      "sha256": "e503bd2c88e20d5f37082dcdfd2a95d1e61cfcc0855844d0050e114fa7428394",
+      "bytes": 2020
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-dots.tsx",
+      "gitBlob": "be84261030eaa17694843243463244a016a311b0",
+      "sha256": "e844857ce448a56bece540cb2cf083081ffdb6e46fdfb250ed5c1eb1f4d7c77b",
+      "bytes": 2121
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-grid-circle-fill.tsx",
+      "gitBlob": "bb58bce241bf01efcb649cbba144a7dc55fc7637",
+      "sha256": "9a9213b59eb2dd1e5073f49ce53901f527f6ffb874e90676733ced917143a0da",
+      "bytes": 2180
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-grid-circle-no-lines.tsx",
+      "gitBlob": "e098f0f1b91900fc4950610f8da0d987f0a1fe35",
+      "sha256": "d454bfaffa340c067e63cf4b4d93d70e91febadea5c2ea00f48780cee925d3c1",
+      "bytes": 2263
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-grid-circle.tsx",
+      "gitBlob": "67601f06ae0e5449167607683564a96a04b80fd7",
+      "sha256": "41bde9ca02b741e473638c16df15f1f4dccb48ea76dfd3d0d6bf4cd08c498865",
+      "bytes": 2220
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-grid-custom.tsx",
+      "gitBlob": "9ab8ad6127646c42c4a005ad7c369ff25b60994a",
+      "sha256": "f64de58f8c60c1c41b8554a25d3f343ce1b1e46e992e8fc7112b1c6a5e8af0e5",
+      "bytes": 2161
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-grid-fill.tsx",
+      "gitBlob": "b3ebb61358b3c51528385402fee7697ae11516c5",
+      "sha256": "f5a7395f16784687624b7cf36e0a074fd6792c314c3aab0be05ff60153fec88a",
+      "bytes": 2150
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-grid-none.tsx",
+      "gitBlob": "0bdb7769a9113342db51b3a1250433cfb9c3fc4d",
+      "sha256": "daf5a704c336412a9c41184d797d5fdfa1830bc9e427d2d9ca2e1cd0b54ec520",
+      "bytes": 2151
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-icons.tsx",
+      "gitBlob": "3c4eec62fb8756910bf8968973d616b918f9764b",
+      "sha256": "305d1e3c1fad1503ce9cf29ac9531bf1c53800c79706955fcb84bf120f3c5f26",
+      "bytes": 2656
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-label-custom.tsx",
+      "gitBlob": "bf16fa743613a25c3641593c7a60ef052fe861ca",
+      "sha256": "a0501d1d977350aa1b9bfa09117accb41847792d84c7882b6dfd34fcb342a54c",
+      "bytes": 3479
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-legend.tsx",
+      "gitBlob": "31bdb565433854385b152710a3fade68f5823bc7",
+      "sha256": "132b18d5502fa68887fa6639a304d26f56ca80b5264cebef945224482cc11cc5",
+      "bytes": 2564
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-lines-only.tsx",
+      "gitBlob": "c62cddf7355f0a003d072a93c77456883deed4ab",
+      "sha256": "f8535625d8b71a2f789aa1a33f5ccfe9db92a8660c8eae5e25f2be91c0a24908",
+      "bytes": 2554
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-multiple.tsx",
+      "gitBlob": "b7d2102f9588a4b86f6cc281ae61eb7efe97e5ed",
+      "sha256": "f6a2b2323e758e88e5dad518e0cd0de90026da45fee4f0498db5a658e7697338",
+      "bytes": 2317
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-radius.tsx",
+      "gitBlob": "61f29bb5b8262c6917d9b0a19f1e4509f228e09c",
+      "sha256": "5a64fa9fa2300034b7451dddce0e84afb2005218d461c4385e641837760e60c6",
+      "bytes": 2524
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radial-grid.tsx",
+      "gitBlob": "032eb98a9e2cab56d7b7a1413af496193477d04c",
+      "sha256": "e15a6b20f96a96dcac0528147a666952b53a69ce3794d2c1ee8967e34d27f602",
+      "bytes": 2433
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radial-label.tsx",
+      "gitBlob": "effb735c84fb1ecee61fd8bab07f1daba1d65135",
+      "sha256": "104be078d10b6d1a11fef591b2bbb10e1e0af1fecf9f59bdadfcbeec0a3de56e",
+      "bytes": 2745
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radial-shape.tsx",
+      "gitBlob": "9550a5bf0f2eab53933f8709d25ca1439964ec3d",
+      "sha256": "e5f7fd025fd83a4aff2fc4ba28b626801ef41fc68e6e839e3e0716472cfc2619",
+      "bytes": 3228
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radial-simple.tsx",
+      "gitBlob": "b13e20e5b584ca18b44201ba4c147fefa8a00f1d",
+      "sha256": "c21d5bc4776a2be310515c6ccfa21b48e263cf340bd6c08ff8402ba6f7bd6790",
+      "bytes": 2372
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radial-stacked.tsx",
+      "gitBlob": "71fbf5756f9811672c7881fa9d1ef87db549391d",
+      "sha256": "d94e8253ad22dadfb74b18f6497d4a771b16cb968399c659c43d28ff7813fd17",
+      "bytes": 3512
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radial-text.tsx",
+      "gitBlob": "f10347522cd27689bd960a4ed7e5033c5659b93c",
+      "sha256": "d02a7c05bb28a4a76e7cb2d16df8ae33bd4e50e06a095f8d13a02cd78d33818e",
+      "bytes": 3260
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-tooltip-advanced.tsx",
+      "gitBlob": "6c55b5e514836c30ae1ff570dee3d3217aca6e9c",
+      "sha256": "ecb06efd0b0e78fcd27bd5211046d648d05b311e306857edce20545d67a3c378",
+      "bytes": 3936
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-tooltip-default.tsx",
+      "gitBlob": "829cc53633afd526f25b7982c2516ff9b590420d",
+      "sha256": "f5f2e3e6f5bbdf361650b07871b09b99c3809e9cdf7bb87317e916b1ac14d755",
+      "bytes": 2352
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-tooltip-formatter.tsx",
+      "gitBlob": "6d0ebf02dda90e7a688b53cdd1c8be735e192f69",
+      "sha256": "b14f8ca9124c8b2bc76db5300870c8af513266eb92fc348dbaf9c9dfdd61363a",
+      "bytes": 2886
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-tooltip-icons.tsx",
+      "gitBlob": "1117d4494cb8316edc4a9096549adf339ec65d17",
+      "sha256": "1e834c4367c7722c60b2c9e1bb0d8307fb58dceddae202bae046c26c43c98049",
+      "bytes": 2255
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-tooltip-indicator-line.tsx",
+      "gitBlob": "2d09ce8039b05c753efde134dc3e8710d92c8e63",
+      "sha256": "f945507f55251f1405d0f10313383a98d10ea4f0b35f1a8d554754c491524191",
+      "bytes": 2349
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-tooltip-indicator-none.tsx",
+      "gitBlob": "6416520431aeeda2bfc170066385538b60e6e920",
+      "sha256": "2050ad90daccf8a42950400d4cc0a4347e603aa052b7106e34ab643cec321c34",
+      "bytes": 2193
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-tooltip-label-custom.tsx",
+      "gitBlob": "b8095ffe6b9accbcc8480c125931db7294effa81",
+      "sha256": "7fdf8f219e87727dbf583c61f5ec3e2af4d255d6cffd6ce282d18e36584c0650",
+      "bytes": 2331
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-tooltip-label-formatter.tsx",
+      "gitBlob": "0b885d71e18d581793bc2e316c3f1402daf59182",
+      "sha256": "fd6a9bdcc8981b88b70237647c7abc43635147870fe4194a9a2891230a8bf186",
+      "bytes": 2512
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-tooltip-label-none.tsx",
+      "gitBlob": "f5f220bb1f20928bd1c9934ddf014cb72b89fb98",
+      "sha256": "d2f97fe115418f06921e37fe5f5ba498ee9c58c6ef853e438f7d5841c87f3f01",
+      "bytes": 2191
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/examples/chart-bar-demo-axis.tsx",
+      "gitBlob": "e0f60aaba8bfbc9379f42dc105743018f2b50da8",
+      "sha256": "881c38bde7d4387b556363a3f09d9c595c259b45e5d467820dfdccb40e8eec88",
+      "bytes": 1250
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/examples/chart-bar-demo-grid.tsx",
+      "gitBlob": "320aeaa23422fc15a0abc4ef218c3aee06334638",
+      "sha256": "9ad4a93b84f660dcb88fb9f99c293278ce2d2128f21ce6d9385e2fa255a2c481",
+      "bytes": 1056
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/examples/chart-bar-demo-legend.tsx",
+      "gitBlob": "4944f45ef222c98a90ec73e3ee8f6a7d15999c56",
+      "sha256": "782f50310b8008369e245e113fa1f8ae5a7d47eadcd4ae882bbbca5fe955a4aa",
+      "bytes": 1442
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/examples/chart-bar-demo-tooltip.tsx",
+      "gitBlob": "74a778ee55965166c9a1bb7be5022df22ab52857",
+      "sha256": "aa9d8a68f709d1be1468269f6caef5f4b72979b799ff15ba8f344f867dc7f8ac",
+      "bytes": 1348
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/examples/chart-bar-demo.tsx",
+      "gitBlob": "a81df2fad864a2cb37b7343c2b4e584d352e4f2e",
+      "sha256": "d6e4921be5a9f8d48f88a64c6479d00bf6c9e98acf2682b2374500b0bcd6a4b7",
+      "bytes": 998
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/examples/chart-tooltip-demo.tsx",
+      "gitBlob": "ee8b7a5ac2d3712d84ae08e3b69c5f938a7b605c",
+      "sha256": "d88d43d9730fb6dd180173ae10dc70238bcc8c4ee534cae4ee3068635e9286c5",
+      "bytes": 8100
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/ui/chart.tsx",
+      "gitBlob": "f4971bf60d74ac43b48d4c86982a6cacb56bde37",
+      "sha256": "35e2fa755465ef8eb8ff8b483d493204d452152e7a8863474b1a69f5d44484db",
+      "bytes": 10544
+    }
+  ],
+  "canonicalCatalogCounts": {
+    "area": 10,
+    "bar": 10,
+    "line": 10,
+    "pie": 11,
+    "radar": 14,
+    "radial": 6,
+    "tooltip": 9
+  },
+  "sourceVsGeneric": {
+    "margin": {
+      "catalogFiles": 27,
+      "allFetchedFiles": 36,
+      "required": true,
+      "includesNegativeValues": true
+    },
+    "LabelList": {
+      "catalogFiles": 7,
+      "allFetchedFiles": 10,
+      "required": true,
+      "requiredSubset": "top,insideLeft,right,insideStart,formatter/name-key/native text color/offset; not every arbitrary Recharts placement"
+    },
+    "ReferenceLine": {
+      "catalogFiles": 0,
+      "allFetchedFiles": 0,
+      "requiredByFixedExamples": false,
+      "currentApp": "RuleY target line is native composition authored in this repo"
+    },
+    "Brush": {
+      "catalogFiles": 0,
+      "allFetchedFiles": 0,
+      "requiredByFixedExamples": false,
+      "currentApp": "RangeSlider+filter authored in this repo; source interactive area uses Select90/30/7 and filtering"
+    },
+    "otherAnimationOptions": {
+      "explicitAnimationPropsInCatalog": 0,
+      "explicitAnimationPropsInAllFetched": 0,
+      "requiredByFixedExamples": false,
+      "qualification": "Default animations still source requirements and new curves/marks must integrate with existing animation; no claim of complete Recharts callback/spring API needed."
+    }
+  },
+  "capabilityGaps": [
+    {
+      "id": "layout",
+      "requirement": "Signed inner chart margins and configurable axis/grid budgets (tickCount, tickMargin, label renderer), distinct from the outer returned element margin.",
+      "source": [
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-area-axes.tsx",
+          "line": 57,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-area-axes.tsx#L57",
+          "endLine": 75
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-line-label-custom.tsx",
+          "line": 70,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-line-label-custom.tsx#L70",
+          "endLine": 74
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-radar-icons.tsx",
+          "line": 63,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-radar-icons.tsx#L63",
+          "endLine": 68
+        }
+      ],
+      "current": [
+        {
+          "path": "pkg/display/chart.go",
+          "line": 345
+        },
+        {
+          "path": "pkg/display/chart.go",
+          "line": 425
+        },
+        {
+          "path": "pkg/display/chart_horizontal.go",
+          "line": 39
+        },
+        {
+          "path": "pkg/display/chart_horizontal.go",
+          "line": 55
+        }
+      ],
+      "finding": "ChartProps exposes no plot margin; native Plot gap fixed 8, value ticks/Nice fixed 4; only category label formatting/width and axis hide toggles exposed. Native Element.Margin on the whole Chart does not express Recharts inner signed margin. Raw MyGo composition can explicitly build a layout, but no equivalent kit recipe currently demonstrates source values.",
+      "kind": "missing-high-level-API; raw-native-composition-possible"
+    },
+    {
+      "id": "curve",
+      "requirement": "Natural, linear, step and monotone interpolation for Line and Area, including source default natural.",
+      "source": [
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-area-default.tsx",
+          "line": 72,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-area-default.tsx#L72"
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-area-linear.tsx",
+          "line": 72,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-area-linear.tsx#L72"
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-area-step.tsx",
+          "line": 73,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-area-step.tsx#L73"
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-line-default.tsx",
+          "line": 70,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-line-default.tsx#L70"
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-line-linear.tsx",
+          "line": 70,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-line-linear.tsx#L70"
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-line-step.tsx",
+          "line": 70,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-line-step.tsx#L70"
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-line-multiple.tsx",
+          "line": 71,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-line-multiple.tsx#L71"
+        },
+        {
+          "path": "apps/v4/registry/bases/base/examples/chart-example.tsx",
+          "line": 108,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/examples/chart-example.tsx#L108"
+        }
+      ],
+      "current": [
+        {
+          "path": "pkg/display/chart_animation.go",
+          "line": 440
+        }
+      ],
+      "finding": "All high-level Line/Area fill/path/reveal use CurveMonotone. Public MyGo chart has Linear/Monotone/Step/StepBefore/StepAfter but no Natural; natural spline needs kit-owned public-path math. Adding curve must also update independent path-length/reveal geometry, not only final drawing.",
+      "kind": "missing-API-and-geometry"
+    },
+    {
+      "id": "cartesian-style",
+      "requirement": "Per-series fill opacity/gradient/stroke style, per-corner stack radii, persistent dots/custom dots and custom active bar shape.",
+      "source": [
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-area-gradient.tsx",
+          "line": 72,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-area-gradient.tsx#L72",
+          "endLine": 110
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-area-stacked-expand.tsx",
+          "line": 80,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-area-stacked-expand.tsx#L80",
+          "endLine": 102
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-bar-stacked.tsx",
+          "line": 65,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-bar-stacked.tsx#L65",
+          "endLine": 75
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-bar-active.tsx",
+          "line": 84,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-bar-active.tsx#L84",
+          "endLine": 101
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-line-dots.tsx",
+          "line": 72,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-line-dots.tsx#L72",
+          "endLine": 83
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-line-dots-colors.tsx",
+          "line": 87,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-line-dots-colors.tsx#L87",
+          "endLine": 103
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-line-dots-custom.tsx",
+          "line": 72,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-line-dots-custom.tsx#L72",
+          "endLine": 107
+        }
+      ],
+      "current": [
+        {
+          "path": "pkg/display/chart.go",
+          "line": 52
+        },
+        {
+          "path": "pkg/display/chart.go",
+          "line": 394
+        },
+        {
+          "path": "pkg/display/chart.go",
+          "line": 406
+        },
+        {
+          "path": "pkg/display/chart_animation.go",
+          "line": 444
+        },
+        {
+          "path": "pkg/display/chart_horizontal.go",
+          "line": 26
+        }
+      ],
+      "finding": "ChartSeries has Name/Values/Color only; Area alpha .2/stroke2 and active-dot7x7 are fixed; idle dots absent. BarRadius one float applies uniformly to every series/corner; selected bar only opacity .8. Public MyGo paths/gradients, Radius variadic, Point/Anchor can implement these, but high-level API and matching source recipes are absent.",
+      "kind": "missing-high-level-API; existing-native-primitives"
+    },
+    {
+      "id": "labels",
+      "requirement": "Actual source LabelList subset: Cartesian top/insideLeft/right offsets and formatter, pie category labels, radial insideStart; plus native-safe custom label content and center text.",
+      "source": [
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-bar-label.tsx",
+          "line": 68,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-bar-label.tsx#L68",
+          "endLine": 73
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-bar-label-custom.tsx",
+          "line": 79,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-bar-label-custom.tsx#L79",
+          "endLine": 92
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-bar-negative.tsx",
+          "line": 54,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-bar-negative.tsx#L54"
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-line-label.tsx",
+          "line": 85,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-line-label.tsx#L85",
+          "endLine": 90
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-line-label-custom.tsx",
+          "line": 99,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-line-label-custom.tsx#L99",
+          "endLine": 108
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-pie-label-list.tsx",
+          "line": 74,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-pie-label-list.tsx#L74",
+          "endLine": 82
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-radial-label.tsx",
+          "line": 81,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-radial-label.tsx#L81",
+          "endLine": 86
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-pie-label.tsx",
+          "line": 71,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-pie-label.tsx#L71"
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-pie-label-custom.tsx",
+          "line": 77,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-pie-label-custom.tsx#L77",
+          "endLine": 96
+        }
+      ],
+      "current": [
+        {
+          "path": "pkg/display/chart.go",
+          "line": 58
+        },
+        {
+          "path": "pkg/display/chart.go",
+          "line": 762
+        },
+        {
+          "path": "examples/chart-composition/main.go",
+          "line": 184
+        }
+      ],
+      "finding": "No data-label config/slot in high-level Chart. The standalone composition app proves app-owned top bar labels using native Anchor, but is not reusable LabelList and does not cover source horizontal, pie or radial label placement. Do not demand every Recharts LabelList placement/overflow mode; these seven files define the required subset.",
+      "kind": "missing-high-level-API; partial-raw-recipe"
+    },
+    {
+      "id": "polar-geometry",
+      "requirement": "Source DIP radii/ring-specific radii, selectable angle spans/orientation, radial tracks/corner radius, separator suppression and active sectors.",
+      "source": [
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-pie-stacked.tsx",
+          "line": 99,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-pie-stacked.tsx#L99",
+          "endLine": 105
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-pie-separator-none.tsx",
+          "line": 75,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-pie-separator-none.tsx#L75",
+          "endLine": 79
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-pie-donut-active.tsx",
+          "line": 81,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-pie-donut-active.tsx#L81",
+          "endLine": 94
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-pie-interactive.tsx",
+          "line": 85,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-pie-interactive.tsx#L85",
+          "endLine": 99
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-radial-label.tsx",
+          "line": 69,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-radial-label.tsx#L69",
+          "endLine": 86
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-radial-shape.tsx",
+          "line": 53,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-radial-shape.tsx#L53",
+          "endLine": 66
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-radial-stacked.tsx",
+          "line": 56,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-radial-stacked.tsx#L56",
+          "endLine": 74
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-radial-text.tsx",
+          "line": 53,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-radial-text.tsx#L53",
+          "endLine": 67
+        },
+        {
+          "path": "apps/v4/registry/bases/base/examples/chart-example.tsx",
+          "line": 515,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/examples/chart-example.tsx#L515",
+          "endLine": 530
+        }
+      ],
+      "current": [
+        {
+          "path": "pkg/display/chart.go",
+          "line": 473
+        },
+        {
+          "path": "pkg/display/chart.go",
+          "line": 532
+        },
+        {
+          "path": "pkg/display/chart.go",
+          "line": 591
+        },
+        {
+          "path": "pkg/display/chart.go",
+          "line": 645
+        },
+        {
+          "path": "pkg/display/chart.go",
+          "line": 665
+        },
+        {
+          "path": "pkg/display/chart_animation.go",
+          "line": 514
+        }
+      ],
+      "finding": "High-level pie uses fixed .025 pad; donut has one fraction clamped <=.9; rings auto-sized; selected outer growth3. Radial uses full2pi target/track and generated band radii, no angles/radii/corners controls. Source includes -90→380,0→250,end100,end180 and explicit inner/outer radii. Merely setting MaxValue cannot replicate changed track/arc geometry or hit regions.",
+      "kind": "missing-API-and-geometry"
+    },
+    {
+      "id": "polar-grid-labels",
+      "requirement": "Radar circle/polygon/none grids, radialLines switch, filled/custom radii grid, visible radius axis/ticks, persistent dots and custom angle label; polar center content.",
+      "source": [
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-radar-grid-circle-fill.tsx",
+          "line": 55,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-radar-grid-circle-fill.tsx#L55",
+          "endLine": 64
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-radar-grid-circle-no-lines.tsx",
+          "line": 58,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-radar-grid-circle-no-lines.tsx#L58",
+          "endLine": 67
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-radar-grid-custom.tsx",
+          "line": 58,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-radar-grid-custom.tsx#L58",
+          "endLine": 64
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-radar-grid-none.tsx",
+          "line": 54,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-radar-grid-none.tsx#L54",
+          "endLine": 64
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-radar-radius.tsx",
+          "line": 77,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-radar-radius.tsx#L77",
+          "endLine": 82
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-radar-label-custom.tsx",
+          "line": 70,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-radar-label-custom.tsx#L70",
+          "endLine": 99
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-radar-lines-only.tsx",
+          "line": 63,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-radar-lines-only.tsx#L63",
+          "endLine": 76
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-pie-donut-text.tsx",
+          "line": 81,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-pie-donut-text.tsx#L81",
+          "endLine": 113
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-radial-text.tsx",
+          "line": 60,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-radial-text.tsx#L60",
+          "endLine": 95
+        },
+        {
+          "path": "apps/v4/registry/bases/base/examples/chart-example.tsx",
+          "line": 362,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/examples/chart-example.tsx#L362",
+          "endLine": 390
+        }
+      ],
+      "current": [
+        {
+          "path": "pkg/display/chart.go",
+          "line": 692
+        },
+        {
+          "path": "pkg/display/chart.go",
+          "line": 716
+        },
+        {
+          "path": "pkg/display/chart.go",
+          "line": 762
+        }
+      ],
+      "finding": "Radar always draws four polygon levels plus radial spokes, fill alpha .15/stroke2, and fixed native text labels; no circle/grid fill/custom radii/axis/dot/custom tick controls. Pie/Donut/Radial lack center-content slot. Native overlays can draw labels, but caller cannot obtain high-level plot geometry/mark metadata through a public high-level callback.",
+      "kind": "missing-high-level-API-and-recipes"
+    },
+    {
+      "id": "tooltip-legend-recipes",
+      "requirement": "Nine source tooltip recipes (initial index1, line/no indicator, hidden label, label key/formatter, formatter, config icons, advanced total) and config-aware legends.",
+      "source": [
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-tooltip-default.tsx",
+          "line": 65,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-tooltip-default.tsx#L65",
+          "endLine": 83
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-tooltip-label-custom.tsx",
+          "line": 79,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-tooltip-label-custom.tsx#L79",
+          "endLine": 84
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-tooltip-formatter.tsx",
+          "line": 74,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-tooltip-formatter.tsx#L74",
+          "endLine": 93
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-tooltip-icons.tsx",
+          "line": 35,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-tooltip-icons.tsx#L35",
+          "endLine": 40
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-tooltip-advanced.tsx",
+          "line": 76,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-tooltip-advanced.tsx#L76",
+          "endLine": 116
+        },
+        {
+          "path": "apps/v4/registry/bases/base/ui/chart.tsx",
+          "line": 116,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/ui/chart.tsx#L116"
+        },
+        {
+          "path": "apps/v4/registry/bases/base/ui/chart.tsx",
+          "line": 269,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/ui/chart.tsx#L269"
+        }
+      ],
+      "current": [
+        {
+          "path": "pkg/display/chart_composition.go",
+          "line": 18
+        },
+        {
+          "path": "pkg/display/chart_composition.go",
+          "line": 251
+        },
+        {
+          "path": "pkg/display/chart_composition.go",
+          "line": 482
+        },
+        {
+          "path": "pkg/display/chart.go",
+          "line": 75
+        },
+        {
+          "path": "pkg/display/chart.go",
+          "line": 80
+        },
+        {
+          "path": "internal/gallery/chart_preview.go",
+          "line": 27
+        }
+      ],
+      "finding": "Config/payload/content helper APIs already cover these source content knobs. Selected pointer initialized1 provides app-owned initial inspection; do not need a new defaultIndex merely for naming parity. High-level Legend bool/ChartTooltipData do not automatically expose full config/payload semantics, so full recipes need a public plot composition/data payload bridge or explicit raw-native composition. Gallery currently uses basic high-level tooltip/legend and selected=-1, lacks nine source-focused recipes. Their stacked bars still need per-corner radii from cartesian-style.",
+      "kind": "content-API-present; integration-and-example-gap"
+    },
+    {
+      "id": "interactive-recipes",
+      "requirement": "Source 90/30/7 day area filter; desktop/mobile total header selection for bar/line; active month pie selection with matching center text and external active sectors.",
+      "source": [
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-area-interactive.tsx",
+          "line": 138,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-area-interactive.tsx#L138",
+          "endLine": 179
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-bar-interactive.tsx",
+          "line": 130,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-bar-interactive.tsx#L130",
+          "endLine": 164
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-line-interactive.tsx",
+          "line": 130,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-line-interactive.tsx#L130",
+          "endLine": 164
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-pie-interactive.tsx",
+          "line": 84,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-pie-interactive.tsx#L84",
+          "endLine": 135
+        },
+        {
+          "path": "apps/v4/registry/new-york-v4/charts/chart-pie-interactive.tsx",
+          "line": 159,
+          "url": "https://github.com/shadcn-ui/ui/blob/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/new-york-v4/charts/chart-pie-interactive.tsx#L159",
+          "endLine": 195
+        }
+      ],
+      "current": [
+        {
+          "path": "internal/gallery/chart_preview.go",
+          "line": 98
+        },
+        {
+          "path": "internal/gallery/chart_preview.go",
+          "line": 104
+        },
+        {
+          "path": "internal/gallery/chart_preview.go",
+          "line": 150
+        },
+        {
+          "path": "examples/chart-composition/main.go",
+          "line": 115
+        }
+      ],
+      "finding": "Native app controls/state/data filtering already exist. Gallery two explorers combine family/mode/update toggles; they are not the four fixed source interactive recipes. Missing recipe/controller wiring is separate from underlying mark APIs; pie shape/center and area gradient/curve still need above gaps. Source area filtering is Select+array filter, not Brush.",
+      "kind": "example-gap-plus-listed-mark-gaps"
+    }
+  ],
+  "examples": [
+    {
+      "id": "chart-area-axes",
+      "family": "area",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-area-axes.tsx",
+      "sourceLines": 110,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "layout",
+        "curve",
+        "cartesian-style"
+      ],
+      "evidence": {
+        "margin": [
+          {
+            "line": 57,
+            "text": "margin={{"
+          }
+        ],
+        "naturalCurve": [
+          {
+            "line": 79,
+            "text": "type=\"natural\""
+          },
+          {
+            "line": 87,
+            "text": "type=\"natural\""
+          }
+        ],
+        "opacity": [
+          {
+            "line": 81,
+            "text": "fillOpacity={0.4}"
+          },
+          {
+            "line": 89,
+            "text": "fillOpacity={0.4}"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-area-default",
+      "family": "area",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-area-default.tsx",
+      "sourceLines": 94,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "layout",
+        "curve",
+        "cartesian-style"
+      ],
+      "evidence": {
+        "margin": [
+          {
+            "line": 53,
+            "text": "margin={{"
+          }
+        ],
+        "naturalCurve": [
+          {
+            "line": 72,
+            "text": "type=\"natural\""
+          }
+        ],
+        "opacity": [
+          {
+            "line": 74,
+            "text": "fillOpacity={0.4}"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-area-gradient",
+      "family": "area",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-area-gradient.tsx",
+      "sourceLines": 130,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "layout",
+        "curve",
+        "cartesian-style"
+      ],
+      "evidence": {
+        "margin": [
+          {
+            "line": 57,
+            "text": "margin={{"
+          }
+        ],
+        "naturalCurve": [
+          {
+            "line": 99,
+            "text": "type=\"natural\""
+          },
+          {
+            "line": 107,
+            "text": "type=\"natural\""
+          }
+        ],
+        "gradient": [
+          {
+            "line": 72,
+            "text": "<linearGradient id=\"fillDesktop\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">"
+          },
+          {
+            "line": 73,
+            "text": "<stop"
+          },
+          {
+            "line": 78,
+            "text": "<stop"
+          },
+          {
+            "line": 84,
+            "text": "<linearGradient id=\"fillMobile\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">"
+          },
+          {
+            "line": 85,
+            "text": "<stop"
+          },
+          {
+            "line": 90,
+            "text": "<stop"
+          }
+        ],
+        "opacity": [
+          {
+            "line": 101,
+            "text": "fillOpacity={0.4}"
+          },
+          {
+            "line": 109,
+            "text": "fillOpacity={0.4}"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-area-icons",
+      "family": "area",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-area-icons.tsx",
+      "sourceLines": 112,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "layout",
+        "curve",
+        "cartesian-style"
+      ],
+      "evidence": {
+        "margin": [
+          {
+            "line": 61,
+            "text": "margin={{"
+          }
+        ],
+        "naturalCurve": [
+          {
+            "line": 80,
+            "text": "type=\"natural\""
+          },
+          {
+            "line": 88,
+            "text": "type=\"natural\""
+          }
+        ],
+        "opacity": [
+          {
+            "line": 82,
+            "text": "fillOpacity={0.4}"
+          },
+          {
+            "line": 90,
+            "text": "fillOpacity={0.4}"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-area-interactive",
+      "family": "area",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-area-interactive.tsx",
+      "sourceLines": 266,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "curve",
+        "cartesian-style",
+        "interactive-recipes"
+      ],
+      "evidence": {
+        "naturalCurve": [
+          {
+            "line": 248,
+            "text": "type=\"natural\""
+          },
+          {
+            "line": 255,
+            "text": "type=\"natural\""
+          }
+        ],
+        "gradient": [
+          {
+            "line": 192,
+            "text": "<linearGradient id=\"fillDesktop\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">"
+          },
+          {
+            "line": 193,
+            "text": "<stop"
+          },
+          {
+            "line": 198,
+            "text": "<stop"
+          },
+          {
+            "line": 204,
+            "text": "<linearGradient id=\"fillMobile\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\">"
+          },
+          {
+            "line": 205,
+            "text": "<stop"
+          },
+          {
+            "line": 210,
+            "text": "<stop"
+          }
+        ],
+        "label": [
+          {
+            "line": 168,
+            "text": "aria-label=\"Select a value\""
+          }
+        ],
+        "control": [
+          {
+            "line": 165,
+            "text": "<Select value={timeRange} onValueChange={setTimeRange}>"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-area-legend",
+      "family": "area",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-area-legend.tsx",
+      "sourceLines": 110,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "layout",
+        "curve",
+        "cartesian-style"
+      ],
+      "evidence": {
+        "margin": [
+          {
+            "line": 59,
+            "text": "margin={{"
+          }
+        ],
+        "naturalCurve": [
+          {
+            "line": 78,
+            "text": "type=\"natural\""
+          },
+          {
+            "line": 86,
+            "text": "type=\"natural\""
+          }
+        ],
+        "opacity": [
+          {
+            "line": 80,
+            "text": "fillOpacity={0.4}"
+          },
+          {
+            "line": 88,
+            "text": "fillOpacity={0.4}"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-area-linear",
+      "family": "area",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-area-linear.tsx",
+      "sourceLines": 94,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "layout",
+        "curve",
+        "cartesian-style"
+      ],
+      "evidence": {
+        "margin": [
+          {
+            "line": 53,
+            "text": "margin={{"
+          }
+        ],
+        "linearCurve": [
+          {
+            "line": 72,
+            "text": "type=\"linear\""
+          }
+        ],
+        "opacity": [
+          {
+            "line": 74,
+            "text": "fillOpacity={0.4}"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-area-stacked-expand",
+      "family": "area",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-area-stacked-expand.tsx",
+      "sourceLines": 121,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "layout",
+        "curve",
+        "cartesian-style"
+      ],
+      "evidence": {
+        "margin": [
+          {
+            "line": 61,
+            "text": "margin={{"
+          }
+        ],
+        "naturalCurve": [
+          {
+            "line": 82,
+            "text": "type=\"natural\""
+          },
+          {
+            "line": 90,
+            "text": "type=\"natural\""
+          },
+          {
+            "line": 98,
+            "text": "type=\"natural\""
+          }
+        ],
+        "opacity": [
+          {
+            "line": 84,
+            "text": "fillOpacity={0.1}"
+          },
+          {
+            "line": 92,
+            "text": "fillOpacity={0.4}"
+          },
+          {
+            "line": 100,
+            "text": "fillOpacity={0.4}"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-area-stacked",
+      "family": "area",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-area-stacked.tsx",
+      "sourceLines": 107,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "layout",
+        "curve",
+        "cartesian-style"
+      ],
+      "evidence": {
+        "margin": [
+          {
+            "line": 57,
+            "text": "margin={{"
+          }
+        ],
+        "naturalCurve": [
+          {
+            "line": 76,
+            "text": "type=\"natural\""
+          },
+          {
+            "line": 84,
+            "text": "type=\"natural\""
+          }
+        ],
+        "opacity": [
+          {
+            "line": 78,
+            "text": "fillOpacity={0.4}"
+          },
+          {
+            "line": 86,
+            "text": "fillOpacity={0.4}"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-area-step",
+      "family": "area",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-area-step.tsx",
+      "sourceLines": 95,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "layout",
+        "curve",
+        "cartesian-style"
+      ],
+      "evidence": {
+        "margin": [
+          {
+            "line": 54,
+            "text": "margin={{"
+          }
+        ],
+        "stepCurve": [
+          {
+            "line": 73,
+            "text": "type=\"step\""
+          }
+        ],
+        "opacity": [
+          {
+            "line": 75,
+            "text": "fillOpacity={0.4}"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-bar-active",
+      "family": "bar",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-bar-active.tsx",
+      "sourceLines": 115,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "cartesian-style"
+      ],
+      "evidence": {
+        "opacity": [
+          {
+            "line": 92,
+            "text": "fillOpacity={0.8}"
+          }
+        ],
+        "customShape": [
+          {
+            "line": 88,
+            "text": "shape={({ index, ...props }: BarShapeProps) =>"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-bar-default",
+      "family": "bar",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-bar-default.tsx",
+      "sourceLines": 75,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [],
+      "evidence": {},
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-bar-horizontal",
+      "family": "bar",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-bar-horizontal.tsx",
+      "sourceLines": 83,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "layout"
+      ],
+      "evidence": {
+        "margin": [
+          {
+            "line": 52,
+            "text": "margin={{"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-bar-interactive",
+      "family": "bar",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-bar-interactive.tsx",
+      "sourceLines": 221,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "layout",
+        "interactive-recipes"
+      ],
+      "evidence": {
+        "margin": [
+          {
+            "line": 180,
+            "text": "margin={{"
+          }
+        ],
+        "control": [
+          {
+            "line": 155,
+            "text": "<button"
+          },
+          {
+            "line": 159,
+            "text": "onClick={() => setActiveChart(chart)}"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-bar-label-custom",
+      "family": "bar",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-bar-label-custom.tsx",
+      "sourceLines": 107,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "layout",
+        "labels"
+      ],
+      "evidence": {
+        "margin": [
+          {
+            "line": 59,
+            "text": "margin={{"
+          }
+        ],
+        "labelList": [
+          {
+            "line": 4,
+            "text": "import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis } from \"recharts\""
+          },
+          {
+            "line": 79,
+            "text": "<LabelList"
+          },
+          {
+            "line": 86,
+            "text": "<LabelList"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-bar-label",
+      "family": "bar",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-bar-label.tsx",
+      "sourceLines": 88,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "layout",
+        "labels"
+      ],
+      "evidence": {
+        "margin": [
+          {
+            "line": 51,
+            "text": "margin={{"
+          }
+        ],
+        "labelList": [
+          {
+            "line": 4,
+            "text": "import { Bar, BarChart, CartesianGrid, LabelList, XAxis } from \"recharts\""
+          },
+          {
+            "line": 68,
+            "text": "<LabelList"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-bar-mixed",
+      "family": "bar",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-bar-mixed.tsx",
+      "sourceLines": 103,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "layout"
+      ],
+      "evidence": {
+        "margin": [
+          {
+            "line": 70,
+            "text": "margin={{"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-bar-multiple",
+      "family": "bar",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-bar-multiple.tsx",
+      "sourceLines": 80,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [],
+      "evidence": {},
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-bar-negative",
+      "family": "bar",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-bar-negative.tsx",
+      "sourceLines": 75,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "cartesian-style",
+        "labels"
+      ],
+      "evidence": {
+        "labelList": [
+          {
+            "line": 4,
+            "text": "import { Bar, BarChart, CartesianGrid, Cell, LabelList } from \"recharts\""
+          },
+          {
+            "line": 54,
+            "text": "<LabelList position=\"top\" dataKey=\"month\" fillOpacity={1} />"
+          }
+        ],
+        "opacity": [
+          {
+            "line": 54,
+            "text": "<LabelList position=\"top\" dataKey=\"month\" fillOpacity={1} />"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-bar-stacked",
+      "family": "bar",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-bar-stacked.tsx",
+      "sourceLines": 90,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "cartesian-style"
+      ],
+      "evidence": {
+        "cornerRadii": [
+          {
+            "line": 69,
+            "text": "radius={[0, 0, 4, 4]}"
+          },
+          {
+            "line": 75,
+            "text": "radius={[4, 4, 0, 0]}"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-line-default",
+      "family": "line",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-line-default.tsx",
+      "sourceLines": 88,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "layout",
+        "curve",
+        "cartesian-style"
+      ],
+      "evidence": {
+        "margin": [
+          {
+            "line": 51,
+            "text": "margin={{"
+          }
+        ],
+        "naturalCurve": [
+          {
+            "line": 70,
+            "text": "type=\"natural\""
+          }
+        ],
+        "dot": [
+          {
+            "line": 73,
+            "text": "dot={false}"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-line-dots-colors",
+      "family": "line",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-line-dots-colors.tsx",
+      "sourceLines": 118,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "layout",
+        "curve",
+        "cartesian-style"
+      ],
+      "evidence": {
+        "margin": [
+          {
+            "line": 70,
+            "text": "margin={{"
+          }
+        ],
+        "naturalCurve": [
+          {
+            "line": 89,
+            "text": "type=\"natural\""
+          }
+        ],
+        "dot": [
+          {
+            "line": 92,
+            "text": "dot={({ payload, ...props }) => {"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-line-dots-custom",
+      "family": "line",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-line-dots-custom.tsx",
+      "sourceLines": 110,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "layout",
+        "curve",
+        "cartesian-style"
+      ],
+      "evidence": {
+        "margin": [
+          {
+            "line": 55,
+            "text": "margin={{"
+          }
+        ],
+        "naturalCurve": [
+          {
+            "line": 74,
+            "text": "type=\"natural\""
+          }
+        ],
+        "dot": [
+          {
+            "line": 77,
+            "text": "dot={({ cx, cy, payload }) => {"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-line-dots",
+      "family": "line",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-line-dots.tsx",
+      "sourceLines": 97,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "layout",
+        "curve",
+        "cartesian-style"
+      ],
+      "evidence": {
+        "margin": [
+          {
+            "line": 55,
+            "text": "margin={{"
+          }
+        ],
+        "naturalCurve": [
+          {
+            "line": 74,
+            "text": "type=\"natural\""
+          }
+        ],
+        "dot": [
+          {
+            "line": 77,
+            "text": "dot={{"
+          },
+          {
+            "line": 80,
+            "text": "activeDot={{"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-line-interactive",
+      "family": "line",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-line-interactive.tsx",
+      "sourceLines": 227,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "layout",
+        "cartesian-style",
+        "interactive-recipes"
+      ],
+      "evidence": {
+        "margin": [
+          {
+            "line": 180,
+            "text": "margin={{"
+          }
+        ],
+        "monotoneCurve": [
+          {
+            "line": 217,
+            "text": "type=\"monotone\""
+          }
+        ],
+        "dot": [
+          {
+            "line": 220,
+            "text": "dot={false}"
+          }
+        ],
+        "control": [
+          {
+            "line": 155,
+            "text": "<button"
+          },
+          {
+            "line": 159,
+            "text": "onClick={() => setActiveChart(chart)}"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-line-label-custom",
+      "family": "line",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-line-label-custom.tsx",
+      "sourceLines": 123,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "layout",
+        "curve",
+        "cartesian-style",
+        "labels"
+      ],
+      "evidence": {
+        "margin": [
+          {
+            "line": 70,
+            "text": "margin={{"
+          }
+        ],
+        "labelList": [
+          {
+            "line": 4,
+            "text": "import { CartesianGrid, LabelList, Line, LineChart } from \"recharts\""
+          },
+          {
+            "line": 99,
+            "text": "<LabelList"
+          }
+        ],
+        "naturalCurve": [
+          {
+            "line": 89,
+            "text": "type=\"natural\""
+          }
+        ],
+        "dot": [
+          {
+            "line": 92,
+            "text": "dot={{"
+          },
+          {
+            "line": 95,
+            "text": "activeDot={{"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-line-label",
+      "family": "line",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-line-label.tsx",
+      "sourceLines": 105,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "layout",
+        "curve",
+        "cartesian-style",
+        "labels"
+      ],
+      "evidence": {
+        "margin": [
+          {
+            "line": 55,
+            "text": "margin={{"
+          }
+        ],
+        "labelList": [
+          {
+            "line": 4,
+            "text": "import { CartesianGrid, LabelList, Line, LineChart, XAxis } from \"recharts\""
+          },
+          {
+            "line": 85,
+            "text": "<LabelList"
+          }
+        ],
+        "naturalCurve": [
+          {
+            "line": 75,
+            "text": "type=\"natural\""
+          }
+        ],
+        "dot": [
+          {
+            "line": 78,
+            "text": "dot={{"
+          },
+          {
+            "line": 81,
+            "text": "activeDot={{"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-line-linear",
+      "family": "line",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-line-linear.tsx",
+      "sourceLines": 88,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "layout",
+        "curve",
+        "cartesian-style"
+      ],
+      "evidence": {
+        "margin": [
+          {
+            "line": 51,
+            "text": "margin={{"
+          }
+        ],
+        "linearCurve": [
+          {
+            "line": 70,
+            "text": "type=\"linear\""
+          }
+        ],
+        "dot": [
+          {
+            "line": 73,
+            "text": "dot={false}"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-line-multiple",
+      "family": "line",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-line-multiple.tsx",
+      "sourceLines": 100,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "layout",
+        "cartesian-style"
+      ],
+      "evidence": {
+        "margin": [
+          {
+            "line": 55,
+            "text": "margin={{"
+          }
+        ],
+        "monotoneCurve": [
+          {
+            "line": 71,
+            "text": "type=\"monotone\""
+          },
+          {
+            "line": 78,
+            "text": "type=\"monotone\""
+          }
+        ],
+        "dot": [
+          {
+            "line": 74,
+            "text": "dot={false}"
+          },
+          {
+            "line": 81,
+            "text": "dot={false}"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-line-step",
+      "family": "line",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-line-step.tsx",
+      "sourceLines": 88,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "layout",
+        "curve",
+        "cartesian-style"
+      ],
+      "evidence": {
+        "margin": [
+          {
+            "line": 51,
+            "text": "margin={{"
+          }
+        ],
+        "stepCurve": [
+          {
+            "line": 70,
+            "text": "type=\"step\""
+          }
+        ],
+        "dot": [
+          {
+            "line": 73,
+            "text": "dot={false}"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-pie-donut-active",
+      "family": "pie",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-pie-donut-active.tsx",
+      "sourceLines": 108,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "polar-geometry"
+      ],
+      "evidence": {
+        "customShape": [
+          {
+            "line": 83,
+            "text": "shape={({"
+          }
+        ],
+        "polarGeometry": [
+          {
+            "line": 81,
+            "text": "innerRadius={60}"
+          },
+          {
+            "line": 89,
+            "text": "<Sector {...props} outerRadius={outerRadius + 10} />"
+          },
+          {
+            "line": 91,
+            "text": "<Sector {...props} outerRadius={outerRadius} />"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-pie-donut-text",
+      "family": "pie",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-pie-donut-text.tsx",
+      "sourceLines": 129,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "labels",
+        "polar-geometry",
+        "polar-grid-labels"
+      ],
+      "evidence": {
+        "label": [
+          {
+            "line": 86,
+            "text": "<Label"
+          }
+        ],
+        "polarGeometry": [
+          {
+            "line": 83,
+            "text": "innerRadius={60}"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-pie-donut",
+      "family": "pie",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-pie-donut.tsx",
+      "sourceLines": 93,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "polar-geometry"
+      ],
+      "evidence": {
+        "polarGeometry": [
+          {
+            "line": 78,
+            "text": "innerRadius={60}"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-pie-interactive",
+      "family": "pie",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-pie-interactive.tsx",
+      "sourceLines": 202,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "labels",
+        "polar-geometry",
+        "polar-grid-labels",
+        "interactive-recipes"
+      ],
+      "evidence": {
+        "customShape": [
+          {
+            "line": 165,
+            "text": "shape={renderPieShape}"
+          }
+        ],
+        "label": [
+          {
+            "line": 115,
+            "text": "aria-label=\"Select a value\""
+          },
+          {
+            "line": 167,
+            "text": "<Label"
+          }
+        ],
+        "polarGeometry": [
+          {
+            "line": 89,
+            "text": "<Sector {...props} outerRadius={outerRadius + 10} />"
+          },
+          {
+            "line": 92,
+            "text": "outerRadius={outerRadius + 25}"
+          },
+          {
+            "line": 93,
+            "text": "innerRadius={outerRadius + 12}"
+          },
+          {
+            "line": 99,
+            "text": "return <Sector {...props} outerRadius={outerRadius} />"
+          },
+          {
+            "line": 163,
+            "text": "innerRadius={60}"
+          }
+        ],
+        "control": [
+          {
+            "line": 112,
+            "text": "<Select value={activeMonth} onValueChange={setActiveMonth}>"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-pie-label-custom",
+      "family": "pie",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-pie-label-custom.tsx",
+      "sourceLines": 107,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "labels",
+        "polar-geometry",
+        "polar-grid-labels"
+      ],
+      "evidence": {
+        "label": [
+          {
+            "line": 77,
+            "text": "label={({ payload, ...props }) => {"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-pie-label-list",
+      "family": "pie",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-pie-label-list.tsx",
+      "sourceLines": 97,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "labels",
+        "polar-geometry",
+        "polar-grid-labels"
+      ],
+      "evidence": {
+        "labelList": [
+          {
+            "line": 4,
+            "text": "import { LabelList, Pie, PieChart } from \"recharts\""
+          },
+          {
+            "line": 74,
+            "text": "<LabelList"
+          }
+        ],
+        "label": [
+          {
+            "line": 21,
+            "text": "export const description = \"A pie chart with a label list\""
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-pie-label",
+      "family": "pie",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-pie-label.tsx",
+      "sourceLines": 85,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "labels",
+        "polar-geometry",
+        "polar-grid-labels"
+      ],
+      "evidence": {
+        "label": [
+          {
+            "line": 71,
+            "text": "<Pie data={chartData} dataKey=\"visitors\" label nameKey=\"browser\" />"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-pie-legend",
+      "family": "pie",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-pie-legend.tsx",
+      "sourceLines": 78,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "polar-geometry"
+      ],
+      "evidence": {},
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-pie-separator-none",
+      "family": "pie",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-pie-separator-none.tsx",
+      "sourceLines": 93,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "polar-geometry"
+      ],
+      "evidence": {},
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-pie-simple",
+      "family": "pie",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-pie-simple.tsx",
+      "sourceLines": 88,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "polar-geometry"
+      ],
+      "evidence": {},
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-pie-stacked",
+      "family": "pie",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-pie-stacked.tsx",
+      "sourceLines": 119,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "polar-geometry"
+      ],
+      "evidence": {
+        "polarGeometry": [
+          {
+            "line": 99,
+            "text": "<Pie data={desktopData} dataKey=\"desktop\" outerRadius={60} />"
+          },
+          {
+            "line": 103,
+            "text": "innerRadius={70}"
+          },
+          {
+            "line": 104,
+            "text": "outerRadius={90}"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-radar-default",
+      "family": "radar",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-default.tsx",
+      "sourceLines": 75,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "polar-grid-labels"
+      ],
+      "evidence": {
+        "opacity": [
+          {
+            "line": 60,
+            "text": "fillOpacity={0.6}"
+          }
+        ],
+        "polarGrid": [
+          {
+            "line": 56,
+            "text": "<PolarGrid />"
+          }
+        ],
+        "polarAxis": [
+          {
+            "line": 55,
+            "text": "<PolarAngleAxis dataKey=\"month\" />"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-radar-dots",
+      "family": "radar",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-dots.tsx",
+      "sourceLines": 79,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "polar-grid-labels"
+      ],
+      "evidence": {
+        "opacity": [
+          {
+            "line": 60,
+            "text": "fillOpacity={0.6}"
+          }
+        ],
+        "dot": [
+          {
+            "line": 61,
+            "text": "dot={{"
+          }
+        ],
+        "polarGrid": [
+          {
+            "line": 56,
+            "text": "<PolarGrid />"
+          }
+        ],
+        "polarAxis": [
+          {
+            "line": 55,
+            "text": "<PolarAngleAxis dataKey=\"month\" />"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-radar-grid-circle-fill",
+      "family": "radar",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-grid-circle-fill.tsx",
+      "sourceLines": 78,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "polar-grid-labels"
+      ],
+      "evidence": {
+        "opacity": [
+          {
+            "line": 63,
+            "text": "fillOpacity={0.5}"
+          }
+        ],
+        "polarGrid": [
+          {
+            "line": 55,
+            "text": "<PolarGrid"
+          },
+          {
+            "line": 57,
+            "text": "gridType=\"circle\""
+          }
+        ],
+        "polarAxis": [
+          {
+            "line": 59,
+            "text": "<PolarAngleAxis dataKey=\"month\" />"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-radar-grid-circle-no-lines",
+      "family": "radar",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-grid-circle-no-lines.tsx",
+      "sourceLines": 82,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "polar-grid-labels"
+      ],
+      "evidence": {
+        "opacity": [
+          {
+            "line": 63,
+            "text": "fillOpacity={0.6}"
+          }
+        ],
+        "dot": [
+          {
+            "line": 64,
+            "text": "dot={{"
+          }
+        ],
+        "polarGrid": [
+          {
+            "line": 58,
+            "text": "<PolarGrid gridType=\"circle\" radialLines={false} />"
+          }
+        ],
+        "polarAxis": [
+          {
+            "line": 59,
+            "text": "<PolarAngleAxis dataKey=\"month\" />"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-radar-grid-circle",
+      "family": "radar",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-grid-circle.tsx",
+      "sourceLines": 82,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "polar-grid-labels"
+      ],
+      "evidence": {
+        "opacity": [
+          {
+            "line": 63,
+            "text": "fillOpacity={0.6}"
+          }
+        ],
+        "dot": [
+          {
+            "line": 64,
+            "text": "dot={{"
+          }
+        ],
+        "polarGrid": [
+          {
+            "line": 58,
+            "text": "<PolarGrid gridType=\"circle\" />"
+          }
+        ],
+        "polarAxis": [
+          {
+            "line": 59,
+            "text": "<PolarAngleAxis dataKey=\"month\" />"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-radar-grid-custom",
+      "family": "radar",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-grid-custom.tsx",
+      "sourceLines": 78,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "polar-grid-labels"
+      ],
+      "evidence": {
+        "opacity": [
+          {
+            "line": 63,
+            "text": "fillOpacity={0.6}"
+          }
+        ],
+        "polarGrid": [
+          {
+            "line": 58,
+            "text": "<PolarGrid radialLines={false} polarRadius={[90]} strokeWidth={1} />"
+          }
+        ],
+        "polarAxis": [
+          {
+            "line": 59,
+            "text": "<PolarAngleAxis dataKey=\"month\" />"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-radar-grid-fill",
+      "family": "radar",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-grid-fill.tsx",
+      "sourceLines": 78,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "polar-grid-labels"
+      ],
+      "evidence": {
+        "opacity": [
+          {
+            "line": 63,
+            "text": "fillOpacity={0.5}"
+          }
+        ],
+        "polarGrid": [
+          {
+            "line": 58,
+            "text": "<PolarGrid className=\"fill-(--color-desktop) opacity-20\" />"
+          }
+        ],
+        "polarAxis": [
+          {
+            "line": 59,
+            "text": "<PolarAngleAxis dataKey=\"month\" />"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-radar-grid-none",
+      "family": "radar",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-grid-none.tsx",
+      "sourceLines": 81,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "polar-grid-labels"
+      ],
+      "evidence": {
+        "opacity": [
+          {
+            "line": 62,
+            "text": "fillOpacity={0.6}"
+          }
+        ],
+        "dot": [
+          {
+            "line": 63,
+            "text": "dot={{"
+          }
+        ],
+        "polarAxis": [
+          {
+            "line": 58,
+            "text": "<PolarAngleAxis dataKey=\"month\" />"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-radar-icons",
+      "family": "radar",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-icons.tsx",
+      "sourceLines": 96,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "layout",
+        "polar-grid-labels"
+      ],
+      "evidence": {
+        "margin": [
+          {
+            "line": 63,
+            "text": "margin={{"
+          }
+        ],
+        "opacity": [
+          {
+            "line": 79,
+            "text": "fillOpacity={0.6}"
+          }
+        ],
+        "polarGrid": [
+          {
+            "line": 75,
+            "text": "<PolarGrid />"
+          }
+        ],
+        "polarAxis": [
+          {
+            "line": 74,
+            "text": "<PolarAngleAxis dataKey=\"month\" />"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-radar-label-custom",
+      "family": "radar",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-label-custom.tsx",
+      "sourceLines": 121,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "layout",
+        "polar-grid-labels"
+      ],
+      "evidence": {
+        "margin": [
+          {
+            "line": 59,
+            "text": "margin={{"
+          }
+        ],
+        "opacity": [
+          {
+            "line": 105,
+            "text": "fillOpacity={0.6}"
+          }
+        ],
+        "polarGrid": [
+          {
+            "line": 101,
+            "text": "<PolarGrid />"
+          }
+        ],
+        "polarAxis": [
+          {
+            "line": 70,
+            "text": "<PolarAngleAxis"
+          }
+        ],
+        "customTick": [
+          {
+            "line": 72,
+            "text": "tick={({ x, y, textAnchor, index, ...props }) => {"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-radar-legend",
+      "family": "radar",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-legend.tsx",
+      "sourceLines": 94,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "layout",
+        "polar-grid-labels"
+      ],
+      "evidence": {
+        "margin": [
+          {
+            "line": 61,
+            "text": "margin={{"
+          }
+        ],
+        "opacity": [
+          {
+            "line": 77,
+            "text": "fillOpacity={0.6}"
+          }
+        ],
+        "polarGrid": [
+          {
+            "line": 73,
+            "text": "<PolarGrid />"
+          }
+        ],
+        "polarAxis": [
+          {
+            "line": 72,
+            "text": "<PolarAngleAxis dataKey=\"month\" />"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-radar-lines-only",
+      "family": "radar",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-lines-only.tsx",
+      "sourceLines": 91,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "polar-grid-labels"
+      ],
+      "evidence": {
+        "opacity": [
+          {
+            "line": 67,
+            "text": "fillOpacity={0}"
+          },
+          {
+            "line": 74,
+            "text": "fillOpacity={0}"
+          }
+        ],
+        "polarGrid": [
+          {
+            "line": 63,
+            "text": "<PolarGrid radialLines={false} />"
+          }
+        ],
+        "polarAxis": [
+          {
+            "line": 62,
+            "text": "<PolarAngleAxis dataKey=\"month\" />"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-radar-multiple",
+      "family": "radar",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-multiple.tsx",
+      "sourceLines": 83,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "polar-grid-labels"
+      ],
+      "evidence": {
+        "opacity": [
+          {
+            "line": 67,
+            "text": "fillOpacity={0.6}"
+          }
+        ],
+        "polarGrid": [
+          {
+            "line": 63,
+            "text": "<PolarGrid />"
+          }
+        ],
+        "polarAxis": [
+          {
+            "line": 62,
+            "text": "<PolarAngleAxis dataKey=\"month\" />"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-radar-radius",
+      "family": "radar",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-radius.tsx",
+      "sourceLines": 96,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "polar-grid-labels"
+      ],
+      "evidence": {
+        "opacity": [
+          {
+            "line": 74,
+            "text": "fillOpacity={0.6}"
+          }
+        ],
+        "polarGrid": [
+          {
+            "line": 70,
+            "text": "<PolarGrid />"
+          }
+        ],
+        "polarAxis": [
+          {
+            "line": 77,
+            "text": "<PolarRadiusAxis"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-radial-grid",
+      "family": "radial",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radial-grid.tsx",
+      "sourceLines": 89,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "polar-geometry",
+        "polar-grid-labels"
+      ],
+      "evidence": {
+        "polarGrid": [
+          {
+            "line": 74,
+            "text": "<PolarGrid gridType=\"circle\" />"
+          }
+        ],
+        "polarGeometry": [
+          {
+            "line": 69,
+            "text": "<RadialBarChart data={chartData} innerRadius={30} outerRadius={100}>"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-radial-label",
+      "family": "radial",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radial-label.tsx",
+      "sourceLines": 101,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "labels",
+        "polar-geometry"
+      ],
+      "evidence": {
+        "labelList": [
+          {
+            "line": 4,
+            "text": "import { LabelList, RadialBar, RadialBarChart } from \"recharts\""
+          },
+          {
+            "line": 81,
+            "text": "<LabelList"
+          }
+        ],
+        "polarGeometry": [
+          {
+            "line": 71,
+            "text": "startAngle={-90}"
+          },
+          {
+            "line": 72,
+            "text": "endAngle={380}"
+          },
+          {
+            "line": 73,
+            "text": "innerRadius={30}"
+          },
+          {
+            "line": 74,
+            "text": "outerRadius={110}"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-radial-shape",
+      "family": "radial",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radial-shape.tsx",
+      "sourceLines": 111,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "polar-geometry",
+        "polar-grid-labels"
+      ],
+      "evidence": {
+        "label": [
+          {
+            "line": 68,
+            "text": "<Label"
+          }
+        ],
+        "polarGrid": [
+          {
+            "line": 59,
+            "text": "<PolarGrid"
+          },
+          {
+            "line": 60,
+            "text": "gridType=\"circle\""
+          },
+          {
+            "line": 61,
+            "text": "radialLines={false}"
+          },
+          {
+            "line": 64,
+            "text": "polarRadius={[86, 74]}"
+          }
+        ],
+        "polarAxis": [
+          {
+            "line": 67,
+            "text": "<PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>"
+          }
+        ],
+        "polarGeometry": [
+          {
+            "line": 55,
+            "text": "endAngle={100}"
+          },
+          {
+            "line": 56,
+            "text": "innerRadius={65}"
+          },
+          {
+            "line": 57,
+            "text": "outerRadius={95}"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-radial-simple",
+      "family": "radial",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radial-simple.tsx",
+      "sourceLines": 88,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "polar-geometry"
+      ],
+      "evidence": {
+        "polarGeometry": [
+          {
+            "line": 69,
+            "text": "<RadialBarChart data={chartData} innerRadius={30} outerRadius={110}>"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-radial-stacked",
+      "family": "radial",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radial-stacked.tsx",
+      "sourceLines": 119,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "polar-geometry",
+        "polar-grid-labels"
+      ],
+      "evidence": {
+        "label": [
+          {
+            "line": 81,
+            "text": "<Label"
+          }
+        ],
+        "polarAxis": [
+          {
+            "line": 80,
+            "text": "<PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>"
+          }
+        ],
+        "polarGeometry": [
+          {
+            "line": 58,
+            "text": "endAngle={180}"
+          },
+          {
+            "line": 59,
+            "text": "innerRadius={80}"
+          },
+          {
+            "line": 60,
+            "text": "outerRadius={110}"
+          },
+          {
+            "line": 66,
+            "text": "cornerRadius={5}"
+          },
+          {
+            "line": 72,
+            "text": "cornerRadius={5}"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-radial-text",
+      "family": "radial",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radial-text.tsx",
+      "sourceLines": 112,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "polar-geometry",
+        "polar-grid-labels"
+      ],
+      "evidence": {
+        "label": [
+          {
+            "line": 69,
+            "text": "<Label"
+          }
+        ],
+        "polarGrid": [
+          {
+            "line": 60,
+            "text": "<PolarGrid"
+          },
+          {
+            "line": 61,
+            "text": "gridType=\"circle\""
+          },
+          {
+            "line": 62,
+            "text": "radialLines={false}"
+          },
+          {
+            "line": 65,
+            "text": "polarRadius={[90, 80]}"
+          }
+        ],
+        "polarAxis": [
+          {
+            "line": 68,
+            "text": "<PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>"
+          }
+        ],
+        "polarGeometry": [
+          {
+            "line": 55,
+            "text": "startAngle={0}"
+          },
+          {
+            "line": 56,
+            "text": "endAngle={250}"
+          },
+          {
+            "line": 57,
+            "text": "outerRadius={90}"
+          },
+          {
+            "line": 58,
+            "text": "innerRadius={80}"
+          },
+          {
+            "line": 67,
+            "text": "<RadialBar dataKey=\"visitors\" background cornerRadius={10} />"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-tooltip-advanced",
+      "family": "tooltip",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-tooltip-advanced.tsx",
+      "sourceLines": 123,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "cartesian-style",
+        "tooltip-legend-recipes"
+      ],
+      "evidence": {
+        "cornerRadii": [
+          {
+            "line": 68,
+            "text": "radius={[0, 0, 4, 4]}"
+          },
+          {
+            "line": 74,
+            "text": "radius={[4, 4, 0, 0]}"
+          }
+        ],
+        "label": [
+          {
+            "line": 91,
+            "text": "{chartConfig[name as keyof typeof chartConfig]?.label ||"
+          }
+        ],
+        "defaultIndex": [
+          {
+            "line": 116,
+            "text": "defaultIndex={1}"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-tooltip-default",
+      "family": "tooltip",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-tooltip-default.tsx",
+      "sourceLines": 89,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "cartesian-style",
+        "tooltip-legend-recipes"
+      ],
+      "evidence": {
+        "cornerRadii": [
+          {
+            "line": 71,
+            "text": "radius={[0, 0, 4, 4]}"
+          },
+          {
+            "line": 77,
+            "text": "radius={[4, 4, 0, 0]}"
+          }
+        ],
+        "defaultIndex": [
+          {
+            "line": 82,
+            "text": "defaultIndex={1}"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-tooltip-formatter",
+      "family": "tooltip",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-tooltip-formatter.tsx",
+      "sourceLines": 100,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "cartesian-style",
+        "tooltip-legend-recipes"
+      ],
+      "evidence": {
+        "cornerRadii": [
+          {
+            "line": 66,
+            "text": "radius={[0, 0, 4, 4]}"
+          },
+          {
+            "line": 72,
+            "text": "radius={[4, 4, 0, 0]}"
+          }
+        ],
+        "label": [
+          {
+            "line": 80,
+            "text": "{chartConfig[name as keyof typeof chartConfig]?.label ||"
+          }
+        ],
+        "defaultIndex": [
+          {
+            "line": 93,
+            "text": "defaultIndex={1}"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-tooltip-icons",
+      "family": "tooltip",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-tooltip-icons.tsx",
+      "sourceLines": 87,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "cartesian-style",
+        "tooltip-legend-recipes"
+      ],
+      "evidence": {
+        "cornerRadii": [
+          {
+            "line": 69,
+            "text": "radius={[0, 0, 4, 4]}"
+          },
+          {
+            "line": 75,
+            "text": "radius={[4, 4, 0, 0]}"
+          }
+        ],
+        "defaultIndex": [
+          {
+            "line": 80,
+            "text": "defaultIndex={1}"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-tooltip-indicator-line",
+      "family": "tooltip",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-tooltip-indicator-line.tsx",
+      "sourceLines": 87,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "cartesian-style",
+        "tooltip-legend-recipes"
+      ],
+      "evidence": {
+        "cornerRadii": [
+          {
+            "line": 69,
+            "text": "radius={[0, 0, 4, 4]}"
+          },
+          {
+            "line": 75,
+            "text": "radius={[4, 4, 0, 0]}"
+          }
+        ],
+        "defaultIndex": [
+          {
+            "line": 80,
+            "text": "defaultIndex={1}"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-tooltip-indicator-none",
+      "family": "tooltip",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-tooltip-indicator-none.tsx",
+      "sourceLines": 84,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "cartesian-style",
+        "tooltip-legend-recipes"
+      ],
+      "evidence": {
+        "cornerRadii": [
+          {
+            "line": 66,
+            "text": "radius={[0, 0, 4, 4]}"
+          },
+          {
+            "line": 72,
+            "text": "radius={[4, 4, 0, 0]}"
+          }
+        ],
+        "defaultIndex": [
+          {
+            "line": 77,
+            "text": "defaultIndex={1}"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-tooltip-label-custom",
+      "family": "tooltip",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-tooltip-label-custom.tsx",
+      "sourceLines": 91,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "cartesian-style",
+        "tooltip-legend-recipes"
+      ],
+      "evidence": {
+        "cornerRadii": [
+          {
+            "line": 71,
+            "text": "radius={[0, 0, 4, 4]}"
+          },
+          {
+            "line": 77,
+            "text": "radius={[4, 4, 0, 0]}"
+          }
+        ],
+        "label": [
+          {
+            "line": 50,
+            "text": "Tooltip with custom label from chartConfig."
+          }
+        ],
+        "defaultIndex": [
+          {
+            "line": 84,
+            "text": "defaultIndex={1}"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-tooltip-label-formatter",
+      "family": "tooltip",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-tooltip-label-formatter.tsx",
+      "sourceLines": 94,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "cartesian-style",
+        "tooltip-legend-recipes"
+      ],
+      "evidence": {
+        "cornerRadii": [
+          {
+            "line": 66,
+            "text": "radius={[0, 0, 4, 4]}"
+          },
+          {
+            "line": 72,
+            "text": "radius={[4, 4, 0, 0]}"
+          }
+        ],
+        "label": [
+          {
+            "line": 46,
+            "text": "<CardDescription>Tooltip with label formatter.</CardDescription>"
+          }
+        ],
+        "defaultIndex": [
+          {
+            "line": 87,
+            "text": "defaultIndex={1}"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    },
+    {
+      "id": "chart-tooltip-label-none",
+      "family": "tooltip",
+      "path": "apps/v4/registry/new-york-v4/charts/chart-tooltip-label-none.tsx",
+      "sourceLines": 84,
+      "highLevelFamilyPresent": true,
+      "standaloneSourceRecipeInGallery": false,
+      "gapIds": [
+        "cartesian-style",
+        "tooltip-legend-recipes"
+      ],
+      "evidence": {
+        "cornerRadii": [
+          {
+            "line": 66,
+            "text": "radius={[0, 0, 4, 4]}"
+          },
+          {
+            "line": 72,
+            "text": "radius={[4, 4, 0, 0]}"
+          }
+        ],
+        "defaultIndex": [
+          {
+            "line": 77,
+            "text": "defaultIndex={1}"
+          }
+        ]
+      },
+      "note": "Static requirement mapping, not pixel/native/AT verification or a pass/fail count. Generic high-level family support does not imply exact source recipe parity."
+    }
+  ],
+  "plannedModules": [
+    {
+      "stage": "Chart1 Cartesian source composition",
+      "scope": "Complete native reusable plot layout/axes + curves + series paint/dots/shapes + source Cartesian LabelList subset; render all 30 area/bar/line source recipes through public API (not private Gallery drawing).",
+      "dependencies": "None; MyGo has public paths/gradients/Point/Anchor/per-corner Radius. Natural interpolation must live in kit.",
+      "acceptance": "Source-grounded geometry/label/interaction cases and existing animation integration for new curves; source counts as catalog inventory, not artificial test matrix. Commit completed module."
+    },
+    {
+      "stage": "Chart2 Polar source composition",
+      "scope": "Complete shared polar geometry/hits/animation + radii/angle/corner/separator/sector; radar grid/axis/custom ticks/dots; center and per-datum labels; all31 pie/radar/radial source recipes, including Create donut/radial.",
+      "dependencies": "Chart1 reusable label/paint contracts where appropriate.",
+      "acceptance": "Real source angle/radius/grid and custom content cases, keyboard/pointer correspondence, reduced-motion/latest-data preservation. Commit completed module."
+    },
+    {
+      "stage": "Chart3 Complete source example integration",
+      "scope": "Nine tooltip recipes with existing content helpers + proper full payload bridge; 4 interactive recipes; documentation8/RTL/Create6 mapping; expose catalog entries/search/presets and source inventory. Reuse Chart1/2 APIs, no Gallery-only mark internals.",
+      "dependencies": "Chart1/2 for per-corner bars, gradients, sectors, center labels.",
+      "acceptance": "All70 ids plus docs/Create examples accounted by implemented source recipe or documented intentional native styling adaptation. Focused public usage and platform delivery gates, not whole Recharts feature list. Commit completed module."
+    }
+  ]
+}
