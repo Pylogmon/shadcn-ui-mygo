@@ -110,14 +110,14 @@
 | 5.CA | Material Symbols按需函数与独立全量目录 | 已提交 `66d83a8`；4157名称/24942 SVG、离线重复生成、11项正式/13项独审及独立SDK1898项通过；真实链接裁剪/像素、三平台构建及macOS浏览切换通过 |
 | 5.CB | Combobox选值/query、清除、共框标签及弹层搜索 | 已提交 `e454b8a`；新增53项、377项隔离、77项独审与vet通过；禁用/IME旧缺陷、RTL/Tab/原生编辑/组合回归已修，源100ms保留退出另阶段完成 |
 | 5.CC | Gallery可清除/分组/内部搜索/多选Combobox | 已提交 `344311e`；新增17项、Gallery205项、全量1968项及vet通过；十张明暗/窄RTL/打开态图与三平台构建、实际选择回写验证 |
-| 5.CD | Material/Combobox同ZIP的独立消费者验收 | 本阶段提交；`344311e`标准八步与第二外部模块15命令、4项Combo/13项图标检查通过；双轮空缓存/无replace、527份原文、实际按需裁剪/像素及缓存清理核验 |
+| 5.CD | Material/Combobox同ZIP的独立消费者验收 | 已提交 `bfe9324`；`344311e`标准八步与第二外部模块15命令、4项Combo/13项图标检查通过；双轮空缓存/无replace、527份原文、实际按需裁剪/像素及缓存清理核验 |
+| 5.CE | Gallery全局搜索与示例草稿独立持有 | 本阶段提交；两条真实输入回归先红后绿，隔离Gallery207项及vet通过；网址、内嵌Command与组件搜索跨页互不修改 |
 
 用户已明确允许原生平台适配：Popover、menu、下拉菜单可以使用 MyGo 的系统菜单与独立 Flyout，超出父窗口范围；无需逐像素照搬网页浮层。Gallery 以 [shadcn/create](https://ui.shadcn.com/create) 的配置与实时预览流程为参考。完整组件功能、主题、动画范围保持不变。
 
 ## 下一轮的明确缺口
 
 - Combobox源100ms进退、退出层保留/反转与侧向原点，以及内部搜索框Vega32DIP样式；现有preset只算兼容动画。
-- Gallery的全局搜索、URL输入示例和独立Command示例目前共享Query，需要分离应用状态并验证互不修改。
 - macOS实窗无active Enter复验：本轮自动化出现旧bundle/AX目标失效及首次Return仍留列表的观测。补充12项公开settled输入检查全绿；Tester无公开batch接口，无帧输入时序仍未证实。先辨明实际进程、IME与事件时序，再依据实证修正。
 - 按parity表继续补齐Carousel多项/插件等高级组合、Chart高级配置及所有组件例子；Windows/Linux实际窗口、真实AT/IME、多显示器/缩放和完整视觉矩阵作为最终验收。
 

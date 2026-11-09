@@ -332,3 +332,5 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 
 - 实窗Enter补充调查：fresh`344311e`的12项纯公开native检查全绿，覆盖真实Gio建议选择回焦、CmdA/菜单selectAll、Field有无、Fy普通Enter恢复Gio/关闭及DownEnter选Fyne；未改产品或运行时。只读macOS事件路径确认普通Return走KeyPressed，insertNewline只补发IME withheld原键。公开Tester所有输入自动settle，没有no-frame batch接口；Changed/Submitted同帧与旧open状态的时序只是推演，未判为SDK故障。收据`/private/tmp/combobox-enter-order-investigation-1wyiiq9a/investigation-receipt.json`，临时Go已移文本模板。
 - 最终图标/Combo分发：实际`344311e`同ZIP标准八步、第二外部模块15命令与4项Combo/13项图标公开检查全0；两轮全新缓存、GOWORK关闭、无replace，527份ZIP文件匹配新模块缓存且缓存已删除。Root核对ref/伪版本/ZIP SHA、全部日志/外部源码/四份二进制及PNG哈希；按需Home与全量图标的真实像素相同，完整ZIP只在全量应用中，体积与私有DCE探针相同。新标准图片与本轮已查看对应图逐字节同；外部raw Home透明PNG已查看。完整收据`build/consumer-verification/run-1850267044/material-combobox-distribution-receipt.json`，不把这些无窗口证据计为公共发布或平台GUI完成。
+
+- Gallery搜索状态：网址输入、内嵌Command与全局组件搜索原先共同绑定State.Query。两项真实native输入回归先在`bfe9324`精确复现全局搜索被改成native-project/settings，再将两种示例分别绑定调用方独立草稿。组件搜索仍保留原Query；增加清楚的原生编辑器名称。验证搜索进入Combobox后网址保留、网址继续编辑不影响全局词、内嵌命令在导航离开/返回后保留且反向不影响搜索。fresh基线仅覆盖两个产品文件和一份回归，聚焦2项、Gallery207项及vet全绿，三个SHA与workspace一致；收据`/private/tmp/gallery-query-final-bnnfgfp2/verification-receipt.json`。未提前混入Combobox动画候选。

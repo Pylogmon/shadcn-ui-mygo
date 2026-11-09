@@ -65,6 +65,7 @@ type State struct {
 	contentAction, contentProject                                                  string
 	contentPinned, contentDismissed                                                bool
 	formStatus, inviteCode, breadcrumbSelection                                    string
+	websiteName, commandPreviewQuery                                               string
 	formatting                                                                     []string
 	readAccess, writeAccess, quietNotifications                                    bool
 	bioResize                                                                      control.TextareaResizeState

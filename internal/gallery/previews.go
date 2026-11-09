@@ -102,7 +102,9 @@ func (s *State) controls(c *ui.Context) {
 			control.Field(c, control.FieldProps{Label: "Bio", Description: "Tell us a little about yourself."}, func() ui.Element {
 				return control.TextareaWith(c, &s.Bio, control.TextareaProps{Placeholder: "I build things with Go…"}, control.TextareaResizeProps{State: &s.bioResize, Label: "Resize bio"}).Root
 			})
-			control.InputGroup(c, control.InputGroupProps{Prefix: "https://", Suffix: ".dev"}, func() ui.Element { return control.Input(c, &s.Query, control.InputProps{Placeholder: "your-name"}) })
+			control.InputGroup(c, control.InputGroupProps{Prefix: "https://", Suffix: ".dev", Label: "Website name"}, func() ui.Element {
+				return control.Input(c, &s.websiteName, control.InputProps{Placeholder: "your-name"})
+			})
 			s.otpPreview(c)
 		})
 	}, func() {
@@ -211,7 +213,7 @@ func (s *State) overlays(c *ui.Context) {
 	s.notificationsPreview(c)
 	display.Card(c, func() {
 		s.cardHeader(c, "Command palette", "Search by name. Select with the keyboard.")
-		overlay.Command(c, &s.Query, overlay.CommandProps{Items: []overlay.CommandItem{{Value: "calendar", Label: "Calendar", Group: "Suggestions"}, {Value: "search", Label: "Search", Group: "Suggestions"}, {Value: "settings", Label: "Settings", Group: "Workspace"}}})
+		overlay.Command(c, &s.commandPreviewQuery, overlay.CommandProps{InputLabel: "Example command search", Items: []overlay.CommandItem{{Value: "calendar", Label: "Calendar", Group: "Suggestions"}, {Value: "search", Label: "Search", Group: "Suggestions"}, {Value: "settings", Label: "Settings", Group: "Workspace"}}})
 	})
 }
 func (s *State) themes(c *ui.Context) {
