@@ -143,7 +143,8 @@
     },
     {
       "path": "apps/v4/registry/bases/base/ui/marker.tsx",
-      "sha256": "f7daf3c6f9ae5eee31820cd9576d6df3d30b7f348beb9fe4372704812e76384e"
+      "sha256": "f7daf3c6f9ae5eee31820cd9576d6df3d30b7f348beb9fe4372704812e76384e",
+      "gitBlob": "4fcf772c96f7649cea01ad6f7a688a521a817a42"
     },
     {
       "path": "apps/v4/registry/bases/base/ui/menubar.tsx",
@@ -516,6 +517,56 @@
       "path": "apps/v4/examples/base/message-pattern.tsx",
       "gitBlob": "4e6b9db1f2031295273452b64430eef46313a94b",
       "sha256": "ded1dfbd51ad78cacd2208bc55cfcc425b7eba638400d1cceb1b282a63117684"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/examples/marker-example.tsx",
+      "gitBlob": "d9eb82ae1ee3b405040716140b88991cea2c4a03",
+      "sha256": "1a6c7b909f4f486e287e01ebc09d8c64ffc38f7971a867352277023384ad31b8"
+    },
+    {
+      "path": "apps/v4/content/docs/components/base/marker.mdx",
+      "gitBlob": "56c1a9f6caadb667bcf16e72e90906e3b6ace5a8",
+      "sha256": "07de1e2fabcbb7380f491bbd24cd1bede3a0bea1533a76120a1c1a1672caf611"
+    },
+    {
+      "path": "apps/v4/examples/base/marker-border.tsx",
+      "gitBlob": "3cb9c624df46efecb358f21bcf53673066ddedc9",
+      "sha256": "a2db1a707835bf1848513de1ecfc5b52e4ada038fca2de3132eab95f21b370e0"
+    },
+    {
+      "path": "apps/v4/examples/base/marker-demo.tsx",
+      "gitBlob": "4a9187eb66ecdce8df6e66a651dbc5c51cc93ab6",
+      "sha256": "8ed6935873331a057de89d9fbcff6722158fe10863122421320a15ce30ee9337"
+    },
+    {
+      "path": "apps/v4/examples/base/marker-icon.tsx",
+      "gitBlob": "1d064a8d1e9d9a943788877d1c6144a84d4029b0",
+      "sha256": "0eb8ffb5d8eca5f5219bbf564064acf48e1a84a0609f9fd266de9f463cb96b29"
+    },
+    {
+      "path": "apps/v4/examples/base/marker-link-button.tsx",
+      "gitBlob": "5af4d4d55ac0d49340f53499789f4f295a5d9d96",
+      "sha256": "c55adadbd046297c806040980de0d042c8ca605ae2364532dfc569415cdc89ac"
+    },
+    {
+      "path": "apps/v4/examples/base/marker-separator.tsx",
+      "gitBlob": "8cd4815358239122701256e2ac17a2371205e592",
+      "sha256": "c549add518588fecf4e046249e4e1e37dd921eb6e127616f3ecf7aef72cd9aa4"
+    },
+    {
+      "path": "apps/v4/examples/base/marker-shimmer.tsx",
+      "gitBlob": "dc276f7b97dd977d4de93ac926c7cf993e877f4a",
+      "sha256": "e23ac1532a81a2877ba731c98ff19dfe236bd2a6b16885f8fcce4fc73bc6f8fc"
+    },
+    {
+      "path": "apps/v4/examples/base/marker-status.tsx",
+      "gitBlob": "48732188050443def9a6bbebdb43da2cf855d6c1",
+      "sha256": "f183e5ab8d6aaa8b47ee089615cd988a8607a11048f0895515157e7dbd89f430"
+    },
+    {
+      "path": "apps/v4/examples/base/marker-variants.tsx",
+      "gitBlob": "64609a002c910ac065f72f92365062bf04791ba1",
+      "sha256": "59c617b087cdfe7b6441c4ac47161bcc143eee75b437989a964e5c1f8d7e685b"
     }
   ],
   "components": [

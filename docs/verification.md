@@ -225,3 +225,6 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 
 - Message：15项聚焦、独立conversation/Gallery共336项与vet通过。旧90%正文二次限宽导致Bubble288而源应320、存在Footer时Avatar少32DIP位移先红后修。完整slot/group/custom Children、metadata12/500/padding12与Ghost0、8/10DIP间距、原生Reverse/RTL视觉与原DOM Tab序、空Avatar、非slot裸内容、Bubble/显式MessageSlot的End作用域恢复、稳定Key前插/空Header切换后实际IME/全选替换，以及附件/URL/原生可选文字均验证。独审另10项字体/继承/长无断点换行/复杂嵌套/RTL编辑检查与Root旧便利入口空Header全选探针通过；临时探针已清理。
 - Message原生适配：无公开data-slot后代查询，Ghost与完全自组Children中的HasFooter需调用方声明，其它slot可用零wrapper MessageSlot显式对齐；不读取私有树或保留帧对象。固定registry、base文档与八个独立示例共11份Git blob/SHA-256核对。完整示例/字体/平台/AT/视觉矩阵继续跟踪，未将函数名或组合入口本身视为全矩阵完成。
+
+- Marker：32项聚焦检查、Root独立conversation/Gallery共368项与vet通过。旧默认RoleStatus误报、12DIP字号、Border全边圆角框先红后修为源静态语义、14DIP/20DIP文字、16DIP最小高度与底边框/padding8。实际像素验证原生字体/字重与token、Separator两侧物理间距/RTL、持久下划线3DIP和明暗字形扫光；真实URL/Router/Enter-only、整行padding命中、Handle/fluent Label、禁用、原生选择/IME、稳定Key前插与空图标槽，以及折叠/Drawer组合通过。明暗PNG已导出并查看；截图与局部检查不代表完整平台/字体/AT视觉矩阵。
+- Marker原生适配：保留Marker便利签名与旧变体常量，但默认不再强制live状态；仅Status/Busy显式使用RoleStatus，Busy另外携带原生busy。根Anchor用实际native Link覆盖惰性视觉行，避免原生Link的text-only子节点限制；MarkerText提供自然名，任意自定义native内容需Label，否则使用URL，fluent Label仍命名实际Link。Shimmer自定义颜色与3ch字体估值显式传递，不读取未知计算祖先样式。primitive/registry/base文档/八独立示例共11份固定Git blob与SHA-256核对，完整示例/平台/辅助技术与视觉矩阵继续跟踪。
