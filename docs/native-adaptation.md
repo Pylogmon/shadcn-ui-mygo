@@ -55,7 +55,7 @@ err := desktop.Popover(c, host, "settings", anchor, &open,
 
 `pkg/overlay` 保留 `InWindowDropdownMenu`、`InWindowContextMenu`、`InWindowMenubar`、`InWindowPopover`、`InWindowTooltip`、`InWindowHoverCard`，专门用于明确需要父窗口内表面的场景。第一版同名简写已标记 Deprecated。没有 Host 时，桌面组件可以绘制关闭状态的触发器，但尝试打开会报错，不会静默退回窗口内浮层。
 
-日期组件对已实现；`NativeDatePicker` / `NativeDateRangePicker` 使用原生 Popover/Flyout 容器与平台主题的受约束 Go 日历，并不声称 MyGo 暴露了系统日期网格。普通选择提交一次；范围选择在完成有效端点对后才发布；`ShowTime` / `Confirm` 使用 Apply/Cancel 草稿。Footer 接受明确的子 Context，父窗口零参数 Calendar.Footer 不可跨窗口复用。
+日期组件对已实现；`NativeDatePicker` / `NativeDateRangePicker` 使用原生 Popover/Flyout 容器与平台主题的受约束 Go 日历，并不声称 MyGo 暴露了系统日期网格。原生版月份/年份下拉默认走系统菜单；`CalendarProps.CaptionSelect` 允许显式注入接收当前日历 Context 的选择器。普通选择提交一次；范围选择在完成有效端点对后才发布；`ShowTime` / `Confirm` 使用 Apply/Cancel 草稿。Footer 接受明确的子 Context，父窗口零参数 Calendar.Footer 不可跨窗口复用。
 
 Tooltip、HoverCard 的成对迁移正在后续阶段完成。`Native*` 不会用一个自绘窗口冒充运行时不存在的操作系统控件；适配范围必须在实现与文档中明确。
 

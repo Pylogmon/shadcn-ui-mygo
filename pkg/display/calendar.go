@@ -58,8 +58,11 @@ type CalendarProps struct {
 	// Browse moves the active day only; Enter/Space then commits selection.
 	Browse, AutoFocus bool
 	DayContent        func(*ui.Context, CalendarDay)
-	Footer            func()
-	OnMonthChange     func(time.Time)
+	// CaptionSelect may provide a native or independently hosted month/year
+	// picker. It runs in the calendar's own Context, never a parent's frame.
+	CaptionSelect func(*ui.Context, *string, control.SelectProps) ui.Element
+	Footer        func()
+	OnMonthChange func(time.Time)
 }
 
 type calendarState struct {
@@ -604,6 +607,10 @@ func calendarDayButton(c *ui.Context, grid ui.Element, st *calendarState, p Cale
 }
 
 func calendarCaption(c *ui.Context, month time.Time, index int, p CalendarProps, loc *time.Location, setMonth func(time.Time)) {
+	selectCaption := p.CaptionSelect
+	if selectCaption == nil {
+		selectCaption = control.Select
+	}
 	months := i18n.Months(c.Locale(), i18n.Wide, true)
 	monthValue := strconv.Itoa(int(month.Month()))
 	yearValue := strconv.Itoa(month.Year())
@@ -622,7 +629,7 @@ func calendarCaption(c *ui.Context, month time.Time, index int, p CalendarProps,
 			options[i] = control.Option{Value: strconv.Itoa(i + 1), Label: months[i], Disabled: !lo.IsZero() && candidate.Before(lo) || !hi.IsZero() && candidate.After(hi)}
 		}
 		if p.Caption != CalendarCaptionDropdownYears {
-			if control.Select(c, &monthValue, control.SelectProps{Label: "Month", Options: options, Disabled: p.DisableNavigation}).Height(28).MinHeight(28).PaddingX(4).FontSize(12).Changed() {
+			if selectCaption(c, &monthValue, control.SelectProps{Label: "Month", Options: options, Disabled: p.DisableNavigation}).Height(28).MinHeight(28).PaddingX(4).FontSize(12).Changed() {
 				m, _ := strconv.Atoi(monthValue)
 				setMonth(time.Date(month.Year(), time.Month(m)-time.Month(index), 1, 0, 0, 0, 0, loc))
 			}
@@ -634,7 +641,7 @@ func calendarCaption(c *ui.Context, month time.Time, index int, p CalendarProps,
 			options = append(options, control.Option{Value: strconv.Itoa(year), Label: strconv.Itoa(year)})
 		}
 		if p.Caption != CalendarCaptionDropdownMonths {
-			if control.Select(c, &yearValue, control.SelectProps{Label: "Year", Options: options, Disabled: p.DisableNavigation}).Height(28).MinHeight(28).PaddingX(4).FontSize(12).Changed() {
+			if selectCaption(c, &yearValue, control.SelectProps{Label: "Year", Options: options, Disabled: p.DisableNavigation}).Height(28).MinHeight(28).PaddingX(4).FontSize(12).Changed() {
 				year, _ := strconv.Atoi(yearValue)
 				setMonth(time.Date(year, month.Month()-time.Month(index), 1, 0, 0, 0, 0, loc))
 			}

@@ -276,6 +276,9 @@ func datePickerContent(c *ui.Context, s *desktopDateState, p DatePickerProps, lo
 	props := p.Calendar
 	props.Location, props.Browse, props.AutoFocus = loc, true, true
 	props.Footer = nil
+	if native && props.CaptionSelect == nil {
+		props.CaptionSelect = control.NativeSelect
+	}
 	if p.Footer != nil {
 		props.Footer = func() { p.Footer(c) }
 	}
