@@ -2,7 +2,6 @@ package display
 
 import (
 	"fmt"
-	"time"
 
 	"github.com/egoist/mygo/ui"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/motion"
@@ -90,71 +89,6 @@ func Collapsible(c *ui.Context, label string, open *bool, content func()) ui.Ele
 		p.Trigger.Padding(8).Radius(t.Radius).FillWidth().Children(func() { ui.Text(c, label).Grow(1); ui.Text(c, "⌄").Rotate(180 * p.Progress()) })
 		p.Panel(content).Padding(8).FontSize(14)
 	})
-}
-func Calendar(c *ui.Context, date *time.Time) ui.Element {
-	return ui.Calendar(c, date).Padding(12).Radius(theme.TokensOf(c).Radius).Border(1, theme.TokensOf(c).Border)
-}
-
-type DatePickerProps struct {
-	Placeholder, Label string
-	Disabled           bool
-	Format             string
-}
-type datePickerState struct {
-	Open    bool
-	Working time.Time
-}
-
-func DatePicker(c *ui.Context, date *time.Time, p DatePickerProps) ui.Element {
-	t := theme.TokensOf(c)
-	root := ui.Column(c)
-	state := ui.Local(root, "date-picker", func() datePickerState { return datePickerState{} })
-	root.Children(func() {
-		text := p.Placeholder
-		if text == "" {
-			text = "Pick a date"
-		}
-		format := p.Format
-		if format == "" {
-			format = "Jan 2, 2006"
-		}
-		if !date.IsZero() {
-			text = date.Format(format)
-		}
-		label := p.Label
-		if label == "" {
-			label = text
-		}
-		anchor := ui.ButtonBase(c).Padding(8, 12).Height(36).Radius(t.Radius*.8).Border(1, t.Input).Disabled(p.Disabled).Label(label).Children(func() { ui.Text(c, text) })
-		if anchor.Clicked() {
-			state.Open = !state.Open
-			if state.Open {
-				state.Working = *date
-				if state.Working.IsZero() {
-					state.Working = c.Now()
-				}
-			}
-		}
-		if p.Disabled {
-			state.Open = false
-			anchor.Opacity(.5)
-		}
-		anchor.Expanded(state.Open)
-		panel := ui.PopoverBase(c, anchor, &state.Open, func(panel ui.Element) {
-			panel.Background(t.Popover).TextColor(t.PopoverForeground).Padding(4).Margin(4, 0, 0, 0).Border(1, t.Border).Radius(t.Radius).Transition(motion.Popup(c)).Children(func() {
-				if Calendar(c, &state.Working).Browse().AutoFocus().Changed() {
-					*date = state.Working
-					state.Open = false
-					root.SetChanged()
-					anchor.Focus()
-				}
-			})
-		})
-		if panel.Dismissed() {
-			anchor.Focus()
-		}
-	})
-	return root
 }
 
 // Carousel keeps the selected slide in caller-owned state. Previous and next
