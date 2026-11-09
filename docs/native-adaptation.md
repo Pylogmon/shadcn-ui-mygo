@@ -65,6 +65,8 @@ Gallery 的日期、日期范围、Tooltip 和作者 HoverCard 已接入组件�
 
 Navigation 页的 Menubar 和导航面板也随配置切换；普通模式支持同窗兄弟菜单及富内容，系统模式使用菜单栏触发器组和系统路由菜单。Forms 页新增范围/多拇指/竖向滑块，Data 页新增带禁用项的边框Accordion、保留笔记内容的Collapsible和可折叠/嵌套Resizable工作区。
 
+Navigation 页的 Project actions、File 和 Project workspace 右键菜单共享 Export 子菜单，可选择 Go source 或 Preset JSON；workspace 支持 Shift+F10。Menu style 同时切换这三处的 Flyout/系统菜单路由，选择结果在 Last action 与通知中显示可读名称。
+
 ## 窗口内与迁移
 
 `pkg/overlay` 保留 `InWindowDropdownMenu`、`InWindowContextMenu`、`InWindowMenubar`、`InWindowPopover`、`InWindowTooltip`、`InWindowHoverCard`，专门用于明确需要父窗口内表面的场景。第一版同名简写已标记 Deprecated。没有 Host 时，桌面组件可以绘制关闭状态的触发器，但尝试打开会报错，不会静默退回窗口内浮层。

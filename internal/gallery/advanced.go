@@ -112,7 +112,7 @@ func (s *State) routePanelsPreview(c *ui.Context) {
 
 func (s *State) menubarPreview(c *ui.Context) {
 	menus := []overlay.MenubarItem{
-		{Key: "file", Label: "File", Items: []overlay.MenuItem{{Key: "new", Label: "New project"}, {Key: "open", Label: "Open project"}, {Separator: true}, {Key: "close", Label: "Close project"}}},
+		{Key: "file", Label: "File", Items: []overlay.MenuItem{{Key: "new", Label: "New project"}, {Key: "open", Label: "Open project"}, projectExportMenuItem(), {Separator: true}, {Key: "close", Label: "Close project"}}},
 		{Key: "edit", Label: "Edit", Items: []overlay.MenuItem{{Key: "undo", Label: "Undo"}, {Key: "redo", Label: "Redo"}}},
 	}
 	var chosen string

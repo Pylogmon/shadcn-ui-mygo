@@ -59,6 +59,7 @@ type State struct {
 	nativeMenuOpen                                                                 bool
 	lineTab, manualTab                                                             int
 	navRoute                                                                       string
+	navigationMenuAction                                                           string
 	sidebarRoute                                                                   string
 	contentAction, contentProject                                                  string
 	contentPinned, contentDismissed                                                bool
@@ -428,7 +429,7 @@ func (s *State) creatorDialogs(c *ui.Context) {
 }
 func (s *State) previewDialogs(c *ui.Context) {
 	if s.pendingMenuAction != "" {
-		overlay.Toast(c, ui.Toast{Title: "Menu action", Description: s.pendingMenuAction})
+		overlay.Toast(c, ui.Toast{Title: "Menu action", Description: menuActionLabel(s.pendingMenuAction)})
 		s.pendingMenuAction = ""
 	}
 	overlay.Dialog(c, &s.Dialog, overlay.DialogProps{Title: "Edit profile", Description: "Make changes to your profile. Save when you are done."}, func() {
