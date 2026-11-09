@@ -178,6 +178,7 @@ func (s *State) displays(c *ui.Context) {
 	})
 	s.workspacePreview(c)
 	s.chartCompositionPreview(c)
+	s.carouselPreview(c)
 }
 
 type invoice struct {

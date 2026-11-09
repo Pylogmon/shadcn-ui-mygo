@@ -115,7 +115,8 @@
 | 5.CF | Combobox源进退动画与原生搜索组 | 已提交 `dd685e9`；新增24项、420项隔离与22项独审、全量1994项/vet/三平台编译通过；100ms/实际side和origin、退出inert/保留过滤及编辑选区、反转和32DIP搜索组 |
 | 5.CG | Carousel多项几何、吸附位置与独立组合控件 | 已提交 `4d39f7a`；Carousel48项/display703项、324源函数对照和195项独审通过；全量2020项/vet/三平台编译及许可打包通过；保留完整controller/物理/Autoplay后续范围 |
 | 5.CH | Carousel/Combobox动画制品的双外部消费者复验 | 已提交 `17e01f3`；`4d39f7a`同ZIP标准八步及第二外部模块八步/4叶公开检查通过，双轮空缓存/无replace、574份原文匹配、原生明暗图及实际100ms时钟验证 |
-| 5.CI | Combobox Base输入、导航、typeahead与弹层语义 | 本阶段提交；新增46项、control259/Gallery207、161叶独审及全量2066项/vet/三平台编译通过；九类源差距修正，motion产品保持不变，Gallery仅更新必要角色定位与强化语义断言 |
+| 5.CI | Combobox Base输入、导航、typeahead与弹层语义 | 已提交 `4073227`；新增46项、control259/Gallery207、161叶独审及全量2066项/vet/三平台编译通过；九类源差距修正，motion产品保持不变，Gallery仅更新必要角色定位与强化语义断言 |
+| 5.CJ | Gallery多项Carousel、项目草稿及垂直/RTL演示 | 本阶段提交；新增12项、Gallery219项及全量2078项/vet/三平台构建通过；布局/间距/loop/短集合/重排/原生编辑/方向键/窄屏滚动与四张明暗宽窄图验证 |
 
 用户已明确允许原生平台适配：Popover、menu、下拉菜单可以使用 MyGo 的系统菜单与独立 Flyout，超出父窗口范围；无需逐像素照搬网页浮层。Gallery 以 [shadcn/create](https://ui.shadcn.com/create) 的配置与实时预览流程为参考。完整组件功能、主题、动画范围保持不变。
 

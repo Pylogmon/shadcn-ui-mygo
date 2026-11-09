@@ -71,3 +71,12 @@ Content内必须按索引顺序构建Count个Item，每项一次。
 
 固定shadcn、Embla8.5.2、许可和可重现的源函数几何数据见
 [`testdata/shadcn-carousel`](../pkg/display/testdata/shadcn-carousel/README.md)。
+
+## Gallery
+
+Data & display页提供可操作的Carousel示例：单项、双项、三项、响应式和固定宽度，
+可切换间距、循环、集合长度及项目顺序。卡片内的真实原生编辑器把备注保留在对应项目上，
+导航、重排和切换预览页后仍保留。另有270DIP垂直半屏布局及独立RTL示例，
+导航按钮位于viewport外侧，小窗口通过页面滚动到达所有示例。
+搜索Carousel、Slides或Slideshow可进入该页。
+当前示例使用已交付的组合API；控制器、源物理和Autoplay示例会随其实现补齐。
