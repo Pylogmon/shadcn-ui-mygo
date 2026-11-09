@@ -129,7 +129,8 @@
 | 5.CT | Select独立组合、无编辑器多选与22例映射 | 已提交 `c371168`；复用旧便捷入口，六侧/RTL、item alignment、100项滚动/箭头、富内容及当前表单；修复临时绑定身份兼容与消费角色定位 |
 | 5.CU | Polar源几何/内容/命中与31例应用 | 已提交 `15ad058`；源角度/半径/扇区/网格/中心/沿弧标签与既有动画、真实ring/axis检查；Tooltip/Gallery整合继续实施 |
 | 5.CV | Gallery独立Tabs、多选Select与富Tooltip | 已提交 `6f6d947`；现有模型同步格式选择与跨页保留、header动作/面板关联及真实全局搜索快捷键，保留旧manual Tabs与popup清理 |
-| 5.CW | 类型化数值、日期、时间和文件输入 | 本阶段提交；真实原生编辑器/分段/系统对话框、应用模型绑定、Field/InputGroup与当前回调，提供完整可运行输入示例 |
+| 5.CW | 类型化数值、日期、时间和文件输入 | 已提交 `3f668e7`；真实原生编辑器/分段/系统对话框、应用模型绑定、Field/InputGroup与当前回调，提供完整可运行输入示例 |
+| 5.CX | Chart Tooltip/原始数据及完整目录整合 | 本阶段提交；9种Tooltip、按检查定位/边缘翻转、类别反转与原始payload，70目录/文档8例/Create6例接入Gallery和独立应用 |
 
 用户已明确允许原生平台适配：Popover、menu、下拉菜单可以使用 MyGo 的系统菜单与独立 Flyout，超出父窗口范围；无需逐像素照搬网页浮层。Gallery 以 [shadcn/create](https://ui.shadcn.com/create) 的配置与实时预览流程为参考。完整组件功能、主题、动画范围保持不变。
 
@@ -138,7 +139,7 @@
 - Combobox九类Base交互差距及原生组合API已在5.CI/5.CL交付：Content定位/anchor宽度、Empty/List、可取消状态事件/Always/Grid/虚拟窗口及12+20例配置完成。菜单可选translucent preset已在5.CO交付；独立越窗编辑弹层、完整locale/Unicode及平台IME/AT继续验收。
 - macOS实窗无active Enter复验：本轮自动化出现旧bundle/AX目标失效及首次Return仍留列表的观测。补充12项公开settled输入检查全绿；Tester无公开batch接口，无帧输入时序仍未证实。先辨明实际进程、IME与事件时序，再依据实证修正。
 - Carousel多项布局、controller/options/events及源物理/数值选项/背景拖动已在5.CG/5.CK/5.CN完成；Autoplay/插件与源Gallery配置已在5.CQ交付。从任意子控件起拖并抑制其click、完整多触点信息仍缺MyGo公开能力；保持原生子控件正常输入，未计完整源gesture闭环。按parity表补齐Chart高级配置及所有组件例子；Windows/Linux实际窗口、真实AT/IME、多显示器/缩放和完整视觉矩阵仍是最终验收要求。
-- Chart按[固定源需求清单](chart-source-coverage.json)实施三个完整模块：Cartesian30例的margin/曲线/渐变/标记/LabelList与既有动画已在5.CP交付；Polar31例的角度/半径/网格/扇区/中心内容已在5.CU交付；后续Tooltip9例及交互、docs/RTL/Create与Gallery目录整合。Brush、ReferenceLine和额外显式动画参数未在132份固定原文中使用，列为Recharts扩展能力，不以其替代真正缺失的源例功能。该清单记录`1d50ec2`时的静态差距，不能当通过计数。
+- Chart按[固定源需求清单](chart-source-coverage.json)实施三个完整模块：Cartesian30例的margin/曲线/渐变/标记/LabelList与既有动画已在5.CP交付；Polar31例的角度/半径/网格/扇区/中心内容已在5.CU交付；Tooltip9例及交互、docs/RTL/Create与Gallery目录整合在5.CX交付。Brush、ReferenceLine和额外显式动画参数未在132份固定原文中使用，列为Recharts扩展能力，不以其替代真正缺失的源例功能。该清单记录`1d50ec2`时的静态差距，不能当通过计数。
 
 ## 实施约定
 

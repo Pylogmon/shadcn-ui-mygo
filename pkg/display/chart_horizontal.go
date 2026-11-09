@@ -10,6 +10,18 @@ import (
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/theme"
 )
 
+func chartCategoryAt(p ChartProps, at float32) float32 {
+	if p.Cartesian.ReversedCategory {
+		return 1 - at
+	}
+	return at
+}
+func chartCategoryBand(p ChartProps, span chart.Span) chart.Span {
+	if p.Cartesian.ReversedCategory {
+		return chart.Span{Lo: 1 - span.Hi, Hi: 1 - span.Lo}
+	}
+	return span
+}
 func horizontalBars(p ChartProps) bool { return p.Kind == BarChart && p.Orientation == ChartHorizontal }
 func chartCategoryFills(p ChartProps) bool {
 	return p.Kind == BarChart && len(p.Series) == 1 && len(p.CategoryColors) > 0
@@ -42,6 +54,7 @@ func cartesianAxes(c *ui.Context, p ChartProps, band chart.Band, value chart.Lin
 		categoryTicks = band.Ticks()
 	}
 	for i := range categoryTicks {
+		categoryTicks[i].At = chartCategoryAt(p, categoryTicks[i].At)
 		if horizontalBars(p) {
 			categoryTicks[i].At = 1 - categoryTicks[i].At
 		}
@@ -51,6 +64,19 @@ func cartesianAxes(c *ui.Context, p ChartProps, band chart.Band, value chart.Lin
 	}
 	if p.Cartesian.CategoryMinTickGap != nil {
 		gap := chartNonnegative(p.Cartesian.CategoryMinTickGap, 0)
+		slices.SortStableFunc(categoryTicks, func(a, b chart.Tick) int {
+			aa, bb := a.At, b.At
+			if horizontalBars(p) {
+				aa, bb = 1-aa, 1-bb
+			}
+			if aa < bb {
+				return -1
+			}
+			if aa > bb {
+				return 1
+			}
+			return 0
+		})
 		kept := make([]chart.Tick, 0, len(categoryTicks))
 		edge := float32(math.Inf(1))
 		for i := len(categoryTicks) - 1; i >= 0; i-- {
@@ -93,7 +119,7 @@ func cartesianAxes(c *ui.Context, p ChartProps, band chart.Band, value chart.Lin
 			index := -1
 			if categorySide {
 				for i := range p.Labels {
-					at := band.At(i)
+					at := chartCategoryAt(p, band.At(i))
 					if horizontalBars(p) {
 						at = 1 - at
 					}
@@ -167,6 +193,9 @@ func inspectCartesian(c *ui.Context, area ui.Element, p ChartProps, selected *in
 	if horizontal {
 		forward, back = ui.KeyDown, ui.KeyUp
 	}
+	if p.Cartesian.ReversedCategory {
+		forward, back = back, forward
+	}
 	keyboard := false
 	move := func(at int) {
 		if len(valid) > 0 {
@@ -206,7 +235,11 @@ func inspectCartesian(c *ui.Context, area ui.Element, p ChartProps, selected *in
 			for i, index := range valid {
 				positions[i] = band.At(index)
 			}
-			cursor = chart.Nearest(positions, at/extent)
+			fraction := at / extent
+			if p.Cartesian.ReversedCategory {
+				fraction = 1 - fraction
+			}
+			cursor = chart.Nearest(positions, fraction)
 			*selected = valid[cursor]
 		}
 		state.hovering, state.windowX, state.windowY = true, windowX, windowY

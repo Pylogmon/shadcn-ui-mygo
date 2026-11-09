@@ -381,14 +381,14 @@ func cartesianAnimationPlans(p ChartProps, plot ChartProps, x chart.Band, y char
 		points := make([]chartGeometryDatum, len(p.Labels))
 		seeds := make([]chartGeometryDatum, len(p.Labels))
 		for i := range points {
-			points[i].v[0] = float64(x.At(i))
+			points[i].v[0] = float64(chartCategoryAt(p, x.At(i)))
 			seeds[i] = points[i]
 			if i >= len(series.Values) || !finite(series.Values[i]) {
 				continue
 			}
 			if p.Kind == BarChart {
 				from, to := 0.0, series.Values[i]
-				band := x.Band(i)
+				band := chartCategoryBand(p, x.Band(i))
 				if len(stacked) > 0 {
 					from, to = stacked[j][i].Lo, stacked[j][i].Hi
 					if series.Values[i] < 0 {
@@ -418,7 +418,7 @@ func cartesianAnimationPlans(p ChartProps, plot ChartProps, x chart.Band, y char
 				if len(stacked) > 0 {
 					hi, lo = y.At(stacked[j][i].Hi), y.At(stacked[j][i].Lo)
 				}
-				point := chartGeometryDatum{valid: true, v: [4]float64{float64(x.At(i)), float64(hi), float64(lo)}}
+				point := chartGeometryDatum{valid: true, v: [4]float64{float64(chartCategoryAt(p, x.At(i))), float64(hi), float64(lo)}}
 				points[i], seeds[i] = point, point
 			}
 		}

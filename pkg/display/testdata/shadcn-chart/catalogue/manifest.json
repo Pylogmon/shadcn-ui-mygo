@@ -1,0 +1,101 @@
+{
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "repository": "https://github.com/shadcn-ui/ui",
+  "members": [
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-tooltip-advanced.tsx",
+      "sha256": "ecb06efd0b0e78fcd27bd5211046d648d05b311e306857edce20545d67a3c378",
+      "gitBlob": "6c55b5e514836c30ae1ff570dee3d3217aca6e9c"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-tooltip-default.tsx",
+      "sha256": "f5f2e3e6f5bbdf361650b07871b09b99c3809e9cdf7bb87317e916b1ac14d755",
+      "gitBlob": "829cc53633afd526f25b7982c2516ff9b590420d"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-tooltip-formatter.tsx",
+      "sha256": "b14f8ca9124c8b2bc76db5300870c8af513266eb92fc348dbaf9c9dfdd61363a",
+      "gitBlob": "6d0ebf02dda90e7a688b53cdd1c8be735e192f69"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-tooltip-icons.tsx",
+      "sha256": "1e834c4367c7722c60b2c9e1bb0d8307fb58dceddae202bae046c26c43c98049",
+      "gitBlob": "1117d4494cb8316edc4a9096549adf339ec65d17"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-tooltip-indicator-line.tsx",
+      "sha256": "f945507f55251f1405d0f10313383a98d10ea4f0b35f1a8d554754c491524191",
+      "gitBlob": "2d09ce8039b05c753efde134dc3e8710d92c8e63"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-tooltip-indicator-none.tsx",
+      "sha256": "2050ad90daccf8a42950400d4cc0a4347e603aa052b7106e34ab643cec321c34",
+      "gitBlob": "6416520431aeeda2bfc170066385538b60e6e920"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-tooltip-label-custom.tsx",
+      "sha256": "7fdf8f219e87727dbf583c61f5ec3e2af4d255d6cffd6ce282d18e36584c0650",
+      "gitBlob": "b8095ffe6b9accbcc8480c125931db7294effa81"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-tooltip-label-formatter.tsx",
+      "sha256": "fd6a9bdcc8981b88b70237647c7abc43635147870fe4194a9a2891230a8bf186",
+      "gitBlob": "0b885d71e18d581793bc2e316c3f1402daf59182"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-tooltip-label-none.tsx",
+      "sha256": "d2f97fe115418f06921e37fe5f5ba498ee9c58c6ef853e438f7d5841c87f3f01",
+      "gitBlob": "f5f220bb1f20928bd1c9934ddf014cb72b89fb98"
+    },
+    {
+      "path": "apps/v4/examples/base/chart-demo.tsx",
+      "sha256": "7d43821bc8556c7264b2d632afb6d5b4668b9fe169df958c72ed0f161ce74989",
+      "gitBlob": "a61706b82491ae3e8f02a967c75be54741a50ee1"
+    },
+    {
+      "path": "apps/v4/examples/base/chart-example-axis.tsx",
+      "sha256": "452ff0a2d6ea2d63c8b13901687018b6ba0e6b4ea6eb7a5940342b020d450510",
+      "gitBlob": "4e9eadf30b97ea6930a25ed36f72e2794b423bc7"
+    },
+    {
+      "path": "apps/v4/examples/base/chart-example-grid.tsx",
+      "sha256": "6f96ddf8058aa475578bf7e902382e46560aed3f7da8a017e0406238c8187a3d",
+      "gitBlob": "388b0bc5eda2dac5100bfabb6234bf9da6a166f1"
+    },
+    {
+      "path": "apps/v4/examples/base/chart-example-legend.tsx",
+      "sha256": "72332f904caedaa24ec929f9a50983ae44e3ed841a7c3790136fc1e5cca229b8",
+      "gitBlob": "3ea3d37c4ab57646f801aa92f01bffc37df64577"
+    },
+    {
+      "path": "apps/v4/examples/base/chart-example-tooltip.tsx",
+      "sha256": "f2c1aec10a7d4a4c691ac3cb29a571a742a8e30e3e9ab66afdc03193c99df970",
+      "gitBlob": "3b989a0f64552125dced9fe3c46ab844d253cfba"
+    },
+    {
+      "path": "apps/v4/examples/base/chart-example.tsx",
+      "sha256": "6399bac7205d2f4e750bcde19a0d794ab466d3f29080fc861e0ded1da7e14313",
+      "gitBlob": "c8a8ead2718e53e1a2ab0e22634876d00a6b8434"
+    },
+    {
+      "path": "apps/v4/examples/base/chart-rtl.tsx",
+      "sha256": "95695b4475abd49751c0cf596d166fcf4294b75f3a9ca71182dfb4f8a63ee86d",
+      "gitBlob": "ae45c6b85193230d55d504104b64311198ad508b"
+    },
+    {
+      "path": "apps/v4/examples/base/chart-tooltip.tsx",
+      "sha256": "62c2676cc479f95765245e25a38f62ce5e10cd600dbbbda5ad32f413dad849f3",
+      "gitBlob": "411555a7688837cb6412bdacb03406f11e25d0cf"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/examples/chart-example.tsx",
+      "sha256": "70465e6e68a3a0471c4b1bb71072da8abc60b56e5f41a1907b8b065219e15a64",
+      "gitBlob": "cf948c73a0b6c2880c85fee90843c6fc63a41f1d"
+    },
+    {
+      "path": "apps/v4/app/(app)/charts/charts.tsx",
+      "sha256": "0e0400b266f6626e98bd1bc67579ceacf645a91aac06212352c2e27066255fe0",
+      "gitBlob": "00220348e58f1aa05a18fe21576e688f2e638e6e"
+    }
+  ]
+}

@@ -1,0 +1,967 @@
+[
+  {
+    "ID": "chart-tooltip-advanced",
+    "Title": "Tooltip - Advanced",
+    "Data": [
+      {
+        "date": "2024-07-15",
+        "running": 450,
+        "swimming": 300
+      },
+      {
+        "date": "2024-07-16",
+        "running": 380,
+        "swimming": 420
+      },
+      {
+        "date": "2024-07-17",
+        "running": 520,
+        "swimming": 120
+      },
+      {
+        "date": "2024-07-18",
+        "running": 140,
+        "swimming": 550
+      },
+      {
+        "date": "2024-07-19",
+        "running": 600,
+        "swimming": 350
+      },
+      {
+        "date": "2024-07-20",
+        "running": 480,
+        "swimming": 400
+      }
+    ],
+    "Family": "tooltip",
+    "Section": "catalogue",
+    "Source": "apps/v4/registry/new-york-v4/charts/chart-tooltip-advanced.tsx",
+    "Description": "Tooltip with custom formatter and total."
+  },
+  {
+    "ID": "chart-tooltip-default",
+    "Title": "Tooltip - Default",
+    "Data": [
+      {
+        "date": "2024-07-15",
+        "running": 450,
+        "swimming": 300
+      },
+      {
+        "date": "2024-07-16",
+        "running": 380,
+        "swimming": 420
+      },
+      {
+        "date": "2024-07-17",
+        "running": 520,
+        "swimming": 120
+      },
+      {
+        "date": "2024-07-18",
+        "running": 140,
+        "swimming": 550
+      },
+      {
+        "date": "2024-07-19",
+        "running": 600,
+        "swimming": 350
+      },
+      {
+        "date": "2024-07-20",
+        "running": 480,
+        "swimming": 400
+      }
+    ],
+    "Family": "tooltip",
+    "Section": "catalogue",
+    "Source": "apps/v4/registry/new-york-v4/charts/chart-tooltip-default.tsx",
+    "Description": "Default tooltip with ChartTooltipContent."
+  },
+  {
+    "ID": "chart-tooltip-formatter",
+    "Title": "Tooltip - Formatter",
+    "Data": [
+      {
+        "date": "2024-07-15",
+        "running": 450,
+        "swimming": 300
+      },
+      {
+        "date": "2024-07-16",
+        "running": 380,
+        "swimming": 420
+      },
+      {
+        "date": "2024-07-17",
+        "running": 520,
+        "swimming": 120
+      },
+      {
+        "date": "2024-07-18",
+        "running": 140,
+        "swimming": 550
+      },
+      {
+        "date": "2024-07-19",
+        "running": 600,
+        "swimming": 350
+      },
+      {
+        "date": "2024-07-20",
+        "running": 480,
+        "swimming": 400
+      }
+    ],
+    "Family": "tooltip",
+    "Section": "catalogue",
+    "Source": "apps/v4/registry/new-york-v4/charts/chart-tooltip-formatter.tsx",
+    "Description": "Tooltip with custom formatter ."
+  },
+  {
+    "ID": "chart-tooltip-icons",
+    "Title": "Tooltip - Icons",
+    "Data": [
+      {
+        "date": "2024-07-15",
+        "running": 450,
+        "swimming": 300
+      },
+      {
+        "date": "2024-07-16",
+        "running": 380,
+        "swimming": 420
+      },
+      {
+        "date": "2024-07-17",
+        "running": 520,
+        "swimming": 120
+      },
+      {
+        "date": "2024-07-18",
+        "running": 140,
+        "swimming": 550
+      },
+      {
+        "date": "2024-07-19",
+        "running": 600,
+        "swimming": 350
+      },
+      {
+        "date": "2024-07-20",
+        "running": 480,
+        "swimming": 400
+      }
+    ],
+    "Family": "tooltip",
+    "Section": "catalogue",
+    "Source": "apps/v4/registry/new-york-v4/charts/chart-tooltip-icons.tsx",
+    "Description": "Tooltip with icons."
+  },
+  {
+    "ID": "chart-tooltip-indicator-line",
+    "Title": "Tooltip - Line Indicator",
+    "Data": [
+      {
+        "date": "2024-07-15",
+        "running": 450,
+        "swimming": 300
+      },
+      {
+        "date": "2024-07-16",
+        "running": 380,
+        "swimming": 420
+      },
+      {
+        "date": "2024-07-17",
+        "running": 520,
+        "swimming": 120
+      },
+      {
+        "date": "2024-07-18",
+        "running": 140,
+        "swimming": 550
+      },
+      {
+        "date": "2024-07-19",
+        "running": 600,
+        "swimming": 350
+      },
+      {
+        "date": "2024-07-20",
+        "running": 480,
+        "swimming": 400
+      }
+    ],
+    "Family": "tooltip",
+    "Section": "catalogue",
+    "Source": "apps/v4/registry/new-york-v4/charts/chart-tooltip-indicator-line.tsx",
+    "Description": "Tooltip with line indicator."
+  },
+  {
+    "ID": "chart-tooltip-indicator-none",
+    "Title": "Tooltip - No Indicator",
+    "Data": [
+      {
+        "date": "2024-07-15",
+        "running": 450,
+        "swimming": 300
+      },
+      {
+        "date": "2024-07-16",
+        "running": 380,
+        "swimming": 420
+      },
+      {
+        "date": "2024-07-17",
+        "running": 520,
+        "swimming": 120
+      },
+      {
+        "date": "2024-07-18",
+        "running": 140,
+        "swimming": 550
+      },
+      {
+        "date": "2024-07-19",
+        "running": 600,
+        "swimming": 350
+      },
+      {
+        "date": "2024-07-20",
+        "running": 480,
+        "swimming": 400
+      }
+    ],
+    "Family": "tooltip",
+    "Section": "catalogue",
+    "Source": "apps/v4/registry/new-york-v4/charts/chart-tooltip-indicator-none.tsx",
+    "Description": "Tooltip with no indicator."
+  },
+  {
+    "ID": "chart-tooltip-label-custom",
+    "Title": "Tooltip - Custom label",
+    "Data": [
+      {
+        "date": "2024-07-15",
+        "running": 450,
+        "swimming": 300
+      },
+      {
+        "date": "2024-07-16",
+        "running": 380,
+        "swimming": 420
+      },
+      {
+        "date": "2024-07-17",
+        "running": 520,
+        "swimming": 120
+      },
+      {
+        "date": "2024-07-18",
+        "running": 140,
+        "swimming": 550
+      },
+      {
+        "date": "2024-07-19",
+        "running": 600,
+        "swimming": 350
+      },
+      {
+        "date": "2024-07-20",
+        "running": 480,
+        "swimming": 400
+      }
+    ],
+    "Family": "tooltip",
+    "Section": "catalogue",
+    "Source": "apps/v4/registry/new-york-v4/charts/chart-tooltip-label-custom.tsx",
+    "Description": "Tooltip with custom label from chartConfig."
+  },
+  {
+    "ID": "chart-tooltip-label-formatter",
+    "Title": "Tooltip - Label Formatter",
+    "Data": [
+      {
+        "date": "2024-07-15",
+        "running": 450,
+        "swimming": 300
+      },
+      {
+        "date": "2024-07-16",
+        "running": 380,
+        "swimming": 420
+      },
+      {
+        "date": "2024-07-17",
+        "running": 520,
+        "swimming": 120
+      },
+      {
+        "date": "2024-07-18",
+        "running": 140,
+        "swimming": 550
+      },
+      {
+        "date": "2024-07-19",
+        "running": 600,
+        "swimming": 350
+      },
+      {
+        "date": "2024-07-20",
+        "running": 480,
+        "swimming": 400
+      }
+    ],
+    "Family": "tooltip",
+    "Section": "catalogue",
+    "Source": "apps/v4/registry/new-york-v4/charts/chart-tooltip-label-formatter.tsx",
+    "Description": "Tooltip with label formatter."
+  },
+  {
+    "ID": "chart-tooltip-label-none",
+    "Title": "Tooltip - No Label",
+    "Data": [
+      {
+        "date": "2024-07-15",
+        "running": 450,
+        "swimming": 300
+      },
+      {
+        "date": "2024-07-16",
+        "running": 380,
+        "swimming": 420
+      },
+      {
+        "date": "2024-07-17",
+        "running": 520,
+        "swimming": 120
+      },
+      {
+        "date": "2024-07-18",
+        "running": 140,
+        "swimming": 550
+      },
+      {
+        "date": "2024-07-19",
+        "running": 600,
+        "swimming": 350
+      },
+      {
+        "date": "2024-07-20",
+        "running": 480,
+        "swimming": 400
+      }
+    ],
+    "Family": "tooltip",
+    "Section": "catalogue",
+    "Source": "apps/v4/registry/new-york-v4/charts/chart-tooltip-label-none.tsx",
+    "Description": "Tooltip with no label."
+  },
+  {
+    "ID": "docs-chart-demo",
+    "Title": "Interactive documentation demo",
+    "Data": [
+      {
+        "date": "2024-04-01",
+        "desktop": 222,
+        "mobile": 150
+      },
+      {
+        "date": "2024-04-02",
+        "desktop": 97,
+        "mobile": 180
+      },
+      {
+        "date": "2024-04-03",
+        "desktop": 167,
+        "mobile": 120
+      },
+      {
+        "date": "2024-04-04",
+        "desktop": 242,
+        "mobile": 260
+      },
+      {
+        "date": "2024-04-05",
+        "desktop": 373,
+        "mobile": 290
+      },
+      {
+        "date": "2024-04-06",
+        "desktop": 301,
+        "mobile": 340
+      },
+      {
+        "date": "2024-04-07",
+        "desktop": 245,
+        "mobile": 180
+      },
+      {
+        "date": "2024-04-08",
+        "desktop": 409,
+        "mobile": 320
+      },
+      {
+        "date": "2024-04-09",
+        "desktop": 59,
+        "mobile": 110
+      },
+      {
+        "date": "2024-04-10",
+        "desktop": 261,
+        "mobile": 190
+      },
+      {
+        "date": "2024-04-11",
+        "desktop": 327,
+        "mobile": 350
+      },
+      {
+        "date": "2024-04-12",
+        "desktop": 292,
+        "mobile": 210
+      },
+      {
+        "date": "2024-04-13",
+        "desktop": 342,
+        "mobile": 380
+      },
+      {
+        "date": "2024-04-14",
+        "desktop": 137,
+        "mobile": 220
+      },
+      {
+        "date": "2024-04-15",
+        "desktop": 120,
+        "mobile": 170
+      },
+      {
+        "date": "2024-04-16",
+        "desktop": 138,
+        "mobile": 190
+      },
+      {
+        "date": "2024-04-17",
+        "desktop": 446,
+        "mobile": 360
+      },
+      {
+        "date": "2024-04-18",
+        "desktop": 364,
+        "mobile": 410
+      },
+      {
+        "date": "2024-04-19",
+        "desktop": 243,
+        "mobile": 180
+      },
+      {
+        "date": "2024-04-20",
+        "desktop": 89,
+        "mobile": 150
+      },
+      {
+        "date": "2024-04-21",
+        "desktop": 137,
+        "mobile": 200
+      },
+      {
+        "date": "2024-04-22",
+        "desktop": 224,
+        "mobile": 170
+      },
+      {
+        "date": "2024-04-23",
+        "desktop": 138,
+        "mobile": 230
+      },
+      {
+        "date": "2024-04-24",
+        "desktop": 387,
+        "mobile": 290
+      },
+      {
+        "date": "2024-04-25",
+        "desktop": 215,
+        "mobile": 250
+      },
+      {
+        "date": "2024-04-26",
+        "desktop": 75,
+        "mobile": 130
+      },
+      {
+        "date": "2024-04-27",
+        "desktop": 383,
+        "mobile": 420
+      },
+      {
+        "date": "2024-04-28",
+        "desktop": 122,
+        "mobile": 180
+      },
+      {
+        "date": "2024-04-29",
+        "desktop": 315,
+        "mobile": 240
+      },
+      {
+        "date": "2024-04-30",
+        "desktop": 454,
+        "mobile": 380
+      }
+    ],
+    "Family": "docs",
+    "Section": "docs",
+    "Source": "apps/v4/examples/base/chart-demo.tsx"
+  },
+  {
+    "ID": "docs-chart-example-axis",
+    "Title": "Composition: category axis",
+    "Data": [
+      {
+        "month": "January",
+        "desktop": 186,
+        "mobile": 80
+      },
+      {
+        "month": "February",
+        "desktop": 305,
+        "mobile": 200
+      },
+      {
+        "month": "March",
+        "desktop": 237,
+        "mobile": 120
+      },
+      {
+        "month": "April",
+        "desktop": 73,
+        "mobile": 190
+      },
+      {
+        "month": "May",
+        "desktop": 209,
+        "mobile": 130
+      },
+      {
+        "month": "June",
+        "desktop": 214,
+        "mobile": 140
+      }
+    ],
+    "Family": "docs",
+    "Section": "docs",
+    "Source": "apps/v4/examples/base/chart-example-axis.tsx"
+  },
+  {
+    "ID": "docs-chart-example-grid",
+    "Title": "Composition: grid",
+    "Data": [
+      {
+        "month": "January",
+        "desktop": 186,
+        "mobile": 80
+      },
+      {
+        "month": "February",
+        "desktop": 305,
+        "mobile": 200
+      },
+      {
+        "month": "March",
+        "desktop": 237,
+        "mobile": 120
+      },
+      {
+        "month": "April",
+        "desktop": 73,
+        "mobile": 190
+      },
+      {
+        "month": "May",
+        "desktop": 209,
+        "mobile": 130
+      },
+      {
+        "month": "June",
+        "desktop": 214,
+        "mobile": 140
+      }
+    ],
+    "Family": "docs",
+    "Section": "docs",
+    "Source": "apps/v4/examples/base/chart-example-grid.tsx"
+  },
+  {
+    "ID": "docs-chart-example-legend",
+    "Title": "Composition: legend",
+    "Data": [
+      {
+        "month": "January",
+        "desktop": 186,
+        "mobile": 80
+      },
+      {
+        "month": "February",
+        "desktop": 305,
+        "mobile": 200
+      },
+      {
+        "month": "March",
+        "desktop": 237,
+        "mobile": 120
+      },
+      {
+        "month": "April",
+        "desktop": 73,
+        "mobile": 190
+      },
+      {
+        "month": "May",
+        "desktop": 209,
+        "mobile": 130
+      },
+      {
+        "month": "June",
+        "desktop": 214,
+        "mobile": 140
+      }
+    ],
+    "Family": "docs",
+    "Section": "docs",
+    "Source": "apps/v4/examples/base/chart-example-legend.tsx"
+  },
+  {
+    "ID": "docs-chart-example-tooltip",
+    "Title": "Composition: tooltip",
+    "Data": [
+      {
+        "month": "January",
+        "desktop": 186,
+        "mobile": 80
+      },
+      {
+        "month": "February",
+        "desktop": 305,
+        "mobile": 200
+      },
+      {
+        "month": "March",
+        "desktop": 237,
+        "mobile": 120
+      },
+      {
+        "month": "April",
+        "desktop": 73,
+        "mobile": 190
+      },
+      {
+        "month": "May",
+        "desktop": 209,
+        "mobile": 130
+      },
+      {
+        "month": "June",
+        "desktop": 214,
+        "mobile": 140
+      }
+    ],
+    "Family": "docs",
+    "Section": "docs",
+    "Source": "apps/v4/examples/base/chart-example-tooltip.tsx"
+  },
+  {
+    "ID": "docs-chart-example",
+    "Title": "Composition: marks",
+    "Data": [
+      {
+        "month": "January",
+        "desktop": 186,
+        "mobile": 80
+      },
+      {
+        "month": "February",
+        "desktop": 305,
+        "mobile": 200
+      },
+      {
+        "month": "March",
+        "desktop": 237,
+        "mobile": 120
+      },
+      {
+        "month": "April",
+        "desktop": 73,
+        "mobile": 190
+      },
+      {
+        "month": "May",
+        "desktop": 209,
+        "mobile": 130
+      },
+      {
+        "month": "June",
+        "desktop": 214,
+        "mobile": 140
+      }
+    ],
+    "Family": "docs",
+    "Section": "docs",
+    "Source": "apps/v4/examples/base/chart-example.tsx"
+  },
+  {
+    "ID": "docs-chart-rtl",
+    "Title": "Chart in Arabic and Hebrew",
+    "Data": [
+      {
+        "month": "january",
+        "desktop": 186,
+        "mobile": 80
+      },
+      {
+        "month": "february",
+        "desktop": 305,
+        "mobile": 200
+      },
+      {
+        "month": "march",
+        "desktop": 237,
+        "mobile": 120
+      },
+      {
+        "month": "april",
+        "desktop": 73,
+        "mobile": 190
+      },
+      {
+        "month": "may",
+        "desktop": 209,
+        "mobile": 130
+      },
+      {
+        "month": "june",
+        "desktop": 214,
+        "mobile": 140
+      }
+    ],
+    "Family": "docs",
+    "Section": "docs",
+    "Source": "apps/v4/examples/base/chart-rtl.tsx"
+  },
+  {
+    "ID": "docs-chart-tooltip",
+    "Title": "Tooltip anatomy",
+    "Data": [],
+    "Family": "docs",
+    "Section": "docs",
+    "Source": "apps/v4/examples/base/chart-tooltip.tsx"
+  },
+  {
+    "ID": "create-area",
+    "Title": "Area Chart",
+    "Data": [
+      {
+        "month": "January",
+        "desktop": 186
+      },
+      {
+        "month": "February",
+        "desktop": 305
+      },
+      {
+        "month": "March",
+        "desktop": 237
+      },
+      {
+        "month": "April",
+        "desktop": 73
+      },
+      {
+        "month": "May",
+        "desktop": 209
+      },
+      {
+        "month": "June",
+        "desktop": 214
+      }
+    ],
+    "Family": "area",
+    "Section": "create",
+    "Source": "apps/v4/registry/bases/base/examples/chart-example.tsx",
+    "Description": "Showing total visitors for the last 6 months"
+  },
+  {
+    "ID": "create-bar",
+    "Title": "Bar Chart - Multiple",
+    "Data": [
+      {
+        "month": "January",
+        "desktop": 186,
+        "mobile": 80
+      },
+      {
+        "month": "February",
+        "desktop": 305,
+        "mobile": 200
+      },
+      {
+        "month": "March",
+        "desktop": 237,
+        "mobile": 120
+      },
+      {
+        "month": "April",
+        "desktop": 73,
+        "mobile": 190
+      },
+      {
+        "month": "May",
+        "desktop": 209,
+        "mobile": 130
+      },
+      {
+        "month": "June",
+        "desktop": 214,
+        "mobile": 140
+      }
+    ],
+    "Family": "bar",
+    "Section": "create",
+    "Source": "apps/v4/registry/bases/base/examples/chart-example.tsx",
+    "Description": "January - June 2024"
+  },
+  {
+    "ID": "create-line",
+    "Title": "Line Chart - Multiple",
+    "Data": [
+      {
+        "month": "January",
+        "desktop": 186,
+        "mobile": 80
+      },
+      {
+        "month": "February",
+        "desktop": 305,
+        "mobile": 200
+      },
+      {
+        "month": "March",
+        "desktop": 237,
+        "mobile": 120
+      },
+      {
+        "month": "April",
+        "desktop": 73,
+        "mobile": 190
+      },
+      {
+        "month": "May",
+        "desktop": 209,
+        "mobile": 130
+      },
+      {
+        "month": "June",
+        "desktop": 214,
+        "mobile": 140
+      }
+    ],
+    "Family": "line",
+    "Section": "create",
+    "Source": "apps/v4/registry/bases/base/examples/chart-example.tsx",
+    "Description": "January - June 2024"
+  },
+  {
+    "ID": "create-pie",
+    "Title": "Pie Chart - Donut with Text",
+    "Data": [
+      {
+        "browser": "chrome",
+        "visitors": 275,
+        "fill": "var(--color-chrome)"
+      },
+      {
+        "browser": "safari",
+        "visitors": 200,
+        "fill": "var(--color-safari)"
+      },
+      {
+        "browser": "firefox",
+        "visitors": 287,
+        "fill": "var(--color-firefox)"
+      },
+      {
+        "browser": "edge",
+        "visitors": 173,
+        "fill": "var(--color-edge)"
+      },
+      {
+        "browser": "other",
+        "visitors": 190,
+        "fill": "var(--color-other)"
+      }
+    ],
+    "Family": "pie",
+    "Section": "create",
+    "Source": "apps/v4/registry/bases/base/examples/chart-example.tsx",
+    "Description": "January - June 2024"
+  },
+  {
+    "ID": "create-radar",
+    "Title": "Radar Chart - Multiple",
+    "Data": [
+      {
+        "month": "January",
+        "desktop": 186,
+        "mobile": 80
+      },
+      {
+        "month": "February",
+        "desktop": 305,
+        "mobile": 200
+      },
+      {
+        "month": "March",
+        "desktop": 237,
+        "mobile": 120
+      },
+      {
+        "month": "April",
+        "desktop": 73,
+        "mobile": 190
+      },
+      {
+        "month": "May",
+        "desktop": 209,
+        "mobile": 130
+      },
+      {
+        "month": "June",
+        "desktop": 214,
+        "mobile": 140
+      }
+    ],
+    "Family": "radar",
+    "Section": "create",
+    "Source": "apps/v4/registry/bases/base/examples/chart-example.tsx",
+    "Description": "Showing total visitors for the last 6 months"
+  },
+  {
+    "ID": "create-radial",
+    "Title": "Radial Chart - Shape",
+    "Data": [
+      {
+        "browser": "safari",
+        "visitors": 1260,
+        "fill": "var(--color-safari)"
+      }
+    ],
+    "Family": "radial",
+    "Section": "create",
+    "Source": "apps/v4/registry/bases/base/examples/chart-example.tsx",
+    "Description": "January - June 2024"
+  }
+]

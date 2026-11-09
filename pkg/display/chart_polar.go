@@ -394,7 +394,7 @@ func chartSourcePolar(c *ui.Context, p ChartProps, selected *int, height float32
 	})
 	return area.Children(func() {
 		chartPolarNativeContent(c, p, frame, *selected, *series, bounds)
-		chartTooltipAt(c, chartPolarInspectionProps(p, *series), *selected)
+		chartTooltipAt(c, chartPolarInspectionProps(p, *series), *selected, chartSourcePolarTooltipAnchor(c, area, p, frame, *selected, *series, bounds))
 		if len(valid) == 0 {
 			ui.Text(c, "No data").Absolute().LeftPercent(50).TopPercent(50).TranslatePercent(-50, -50).TextColor(theme.TokensOf(c).MutedForeground)
 		}

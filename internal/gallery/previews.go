@@ -179,6 +179,7 @@ func (s *State) displays(c *ui.Context) {
 	})
 	s.workspacePreview(c)
 	s.chartCompositionPreview(c)
+	s.chartSourcePreview(c)
 	s.carouselPreview(c)
 }
 

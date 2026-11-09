@@ -114,6 +114,13 @@ functions, original Sector/axis/grid source and licenses are archived under
 is oracle-only and not a native runtime dependency. The existing bundled
 Recharts license covers the native translation.
 
+The Chart catalogue's tooltip placement and payload references additionally use
+the same fixed Recharts distribution. Exact Tooltip, bounding-box, coordinate,
+payload and keyboard members are archived in
+`pkg/display/testdata/shadcn-chart/catalogue/recharts/`. The shared catalogue
+data, documentation examples, Create cards and tooltip anatomy paths use the
+fixed shadcn MIT source and the licenses already bundled above.
+
 Chart shadow parameters are additionally verified against the official
 Tailwind CSS 4.3.0 package locked by the pinned shadcn reference. Its exact
 theme CSS, MIT license and npm integrity evidence are archived with the chart

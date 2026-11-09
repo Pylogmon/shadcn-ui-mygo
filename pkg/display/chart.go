@@ -37,6 +37,9 @@ const (
 // existing axes, grid, cursor and radius. It has no effect on polar charts.
 type ChartCartesianProps struct {
 	HideValueAxis, HideCategoryAxis, HideGrid, HideCursor bool
+	// ReversedCategory mirrors category positions while preserving logical data
+	// indices and grouped series order. The zero value keeps physical LTR order.
+	ReversedCategory bool
 	// FormatCategory changes axis text only; inspection keeps original labels.
 	FormatCategory func(string) string
 	// FormatValue formats numeric axis ticks (fractions for normalized stacks).
@@ -72,15 +75,28 @@ type ChartCartesianProps struct {
 }
 
 type ChartSeries struct {
-	Name   string
-	Values []float64
-	Color  ui.Color
+	// Data optionally overrides ChartProps.Data for this series' original
+	// tooltip rows (for example separate datasets in concentric Pie rings).
+	Data []map[string]any
+	// DataKey identifies this series in tooltip payloads; nil uses Name.
+	DataKey any
+	// TooltipName overrides the payload name (nil uses DataKey, then Name).
+	TooltipName any
+	Name        string
+	Values      []float64
+	Color       ui.Color
 	// Style is evaluated during the current build; only copied paint values
 	// and geometry are retained by animation and drawing.
 	Style ChartSeriesStyle
 }
 
 type ChartProps struct {
+	// Data optionally supplies original tooltip rows, indexed like Labels. Marks
+	// continue to use Series.Values. A tooltip receives a detached JSON-like
+	// snapshot of map[string]any / []any (including nested maps), []string,
+	// []float64 and []int. Source rows must be acyclic. Other application-owned
+	// objects stay opaque and borrowed, as in ChartPayloadItem.
+	Data        []map[string]any
 	Labels      []string
 	Series      []ChartSeries
 	Kind        ChartKind
@@ -101,7 +117,11 @@ type ChartProps struct {
 	// Selected is a caller-owned category index; -1 means no inspected item.
 	// Without it the chart keeps its own local selection, initially -1.
 	Selected *int
-	// HideTooltip hides the visual tooltip without disabling keyboard inspection.
+	// TooltipFollowInspection positions content beside the inspected axis/mark
+	// (or pointer), using the source 10-DIP gap and viewport edge flip. False
+	// preserves the original fixed upper-left placement.
+	TooltipFollowInspection bool
+	// HideTooltip hides visual content without disabling keyboard inspection.
 	HideTooltip    bool
 	FormatValue    func(float64) string
 	TooltipContent func(ChartTooltipData)
@@ -124,6 +144,11 @@ type ChartTooltipItem struct {
 	Color ui.Color
 }
 type ChartTooltipData struct {
+	// Index is the logical category index, or -1 for an absent category.
+	Index int
+	// Payload contains detached metadata and the original Data row, suitable for
+	// ChartTooltipContent formatters. Items remains the simple legacy view.
+	Payload     []ChartPayloadItem
 	Label       string
 	Items       []ChartTooltipItem
 	FormatValue func(float64) string
@@ -257,11 +282,11 @@ func categoryColor(c *ui.Context, p ChartProps, index int) ui.Color {
 	return chartColor(c, ChartProps{}, index)
 }
 func tooltipData(c *ui.Context, p ChartProps, index int) ChartTooltipData {
-	d := ChartTooltipData{FormatValue: p.FormatValue}
+	d := ChartTooltipData{Index: -1, FormatValue: p.FormatValue}
 	if index < 0 || index >= len(p.Labels) {
 		return d
 	}
-	d.Label = p.Labels[index]
+	d.Label, d.Index = p.Labels[index], index
 	for j, s := range p.Series {
 		if index >= len(s.Values) || !finite(s.Values[index]) {
 			continue
@@ -279,6 +304,24 @@ func tooltipData(c *ui.Context, p ChartProps, index int) ChartTooltipData {
 			}
 		}
 		d.Items = append(d.Items, ChartTooltipItem{seriesName(p, j), s.Values[index], color})
+		key := s.DataKey
+		if key == nil {
+			key = seriesName(p, j)
+		}
+		name := s.TooltipName
+		if name == nil {
+			name = key
+		}
+		var row map[string]any
+		rows := p.Data
+		if s.Data != nil {
+			rows = s.Data
+		}
+		if index < len(rows) {
+			row = chartCopyPayloadRow(rows[index])
+		}
+		col := color
+		d.Payload = append(d.Payload, ChartPayloadItem{Name: name, DataKey: key, Value: s.Values[index], Color: &col, Payload: row})
 	}
 	return d
 }
@@ -294,7 +337,7 @@ func describeChart(c *ui.Context, p ChartProps, index int) string {
 	}
 	return strings.Join(parts, ", ")
 }
-func chartTooltipAt(c *ui.Context, p ChartProps, index int) {
+func chartTooltipAt(c *ui.Context, p ChartProps, index int, anchors ...chartTooltipAnchor) {
 	if p.HideTooltip || index < 0 {
 		return
 	}
@@ -302,7 +345,11 @@ func chartTooltipAt(c *ui.Context, p ChartProps, index int) {
 	if len(d.Items) == 0 {
 		return
 	}
-	ui.Column(c).Absolute().Top(8).Left(8).ZIndex(10).IgnoreInput(true).AccessHidden(true).Children(func() {
+	tip := ui.Column(c).Absolute().Top(8).Left(8).ZIndex(10).IgnoreInput(true).AccessHidden(true)
+	if p.TooltipFollowInspection && len(anchors) > 0 {
+		chartPositionTooltip(c, tip, anchors[0])
+	}
+	tip.Children(func() {
 		if p.TooltipContent != nil {
 			p.TooltipContent(d)
 		} else {
@@ -355,12 +402,12 @@ func cartesianChart(c *ui.Context, p ChartProps, selected *int, height float32) 
 		c.Invalidate()
 	}
 	return root.Children(func() {
-		plot := cartesianChartPlot(c, p, selected, metrics)
+		plot := cartesianChartPlot(c, root, p, selected, metrics)
 		plot.Absolute().Top(m.Top).Right(m.Right).Bottom(m.Bottom).Left(m.Left)
 	})
 }
 
-func cartesianChartPlot(c *ui.Context, p ChartProps, selected *int, metrics *chartAxisLayout) ui.Element {
+func cartesianChartPlot(c *ui.Context, outer ui.Element, p ChartProps, selected *int, metrics *chartAxisLayout) ui.Element {
 	t := theme.TokensOf(c)
 	plot, scale := scaledChartValues(p)
 	hi, lo := float64(0), float64(0)
@@ -425,7 +472,7 @@ func cartesianChartPlot(c *ui.Context, p ChartProps, selected *int, metrics *cha
 			if len(p.Labels) > 1 {
 				step = x.At(1) - x.At(0)
 			}
-			center := x.At(*selected)
+			center := chartCategoryAt(p, x.At(*selected))
 			span := chart.Span{Lo: center - step/2, Hi: center + step/2}
 			color := t.Muted
 			if p.Cartesian.Cursor.Color != nil {
@@ -521,12 +568,12 @@ func cartesianChartPlot(c *ui.Context, p ChartProps, selected *int, metrics *cha
 		})
 		if *selected >= 0 && !p.Cartesian.HideCursor && !bandCursor {
 			if horizontal {
-				chart.RuleY(c, 1-x.At(*selected), 1).Background(t.Border).IgnoreInput(true)
+				chart.RuleY(c, 1-chartCategoryAt(p, x.At(*selected)), 1).Background(t.Border).IgnoreInput(true)
 			} else {
-				chart.RuleX(c, x.At(*selected), 1).Background(t.Border).IgnoreInput(true)
+				chart.RuleX(c, chartCategoryAt(p, x.At(*selected)), 1).Background(t.Border).IgnoreInput(true)
 			}
 		}
-		chartTooltipAt(c, p, *selected)
+		chartTooltipAt(c, p, *selected, chartCartesianTooltipAnchor(c, area, outer, p, x, *selected))
 	}).MinWidth(0).Gap(8).FontSize(12).Direction(ui.LeftToRight)
 	categoryGap := chartNonnegative(p.Cartesian.CategoryTickMargin, 8)
 	valueGap := chartNonnegative(p.Cartesian.ValueTickMargin, 8)

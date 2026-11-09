@@ -1,0 +1,40 @@
+{
+  "version": "3.8.0",
+  "commit": "c04a79039ebc4d5057de163298d2e9917a5e5a66",
+  "npmIntegrity": "sha512-Z/m38DX3L73ExO4Tpc9/iZWHmHnlzWG4njQbxsF5aSjwqmHNDDIm0rdEBArkwsBvR8U6EirlEHiQNYWCVh9sGQ==",
+  "license": "../../polar/LICENSE.recharts",
+  "files": [
+    {
+      "path": "lib/component/Tooltip.js",
+      "sha256": "7c44091820a5366ee66deeb91c17c60b80bccd38019af48b7213f9c06367a57c"
+    },
+    {
+      "path": "lib/component/TooltipBoundingBox.js",
+      "sha256": "1ca4550e89a8798c43a9d3a227f30141fcb030c6ddb35b1b974f85f704fc3072"
+    },
+    {
+      "path": "lib/util/tooltip/translate.js",
+      "sha256": "7231b6c2f6ad6064b4b735d04363a249a0bdd0d152b7b250f86ff198afda181f"
+    },
+    {
+      "path": "lib/state/selectors/combiners/combineCoordinateForDefaultIndex.js",
+      "sha256": "9204c7c3cca217caba30e93caf61d5cd1ee1bb39b7181c435dcfbcc2e87eacd5"
+    },
+    {
+      "path": "lib/state/selectors/combiners/combineTooltipPayload.js",
+      "sha256": "aec5ce4aafd28696bde356ccaeeeacfbaa1ea714a2e7fa23533f5db4b07b8ae3"
+    },
+    {
+      "path": "lib/state/selectors/tooltipSelectors.js",
+      "sha256": "15666e59f87f4df2938e3c4b0dff5d9803adf7a4dc4823e6a06dbe5ad2a12db9"
+    },
+    {
+      "path": "lib/state/keyboardEventsMiddleware.js",
+      "sha256": "928dd9e5497b2fa3ff8dc4f992656c12abce5c5a1cded2a13f2dd304c1d99b7f"
+    },
+    {
+      "path": "lib/state/selectors/axisSelectors.js",
+      "sha256": "0fad9066a0905d408becfca8b5594a593bce8606ceec4401d255a0401b6cc39f"
+    }
+  ]
+}

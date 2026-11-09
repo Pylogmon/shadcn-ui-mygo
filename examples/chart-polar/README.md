@@ -2,7 +2,7 @@
 
 `go run ./examples/chart-polar` provides all 31 fixed shadcn Pie, Radar and
 Radial examples using public `display.Chart`, polar composition, scoped config
-and tooltip/legend content helpers. `recipes.json` preserves their actual data,
+and tooltip/legend content helpers. `internal/chartcatalog/polar.json` preserves their actual data,
 series order, colors and margins from shadcn commit
 `8ab27715521cbd4f87ae6886cd989cbb678f6de7`.
 
@@ -40,3 +40,12 @@ Original 31 TSX examples, actual Recharts 3.8 CJS geometry-function output,
 Sector/axis/grid source and licenses are archived in
 `pkg/display/testdata/shadcn-chart`. This example is separate from the nine
 Tooltip catalog recipes and the final Gallery integration stage.
+
+The configuration builders are shared with Gallery and `examples/chart-catalog`;
+tooltip payloads include detached original per-series rows, so stacked Pie rings
+retain their respective source datasets.
+
+Run this example from this module: its shared recipe builders live in
+`internal/chartcatalog`, so the complete main.go is not a standalone external
+module sample. `examples/chart-composition` remains the self-contained example
+using the public packages directly.

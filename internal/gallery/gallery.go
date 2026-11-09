@@ -9,6 +9,7 @@ import (
 
 	"github.com/egoist/mygo"
 	"github.com/egoist/mygo/ui"
+	"github.com/pylogmon/shadcn-ui-mygo/internal/chartcatalog"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/control"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/conversation"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/desktop"
@@ -43,6 +44,7 @@ type State struct {
 	Table                                                                          display.DataTableState
 	tablePreview                                                                   tablePreviewState
 	chartPreview                                                                   chartPreviewState
+	chartCatalogue                                                                 chartcatalog.State
 	comboboxCompound                                                               comboboxCompoundPreviewState
 	comboboxes                                                                     comboboxPreviewState
 	carousels                                                                      carouselPreviewState

@@ -400,3 +400,7 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 
 - 类型化输入：NumberInput使用真实TextInput编辑器，有限范围/步进、独立draft与提交、IME/Field/InputGroup均保留；Date/Time复用公开本地化日期/分段，File由用户激活后异步打开系统选择器，取消保留值、卸载/换绑丢弃旧结果、当前构建回调。Time元数据位于SDK公开group，未虚构内部段ReadOnly/AutoFocus。外部NaN模型曾因NaN!=NaN导致每帧Changed，原定向检查修正后通过。
 - 类型化输入收尾：fresh实际6f6d947仅叠30冻结模块/包装说明文件，全量2288结果、33包（control295、example8）、全量vet、macOS Gallery/Inputs bundle及Linux/Windows Gallery编译通过。Root核对冻结文件和收据，逐张查看由exact最终Inputs可执行文件导出的三张原生PNG，含types明暗与Field/InputGroup/file组合；两bundle各14份许可字节相同。收据`/private/tmp/typed-input-stage-final-e1baevri/receipt.json`；未重复运行独立消费者或旧检查矩阵，未混入Calendar/Chart3。实际OS文件选择器、平台候选窗和AT仍待验收。
+
+- Chart目录：九种Tooltip复用现有content/legend并接入最新原始行payload，支持series数据覆盖、DataKey/TooltipName、复制明确的无环JSON形状；新增按检查位置的10DIP间距/边缘翻转及显式类别反转，默认旧定位和物理顺序保留。目录70项、文档8项、Create6项共用模块内构建器，原两个应用的数据JSON逐字迁移，Gallery搜索/草稿与旧探索器保留。84配置的一条inventory不计84独立视觉验收。
+- Chart目录位置修正：官方defaultIndex非类别坐标包含完整图表高度与axis offset，旧plot-only midpoint实际tip.Y=138.9336，源期望150；同一公开原生检查修正后通过。Root仅补原位置检查的有限数守卫，未改产品或扩展检查矩阵。Root核对19个固定Git tree blob/原文SHA及8个官方npm成员、完整tgz SHA-512，离线核验不依赖缺失promisor blob下载。
+- Chart目录收尾：fresh实际3f668e7仅叠63冻结文件并删除两个已迁移JSON，全量2296结果、35包（display763、Gallery227、catalogue4）、全量vet、macOS Gallery/Catalogue bundle及Linux/Windows Gallery构建通过。收据`/private/tmp/chart3-root-final-vp1hh22_/artifacts/verification-receipt.json`。Root逐张查看advanced total、Arabic RTL、anatomy和完整六卡Create原生图；最终打包可执行文件重新导出四图与已查看图片逐字一致。未混入Calendar候选；字体/栅格差异、其它Go对象借用边界及真实平台/AT验收保留。
