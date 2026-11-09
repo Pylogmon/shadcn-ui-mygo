@@ -1,0 +1,248 @@
+{
+  "repository": "https://github.com/shadcn-ui/ui",
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "files": [
+    {
+      "archive": "shadcn/examples/calendar-hijri.tsx",
+      "sourcePath": "apps/v4/examples/base/calendar-hijri.tsx",
+      "gitBlob": "44ef99307f2317ce8aa68043b77e8fca6c8b2b33",
+      "sha256": "e715a8b0003b1a5ffa924c96e0c1aa9e635ce5cb4bd0a7414074389496943a05",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/calendar-hijri.tsx"
+    },
+    {
+      "archive": "shadcn/examples/date-picker-input.tsx",
+      "sourcePath": "apps/v4/examples/base/date-picker-input.tsx",
+      "gitBlob": "aa57469b7c9a22866dc70e2d8db8561028a8a7e7",
+      "sha256": "3f9601a170b0dc21996e761f097462bed504e3195fa801d6bcd549b3011a04a6",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/date-picker-input.tsx"
+    },
+    {
+      "archive": "shadcn/examples/date-picker-natural-language.tsx",
+      "sourcePath": "apps/v4/examples/base/date-picker-natural-language.tsx",
+      "gitBlob": "c4b5fea4c9a2ab74e8e08239d86b92b4e0e2e73c",
+      "sha256": "cab7dd423fa2fe787417204d839edbea27935637e171ea0a72c11abbc0c3de22",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/date-picker-natural-language.tsx"
+    },
+    {
+      "archive": "shadcn/docs/calendar.mdx",
+      "sourcePath": "apps/v4/content/docs/components/base/calendar.mdx",
+      "gitBlob": "efb7a532ee3cc9907c11722b5b54e941c9d19084",
+      "sha256": "c9d22ce8f5c3e2229e792099cc5f542f79c715966573887f867035d2c3bc35ff",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/content/docs/components/base/calendar.mdx"
+    },
+    {
+      "archive": "shadcn/docs/date-picker.mdx",
+      "sourcePath": "apps/v4/content/docs/components/base/date-picker.mdx",
+      "gitBlob": "b3502726dcd56f0c97fc54c297d05a5460fdc53f",
+      "sha256": "3a39e4274f247f1f0d6f8f0c7029ca3161db37cf5026f48de3f5e2831fb82b17",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/content/docs/components/base/date-picker.mdx"
+    },
+    {
+      "archive": "npm/react-day-picker/LICENSE",
+      "package": "react-day-picker@9.8.1",
+      "member": "package/LICENSE",
+      "tarball": "https://registry.npmjs.org/react-day-picker/-/react-day-picker-9.8.1.tgz",
+      "tarballSHA256": "a2dc42bf2ad9f402a7b331fa133f88fa1f36aa0d2d187e8c2a80bb0c5d647c07",
+      "integrity": "sha512-kMcLrp3PfN/asVJayVv82IjF3iLOOxuH5TNFWezX6lS/T8iVRFPTETpHl3TUSTH99IDMZLubdNPJr++rQctkEw==",
+      "sha256": "45d115f88e2b50de2113bafbc5e877f8e85dc9236d5d304a855ed4756f7e4439"
+    },
+    {
+      "archive": "npm/react-day-picker/package.json",
+      "package": "react-day-picker@9.8.1",
+      "member": "package/package.json",
+      "tarball": "https://registry.npmjs.org/react-day-picker/-/react-day-picker-9.8.1.tgz",
+      "tarballSHA256": "a2dc42bf2ad9f402a7b331fa133f88fa1f36aa0d2d187e8c2a80bb0c5d647c07",
+      "integrity": "sha512-kMcLrp3PfN/asVJayVv82IjF3iLOOxuH5TNFWezX6lS/T8iVRFPTETpHl3TUSTH99IDMZLubdNPJr++rQctkEw==",
+      "sha256": "cac8424664618adcff971ce70ceeca0dd63678fed85417ecdefb29c8a256e73b"
+    },
+    {
+      "archive": "npm/react-day-picker/dist/esm/persian.js",
+      "package": "react-day-picker@9.8.1",
+      "member": "package/dist/esm/persian.js",
+      "tarball": "https://registry.npmjs.org/react-day-picker/-/react-day-picker-9.8.1.tgz",
+      "tarballSHA256": "a2dc42bf2ad9f402a7b331fa133f88fa1f36aa0d2d187e8c2a80bb0c5d647c07",
+      "integrity": "sha512-kMcLrp3PfN/asVJayVv82IjF3iLOOxuH5TNFWezX6lS/T8iVRFPTETpHl3TUSTH99IDMZLubdNPJr++rQctkEw==",
+      "sha256": "d515944c5fdcbf1525033bf352c5301acc6a4c371e1e9e722648c69331a4c54b"
+    },
+    {
+      "archive": "npm/react-day-picker/dist/esm/DayPicker.js",
+      "package": "react-day-picker@9.8.1",
+      "member": "package/dist/esm/DayPicker.js",
+      "tarball": "https://registry.npmjs.org/react-day-picker/-/react-day-picker-9.8.1.tgz",
+      "tarballSHA256": "a2dc42bf2ad9f402a7b331fa133f88fa1f36aa0d2d187e8c2a80bb0c5d647c07",
+      "integrity": "sha512-kMcLrp3PfN/asVJayVv82IjF3iLOOxuH5TNFWezX6lS/T8iVRFPTETpHl3TUSTH99IDMZLubdNPJr++rQctkEw==",
+      "sha256": "6e84f6cedb5967d9a44a3d7913cbc36ff8bffb97e90d4b98c9ad929b35593a77"
+    },
+    {
+      "archive": "npm/react-day-picker/dist/esm/classes/DateLib.js",
+      "package": "react-day-picker@9.8.1",
+      "member": "package/dist/esm/classes/DateLib.js",
+      "tarball": "https://registry.npmjs.org/react-day-picker/-/react-day-picker-9.8.1.tgz",
+      "tarballSHA256": "a2dc42bf2ad9f402a7b331fa133f88fa1f36aa0d2d187e8c2a80bb0c5d647c07",
+      "integrity": "sha512-kMcLrp3PfN/asVJayVv82IjF3iLOOxuH5TNFWezX6lS/T8iVRFPTETpHl3TUSTH99IDMZLubdNPJr++rQctkEw==",
+      "sha256": "178719413ba33a34118aa1c2e4b551cdd1423b3824b568cf5daf8eb1b8db3906"
+    },
+    {
+      "archive": "npm/react-day-picker/dist/esm/labels/labelDayButton.js",
+      "package": "react-day-picker@9.8.1",
+      "member": "package/dist/esm/labels/labelDayButton.js",
+      "tarball": "https://registry.npmjs.org/react-day-picker/-/react-day-picker-9.8.1.tgz",
+      "tarballSHA256": "a2dc42bf2ad9f402a7b331fa133f88fa1f36aa0d2d187e8c2a80bb0c5d647c07",
+      "integrity": "sha512-kMcLrp3PfN/asVJayVv82IjF3iLOOxuH5TNFWezX6lS/T8iVRFPTETpHl3TUSTH99IDMZLubdNPJr++rQctkEw==",
+      "sha256": "efb84393aeb74208d2a7a449ff5f1019e624284539788513dc75a5694d196c69"
+    },
+    {
+      "archive": "npm/react-day-picker/dist/esm/formatters/formatWeekdayName.js",
+      "package": "react-day-picker@9.8.1",
+      "member": "package/dist/esm/formatters/formatWeekdayName.js",
+      "tarball": "https://registry.npmjs.org/react-day-picker/-/react-day-picker-9.8.1.tgz",
+      "tarballSHA256": "a2dc42bf2ad9f402a7b331fa133f88fa1f36aa0d2d187e8c2a80bb0c5d647c07",
+      "integrity": "sha512-kMcLrp3PfN/asVJayVv82IjF3iLOOxuH5TNFWezX6lS/T8iVRFPTETpHl3TUSTH99IDMZLubdNPJr++rQctkEw==",
+      "sha256": "46528dca4aa72b4e16713ec80b07ba1c371cbf64206938b028c1ddd7a95b3242"
+    },
+    {
+      "archive": "npm/date-fns-jalali/LICENSE.md",
+      "package": "date-fns-jalali@4.1.0-0",
+      "member": "package/LICENSE.md",
+      "tarball": "https://registry.npmjs.org/date-fns-jalali/-/date-fns-jalali-4.1.0-0.tgz",
+      "tarballSHA256": "0b0748d0adf1aab6b6b3e160a616b1875257e151b6ac1ae088d901dcd6f37922",
+      "integrity": "sha512-hTIP/z+t+qKwBDcmmsnmjWTduxCg+5KfdqWQvb2X/8C9+knYY6epN/pfxdDuyVlSVeFz0sM5eEfwIUQ70U4ckg==",
+      "sha256": "8d3951c38967b964b1fe259bfd200c2647cc04c858b55a4414e3122a60f1ef4b"
+    },
+    {
+      "archive": "npm/date-fns-jalali/package.json",
+      "package": "date-fns-jalali@4.1.0-0",
+      "member": "package/package.json",
+      "tarball": "https://registry.npmjs.org/date-fns-jalali/-/date-fns-jalali-4.1.0-0.tgz",
+      "tarballSHA256": "0b0748d0adf1aab6b6b3e160a616b1875257e151b6ac1ae088d901dcd6f37922",
+      "integrity": "sha512-hTIP/z+t+qKwBDcmmsnmjWTduxCg+5KfdqWQvb2X/8C9+knYY6epN/pfxdDuyVlSVeFz0sM5eEfwIUQ70U4ckg==",
+      "sha256": "ef3faabbd652f16ea0b2559a9ac338f88bddd084fcb356551859ea911628616f"
+    },
+    {
+      "archive": "npm/date-fns-jalali/_lib/jalali.js",
+      "package": "date-fns-jalali@4.1.0-0",
+      "member": "package/_lib/jalali.js",
+      "tarball": "https://registry.npmjs.org/date-fns-jalali/-/date-fns-jalali-4.1.0-0.tgz",
+      "tarballSHA256": "0b0748d0adf1aab6b6b3e160a616b1875257e151b6ac1ae088d901dcd6f37922",
+      "integrity": "sha512-hTIP/z+t+qKwBDcmmsnmjWTduxCg+5KfdqWQvb2X/8C9+knYY6epN/pfxdDuyVlSVeFz0sM5eEfwIUQ70U4ckg==",
+      "sha256": "bf8d5195bfc80b35abfa57406db2aaad6b642c3b660395449ca50c3f17f60f3c"
+    },
+    {
+      "archive": "npm/date-fns-jalali/_core/newDate.js",
+      "package": "date-fns-jalali@4.1.0-0",
+      "member": "package/_core/newDate.js",
+      "tarball": "https://registry.npmjs.org/date-fns-jalali/-/date-fns-jalali-4.1.0-0.tgz",
+      "tarballSHA256": "0b0748d0adf1aab6b6b3e160a616b1875257e151b6ac1ae088d901dcd6f37922",
+      "integrity": "sha512-hTIP/z+t+qKwBDcmmsnmjWTduxCg+5KfdqWQvb2X/8C9+knYY6epN/pfxdDuyVlSVeFz0sM5eEfwIUQ70U4ckg==",
+      "sha256": "36f6fc88dcb9889eb4b5c41c362cfeeec8487f373960c8ea9af383cea0e85fb8"
+    },
+    {
+      "archive": "npm/date-fns-jalali/_core/getDate.js",
+      "package": "date-fns-jalali@4.1.0-0",
+      "member": "package/_core/getDate.js",
+      "tarball": "https://registry.npmjs.org/date-fns-jalali/-/date-fns-jalali-4.1.0-0.tgz",
+      "tarballSHA256": "0b0748d0adf1aab6b6b3e160a616b1875257e151b6ac1ae088d901dcd6f37922",
+      "integrity": "sha512-hTIP/z+t+qKwBDcmmsnmjWTduxCg+5KfdqWQvb2X/8C9+knYY6epN/pfxdDuyVlSVeFz0sM5eEfwIUQ70U4ckg==",
+      "sha256": "6afa9dcf886ff4e60f9580dcceee0de9b5f05b8180eae8d659f2fd62739bb861"
+    },
+    {
+      "archive": "npm/date-fns-jalali/_core/getMonth.js",
+      "package": "date-fns-jalali@4.1.0-0",
+      "member": "package/_core/getMonth.js",
+      "tarball": "https://registry.npmjs.org/date-fns-jalali/-/date-fns-jalali-4.1.0-0.tgz",
+      "tarballSHA256": "0b0748d0adf1aab6b6b3e160a616b1875257e151b6ac1ae088d901dcd6f37922",
+      "integrity": "sha512-hTIP/z+t+qKwBDcmmsnmjWTduxCg+5KfdqWQvb2X/8C9+knYY6epN/pfxdDuyVlSVeFz0sM5eEfwIUQ70U4ckg==",
+      "sha256": "2f3854b8ad6aa976f06a41b5366d200e581353568a639b00461ec855a18cbf2f"
+    },
+    {
+      "archive": "npm/date-fns-jalali/_core/getFullYear.js",
+      "package": "date-fns-jalali@4.1.0-0",
+      "member": "package/_core/getFullYear.js",
+      "tarball": "https://registry.npmjs.org/date-fns-jalali/-/date-fns-jalali-4.1.0-0.tgz",
+      "tarballSHA256": "0b0748d0adf1aab6b6b3e160a616b1875257e151b6ac1ae088d901dcd6f37922",
+      "integrity": "sha512-hTIP/z+t+qKwBDcmmsnmjWTduxCg+5KfdqWQvb2X/8C9+knYY6epN/pfxdDuyVlSVeFz0sM5eEfwIUQ70U4ckg==",
+      "sha256": "dbdfc1e69a2792f8fe6c0ca74f472a89b46f89d0f8d25ce72249b64f2e09bafa"
+    },
+    {
+      "archive": "npm/date-fns-jalali/_core/setFullYear.js",
+      "package": "date-fns-jalali@4.1.0-0",
+      "member": "package/_core/setFullYear.js",
+      "tarball": "https://registry.npmjs.org/date-fns-jalali/-/date-fns-jalali-4.1.0-0.tgz",
+      "tarballSHA256": "0b0748d0adf1aab6b6b3e160a616b1875257e151b6ac1ae088d901dcd6f37922",
+      "integrity": "sha512-hTIP/z+t+qKwBDcmmsnmjWTduxCg+5KfdqWQvb2X/8C9+knYY6epN/pfxdDuyVlSVeFz0sM5eEfwIUQ70U4ckg==",
+      "sha256": "6a133ecccff69c1ac9f333572e0fae8edeb777745b20f6334232fa461d1197c9"
+    },
+    {
+      "archive": "npm/date-fns-jalali/addMonths.js",
+      "package": "date-fns-jalali@4.1.0-0",
+      "member": "package/addMonths.js",
+      "tarball": "https://registry.npmjs.org/date-fns-jalali/-/date-fns-jalali-4.1.0-0.tgz",
+      "tarballSHA256": "0b0748d0adf1aab6b6b3e160a616b1875257e151b6ac1ae088d901dcd6f37922",
+      "integrity": "sha512-hTIP/z+t+qKwBDcmmsnmjWTduxCg+5KfdqWQvb2X/8C9+knYY6epN/pfxdDuyVlSVeFz0sM5eEfwIUQ70U4ckg==",
+      "sha256": "d1f917a1ef89186bf4ffc265732a463b767c8add9491c742a155ed479239dd2d"
+    },
+    {
+      "archive": "npm/date-fns-jalali/getDaysInMonth.js",
+      "package": "date-fns-jalali@4.1.0-0",
+      "member": "package/getDaysInMonth.js",
+      "tarball": "https://registry.npmjs.org/date-fns-jalali/-/date-fns-jalali-4.1.0-0.tgz",
+      "tarballSHA256": "0b0748d0adf1aab6b6b3e160a616b1875257e151b6ac1ae088d901dcd6f37922",
+      "integrity": "sha512-hTIP/z+t+qKwBDcmmsnmjWTduxCg+5KfdqWQvb2X/8C9+knYY6epN/pfxdDuyVlSVeFz0sM5eEfwIUQ70U4ckg==",
+      "sha256": "ca7ca682cf4beefd1dcc7b93c118eaa09edfee7661ff61fb274230c8164aa5d2"
+    },
+    {
+      "archive": "npm/date-fns-jalali/getWeek.js",
+      "package": "date-fns-jalali@4.1.0-0",
+      "member": "package/getWeek.js",
+      "tarball": "https://registry.npmjs.org/date-fns-jalali/-/date-fns-jalali-4.1.0-0.tgz",
+      "tarballSHA256": "0b0748d0adf1aab6b6b3e160a616b1875257e151b6ac1ae088d901dcd6f37922",
+      "integrity": "sha512-hTIP/z+t+qKwBDcmmsnmjWTduxCg+5KfdqWQvb2X/8C9+knYY6epN/pfxdDuyVlSVeFz0sM5eEfwIUQ70U4ckg==",
+      "sha256": "1ef3bec1687000e794a33123913b0b8bad450f484561a2434c5a11b3aa4e4ccd"
+    },
+    {
+      "archive": "npm/date-fns-jalali/getWeekYear.js",
+      "package": "date-fns-jalali@4.1.0-0",
+      "member": "package/getWeekYear.js",
+      "tarball": "https://registry.npmjs.org/date-fns-jalali/-/date-fns-jalali-4.1.0-0.tgz",
+      "tarballSHA256": "0b0748d0adf1aab6b6b3e160a616b1875257e151b6ac1ae088d901dcd6f37922",
+      "integrity": "sha512-hTIP/z+t+qKwBDcmmsnmjWTduxCg+5KfdqWQvb2X/8C9+knYY6epN/pfxdDuyVlSVeFz0sM5eEfwIUQ70U4ckg==",
+      "sha256": "59197a7124b32d17619fc7e2dc07d1017cd21aa14db5d09bfca1eed8fc46b9e0"
+    },
+    {
+      "archive": "npm/date-fns-jalali/startOfMonth.js",
+      "package": "date-fns-jalali@4.1.0-0",
+      "member": "package/startOfMonth.js",
+      "tarball": "https://registry.npmjs.org/date-fns-jalali/-/date-fns-jalali-4.1.0-0.tgz",
+      "tarballSHA256": "0b0748d0adf1aab6b6b3e160a616b1875257e151b6ac1ae088d901dcd6f37922",
+      "integrity": "sha512-hTIP/z+t+qKwBDcmmsnmjWTduxCg+5KfdqWQvb2X/8C9+knYY6epN/pfxdDuyVlSVeFz0sM5eEfwIUQ70U4ckg==",
+      "sha256": "5e2153074d2de2e92d25b56863baf0ca7b6659f253d59f6a996e477d6481d5af"
+    },
+    {
+      "archive": "npm/date-fns-jalali/locale/fa-IR.js",
+      "package": "date-fns-jalali@4.1.0-0",
+      "member": "package/locale/fa-IR.js",
+      "tarball": "https://registry.npmjs.org/date-fns-jalali/-/date-fns-jalali-4.1.0-0.tgz",
+      "tarballSHA256": "0b0748d0adf1aab6b6b3e160a616b1875257e151b6ac1ae088d901dcd6f37922",
+      "integrity": "sha512-hTIP/z+t+qKwBDcmmsnmjWTduxCg+5KfdqWQvb2X/8C9+knYY6epN/pfxdDuyVlSVeFz0sM5eEfwIUQ70U4ckg==",
+      "sha256": "550f9c55bc659605c12c97ee5c4de3617ab8a5c9a86c448356ee0a4a3bec0dca"
+    },
+    {
+      "archive": "npm/date-fns-jalali/locale/fa-IR/_lib/localize.js",
+      "package": "date-fns-jalali@4.1.0-0",
+      "member": "package/locale/fa-IR/_lib/localize.js",
+      "tarball": "https://registry.npmjs.org/date-fns-jalali/-/date-fns-jalali-4.1.0-0.tgz",
+      "tarballSHA256": "0b0748d0adf1aab6b6b3e160a616b1875257e151b6ac1ae088d901dcd6f37922",
+      "integrity": "sha512-hTIP/z+t+qKwBDcmmsnmjWTduxCg+5KfdqWQvb2X/8C9+knYY6epN/pfxdDuyVlSVeFz0sM5eEfwIUQ70U4ckg==",
+      "sha256": "0b8bce3e3146775a411d83adb1f98cb4336c747763351d3c998bb2e0685d6308"
+    },
+    {
+      "archive": "npm/date-fns-jalali/locale/fa-IR/_lib/formatLong.js",
+      "package": "date-fns-jalali@4.1.0-0",
+      "member": "package/locale/fa-IR/_lib/formatLong.js",
+      "tarball": "https://registry.npmjs.org/date-fns-jalali/-/date-fns-jalali-4.1.0-0.tgz",
+      "tarballSHA256": "0b0748d0adf1aab6b6b3e160a616b1875257e151b6ac1ae088d901dcd6f37922",
+      "integrity": "sha512-hTIP/z+t+qKwBDcmmsnmjWTduxCg+5KfdqWQvb2X/8C9+knYY6epN/pfxdDuyVlSVeFz0sM5eEfwIUQ70U4ckg==",
+      "sha256": "b3231d90e5332aff26329f63ce0e12b6a6cf0869964c3c5c63a5ecfb74aad60d"
+    }
+  ]
+}

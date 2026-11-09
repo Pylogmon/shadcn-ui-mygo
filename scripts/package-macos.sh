@@ -66,13 +66,19 @@ case "${1:-gallery}" in
         identifier='dev.pylogmon.shadcn-inputs'
         app_name='Shadcn Inputs'
         ;;
+    date-composition)
+        bundle='build/Shadcn Dates.app'
+        package='./examples/date-composition'
+        identifier='dev.pylogmon.shadcn-dates'
+        app_name='Shadcn Dates'
+        ;;
     material-icons)
         bundle='build/Shadcn Symbols.app'
         package='./examples/material-icons'
         identifier='dev.pylogmon.shadcn-symbols'
         app_name='Shadcn Symbols'
         ;;
-    *) echo 'Expected gallery, native-popups, chart-composition, chart-cartesian, chart-polar, chart-catalog, tooltip-composition, tabs-composition, select-composition, typed-input or material-icons.' >&2; exit 1 ;;
+    *) echo 'Expected gallery, native-popups, chart-composition, chart-cartesian, chart-polar, chart-catalog, tooltip-composition, tabs-composition, select-composition, typed-input, date-composition or material-icons.' >&2; exit 1 ;;
 esac
 mkdir -p "$bundle/Contents/MacOS"
 mkdir -p "$bundle/Contents/Resources/licenses"
@@ -90,6 +96,8 @@ cp pkg/desktop/testdata/shadcn-menu/npm/base-ui-react/LICENSE "$bundle/Contents/
 cp pkg/desktop/testdata/shadcn-menu/npm/radix-ui-react-menu/LICENSE "$bundle/Contents/Resources/licenses/radix-ui.txt"
 cp pkg/desktop/testdata/shadcn-menu/npm/tw-animate-css/LICENSE "$bundle/Contents/Resources/licenses/tw-animate-css.txt"
 cp pkg/icons/material/sources/LICENSE "$bundle/Contents/Resources/licenses/material-symbols.txt"
+cp pkg/display/testdata/shadcn-calendar/npm/date-fns-jalali/LICENSE.md "$bundle/Contents/Resources/licenses/date-fns-jalali.txt"
+cp pkg/display/testdata/shadcn-calendar/npm/react-day-picker/LICENSE "$bundle/Contents/Resources/licenses/react-day-picker.txt"
 CGO_ENABLED=0 go build -o "$bundle/Contents/MacOS/gallery" "$package"
 cat > "$bundle/Contents/Info.plist" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>

@@ -145,6 +145,14 @@ The macOS application bundles include the full license as
 `Contents/Resources/licenses/embla.txt`. No JavaScript package is a runtime
 dependency of the Go kit.
 
+Persian calendar conversion translates date-fns-jalali 4.1.0-0's arithmetic
+Jalali algorithm under its MIT license. The fixed react-day-picker 9.8.1 Persian
+wrapper, faIR locale, shadcn date examples, exact npm members and original
+licenses are archived in `pkg/display/testdata/shadcn-calendar/`.
+Native bundles include `licenses/date-fns-jalali.txt` and
+`licenses/react-day-picker.txt`. Neither JavaScript package nor chrono-node is
+a runtime dependency; editable-date parsing is supplied by the application.
+
 ## cmdk
 
 MIT License

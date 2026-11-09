@@ -130,7 +130,8 @@
 | 5.CU | Polar源几何/内容/命中与31例应用 | 已提交 `15ad058`；源角度/半径/扇区/网格/中心/沿弧标签与既有动画、真实ring/axis检查；Tooltip/Gallery整合继续实施 |
 | 5.CV | Gallery独立Tabs、多选Select与富Tooltip | 已提交 `6f6d947`；现有模型同步格式选择与跨页保留、header动作/面板关联及真实全局搜索快捷键，保留旧manual Tabs与popup清理 |
 | 5.CW | 类型化数值、日期、时间和文件输入 | 已提交 `3f668e7`；真实原生编辑器/分段/系统对话框、应用模型绑定、Field/InputGroup与当前回调，提供完整可运行输入示例 |
-| 5.CX | Chart Tooltip/原始数据及完整目录整合 | 本阶段提交；9种Tooltip、按检查定位/边缘翻转、类别反转与原始payload，70目录/文档8例/Create6例接入Gallery和独立应用 |
+| 5.CX | Chart Tooltip/原始数据及完整目录整合 | 已提交 `157c3ca`；9种Tooltip、按检查定位/边缘翻转、类别反转与原始payload，70目录/文档8例/Create6例接入Gallery和独立应用 |
+| 5.CY | Persian历法与可编辑日期组合 | 本阶段提交；固定33年Jalali模型、Farsi/RTL/历月导航与真实time.Time，应用Parse/Format、错误草稿、真实编辑器/Field/Submit及可操作示例 |
 
 用户已明确允许原生平台适配：Popover、menu、下拉菜单可以使用 MyGo 的系统菜单与独立 Flyout，超出父窗口范围；无需逐像素照搬网页浮层。Gallery 以 [shadcn/create](https://ui.shadcn.com/create) 的配置与实时预览流程为参考。完整组件功能、主题、动画范围保持不变。
 

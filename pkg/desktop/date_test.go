@@ -402,4 +402,31 @@ func TestDesktopDatePickerRefreshesLiveConstraintsWithoutIdleRedraws(t *testing.
 	if surface.invalidates != before {
 		t.Fatal("stable date options caused idle child invalidation")
 	}
+	before = surface.invalidates
+	p.Calendar.MinDate = value
+	p.Calendar.System = display.CalendarPersian
+	parent.Frame()
+	child.Frame()
+	if surface.invalidates <= before || len(b.surfaces) != 1 || !child.HasText("آبان ۱۴۰۵") || value.Day() != 9 {
+		t.Fatal("live month model did not refresh the same child without changing its real value")
+	}
+	direction := ui.LeftToRight
+	p.Calendar.Direction = &direction
+	before = surface.invalidates
+	parent.Frame()
+	child.Frame()
+	saturday, _ := child.AccessByRole(ui.RoleColumnHeader, "ش")
+	friday, _ := child.AccessByRole(ui.RoleColumnHeader, "ج")
+	if surface.invalidates <= before || saturday.Bounds.X >= friday.Bounds.X {
+		t.Fatal("explicit direction did not refresh Persian child")
+	}
+	direction = ui.RightToLeft
+	before = surface.invalidates
+	parent.Frame()
+	child.Frame()
+	saturday, _ = child.AccessByRole(ui.RoleColumnHeader, "ش")
+	friday, _ = child.AccessByRole(ui.RoleColumnHeader, "ج")
+	if surface.invalidates <= before || saturday.Bounds.X <= friday.Bounds.X {
+		t.Fatal("changed direction value at the same address did not refresh child")
+	}
 }

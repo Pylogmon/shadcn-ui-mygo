@@ -58,6 +58,8 @@ type pickerOptions struct {
 	Location                                                       *time.Location
 	WeekStartsOn                                                   int
 	NumberOfMonths, Caption, Min, Max                              int
+	CalendarSystem                                                 display.CalendarSystem
+	CalendarDirection                                              int
 	HideOutside, FixedWeeks, WeekNumbers, DisableNavigation        bool
 	Vertical, Reverse, Paged, Required, ExcludeDisabled            bool
 	Presets, RangePresets                                          string
@@ -68,6 +70,10 @@ func pickerOptionsOf(p DatePickerProps) pickerOptions {
 	week := -1
 	if q.WeekStartsOn != nil {
 		week = int(*q.WeekStartsOn)
+	}
+	direction := -1
+	if q.Direction != nil {
+		direction = int(*q.Direction)
 	}
 	var month time.Time
 	if q.Month != nil {
@@ -83,7 +89,7 @@ func pickerOptionsOf(p DatePickerProps) pickerOptions {
 	return pickerOptions{Placeholder: p.Placeholder, Label: p.Label, Format: p.Format, TimeLabel: p.TimeLabel, ApplyLabel: p.ApplyLabel, CancelLabel: p.CancelLabel,
 		Disabled: p.Disabled, ShowTime: p.ShowTime, Confirm: p.Confirm, CalendarLabel: q.Label,
 		Month: month, DefaultMonth: q.DefaultMonth, StartMonth: q.StartMonth, EndMonth: q.EndMonth, MinDate: q.MinDate, MaxDate: q.MaxDate, Location: q.Location, WeekStartsOn: week,
-		NumberOfMonths: q.NumberOfMonths, Caption: int(q.Caption), Min: q.Min, Max: q.Max,
+		NumberOfMonths: q.NumberOfMonths, Caption: int(q.Caption), Min: q.Min, Max: q.Max, CalendarSystem: q.System, CalendarDirection: direction,
 		HideOutside: q.HideOutsideDays, FixedWeeks: q.FixedWeeks, WeekNumbers: q.WeekNumbers, DisableNavigation: q.DisableNavigation,
 		Vertical: q.VerticalMonths, Reverse: q.ReverseMonths, Paged: q.PagedNavigation, Required: q.Required, ExcludeDisabled: q.ExcludeDisabled,
 		Presets: string(presets), RangePresets: string(ranges)}

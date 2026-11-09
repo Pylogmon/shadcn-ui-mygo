@@ -7,7 +7,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/egoist/mygo/i18n"
 	"github.com/egoist/mygo/ui"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/control"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/motion"
@@ -38,6 +37,11 @@ type CalendarDay struct {
 }
 type CalendarProps struct {
 	Label string
+	// System defaults to Gregorian. Persian uses the fixed Jalali month model,
+	// Farsi names, Eastern Arabic-Indic digits and Saturday-first weeks.
+	System CalendarSystem
+	// Nil inherits the parent direction for Gregorian and uses RTL for Persian.
+	Direction *ui.Direction
 	// Month is an optional caller-owned displayed month. DefaultMonth is used
 	// only when the calendar is first constructed; browsing never selects a day.
 	Month                                                       *time.Time
@@ -69,6 +73,7 @@ type calendarState struct {
 	Month, Cursor      time.Time
 	Signature          string
 	Ready, FocusCursor bool
+	System             CalendarSystem
 }
 
 func calendarLocation(p CalendarProps, date time.Time) *time.Location {
@@ -98,8 +103,20 @@ func dayKey(d time.Time) string {
 	}
 	return d.Format("2006-01-02")
 }
-func sameDate(a, b time.Time) bool  { return dayKey(a) == dayKey(b) }
-func compareDay(a, b time.Time) int { return strings.Compare(dayKey(a), dayKey(b)) }
+func sameDate(a, b time.Time) bool { return dayKey(a) == dayKey(b) }
+func compareDay(a, b time.Time) int {
+	av := []int{a.Year(), int(a.Month()), a.Day()}
+	bv := []int{b.Year(), int(b.Month()), b.Day()}
+	for i := range av {
+		if av[i] < bv[i] {
+			return -1
+		}
+		if av[i] > bv[i] {
+			return 1
+		}
+	}
+	return 0
+}
 func withCalendarDay(original, day time.Time, loc *time.Location) time.Time {
 	base := dateIn(original, loc)
 	h, m, s := base.Clock()
@@ -110,26 +127,36 @@ func disabledDay(day time.Time, p CalendarProps) bool {
 	return !p.MinDate.IsZero() && compareDay(day, dateIn(p.MinDate, loc)) < 0 || !p.MaxDate.IsZero() && compareDay(day, dateIn(p.MaxDate, loc)) > 0 || p.Disabled != nil && p.Disabled(day)
 }
 func unselectableDate(day time.Time, p CalendarProps) bool {
-	return day.IsZero() || disabledDay(day, p) || p.Hidden != nil && p.Hidden(day)
+	return day.IsZero() || !modelFor(p.System).valid(day) || disabledDay(day, p) || p.Hidden != nil && p.Hidden(day)
 }
 func calendarBounds(p CalendarProps, loc *time.Location) (time.Time, time.Time) {
+	model := modelFor(p.System)
 	lo, hi := dateIn(p.StartMonth, loc), dateIn(p.EndMonth, loc)
-	if !p.MinDate.IsZero() && (lo.IsZero() || compareDay(monthDate(dateIn(p.MinDate, loc)), monthDate(lo)) > 0) {
+	if !p.MinDate.IsZero() && (lo.IsZero() || compareDay(model.start(dateIn(p.MinDate, loc)), model.start(lo)) > 0) {
 		lo = p.MinDate.In(loc)
 	}
-	if !p.MaxDate.IsZero() && (hi.IsZero() || compareDay(monthDate(dateIn(p.MaxDate, loc)), monthDate(hi)) < 0) {
+	if !p.MaxDate.IsZero() && (hi.IsZero() || compareDay(model.start(dateIn(p.MaxDate, loc)), model.start(hi)) < 0) {
 		hi = p.MaxDate.In(loc)
 	}
 	if !lo.IsZero() {
-		lo = monthDate(lo)
+		lo = model.start(lo)
 	}
 	if !hi.IsZero() {
-		hi = monthDate(hi)
+		hi = model.start(hi)
 	}
 	return lo, hi
 }
 func boundedMonth(month time.Time, p CalendarProps, loc *time.Location) time.Time {
-	month = monthDate(month.In(loc))
+	model := modelFor(p.System)
+	month = model.start(month.In(loc))
+	if p.System == CalendarPersian && !model.valid(month) {
+		y, _, _ := model.parts(month)
+		if y < 1 {
+			month = persianTime(1, 1, 1, loc)
+		} else {
+			month = persianTime(maxPersianYear, 12, 1, loc)
+		}
+	}
 	lo, hi := calendarBounds(p, loc)
 	if !lo.IsZero() && month.Before(lo) {
 		month = lo
@@ -240,17 +267,18 @@ func CalendarRange(c *ui.Context, date *DateRange, p CalendarProps) ui.Element {
 }
 
 func calendarView(c *ui.Context, p CalendarProps, selected time.Time, signature func() string, choose func(time.Time) bool, selection func(time.Time) CalendarDay, multiple bool) ui.Element {
+	model := modelFor(p.System)
 	t := theme.TokensOf(c)
 	loc := calendarLocation(p, selected)
 	n := max(1, p.NumberOfMonths)
 	lo, hi := calendarBounds(p, loc)
 	if !lo.IsZero() && !hi.IsZero() && !hi.Before(lo) {
-		n = min(n, (hi.Year()-lo.Year())*12+int(hi.Month()-lo.Month())+1)
+		n = min(n, model.difference(hi, lo)+1)
 	}
 	boundView := func(month time.Time) time.Time {
 		month = boundedMonth(month, p, loc)
 		if !hi.IsZero() {
-			latest := hi.AddDate(0, -n+1, 0)
+			latest := model.add(hi, -n+1)
 			if !lo.IsZero() && latest.Before(lo) {
 				latest = lo
 			}
@@ -266,8 +294,21 @@ func calendarView(c *ui.Context, p CalendarProps, selected time.Time, signature 
 		label = "Calendar"
 	}
 	root.Label(label)
+	if p.Direction != nil {
+		root.Direction(*p.Direction)
+	} else if p.System == CalendarPersian {
+		root.Direction(ui.RightToLeft)
+	}
+	if !model.valid(selected) {
+		return root.Invalid(true).Description("Date is outside the supported Persian calendar").Children(func() { ui.Text(c, "Unsupported Persian date") })
+	}
 	st := ui.Local(root, "calendar", func() calendarState { return calendarState{} })
+	if st.Ready && st.System != p.System {
+		st.Month = boundView(st.Month)
+		st.System = p.System
+	}
 	if !st.Ready {
+		st.System = p.System
 		base := selected
 		if base.IsZero() {
 			base = c.Now().In(loc)
@@ -278,12 +319,12 @@ func calendarView(c *ui.Context, p CalendarProps, selected time.Time, signature 
 			st.Month = base
 		}
 		st.Month = boundView(st.Month)
-		if st.Cursor.Before(st.Month) || !st.Cursor.Before(st.Month.AddDate(0, n, 0)) {
+		if st.Cursor.Before(st.Month) || !st.Cursor.Before(model.add(st.Month, n)) {
 			st.Cursor = st.Month
 		}
 		// Focus a selectable day when an empty/default month is constrained.
 		if disabledDay(st.Cursor, p) || p.Hidden != nil && p.Hidden(st.Cursor) {
-			for day := st.Month; day.Before(st.Month.AddDate(0, n, 0)); day = day.AddDate(0, 0, 1) {
+			for day := st.Month; day.Before(model.add(st.Month, n)); day = day.AddDate(0, 0, 1) {
 				if !disabledDay(day, p) && (p.Hidden == nil || !p.Hidden(day)) {
 					st.Cursor = day
 					break
@@ -310,16 +351,19 @@ func calendarView(c *ui.Context, p CalendarProps, selected time.Time, signature 
 	// Keep the grid's active descendant inside the visible months so keyboard
 	// activation cannot select a stale date from the month just left behind.
 	relocateCursor := func() {
-		end := st.Month.AddDate(0, n, 0)
+		end := model.add(st.Month, n)
 		if !st.Cursor.Before(st.Month) && st.Cursor.Before(end) && !unselectableDate(st.Cursor, p) {
 			return
 		}
 		target := st.Month
 		if !st.Cursor.Before(end) {
-			target = st.Month.AddDate(0, n-1, 0)
+			target = model.add(st.Month, n-1)
 		}
-		last := target.AddDate(0, 1, -1)
-		candidate := time.Date(target.Year(), target.Month(), min(max(1, st.Cursor.Day()), last.Day()), 0, 0, 0, 0, loc)
+		last := model.add(target, 1).AddDate(0, 0, -1)
+		year, month, _ := model.parts(target)
+		_, _, cursorDay := model.parts(st.Cursor)
+		_, _, lastDay := model.parts(last)
+		candidate := model.date(year, month, min(max(1, cursorDay), lastDay), loc)
 		for day := candidate; day.Before(end); day = day.AddDate(0, 0, 1) {
 			if !unselectableDate(day, p) {
 				st.Cursor = day
@@ -365,17 +409,23 @@ func calendarView(c *ui.Context, p CalendarProps, selected time.Time, signature 
 	moveCursor := func(day time.Time, delta int) {
 		lo, hi := calendarBounds(p, loc)
 		attempt := dayDate(day)
-		if p.DisableNavigation && (attempt.Before(st.Month) || !attempt.Before(st.Month.AddDate(0, n, 0))) {
+		if !model.valid(attempt) {
+			return
+		}
+		if p.DisableNavigation && (attempt.Before(st.Month) || !attempt.Before(model.add(st.Month, n))) {
 			return
 		}
 		for tries := 0; tries < 3660; tries++ {
-			if p.DisableNavigation && (attempt.Before(st.Month) || !attempt.Before(st.Month.AddDate(0, n, 0))) {
+			if !model.valid(attempt) {
 				return
 			}
-			if !lo.IsZero() && monthDate(attempt).Before(lo) || !hi.IsZero() && monthDate(attempt).After(hi) {
+			if p.DisableNavigation && (attempt.Before(st.Month) || !attempt.Before(model.add(st.Month, n))) {
 				return
 			}
-			if !disabledDay(attempt, p) && (p.Hidden == nil || !p.Hidden(attempt)) {
+			if !lo.IsZero() && model.start(attempt).Before(lo) || !hi.IsZero() && model.start(attempt).After(hi) {
+				return
+			}
+			if model.valid(attempt) && !disabledDay(attempt, p) && (p.Hidden == nil || !p.Hidden(attempt)) {
 				break
 			}
 			attempt = attempt.AddDate(0, 0, delta)
@@ -385,10 +435,10 @@ func calendarView(c *ui.Context, p CalendarProps, selected time.Time, signature 
 		}
 		st.Cursor = attempt
 		st.FocusCursor = true
-		if monthDate(attempt).Before(st.Month) {
+		if model.start(attempt).Before(st.Month) {
 			setMonth(attempt)
-		} else if monthDate(attempt).After(st.Month.AddDate(0, n-1, 0)) {
-			setMonth(attempt.AddDate(0, -n+1, 0))
+		} else if model.start(attempt).After(model.add(st.Month, n-1)) {
+			setMonth(model.add(attempt, -n+1))
 		}
 		if !p.Browse && !multiple && !sameDate(dateIn(selected, loc), attempt) {
 			commit(attempt)
@@ -401,19 +451,31 @@ func calendarView(c *ui.Context, p CalendarProps, selected time.Time, signature 
 		if p.PagedNavigation {
 			step = n
 		}
-		prev := ui.ButtonBase(c.Key("previous")).Absolute().Top(12).Left(12).ZIndex(1).Size(28, 28).Radius(t.RadiusSM()).Label("Previous month").Disabled(p.DisableNavigation || !lo.IsZero() && !st.Month.After(lo)).Children(func() { ui.Text(c, "‹") })
+		prev := ui.ButtonBase(c.Key("previous")).Absolute().Top(12).Start(12).ZIndex(1).Size(28, 28).Radius(t.RadiusSM()).Label("Previous month").Disabled(p.DisableNavigation || !model.valid(model.add(st.Month, -step)) || !lo.IsZero() && !st.Month.After(lo)).Children(func() {
+			glyph := "‹"
+			if c.Direction() == ui.RightToLeft {
+				glyph = "›"
+			}
+			ui.Text(c, glyph)
+		})
 		if prev.Hovered() {
 			prev.Background(t.Accent)
 		}
 		if prev.Clicked() {
-			setMonth(st.Month.AddDate(0, -step, 0))
+			setMonth(model.add(st.Month, -step))
 		}
-		next := ui.ButtonBase(c.Key("next")).Absolute().Top(12).Right(12).ZIndex(1).Size(28, 28).Radius(t.RadiusSM()).Label("Next month").Disabled(p.DisableNavigation || !hi.IsZero() && !st.Month.AddDate(0, n-1, 0).Before(hi)).Children(func() { ui.Text(c, "›") })
+		next := ui.ButtonBase(c.Key("next")).Absolute().Top(12).End(12).ZIndex(1).Size(28, 28).Radius(t.RadiusSM()).Label("Next month").Disabled(p.DisableNavigation || !model.valid(model.add(st.Month, n)) || !hi.IsZero() && !model.add(st.Month, n-1).Before(hi)).Children(func() {
+			glyph := "›"
+			if c.Direction() == ui.RightToLeft {
+				glyph = "‹"
+			}
+			ui.Text(c, glyph)
+		})
 		if next.Hovered() {
 			next.Background(t.Accent)
 		}
 		if next.Clicked() {
-			setMonth(st.Month.AddDate(0, step, 0))
+			setMonth(model.add(st.Month, step))
 		}
 
 		months := ui.Row(c).Gap(16).AlignItems(ui.Start)
@@ -426,13 +488,13 @@ func calendarView(c *ui.Context, p CalendarProps, selected time.Time, signature 
 				if p.ReverseMonths {
 					index = n - 1 - order
 				}
-				month := st.Month.AddDate(0, index, 0)
+				month := model.add(st.Month, index)
 				ctx := c.Key(month.Format("2006-01"))
-				grid := ui.Column(ctx).Gap(4).Role(ui.RoleGrid).ColumnCount(7).Multiselectable(multiple).Focusable().Label(i18n.FormatDate(c.Locale(), month, i18n.DateOptions{Skeleton: "yMMMM"}))
-				if p.AutoFocus && monthDate(st.Cursor).Equal(month) {
+				grid := ui.Column(ctx).Gap(4).Role(ui.RoleGrid).ColumnCount(7).Multiselectable(multiple).Focusable().Label(model.label(c.Locale(), month, true))
+				if p.AutoFocus && model.start(st.Cursor).Equal(month) {
 					grid.AutoFocus()
 				}
-				if st.FocusCursor && monthDate(st.Cursor).Equal(month) {
+				if st.FocusCursor && model.start(st.Cursor).Equal(month) {
 					grid.Focus()
 					st.FocusCursor = false
 				}
@@ -452,24 +514,24 @@ func calendarView(c *ui.Context, p CalendarProps, selected time.Time, signature 
 					case grid.Shortcut(0, ui.KeyDown):
 						moveCursor(cur.AddDate(0, 0, 7), 1)
 					case grid.Shortcut(0, ui.KeyHome):
-						moveCursor(monthDate(cur), 1)
+						moveCursor(model.start(cur), 1)
 					case grid.Shortcut(0, ui.KeyEnd):
-						moveCursor(monthDate(cur).AddDate(0, 1, -1), -1)
+						moveCursor(model.add(model.start(cur), 1).AddDate(0, 0, -1), -1)
 					case grid.Shortcut(0, ui.KeyPageUp):
 						if !p.DisableNavigation {
-							moveCursor(calendarMoveMonth(cur, -1), -1)
+							moveCursor(model.move(cur, -1), -1)
 						}
 					case grid.Shortcut(0, ui.KeyPageDown):
 						if !p.DisableNavigation {
-							moveCursor(calendarMoveMonth(cur, 1), 1)
+							moveCursor(model.move(cur, 1), 1)
 						}
 					case grid.Shortcut(ui.Shift, ui.KeyPageUp):
 						if !p.DisableNavigation {
-							moveCursor(calendarMoveMonth(cur, -12), -1)
+							moveCursor(model.move(cur, -12), -1)
 						}
 					case grid.Shortcut(ui.Shift, ui.KeyPageDown):
 						if !p.DisableNavigation {
-							moveCursor(calendarMoveMonth(cur, 12), 1)
+							moveCursor(model.move(cur, 12), 1)
 						}
 					case grid.Shortcut(0, ui.KeyEnter), grid.Shortcut(0, ui.KeySpace):
 						commit(cur)
@@ -479,13 +541,10 @@ func calendarView(c *ui.Context, p CalendarProps, selected time.Time, signature 
 					if p.Caption != CalendarCaptionLabel {
 						calendarCaption(ctx, month, index, p, loc, setMonth)
 					} else {
-						ui.Text(ctx, i18n.FormatDate(c.Locale(), month, i18n.DateOptions{Skeleton: "yMMMM"})).TextAlign(ui.Center).FontSize(14).FontWeight(500).Height(28)
+						ui.Text(ctx, model.label(c.Locale(), month, true)).TextAlign(ui.Center).FontSize(14).FontWeight(500).Height(28)
 					}
-					first := c.Region().FirstWeekday
-					if p.WeekStartsOn != nil {
-						first = *p.WeekStartsOn
-					}
-					names := i18n.Weekdays(c.Locale(), i18n.Short, true)
+					first := model.firstWeekday(c, p)
+					names := model.weekdays(c.Locale())
 					ui.Row(ctx).Role(ui.RoleRow).Children(func() {
 						if p.WeekNumbers {
 							ui.Text(ctx, "#").Width(28).TextAlign(ui.Center).Role(ui.RoleColumnHeader)
@@ -495,7 +554,7 @@ func calendarView(c *ui.Context, p CalendarProps, selected time.Time, signature 
 						}
 					})
 					start := month.AddDate(0, 0, -((int(month.Weekday()) - int(first) + 7) % 7))
-					weeks := (calendarDaysBetween(start, month.AddDate(0, 1, -1)) + 7) / 7
+					weeks := (calendarDaysBetween(start, model.add(month, 1).AddDate(0, 0, -1)) + 7) / 7
 					if p.FixedWeeks {
 						weeks = 6
 					}
@@ -506,19 +565,19 @@ func calendarView(c *ui.Context, p CalendarProps, selected time.Time, signature 
 					for week := range weeks {
 						ui.Row(ctx.Key(week)).Role(ui.RoleRow).RowIndex(week + 2).Children(func() {
 							if p.WeekNumbers {
-								_, num := start.AddDate(0, 0, week*7).ISOWeek()
-								ui.Text(ctx, strconv.Itoa(num)).Width(28).FontSize(12).TextColor(t.MutedForeground).TextAlign(ui.Center).Role(ui.RoleRowHeader)
+								num := model.week(start.AddDate(0, 0, week*7), first)
+								ui.Text(ctx, num).Width(28).FontSize(12).TextColor(t.MutedForeground).TextAlign(ui.Center).Role(ui.RoleRowHeader)
 							}
 							for weekday := range 7 {
 								day := start.AddDate(0, 0, week*7+weekday)
 								d := selection(day)
 								d.Date = day
-								d.Outside = day.Month() != month.Month()
+								d.Outside = !model.start(day).Equal(month)
 								d.Disabled = disabledDay(day, p)
 								d.Today = sameDate(day, c.Now().In(loc))
 								// A date already rendered in a neighboring month is decorative here.
-								duplicate := d.Outside && !monthDate(day).Before(st.Month) && !monthDate(day).After(st.Month.AddDate(0, n-1, 0))
-								if p.Hidden != nil && p.Hidden(day) || p.HideOutsideDays && d.Outside || duplicate {
+								duplicate := d.Outside && !model.start(day).Before(st.Month) && !model.start(day).After(model.add(st.Month, n-1))
+								if !model.valid(day) || p.Hidden != nil && p.Hidden(day) || p.HideOutsideDays && d.Outside || duplicate {
 									ui.Box(ctx.Key(dayKey(day))).Size(32, 32).AccessHidden(true)
 									continue
 								}
@@ -546,7 +605,8 @@ func calendarMoveMonth(day time.Time, delta int) time.Time {
 
 func calendarDayButton(c *ui.Context, grid ui.Element, st *calendarState, p CalendarProps, d CalendarDay, column int, commit func(time.Time)) {
 	t := theme.TokensOf(c)
-	label := i18n.FormatDate(c.Locale(), d.Date, i18n.DateOptions{Skeleton: "yMMMMd"})
+	model := modelFor(p.System)
+	label := model.label(c.Locale(), d.Date, false)
 	slot := ui.Box(c.Key(dayKey(d.Date))).Size(32, 32).Role(ui.RoleCell).Label(label).AccessSelected(d.Selected).AccessDisabled(d.Disabled).ColumnIndex(column)
 	if d.RangeStart || d.RangeEnd || d.RangeMiddle {
 		slot.Background(t.Accent).Clip()
@@ -596,7 +656,7 @@ func calendarDayButton(c *ui.Context, grid ui.Element, st *calendarState, p Cale
 			if p.DayContent != nil {
 				p.DayContent(c, d)
 			} else {
-				ui.Text(c, strconv.Itoa(d.Date.Day())).FontFeatures("tnum")
+				ui.Text(c, model.dayNumber(d.Date)).FontFeatures("tnum")
 			}
 		})
 		if cell.Clicked() {
@@ -607,46 +667,52 @@ func calendarDayButton(c *ui.Context, grid ui.Element, st *calendarState, p Cale
 }
 
 func calendarCaption(c *ui.Context, month time.Time, index int, p CalendarProps, loc *time.Location, setMonth func(time.Time)) {
+	model := modelFor(p.System)
+	year, monthIndex, _ := model.parts(month)
 	selectCaption := p.CaptionSelect
 	if selectCaption == nil {
 		selectCaption = control.Select
 	}
-	months := i18n.Months(c.Locale(), i18n.Wide, true)
-	monthValue := strconv.Itoa(int(month.Month()))
-	yearValue := strconv.Itoa(month.Year())
+	months := model.months(c.Locale())
+	monthValue := strconv.Itoa(monthIndex)
+	yearValue := strconv.Itoa(year)
 	lo, hi := calendarBounds(p, loc)
-	firstYear, lastYear := month.Year()-100, month.Year()+100
+	firstYear, lastYear := year-100, year+100
 	if !lo.IsZero() {
-		firstYear = lo.Year()
+		firstYear, _, _ = model.parts(lo)
 	}
 	if !hi.IsZero() {
-		lastYear = hi.Year()
+		lastYear, _, _ = model.parts(hi)
+	}
+	if p.System == CalendarPersian {
+		firstYear = max(1, firstYear)
+		lastYear = min(maxPersianYear, lastYear)
 	}
 	ui.Row(c).Gap(4).PaddingX(28).Children(func() {
 		options := make([]control.Option, 12)
 		for i := range options {
-			candidate := time.Date(month.Year(), time.Month(i+1), 1, 0, 0, 0, 0, loc)
+			candidate := model.date(year, i+1, 1, loc)
 			options[i] = control.Option{Value: strconv.Itoa(i + 1), Label: months[i], Disabled: !lo.IsZero() && candidate.Before(lo) || !hi.IsZero() && candidate.After(hi)}
 		}
 		if p.Caption != CalendarCaptionDropdownYears {
 			if selectCaption(c, &monthValue, control.SelectProps{Label: "Month", Options: options, Disabled: p.DisableNavigation}).Height(28).MinHeight(28).PaddingX(4).FontSize(12).Changed() {
 				m, _ := strconv.Atoi(monthValue)
-				setMonth(time.Date(month.Year(), time.Month(m)-time.Month(index), 1, 0, 0, 0, 0, loc))
+				setMonth(model.date(year, m-index, 1, loc))
 			}
 		} else {
-			ui.Text(c, months[month.Month()-1]).FontSize(14).FontWeight(500)
+			ui.Text(c, months[monthIndex-1]).FontSize(14).FontWeight(500)
 		}
 		options = make([]control.Option, 0, max(0, lastYear-firstYear+1))
 		for year := firstYear; year <= lastYear; year++ {
-			options = append(options, control.Option{Value: strconv.Itoa(year), Label: strconv.Itoa(year)})
+			options = append(options, control.Option{Value: strconv.Itoa(year), Label: model.yearNumber(year)})
 		}
 		if p.Caption != CalendarCaptionDropdownMonths {
 			if selectCaption(c, &yearValue, control.SelectProps{Label: "Year", Options: options, Disabled: p.DisableNavigation}).Height(28).MinHeight(28).PaddingX(4).FontSize(12).Changed() {
 				year, _ := strconv.Atoi(yearValue)
-				setMonth(time.Date(year, month.Month()-time.Month(index), 1, 0, 0, 0, 0, loc))
+				setMonth(model.date(year, monthIndex-index, 1, loc))
 			}
 		} else {
-			ui.Text(c, yearValue).FontSize(14).FontWeight(500)
+			ui.Text(c, model.yearNumber(year)).FontSize(14).FontWeight(500)
 		}
 	})
 }
