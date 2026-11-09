@@ -68,7 +68,7 @@ composition; they do not automatically supply missing upstream behavior.
 | Input | `control.Input` | Native text editing/readonly/disabled exists; verify IME, password, selection, clipboard, invalid/focus geometry and all sizes. |
 | Input Group | `control.InputGroup` | Inline/block arbitrary addons, buttons, text and compound editor focus/error propagation are implemented; complete textarea/menu/action examples and platform screenshots. |
 | Input OTP | `control.InputOTP` | Native hidden editor + visible cells, filtering and completion exist; verify paste, selection/caret position, IME, grouping and pattern variants. |
-| Item | `display.Item` | Basic leading/body/trailing slots exist; verify interactive/link, media, separators and all variants/sizes. |
+| Item | `display.Item` / `ItemGroup` and compound helpers | Three variants/sizes, cover image/icon/custom media, clamped descriptions, primary native Button/Link, independent header/actions/footer, native list semantics and stable keyed editor/focus are tested. Narrow primary targets shrink; oversized fixed actions remain reachable in a bounded native horizontal viewport. Custom media preserves interactive AX; decorative media is inert. Complete grayscale/composition, real AT and visual/platform matrices remain. |
 | Kbd | `display.Kbd` | Verify platform modifier mapping, key groups, icons, nested buttons and contrast. |
 | Label | `control.Label` | Standalone LabelFor and Field associate visible labels with native editors and focus them on click; verify all disabled and screen-reader combinations. |
 | Marker | `conversation.Marker` | Inline/bordered/separator status exists; verify icons, busy states and complete upstream compositions. |

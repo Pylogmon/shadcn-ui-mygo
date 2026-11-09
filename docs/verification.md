@@ -114,3 +114,6 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 
 - Command模糊评分：28项针对性检查、overlay全包72项和vet通过。默认子串实现先在缩写排序、清空顺序与默认分组评分3项回归失败，再接入cmdk 1.1.1的原生Go移植。固定2,299条JavaScript数值（ASCII/空白/分隔符/转置/重复键/别名/UTF-16/Unicode大小写）逐条误差≤1e-14；独立新seed生成15,986条对照再次零差异。另有5条固定及14条临时上游RangeError输入，Go终止越过原始长度的递归。清空搜索绕过自定义Filter，默认也按分数排序并保持分组连续、未分组在前；真实键盘选择仍返回业务Value。10,000条候选本机3次benchmark约7.6ms/轮、5.6MB分配，仅为M4 Pro本机证据。源文件/许可证/哈希归档，可离线再验，macOS包脚本带上cmdk许可。
 - 评分阶段将已提交HEAD导出到临时目录，只覆盖本阶段Command/go.mod/许可脚本文件，overlay/Gallery共119项通过，确认不依赖并行展示组件变更。
+
+- Item：26项针对性检查及display vet通过，先复现默认Vega留白偏差；覆盖9种size×variant真实媒体像素、两行说明/RTL、Button鼠标/Space/Enter、实际Link/Router/Enter-only、独立Header/Actions/Footer编辑器、稳定重排/list语义、空callback身份和减少动画收敛。根审计补充窄60DIP主目标溢出与自定义媒体有键盘焦点却无AX节点；改为可收缩basis与保留custom native children后回归通过。超宽固定动作在原生横向Scroll中，检查实际viewport/滚动显露/像素/外部命中及可见动作键鼠；没有伪造运行时完整scrollchild的AX几何。
+- Item独立阶段验证：HEAD加本阶段Item源文件/测试及仅Item旧块提取，display/Gallery共210项通过；没有提前包含Badge或Alert/Empty实现。

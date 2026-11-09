@@ -180,28 +180,6 @@ func Empty(c *ui.Context, p EmptyProps) ui.Element {
 	})
 }
 
-type ItemProps struct {
-	Title, Description string
-	Leading, Trailing  func()
-}
-
-func Item(c *ui.Context, p ItemProps) ui.Element {
-	return ui.Row(c).FillWidth().Gap(12).AlignItems(ui.Center).Padding(12).Children(func() {
-		if p.Leading != nil {
-			p.Leading()
-		}
-		ui.Column(c).Grow(1).MinWidth(0).Gap(4).Children(func() {
-			Typography(c, p.Title, Small)
-			if p.Description != "" {
-				Typography(c, p.Description, Muted)
-			}
-		})
-		if p.Trailing != nil {
-			p.Trailing()
-		}
-	})
-}
-
 type ProgressProps struct {
 	Label, ValueText       string
 	Height                 float32

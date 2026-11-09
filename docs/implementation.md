@@ -48,7 +48,8 @@
 | 5.Q | Sidebar 响应式布局、移动面板、图标折叠和外部触发器 | 已提交 `7b585fc`，23 项针对性检查、navigation全包64项、独立审计及 vet 通过 |
 | 5.R | Command 虚拟列表、稳定选择、快捷键/IME与受限窗口布局 | 已提交 `3645d0d`，21 项针对性检查、overlay全包65项、独立审计及 vet 通过 |
 | 5.S | Gallery 响应式侧栏、移动选择及编辑状态接入 | 已提交 `25ad18d`，Gallery全包47项、独立审计及构建通过 |
-| 5.T | Command 固定上游模糊评分、Unicode与离线数值对照 | 28项Command检查、overlay全包72项、独立审计和vet通过，提交本子阶段 |
+| 5.T | Command 固定上游模糊评分、Unicode与离线数值对照 | 已提交 `afbf25f`，28项Command检查、overlay全包72项、独立审计和vet通过 |
+| 5.U | Item 变体/尺寸/媒体、原生主动作与独立操作区域 | 26项针对性检查、独立审计及vet通过，提交本子阶段 |
 
 用户已明确允许原生平台适配：Popover、menu、下拉菜单可以使用 MyGo 的系统菜单与独立 Flyout，超出父窗口范围；无需逐像素照搬网页浮层。Gallery 以 [shadcn/create](https://ui.shadcn.com/create) 的配置与实时预览流程为参考。完整组件功能、主题、动画范围保持不变。
 
