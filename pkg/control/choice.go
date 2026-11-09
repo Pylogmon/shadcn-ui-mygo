@@ -1,7 +1,6 @@
 package control
 
 import (
-	"math"
 	"slices"
 
 	"github.com/egoist/mygo/ui"
@@ -140,51 +139,6 @@ func Radio(c *ui.Context, selected *string, value, label string, disabled bool) 
 		}
 	})
 	return e
-}
-
-type SliderProps struct {
-	Min, Max, Step float64
-	Label          string
-	Disabled       bool
-}
-
-func Slider(c *ui.Context, value *float64, p SliderProps) ui.Element {
-	t := theme.TokensOf(c)
-	lo, hi := p.Min, p.Max
-	if lo == 0 && hi == 0 {
-		hi = 100
-	}
-	if hi < lo {
-		lo, hi = hi, lo
-	}
-	s := ui.SliderBase(c, value, lo, hi).Height(20).PaddingX(8).FillWidth().Disabled(p.Disabled).
-		Cursor(ui.CursorPointer).Label(p.Label)
-	if p.Step > 0 {
-		s.Step(p.Step)
-	}
-	if p.Disabled {
-		s.Opacity(.5).Cursor(ui.CursorNotAllowed)
-	}
-	frac := float32(0)
-	if hi > lo {
-		frac = float32(math.Max(0, math.Min(1, (*value-lo)/(hi-lo))))
-	}
-	rtl := c.Direction() == ui.RightToLeft
-	s.Draw(func(pt *ui.Painter, r ui.Rect) {
-		start, width := r.X+8, max(float32(0), r.W-16)
-		x := start + width*frac
-		cy := r.Y + r.H/2
-		pt.Fill(ui.Rect{X: start, Y: cy - 3, W: width, H: 6}, t.Secondary, 3)
-		if rtl {
-			x = start + width*(1-frac)
-			pt.Fill(ui.Rect{X: x, Y: cy - 3, W: start + width - x, H: 6}, t.Primary, 3)
-		} else {
-			pt.Fill(ui.Rect{X: start, Y: cy - 3, W: x - start, H: 6}, t.Primary, 3)
-		}
-		pt.Fill(ui.Rect{X: x - 8, Y: cy - 8, W: 16, H: 16}, t.Primary, 8)
-		pt.Fill(ui.Rect{X: x - 7, Y: cy - 7, W: 14, H: 14}, t.Background, 7)
-	})
-	return s
 }
 
 type ToggleGroupProps struct {

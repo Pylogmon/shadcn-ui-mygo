@@ -89,7 +89,7 @@ composition; they do not automatically supply missing upstream behavior.
 | Sheet | `overlay.Sheet` | Four-edge modal panel exists; verify every edge, constrained sizing, nested scroll, focus/exit and RTL logical-side behavior. |
 | Sidebar | `navigation.Sidebar` | Current route, grouping, collapse and separate sidebar semantic colors exist; responsive/off-canvas, nested collapsibles, icon tooltips, rail/inset/floating variants remain. |
 | Skeleton | `display.Skeleton` | Static/circle/pulse exists; verify contrast, reduced motion and loading accessibility without idle redraw. |
-| Slider | `control.Slider` | Native single-thumb pointer/keyboard/step and RTL draw exist; range/multiple thumbs, vertical orientation and accessible value formatting remain. |
+| Slider | `control.Slider` / `RangeSlider` / `SliderValues` | Single/range/multiple native focusable slider thumbs, captured pointer cancellation, vertical/RTL, step/gap constraints, stable thumb IDs and accessible formatting are tested. Impossible constraints are disabled/invalid. Full native assistive-technology/runtime matrix remains. |
 | Spinner | `display.Spinner` | Native labeled spinner exists; verify reduced motion, sizes and compound loading examples. |
 | Switch | `control.Switch` | Native toggling and thumb transition exist; verify RTL thumb geometry, focus/labels and disabled states visually. |
 | Table | `display.Table` | Native virtual table with captions exists; verify header/footer/row-header, selection, overflow and empty-state compositions. |
