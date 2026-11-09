@@ -58,7 +58,7 @@ func (s *State) previewPopover(c *ui.Context, anchor ui.Element) {
 		}
 		return
 	}
-	p := desktop.PopoverProps{Label: "Dimensions", Placement: mygo.PlacementBottomStart, Width: 320, Height: 220, FitContent: true}
+	p := desktop.PopoverProps{Label: "Dimensions", Placement: mygo.PlacementBottomStart, Width: 320, Height: 220, FitContent: true, Revision: popupRevision(anchor, s.Name)}
 	var err error
 	if s.Config.NativeMenus {
 		err = desktop.NativePopover(c, s.Popovers, "preview-popover", anchor, &s.Popover, p, func(child *ui.Context) {

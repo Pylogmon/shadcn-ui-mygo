@@ -41,6 +41,157 @@ func (s *creatorPopupSurface) Close() {
 	}
 }
 
+func TestCreatorSecondaryDateAndHoverPopupsUseDesktopHost(t *testing.T) {
+	for _, native := range []bool{false, true} {
+		t.Run(fmt.Sprintf("native=%v", native), func(t *testing.T) {
+			s := New()
+			s.Config.NativeMenus = native
+			s.Page = "display"
+			s.Date = time.Date(2026, time.November, 9, 0, 0, 0, 0, time.UTC)
+			b := &creatorPopupBackend{}
+			s.Popovers = desktop.NewHostWithBackend(b)
+			r := ui.NewTester(s.View, 1280, 900)
+			if err := r.Click("Project date"); err != nil {
+				t.Fatal(err)
+			}
+			if len(b.surfaces) != 1 {
+				t.Fatalf("date surfaces=%d", len(b.surfaces))
+			}
+			popup := b.surfaces[0]
+			if popup.spec.SystemPopover != native {
+				t.Fatalf("date pair wrong platform container %+v", popup.spec)
+			}
+			if r.HasText("November 2026") && r.HasText("Apply") {
+				t.Fatal("date popup content leaked into parent tree")
+			}
+			popup.tester.Key(0, ui.KeyRight)
+			popup.tester.Key(0, ui.KeyEnter)
+			r.Frame()
+			if s.Date.Day() != 10 {
+				t.Fatalf("child choice not reflected in Gallery: %v", s.Date)
+			}
+			if s.Popovers.IsOpen("preview-project-date") {
+				t.Fatal("date popup did not close")
+			}
+			s.Page = "overlays"
+			r.Frame()
+			if err := r.Click("Hover for a tip"); err != nil {
+				t.Fatal(err)
+			}
+			if len(b.surfaces) != 2 {
+				t.Fatalf("tooltip surfaces=%d", len(b.surfaces))
+			}
+			tip := b.surfaces[1]
+			if !tip.spec.IgnoreMouseEvents || tip.spec.Focusable {
+				t.Fatalf("tooltip catches pointer/key input %+v", tip.spec)
+			}
+			if !tip.tester.HasText("Small details make a difference.") {
+				t.Fatal("tooltip did not render in child window")
+			}
+			s.Page = "overview"
+			r.Frame()
+			if s.Popovers.IsPresent("preview-tooltip") {
+				t.Fatal("hidden preview kept detached tooltip")
+			}
+		})
+	}
+}
+
+func TestCreatorHoverCardRefreshesSharedValueAcrossStylesAndClosesOnNavigation(t *testing.T) {
+	for _, native := range []bool{false, true} {
+		t.Run(fmt.Sprintf("native=%v", native), func(t *testing.T) {
+			s := New()
+			s.Page, s.Config.NativeMenus = "overlays", native
+			b := &creatorPopupBackend{}
+			s.Popovers = desktop.NewHostWithBackend(b)
+			parent := ui.NewTester(s.View, 1280, 900)
+			anchor, ok := parent.Find("Preview author")
+			if !ok {
+				t.Fatal("author trigger missing")
+			}
+			parent.Move(anchor.X+anchor.W/2, anchor.Y+anchor.H/2)
+			parent.Advance(701 * time.Millisecond)
+			if len(b.surfaces) != 1 {
+				t.Fatalf("hover surfaces=%d", len(b.surfaces))
+			}
+			popup := b.surfaces[0]
+			for _, mode := range []bool{native, !native, native} {
+				p := s.Config
+				p.NativeMenus = mode
+				if err := s.ApplyPreset(p); err != nil {
+					t.Fatal(err)
+				}
+				parent.Frame()
+				popup.tester.Advance(time.Second)
+				if len(b.surfaces) != 1 || !s.Popovers.IsOpen("preview-author") {
+					t.Fatal("style change replaced or closed the inactive hover window")
+				}
+				if popup.tester.HasText("SD") == mode {
+					t.Fatalf("native=%v did not refresh the matching content", mode)
+				}
+				s.Marketing = !s.Marketing
+				parent.Frame()
+				checkbox, ok := popup.tester.AccessByRole(ui.RoleCheckBox, "Follow project updates")
+				if !ok || checkbox.Checked != s.Marketing {
+					t.Fatalf("native=%v child retained old shared value: %+v", mode, checkbox)
+				}
+				if parent.HasText("Follow project updates") {
+					t.Fatal("hover content leaked into the parent tree")
+				}
+			}
+			s.Page = "overview"
+			parent.Frame()
+			if s.Popovers.IsPresent("preview-author") || !popup.didClose {
+				t.Fatal("leaving the page retained the detached hover window")
+			}
+		})
+	}
+}
+
+func TestCreatorPopoverRefreshesSharedValueAcrossStylesAndClosesOnNavigation(t *testing.T) {
+	for _, native := range []bool{false, true} {
+		t.Run(fmt.Sprintf("native=%v", native), func(t *testing.T) {
+			s := New()
+			s.Page, s.Config.NativeMenus = "overlays", native
+			b := &creatorPopupBackend{}
+			s.Popovers = desktop.NewHostWithBackend(b)
+			parent := ui.NewTester(s.View, 1280, 900)
+			if err := parent.Click("Popover"); err != nil {
+				t.Fatal(err)
+			}
+			for i, mode := range []bool{native, !native, native} {
+				p := s.Config
+				p.NativeMenus = mode
+				if err := s.ApplyPreset(p); err != nil {
+					t.Fatal(err)
+				}
+				parent.Frame()
+				popup := b.surfaces[len(b.surfaces)-1]
+				popup.tester.Advance(time.Second)
+				if popup.spec.SystemPopover != mode || !s.Popovers.IsOpen("preview-popover") {
+					t.Fatalf("native=%v did not use the matching open container", mode)
+				}
+				s.Name = fmt.Sprintf("External name %d", i)
+				parent.Frame()
+				input, ok := popup.tester.AccessByRole(ui.RoleTextField, "Layer name")
+				if !ok || input.Value != s.Name {
+					t.Fatalf("native=%v child retained old name: %+v", mode, input)
+				}
+			}
+			s.Page = "overview"
+			parent.Frame()
+			if s.Popover || s.Popovers.IsPresent("preview-popover") {
+				t.Fatal("leaving the page retained the controlled popover")
+			}
+			for _, popup := range b.surfaces {
+				if !popup.didClose {
+					t.Fatal("style change or navigation left a detached surface")
+				}
+			}
+		})
+	}
+}
+
 func TestCreatorInspectorUsesIndependentShadcnAndSystemSurfaces(t *testing.T) {
 	for _, native := range []bool{false, true} {
 		s := New()

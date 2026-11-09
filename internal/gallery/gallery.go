@@ -31,6 +31,7 @@ type State struct {
 	Slider                                                                         float64
 	Tab, Slide, PageNumber                                                         int
 	Date                                                                           time.Time
+	DateRange                                                                      display.DateRange
 	Table                                                                          display.DataTableState
 	Questionnaire                                                                  conversation.QuestionnaireState
 	Trace                                                                          conversation.TraceState

@@ -123,7 +123,8 @@ func (s *State) displays(c *ui.Context) {
 	columns(c, func() {
 		display.Card(c, func() {
 			s.cardHeader(c, "Calendar", "Browse months and choose a date.")
-			display.DatePicker(c, &s.Date, display.DatePickerProps{Label: "Project date"})
+			s.previewDatePicker(c)
+			s.previewDateRangePicker(c)
 			display.Calendar(c, &s.Date)
 		})
 		display.Card(c, func() {
@@ -179,7 +180,9 @@ func (s *State) overlays(c *ui.Context) {
 			b := control.Button(c, "Popover", control.ButtonProps{Variant: control.Outline})
 			s.previewPopover(c, b)
 			b = control.Button(c, "Hover for a tip", control.ButtonProps{Variant: control.Outline})
-			overlay.Tooltip(c, b, "Small details make a difference.", overlay.TooltipProps{})
+			s.previewTooltip(c, b)
+			b = control.Button(c, "Preview author", control.ButtonProps{Variant: control.Outline})
+			s.previewHoverCard(c, b)
 			s.previewMenu(c, "preview-dropdown", "Open menu", overlay.MenuProps{Items: []overlay.MenuItem{{Key: "profile", Label: "Profile"}, {Key: "settings", Label: "Settings"}, {Separator: true}, {Key: "logout", Label: "Log out", Destructive: true}}})
 			if control.Button(c, "Show toast", control.ButtonProps{}).Clicked() {
 				overlay.Toast(c, ui.Toast{Title: "Event created", Description: "Monday, November 9 at 9:00 AM"})

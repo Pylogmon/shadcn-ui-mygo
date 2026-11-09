@@ -15,7 +15,7 @@ make run        # 原生 Gallery
 make snapshots  # 浅色、深色和主题页 PNG，输出 artifacts/
 make build     # CGO_ENABLED=0 构建
 make app       # macOS .app 输出 build/Shadcn Gallery.app
-make popups-app # 小窗口对照：Menu / NativeMenu，Popover / NativePopover
+make popups-app # 小窗口对照：菜单、Popover、日期与悬停组件对
 ```
 
 ```go
@@ -45,7 +45,7 @@ func view(c *ui.Context) {
 | `pkg/display` | 卡片、排版、日历、数据表、图表、代码块、布局与反馈 |
 | `pkg/overlay` | 对话框、抽屉、菜单、命令、提示、通知 |
 | `pkg/navigation` | 标签页、面包屑、分页、导航、侧栏 |
-| `pkg/desktop` | 成对桌面组件：Menu / NativeMenu、DropdownMenu、ContextMenu、Popover、Select；独立 Flyout 与系统样式 |
+| `pkg/desktop` | 成对桌面组件：Menu / NativeMenu、DropdownMenu、ContextMenu、Popover、Select、日期、Tooltip、HoverCard；独立 Flyout 与系统样式 |
 | `pkg/conversation` | 附件、消息、虚拟滚动、标记、Trace、多步问卷 |
 | `internal/gallery` | 原生演示与集成验收 |
 

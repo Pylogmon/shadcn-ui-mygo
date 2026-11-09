@@ -53,6 +53,8 @@ err := desktop.Popover(c, host, "settings", anchor, &open,
 
 菜单动作既提供 `OnChoose`，也可在下一次父窗口构建中返回结果；应用选其中一条路径处理业务动作，避免自己重复执行。需要外部数据变化刷新子内容时使用 `Revision` 或 `Host.Refresh(key)`。普通空闲帧不会不断重绘子窗口。
 
+Gallery 的日期、日期范围、Tooltip 和作者 HoverCard 已接入组件对，随 Menu style 配置切换。共享的层名称与订阅状态变化会更新子内容版本，避免父窗口已更新而子窗口仍显示旧值。小窗口对照示例同时展示两套 API。
+
 ## 窗口内与迁移
 
 `pkg/overlay` 保留 `InWindowDropdownMenu`、`InWindowContextMenu`、`InWindowMenubar`、`InWindowPopover`、`InWindowTooltip`、`InWindowHoverCard`，专门用于明确需要父窗口内表面的场景。第一版同名简写已标记 Deprecated。没有 Host 时，桌面组件可以绘制关闭状态的触发器，但尝试打开会报错，不会静默退回窗口内浮层。
