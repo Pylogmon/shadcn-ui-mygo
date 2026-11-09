@@ -10,6 +10,11 @@ Theme/color source notices are kept alongside their archived data at
 `pkg/theme/sources/LICENSE.shadcn` and `pkg/theme/sources/LICENSE.tailwind`.
 Go module dependencies retain their respective licenses in their module sources.
 
+The native text shimmer ports the shared utility in the fixed shadcn commit
+`8ab27715521cbd4f87ae6886cd989cbb678f6de7`. Its exact CSS, documentation,
+MIT license and content manifest are archived in `internal/shimmer/testdata/shadcn/`.
+The macOS bundles include that license as `Contents/Resources/licenses/shadcn.txt`.
+
 Input OTP behavior is independently implemented against input-otp 1.4.2,
 commit `81ccdb48c010d800b24942aa231909f0c971b1ca`.
 The exact reference source and its MIT license (Copyright (c) 2024 Guilherme Rodz)

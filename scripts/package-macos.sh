@@ -26,6 +26,7 @@ cp pkg/overlay/testdata/cmdk/LICENSE.md "$bundle/Contents/Resources/licenses/cmd
 cp pkg/control/testdata/input-otp/LICENSE "$bundle/Contents/Resources/licenses/input-otp.txt"
 cp internal/indicator/LICENSE.lucide "$bundle/Contents/Resources/licenses/lucide.txt"
 cp pkg/overlay/testdata/sonner/LICENSE.md "$bundle/Contents/Resources/licenses/sonner.txt"
+cp internal/shimmer/testdata/shadcn/LICENSE "$bundle/Contents/Resources/licenses/shadcn.txt"
 CGO_ENABLED=0 go build -o "$bundle/Contents/MacOS/gallery" "$package"
 cat > "$bundle/Contents/Info.plist" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>

@@ -190,3 +190,6 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 - Gallery通知macOS实窗：UI退出旧进程并启动新bundle，已观察Notifications页、持续loading通知；Complete upload后原row身份原位变为Upload complete，按钮禁用且状态提示更新。Alt+T进入通知原生list，Escape实际返回Start upload。勾选Keep open后Review触发Notification action selected并保留通知，Later触发Notification postponed并移除通知。实窗未验证本阶段的指针swipe、触控和所有位置；这些继续保留为平台验收工作。
 - Gallery最终交叉审查：先以完整State.View复现跨页后Escape请求已卸载旧触发器、Clear仅清新队列两条红测；改为当前activeTab绑定独立Handle作为跨页fallback，并同时清理MyGo兼容队列后转绿。测试继续验证切回Overlays没有旧Start抢焦点、下一Tab到Edit profile，以及实际Show toast与Start upload均被清除。独立只读14项复核通过。
 - Gallery修正版macOS补验：重新启动最终bundle，Start upload后切Text & layout，Alt+T/Tab/Escape实际返回当前Text & layout标签，通知仍在。返回Overlays后叠加Show toast与loading，Clear实际移除两组文字并禁用Complete。切回页后下一Tab的AX焦点没有明确显示，未把这一步记为实窗通过；完整原生键盘/AT矩阵仍保留。最终全量931项、13个包、vet/diff及三平台构建通过。
+
+- Shimmer基础模块：固定CSS/MDX的Git blob逐字节核对；20项内部检查及1项外部package公开API检查通过。实际原生字形像素验证空间扫光、2秒线性、RTL/reverse、一次播放恢复、明暗高光与透明度、OKLCH中间色/OKLab插值和sRGB色域映射；原生中文/字体继承/ellipsis/AX及动态减少动画、Instant和停止后的idle均通过。默认3ch估值需要已知字体，Base需显式传递非Theme祖先颜色；公开运行时没有计算样式getter，不读取私有状态。
+- Shimmer独立阶段：从已提交HEAD仅加入内部实现和公开display入口，internal/shimmer与display共343项检查通过，vet及macOS/Linux/Windows构建通过；没有把尚未完成的Table、Attachment或Trace候选算入隔离验收。完整实窗、字体、广色域和辅助技术矩阵继续跟踪。
