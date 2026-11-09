@@ -104,7 +104,7 @@ type ChartTooltipData struct {
 // tooltip. It may also be composed separately from a plot.
 func ChartLegend(c *ui.Context, items []ChartLegendItem) ui.Element {
 	if len(items) == 0 {
-		return ui.Box(c).Size(0, 0).IgnoreInput(true).AccessHidden(true)
+		return ui.Box(c).Size(0, 0).Hidden(true).IgnoreInput(true).AccessHidden(true)
 	}
 	// Retain native wrapping so narrow charts keep complete legend items
 	// readable; the source's unconstrained single-line layout can overflow.
@@ -125,7 +125,7 @@ func ChartLegend(c *ui.Context, items []ChartLegendItem) ui.Element {
 // used by TooltipContent to compose custom values without replacing selection.
 func ChartTooltip(c *ui.Context, data ChartTooltipData) ui.Element {
 	if len(data.Items) == 0 {
-		return ui.Box(c).Size(0, 0).IgnoreInput(true).AccessHidden(true)
+		return ui.Box(c).Size(0, 0).Hidden(true).IgnoreInput(true).AccessHidden(true)
 	}
 	t := theme.TokensOf(c)
 	format := data.FormatValue
@@ -163,6 +163,11 @@ type chartInspection struct {
 // Pie, donut and radial plots use non-negative finite values; missing Cartesian
 // observations break a line rather than inventing a measurement.
 func Chart(c *ui.Context, p ChartProps) ui.Element {
+	// These unstacked polar plots paint one series. Derive the same input for
+	// their domain, hit testing, tooltip and accessibility before building.
+	if !p.Stacked && len(p.Series) > 1 && (p.Kind == PieChart || p.Kind == DonutChart || p.Kind == RadialChart) {
+		p.Series = p.Series[:1]
+	}
 	root := ui.Column(c).FillWidth().Gap(0)
 	selected := p.Selected
 	if selected == nil {

@@ -35,6 +35,8 @@ Cartesian配置提供隐藏数值轴、分类轴、网格和检查线的独立�
 
 Radar的图形、Legend与Tooltip按系列取色，切换分类不会改变系列的提示色块；CategoryColors不覆盖Radar的系列颜色。Pie、Donut与未堆叠Radial继续按分类取色，堆叠Radial按系列取色。
 
+未堆叠的Pie、Donut和Radial只绘制第一个Series；额外系列也不会进入数值域、指针命中、Tooltip或无障碍检查值。堆叠模式及Radar保留所有实际绘制系列。独立ChartTooltip/ChartLegend的空内容不参与父布局，不额外占用Gap；非空内容恢复显示时仍保留相邻原生编辑器的身份。
+
 默认Tooltip采用Vega的128DIP最小宽度、左右10/上下6DIP内边距、RadiusLG、Background及半透明Border，保留两层shadow-xl。标题继承父前景和字体，值采用等宽字体、500字重及tabular数字。缺少标题不会留下空行，空Items不显示内容；宽格式化值不再被旧280DIP上限截断。独立Legend使用8DIP色块、6DIP条目间距、16DIP外层间距和12DIP顶部留白，继承父前景/字体/字重。窄图表保留原生整项换行，避免类别名被裁切；空间充足时为单行。
 
 原生Text的行盒至少容纳字体度量，即使LineHeight设为1，系统字体仍可能高于CSS的12DIP行盒。组件不通过硬高度裁字来伪装一致。Tooltip的默认数字格式仍可由FormatValue替换；完整locale、图标和line/dashed指标组合继续跟踪。
