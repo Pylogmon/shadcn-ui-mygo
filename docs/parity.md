@@ -35,7 +35,7 @@ composition; they do not automatically supply missing upstream behavior.
 
 | Component | Implemented native API | Remaining acceptance work |
 | --- | --- | --- |
-| Accordion | `display.Accordion` with single/multiple controlled sections | Verify every size, disabled state, disclosure association and exit motion in both directions. |
+| Accordion | `display.Accordion` with single/multiple controlled sections | Enabled-header navigation, optional looping/bordered variant, stable keyed focus, native heading levels, trigger/panel controls, normalized single-change callbacks, immediate closed input/AX exclusion and reversible height motion are tested. Retention starts lazily after first opening; eager hidden mount and unconditional new Focus calls in retained hidden content require runtime support. Full platform/visual matrix remains. |
 | Alert | `display.Alert` | Verify alert/live-region semantics, leading icons and full content layouts. |
 | Alert Dialog | `overlay.AlertDialog` | Backdrop protection, alert role and Cancel are tested; verify nested dialogs, initial focus, asynchronous confirmation and reduced-motion exit. |
 | Aspect Ratio | `display.AspectRatio` | Verify nested images, extreme aspect ratios and constrained resizing visually. |
@@ -52,7 +52,7 @@ composition; they do not automatically supply missing upstream behavior.
 | Chart | `display.Chart` | Bar/line/area/pie/donut/radar/radial, diverging/normalized stacks, legend/tooltip and pointer/keyboard inspection are implemented and tested, including multi-series pixel painting. Horizontal orientation, brush/reference-line compositions, path-data animation and the full example/screenshot matrix remain. |
 | Checkbox | `control.Checkbox` | Native checked/mixed/disabled behavior exists; complete screenshot and mixed-state keyboard acceptance. |
 | Code Block | `display.CodeBlock` | Native syntax editor, selection and copy exist; verify copy feedback, supported language mapping, themes and large-file behavior. |
-| Collapsible | `display.Collapsible` | Verify focus/controls linkage, interrupted/reversed animation and content preservation. |
+| Collapsible | `display.Collapsible` / `CollapsibleWith` | Custom native disclosure triggers, disabled state, controls linkage, focused-content restoration, reduced motion/reversal and optional local-state retention after first opening are tested. MyGo direct Focus/AutoFocus bypasses disabled ancestors; new explicit focus calls in retained hidden content must be conditioned on open. Framework inert-focus enforcement/eager hidden mounting remains tracked, rather than counted complete. |
 | Combobox | `control.Combobox` | Grouped/custom single-select and multi-select chips with filtering/removal/limits exist; verify loading/async sources, full variant examples and platform IME behavior. |
 | Command | `overlay.Command` / `CommandDialog` | Inline filtering/Enter is tested; verify all disabled-navigation cases, scroll-to-highlight, shortcuts, accessibility and large result sets. |
 | Context Menu | `overlay.ContextMenu` | desktop.ContextMenu/NativeContextMenu are paired Flyout/OS adapters; secondary-click, Control-click, context key/Shift+F10 and scoped nested keys are tested. Real touch and multi-display/window-edge acceptance remain. |

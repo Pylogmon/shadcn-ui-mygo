@@ -76,3 +76,5 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 
 - Gallery 补充集成：日期/范围、Tooltip/HoverCard 接入桌面组件对；36项 Gallery 检查通过。新增9项检查覆盖独立日期选择、指针穿透提示、共享名称/订阅状态变化、双向样式切换和离页清理；审计先复现共享状态更新缺少子窗口失效，再补内容 Revision。小窗口示例同步覆盖两套 API 和共享值刷新。
 - 本次阶段收尾：`go test ./...` 264项检查通过，`go vet ./...`、`git diff --check` 通过；离线 `go generate ./...` 后 colors_gen.go 无差异。macOS Gallery/Popups `.app` 构建、Linux/Windows amd64 Gallery 交叉编译通过；浅深色与主题页截图重新生成，浅深色布局已查看。最终完整复刻与全平台运行矩阵仍未完成。
+
+- Accordion/Collapsible：`go test ./pkg/display -run 'Accordion|Disclosure|Collapsible'` 11项检查通过。回归先复现方向键落在禁用标题、缺少受控面板关联和单开回调含两个打开项；修复后覆盖标题级别、边框/循环、稳定键重排、一次性变化、关闭内容立即失去输入/AX、减少动画时焦点回收、外部焦点不被夺取、真实高度反转及空闲收敛。独立审计补充初始闭合保留子树的 AutoFocus 争抢，改为首次打开时创建后保留状态，并在关闭期间禁用但不染淡内容。框架 direct Focus 无视祖先的剩余限制明确记录在对齐清单；未修改或私自访问运行时内部。
