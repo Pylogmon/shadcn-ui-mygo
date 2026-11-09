@@ -40,7 +40,7 @@ composition; they do not automatically supply missing upstream behavior.
 | Alert Dialog | `overlay.AlertDialog` | Backdrop protection, alert role and Cancel are tested; verify nested dialogs, initial focus, asynchronous confirmation and reduced-motion exit. |
 | Aspect Ratio | `display.AspectRatio` | Verify nested images, extreme aspect ratios and constrained resizing visually. |
 | Attachment | `conversation.Attachment` | Current callbacks/status/progress are basic primitives; complete upload/cancel/retry, media previews and drag-and-drop composition examples. |
-| Avatar | `display.Avatar` | Verify delayed/error image fallback, avatar groups and badge/size variants. |
+| Avatar | `display.Avatar` / `AvatarBadge` / `AvatarGroup` | Small/default/large sizes, app-owned decoded image loading/status, mount-latched delayed fallback, invalid image recovery, cover/circular clipping, unclipped corner badges, keyed overlapping groups/counts and native image semantics are tested. Network fetch/decode belongs to the app and uses Window.Update. Grayscale/example compositions and full visual/platform matrix remain. |
 | Badge | `display.Badge` | Verify all variants, interactive/link composition, icon spacing and focus states. |
 | Breadcrumb | `navigation.Breadcrumb` | Current route actions and current-page semantics are tested; add overflow/ellipsis menus and linked-route examples. |
 | Bubble | `conversation.Bubble` | Controlled expansion/reactions exist; verify all tails, sizes, streaming content and reaction layouts against current upstream examples. |

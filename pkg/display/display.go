@@ -81,27 +81,6 @@ func Alert(c *ui.Context, p AlertProps) ui.Element {
 	})
 }
 
-type AvatarProps struct {
-	Image           ui.ImageSource
-	Fallback, Label string
-	Size            float32
-}
-
-func Avatar(c *ui.Context, p AvatarProps) ui.Element {
-	t := theme.TokensOf(c)
-	size := p.Size
-	if size <= 0 {
-		size = 40
-	}
-	return ui.Box(c).Size(size, size).Radius(size / 2).Clip().Background(t.Muted).TextColor(t.MutedForeground).AlignItems(ui.Center).Justify(ui.Center).Label(p.Label).Children(func() {
-		if p.Image != nil {
-			ui.Image(c, p.Image).Fill().Fit(ui.Cover)
-		} else {
-			ui.Text(c, p.Fallback).FontSize(size * 0.35).FontWeight(500)
-		}
-	})
-}
-
 type SeparatorProps struct {
 	// Semantic exposes a named/oriented separator to assistive technology.
 	// The default is decorative, as in shadcn's separator primitive.
