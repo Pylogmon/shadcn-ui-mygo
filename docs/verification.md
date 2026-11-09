@@ -208,3 +208,6 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 - Trace：72项聚焦检查通过。固定源静态Line不会误变按钮、Complete与默认均为Muted、Running标题共享扫光且完成后idle、Pending整行透明度、Error与Link hover错误色、Description alpha/tnum、8DIP间距/16DIP图标/标题截断、正文物理左缩进/border/RTL、源150ms颜色和200ms高度均验证。真实原生Button/URL、可选CodeBlock复制、Dialog/Sheet、Controlled回调替换/反转、惰性KeepMounted输入选区/AutoFocus与关闭回焦、嵌套同名/重复/空ID隔离均通过。
 - Trace独立审查先复现Scale后的Bounds/Draw坐标系反馈环、强制Theme字体与400字重覆盖祖先、Description/Content多余字号重置；修为公开LayoutBounds和按源继承后全部转绿。32项family/weight/ancestor/fluent实际像素/AX/idle与额外22DIP继承参考验证通过；离屏动态正文、首帧显示和多实例静止无待帧通过，不引入独立成对帧循环。
 - Trace独立阶段：基于已提交`e7bb5d7`仅加入Trace实现/正式检查及固定Chevron SVG，conversation/Gallery共288项通过，vet/diff通过；16个固定示例Git blob/SHA-256以及SVG XML/校验值均核对。Native Link整行装饰点击/hover下划线、缺计算祖先字体getter导致3ch估值、compound显式Status传播和完整源示例/平台/触控/AT/视觉矩阵继续保留；Gallery会话流程单独提交。
+
+- Gallery Table：新增6项真实集成、Gallery90项通过。选中行AX状态、备注编辑、重排前原生全选保留并在重排后实际替换、跨页状态、空表六列跨度/总额恢复、窄窗口横向滚动到Actions均验证。Status/Actions分别实际打开独立shadcn Flyout和OS Menu并回写正确记录；新组件名进入统一Search命令源。独审另验窄窗口Tab自动显露Note/Actions、空表关闭已开菜单与两类菜单键盘动作；临时探针已清理。
+- Gallery Table明暗/宽窄：导出并查看1100与620DIP两种宽度的四张PNG；页脚/行/控件清晰、窄窗口按源水平溢出，额外内容通过真实滚动或键盘焦点查看。该证据不代表所有平台视觉矩阵。以`d4757d0`仅加入Table Gallery的隔离阶段，全量1206项、14个包（10个有测试、4个无测试）、vet/diff及macOS/Linux/Windows构建通过；未提前包含尚在完善的会话Gallery。

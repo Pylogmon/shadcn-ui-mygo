@@ -153,6 +153,7 @@ func (s *State) displays(c *ui.Context) {
 		display.Alert(c, display.AlertProps{Title: "Everything is up to date", Description: "Your workspace is ready for the next idea."})
 		display.CodeBlock(c, display.CodeBlockProps{Title: "main.go", Language: "go", Code: "func view(c *ui.Context) {\n    theme.Apply(c)\n    control.Button(c, \"Hello, Go\", control.ButtonProps{})\n}", LineNumbers: true, Height: 130})
 	})
+	s.tableCompositionPreview(c)
 	display.Card(c, func() {
 		s.cardHeader(c, "Recent invoices", "Sortable columns and paginated rows.")
 		display.DataTable(c, &s.Table, display.DataTableProps[invoice]{Rows: invoices, Label: "Invoices", Key: func(i invoice) any { return i.ID }, Columns: []display.DataColumn[invoice]{{ID: "id", Title: "Invoice", Value: func(i invoice) string { return i.ID }}, {ID: "status", Title: "Status", Value: func(i invoice) string { return i.Status }}, {ID: "amount", Title: "Amount", Value: func(i invoice) string { return fmt.Sprintf("$%.2f", i.Amount) }, Compare: func(a, b invoice) int {

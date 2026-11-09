@@ -40,6 +40,7 @@ type State struct {
 	Date                                                                           time.Time
 	DateRange                                                                      display.DateRange
 	Table                                                                          display.DataTableState
+	tablePreview                                                                   tablePreviewState
 	Questionnaire                                                                  conversation.QuestionnaireState
 	Trace                                                                          conversation.TraceState
 	undo, redo                                                                     []Preset
@@ -89,7 +90,7 @@ type creatorPage struct {
 var pages = []creatorPage{
 	{Key: "overview", Label: "Cards"},
 	{Key: "controls", Label: "Forms & controls"},
-	{Key: "display", Label: "Data & display"},
+	{Key: "display", Label: "Data & display", Keywords: []string{"Table", "DataTable", "Calendar", "Avatar", "Card", "Chart"}},
 	{Key: "content", Label: "Content & feedback"},
 	{Key: "text-layout", Label: "Text & layout", Keywords: []string{"Typography", "Kbd", "Keyboard", "CodeBlock", "Code", "Spinner", "Skeleton", "ScrollArea", "AspectRatio"}},
 	{Key: "overlays", Label: "Overlays"},
