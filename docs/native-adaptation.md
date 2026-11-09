@@ -43,6 +43,8 @@ err := desktop.Popover(c, host, "settings", anchor, &open,
     })
 ```
 
+`theme.NativeScope(child)` 保留完整平台 Theme（字体、焦点尺寸、Tooltip 延迟等）并提供原生颜色的语义别名，可用于操作系统没有对应 API 的受约束 Go 内容；它不把平台主题重建成 shadcn 主题。
+
 `Popover` 自动选择 plain Flyout 与完整 shadcn token；`NativePopover` 选择平台容器与子窗口自己的默认主题。原生样式内容使用 MyGo 的 `ui.*` 控件；不要在该回调中又强制安装 shadcn 主题。
 
 菜单动作既提供 `OnChoose`，也可在下一次父窗口构建中返回结果；应用选其中一条路径处理业务动作，避免自己重复执行。需要外部数据变化刷新子内容时使用 `Revision` 或 `Host.Refresh(key)`。普通空闲帧不会不断重绘子窗口。

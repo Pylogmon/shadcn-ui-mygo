@@ -29,11 +29,15 @@ func (t *Tokens) Theme() *ui.Theme {
 		Inverse: t.Foreground, InverseText: t.Background, Scrollbar: t.MutedForeground.Alpha(.5), ScrollbarWidth: 6,
 		Radius: t.Radius, Spacing: t.Spacing, FontSize: t.FontSize,
 	}
-	key := weak.Make(n)
-	metadata.Store(key, *t)
-	runtime.AddCleanup(n, func(k weak.Pointer[ui.Theme]) { metadata.Delete(k) }, key)
-	runtime.KeepAlive(n)
+	remember(n, t)
 	return n
+}
+
+func remember(native *ui.Theme, tokens *Tokens) {
+	key := weak.Make(native)
+	metadata.Store(key, *tokens)
+	runtime.AddCleanup(native, func(k weak.Pointer[ui.Theme]) { metadata.Delete(k) }, key)
+	runtime.KeepAlive(native)
 }
 
 // TokensOf returns a copy of the tokens of the innermost theme. Changing the
