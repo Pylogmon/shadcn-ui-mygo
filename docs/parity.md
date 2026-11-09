@@ -49,14 +49,14 @@ composition; they do not automatically supply missing upstream behavior.
 | Calendar | `display.Calendar` | Currently MyGo's single-date calendar; date ranges, multiple selection, disabled/matcher days, month counts and complete navigation variants remain. |
 | Card | `display.Card`, `CardHeader`, `CardContent`, `CardFooter` | Verify action slots, responsive layouts and all size variants. |
 | Carousel | `display.Carousel` | Boundaries are tested; add swipe/drag, orientation, looping options, keyboard arrows, slide transitions and carousel announcements. |
-| Chart | `display.Chart` | Bar/line/area and missing-data handling exist; pie/radar/radial/stacked examples, tooltip/legend APIs, keyboard inspection and full chart examples remain. |
+| Chart | `display.Chart` | Bar/line/area/pie/donut/radar/radial, diverging/normalized stacks, legend/tooltip and pointer/keyboard inspection are implemented and tested, including multi-series pixel painting. Horizontal orientation, brush/reference-line compositions, path-data animation and the full example/screenshot matrix remain. |
 | Checkbox | `control.Checkbox` | Native checked/mixed/disabled behavior exists; complete screenshot and mixed-state keyboard acceptance. |
 | Code Block | `display.CodeBlock` | Native syntax editor, selection and copy exist; verify copy feedback, supported language mapping, themes and large-file behavior. |
 | Collapsible | `display.Collapsible` | Verify focus/controls linkage, interrupted/reversed animation and content preservation. |
 | Combobox | `control.Combobox` | Grouped/custom single-select and multi-select chips with filtering/removal/limits exist; verify loading/async sources, full variant examples and platform IME behavior. |
 | Command | `overlay.Command` / `CommandDialog` | Inline filtering/Enter is tested; verify all disabled-navigation cases, scroll-to-highlight, shortcuts, accessibility and large result sets. |
 | Context Menu | `overlay.ContextMenu` | System-menu and themed alternatives both exist; secondary-click and nested native actions are tested. Verify real keyboard context key/Shift+F10, touch and cross-window/screen-edge placement. |
-| Data Table | `display.DataTable` / `DataRows` | Filtering/sorting/paging exist; add column visibility, facets, row-selection toolbar, pinned columns and complete editable/custom-cell examples. |
+| Data Table | `display.DataTable` / `DataRows` | Filtering/sorting/paging, native visibility/facet menus, keyed selection/toolbar and custom cells/actions are tested. True sticky pinned columns, editable-cell commit policy and full example/visual coverage remain. |
 | Date Picker | `display.DatePicker` | Single-date browse/commit and empty value are tested; ranges, disabled dates, date-time, timezone and formatting variants remain. |
 | Dialog | `overlay.Dialog` | Escape, accessible metadata, exit and focus restoration are tested; verify nested focus traps, long scroll content and all interrupted transitions. |
 | Direction | `display.Direction` | Native direction scope exists; run all directional components in RTL, including popup flipping, keyboard arrows and physical/logical padding. |
