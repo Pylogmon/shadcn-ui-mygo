@@ -60,12 +60,7 @@ func Separator(c *ui.Context, vertical bool, props ...SeparatorProps) ui.Element
 	}
 	return e.Height(1).FillWidth()
 }
-func AspectRatio(c *ui.Context, ratio float32, content func()) ui.Element {
-	if ratio <= 0 {
-		ratio = 1
-	}
-	return ui.Box(c).FillWidth().AspectRatio(ratio).Clip().Children(content)
-}
+
 type ProgressProps struct {
 	Label, ValueText       string
 	Height                 float32
@@ -114,6 +109,7 @@ func Progress(c *ui.Context, value float64, props ...ProgressProps) ui.Element {
 	}
 	return e
 }
+
 // Initials uses Unicode words and runes so names need not be Latin text.
 func Initials(name string) string {
 	parts := strings.Fields(name)

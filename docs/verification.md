@@ -165,3 +165,8 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 
 - CodeBlock：33项正式检查通过，独立审计另5条探针通过并清理。先复现Language切换丢选区、没有确认后的两秒复制反馈、非有限Height进入AX；再覆盖readonly原生编辑、UTF-8局部Edit/流追加、折行/上下限、十万行与真实水平reveal、source variant/size、startLine与不进入复制的diff/highlight背景。独审实际像素复现浮动Copy缺背景/环及Destructive Footer错误继承红色，修复后明暗回归通过；title按当前Theme.Font恢复body字体。原生显示切换快捷键不覆盖受控Wrap/gutter，其他app bindings不增长。Copy/Check SVG另与不可变Lucide提交逐字节归档。
 - CodeBlock独立阶段：HEAD只加入CodeBlock源/测试与SVG assets后display/Gallery共328项通过；未依赖正在实施的ScrollArea/AspectRatio或Gallery新页。
+
+- ScrollArea/AspectRatio：50项正式聚焦与独立审查通过。实际native内容位移/accepted callback、三轴模式×RTL、Border token 7DIP拇指、父font/currentColor/custom theme、键盘与内部编辑器、真实drag/track/capture/cancel、wheel/ScrollTo中途接管、滚动链、隐藏/重配/移除、可选原生slider range及有限参数均有回归。独审先复现corner缩短轨道后的比例误差，再按native实际inner行程修复，四方向半行程对应精确半范围。Auto条自身focus及custom→MyGo样式切换回viewport也有先红后绿回归。
+- Aspect图片/限制：16:9、21:9、1:1、9:16四种比例实际Cover像素、Max约束、invalid有限正方形、With默认visible overflow与legacy clip及动态内容/空callback身份均通过。没有修改运行时私有缓存。
+- 明确运行时缺口：真实probe复现1s ScrollState.ScrollTo在100ms到40后开启ReduceMotion，下一100ms仍到80且有待帧；ui/scroll.go只在新target时读取Reduced，公开ScrollState没有target getter。未通过丢弃intent伪造通过，该项保留在最终motion gate。
+- Scroll独立阶段：HEAD仅加入Scroll/Aspect源码、正式测试及旧块提取后，display/Gallery共378项通过；新Gallery页未提前纳入。
