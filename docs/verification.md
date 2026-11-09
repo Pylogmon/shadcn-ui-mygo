@@ -131,3 +131,6 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 - Motion基础：新增 `ApplyTransition(c, element)`；先复现进行中的背景/边框颜色过渡在切换ReduceMotion后仍保留混色，再验证立即到目标像素、取消待绘帧、后续即时更新及恢复普通动画。底层 `Transition` 值 API 保持兼容；SDK调用点迁移作为后续独立子阶段。
 
 - Input/Textarea：13项针对性检查、control vet与独立审计通过。先复现父line-height改变Input尺寸、错误实底色和Textarea八行增长上限，再验证全宽/24·32·36·40DIP、明暗真实像素、文字缩放光标、UTF-16 typed/paste/undo、readonly/password/search、可消费OnPaste/OnTextKey、候选Enter仅提交文字及第二Enter提交表单、Field作用域与InputGroup保留显式Disabled/Invalid及回调。用户拖动resize仍待实施；原生客户端检查不替代真实输入法候选窗与AT验收。
+
+- Choice：39项针对性检查、control vet和独立审计通过。补齐受控Mixed、Vega Switch默认/小号尺寸及RTL拇指、Radio方向约束/循环/描述、Toggle自定义视觉和多/单选组即时Changed。明暗像素、禁用祖先、原生Space/方向键、稳定重排、边框合并与运行中切ReduceMotion均验证。文字与视觉槽位保持单一原生输入/AX目标；真实AT与完整跨平台视觉矩阵继续跟踪。
+- Choice独立阶段验证：HEAD仅覆盖本阶段button/choice源码与choice测试，control/Gallery共126项检查通过；未提前包含OTP或Routes增强。

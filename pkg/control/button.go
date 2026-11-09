@@ -74,9 +74,9 @@ func Button(c *ui.Context, label string, p ButtonProps) ui.Element {
 func StyleButton(c *ui.Context, b ui.Element, label string, p ButtonProps) ui.Element {
 	t := theme.TokensOf(c)
 	h, px := metrics(p.Size)
-	b.Height(h).PaddingX(px).Gap(6).Radius(t.RadiusMD()).FontSize(14).FontWeight(500).
+	motion.ApplyTransition(c, b.Height(h).PaddingX(px).Gap(6).Radius(t.RadiusMD()).FontSize(14).FontWeight(500).
 		AlignItems(ui.Center).Justify(ui.Center).Cursor(ui.CursorPointer).
-		Disabled(p.Disabled || p.Loading).Busy(p.Loading).Invalid(p.Invalid).FocusRing(false).Transition(motion.Transition(c))
+		Disabled(p.Disabled || p.Loading).Busy(p.Loading).Invalid(p.Invalid).FocusRing(false))
 	if p.Size == ExtraSmall || p.Size == IconExtraSmall {
 		b.FontSize(12).Gap(4)
 	}
@@ -169,23 +169,4 @@ func StyleButton(c *ui.Context, b ui.Element, label string, p ButtonProps) ui.El
 		}
 	})
 	return ButtonGroupItem(c, b)
-}
-
-type ToggleProps struct {
-	Size              Size
-	Outline, Disabled bool
-}
-
-func Toggle(c *ui.Context, on *bool, label string, p ToggleProps) ui.Element {
-	t := theme.TokensOf(c)
-	b := ui.ToggleBase(c, on)
-	v := Ghost
-	if p.Outline {
-		v = Outline
-	}
-	StyleButton(c, b, label, ButtonProps{Variant: v, Size: p.Size, Disabled: p.Disabled})
-	if *on {
-		b.Background(t.Accent).TextColor(t.AccentForeground)
-	}
-	return b
 }

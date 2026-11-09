@@ -56,7 +56,9 @@
 
 | 5.Y | 可取消的颜色反馈动画基础 API | 已提交 `93bd44f`；3项motion基础检查及隔离验证通过，各模块接入单独提交 |
 
-| 5.Z | Input/Textarea 原生编辑、Vega外观与Field错误传播 | 13项针对性检查、独立审计通过；用户拖动resize及真实IME/AT平台矩阵继续跟踪 |
+| 5.Z | Input/Textarea 原生编辑、Vega外观与Field错误传播 | 已提交 `181f277`；13项针对性、87项隔离检查与独立审计通过；拖动resize及平台矩阵继续跟踪 |
+
+| 5.AA | Checkbox/Switch/Radio/Toggle 原生状态、组合与Vega样式 | 39项针对性检查及独立审计通过，提交本子阶段 |
 
 用户已明确允许原生平台适配：Popover、menu、下拉菜单可以使用 MyGo 的系统菜单与独立 Flyout，超出父窗口范围；无需逐像素照搬网页浮层。Gallery 以 [shadcn/create](https://ui.shadcn.com/create) 的配置与实时预览流程为参考。完整组件功能、主题、动画范围保持不变。
 
