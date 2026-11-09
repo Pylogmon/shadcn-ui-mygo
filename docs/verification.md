@@ -91,3 +91,6 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 
 - Navigation Menu：`go test ./pkg/navigation` 42项检查及 vet 通过，含新增33项和4项独立临时审计探针。覆盖独立Context、描述/当前路由、网格/自定义内容、一次选择、原生系统策略、hover intent/间隙/取消、RTL/兄弟/动态项、缺Host错误不重试、Revision、真实尺寸/位置350ms与减少动画、连续快速重定向像素/局部状态/caret、Tab首末/空内容/编辑器吞Tab、失焦后取消交接保活。审计先复现禁用分组后代仍可选、自定义Tab陷阱、选择后同hover重开和静止指针反抢键盘切换；修复后严格回归通过。未访问内容延迟构建，已访问隐藏内容动态显式AutoFocus的运行时限制继续保留。
 - macOS 最终构建实际启动：Menubar File→Right→Edit→Enter 后菜单关闭、焦点恢复Edit；Navigation Documentation独立窗口显示描述链接，Right切到更宽的Components富内容窗口，Tab/Enter激活Browse components后父界面显示`Selected: buttons`并恢复Components触发器。布局页读取一度超时，进程采样显示正常AppKit事件循环；改用应用完整路径连接后恢复读取。未将未完成的实窗面板拖动或所有窗口边缘行为记作通过。
+
+- Gallery 高级示例：43项检查及 vet 通过，新增7项验证Menubar两种路由/同窗切换、富导航选择/静止指针下的键盘切换/离页清理、RangeSlider及嵌套Resizable实际改变State并跨页保留。测试先复现选择后重开和旧指针反抢兄弟切换，组件修复后原断言通过。浅深色/主题页截图重新生成，另渲染并查看Forms、Data和Navigation页面；截图不能替代未完成的原生输入矩阵。
+- 本次阶段收尾：`go test ./...` 共364项检查通过；`go vet ./...`、`git diff --check`通过。`go generate ./...` 后颜色生成文件无差异。macOS `.app` 构建及最终导航实窗路径通过，Linux/Windows amd64 Gallery交叉编译通过。完整组件/变体视觉对照、运行时inert焦点约束及Windows/Linux真实运行仍未完成，完整目标保持进行中。

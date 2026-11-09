@@ -35,22 +35,12 @@ func (s *State) navigationPreview(c *ui.Context) {
 	}, func() {
 		display.Card(c, func() {
 			s.cardHeader(c, "Menu presentation", "Native menus follow the desktop; choose Shadcn Flyout to compare themed menus.")
-			menus := []overlay.MenubarItem{{Label: "File", Items: []overlay.MenuItem{{Key: "new", Label: "New project"}, {Key: "open", Label: "Open project"}, {Separator: true}, {Key: "close", Label: "Close project"}}}, {Label: "Edit", Items: []overlay.MenuItem{{Key: "undo", Label: "Undo"}, {Key: "redo", Label: "Redo"}}}}
-			if s.Config.NativeMenus {
-				if chosen := overlay.NativeMenubar(c, menus); chosen != "" {
-					s.pendingMenuAction = chosen
-				}
-			} else {
-				ui.Row(c).Gap(4).FocusGroup(ui.Horizontal).Children(func() {
-					for _, menu := range menus {
-						s.previewMenu(c, "navigation-menubar:"+menu.Label, menu.Label, overlay.MenuProps{Items: menu.Items})
-					}
-				})
-			}
+			s.menubarPreview(c)
 			menu := overlay.MenuProps{Items: []overlay.MenuItem{{Key: "copy", Label: "Copy link"}, {Key: "share", Label: "Share project"}, {Separator: true}, {Key: "archive", Label: "Archive project", Destructive: true}}}
 			s.previewMenu(c, "navigation-project-actions", "Project actions", menu)
 		})
 	})
+	s.routePanelsPreview(c)
 	display.Card(c, func() {
 		s.cardHeader(c, "Pagination", "A single controlled page value, with bounds and current-page semantics.")
 		navigation.Pagination(c, &s.PageNumber, navigation.PaginationProps{Pages: 20})

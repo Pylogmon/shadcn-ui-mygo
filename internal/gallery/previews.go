@@ -117,6 +117,7 @@ func (s *State) controls(c *ui.Context) {
 			control.Toggle(c, &s.Bold, "Bold", control.ToggleProps{Outline: true})
 		})
 	})
+	s.sliderRangesPreview(c)
 }
 func (s *State) displays(c *ui.Context) {
 	s.heading(c, "Data & display", "Readable information, useful feedback and considered details.")
@@ -137,10 +138,15 @@ func (s *State) displays(c *ui.Context) {
 	}, func() {
 		display.Card(c, func() {
 			s.cardHeader(c, "Frequently asked", "Composable disclosure patterns.")
-			display.Accordion(c, display.AccordionProps{Single: true, Items: []display.AccordionItem{{Key: "native", Title: "Is this a native app?", Open: &s.Accordion, Content: func() {
+			display.Accordion(c, display.AccordionProps{Single: true, Bordered: true, Items: []display.AccordionItem{{Key: "native", Title: "Is this a native app?", Open: &s.Accordion, Content: func() {
 				display.Typography(c, "Yes. Every component is rendered by MyGo using Go, with native input and accessibility.", display.Paragraph)
-			}}}})
-			display.Collapsible(c, "More details", &s.Collapsible, func() { display.Typography(c, "Components use your application's own state.", display.Muted) })
+			}}, {Key: "themes", Title: "How do themes work?", Open: &s.AccordionTheme, Content: func() {
+				display.Typography(c, "Semantic colors adapt to your palette, appearance and local theme scope.", display.Paragraph)
+			}}, {Key: "future", Title: "Premium options", Open: &s.AccordionDisabled, Disabled: true}}})
+			display.CollapsibleWith(c, &s.Collapsible, display.CollapsibleProps{Label: "More details", KeepMounted: true, Content: func() {
+				display.Typography(c, "Your notes stay here when this section closes.", display.Muted)
+				control.Input(c, &s.Bio, control.InputProps{Label: "Preview notes", Placeholder: "Add a note…"})
+			}})
 		})
 		display.Alert(c, display.AlertProps{Title: "Everything is up to date", Description: "Your workspace is ready for the next idea."})
 		display.CodeBlock(c, display.CodeBlockProps{Title: "main.go", Language: "go", Code: "func view(c *ui.Context) {\n    theme.Apply(c)\n    control.Button(c, \"Hello, Go\", control.ButtonProps{})\n}", LineNumbers: true, Height: 130})
@@ -157,6 +163,7 @@ func (s *State) displays(c *ui.Context) {
 			return 0
 		}}}})
 	})
+	s.workspacePreview(c)
 }
 
 type invoice struct {

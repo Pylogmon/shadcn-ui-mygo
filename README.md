@@ -41,17 +41,19 @@ func view(c *ui.Context) {
 | --- | --- |
 | `pkg/theme` | 语义颜色、OKLCH、官方主题与色阶、作用域主题、浅/深/系统模式、偏好存储 |
 | `pkg/motion` | 交互过渡、浮层动画、减少动态效果支持 |
-| `pkg/control` | 按钮、输入、选择、表单、OTP、开关、滑块 |
-| `pkg/display` | 卡片、排版、日历、数据表、图表、代码块、布局与反馈 |
+| `pkg/control` | 按钮、输入、选择、表单、OTP、开关、单值/范围/多拇指滑块 |
+| `pkg/display` | 卡片、排版、日历、数据表、图表、代码块、可折叠/多面板布局与反馈 |
 | `pkg/overlay` | 对话框、抽屉、菜单、命令、提示、通知 |
-| `pkg/navigation` | 标签页、面包屑、分页、导航、侧栏 |
-| `pkg/desktop` | 成对桌面组件：Menu / NativeMenu、DropdownMenu、ContextMenu、Popover、Select、日期、Tooltip、HoverCard；独立 Flyout 与系统样式 |
+| `pkg/navigation` | 标签页、面包屑、分页、独立富内容导航面板/系统路由菜单、侧栏 |
+| `pkg/desktop` | 成对桌面组件：Menu / NativeMenu、DropdownMenu、ContextMenu、Menubar、Popover、Select、日期、Tooltip、HoverCard；独立 Flyout 与系统样式 |
 | `pkg/conversation` | 附件、消息、虚拟滚动、标记、Trace、多步问卷 |
 | `internal/gallery` | 原生演示与集成验收 |
 
 组件使用调用方持有的状态；在动态列表中使用稳定的 `c.Key(id)`。颜色通过 `theme.TokensOf(c)` 获取，局部完整主题使用 `theme.Scope(c, tokens).Children(...)`，不会影响其他窗口。
 
 桌面弹出组件显式使用 `desktop.NewHost(parentWindow)`。`Menu` 使用统一 shadcn 样式的独立 Flyout；`NativeMenu` 使用系统菜单。没有 Host 时不会默默退回父窗口内绘制。窗口内旧组件以 `InWindow*` 明确命名；API、平台范围与迁移说明见 [原生浮层适配](docs/native-adaptation.md)，完整示例见 [native-popups](examples/native-popups/main.go)。
+
+Gallery 的 Navigation 页展示菜单栏和可切换尺寸的导航内容面板，Forms 页展示范围/多拇指滑块，Data 页包含保留状态的折叠内容和嵌套可调整面板。导航面板的子 Context、路由回传和 Tab 边界用法见 [导航 API](docs/navigation.md)。
 
 预设可从 Gallery 复制，并用 `go run ./cmd/gallery -preset path/to/preset.json` 加载；无效预设会在修改配置之前被拒绝。
 

@@ -28,7 +28,13 @@ type State struct {
 	Name, Email, Bio, Framework, Plan, OTP, Query                                  string
 	Notifications, Marketing, Checked, Bold, Dialog, Sheet, Popover, Menu, Command bool
 	Accordion, Collapsible                                                         bool
+	AccordionTheme, AccordionDisabled                                              bool
 	Slider                                                                         float64
+	SliderRange                                                                    [2]float64
+	SliderBands                                                                    []float64
+	VerticalLevel                                                                  float64
+	WorkspaceLayout, EditorLayout                                                  display.ResizableLayout
+	Menubar                                                                        desktop.MenubarState
 	Tab, Slide, PageNumber                                                         int
 	Date                                                                           time.Time
 	DateRange                                                                      display.DateRange
@@ -53,7 +59,7 @@ type State struct {
 
 func New() *State {
 	p := DefaultPreset()
-	return &State{Config: p, Theme: theme.Controller{Mode: p.Appearance, Preset: p.Accent, Radius: p.Radius}, lastThemeMode: p.Appearance, Page: "overview", Name: "Sofia Davis", Email: "sofia@example.com", Framework: "go", Plan: "pro", Slider: 65, Notifications: true, Accordion: true, PageNumber: 1, Date: time.Date(2026, 11, 9, 0, 0, 0, 0, time.Local)}
+	return &State{Config: p, Theme: theme.Controller{Mode: p.Appearance, Preset: p.Accent, Radius: p.Radius}, lastThemeMode: p.Appearance, Page: "overview", Name: "Sofia Davis", Email: "sofia@example.com", Framework: "go", Plan: "pro", Slider: 65, SliderRange: [2]float64{25, 75}, SliderBands: []float64{20, 50, 80}, VerticalLevel: 60, Notifications: true, Accordion: true, PageNumber: 1, Date: time.Date(2026, 11, 9, 0, 0, 0, 0, time.Local)}
 }
 
 var pages = []navigation.NavItem{
