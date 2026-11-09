@@ -1,0 +1,234 @@
+{
+  "repository": "https://github.com/shadcn-ui/ui",
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "files": [
+    {
+      "path": "apps/v4/content/docs/components/base/carousel.mdx",
+      "sha256": "42e87e8c7fecc9f7f5fbb1786ca2bdd0af3e97af052529b8b31b07b0cdb2f07b",
+      "gitBlob": "0637774e2f1a2ca09580e4fb58ba464a3dfb7596",
+      "archive": "shadcn/carousel.mdx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/ui/carousel.tsx",
+      "sha256": "d2c33f0ae6b64f5d6ba8d6ad467322008008621fff6b09e9f6d8e21011849123",
+      "gitBlob": "67bb25fa3ad927545ee1b80189cd7e9c9c3ca96a",
+      "archive": "shadcn/carousel.tsx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/examples/carousel-example.tsx",
+      "sha256": "3f04d744b24e2e9ade532b5b7aa2ade70c305ade9c87c47f2a2335766cac2bb6",
+      "gitBlob": "0a501ad0e09518ca1d73f20e4745e10df6c91f5b",
+      "archive": "shadcn/carousel-example.tsx"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "sha256": "5d1903905c5020aec5062fc18b4d1856a91914f9adb9226a9c069c0b4754bf82",
+      "gitBlob": "5e588df5ffb2bfaec0673b426fb657d44200560b",
+      "archive": "shadcn/pnpm-lock.yaml"
+    },
+    {
+      "path": "apps/v4/package.json",
+      "sha256": "f3692cbcc60e47d84859acecd97fbf0cf37358514b317fe05cd8be67ec98b1e9",
+      "gitBlob": "6c742072f9d5b9ca776f7b4af5bddb9cfa5020b7",
+      "archive": "shadcn/package.json"
+    },
+    {
+      "path": "apps/v4/examples/base/carousel-api.tsx",
+      "sha256": "a72fcf98e4117e2eed0b859d45f56ba6ec7eddcd5eeb997dc335b7f252ea8ba8",
+      "gitBlob": "94f09e8b03ba8157685a498ad35399ec2a340223",
+      "archive": "shadcn/examples/carousel-api.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/carousel-demo.tsx",
+      "sha256": "bc546b88be83154786011ed53ddc1fddc22765f0fe81529472c668b27ce95d56",
+      "gitBlob": "17d5010743bd45a5db84b3b2bd952254d498740f",
+      "archive": "shadcn/examples/carousel-demo.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/carousel-multiple.tsx",
+      "sha256": "908f620ae0e62e3449344c91dca5ea5d85b434b7771944cf004e91996d457ab3",
+      "gitBlob": "b9910f558319e6c91ec6705c74421e1d818592d9",
+      "archive": "shadcn/examples/carousel-multiple.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/carousel-orientation.tsx",
+      "sha256": "0d32df9df5562cc7a935c0e91a98a56ae7966900ba216be4d675dd3e3046dee2",
+      "gitBlob": "7cc878fbb709bc169935071d8eeae04abfb2362f",
+      "archive": "shadcn/examples/carousel-orientation.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/carousel-plugin.tsx",
+      "sha256": "8e53d358fac3660e212bf34e64865f6095d043d63ac8ff2e7c54fd8d92eeea63",
+      "gitBlob": "9a433259e515e9d0edd83b176b2eb0e79c84b11b",
+      "archive": "shadcn/examples/carousel-plugin.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/carousel-rtl.tsx",
+      "sha256": "d75c442dcd542ab7b5fdbebc66c100140b2b06cd79852c7bc07729a8a784dc6a",
+      "gitBlob": "4bcebb95a343aee8b5a6d9fe53f417254b4f9ac5",
+      "archive": "shadcn/examples/carousel-rtl.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/carousel-size.tsx",
+      "sha256": "84eb7070085da0e5a5ad109991ddf2c498ad5908803bc9e109098cf350672e70",
+      "gitBlob": "cd3229ea1f02639ac88768c02966d8483f53eb27",
+      "archive": "shadcn/examples/carousel-size.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/carousel-spacing.tsx",
+      "sha256": "80d540cf89a39ff47ef9e3530c3c4280e7992fef6229bf826c6ad2759c6f740e",
+      "gitBlob": "be0ec9c5c5aa8b0e5057c426e135ec04535df299",
+      "archive": "shadcn/examples/carousel-spacing.tsx"
+    },
+    {
+      "path": "LICENSE.md",
+      "archive": "shadcn/LICENSE",
+      "gitBlob": "fad4d887a681dd49233e5ed01ee2c7a1513089a0",
+      "sha256": "1564074e13439397221ffd522e2e504d56561994a23d371aa5e3ad43e4f5423f"
+    },
+    {
+      "path": "apps/v4/registry/styles/style-vega.css",
+      "archive": "shadcn/style-vega.css",
+      "gitBlob": "9f03b3c6dc5a803db963a81743d47d5b5f8f9fe0",
+      "sha256": "10fa07bd61b429ae2c14c572ba9975f6e991d68a04f8fec7e354a062597e0d4e"
+    }
+  ],
+  "npm": [
+    {
+      "name": "embla-carousel",
+      "version": "8.5.2",
+      "gitHead": "5ee3c4ed0251dc685198d0ac21dc3e754b865476",
+      "tarball": "https://registry.npmjs.org/embla-carousel/-/embla-carousel-8.5.2.tgz",
+      "integrity": "sha512-xQ9oVLrun/eCG/7ru3R+I5bJ7shsD8fFwLEY7yPe27/+fDHCNj0OT5EoG5ZbFyOxOcG6yTwW8oTz/dWyFnyGpg==",
+      "tarballSHA256": "64824d314b88dc201066a7e62d7b1ef6e0b08b99de79112cc10eb3a292e93d60",
+      "archive": "npm/embla-carousel-8.5.2.tgz",
+      "license": "MIT",
+      "files": [
+        {
+          "path": "package/package.json",
+          "archive": "npm/embla-carousel/package.json",
+          "sha256": "8fc429a45147217cc698408fed22b6d497f1870f440cfaa0fb8fb368a42fcecf"
+        },
+        {
+          "path": "package/esm/embla-carousel.esm.js",
+          "archive": "npm/embla-carousel/esm/embla-carousel.esm.js",
+          "sha256": "89fd4fd711b8bd4ad6deac95eeb09feaa4077fdb489ae6704d7156e1d9e26fe0"
+        },
+        {
+          "path": "package/cjs/embla-carousel.cjs.js",
+          "archive": "npm/embla-carousel/cjs/embla-carousel.cjs.js",
+          "sha256": "a90f9c822bd7102e4b13c985c7926f910c13fc299a368f72c9c044eb730b2507"
+        },
+        {
+          "path": "package/esm/components/Options.d.ts",
+          "archive": "npm/embla-carousel/esm/components/Options.d.ts",
+          "sha256": "cf41b0fc7d57643d1a8d21af07b0247db2f2d7e2391c2e55929e9c00fbe6ab9a"
+        },
+        {
+          "path": "package/esm/components/EmblaCarousel.d.ts",
+          "archive": "npm/embla-carousel/esm/components/EmblaCarousel.d.ts",
+          "sha256": "0f268017a6b1891fdeea69c2a11d576646d7fd9cdfc8aac74d003cd7e87e9c5a"
+        },
+        {
+          "path": "package/esm/components/EventHandler.d.ts",
+          "archive": "npm/embla-carousel/esm/components/EventHandler.d.ts",
+          "sha256": "55ce6ca8df9d774d60cef58dd5d716807d5cc8410b8b065c06d3edac13f2e726"
+        }
+      ]
+    },
+    {
+      "name": "embla-carousel-react",
+      "version": "8.5.2",
+      "gitHead": "5ee3c4ed0251dc685198d0ac21dc3e754b865476",
+      "tarball": "https://registry.npmjs.org/embla-carousel-react/-/embla-carousel-react-8.5.2.tgz",
+      "integrity": "sha512-Tmx+uY3MqseIGdwp0ScyUuxpBgx5jX1f7od4Cm5mDwg/dptEiTKf9xp6tw0lZN2VA9JbnVMl/aikmbc53c6QFA==",
+      "tarballSHA256": "beb2bd6ccb0f362456b27e6389715a3feb6831a0121763decb7509d7ab6eada9",
+      "archive": "npm/embla-carousel-react-8.5.2.tgz",
+      "license": "MIT",
+      "files": [
+        {
+          "path": "package/package.json",
+          "archive": "npm/embla-carousel-react/package.json",
+          "sha256": "73aff4dfc375da0135836bbdaa59b9485118ff193501aef436b14eca673baca8"
+        },
+        {
+          "path": "package/esm/embla-carousel-react.esm.js",
+          "archive": "npm/embla-carousel-react/esm/embla-carousel-react.esm.js",
+          "sha256": "fc18b0eb7038310acfd980be4313b8b973a9726bd2fb9996449afaf3dff28813"
+        }
+      ]
+    },
+    {
+      "name": "embla-carousel-reactive-utils",
+      "version": "8.5.2",
+      "gitHead": "5ee3c4ed0251dc685198d0ac21dc3e754b865476",
+      "tarball": "https://registry.npmjs.org/embla-carousel-reactive-utils/-/embla-carousel-reactive-utils-8.5.2.tgz",
+      "integrity": "sha512-QC8/hYSK/pEmqEdU1IO5O+XNc/Ptmmq7uCB44vKplgLKhB/l0+yvYx0+Cv0sF6Ena8Srld5vUErZkT+yTahtDg==",
+      "tarballSHA256": "71c4535cd709be1c4538f1a982569834fef048843110f9bd07b657a6a4eddd4d",
+      "archive": "npm/embla-carousel-reactive-utils-8.5.2.tgz",
+      "license": "MIT",
+      "files": [
+        {
+          "path": "package/package.json",
+          "archive": "npm/embla-carousel-reactive-utils/package.json",
+          "sha256": "53fd2c8445c86b4b087aed88c374b1bc45f95d14143c2619cd0b016c74d32279"
+        },
+        {
+          "path": "package/esm/embla-carousel-reactive-utils.esm.js",
+          "archive": "npm/embla-carousel-reactive-utils/esm/embla-carousel-reactive-utils.esm.js",
+          "sha256": "1c8c751cf4f6cd336503980f25266071136684bc5095f29c2b71d2ba2d15cf94"
+        }
+      ]
+    },
+    {
+      "name": "embla-carousel-autoplay",
+      "version": "8.5.2",
+      "gitHead": "5ee3c4ed0251dc685198d0ac21dc3e754b865476",
+      "tarball": "https://registry.npmjs.org/embla-carousel-autoplay/-/embla-carousel-autoplay-8.5.2.tgz",
+      "integrity": "sha512-27emJ0px3q/c0kCHCjwRrEbYcyYUPfGO3g5IBWF1i7714TTzE6L9P81V6PHLoSMAKJ1aHoT2e7YFOsuFKCbyag==",
+      "tarballSHA256": "048ed77590319d778d0ffee9d6e3fae58cda5e0643912f6f0b5e34294f21c82d",
+      "archive": "npm/embla-carousel-autoplay-8.5.2.tgz",
+      "license": "MIT",
+      "files": [
+        {
+          "path": "package/package.json",
+          "archive": "npm/embla-carousel-autoplay/package.json",
+          "sha256": "919b101444258862cdbb30e404d3de6304a377a16a20959af27d6d6175ed5a5c"
+        },
+        {
+          "path": "package/esm/embla-carousel-autoplay.esm.js",
+          "archive": "npm/embla-carousel-autoplay/esm/embla-carousel-autoplay.esm.js",
+          "sha256": "84911d2f9b684038360e7be1019923462ffb8a34659b868f6fb046eb13edd42a"
+        }
+      ]
+    }
+  ],
+  "emblaLicense": {
+    "repository": "https://github.com/davidjerleke/embla-carousel",
+    "commit": "5ee3c4ed0251dc685198d0ac21dc3e754b865476",
+    "path": "LICENSE",
+    "archive": "npm/LICENSE.embla",
+    "sha256": "992490064b90ec94c302fe5f29dcc14cb44145857064e46f9ffe6c8f511c1093",
+    "url": "https://raw.githubusercontent.com/davidjerleke/embla-carousel/5ee3c4ed0251dc685198d0ac21dc3e754b865476/LICENSE",
+    "acquisition": "Separate HTTPS fetch at the fixed published gitHead; no LICENSE member exists in the four npm tarballs."
+  },
+  "oracle": {
+    "generator": "generate-oracle.cjs",
+    "generatorSHA256": "a644fb4eafa0d7adb172e8d4d33c5aa741e247185e954177d14b5538bd87b784",
+    "archive": "geometry-oracle.json",
+    "sha256": "c535bbc8caad98113f3a676afe05aeae74059e4a692ceffac0340cf270f0090e",
+    "caseCount": 324,
+    "upstreamFunctions": [
+      "Axis",
+      "Alignment",
+      "SlideSizes",
+      "SlidesToScroll",
+      "ScrollSnaps",
+      "ScrollContain",
+      "SlideRegistry",
+      "SlideLooper"
+    ],
+    "derivation": "LTR cases selected unchanged from 1296 independent official-function cases; axis/direction do not change logical geometry. The complete generator also produces RTL/vertical inputs.",
+    "fullOracleSHA256": "67074ba8aa8e1ef38d08571c13330e51fe7b8adcbed549654a5b2461a4e36a68"
+  }
+}

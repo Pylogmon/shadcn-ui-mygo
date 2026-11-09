@@ -108,6 +108,18 @@ Emil Kowalski) and SHA-256 manifest are archived in `pkg/overlay/testdata/sonner
 The Toast close SVG preserves Sonner's original geometry. The macOS bundles
 include its license as `Contents/Resources/licenses/sonner.txt`.
 
+## Embla Carousel
+
+The composed Carousel's layout and snap geometry are a native Go translation
+of Embla Carousel 8.5.2, commit `5ee3c4ed0251dc685198d0ac21dc3e754b865476`,
+under the MIT license, Copyright (c) David Jerleke.
+The exact source, license, four lockfile-verified npm packages and source-function
+geometry fixtures are archived in `pkg/display/testdata/shadcn-carousel/`.
+The macOS application bundles include the full license as
+`Contents/Resources/licenses/embla.txt`. No JavaScript package is a runtime
+dependency of the Go kit. Autoplay, physics and the complete controller API
+remain separate implementation stages.
+
 ## cmdk
 
 MIT License
