@@ -1,0 +1,19 @@
+{
+  "sources": [
+    {
+      "file": "registry-themes.ts",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/main/apps/v4/registry/themes.ts",
+      "sha256": "60cb5ed25f7b39d9973e2280f476dd2119a4268317f45bd7ee3cac7883db8ea0"
+    },
+    {
+      "file": "tailwind-theme.css",
+      "url": "https://raw.githubusercontent.com/tailwindlabs/tailwindcss/main/packages/tailwindcss/theme.css",
+      "sha256": "443d7af364200f8ec8352dc78e39485a118a1840d498c97967bf0ae402b39167"
+    }
+  ],
+  "retrieved": "2026-11-09",
+  "pin": "Exact checked-in source bytes are SHA-256 pinned; main URLs identify origin, not an immutable upstream commit. Generation is offline and rejects changed bytes.",
+  "license": "MIT",
+  "themeMerge": "Brand partial overrides are merged onto Neutral for each appearance. Registry values take precedence over documentation examples.",
+  "nativeExtensions": "DestructiveForeground uses Neutral light 0.985 / dark 0.205, FontSize is 14 DIPs, Spacing is 4 DIPs. Radius rem values use 16 DIPs/rem."
+}
