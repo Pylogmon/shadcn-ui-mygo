@@ -126,7 +126,7 @@ func ScrollAreaWith(c *ui.Context, p ScrollAreaProps, content func(*ui.Context))
 		default:
 			parts.Viewport = ui.Scroll(ctx)
 		}
-		viewport := parts.Viewport.Fill().MinWidth(0).MinHeight(0).TrackScroll(state).FocusRing(false).
+		viewport := parts.Viewport.Fill().MinWidth(0).MinHeight(0).TrackScroll(state).FocusRing(false).Invalid(!valid).
 			Label(p.Label).Description(p.Description)
 		hasX, hasY := axis&ui.Horizontal != 0 && state.MaxX > .5, axis&ui.Vertical != 0 && state.MaxY > .5
 		if hasX || hasY {

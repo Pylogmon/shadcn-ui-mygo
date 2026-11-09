@@ -746,3 +746,25 @@ func TestScrollAreaSwitchFromFocusedCustomBarRestoresNativeViewport(t *testing.T
 		t.Fatal("restored native viewport did not receive the next navigation key")
 	}
 }
+
+func TestScrollAreaInvalidOrientationMarksRealViewportWithoutDisablingContent(t *testing.T) {
+	state, value := ui.ScrollState{}, ""
+	r := ui.NewTester(func(c *ui.Context) {
+		theme.Apply(c)
+		ui.Column(c).Padding(20).Children(func() {
+			ScrollAreaWith(c, ScrollAreaProps{Orientation: ui.Orientation(255), State: &state, Label: "Invalid region"}, func(child *ui.Context) {
+				control.Input(child, &value, control.InputProps{Label: "Editable child"})
+				ui.Box(child).Size(500, 500).Shrink(0)
+			}).Root.Size(240, 140)
+		})
+	}, 400, 300)
+	view := scrollAccess(t, r, ui.RoleScroll, "Invalid region")
+	if !view.Invalid || view.Disabled || state.MaxX != 0 || state.MaxY <= 0 {
+		t.Fatalf("invalid axis was not a finite, usable native fallback: %+v state=%+v", view, state)
+	}
+	displayClick(t, r, "Editable child")
+	r.Type("still editable")
+	if value != "still editable" {
+		t.Fatal("invalid scroll configuration disabled independent content")
+	}
+}

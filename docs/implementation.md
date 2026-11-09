@@ -65,7 +65,7 @@
 | 5.AH | Spinner/Skeleton源图形、曲线与减少动画画面稳定性 | 已提交 `6d5e6ae`；8项loading、412项隔离检查及独立审查通过 |
 | 5.AI | Typography文档组合与原生Kbd | 已提交 `5642cd5`；21项聚焦与296项隔离检查通过 |
 | 5.AJ | CodeBlock原生编辑保留、复合槽位及确认复制 | 已提交 `22de763`；33项正式检查、328项隔离检查与交叉审计通过 |
-| 5.AK | ScrollArea真实滚动条与AspectRatio几何 | 50项正式检查及交叉审计通过；原生ScrollTo动态偏好缺口明确保留，提交本子阶段 |
+| 5.AK | ScrollArea真实滚动条与AspectRatio几何 | 已提交 `d7c5880`；50项正式、378项隔离与交叉审查通过，另补Invalid传播第51项；原生动画偏好缺口保留 |
 
 用户已明确允许原生平台适配：Popover、menu、下拉菜单可以使用 MyGo 的系统菜单与独立 Flyout，超出父窗口范围；无需逐像素照搬网页浮层。Gallery 以 [shadcn/create](https://ui.shadcn.com/create) 的配置与实时预览流程为参考。完整组件功能、主题、动画范围保持不变。
 

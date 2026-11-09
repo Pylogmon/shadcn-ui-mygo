@@ -170,3 +170,4 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 - Aspect图片/限制：16:9、21:9、1:1、9:16四种比例实际Cover像素、Max约束、invalid有限正方形、With默认visible overflow与legacy clip及动态内容/空callback身份均通过。没有修改运行时私有缓存。
 - 明确运行时缺口：真实probe复现1s ScrollState.ScrollTo在100ms到40后开启ReduceMotion，下一100ms仍到80且有待帧；ui/scroll.go只在新target时读取Reduced，公开ScrollState没有target getter。未通过丢弃intent伪造通过，该项保留在最终motion gate。
 - Scroll独立阶段：HEAD仅加入Scroll/Aspect源码、正式测试及旧块提取后，display/Gallery共378项通过；新Gallery页未提前纳入。
+- Scroll最后复核追加Invalid轴配置向真实native viewport传播，保留内容输入而不只标装饰Root；51项聚焦检查通过，作为模块修正独立提交。

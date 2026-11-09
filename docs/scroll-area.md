@@ -40,4 +40,4 @@ display.AspectRatioWith(c, display.AspectRatioProps{
 
 AspectRatioWith 默认允许内容溢出，与源 primitive 一致；旧 AspectRatio 保留剪裁契约。支持 Width/MaxWidth/MaxHeight、命名与描述。非正、非有限或无法表示高度的比值回退有限正方形并标记 Invalid；尺寸限制不伪造图片缩放。原生 Image 决定 Cover/Contain。
 
-50 项正式检查与独审覆盖滚动实际内容、像素/主题/字体、双轴/RTL、拖拽/取消、native scrolling 中断、回调、稳定编辑器、嵌套链、AX 扩展及四种图片比例。真实触屏、全部平台/辅助技术/视觉与上述运行时动画缺口继续验收。
+51 项正式检查与独审覆盖滚动实际内容、像素/主题/字体、双轴/RTL、拖拽/取消、native scrolling 中断、回调、稳定编辑器、嵌套链、AX 扩展及四种图片比例。真实触屏、全部平台/辅助技术/视觉与上述运行时动画缺口继续验收。
