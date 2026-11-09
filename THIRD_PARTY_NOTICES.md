@@ -28,6 +28,7 @@ shadcn app's direct icon dependency. The loading SVG, ISC license (including its
 Feather MIT notice) and SHA-256 manifest are in `internal/indicator/`;
 exact CodeBlock copy/check SVGs and their manifest are in `pkg/display/assets/`.
 Toast status SVGs are archived in `pkg/overlay/assets/` with their own manifest.
+Attachment file/state/action SVGs and their manifest are in `pkg/conversation/assets/`.
 The macOS bundles include that license as `Contents/Resources/licenses/lucide.txt`.
 
 Toast behavior and styles are independently ported against Sonner 2.0.7,

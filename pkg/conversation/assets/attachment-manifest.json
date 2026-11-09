@@ -1,0 +1,63 @@
+{
+  "repository": "https://github.com/lucide-icons/lucide",
+  "version": "0.474.0",
+  "commit": "97bbe1d6b2adc6767831e52f6b12b2886b6498d5",
+  "license": "../../../internal/indicator/LICENSE.lucide",
+  "files": [
+    {
+      "file": "attachment-file-text.svg",
+      "upstream_path": "icons/file-text.svg",
+      "sha256": "486fab70d8ad3cdc69b5ff9b6c356a58d41fcc4c885359cbf9d6e088a7c47f70"
+    },
+    {
+      "file": "attachment-file-warning.svg",
+      "upstream_path": "icons/file-warning.svg",
+      "sha256": "d271e568e0f6fe92c9d63234175aad9ed3cd67e8a99c75bcc97233b3932100cc"
+    },
+    {
+      "file": "attachment-clock.svg",
+      "upstream_path": "icons/clock.svg",
+      "sha256": "ede96d40554848eaa512664b11e73def3960cd60c260efa59ca9ccc1bbe8ec9c"
+    },
+    {
+      "file": "attachment-check.svg",
+      "upstream_path": "icons/check.svg",
+      "sha256": "7f33acc9a77a61659531044525fc008edebe215bf4dcf1c789c8674ad3277db0"
+    },
+    {
+      "file": "attachment-x.svg",
+      "upstream_path": "icons/x.svg",
+      "sha256": "4a9cdab38fbb96162e7dace28e33f4ca0e49d8963a6162abc3d4691b7d675117"
+    },
+    {
+      "file": "attachment-refresh-cw.svg",
+      "upstream_path": "icons/refresh-cw.svg",
+      "sha256": "2e10dd403c85a24f163d59fc6151aa21147fe9402e1305dfc8979208caee8944"
+    },
+    {
+      "file": "attachment-download.svg",
+      "upstream_path": "icons/download.svg",
+      "sha256": "21ee20839a201a74e612aafe7eaaf56f6ddc095c74aa5fcbb252c51f74a7535c"
+    },
+    {
+      "file": "attachment-table.svg",
+      "upstream_path": "icons/table.svg",
+      "sha256": "806e2810a1dc693e5dcc22298c6bab50ca5ba16f090d5c61e8ca4b22fdeaa4e3"
+    },
+    {
+      "file": "attachment-file-code.svg",
+      "upstream_path": "icons/file-code.svg",
+      "sha256": "1764ec5309eace9a7bd004ca0a211253e40f837554e51a21bcf527c6eccf167a"
+    },
+    {
+      "file": "attachment-file-archive.svg",
+      "upstream_path": "icons/file-archive.svg",
+      "sha256": "50adc280c84fcde3a62288e91a049557bb15ab3162fcb9533f4e2f821eaad7dd"
+    },
+    {
+      "file": "attachment-presentation.svg",
+      "upstream_path": "icons/presentation.svg",
+      "sha256": "5d15abfdfca21e40abe3b8daead5e8f6a7d38e623fb1a4dd8890448c79e75342"
+    }
+  ]
+}

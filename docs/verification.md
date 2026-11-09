@@ -200,3 +200,7 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 
 - Bubble：61项聚焦检查、独立阶段conversation/Gallery共149项与vet通过。实际像素覆盖七变体明暗/hover、Destructive浅色背景、OKLCH相对tint与混色、比例圆角、祖先颜色/字重继承及动态减少动画；普通、Button和Link的字重覆盖缺陷先红后修。原生Button/URL/Router、disabled在press中切换/取消、反应层四侧RTL物理布局/溢出可点击、原生pressed状态、长字换行与80%/Ghost100%上限、同Key流式追加/重排的编辑器焦点/选区和Message祖先End作用域均通过。源示例没有单独tails/size API，旧泛化待办已改正。
 - Bubble保留差异：MyGo公开Link无LinkBase和关闭hover下划线入口，也无法读取计算后的祖先颜色；保留真实原生URL/路由，quiet Link默认Foreground并允许fluent颜色覆盖。所有token已是sRGB，不能从中恢复原始广色域坐标。完整源示例/字体/平台/AT/视觉矩阵仍未完成；独立验证基于`cd5cbc9`加Bubble文件，没有提前纳入Attachment/Trace或新Gallery示例。
+
+- Attachment：68项聚焦检查通过；固定源五状态×三尺寸×两方向、纯内容/图标/图片与Cover/圆角/状态透明度、源卡片/媒体/错误文字token、整卡Trigger与独立动作/编辑器、真实IME/文件拖入路径副本/禁用/取消与重试/进度有限值、原生字体继承、共享文字扫光及动态减少动画均验证。独立审查另验证processing→done保留输入焦点和全选、最新动作callback及真实wheel→snap；临时探针已清理。
+- AttachmentGroup：真实原生横向viewport保留TrackScroll、焦点滚入、首尾键、snap和按接受位置计算的CSS边缘渐隐；稳定ID重排保留原生编辑器/选区，普通竖直滚动仍到父级，纯水平边界包含。源4DIP scroll-padding缺公开API（实测第二卡native192，CSS inset应188）及边界混合轴事件无法只转发一个轴，两项明确保留；未实现上传引擎。
+- Attachment独立阶段：基于已提交`d8e7cad`仅加入附件实现/正式检查和11枚固定Lucide SVG，conversation/Gallery共217项通过，vet/diff通过；资产SHA-256/XML均核对。已生成并查看浅/深附件矩阵PNG，实际展示状态色、三尺寸、两个方向与图像状态；完整源示例/平台/触控/拖入/AT/视觉矩阵仍继续验收。Gallery新会话流程未提前纳入本模块提交。

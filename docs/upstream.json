@@ -380,6 +380,11 @@
       "path": "apps/v4/registry/bases/base/examples/table-example.tsx",
       "gitBlob": "18f7f3dc1a0900daa1c0db9e9b177fecc482e116",
       "sha256": "dcfd2fa9f630c6fc5440f1f0af57e8c8b9062a31879e1fc0be29ee8621ccf0c2"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/examples/attachment-example.tsx",
+      "gitBlob": "f21f75579820d94e5078e3f2b9cfe2ee043d7e26",
+      "sha256": "39fbf1843c0941ad3dffe4978209902b6b552f96884f6d3687335c87b1c8c16f"
     }
   ],
   "components": [
