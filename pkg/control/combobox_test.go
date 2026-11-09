@@ -11,6 +11,13 @@ import (
 
 func selectionComboInput(t *testing.T, r *ui.Tester, label string) ui.AccessInfo {
 	t.Helper()
+	// PopupInput has both a combobox/dialog trigger and a list-autocomplete
+	// combobox editor. Prefer the actual editor while that dialog is open.
+	for _, n := range r.AccessAll() {
+		if n.Role == ui.RoleComboBox && n.Name == label && n.HasPopup == ui.PopupListBox {
+			return n
+		}
+	}
 	n, ok := r.AccessByRole(ui.RoleComboBox, label)
 	if !ok {
 		t.Fatalf("missing combobox %q: %v", label, r.AccessAll())
@@ -107,8 +114,21 @@ func TestComboboxKeyboardSkipsDisabledLoopsAndControlsHighlight(t *testing.T) {
 					ComboboxWith(c, &value, &q, ComboboxWithProps{Label: "Language", AutoHighlight: auto, NoLoop: noLoop, ShowClear: true, Options: []Option{{Value: "off", Label: "Unavailable", Disabled: true}, {Value: "go", Label: "Go"}, {Value: "rust", Label: "Rust"}}})
 				})
 				openSelectionCombo(t, r, "Language")
+				r.Advance(comboMotionDuration)
+				r.Frame()
 				r.Key(0, ui.KeyDown)
+				r.Frame()
+				if comboBehaviorActive(r) != "Go" {
+					t.Fatal("initial Down did not skip disabled option")
+				}
 				r.Key(0, ui.KeyUp)
+				r.Frame()
+				if !auto && !noLoop {
+					if !r.Focused("Language") || !selectionComboInput(t, r, "Language").Expanded {
+						t.Fatal("manual loop did not pass through native input without closing")
+					}
+					r.Key(0, ui.KeyUp)
+				}
 				r.Key(0, ui.KeyEnter)
 				r.Frame()
 				want := "rust"
@@ -313,7 +333,11 @@ func TestComboboxDynamicOptionsDisabledAndCallbacks(t *testing.T) {
 				t.Fatalf("async label=%q callback%d", q, calls)
 			}
 			openSelectionCombo(t, r, "Language")
-			r.Key(0, ui.KeyDown)
+			r.Advance(comboMotionDuration)
+			r.Frame()
+			if comboBehaviorActive(r) != "Go new" {
+				t.Fatal("opening did not highlight selected stable identity")
+			}
 			options = options[1:]
 			r.Frame()
 			r.Key(0, ui.KeyEnter)
@@ -844,9 +868,12 @@ func TestComboboxPopupButtonGroupMatchesJoinedNativeButtonGeometryAndPixels(t *t
 			}
 			candidate, outer := render(true)
 			reference, wantOuter := render(false)
-			got, ok := candidate.AccessByRole(ui.RoleButton, "Choice")
+			got, ok := candidate.AccessByRole(ui.RoleComboBox, "Choice")
 			if !ok {
 				t.Fatal("missing popup button")
+			}
+			if got.HasPopup != ui.PopupDialog {
+				t.Fatal("popup native button lacks combobox/dialog semantics")
 			}
 			want, ok := reference.AccessByRole(ui.RoleButton, "Choice")
 			if !ok {

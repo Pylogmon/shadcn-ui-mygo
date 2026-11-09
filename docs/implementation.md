@@ -114,13 +114,14 @@
 | 5.CE | Gallery全局搜索与示例草稿独立持有 | 已提交 `b857d62`；两条真实输入回归先红后绿，隔离Gallery207项及vet通过；网址、内嵌Command与组件搜索跨页互不修改 |
 | 5.CF | Combobox源进退动画与原生搜索组 | 已提交 `dd685e9`；新增24项、420项隔离与22项独审、全量1994项/vet/三平台编译通过；100ms/实际side和origin、退出inert/保留过滤及编辑选区、反转和32DIP搜索组 |
 | 5.CG | Carousel多项几何、吸附位置与独立组合控件 | 已提交 `4d39f7a`；Carousel48项/display703项、324源函数对照和195项独审通过；全量2020项/vet/三平台编译及许可打包通过；保留完整controller/物理/Autoplay后续范围 |
-| 5.CH | Carousel/Combobox动画制品的双外部消费者复验 | 本阶段提交；`4d39f7a`同ZIP标准八步及第二外部模块八步/4叶公开检查通过，双轮空缓存/无replace、574份原文匹配、原生明暗图及实际100ms时钟验证 |
+| 5.CH | Carousel/Combobox动画制品的双外部消费者复验 | 已提交 `17e01f3`；`4d39f7a`同ZIP标准八步及第二外部模块八步/4叶公开检查通过，双轮空缓存/无replace、574份原文匹配、原生明暗图及实际100ms时钟验证 |
+| 5.CI | Combobox Base输入、导航、typeahead与弹层语义 | 本阶段提交；新增46项、control259/Gallery207、161叶独审及全量2066项/vet/三平台编译通过；九类源差距修正，motion产品保持不变，Gallery仅更新必要角色定位与强化语义断言 |
 
 用户已明确允许原生平台适配：Popover、menu、下拉菜单可以使用 MyGo 的系统菜单与独立 Flyout，超出父窗口范围；无需逐像素照搬网页浮层。Gallery 以 [shadcn/create](https://ui.shadcn.com/create) 的配置与实时预览流程为参考。完整组件功能、主题、动画范围保持不变。
 
 ## 下一轮的明确缺口
 
-- Combobox Base交互差距：外部单选空输入清值、trim/IME过滤、手动无active循环点、打开选中项起点、pointer leave、chip可打印字符及闭合typeahead/PopupInput AX；已独立复现，下一行为阶段修正。Content定位、anchor宽度、复合槽位与空态结构仍需实现，100ms源动画/32DIP搜索组不等于完整组合验收。
+- Combobox九类Base交互差距已在5.CI修正；Content定位、anchor宽度、复合槽位、Empty/List结构、完整controlled/always/grid选项、12+20例及可选translucent preset仍需实现。完整locale/Unicode及平台IME/AT继续验收，不能把With便捷API视为全部source compound功能。
 - macOS实窗无active Enter复验：本轮自动化出现旧bundle/AX目标失效及首次Return仍留列表的观测。补充12项公开settled输入检查全绿；Tester无公开batch接口，无帧输入时序仍未证实。先辨明实际进程、IME与事件时序，再依据实证修正。
 - Carousel多项布局已在5.CG完成；完整controller/options/events、Embla物理/速度投影/拖动及Autoplay/插件与源示例继续分阶段实现。按parity表补齐Chart高级配置及所有组件例子；Windows/Linux实际窗口、真实AT/IME、多显示器/缩放和完整视觉矩阵仍是最终验收要求。
 

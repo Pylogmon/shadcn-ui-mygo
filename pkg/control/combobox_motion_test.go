@@ -100,9 +100,12 @@ func TestComboboxPopupSearchUsesVega32DIPGroup(t *testing.T) {
 func (h *comboMotionHarness) open(t *testing.T) {
 	t.Helper()
 	if h.popup {
-		n, ok := h.r.AccessByRole(ui.RoleButton, "Motion combo")
+		n, ok := h.r.AccessByRole(ui.RoleComboBox, "Motion combo")
 		if !ok {
 			t.Fatal("missing popup trigger")
+		}
+		if n.HasPopup != ui.PopupDialog {
+			t.Fatal("popup trigger is not a dialog combobox")
 		}
 		h.r.ClickAt(n.Bounds.X+12, n.Bounds.Y+n.Bounds.H/2)
 	} else {

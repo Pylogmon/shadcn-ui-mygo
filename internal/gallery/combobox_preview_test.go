@@ -27,6 +27,15 @@ func comboboxPreviewTester(s *State, width, height int) *ui.Tester {
 
 func comboboxAccess(t *testing.T, r *ui.Tester, role ui.Role, label string) ui.AccessInfo {
 	t.Helper()
+	// An open popup has a combobox/dialog trigger and a list-autocomplete
+	// combobox editor. Keep input/focus assertions on the actual native editor.
+	if role == ui.RoleComboBox {
+		for _, info := range r.AccessAll() {
+			if info.Role == role && info.Name == label && info.HasPopup == ui.PopupListBox {
+				return info
+			}
+		}
+	}
 	a, ok := r.AccessByRole(role, label)
 	if !ok {
 		t.Fatalf("missing native %v %q", role, label)
@@ -118,7 +127,10 @@ func TestCreatorComboboxPopupSearchReturnsFocusAndResetsOnlyQuery(t *testing.T) 
 	s := New()
 	s.Page = "controls"
 	r := comboboxPreviewTester(s, 1200, 1000)
-	comboboxClick(t, r, ui.RoleButton, "Office city")
+	comboboxClick(t, r, ui.RoleComboBox, "Office city")
+	if trigger := comboboxAccess(t, r, ui.RoleComboBox, "Office city"); trigger.HasPopup != ui.PopupListBox {
+		t.Fatal("the popup did not expose its list-autocomplete search editor")
+	}
 	r.Advance(200 * time.Millisecond)
 	if !comboboxAccess(t, r, ui.RoleComboBox, "Office city").Focused {
 		t.Fatal("the popup's actual native search editor did not receive focus")
@@ -129,7 +141,7 @@ func TestCreatorComboboxPopupSearchReturnsFocusAndResetsOnlyQuery(t *testing.T) 
 	if s.comboboxes.city.Value != "new-york" || s.comboboxes.cityQuery != "" || !r.Focused("Office city") {
 		t.Fatal("the popup choice did not reach the trigger and return its focus")
 	}
-	comboboxClick(t, r, ui.RoleButton, "Office city")
+	comboboxClick(t, r, ui.RoleComboBox, "Office city")
 	r.Advance(200 * time.Millisecond)
 	r.Type("tokyo")
 	r.Key(0, ui.KeyEscape)
@@ -242,7 +254,7 @@ func TestCreatorComboboxLeavingPageClosesSearchWithoutStealingNewFocus(t *testin
 	s := New()
 	s.Page = "controls"
 	r := comboboxPreviewTester(s, 1200, 1000)
-	comboboxClick(t, r, ui.RoleButton, "Office city")
+	comboboxClick(t, r, ui.RoleComboBox, "Office city")
 	r.Advance(200 * time.Millisecond)
 	r.Type("San")
 	if s.comboboxes.cityQuery != "San" || !r.Focused("Office city") {
@@ -258,8 +270,12 @@ func TestCreatorComboboxLeavingPageClosesSearchWithoutStealingNewFocus(t *testin
 	}
 	s.Page = "controls"
 	r.Frame()
-	if _, ok := r.AccessByRole(ui.RoleComboBox, "Office city"); ok || s.comboboxes.framework.Value != "mygo" || !slices.Equal(s.comboboxes.technologies, []string{"go", "typescript"}) {
+	trigger := comboboxAccess(t, r, ui.RoleComboBox, "Office city")
+	if trigger.HasPopup != ui.PopupDialog || trigger.Expanded || s.comboboxes.framework.Value != "mygo" || !slices.Equal(s.comboboxes.technologies, []string{"go", "typescript"}) {
 		t.Fatal("returning to Forms reopened a stale popup or lost selected application state")
+	}
+	if _, ok := r.AccessByRole(ui.RoleDialog, "Office city popup"); ok {
+		t.Fatal("returning to Forms retained a stale popup dialog")
 	}
 }
 
@@ -267,9 +283,6 @@ func comboboxReveal(t *testing.T, r *ui.Tester, label string) ui.Rect {
 	t.Helper()
 	for attempt := 0; attempt < 6; attempt++ {
 		role := ui.RoleComboBox
-		if label == "Office city" {
-			role = ui.RoleButton
-		}
 		info, ok := r.AccessByRole(role, label)
 		if !ok {
 			t.Fatalf("missing actual Forms control %q", label)

@@ -4,6 +4,8 @@ import (
 	"math"
 	"slices"
 	"strings"
+	"time"
+	"unicode"
 
 	"github.com/egoist/mygo/ui"
 	"github.com/pylogmon/shadcn-ui-mygo/internal/indicator"
@@ -21,12 +23,14 @@ type ComboboxValue struct {
 }
 
 // ComboboxWithProps configures the selection comboboxes. Unlike the legacy
-// free-text Combobox, typing only changes query; choosing an option changes the
-// selected value. AutoHighlight is opt-in, and arrow navigation loops by default.
+// free-text Combobox, typing edits the query and choosing commits an option.
+// Clearing a single external editor also clears its selected value, matching
+// Base UI. AutoHighlight is opt-in; manual loops include the unhighlighted input.
 type ComboboxWithProps struct {
 	Options                       []Option
 	Label, Placeholder, EmptyText string
-	// PopupInput places the search editor inside the popup, below a button.
+	// PopupInput uses a native button with combobox/dialog accessibility semantics
+	// and places a list-autocomplete combobox editor inside its nonmodal dialog.
 	PopupInput                                                bool
 	InputPlaceholder                                          string
 	Disabled, Invalid, ReadOnly                               bool
@@ -78,15 +82,44 @@ type comboRuntime struct {
 	selected                                                  []string
 	direction                                                 ui.Direction
 	selectionStart, selectionEnd                              int
-	previousQuery                                             string
 	previousLabel                                             string
 	previousValue                                             ComboboxValue
-	pointerX, pointerY                                        float32
 	pointerOver                                               bool
 	closing                                                   bool
 	closeQuery                                                string
 	closeFiltering                                            bool
 	motion                                                    comboMotion
+	committedQuery, previousFilterQuery                       string
+	compositionCommit                                         bool
+	pointerHighlight                                          bool
+	pointerMoved, pointerTouch                                bool
+	typeahead, typeaheadText                                  string
+	typeaheadAt                                               time.Time
+	typeaheadPrevious, typeaheadMatch                         int
+	typeaheadIME                                              bool
+	typeaheadValue                                            string
+	hasTypeaheadValue                                         bool
+}
+
+func (s *comboRuntime) filterQuery(query string) string {
+	if s.composing || s.compositionCommit {
+		return s.committedQuery
+	}
+	return query
+}
+
+func (s *comboRuntime) highlightSelected() bool {
+	if len(s.selected) == 0 {
+		return false
+	}
+	value := s.selected[len(s.selected)-1]
+	for _, e := range s.items {
+		if !e.option.Separator && e.option.Value == value {
+			s.active, s.hasActive, s.reveal, s.pointerHighlight = value, true, true, false
+			return true
+		}
+	}
+	return false
 }
 
 func (s *comboRuntime) captureClose(query string) {
@@ -121,6 +154,7 @@ func (s *comboRuntime) setActive(i int) {
 		s.reveal = true
 	}
 	s.active, s.hasActive = s.items[i].option.Value, true
+	s.pointerHighlight = false
 }
 func (s *comboRuntime) move(delta int) {
 	i := -1
@@ -139,6 +173,10 @@ func (s *comboRuntime) move(delta int) {
 		i += delta
 		if i < 0 || i >= len(s.items) {
 			if s.noLoop {
+				return
+			}
+			if s.hasActive && !s.autoHighlight {
+				s.hasActive, s.pointerHighlight = false, false
 				return
 			}
 			i = (i + len(s.items)) % len(s.items)
@@ -162,12 +200,27 @@ func (s *comboRuntime) edge(last bool) {
 	}
 }
 func (s *comboRuntime) observe(ev ui.InputEvent) {
+	if ev.Kind == ui.InputKeyDown || ev.Kind == ui.InputText {
+		s.pointerHighlight = false
+	}
 	switch ev.Kind {
 	case ui.InputCompose:
 		s.composing = ev.Text != ""
+		if s.enabled && strings.TrimSpace(ev.Text) != "" {
+			s.open = true
+		}
 	case ui.InputText:
+		s.compositionCommit = s.composing
 		s.composing = false
 	}
+}
+
+func (s *comboRuntime) pointerEvent(ev ui.InputEvent) bool {
+	if ev.Kind == ui.InputPointerMove {
+		s.pointerMoved = true
+		s.pointerTouch = ev.Pointer == ui.PointerTouch
+	}
+	return false
 }
 func (s *comboRuntime) inputEvent(ev ui.InputEvent) bool {
 	if !s.enabled || s.composing || ev.Kind != ui.InputKeyDown || ev.Mods != 0 {
@@ -175,10 +228,15 @@ func (s *comboRuntime) inputEvent(ev ui.InputEvent) bool {
 	}
 	switch ev.Key {
 	case ui.KeyDown, ui.KeyUp:
-		s.open = true
 		d := 1
 		if ev.Key == ui.KeyUp {
 			d = -1
+		}
+		if !s.open {
+			s.open = true
+			if s.highlightSelected() {
+				return true
+			}
 		}
 		s.move(d)
 		return true
@@ -228,7 +286,14 @@ func (s *comboRuntime) inputEvent(ev ui.InputEvent) bool {
 	return false
 }
 func (s *comboRuntime) chipEvent(value string, ev ui.InputEvent) bool {
-	if !s.enabled || ev.Kind != ui.InputKeyDown || ev.Mods != 0 {
+	if !s.enabled || ev.Kind != ui.InputKeyDown {
+		return false
+	}
+	if ev.Mods&^ui.Shift == 0 && ev.Key != ui.KeySpace && comboPrintableKey(ev) {
+		s.input.Focus()
+		return false // Native text, composition, selection and undo stay in the editor.
+	}
+	if ev.Mods != 0 {
 		return false
 	}
 	i := slices.Index(s.selected, value)
@@ -276,8 +341,176 @@ func (s *comboRuntime) chipEvent(value string, ev ui.InputEvent) bool {
 		s.input.Focus()
 		return true
 	}
+	return false
+}
+
+func comboPrintableKey(ev ui.InputEvent) bool {
+	if ev.Key >= ui.KeyA && ev.Key <= ui.KeyZ || ev.Key >= ui.Key0 && ev.Key <= ui.Key9 {
+		return true
+	}
+	switch ev.Key {
+	case ui.KeyUnknown:
+		return ev.Code == ui.CodeUnknown
+	case ui.KeySpace, ui.KeyMinus, ui.KeyEqual, ui.KeyComma, ui.KeyPeriod, ui.KeySlash, ui.KeySemicolon, ui.KeyQuote, ui.KeyBracketLeft, ui.KeyBracketRight, ui.KeyBackslash, ui.KeyBackquote:
+		return true
+	}
+	return false
+}
+
+func comboKeyText(ev ui.InputEvent) string {
 	if ev.Key >= ui.KeyA && ev.Key <= ui.KeyZ {
+		return string(rune('a' + ev.Key - ui.KeyA))
+	}
+	if ev.Key >= ui.Key0 && ev.Key <= ui.Key9 {
+		if ev.Mods&ui.Shift != 0 {
+			return string(")!@#$%^&*("[ev.Key-ui.Key0])
+		}
+		return string(rune('0' + ev.Key - ui.Key0))
+	}
+	plain, shifted := "", ""
+	switch ev.Key {
+	case ui.KeySpace:
+		plain, shifted = " ", " "
+	case ui.KeyMinus:
+		plain, shifted = "-", "_"
+	case ui.KeyEqual:
+		plain, shifted = "=", "+"
+	case ui.KeyComma:
+		plain, shifted = ",", "<"
+	case ui.KeyPeriod:
+		plain, shifted = ".", ">"
+	case ui.KeySlash:
+		plain, shifted = "/", "?"
+	case ui.KeySemicolon:
+		plain, shifted = ";", ":"
+	case ui.KeyQuote:
+		plain, shifted = "'", "\""
+	case ui.KeyBracketLeft:
+		plain, shifted = "[", "{"
+	case ui.KeyBracketRight:
+		plain, shifted = "]", "}"
+	case ui.KeyBackslash:
+		plain, shifted = "\\", "|"
+	case ui.KeyBackquote:
+		plain, shifted = "`", "~"
+	}
+	if ev.Mods&ui.Shift != 0 {
+		return shifted
+	}
+	return plain
+}
+
+// The closed single-value trigger has Base's 750ms startsWith session. Unlike
+// open list navigation, Base does not pass disabledIndices to this typeahead.
+func (s *comboRuntime) typeaheadInput(text string, now time.Time) {
+	if now.Sub(s.typeaheadAt) >= 750*time.Millisecond {
+		s.typeahead = ""
+	}
+	items := make([]Option, 0, len(s.items))
+	for _, e := range s.items {
+		if !e.option.Separator {
+			items = append(items, e.option)
+		}
+	}
+	for _, ch := range text {
+		if !unicode.IsPrint(ch) {
+			continue
+		}
+		key := strings.ToLower(string(ch))
+		fresh := s.typeahead == ""
+		if fresh {
+			s.typeaheadPrevious = -1
+			for i, o := range items {
+				if len(s.selected) > 0 && o.Value == s.selected[0] {
+					s.typeaheadPrevious = i
+					break
+				}
+			}
+		}
+		rapid := true
+		for _, o := range items {
+			rs := []rune(strings.ToLower(optionLabel(o)))
+			if len(rs) > 1 && rs[0] == rs[1] {
+				rapid = false
+				break
+			}
+		}
+		if rapid && s.typeahead == key {
+			s.typeahead = ""
+			s.typeaheadPrevious = s.typeaheadMatch
+		}
+		s.typeahead += key
+		s.typeaheadAt = now
+		found := -1
+		for n := range len(items) {
+			i := (s.typeaheadPrevious + 1 + n + len(items)) % len(items)
+			if strings.HasPrefix(strings.ToLower(optionLabel(items[i])), s.typeahead) {
+				found = i
+				break
+			}
+		}
+		if found >= 0 {
+			s.typeaheadMatch = found
+			s.typeaheadValue, s.hasTypeaheadValue = items[found].Value, true
+		} else if key != " " {
+			s.typeahead = ""
+		}
+	}
+}
+
+func (s *comboRuntime) triggerEvent(ev ui.InputEvent) bool {
+	if !s.enabled {
+		return false
+	}
+	if ev.Kind == ui.InputCompose {
+		s.typeaheadIME = ev.Text != ""
+		return false
+	}
+	if ev.Kind == ui.InputKeyUp {
+		s.typeaheadText = ""
+		return false
+	}
+	if ev.Kind == ui.InputKeyDown && ev.Mods == 0 && (ev.Key == ui.KeyDown || ev.Key == ui.KeyUp) {
+		d := 1
+		if ev.Key == ui.KeyUp {
+			d = -1
+		}
+		if !s.open {
+			s.open = true
+			if s.highlightSelected() {
+				return true
+			}
+		}
+		s.move(d)
 		s.input.Focus()
+		return true
+	}
+	if s.open || s.multiple || ev.Mods&(ui.Ctrl|ui.Super|ui.Alt) != 0 {
+		return false
+	}
+	if ev.Time.Sub(s.typeaheadAt) >= 750*time.Millisecond {
+		s.typeahead = ""
+	}
+	if ev.Kind == ui.InputText {
+		if s.typeaheadIME {
+			s.typeaheadIME = false
+			return false
+		}
+		if strings.EqualFold(ev.Text, s.typeaheadText) {
+			s.typeaheadText = ""
+			return true
+		}
+		s.typeaheadInput(ev.Text, ev.Time)
+		return ev.Text != ""
+	}
+	if ev.Kind == ui.InputKeyDown && !s.typeaheadIME {
+		key := comboKeyText(ev)
+		if key == "" || key == " " && s.typeahead == "" {
+			return false
+		}
+		s.typeaheadInput(key, ev.Time)
+		s.typeaheadText = key
+		return true
 	}
 	return false
 }
@@ -293,6 +526,9 @@ func comboEntries(p ComboboxWithProps, q string, filtering bool, selected []stri
 	out := make([]comboEntry, 0, len(p.Options))
 	seen := map[string]bool{}
 	var pattern *search.Pattern
+	if p.Filter == nil {
+		q = strings.TrimSpace(q)
+	}
 	if filtering && q != "" && p.Filter == nil {
 		pattern = search.New(language.Make(p.Locale), search.Loose).CompileString(q)
 	}
@@ -319,6 +555,25 @@ func comboEntries(p ComboboxWithProps, q string, filtering bool, selected []stri
 			o.Disabled = true
 		}
 		out = append(out, comboEntry{o, selectedItem})
+	}
+	if filtering {
+		// Separators are collection boundaries, not surviving results. Empty
+		// groups disappear with their children; retain one rule only between
+		// two remaining runs, never before/after the filtered collection.
+		filtered := out[:0]
+		pending := false
+		for _, e := range out {
+			if e.option.Separator {
+				pending = len(filtered) > 0
+				continue
+			}
+			if pending {
+				filtered = append(filtered, comboEntry{option: Option{Separator: true, Disabled: true}})
+				pending = false
+			}
+			filtered = append(filtered, e)
+		}
+		out = filtered
 	}
 	return out
 }
@@ -403,7 +658,7 @@ func selectionCombobox(c *ui.Context, single *ComboboxValue, selected *[]string,
 		if !multiple && single.Valid && *query == "" && !p.PopupInput {
 			*query = comboLabel(p.Options, single.Value)
 		}
-		s.previousQuery = *query
+		s.committedQuery, s.previousFilterQuery = *query, *query
 		s.initialized = true
 	}
 	// External updates reconcile the displayed label without publishing user events.
@@ -419,11 +674,14 @@ func selectionCombobox(c *ui.Context, single *ComboboxValue, selected *[]string,
 		s.hasActive = false
 		s.composing = false
 	}
+	if !s.composing && !s.compositionCommit {
+		s.committedQuery = *query
+	}
 	// Logical dismissal removes input and accessibility immediately; native
 	// editors and the filtered result stay mounted until their exit finishes.
 	syncMotion := func() (comboPose, bool) {
 		if s.wasOpen && !s.open {
-			s.captureClose(*query)
+			s.captureClose(s.filterQuery(*query))
 		}
 		if s.open {
 			s.closing = false
@@ -448,6 +706,9 @@ func selectionCombobox(c *ui.Context, single *ComboboxValue, selected *[]string,
 	setQuery := func(q string) {
 		if *query != q {
 			*query = q
+			if !s.composing {
+				s.committedQuery = q
+			}
 			if p.OnInputChange != nil {
 				p.OnInputChange(q)
 			}
@@ -481,6 +742,12 @@ func selectionCombobox(c *ui.Context, single *ComboboxValue, selected *[]string,
 		values := slices.DeleteFunc(slices.Clone(*selected), func(v string) bool { return v == value })
 		change(values)
 	}
+	if s.hasTypeaheadValue {
+		s.hasTypeaheadValue = false
+		if s.enabled && p.PopupInput && !multiple && !s.open {
+			change([]string{s.typeaheadValue})
+		}
+	}
 	if s.clear {
 		s.clear = false
 		change(nil)
@@ -494,23 +761,23 @@ func selectionCombobox(c *ui.Context, single *ComboboxValue, selected *[]string,
 		remove(s.remove)
 	}
 	s.selected = slices.Clone(*selected)
-	s.items = comboEntries(p, *query, s.filtering, *selected)
+	s.items = comboEntries(p, s.filterQuery(*query), s.filtering, *selected)
 	// Separators take space but are not eligible navigation destinations.
 	for i := range s.items {
 		if s.items[i].option.Separator {
 			s.items[i].option.Disabled = true
 		}
 	}
-	if s.previousQuery != *query {
+	if s.previousFilterQuery != s.filterQuery(*query) {
 		s.hasActive = false
-		if s.filtering && p.AutoHighlight {
+		if s.filtering && p.AutoHighlight && strings.TrimSpace(s.filterQuery(*query)) != "" {
 			s.edge(false)
 		}
 	}
 	if s.hasActive {
 		valid := false
 		for i, e := range s.items {
-			if e.option.Value == s.active && s.eligible(i) {
+			if e.option.Value == s.active && (s.eligible(i) || e.selected) {
 				valid = true
 				break
 			}
@@ -566,6 +833,7 @@ func selectionCombobox(c *ui.Context, single *ComboboxValue, selected *[]string,
 		}
 		s.filtering = false
 		s.hasActive = false
+		s.pointerHighlight = false
 		if p.PopupInput {
 			s.trigger.Focus()
 		} else {
@@ -594,20 +862,41 @@ func selectionCombobox(c *ui.Context, single *ComboboxValue, selected *[]string,
 			input.Placeholder(placeholder).Padding(4, 8).Height(max(float32(30), 20*scale+10)).FontSize(14).LineHeight(20.0 / 14)
 		}
 
-		input.OnChange(func() {
-			s.open = true
-			s.filtering = true
-			if s.previousQuery != *query {
+		wasComposing := s.composing
+		s.composing = input.Composing()
+		notified := false
+		commitInput := func() {
+			if notified {
+				return
+			}
+			if input.Composing() {
+				// TextInputBase owns native marked text. Its binding can exclude
+				// that marked range; keep the committed filter and user events
+				// unchanged until the native composition actually commits.
+				if strings.TrimSpace(*query) != "" {
+					s.open = true
+				}
+			} else {
+				notified = true
+				s.compositionCommit = false
+				s.committedQuery = *query
+				s.open, s.filtering, s.pointerHighlight = true, true, false
 				s.hasActive = false
+				if !multiple && !p.PopupInput && *query == "" {
+					change(nil)
+				}
+				if p.OnInputChange != nil {
+					p.OnInputChange(*query)
+				}
 			}
-			if p.OnInputChange != nil {
-				p.OnInputChange(*query)
-			}
-		})
+		}
+		input.OnChange(commitInput)
+		if s.compositionCommit || wasComposing && !s.composing {
+			commitInput()
+		}
 		if input.Clicked() && s.enabled {
 			s.open = true
 		}
-		s.composing = input.Composing()
 		s.queryEmpty = *query == ""
 		s.selectionStart, s.selectionEnd = input.TextSelection()
 	}
@@ -637,7 +926,7 @@ func selectionCombobox(c *ui.Context, single *ComboboxValue, selected *[]string,
 			if label == "" {
 				label = "Select an option"
 			}
-			trigger := root.Bind(&s.trigger).FillWidth().Gap(8).Expanded(s.open).HasPopup(ui.PopupListBox)
+			trigger := root.Bind(&s.trigger).FillWidth().Gap(8).Role(ui.RoleComboBox).Expanded(s.open).HasPopup(ui.PopupDialog)
 			trigger.Bind(handle)
 			trigger.Children(func() {
 				if p.TriggerContent != nil && !multiple && single.Valid {
@@ -650,14 +939,7 @@ func selectionCombobox(c *ui.Context, single *ComboboxValue, selected *[]string,
 			if trigger.Clicked() && s.enabled {
 				s.toggle(*query)
 			}
-			trigger.HandleInput(func(ev ui.InputEvent) bool {
-				if s.enabled && ev.Kind == ui.InputKeyDown && ev.Mods == 0 && (ev.Key == ui.KeyDown || ev.Key == ui.KeyUp) {
-					s.open = true
-					s.hasActive = false
-					return true
-				}
-				return false
-			})
+			trigger.HandleInput(s.triggerEvent)
 			return
 		}
 		root.Padding(0, 10)
@@ -726,25 +1008,29 @@ func selectionCombobox(c *ui.Context, single *ComboboxValue, selected *[]string,
 	if inInputGroup {
 		root.Border(0, ui.Transparent).Background(ui.Transparent).NoShadow()
 	}
-	s.items = comboEntries(p, *query, s.filtering, *selected)
+	s.items = comboEntries(p, s.filterQuery(*query), s.filtering, *selected)
 	for i := range s.items {
 		if s.items[i].option.Separator {
 			s.items[i].option.Disabled = true
 		}
 	}
-	if s.previousQuery != *query {
+	if s.previousFilterQuery != s.filterQuery(*query) {
 		s.hasActive = false
-		if s.filtering && p.AutoHighlight {
+		if s.filtering && p.AutoHighlight && strings.TrimSpace(s.filterQuery(*query)) != "" {
 			s.edge(false)
 		}
 	}
-	if s.filtering && p.AutoHighlight && !s.hasActive {
+	if s.filtering && p.AutoHighlight && !s.hasActive && strings.TrimSpace(s.filterQuery(*query)) != "" {
 		s.edge(false)
+	}
+	if s.open && !s.wasOpen && !s.filtering && !s.hasActive {
+		s.highlightSelected()
 	}
 	// The attached popup participates in FocusLeft and native light dismissal.
 	if root.FocusLeft() {
 		s.open = false
 		s.composing = false
+		s.typeahead, s.typeaheadText = "", ""
 	}
 	pose, present := syncMotion()
 	if s.closing {
@@ -770,6 +1056,10 @@ func selectionCombobox(c *ui.Context, single *ComboboxValue, selected *[]string,
 	if present {
 		ui.Overlay(c, func() {
 			panel = ui.Box(c).Role(ui.RolePopup).AttachTo(anchor, ui.AnchorBottomStart, ui.AnchorTopStart)
+			if p.PopupInput {
+				panel.Role(ui.RoleDialog).Label(p.Label + " popup")
+				root.Controls(panel)
+			}
 			panel.Key(s)
 			panel.Clicked() // The panel background participates in native hit testing.
 			panel.MinWidth(max(float32(144), root.Bounds().W)).MaxHeight(maxHeight).Margin(6, 0, 0, 0).Clip().Radius(t.RadiusMD()).Border(1, t.Foreground.Alpha(.1)).Background(t.Popover).TextColor(t.PopoverForeground).Shadow(0, 4, 12, 0, ui.RGBA(0, 0, 0, .12)).IgnoreInput(!s.open).AccessHidden(!s.open)
@@ -792,13 +1082,17 @@ func selectionCombobox(c *ui.Context, single *ComboboxValue, selected *[]string,
 						}
 					})
 				}
-				list := ui.Scroll(c.Key("list")).TabStop(false).FillWidth().Padding(4).MaxHeight(max(float32(1), maxHeight-36)).Role(ui.RoleListBox).Multiselectable(multiple).Label(p.Label + " options")
+				list := ui.Scroll(c.Key("list")).TabStop(false).FillWidth().Padding(4).MaxHeight(max(float32(1), maxHeight-36)).Role(ui.RoleListBox).Multiselectable(multiple).Label(p.Label + " options").HandleInput(s.pointerEvent)
 				if input := c.Resolve(s.input); input.Valid() {
 					input.Controls(list).Expanded(s.open)
 				}
-				x, y, over := list.PointerPosition()
-				pointerMoved := over && (!s.pointerOver || s.pointerX != x || s.pointerY != y)
-				s.pointerX, s.pointerY, s.pointerOver = x, y, over
+				_, _, over := list.PointerPosition()
+				if s.pointerOver && !over && s.pointerHighlight {
+					s.hasActive, s.pointerHighlight = false, false
+				}
+				pointerMoved := s.pointerMoved && !s.pointerTouch
+				s.pointerMoved = false
+				s.pointerOver = over
 				list.Children(func() {
 					n := 0
 					for _, e := range s.items {
@@ -817,10 +1111,15 @@ func selectionCombobox(c *ui.Context, single *ComboboxValue, selected *[]string,
 					renderOption := func(entry comboEntry) {
 						o := entry.option
 						pos++
-						option := ui.ButtonBase(c.Key(choiceOptionKey{value: o.Value})).Role(ui.RoleOption).KeepFocus().TabStop(false).Disabled(o.Disabled || !s.enabled).DimDisabled(false).Label(optionLabel(o)).PositionInSet(pos, n).AccessSelected(entry.selected).FillWidth().MinWidth(0).MinHeight(32).Padding(6, 32, 6, 8).Gap(8).AlignItems(ui.Center).Radius(t.RadiusSM()).FontSize(14).FocusRing(false)
+						option := ui.ButtonBase(c.Key(choiceOptionKey{value: o.Value})).Role(ui.RoleOption).KeepFocus().TabStop(false).Disabled(o.Disabled || !s.enabled).DimDisabled(false).Label(optionLabel(o)).PositionInSet(pos, n).AccessSelected(entry.selected).FillWidth().MinWidth(0).MinHeight(32).Padding(6, 32, 6, 8).Gap(8).AlignItems(ui.Center).Radius(t.RadiusSM()).FontSize(14).FocusRing(false).HandleInput(s.pointerEvent)
 						active := s.hasActive && s.active == o.Value
+						if active && s.pointerHighlight && pointerMoved && !option.Hovered() {
+							s.hasActive, s.pointerHighlight = false, false
+							active = false
+						}
 						if pointerMoved && option.Hovered() && !o.Disabled && s.enabled {
 							s.active, s.hasActive = o.Value, true
+							s.pointerHighlight = true
 							active = true
 						}
 						if active {
@@ -910,7 +1209,10 @@ func selectionCombobox(c *ui.Context, single *ComboboxValue, selected *[]string,
 		p.OnOpenChange(s.open)
 	}
 	s.wasOpen = s.open
-	s.previousQuery = *query
+	s.previousFilterQuery = s.filterQuery(*query)
+	if s.open {
+		s.typeahead, s.typeaheadText = "", ""
+	}
 	if !multiple {
 		s.previousValue = *single
 		s.previousLabel = comboLabel(p.Options, single.Value)

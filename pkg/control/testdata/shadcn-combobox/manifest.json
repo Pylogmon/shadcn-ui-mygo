@@ -379,6 +379,38 @@
       "sourcePath": "package/utils/getDisabledMountTransitionStyles.js",
       "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
       "verification": "member bytes of full lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/floating-ui-react/hooks/useListNavigation.js",
+      "sha256": "7058d01d9356b4fbf1c48e369e1a1a9b3239e72a6e6abd07ca7e4a82abaa80c6",
+      "package": "@base-ui/react",
+      "sourcePath": "package/floating-ui-react/hooks/useListNavigation.js",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member bytes of full lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/floating-ui-react/hooks/useTypeahead.js",
+      "sha256": "c1e0d60396d785265a5f43e3867529f61335451f8a7264ab0b3e232bb3843afa",
+      "package": "@base-ui/react",
+      "sourcePath": "package/floating-ui-react/hooks/useTypeahead.js",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member bytes of full lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/combobox/root/utils/index.js",
+      "sha256": "aa7a068a7f4e1cff90d7af9364f65adc26bfb4167ce77182951534906071f429",
+      "package": "@base-ui/react",
+      "sourcePath": "package/combobox/root/utils/index.js",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member bytes of full lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/internals/filter.js",
+      "sha256": "9ceec87c901f0087dacce036a6f98b01123c4afd572035301c329efaf108434c",
+      "package": "@base-ui/react",
+      "sourcePath": "package/internals/filter.js",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member bytes of full lockfile SHA512-verified official npm tarball"
     }
   ],
   "existingSourceReferences": [
@@ -447,7 +479,7 @@
       "lockedBy": "shadcn-ui/ui@8ab27715521cbd4f87ae6886cd989cbb678f6de7:pnpm-lock.yaml",
       "lockfileGitBlob": "5e588df5ffb2bfaec0673b426fb657d44200560b",
       "lockfileSHA256": "5d1903905c5020aec5062fc18b4d1856a91914f9adb9226a9c069c0b4754bf82",
-      "tarballMembersVerified": 30
+      "tarballMembersVerified": 34
     }
   ]
 }

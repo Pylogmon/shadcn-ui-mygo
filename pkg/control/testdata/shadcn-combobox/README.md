@@ -26,6 +26,10 @@ JavaScript package is a dependency of the Go kit.
 | Default auto-highlight is false; the explicit auto-highlight example enables it; list navigation loops by default | `root/AriaCombobox.js`, `shadcn/examples/combobox-auto-highlight.tsx` |
 | On completed close, an external input restores the selected label and a popup input clears its query | `root/AriaCombobox.js` `handleUnmount` |
 | Multiple selection toggles items; unfiltered selection keeps the list open; filtered external-input selection closes and clears the query | `root/AriaCombobox.js` `handleSelection` / `setOpen` |
+| Deleting all text in a single external input clears the selected value; IME preedit does not publish committed filtering/input events | `input/ComboboxInput.js` |
+| Default filtering trims the query; native custom Filter retains its raw-query contract | `root/AriaCombobox.js`, `internals/filter.js` |
+| Manual looping passes through the unhighlighted input; auto-highlight loops directly; opening starts at the selected item | `root/AriaCombobox.js`, `floating-ui-react/hooks/useListNavigation.js` |
+| A closed single popup trigger supports 750ms prefix typeahead and combobox/dialog semantics; the popup uses a nonmodal dialog | `trigger/ComboboxTrigger.js`, `popup/ComboboxPopup.js`, `floating-ui-react/hooks/useTypeahead.js` |
 | Clear empties query and selection, clears active indices and returns input focus; disabled/read-only prevents changes | `clear/ComboboxClear.js` |
 | Default input includes a trigger; a visible clear button replaces that trigger | `shadcn/base/combobox.tsx` `ComboboxInput` |
 | Items have a selected check indicator and disabled behavior; groups, labels and separators are separate parts | `shadcn/base/combobox.tsx`, `item/ComboboxItem.js` |
