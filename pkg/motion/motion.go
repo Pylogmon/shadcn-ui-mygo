@@ -3,8 +3,9 @@
 package motion
 
 import (
-	"github.com/egoist/mygo/ui"
 	"time"
+
+	"github.com/egoist/mygo/ui"
 )
 
 const (
@@ -26,6 +27,17 @@ func respect(c *ui.Context, tr ui.ElementTransition) ui.ElementTransition {
 
 func Transition(c *ui.Context) ui.ElementTransition {
 	return respect(c, ui.ElementTransition{Duration: Normal, Ease: EaseOut, Colors: true})
+}
+
+// ApplyTransition applies the standard feedback transition. Reduced motion
+// and instant frames skip registration so an in-flight native color transition
+// cannot continue after the preference changes. Transition remains available
+// for callers that need to customize a preset.
+func ApplyTransition(c *ui.Context, element ui.Element) ui.Element {
+	if !Reduced(c) {
+		element.Transition(Transition(c))
+	}
+	return element
 }
 func Popup(c *ui.Context) ui.ElementTransition {
 	return respect(c, ui.ElementTransition{Duration: 150 * time.Millisecond, ExitDuration: 100 * time.Millisecond, Ease: EaseOut,

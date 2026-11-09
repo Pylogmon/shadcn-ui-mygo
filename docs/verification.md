@@ -127,3 +127,5 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 - Gallery内容/反馈页：全包51项与独立审计通过。新页包含6种Badge、实际Button/Link、3种Item/媒体、独立Pin/主动作、Alert undo/dismiss与Empty输入/创建；2项集成检查验证动作隔离、URL、跨页草稿/状态和模糊命令注册。命令项从统一pages注册表生成，新增页不会遗漏搜索入口。明暗 `artifacts/gallery-content*.png` 已重新生成并查看，修正示例icon-only按钮的显式Label及输入起始对齐。
 - macOS最终app重启实测：键盘打开Command，输入 `cntfdbck` 仅留下Content & feedback并Enter进入，焦点返回Search；AX激活Pin只变Unpin且没有触发主动作，再激活Open显示Opened quarterly report。真实New project name输入Runtime project后Create显示Created project: Runtime project。未打开任何外部示例URL。静态截图与这些流程不替代完整平台/AT/视觉矩阵。
 - 本轮收尾：`go test ./... -count=1` 共551项、12包通过，`go vet ./...`与`git diff --check`通过；macOS app及Linux/Windows amd64交叉编译通过。cmdk归档源码/许可证与不可变提交逐字节一致，app内携带的许可也匹配。完整组件复刻继续进行，未改变原始范围。
+
+- Motion基础：新增 `ApplyTransition(c, element)`；先复现进行中的背景/边框颜色过渡在切换ReduceMotion后仍保留混色，再验证立即到目标像素、取消待绘帧、后续即时更新及恢复普通动画。底层 `Transition` 值 API 保持兼容；SDK调用点迁移作为后续独立子阶段。
