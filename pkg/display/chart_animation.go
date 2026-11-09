@@ -116,7 +116,7 @@ func chartGeometryDrawable(points []chartGeometryDatum, kind ChartKind) bool {
 	return chartGeometryHasData(points)
 }
 
-func chartGeometryFrom(current []chartGeometryDatum, plan chartGeometryPlan, kind ChartKind) []chartGeometryDatum {
+func chartGeometryFrom(current []chartGeometryDatum, plan chartGeometryPlan, kind ChartKind, lineHadDrawable bool) []chartGeometryDatum {
 	from := chartCopyGeometry(plan.seeds)
 	filtered := []chartGeometryDatum(nil)
 	if kind == BarChart {
@@ -145,6 +145,11 @@ func chartGeometryFrom(current []chartGeometryDatum, plan chartGeometryPlan, kin
 		}
 		if previous >= 0 && previous < len(source) && source[previous].valid {
 			from[i] = source[previous]
+		} else if kind == LineChart && lineHadDrawable && (previous < 0 || previous >= len(source)) {
+			// An empty previous array is different from a cold null ref.
+			// After an earlier drawable Line, new unmatched points use the
+			// source animateNewValues offscreen seed.
+			from[i].v[0], from[i].v[1] = 2, .5
 		} else if previous >= 0 && previous < len(source) && (kind == LineChart || kind == AreaChart) {
 			// A source point with a missing Y still has its numeric X.
 			// Interpolating a missing endpoint returns the new Y directly;
@@ -218,7 +223,7 @@ func animateChartGeometry(c *ui.Context, owner ui.Element, kind ChartKind, p Cha
 		changed := !chartGeometryEqual(s.target, plan.points)
 		settingsChanged := s.duration != duration || s.begin != begin
 		if changed || settingsChanged || s.target == nil {
-			from := chartGeometryFrom(s.current, plan, kind)
+			from := chartGeometryFrom(s.current, plan, kind, s.longest > 0)
 			initial := s.target == nil
 			if kind == LineChart && s.longest <= 0 {
 				initial = true
@@ -237,7 +242,10 @@ func animateChartGeometry(c *ui.Context, owner ui.Element, kind ChartKind, p Cha
 			if initial {
 				s.fromReveal = 0
 			}
-			s.active = chartGeometryDrawable(s.target, kind) && (!chartGeometryEqual(s.from, s.target) || (kind == LineChart || kind == AreaChart) && s.fromReveal < 1)
+			// A Line can have unchanged coordinates yet still owe an absolute
+			// length reveal after missing-Y history. Do not short-circuit it
+			// merely because interpolation snapped those missing Ys to target.
+			s.active = chartGeometryDrawable(s.target, kind) && (!chartGeometryEqual(s.from, s.target) || kind == LineChart && changed || (kind == LineChart || kind == AreaChart) && s.fromReveal < 1)
 			// Pie/Radial/Radar seeds already express their geometric entrance.
 			if !s.active {
 				s.reveal = 1

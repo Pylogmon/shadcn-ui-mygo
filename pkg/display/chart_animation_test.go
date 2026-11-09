@@ -1141,3 +1141,93 @@ func TestChartAnimationMissingRunsShareAbsoluteRevealInParallel(t *testing.T) {
 		}
 	}
 }
+
+func TestChartAnimationLineKeepsAbsoluteRevealAfterMissingInterval(t *testing.T) {
+	p := chartMotionProps(LineChart)
+	p.Labels = []string{"A", "B"}
+	p.Series[0].Values = []float64{50, 50}
+	p.Series = append(p.Series, ChartSeries{Name: "Anchor", Color: ui.RGB(30, 30, 220), Values: []float64{100, 100}})
+	r := chartMotionTester(&p)
+	r.Advance(250 * time.Millisecond)
+	p.Series[0].Values = []float64{math.NaN(), math.NaN()}
+	r.Frame()
+	r.Advance(250 * time.Millisecond)
+	p.Series[0].Values = []float64{0, 100}
+	r.Frame()
+	b := chartMotionPlot(t, r, p)
+	band := chart.NewBand(p.Labels...).Padding(.3, .15)
+	if chartMotionHasInkNear(r, b.X+band.At(1)*b.W, b.Y) {
+		t.Fatal("line after missing interval discarded its retained absolute reveal budget and painted the new full endpoint")
+	}
+	before := chartAnimationRedPixels(r, b)
+	r.Advance(250 * time.Millisecond)
+	after := chartAnimationRedPixels(r, b)
+	if before == 0 || before >= after || r.FramePending() {
+		t.Fatalf("retained reveal did not continue after missing interval: before%d after%d", before, after)
+	}
+}
+
+func TestChartAnimationDenseMissingHistoryRetainsOnlyNumericX(t *testing.T) {
+	p := chartMotionProps(LineChart)
+	p.Labels = []string{"A", "B", "C"}
+	p.Series[0].Values = []float64{0, 100, 0}
+	p.Series = append(p.Series, ChartSeries{Name: "Anchor", Color: ui.RGB(30, 30, 220), Values: []float64{100, 100, 100}})
+	r := chartMotionTester(&p)
+	r.Advance(250 * time.Millisecond)
+	p.Series[0].Values = []float64{math.NaN(), math.NaN(), math.NaN()}
+	r.Frame()
+	r.Advance(250 * time.Millisecond)
+	p.Labels = []string{"A", "B", "C", "D", "E"}
+	p.Series[0].Values = []float64{50, 50, 50, 50, 50}
+	p.Series[1].Values = []float64{100, 100, 100, 100, 100}
+	r.Frame()
+	b := chartMotionPlot(t, r, p)
+	oldBand := chart.NewBand("A", "B", "C").Padding(.3, .15)
+	newBand := chart.NewBand(p.Labels...).Padding(.3, .15)
+	// Line.tsx's previous-points branch stores missing-Y entries. Their X
+	// remains numeric; only the missing Y snaps to the new value. The prior
+	// zigzag was longer than this flat path, so its reveal budget covers it.
+	if !chartMotionHasInkNear(r, b.X+oldBand.At(0)*b.W, b.Y+.5*b.H) {
+		t.Fatal("dense missing predecessor lost its numeric X")
+	}
+	if chartMotionHasInkNear(r, b.X+newBand.At(0)*b.W, b.Y+.5*b.H) {
+		t.Fatal("missing history was incorrectly treated as new target coordinates")
+	}
+	r.Advance(250 * time.Millisecond)
+	if !chartMotionHasInkNear(r, b.X+newBand.At(0)*b.W, b.Y+.5*b.H) || r.FramePending() {
+		t.Fatal("numeric-X interpolation failed to finish")
+	}
+}
+
+func TestChartAnimationEmptyPointHistoryUsesSourceNewPointEntrance(t *testing.T) {
+	p := chartMotionProps(LineChart)
+	p.Labels = []string{"A", "B", "C"}
+	p.Series[0].Values = []float64{0, 100, 0}
+	p.Series = append(p.Series, ChartSeries{Name: "Anchor", Color: ui.RGB(30, 30, 220), Values: []float64{100, 100, 100}})
+	r := chartMotionTester(&p)
+	r.Advance(250 * time.Millisecond)
+	p.Labels = nil
+	p.Series[0].Values = nil
+	p.Series[1].Values = nil
+	r.Frame()
+	r.Advance(250 * time.Millisecond)
+	p.Labels = []string{"A", "B", "C"}
+	p.Series[0].Values = []float64{50, 50, 50}
+	p.Series[1].Values = []float64{100, 100, 100}
+	r.Frame()
+	// A previous [] is truthy in the source after an earlier drawable line.
+	// Its points have no matching partners, unlike a cold start's null ref.
+	// animateNewValues therefore enters from (2*width,height/2).
+	b := chartMotionPlot(t, r, p)
+	if n := chartAnimationRedPixels(r, b); n != 0 {
+		t.Fatalf("warm empty history skipped source offscreen seed: %d pixels", n)
+	}
+	r.Advance(50 * time.Millisecond)
+	if n := chartAnimationRedPixels(r, b); n != 0 {
+		t.Fatalf("new points flew in from target rather than source's 2*width seed: %d pixels", n)
+	}
+	r.Advance(200 * time.Millisecond)
+	if n := chartAnimationRedPixels(r, b); n < 50 || r.FramePending() {
+		t.Fatalf("warm-history line did not finish: pixels%d pending%v", n, r.FramePending())
+	}
+}

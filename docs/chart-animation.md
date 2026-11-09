@@ -27,6 +27,8 @@ Bar从零数值尺寸进入，更新插值实际矩形；正负变化保留带�
 
 数据快速更新或反转时从当前显示的姿态继续；仅主题、检查值或其它不改变几何的重建不会重播。Tooltip、原生无障碍值和数据回调始终使用最新原始测量值，独立于绘图中间值。隐藏窗口或离屏图表直接收敛至最新目标，重新显示未改变的数据不自动重播；可见首帧会等待原生首次布局信号，避免误判为离屏。
 
-原生Line通过公开Path.Dash保存最长绝对显现长度，并按当前曲线总长度重新计算不会重复的间隔。固定Recharts源使用渲染时测得的SVG长度作为dash周期；旧短线更新成长曲线时，该生命周期可能产生重复绘制缺口。原生实现保持各连续段内的连续显现，不复制这一缺口，因此不声称与React/SVG每一中间帧逐像素相同。原生曲线长度由独立数值计算取得，不读取Path私有字段；子路径规则见[SVG 2 Stroke Dashing](https://www.w3.org/TR/SVG2/painting.html#StrokeDashing)。完整字体、平台、视觉和其它Recharts配置仍按[差异清单](parity.md)跟踪。
+Line已经绘制过后，暂时全部缺失的数据仍保留数值X，重新加载时缺失Y直接采用新目标Y，X继续插值，同时接续已显现的绝对长度。若分类数组曾完全清空，后续无匹配的新增点沿用源的animateNewValues规则，从绘图区右侧两倍宽度、垂直中点进入；它与从未存在可绘制路径的首次进入不同。
+
+原生Line通过公开Path.Dash保存最长绝对显现长度，并按当前曲线总长度重新计算不会重复的间隔。固定Recharts源使用渲染时测得的SVG长度作为dash周期；旧短线或空路径更新成长曲线时，该生命周期可能保留旧周期，产生重复绘制缺口或零长度周期。原生实现保持各连续段内的连续显现，不复制这一缺口，因此不声称与React/SVG每一中间帧逐像素相同。原生曲线长度由独立数值计算取得，不读取Path私有字段；子路径规则见[SVG 2 Stroke Dashing](https://www.w3.org/TR/SVG2/painting.html#StrokeDashing)。完整字体、平台、视觉和其它Recharts配置仍按[差异清单](parity.md)跟踪。
 
 固定npm包的SHA-512与shadcn lockfile相符；官方gitHead为`c04a79039ebc4d5057de163298d2e9917a5e5a66`。六家族与动画引擎TS/TSX、发布包中的引擎/命中辅助、包信息、官方metadata和MIT许可归档于`pkg/display/testdata/recharts-animation`。manifest记录Git tree blob或发布包成员及SHA-256，原生应用随包附带对应Recharts许可。
