@@ -37,3 +37,21 @@ go run ./cmd/verify-consumer -ref <commit> -out build/consumer-verification
 菜单动画、Gallery子菜单与Select箭头阶段提交`1d9601ef61be21cefe9585689b62d852fca84749`以`v0.0.0-20261109144504-1d9601ef61be`复验，ZIP SHA-256为`af88a0645342beee03f9b4803d02d681b18d2e95ac7591d8f027c463de638e47`。标准八步及第二个外部模块`example.invalid/menu-consumer`的tidy/模块图/test/vet/env五命令均通过；公开检查共五项，包括实现GeometrySurface/DismissInterceptor、实际左侧几何的进入像素、100ms完成、保留退出/AX排除/最终一次关闭回调，以及三路Select关闭触发器的10×6着墨与精确居中。
 
 两轮缓存均从空开始并已删除，GOWORK关闭、依赖图无replace、SDK确来自同一ZIP。Root核对ZIP内十个产品文件与该提交原文、完整收据/哈希，并查看恢复消费者及Gallery明暗图。证据`build/consumer-verification/run-1641041268/menu-distribution-receipt.json`。首次自定义探针把OnDismiss误断言为退场开始时调用；按既有完成退场契约纠正测试后，最终五命令在另一套全新缓存完整重跑，产品未因此修改。并行Combobox候选未混入制品；公共发布、OS放置/实窗及完整平台矩阵仍未完成。
+
+Material Symbols与Combobox最终代码提交`344311e962ce5717946a7fe89986d7ba0ff25125`以
+`v0.0.0-20261109153319-344311e962ce`复验，ZIP SHA-256为
+`c51916a6b0ec19943dccef507d69d0506d2dde965f4cf949762642b88124897a`。
+标准八步，以及第二个真正外部模块的15命令、4项Combobox检查和13项Material公开API断言均通过。
+后者验证合法空值、标签/query、无active Enter及多选IME/disabled；四个真实应用验证原始SVG、空导入、
+按需Home与全量名称入口。全部应用像素和PNG相同，按需/空导入与baseline均4271650字节，
+全量15637314字节；完整资源ZIP仅出现在显式全量应用中。
+
+两轮模块/构建缓存均初始为空、GOWORK关闭、完整依赖图无replace；527份SDK ZIP文件与第二轮模块缓存
+逐字节匹配，结束后独占缓存均已删除。Root核对同ref/版本/ZIP、15条命令及日志哈希、外部Go源码、
+四份实际二进制/PNG/全ZIP包含关系。新标准四图与本轮此前实际查看的相应图片逐字节相同；Owner和Root
+查看外部Home透明PNG，另三图与它字节相同。该PNG是raw SVG.Image默认黑色透明底，不代表全目录或
+ui.Icon颜色/布局验收。
+
+完整证据为`build/consumer-verification/run-1850267044/material-combobox-distribution-receipt.json`，
+第二模块的源码、环境、图像、二进制、完整依赖图与复制再运行脚本在同目录的`external-icons-combobox`。
+SDK来自本地标准模块代理；此验证未执行公开发布或替代原生平台/AT验收。
