@@ -103,12 +103,19 @@ type ChartTooltipData struct {
 // ChartLegend exposes the same human-readable labels used by the marks and
 // tooltip. It may also be composed separately from a plot.
 func ChartLegend(c *ui.Context, items []ChartLegendItem) ui.Element {
-	t := theme.TokensOf(c)
-	return ui.Row(c).FillWidth().Wrap().Justify(ui.Center).Gap(16).Role(ui.RoleGroup).Label("Chart legend").Children(func() {
+	if len(items) == 0 {
+		return ui.Box(c).Size(0, 0).IgnoreInput(true).AccessHidden(true)
+	}
+	// Retain native wrapping so narrow charts keep complete legend items
+	// readable; the source's unconstrained single-line layout can overflow.
+	return ui.Row(c).FillWidth().Wrap().AlignItems(ui.Center).Justify(ui.Center).Gap(16).Padding(12, 0, 0, 0).
+		FontSize(12).LineHeight(4.0 / 3).Role(ui.RoleGroup).Label("Chart legend").Children(func() {
 		for _, item := range items {
 			ui.Row(c).Gap(6).AlignItems(ui.Center).Children(func() {
-				ui.Box(c).Size(9, 9).Radius(2).Background(item.Color).AccessHidden(true)
-				ui.Text(c, item.Label).FontSize(12).TextColor(t.MutedForeground)
+				ui.Box(c).Size(8, 8).Shrink(0).Radius(2).Background(item.Color).AccessHidden(true)
+				if item.Label != "" {
+					ui.Text(c, item.Label)
+				}
 			})
 		}
 	})
@@ -117,20 +124,29 @@ func ChartLegend(c *ui.Context, items []ChartLegendItem) ui.Element {
 // ChartTooltip provides the shadcn surface and series indicators. It can be
 // used by TooltipContent to compose custom values without replacing selection.
 func ChartTooltip(c *ui.Context, data ChartTooltipData) ui.Element {
+	if len(data.Items) == 0 {
+		return ui.Box(c).Size(0, 0).IgnoreInput(true).AccessHidden(true)
+	}
 	t := theme.TokensOf(c)
 	format := data.FormatValue
 	if format == nil {
 		format = chartFormat
 	}
-	return ui.Column(c).Gap(6).MinWidth(140).MaxWidth(280).Padding(10).Radius(t.RadiusMD()).
-		Background(t.Popover).TextColor(t.PopoverForeground).Border(1, t.Border).
-		Shadow(0, 4, 12, 0, ui.RGBA(0, 0, 0, .12)).Children(func() {
-		ui.Text(c, data.Label).FontSize(12).FontWeight(500)
+	return ui.Column(c).Gap(6).MinWidth(128).Padding(6, 10).Radius(t.RadiusLG()).FontSize(12).LineHeight(4.0/3).
+		Background(t.Background).Border(1, t.Border.Alpha(.5)).
+		Shadow(0, 20, 25, -5, ui.RGBA(0, 0, 0, .1)).Shadow(0, 8, 10, -6, ui.RGBA(0, 0, 0, .1)).Children(func() {
+		if data.Label != "" {
+			ui.Text(c, data.Label).FontWeight(500)
+		}
 		for _, item := range data.Items {
-			ui.Row(c).Gap(8).AlignItems(ui.Center).Children(func() {
-				ui.Box(c).Size(8, 8).Radius(2).Background(item.Color).AccessHidden(true)
-				ui.Text(c, item.Label).Grow(1).FontSize(12).TextColor(t.MutedForeground)
-				ui.Text(c, format(item.Value)).FontSize(12).FontWeight(500)
+			ui.Row(c).FillWidth().Wrap().Gap(8).AlignItems(ui.Center).Children(func() {
+				ui.Box(c).Size(10, 10).Shrink(0).Radius(2).Background(item.Color).AccessHidden(true)
+				ui.Row(c).Grow(1).MinWidth(0).Justify(ui.SpaceBetween).AlignItems(ui.Center).LineHeight(1).Children(func() {
+					if item.Label != "" {
+						ui.Text(c, item.Label).TextColor(t.MutedForeground)
+					}
+					ui.Text(c, format(item.Value)).Font("monospace").FontWeight(500).FontFeatures("tnum").TextColor(t.Foreground)
+				})
 			})
 		}
 	})
@@ -147,7 +163,7 @@ type chartInspection struct {
 // Pie, donut and radial plots use non-negative finite values; missing Cartesian
 // observations break a line rather than inventing a measurement.
 func Chart(c *ui.Context, p ChartProps) ui.Element {
-	root := ui.Column(c).FillWidth().Gap(12)
+	root := ui.Column(c).FillWidth().Gap(0)
 	selected := p.Selected
 	if selected == nil {
 		selected = ui.Local(root, "chart-selection", func() int { return -1 })
@@ -345,9 +361,9 @@ func cartesianChart(c *ui.Context, p ChartProps, selected *int, height float32) 
 			drawers = append(drawers, func(painter *ui.Painter, r ui.Rect) {
 				for _, tick := range gridTicks {
 					if horizontal {
-						painter.Line(chart.X(r, tick.At), r.Y, chart.X(r, tick.At), r.Y+r.H, 1, t.Border)
+						painter.Line(chart.X(r, tick.At), r.Y, chart.X(r, tick.At), r.Y+r.H, 1, t.Border.Alpha(.5))
 					} else {
-						painter.Line(r.X, chart.Y(r, tick.At), r.X+r.W, chart.Y(r, tick.At), 1, t.Border)
+						painter.Line(r.X, chart.Y(r, tick.At), r.X+r.W, chart.Y(r, tick.At), 1, t.Border.Alpha(.5))
 					}
 				}
 			})

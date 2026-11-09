@@ -32,5 +32,18 @@
     "archive": "LICENSE",
     "gitBlob": "fad4d887a681dd49233e5ed01ee2c7a1513089a0",
     "sha256": "1564074e13439397221ffd522e2e504d56561994a23d371aa5e3ad43e4f5423f"
+  },
+  "tailwind": {
+    "package": "tailwindcss",
+    "version": "4.3.0",
+    "tarball": "https://registry.npmjs.org/tailwindcss/-/tailwindcss-4.3.0.tgz",
+    "integrity": "sha512-y6nxMGB1nMW9R6k96e5gdIFzcfL/gTJRNaqGes1YvkLnPVXzWgbqFF2yLC0T8G774n24cx3Pe8XrKoniCOAH+Q==",
+    "tarballSHA256": "f0603a3504a60414e23d8cba1e6abae24e697f450796e7e260db5cbf5e44bc1b",
+    "themeSHA256": "ce91efc0ca2e741e56fe263662e5282dc0a16f19a8647f0c38b60fcc4e2119b1",
+    "licenseSHA256": "60e0b68c0f35c078eef3a5d29419d0b03ff84ec1df9c3f9d6e39a519a5ae7985",
+    "shadowXL": "--shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);",
+    "themeArchive": "tailwindcss-4.3.0-theme.css",
+    "licenseArchive": "LICENSE.tailwind",
+    "lockedBy": "shadcn-ui/ui@8ab27715521cbd4f87ae6886cd989cbb678f6de7:pnpm-lock.yaml"
   }
 }

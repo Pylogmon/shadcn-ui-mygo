@@ -52,6 +52,12 @@ archived in `pkg/display/testdata/shadcn-chart/`. They use the same shadcn commi
 and bundled MIT license described above; Recharts is a reference, not a Go runtime
 dependency or copied implementation.
 
+Chart shadow parameters are additionally verified against the official
+Tailwind CSS 4.3.0 package locked by the pinned shadcn reference. Its exact
+theme CSS, MIT license and npm integrity evidence are archived with the chart
+references. The macOS application bundles include the matching Tailwind MIT
+license as `Contents/Resources/licenses/tailwind.txt`.
+
 Toast behavior and styles are independently ported against Sonner 2.0.7,
 commit `3ba7aa17ab7e8101b9cf4893936f873b0d4769b3`, the version locked by
 the fixed shadcn reference. The exact source, MIT license (Copyright (c) 2023
