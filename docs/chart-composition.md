@@ -34,3 +34,5 @@ display.ChartContainer(c, display.ChartContainerProps{
 `ChartLegendContent`使用同一份配置的标签和图标，颜色来自payload。HideIcon回退为8DIP色块；顶部位置在下方留12DIP，底部位置在上方留12DIP。窄容器保留整项换行以维持可读性。
 
 这些入口实现的是shadcn的配置与内容组合层。原生Rule/Anchor和应用持有的范围选择可以组成参考线、标签与筛选，但不等于已实现Recharts的全部Brush、LabelList、堆叠或动画API。完整几何/路径动画、平台和视觉矩阵继续在[差异清单](parity.md)中跟踪。
+
+完整可运行示例见[examples/chart-composition](../examples/chart-composition/README.md)。它直接使用公开包，支持原生窗口、明暗PNG、月份范围、数据编辑与笔记；没有调用高层Chart。

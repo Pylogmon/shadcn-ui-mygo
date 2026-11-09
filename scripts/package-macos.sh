@@ -18,7 +18,13 @@ case "${1:-gallery}" in
         identifier='dev.pylogmon.shadcn-popups'
         app_name='Shadcn Popups'
         ;;
-    *) echo 'Expected gallery or native-popups.' >&2; exit 1 ;;
+    chart-composition)
+        bundle='build/Shadcn Charts.app'
+        package='./examples/chart-composition'
+        identifier='dev.pylogmon.shadcn-charts'
+        app_name='Shadcn Charts'
+        ;;
+    *) echo 'Expected gallery, native-popups or chart-composition.' >&2; exit 1 ;;
 esac
 mkdir -p "$bundle/Contents/MacOS"
 mkdir -p "$bundle/Contents/Resources/licenses"
