@@ -176,3 +176,5 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 - Gallery字体作用域：预览与Inspector的native Theme.Font同步选择的正文字体，同时保留语义token metadata；键帽和恢复body字体的代码标题因此遵循选择，不修改窗口全局主题。
 - macOS实窗：已观察新页、Plain text/Wrap/Compact/Highlight切换、Example copied成功反馈、文章详情表格和暂停加载后Sync按钮恢复可用。此前可访问性读取超时后重新连接恢复；后续下方滚动调用连续被自动化接口以“窗口状态已变化”拒绝，未观察到下方滚动结果，不计作实窗验收。头部明暗截图与下方模块的离屏明暗截图仅证明对应原生渲染路径；全平台、AT及完整视觉矩阵继续保留。
 - 本次阶段收尾：全量823项检查、13个包通过；`go vet ./...`、`git diff --check`、macOS `.app`及Linux/Windows交叉构建通过。新增Gallery测试加强后另运行全包与vet复核。完整复刻仍在阶段5，未将测试数量视为最终验收。
+
+- Gallery下方实窗补验：在同一已构建应用中通过Workspace lookup后的Tab焦点自动滚入下方区域；End按钮键盘激活后实际显示Note 17–20，聚焦Preview notes并Page Up后显示Note 14–17，切换Use MyGo scrollbars后保留当前位置，Start返回Note 01–04。原生焦点环、加载组合、裁剪的16:9插画和两个滚动条样式均已实际观察。这补齐前条记录中未确认的Start/End、键盘滚动和样式切换路径；没有将其扩展为触控、指针拖拽或全平台验收。
