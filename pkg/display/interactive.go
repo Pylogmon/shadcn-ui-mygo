@@ -1,8 +1,6 @@
 package display
 
 import (
-	"fmt"
-
 	"github.com/egoist/mygo/ui"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/motion"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/theme"
@@ -91,35 +89,6 @@ func Collapsible(c *ui.Context, label string, open *bool, content func()) ui.Ele
 	})
 }
 
-// Carousel keeps the selected slide in caller-owned state. Previous and next
-// remain native, keyboard-operable buttons with descriptive names.
-func Carousel(c *ui.Context, selected *int, count int, slide func(int)) ui.Element {
-	t := theme.TokensOf(c)
-	n := max(count, 0)
-	if n > 0 {
-		*selected = max(0, min(*selected, n-1))
-	} else {
-		*selected = 0
-	}
-	return ui.Column(c).FillWidth().Gap(12).Children(func() {
-		ui.Box(c.Key(*selected)).FillWidth().Children(func() {
-			if n > 0 && slide != nil {
-				slide(*selected)
-			}
-		})
-		ui.Row(c).Gap(12).AlignItems(ui.Center).Justify(ui.Center).Children(func() {
-			b := ui.ButtonBase(c).Size(32, 32).Radius(999).Border(1, t.Border).Label("Previous slide").Disabled(*selected <= 0).Children(func() { ui.Text(c, "←") })
-			if b.Clicked() {
-				*selected--
-			}
-			ui.Text(c, fmt.Sprintf("%d / %d", min(*selected+1, n), n)).FontSize(12).TextColor(t.MutedForeground)
-			b = ui.ButtonBase(c).Size(32, 32).Radius(999).Border(1, t.Border).Label("Next slide").Disabled(n == 0 || *selected >= n-1).Children(func() { ui.Text(c, "→") })
-			if b.Clicked() {
-				*selected++
-			}
-		})
-	})
-}
 func ScrollArea(c *ui.Context, content func()) ui.Element {
 	return ui.Scroll(c).Fill().Children(content)
 }

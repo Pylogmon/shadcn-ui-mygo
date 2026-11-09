@@ -27,10 +27,11 @@
 | 5.D.2 | Create 风格 Gallery、真实配置/预览和预设 | 已提交 `07c6e2e`，27 项 Gallery 检查及截图通过 |
 | 5.D.3a | Flyout 可逆退场、原生关闭拦截、减少动画和生命周期 | 已提交 `a451b0a`，23 项针对性检查及 vet 通过 |
 | 5.D.3b | DatePicker/DateRangePicker 与 Native 日期组件对 | 已提交 `6b4cb63`；原生日期标题补充修复 `8f7d8df` |
-| 5.D.3c | Tooltip/HoverCard 与 Native 组件对 | 20 项针对性检查及 vet 通过，提交本子阶段；Gallery 集成另行验收 |
+| 5.D.3c | Tooltip/HoverCard 与 Native 组件对 | 已提交 `0abc803`；macOS 键盘交接补充修复与 Gallery 集成另行验收 |
 | 5.E | Tabs 激活模式、关联、方向键、动态指示器 | 已提交 `d734b28`，9 项导航测试和 vet 通过 |
 | 5.F | 不确定进度、非有限值、原生标题层级与分隔语义 | 已提交 `25d9ca2`，回归与模块检查通过 |
-| 5.G | Slider 单值/范围/多拇指、竖向、步长间距和原生无障碍 | 23 项 control 检查、独立审计及 vet 通过，提交本子阶段 |
+| 5.G | Slider 单值/范围/多拇指、竖向、步长间距和原生无障碍 | 已提交 `941199d`，23 项 control 检查、独立审计及 vet 通过 |
+| 5.H | Carousel 稳定轨道、拖拽、循环、方向与中途切换 | 93 项 display 检查、独立审计及 vet 通过，提交本子阶段 |
 
 用户已明确允许原生平台适配：Popover、menu、下拉菜单可以使用 MyGo 的系统菜单与独立 Flyout，超出父窗口范围；无需逐像素照搬网页浮层。Gallery 以 [shadcn/create](https://ui.shadcn.com/create) 的配置与实时预览流程为参考。完整组件功能、主题、动画范围保持不变。
 
