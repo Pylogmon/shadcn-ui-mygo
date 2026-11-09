@@ -10,56 +10,6 @@ import (
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/theme"
 )
 
-type TabItem struct {
-	Label    string
-	Icon     *ui.SVG
-	Disabled bool
-}
-type TabsProps struct {
-	Items    []TabItem
-	Vertical bool
-	Label    string
-}
-
-// Tabs uses roving keyboard focus, arrow-key selection, Home and End. Disabled
-// tabs remain visible but are skipped. panel builds the selected panel only.
-func Tabs(c *ui.Context, selected *int, p TabsProps, panel func(int)) ui.Element {
-	t := theme.TokensOf(c)
-	root := ui.Column(c).Gap(8)
-	if p.Vertical {
-		root.Row()
-	}
-	root.Children(func() {
-		parts := ui.TabsBase(c, selected, len(p.Items))
-		parts.List.Padding(3).Gap(2).Radius(t.Radius).Background(t.Muted).TextColor(t.MutedForeground).Label(p.Label).AlignSelf(ui.Start)
-		if p.Vertical {
-			parts.List.Column()
-		}
-		parts.List.Children(func() {
-			for i, item := range p.Items {
-				tab := parts.Tab(i).Label(item.Label).Disabled(item.Disabled).Height(30).PaddingX(12).Gap(6).
-					Radius(max(2, t.Radius-2)).FontSize(14).FontWeight(500).Transition(motion.Transition(c))
-				if i == *selected {
-					tab.Background(t.Background).TextColor(t.Foreground).Shadow(0, 1, 2, 0, ui.RGBA(0, 0, 0, 0.06))
-				}
-				if item.Disabled {
-					tab.Opacity(0.5)
-				}
-				tab.Children(func() {
-					if item.Icon != nil {
-						ui.Icon(c, item.Icon).Size(16, 16)
-					}
-					ui.Text(c, item.Label).SingleLine()
-				})
-			}
-		})
-		if panel != nil && *selected >= 0 && *selected < len(p.Items) {
-			ui.Column(c.Key(*selected)).Grow(1).MinWidth(0).Role(ui.RoleRegion).Label(p.Items[*selected].Label).Children(func() { panel(*selected) })
-		}
-	})
-	return root
-}
-
 type BreadcrumbItem struct {
 	Key, Label string
 	Disabled   bool

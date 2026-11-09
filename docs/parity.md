@@ -87,7 +87,7 @@ composition; they do not automatically supply missing upstream behavior.
 | Spinner | `display.Spinner` | Native labeled spinner exists; verify reduced motion, sizes and compound loading examples. |
 | Switch | `control.Switch` | Native toggling and thumb transition exist; verify RTL thumb geometry, focus/labels and disabled states visually. |
 | Table | `display.Table` | Native virtual table with captions exists; verify header/footer/row-header, selection, overflow and empty-state compositions. |
-| Tabs | `navigation.Tabs` | Native tab roles/disabled skipping/Home/selection are tested; explicit trigger-to-panel associations, activation modes and moving active indicator remain. |
+| Tabs | `navigation.Tabs` | Automatic/manual activation, orientation-only arrows, RTL, loop bounds, disabled/removed tabs, active trigger-to-panel association and matched indicator transitions are tested. Verify full profile/platform visuals and screen readers; native regions represent tab panels. |
 | Textarea | `control.Textarea` | Native multiline editing and row sizing exist; verify user resize, autogrow limits, IME and field associations. |
 | Toast | `overlay.Toast` / `Toaster` | Native queue, action, close and pause semantics are used; action dismissal is tested. Verify timed expiry, hover/focus pause, swipe and every placement. |
 | Toggle | `control.Toggle` | Native pressed state exists; verify icon-only labels, every variant/size and focus/disabled screenshots. |
