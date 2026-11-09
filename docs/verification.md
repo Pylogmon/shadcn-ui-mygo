@@ -171,3 +171,8 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 - 明确运行时缺口：真实probe复现1s ScrollState.ScrollTo在100ms到40后开启ReduceMotion，下一100ms仍到80且有待帧；ui/scroll.go只在新target时读取Reduced，公开ScrollState没有target getter。未通过丢弃intent伪造通过，该项保留在最终motion gate。
 - Scroll独立阶段：HEAD仅加入Scroll/Aspect源码、正式测试及旧块提取后，display/Gallery共378项通过；新Gallery页未提前纳入。
 - Scroll最后复核追加Invalid轴配置向真实native viewport传播，保留内容输入而不只标装饰Root；51项聚焦检查通过，作为模块修正独立提交。
+
+- Gallery Text & layout：全包70项检查通过。新页注册在统一Tabs/Command数据源中，可用组件名和模糊页名进入。原生只读代码的语言、换行与紧凑配置实际到达editor，切换选项和离页保留Buffer，确认复制只含源文；文章链接/列表/详情表格和搜索按钮保留真实语义及动作。加载检查在正常动画下先确认像素变化/待帧，再暂停并确认静止/无待帧，避免通过测试环境禁用动画造成假阳性。输入草稿、实际内容位移及滚动条切换/离页位置保留均通过。
+- Gallery字体作用域：预览与Inspector的native Theme.Font同步选择的正文字体，同时保留语义token metadata；键帽和恢复body字体的代码标题因此遵循选择，不修改窗口全局主题。
+- macOS实窗：已观察新页、Plain text/Wrap/Compact/Highlight切换、Example copied成功反馈、文章详情表格和暂停加载后Sync按钮恢复可用。此前可访问性读取超时后重新连接恢复；后续下方滚动调用连续被自动化接口以“窗口状态已变化”拒绝，未观察到下方滚动结果，不计作实窗验收。头部明暗截图与下方模块的离屏明暗截图仅证明对应原生渲染路径；全平台、AT及完整视觉矩阵继续保留。
+- 本次阶段收尾：全量823项检查、13个包通过；`go vet ./...`、`git diff --check`、macOS `.app`及Linux/Windows交叉构建通过。新增Gallery测试加强后另运行全包与vet复核。完整复刻仍在阶段5，未将测试数量视为最终验收。

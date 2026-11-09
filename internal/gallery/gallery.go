@@ -61,6 +61,11 @@ type State struct {
 	formatting                                                                     []string
 	readAccess, writeAccess, quietNotifications                                    bool
 	bioResize                                                                      control.TextareaResizeState
+	loadingStatic, codeWrap, codeCompact                                           bool
+	codeDiff, articleDetails, nativeScrollbars                                     bool
+	codeLanguage, codeCopied, layoutDraft                                          string
+	codeExample                                                                    display.CodeBlockState
+	articleScroll                                                                  ui.ScrollState
 	menuStates                                                                     map[string]*creatorMenu
 	pendingMenuAction                                                              string
 }
@@ -70,11 +75,17 @@ func New() *State {
 	return &State{Config: p, Theme: theme.Controller{Mode: p.Appearance, Preset: p.Accent, Radius: p.Radius}, lastThemeMode: p.Appearance, Page: "overview", Name: "Sofia Davis", Email: "sofia@example.com", Framework: "go", Plan: "pro", Slider: 65, SliderRange: [2]float64{25, 75}, SliderBands: []float64{20, 50, 80}, VerticalLevel: 60, Notifications: true, readAccess: true, formatting: []string{"bold"}, Accordion: true, PageNumber: 1, Date: time.Date(2026, 11, 9, 0, 0, 0, 0, time.Local)}
 }
 
-var pages = []navigation.NavItem{
+type creatorPage struct {
+	Key, Label string
+	Keywords   []string
+}
+
+var pages = []creatorPage{
 	{Key: "overview", Label: "Cards"},
 	{Key: "controls", Label: "Forms & controls"},
 	{Key: "display", Label: "Data & display"},
 	{Key: "content", Label: "Content & feedback"},
+	{Key: "text-layout", Label: "Text & layout", Keywords: []string{"Typography", "Kbd", "Keyboard", "CodeBlock", "Code", "Spinner", "Skeleton", "ScrollArea", "AspectRatio"}},
 	{Key: "overlays", Label: "Overlays"},
 	{Key: "conversation", Label: "Messages & questions"},
 	{Key: "navigation", Label: "Navigation"},
@@ -314,7 +325,9 @@ func (s *State) choiceSwitch(c *ui.Context, label string, value bool, changed fu
 }
 
 func (s *State) preview(c *ui.Context, t *theme.Tokens) {
-	theme.Scope(c, t).Grow(1).MinHeight(0).MinWidth(0).Radius(14).Border(1, t.Border).Clip().Background(t.Background).TextColor(t.Foreground).Font(s.Config.BodyFamily()).Children(func() {
+	native := t.Theme()
+	native.Font = s.Config.BodyFamily()
+	ui.Themed(c, native).Grow(1).MinHeight(0).MinWidth(0).Radius(14).Border(1, t.Border).Clip().Background(t.Background).TextColor(t.Foreground).Font(s.Config.BodyFamily()).Children(func() {
 		var parts ui.TabsParts
 		triggers := make([]ui.Element, len(pages))
 		ui.Row(c).Height(48).FillWidth().InsetShadow(0, -1, 0, 0, t.Border).Background(t.Card).Children(func() {
@@ -352,6 +365,8 @@ func (s *State) preview(c *ui.Context, t *theme.Tokens) {
 					s.displays(c)
 				case "content":
 					s.contents(c)
+				case "text-layout":
+					s.textLayout(c)
 				case "overlays":
 					s.overlays(c)
 				case "conversation":
@@ -372,7 +387,7 @@ func (s *State) preview(c *ui.Context, t *theme.Tokens) {
 func (s *State) creatorDialogs(c *ui.Context) {
 	commands := make([]overlay.CommandItem, len(pages))
 	for i, page := range pages {
-		commands[i] = overlay.CommandItem{Key: page.Key, Value: page.Key, Label: page.Label}
+		commands[i] = overlay.CommandItem{Key: page.Key, Value: page.Key, Label: page.Label, Keywords: page.Keywords}
 	}
 	if choice := overlay.CommandDialog(c, &s.Command, &s.Query, overlay.CommandProps{Items: commands, Placeholder: "Find a preview…"}); choice != "" {
 		s.Page = choice
@@ -462,7 +477,9 @@ func (s *State) nativeInspectorContent(c *ui.Context, t *theme.Tokens) {
 }
 
 func (s *State) inspectorContent(c *ui.Context, t *theme.Tokens) {
-	theme.Scope(c, t).FillWidth().Padding(16).Gap(12).Background(t.Background).TextColor(t.Foreground).Font(s.Config.BodyFamily()).Children(func() {
+	native := t.Theme()
+	native.Font = s.Config.BodyFamily()
+	ui.Themed(c, native).FillWidth().Padding(16).Gap(12).Background(t.Background).TextColor(t.Foreground).Font(s.Config.BodyFamily()).Children(func() {
 		s.cardHeader(c, "Theme tokens", "Your current preview colors.")
 		for _, v := range []struct {
 			name  string

@@ -61,6 +61,8 @@ Data 页也展示头像尺寸、状态角标、加载/回退和头像组。对�
 
 Content & feedback 页展示 [Badge](docs/badge.md)、[Item](docs/item.md)、[Alert/Empty](docs/status-surfaces.md) 的组合示例，包含真实原生按钮/链接、独立主动作、通知操作和空状态表单。
 
+Text & layout 页集中展示 [Typography/Kbd](docs/typography.md)、[CodeBlock](docs/code-block.md)、[Spinner/Skeleton](docs/loading.md) 与 [ScrollArea/AspectRatio](docs/scroll-area.md)。文章详情、确认后的复制反馈、加载暂停和滚动条样式切换均可交互；代码 Buffer、输入草稿与滚动位置跨页保留。通过 Search 输入组件名，或运行 `go run ./cmd/gallery -page text-layout` 可直接进入。
+
 响应式导航布局见 [Sidebar](docs/sidebar.md)；对话框焦点、固定页脚与抽屉吸附手势见 [Modal API](docs/modals.md)。
 命令面板的虚拟列表、过滤、快捷键与自定义内容见 [Command](docs/command.md)。
 
