@@ -39,6 +39,8 @@ choice, err := desktop.Menu(c, state.Popovers, "project-actions", anchor,
 
 `Host` 关闭已消失的锚点、跟踪布局后的锚点位置、同步主题/减少动态效果、处理关闭与焦点恢复，并拒绝旧窗口的迟到关闭回调。Host 绑定明确的父窗口，子窗口接收自己的 `*ui.Context`；回调不得捕获并复用父窗口某一帧的 Context。子窗口可以共享应用状态，但必须在 UI 线程修改。
 
+Host 同步父调用作用域的 LTR/RTL，打开期间方向变化会刷新现有子内容。标准 MyGo 后端支持 `SizeSurface.SetSize(width,height)`：仅宽高变化时原位调整窗口，保留子树和编辑状态；其他不可变窗口选项仍重建。显式注入且不支持该能力的后端保留原来的重建行为。
+
 ```go
 err := desktop.Popover(c, host, "settings", anchor, &open,
     desktop.PopoverProps{Width: 320, Height: 220, Label: "Settings"},

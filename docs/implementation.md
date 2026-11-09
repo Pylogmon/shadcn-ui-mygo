@@ -29,12 +29,13 @@
 | 5.D.3b | DatePicker/DateRangePicker 与 Native 日期组件对 | 已提交 `6b4cb63`；原生日期标题补充修复 `8f7d8df` |
 | 5.D.3c | Tooltip/HoverCard 与 Native 组件对 | 已提交 `0abc803`，键盘交接修复 `524a63d`；macOS Down/Escape 已核验 |
 | 5.D.3d | Gallery 日期/悬停组件对接入与共享内容刷新 | 36 项 Gallery 检查、独立审计和构建通过，提交本子阶段 |
+| 5.D.4a | Flyout 原位尺寸更新与父方向作用域传播 | 8 项针对性检查与独立审计通过，提交本子阶段 |
 | 5.E | Tabs 激活模式、关联、方向键、动态指示器 | 已提交 `d734b28`，9 项导航测试和 vet 通过 |
 | 5.F | 不确定进度、非有限值、原生标题层级与分隔语义 | 已提交 `25d9ca2`，回归与模块检查通过 |
 | 5.G | Slider 单值/范围/多拇指、竖向、步长间距和原生无障碍 | 已提交 `941199d`，23 项 control 检查、独立审计及 vet 通过 |
 | 5.H | Carousel 稳定轨道、拖拽、循环、方向与中途切换 | 已提交 `fe0cf45`，93 项 display 检查、独立审计及 vet 通过 |
 | 5.I | Accordion/Collapsible 关联、禁用导航、保留状态与反转 | 已提交 `f94cba3`，11 项针对性检查与独立审计通过；运行时显式 Focus 限制继续跟踪 |
-| 5.J | 多面板 Resizable、约束、折叠、键盘与布局持久化 | 16 项针对性检查、118 项 display 检查和 vet 通过，提交本子阶段 |
+| 5.J | 多面板 Resizable、约束、折叠、键盘与布局持久化 | 已提交 `b521448`，16 项针对性检查、118 项 display 检查和 vet 通过 |
 
 用户已明确允许原生平台适配：Popover、menu、下拉菜单可以使用 MyGo 的系统菜单与独立 Flyout，超出父窗口范围；无需逐像素照搬网页浮层。Gallery 以 [shadcn/create](https://ui.shadcn.com/create) 的配置与实时预览流程为参考。完整组件功能、主题、动画范围保持不变。
 

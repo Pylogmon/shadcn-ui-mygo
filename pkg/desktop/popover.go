@@ -24,6 +24,11 @@ type Surface interface {
 	Close()
 }
 
+// SizeSurface optionally resizes a live Flyout without discarding its child
+// tree. Only the requested width/height use this capability; other immutable
+// native options still require a replacement. Dimensions are window DIPs.
+type SizeSurface interface{ SetSize(width, height int) }
+
 // DismissInterceptor is an optional surface capability. The callback returns
 // true when Host retained the surface to animate its dismissal, so the native
 // close event must be prevented. Backends without it preserve immediate close
@@ -112,6 +117,7 @@ type entry struct {
 	observedAnchor                           ui.Rect
 	padding                                  float32
 	presentation                             ui.MenuPresentation
+	direction                                ui.Direction
 	closing, nativeDismiss, removeAfterClose bool
 	presented                                bool
 }
@@ -236,17 +242,29 @@ func (h *Host) Popover(c *ui.Context, key string, anchor ui.Element, open *bool,
 		padding = max(0, *p.ContentPadding)
 	}
 	presentation := c.MenuPresentation()
-	changed := e.nativeTheme == nil || e.tokens != tokens || e.reduced != reduced || e.props.Label != p.Label || e.props.Revision != p.Revision || e.props.SystemStyle != p.SystemStyle || e.padding != padding || e.props.ContentRole != p.ContentRole || !p.SystemStyle && e.presentation != presentation
+	changed := e.nativeTheme == nil || e.tokens != tokens || e.reduced != reduced || e.props.Label != p.Label || e.props.Revision != p.Revision || e.props.SystemStyle != p.SystemStyle || e.padding != padding || e.props.ContentRole != p.ContentRole || e.direction != c.Direction() || !p.SystemStyle && e.presentation != presentation
 	if e.nativeTheme == nil || e.tokens != tokens {
 		e.tokens = tokens
 		e.nativeTheme = tokens.Theme()
 	}
 	e.reduced = reduced
 	e.padding, e.presentation = padding, presentation
+	e.direction = c.Direction()
 	// Changing immutable window options needs a fresh native surface. Anchor,
 	// complete tokens and content do not require reopening an existing one.
 	previous := e.spec
 	previous.Anchor = spec.Anchor
+	var resize SizeSurface
+	if e.surface != nil && (previous.Width != spec.Width || previous.Height != spec.Height) {
+		if sized, ok := e.surface.(SizeSurface); ok {
+			withoutSize := previous
+			withoutSize.Width, withoutSize.Height = spec.Width, spec.Height
+			if withoutSize == spec {
+				previous = withoutSize
+				resize = sized
+			}
+		}
+	}
 	if e.surface != nil && previous != spec {
 		h.releaseSurface(e)
 	}
@@ -254,6 +272,9 @@ func (h *Host) Popover(c *ui.Context, key string, anchor ui.Element, open *bool,
 	oldAnchor := e.spec.Anchor
 	e.spec = spec
 	if e.surface != nil {
+		if resize != nil {
+			resize.SetSize(spec.Width, spec.Height)
+		}
 		h.configureDismiss(e, e.surface, e.generation)
 		if oldAnchor != spec.Anchor {
 			e.surface.SetAnchor(spec.Anchor)
@@ -332,7 +353,7 @@ func (h *Host) view(c *ui.Context, e *entry, generation uint64) {
 		c.DisableAnimations()
 	}
 	t := e.tokens
-	root := ui.Column(c).Gap(12).Padding(e.padding).Background(t.Popover).TextColor(t.PopoverForeground).Radius(t.Radius)
+	root := ui.Column(c).Gap(12).Padding(e.padding).Background(t.Popover).TextColor(t.PopoverForeground).Radius(t.Radius).Direction(e.direction)
 	if !e.props.SystemStyle && !e.spec.SystemPopover {
 		// MyGo intentionally skips presence animation on a view's very first
 		// tree. Measure invisibly once, then add the visible keyed panel on the

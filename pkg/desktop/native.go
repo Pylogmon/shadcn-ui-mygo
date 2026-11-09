@@ -65,8 +65,9 @@ func (b *nativeBackend) InvalidateParent() {
 		b.parent.Invalidate()
 	}
 }
-func (s *nativeSurface) SetAnchor(r ui.Rect) { s.window.SetAnchor(nativeRect(r)) }
-func (s *nativeSurface) Invalidate()         { s.window.Invalidate() }
+func (s *nativeSurface) SetAnchor(r ui.Rect)       { s.window.SetAnchor(nativeRect(r)) }
+func (s *nativeSurface) SetSize(width, height int) { s.window.SetSize(width, height) }
+func (s *nativeSurface) Invalidate()               { s.window.Invalidate() }
 func (s *nativeSurface) Focus() {
 	if !s.window.IsDestroyed() {
 		s.window.Focus()
