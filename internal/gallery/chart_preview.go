@@ -17,6 +17,7 @@ type chartPreviewState struct {
 	selected                     int
 	legend, values, grid, change bool
 	updated                      bool
+	animate, storyUpdated        bool
 	family                       string
 	familySelected               int
 }
@@ -28,6 +29,7 @@ func (p *chartPreviewState) initialize() {
 	p.ready = true
 	p.orientation, p.mode, p.selected = "horizontal", "single", -1
 	p.family, p.familySelected = "line", -1
+	p.animate = true
 }
 
 func (p *chartPreviewState) props(c *ui.Context) display.ChartProps {
@@ -39,6 +41,7 @@ func (p *chartPreviewState) props(c *ui.Context) display.ChartProps {
 			{Name: "Desktop", Values: []float64{186, 305, 237, 73, 209, 214}},
 		},
 		Selected: &p.selected, Legend: p.legend,
+		Animation: display.ChartAnimationProps{Disabled: !p.animate},
 		Cartesian: display.ChartCartesianProps{
 			HideValueAxis: !p.values, HideGrid: !p.grid, HideCursor: true,
 			BarRadius: &radius,
@@ -90,6 +93,7 @@ func (s *State) chartCompositionPreview(c *ui.Context) {
 	p := &s.chartPreview
 	p.initialize()
 	ui.Column(c).FillWidth().MinWidth(0).Shrink(0).Gap(20).Children(func() {
+		control.Switch(c, &p.animate, control.SwitchProps{Label: "Animate chart changes", Size: control.Small})
 		s.chartBarPreview(c)
 		s.chartFamilyPreview(c)
 	})
@@ -157,8 +161,9 @@ func (s *State) chartFamilyPreview(c *ui.Context) {
 		}).Wrap().MinWidth(0)
 		props := display.ChartProps{
 			Kind: display.LineChart, Label: "Visitor story", Height: 240, Legend: true,
-			Selected: &p.familySelected,
-			Labels:   []string{"January", "February", "March", "April", "May", "June"},
+			Animation: display.ChartAnimationProps{Disabled: !p.animate},
+			Selected:  &p.familySelected,
+			Labels:    []string{"January", "February", "March", "April", "May", "June"},
 			Series: []display.ChartSeries{
 				{Name: "Desktop", Values: []float64{186, 305, 237, 73, 209, 214}},
 				{Name: "Mobile", Values: []float64{80, 200, 120, 190, 130, 140}},
@@ -167,6 +172,10 @@ func (s *State) chartFamilyPreview(c *ui.Context) {
 				letters := []rune(label)
 				return string(letters[:min(3, len(letters))])
 			}},
+		}
+		if p.storyUpdated {
+			props.Series[0].Values = []float64{286, 145, 312, 173, 126, 280}
+			props.Series[1].Values = []float64{140, 110, 240, 86, 210, 90}
 		}
 		switch p.family {
 		case "area":
@@ -180,9 +189,22 @@ func (s *State) chartFamilyPreview(c *ui.Context) {
 			}
 			props.Labels = []string{"Chrome", "Safari", "Firefox", "Edge", "Other"}
 			props.Series = []display.ChartSeries{{Name: "Visitors", Values: []float64{275, 200, 187, 173, 90}}}
+			if p.storyUpdated {
+				props.Series[0].Values = []float64{160, 310, 125, 240, 185}
+			}
 		case "radar":
 			props.Kind = display.RadarChart
 		}
 		display.Chart(c, props).Shrink(0)
+		ui.Row(c).Wrap().Gap(12).AlignItems(ui.Center).Children(func() {
+			if control.Button(c, "Update story counts", control.ButtonProps{Variant: control.Outline, Size: control.Small, Disabled: p.storyUpdated}).Clicked() {
+				p.storyUpdated = true
+				c.Invalidate()
+			}
+			if control.Button(c, "Restore story counts", control.ButtonProps{Variant: control.Ghost, Size: control.Small, Disabled: !p.storyUpdated}).Clicked() {
+				p.storyUpdated = false
+				c.Invalidate()
+			}
+		})
 	}).Label("Chart style explorer")
 }

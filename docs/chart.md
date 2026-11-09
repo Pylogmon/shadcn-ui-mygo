@@ -45,7 +45,7 @@ Stacked使用正负分开的堆叠，Normalized沿MyGo的StackNormalized契约�
 
 Selected是应用持有的分类索引，-1表示未检查；省略时使用组件局部状态。每个图表只有一个原生键盘停靠点，纵向用Left/Right、横向用Up/Down检查有效分类，Home/End到首尾，Escape退出检查。指针移动按对应分类维度选择；键盘操作不会被静止指针立即覆盖。无障碍Value包含分类、系列及格式化值。真实读屏与平台输入矩阵仍须验证。
 
-Gallery的Data & display页包含两张交互示例卡。Visitor explorer可切换横纵方向、单系列/分组/堆叠/绝对比例、正负变化和浏览器分类配色，单独显示坐标值、网格与Legend，并更新或恢复实际数据。比例坐标只改变轴格式，Tooltip仍显示原始计数。Chart style explorer可切换Line、堆叠Area、Pie、Donut、Radar和Radial；两个图表分别持有选择状态，离页返回保留应用配置。所有示例均直接调用公开Chart API。
+Gallery的Data & display页包含两张交互示例卡。Visitor explorer可切换横纵方向、单系列/分组/堆叠/绝对比例、正负变化和浏览器分类配色，单独显示坐标值、网格与Legend，并更新或恢复实际数据。比例坐标只改变轴格式，Tooltip仍显示原始计数。Chart style explorer可切换Line、堆叠Area、Pie、Donut、Radar和Radial；自己的Update/Restore按钮会改变月份两系列或浏览器分布。两卡共用默认开启的Animate chart changes开关，Reduce motion优先；两个图表分别持有选择和更新状态，离页返回保留应用配置。所有示例均直接调用公开Chart API。
 
 高层Chart默认对七类图表的实际矩形、曲线和极坐标角度做数据动画，可配置时长、延迟及缓动，减少动态效果会立即收敛；具体时序与原生适配见[Chart动画](chart-animation.md)。
 
