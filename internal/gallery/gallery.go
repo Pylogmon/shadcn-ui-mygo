@@ -35,6 +35,7 @@ type State struct {
 	VerticalLevel                                                                  float64
 	WorkspaceLayout, EditorLayout                                                  display.ResizableLayout
 	Menubar                                                                        desktop.MenubarState
+	Sidebar                                                                        navigation.SidebarState
 	Tab, Slide, PageNumber                                                         int
 	Date                                                                           time.Time
 	DateRange                                                                      display.DateRange
@@ -53,6 +54,7 @@ type State struct {
 	nativeMenuOpen                                                                 bool
 	lineTab, manualTab                                                             int
 	navRoute                                                                       string
+	sidebarRoute                                                                   string
 	menuStates                                                                     map[string]*creatorMenu
 	pendingMenuAction                                                              string
 }

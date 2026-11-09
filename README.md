@@ -53,7 +53,7 @@ func view(c *ui.Context) {
 
 桌面弹出组件显式使用 `desktop.NewHost(parentWindow)`。`Menu` 使用统一 shadcn 样式的独立 Flyout；`NativeMenu` 使用系统菜单。没有 Host 时不会默默退回父窗口内绘制。窗口内旧组件以 `InWindow*` 明确命名；API、平台范围与迁移说明见 [原生浮层适配](docs/native-adaptation.md)，完整示例见 [native-popups](examples/native-popups/main.go)。
 
-Gallery 的 Navigation 页展示菜单栏和可切换尺寸的导航内容面板，Forms 页展示范围/多拇指滑块，Data 页包含保留状态的折叠内容和嵌套可调整面板。导航面板的子 Context、路由回传和 Tab 边界用法见 [导航 API](docs/navigation.md)。
+Gallery 的 Navigation 页展示菜单栏、可切换尺寸的导航内容面板和响应式侧栏，Forms 页展示范围/多拇指滑块，Data 页包含保留状态的折叠内容和嵌套可调整面板。导航面板的子 Context、路由回传和 Tab 边界用法见 [导航 API](docs/navigation.md)。
 
 Data 页也展示头像尺寸、状态角标、加载/回退和头像组。对应 API 见 [Avatar](docs/avatar.md) 与 [Card 槽位](docs/card.md)。
 

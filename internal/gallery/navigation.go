@@ -41,6 +41,7 @@ func (s *State) navigationPreview(c *ui.Context) {
 		})
 	})
 	s.routePanelsPreview(c)
+	s.sidebarPreview(c)
 	display.Card(c, func() {
 		s.cardHeader(c, "Pagination", "A single controlled page value, with bounds and current-page semantics.")
 		navigation.Pagination(c, &s.PageNumber, navigation.PaginationProps{Pages: 20})
