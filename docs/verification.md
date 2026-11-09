@@ -220,3 +220,5 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 
 - 独立消费者：新增仅用公开API的examples/consumer和可重复的cmd/verify-consumer。实际以`fc7cfe1`生成模块ZIP，外部require其伪版本；GOWORK关闭、整个依赖图无replace、GOMODCACHE/GOCACHE均从新临时目录开始，固定依赖由官方代理下载并正常校验，SDK从本地标准模块代理解析而非工作树。完成外部编译、消费应用渲染、Dark/Blue/Radius12保存与第二进程仅Load后的560×400实际像素一致，以及从模块ZIP运行Gallery的明暗渲染。记录/log/PNG/ZIP保存在build/consumer-verification/run-4177292664，临时缓存已清理；已查看消费者与Gallery渲染。工具和示例vet/build通过。
 - 消费者验证范围：该证据覆盖本地模块制品、公开API、无本地替换/预热缓存依赖及跨进程设置恢复。SDK没有因此发布到公共代理；PNG运行不是原生窗口启动，系统主题监听、真实窗口重启和Windows/Linux运行矩阵继续跟踪。此验证锁定已提交SDK，未把并行Message/Marker/Questionnaire/Scroller候选提前计入。
+
+- ScrollBar意图回调：新增OnScrollIntent在有效手动操作改变原生offset之前通知，供会话自动跟随释放使用。2项真实原生检查验证wheel/key之前的位置、最新callback、程序滚动静默、禁用/非滚动键/零轴输入排除及callback更新不取消现有捕获；回调没有加入comparable布局配置。仅HEAD加这两个文件的隔离display/Gallery共490项通过，vet通过；没有提前包含Scroller候选。

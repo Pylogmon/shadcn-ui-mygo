@@ -200,6 +200,10 @@ type ScrollBarProps struct {
 	Corner, Hidden, Disabled, Focusable         bool
 	Label                                       string
 	ThumbColor                                  *ui.Color
+	// OnScrollIntent runs before a valid manual press, wheel or focused scroll
+	// key changes the offset. Programmatic scrolling is silent. Use model-only
+	// callbacks, for example to release transcript auto-follow.
+	OnScrollIntent func()
 }
 
 type scrollBarConfig struct {
@@ -221,6 +225,7 @@ type scrollBarRuntime struct {
 	focus                          ui.Handle
 	freezePending                  bool
 	pendingX, pendingY             float32
+	onScrollIntent                 func()
 }
 
 func scrollFinite(v float32) bool { return !math.IsNaN(float64(v)) && !math.IsInf(float64(v), 0) }
@@ -322,6 +327,9 @@ func (s *scrollBarRuntime) input(ev ui.InputEvent) bool {
 		if ev.Button != 0 || !scrollFinite(axis) {
 			return false
 		}
+		if s.onScrollIntent != nil {
+			s.onScrollIntent()
+		}
 		start, length, travel := s.thumb()
 		s.freezeMotion()
 		if travel <= 0 {
@@ -370,6 +378,9 @@ func (s *scrollBarRuntime) input(ev ui.InputEvent) bool {
 		}
 		before := s.offset()
 		if scrollFinite(delta) {
+			if delta != 0 && s.onScrollIntent != nil {
+				s.onScrollIntent()
+			}
 			s.freezeMotion()
 			s.write(float64(before) + float64(delta))
 		}
@@ -416,6 +427,9 @@ func (s *scrollBarRuntime) input(ev ui.InputEvent) bool {
 			next += delta
 		default:
 			return false
+		}
+		if s.onScrollIntent != nil {
+			s.onScrollIntent()
 		}
 		s.drag = nil
 		s.freezeMotion()
@@ -491,7 +505,7 @@ func ScrollBar(c *ui.Context, state *ui.ScrollState, p ScrollBarProps) ui.Elemen
 	if !s.initialized || config != s.config || s.drag != nil && (s.offset() != s.expected || state.Scrolling()) {
 		s.drag = nil
 	}
-	s.config, s.initialized = config, true
+	s.config, s.initialized, s.onScrollIntent = config, true, p.OnScrollIntent
 	hidden := p.Hidden && s.drag == nil
 	if s.changed {
 		root.SetChanged()

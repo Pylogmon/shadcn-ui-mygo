@@ -28,6 +28,8 @@ NativeScrollbars 选择 MyGo 标准的 GPU overlay renderer，使用其 theme �
 
 OnScroll 在本帧原生 layout/clamp 后的 Draw 中报告接受的位置，初始放置静默，应用更改 offset 也会通知。Root.Changed 在一次修正构建中报告。回调可以改位置，下一帧重新报告最终接受值；稳定位置不持续重绘。
 
+单独组合ScrollBar时，OnScrollIntent可在有效主键按下、滚轮及已处理的聚焦滚动键改变offset前报告用户意图，例如解除会话的自动跟随。程序ScrollTo保持静默，禁用、非滚动键和零轴滚轮不会触发。回调只操作应用模型；它的更新不重置已开始的原生拖拽。
+
 当前 MyGo 的已启动 ScrollState.ScrollTo 在中途开启 ReduceMotion 时仍沿原动画前进；公开 API 无法读出其目标，因此本组件没有丢弃目标或假装完成收敛。减少动画下新发起的原生滚动会立即定位。该运行时缺口仍待修复，不计为完整减少动画验收通过。
 
 ```go
