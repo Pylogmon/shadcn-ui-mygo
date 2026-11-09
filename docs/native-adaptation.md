@@ -1,31 +1,61 @@
-# 原生浮层适配
+# 桌面浮层：成对 API
 
-按照用户要求，菜单、下拉菜单和 Popover 优先采用 MyGo 的原生能力，可以越出父窗口；原生平台的交互约定可替代网页 DOM 浮层实现。shadcn 的颜色、组件组合和功能仍作为设计参考。
+按照用户确认的命名，`Menu` 使用独立原生 Flyout 加统一 shadcn 绘制；`NativeMenu` 使用系统菜单，保持系统样式。双组件的区别是外观与交互实现，而不是能否越出父窗口：两者都可以越窗。
 
-## 系统菜单
+## 已实现的组件对
 
-- `overlay.NativeDropdownMenu`、`NativeContextMenu`、`NativeMenubar` 构建 MyGo 的系统菜单。
-- `control.NativeSelect` 是系统菜单选择控件；`Select` 保留完全可定制的窗口内选项内容。
-- DataTable 的列显隐和分面过滤同样使用 MyGo 的菜单。
-- 默认 `ui.SystemMenus` 由操作系统布局、绘制和处理越窗边界。应用显式设置 `ui.PopoverMenus` 时，MyGo 会将同一份菜单绘制在窗口内，便于嵌入预览与特殊风格。
-- 完全自绘的 `overlay.DropdownMenu` / `ContextMenu` / `Menubar` 仍可单独使用，不强制所有应用放弃自定义菜单。
+桌面组件入口统一放在 `pkg/desktop`，显式绑定父窗口，不依赖全局当前窗口。
 
-原生菜单支持子菜单、复选/单选、禁用项、分组与分隔项。`MenuItem.NativeIcon` 使用一次创建、可复用的 MyGo 平台图标，`Icon` 继续用于自绘菜单中的 SVG。`Shortcut` 当前是显示文本，应用的真实快捷键绑定应单独注册。
+| Shadcn Flyout | 系统样式版本 | 行为 |
+| --- | --- | --- |
+| `Menu` | `NativeMenu` | 自绘可测量菜单与系统菜单 |
+| `DropdownMenu` | `NativeDropdownMenu` | 对应菜单对的下拉命名 |
+| `ContextMenu` | `NativeContextMenu` | 指针、Control-click、菜单键、Shift+F10 |
+| `Popover` | `NativePopover` | 自绘主题与平台原生 Popover 外观 |
+| `Select` | `NativeSelect` | 独立 Flyout 选项与系统菜单选择 |
+
+`NativeMenu` 家族和 `NativeSelect` 强制走 `ui.SystemMenus`，并在同一帧恢复调用方的菜单策略；不会因为预览设置而偷偷改成自绘菜单。`NativePopover` 在 macOS 使用 NSPopover 材质/箭头与平台主题；其他平台使用 MyGo 的原生 Flyout 和该窗口的平台默认主题，不声称存在对应的操作系统通用 Popover 控件。
+
+自绘 Menu 的内容实际位于 Flyout 子窗口，使用 shadcn 颜色、字体、圆角与状态反馈。子菜单以可测量的相邻面板呈现，可使用键盘、typeahead、禁用项、复选/单选和长菜单滚动；原生窗口负责显示器工作区约束。它没有用父窗口内的绝对定位覆盖层冒充越窗实现。
+
+## 父窗口与生命周期
 
 ```go
-choice := overlay.NativeDropdownMenu(c, overlay.MenuProps{
-    Items: []overlay.MenuItem{
-        {Key: "duplicate", Label: "Duplicate"},
-        {Separator: true},
-        {Key: "remove", Label: "Remove", Destructive: true},
-    },
-}, func(trigger ui.Element) {
-    control.StyleButton(c, trigger, "Actions", control.ButtonProps{Variant: control.Outline})
-})
+// 在 App.WhenReady 中、创建父窗口后：
+state.Popovers = desktop.NewHost(parentWindow)
+
+// 每个父窗口的 view 中：
+state.Popovers.BeginFrame()
+defer state.Popovers.EndFrame()
+
+anchor := control.Button(c, "Menu", control.ButtonProps{Variant: control.Outline})
+choice, err := desktop.Menu(c, state.Popovers, "project-actions", anchor,
+    &state.MenuOpen, &state.MenuState, desktop.MenuProps{Items: items})
 ```
 
-系统菜单在操作系统自己的弹出层中显示，不出现在父窗口的 `ui.Element` 子树。单元测试使用 MyGo 的系统菜单记录/选择接口验证路由、禁用项、勾选状态和回调。它们不能替代真实窗口边缘、屏幕边界、缩放与多显示器的运行验证。
+`Host` 关闭已消失的锚点、跟踪布局后的锚点位置、同步主题/减少动态效果、处理关闭与焦点恢复，并拒绝旧窗口的迟到关闭回调。Host 绑定明确的父窗口，子窗口接收自己的 `*ui.Context`；回调不得捕获并复用父窗口某一帧的 Context。子窗口可以共享应用状态，但必须在 UI 线程修改。
 
-## 任意内容 Popover
+```go
+err := desktop.Popover(c, host, "settings", anchor, &open,
+    desktop.PopoverProps{Width: 320, Height: 220, Label: "Settings"},
+    func(child *ui.Context) {
+        control.Input(child, &name, control.InputProps{Label: "Name"})
+    })
+```
 
-MyGo 的 `NewFlyout` 支持拥有独立原生 UI 内容的子窗口，由父窗口及锚点控制位置、工作区碰撞和关闭生命周期。独立窗口必须收到自己的 `*ui.Context`，不能继续使用父窗口某一帧的 Context 构建内容。适配层与 Gallery 接入正在阶段 5.D 实施，完成后补充 API 与验证记录。
+`Popover` 自动选择 plain Flyout 与完整 shadcn token；`NativePopover` 选择平台容器与子窗口自己的默认主题。原生样式内容使用 MyGo 的 `ui.*` 控件；不要在该回调中又强制安装 shadcn 主题。
+
+菜单动作既提供 `OnChoose`，也可在下一次父窗口构建中返回结果；应用选其中一条路径处理业务动作，避免自己重复执行。需要外部数据变化刷新子内容时使用 `Revision` 或 `Host.Refresh(key)`。普通空闲帧不会不断重绘子窗口。
+
+## 窗口内与迁移
+
+`pkg/overlay` 保留 `InWindowDropdownMenu`、`InWindowContextMenu`、`InWindowMenubar`、`InWindowPopover`、`InWindowTooltip`、`InWindowHoverCard`，专门用于明确需要父窗口内表面的场景。第一版同名简写已标记 Deprecated。没有 Host 时，桌面组件可以绘制关闭状态的触发器，但尝试打开会报错，不会静默退回窗口内浮层。
+
+Tooltip、HoverCard、DatePicker 等其余弹出家族的完整成对迁移仍待后续阶段。`Native*` 不会用一个自绘窗口冒充运行时不存在的操作系统控件；适配范围必须在实现与文档中明确。
+
+## 验证范围
+
+- 运行 `go run ./examples/native-popups`；macOS 可用 `make popups-app` 生成小窗口对照应用。
+- 已在 macOS 实际观察 Menu 的 shadcn Flyout 越过父窗口下边界、NativeMenu 的系统菜单样式，以及自绘 Popover 同时越过父窗口右侧/下边界。子窗口 Done 关闭后恢复父窗口焦点。
+- 自动测试验证独立 Context、系统与主题路由、锚点、无空闲帧循环、关闭保护、选择回传、键盘、子菜单与自定义选项。
+- Plain Flyout 完整退场动画/原生外部关闭拦截、多显示器/缩放边界和 Windows/Linux 实际运行矩阵尚未完成；无窗口测试不能代替这些验收。

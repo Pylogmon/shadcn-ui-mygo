@@ -111,8 +111,8 @@ func Select(c *ui.Context, selected *string, p SelectProps) ui.Element {
 
 // NativeSelect uses MyGo's system-menu adapter instead of SelectBase's in-window
 // listbox. The native OS owns popup placement, keyboard navigation and painting,
-// and can display beyond the parent window. A caller explicitly choosing MyGo's
-// drawn menu presentation is respected. Native options use text, groups and
+// and can display beyond the parent window. It explicitly selects system menus
+// for this control without changing its caller's menu policy. Native options use text, groups and
 // selected marks; arbitrary ItemContent belongs to the styled Select instead.
 func NativeSelect(c *ui.Context, selected *string, p SelectProps) ui.Element {
 	t := theme.TokensOf(c)
@@ -152,6 +152,8 @@ func NativeSelect(c *ui.Context, selected *string, p SelectProps) ui.Element {
 		}
 		ui.Icon(c, chevron).FontSize(16).TextColor(t.MutedForeground)
 	})
+	previousPresentation := c.MenuPresentation()
+	c.SetMenuPresentation(ui.SystemMenus)
 	tr.Menu(func(m *ui.Menu) {
 		group := ""
 		for _, o := range p.Options {
@@ -174,6 +176,7 @@ func NativeSelect(c *ui.Context, selected *string, p SelectProps) ui.Element {
 			}
 		}
 	})
+	c.SetMenuPresentation(previousPresentation)
 	return ButtonGroupItem(c, tr)
 }
 

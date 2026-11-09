@@ -63,8 +63,8 @@ type PopoverProps struct {
 	Width     float32
 }
 
-// Popover toggles on an anchor click and closes on Escape or an outside press.
-func Popover(c *ui.Context, anchor ui.Element, open *bool, p PopoverProps, content func()) ui.Element {
+// InWindowPopover toggles on an anchor click and closes on Escape or an outside press.
+func InWindowPopover(c *ui.Context, anchor ui.Element, open *bool, p PopoverProps, content func()) ui.Element {
 	if anchor.Clicked() {
 		*open = !*open
 	}
@@ -83,8 +83,8 @@ func Popover(c *ui.Context, anchor ui.Element, open *bool, p PopoverProps, conte
 
 type TooltipProps struct{ Placement Placement }
 
-// Tooltip also describes the trigger to assistive technology, and opens on focus.
-func Tooltip(c *ui.Context, anchor ui.Element, text string, p TooltipProps) ui.Element {
+// InWindowTooltip also describes the trigger to assistive technology, and opens on focus.
+func InWindowTooltip(c *ui.Context, anchor ui.Element, text string, p TooltipProps) ui.Element {
 	if text == "" {
 		return ui.Element{}
 	}
@@ -108,9 +108,9 @@ type hoverState struct {
 	enter, leave                 time.Time
 }
 
-// HoverCard keeps interactive content open while the pointer travels from the
+// InWindowHoverCard keeps interactive content open while the pointer travels from the
 // trigger to its panel; focus opens immediately, Escape dismisses it.
-func HoverCard(c *ui.Context, anchor ui.Element, p HoverCardProps, content func()) ui.Element {
+func InWindowHoverCard(c *ui.Context, anchor ui.Element, p HoverCardProps, content func()) ui.Element {
 	s := ui.Local(anchor, "shadcn.hover-card", func() hoverState { return hoverState{} })
 	now := c.Now()
 	over := anchor.Hovered() || anchor.FocusWithin() || s.panelHover

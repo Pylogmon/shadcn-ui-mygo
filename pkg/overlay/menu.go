@@ -34,9 +34,9 @@ func menuPanel(c *ui.Context, panel ui.Element, width float32) {
 	panel.MinWidth(width)
 }
 
-// DropdownMenu opens on pointer press or Enter, Space, Up and Down. The menu
+// InWindowDropdownMenu opens on pointer press or Enter, Space, Up and Down. The menu
 // supports typeahead, disabled-item skipping, nested arrows and Escape.
-func DropdownMenu(c *ui.Context, open *bool, p MenuProps, trigger func(ui.Element)) string {
+func InWindowDropdownMenu(c *ui.Context, open *bool, p MenuProps, trigger func(ui.Element)) string {
 	m := ui.MenuBase(c, open)
 	if trigger != nil {
 		trigger(m.Trigger)
@@ -51,8 +51,8 @@ func DropdownMenu(c *ui.Context, open *bool, p MenuProps, trigger func(ui.Elemen
 	return chosen
 }
 
-// ContextMenu opens on secondary click, Control-click on macOS, or Shift+F10.
-func ContextMenu(c *ui.Context, target ui.Element, p MenuProps) string {
+// InWindowContextMenu opens on secondary click, Control-click on macOS, or Shift+F10.
+func InWindowContextMenu(c *ui.Context, target ui.Element, p MenuProps) string {
 	open := ui.Local(target, "shadcn.context-menu", func() bool { return false })
 	m := ui.ContextMenuBase(c, target, open)
 	chosen := ""
@@ -145,9 +145,9 @@ type MenubarItem struct {
 }
 type menubarState struct{ open []bool }
 
-// Menubar is a horizontal group of native menu triggers. Tab enters the group,
+// InWindowMenubar is a horizontal group of native menu triggers. Tab enters the group,
 // Left and Right move among triggers, and each menu has full menu navigation.
-func Menubar(c *ui.Context, items []MenubarItem) string {
+func InWindowMenubar(c *ui.Context, items []MenubarItem) string {
 	t := theme.TokensOf(c)
 	root := ui.Row(c).Gap(2).Padding(3).Radius(t.Radius).Border(1, t.Border).Background(t.Background).FocusGroup(ui.Horizontal).Role(ui.RoleMenuBar).Label("Menu bar")
 	s := ui.Local(root, "shadcn.menubar", func() menubarState { return menubarState{} })
@@ -157,7 +157,7 @@ func Menubar(c *ui.Context, items []MenubarItem) string {
 	chosen := ""
 	root.Children(func() {
 		for i, item := range items {
-			value := DropdownMenu(c.Key(i), &s.open[i], MenuProps{Items: item.Items}, func(trigger ui.Element) {
+			value := InWindowDropdownMenu(c.Key(i), &s.open[i], MenuProps{Items: item.Items}, func(trigger ui.Element) {
 				button(c, trigger.Disabled(item.Disabled), item.Label, false).Border(0, ui.Transparent).Height(28)
 				if s.open[i] {
 					trigger.Background(t.Accent)

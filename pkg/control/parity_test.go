@@ -256,12 +256,16 @@ func TestNativeSelectUsesSystemMenuAndControlledValue(t *testing.T) {
 	disabled := false
 	changes := 0
 	tt := tester(func(c *ui.Context) {
+		c.SetMenuPresentation(ui.PopoverMenus)
 		if NativeSelect(c, &value, SelectProps{Label: "Native language", Disabled: disabled, Options: []Option{
 			{Value: "go", Label: "Go", Group: "Languages"},
 			{Value: "off", Label: "Unavailable", Disabled: true},
 			{Separator: true}, {Value: "rust", Label: "Rust"},
 		}}).Changed() {
 			changes++
+		}
+		if c.MenuPresentation() != ui.PopoverMenus {
+			t.Fatal("native select leaked its menu presentation policy")
 		}
 	})
 	if _, ok := tt.AccessByRole(ui.RoleMenuButton, "Native language"); !ok {

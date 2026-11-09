@@ -55,13 +55,13 @@ composition; they do not automatically supply missing upstream behavior.
 | Collapsible | `display.Collapsible` | Verify focus/controls linkage, interrupted/reversed animation and content preservation. |
 | Combobox | `control.Combobox` | Grouped/custom single-select and multi-select chips with filtering/removal/limits exist; verify loading/async sources, full variant examples and platform IME behavior. |
 | Command | `overlay.Command` / `CommandDialog` | Inline filtering/Enter is tested; verify all disabled-navigation cases, scroll-to-highlight, shortcuts, accessibility and large result sets. |
-| Context Menu | `overlay.ContextMenu` | System-menu and themed alternatives both exist; secondary-click and nested native actions are tested. Verify real keyboard context key/Shift+F10, touch and cross-window/screen-edge placement. |
+| Context Menu | `overlay.ContextMenu` | desktop.ContextMenu/NativeContextMenu are paired Flyout/OS adapters; secondary-click, Control-click, context key/Shift+F10 and scoped nested keys are tested. Real touch and multi-display/window-edge acceptance remain. |
 | Data Table | `display.DataTable` / `DataRows` | Filtering/sorting/paging, native visibility/facet menus, keyed selection/toolbar and custom cells/actions are tested. True sticky pinned columns, editable-cell commit policy and full example/visual coverage remain. |
 | Date Picker | `display.DatePicker` | Single/range pickers, disabled/hidden presets, native time editors, timezone/wall-clock preservation and formatting are tested. Native Flyout presenter wrappers and free-form/natural-language input remain; do not retain parent frame Elements in child callbacks. |
 | Dialog | `overlay.Dialog` | Escape, accessible metadata, exit and focus restoration are tested; verify nested focus traps, long scroll content and all interrupted transitions. |
 | Direction | `display.Direction` | Native direction scope exists; run all directional components in RTL, including popup flipping, keyboard arrows and physical/logical padding. |
 | Drawer | `overlay.Drawer` | Bottom modal with draggable dismiss exists; verify touch gestures, velocity/snap thresholds, nested scrolling, focus and motion interruptions. |
-| Dropdown Menu | `overlay.DropdownMenu` | Checkbox, radio and nested item API exists; keyboard disabled skipping/submenus/focus restoration are tested. Verify typeahead, RTL, collision and custom content. |
+| Dropdown Menu | `overlay.DropdownMenu` | desktop.DropdownMenu/NativeDropdownMenu now use independent shadcn Flyout vs OS menus. Typeahead, scoped nested keys, checks/radio/disabled/RTL/scroll, result delivery and focus are tested. Complete platform/window-edge matrices and animated closing remain. |
 | Empty | `display.Empty` | Verify icon/media/content/action compositions and constrained widths. |
 | Field | `control.Field` | Vertical/horizontal/responsive layout, fieldset/group, required state and compound editor label/error linkage are tested; complete IME/screen-reader and validation timing examples. |
 | Hover Card | `overlay.HoverCard` | Open/close timers and pointer-gap persistence exist; verify timer cancellation, Escape suppression, interactive focus and placement on every side. |
@@ -78,7 +78,7 @@ composition; they do not automatically supply missing upstream behavior.
 | Native Select | `control.NativeSelect` | Deliberate MyGo system-menu adapter replaces the alias; native disabled/group/selection and no parent-tree menu painting are tested. Verify real out-of-window menus on every platform. |
 | Navigation Menu | `navigation.NavigationMenu` | Native grouped dropdown route menus exist; shadcn content mega-panels, viewport/indicator motion, hover intent and sibling keyboard switching remain. |
 | Pagination | `navigation.Pagination` | One-based bounds, ellipsis and current page are tested; verify large page counts, responsiveness and full link composition. |
-| Popover | `overlay.Popover` | Native outside/Escape dismissal, attachment and styling exist; verify initial focus, focus restoration, nested overlays, collision and all align variants. |
+| Popover | `overlay.Popover` | desktop.Popover/NativePopover now distinguish themed Flyout and platform-style popup. Independent context, theme/style policy, anchor, dismissal/focus and child state propagation are tested; macOS crossing two parent edges was observed. Complete nested/scale/display placement and exit-motion acceptance remain. |
 | Progress | `display.Progress` | Determinate native progress exists; verify accessible value text, indeterminate composition and reduced motion. |
 | Questionnaire | `conversation.Questionnaire` | Controlled answers/validation/step navigation exist; verify all keyboard/focus, custom question renderer, review/edit and conditional-flow examples. |
 | Radio Group | `control.RadioGroup` | Native selection/arrow behavior exists; verify every orientation, RTL and group/description association. |

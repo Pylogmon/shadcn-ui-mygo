@@ -74,3 +74,22 @@ func TestNativeContextAndMenubar(t *testing.T) {
 		t.Fatal(chosen)
 	}
 }
+
+func TestNativeMenuKeysAreScopedToTheirSubmenu(t *testing.T) {
+	first, second := false, false
+	r := ui.NewTester(view(func(c *ui.Context) {
+		NativeDropdownMenu(c, MenuProps{Items: []MenuItem{
+			{Key: "first", Label: "First group", Children: []MenuItem{{Key: "pin", Label: "Pinned", Checked: &first}}},
+			{Key: "second", Label: "Second group", Children: []MenuItem{{Key: "pin", Label: "Pinned", Checked: &second}}},
+		}}, func(b ui.Element) { button(c, b, "Actions", false) })
+	}), 300, 150)
+	if err := r.Click("Actions"); err != nil {
+		t.Fatal(err)
+	}
+	if err := r.ChooseMenuItem("Second group", "Pinned"); err != nil {
+		t.Fatal(err)
+	}
+	if first || !second {
+		t.Fatalf("submenu key collision mutated wrong state: first=%v second=%v", first, second)
+	}
+}

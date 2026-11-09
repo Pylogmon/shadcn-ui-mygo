@@ -65,8 +65,8 @@ func nativeMenuItems(m *ui.Menu, items []MenuItem, path string, chosen *string) 
 			group = item.Group
 			m.Item(group).Disabled(true)
 		}
-		id := item.Key
-		if id == "" {
+		id := path + item.Key
+		if item.Key == "" {
 			id = path + strconv.Itoa(i)
 		}
 		var row *ui.MenuItem
