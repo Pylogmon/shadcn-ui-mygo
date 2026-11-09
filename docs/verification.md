@@ -265,3 +265,7 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 
 - Radar提示配色：先复现CategoryColors把两个系列的提示色块都替换为同一类别色，而实际Radar轮廓/Legend仍为不同系列色。修复仅让Pie、Donut与未堆叠Radial采用分类色，Radar保持系列颜色。5项正式检查覆盖明暗×默认局部Blue/显式系列色、原生提示色块实际像素与Legend一致及Home/End检查原值；显式色错误场景先红后绿。以`af5274b`仅加入本模块chart.go与chart_radar_tooltip_test.go，display476/Gallery154共630项及双包vet通过，文件哈希与workspace候选一致。
 - Radar交叉复核：6项独立原生检查直接操作默认Tooltip，色块与实际选中mark和Legend一致，East/West键盘切换、实时系列换色不受分类色影响；Pie/Donut/未堆叠Radial的分类色及堆叠Radial的系列色未退化。复核另发现未堆叠极坐标图表会提示未绘制系列，作为独立后续修正保留，不包含在本次通过结论中。
+
+- Chart自由组合SDK：40项正式检查（17顶层、23子例）及基于`be7dd98`仅新增chart_composition.go/test.go的隔离display516/Gallery154共670项、双包vet通过。独立ChartContainer与Config的统一/明暗颜色、严格live作用域与深复制、nested/sibling恢复、真实raw Plot/Rule/Anchor/编辑器、动态主题/字体/方向/禁用/原IME及选区、Local生命周期与idle均验证，不依赖高层Chart。源base chart.tsx和完整Vega样式原文已补归档，与另外四份参考及共享MIT许可的blob/SHA逐一核验。
+- Chart内容组合覆盖：Config原生标签/图标，payload顶层→datum→原键查找，Name/DataKey的nil/数字/显式空值，空NameKey/LabelKey的显式presence，dot/line/dashed真实像素、单raw payload嵌标题、过滤none后formatter索引、null/undefined与原生可编辑formatter、label formatter和en-US/de-DE数值格式，Legend上下留白/隐藏图标回退/原生标签身份均通过。默认JS式逗号数组仅声明[]any/[]string/[]float64/[]int，其它Go值按fmt.Sprint或应用formatter；不把Go默认格式冒称完整Intl等价。
+- Chart组合独审10项通过：scope/raw的两实例重排、嵌套配置、主题/字体/RTL/实际选区/Local释放原本正常；另两条条件标题/指示器移除导致editor失焦先红后以typed slot keys修绿。显式空selector此前不可表达，新增兼容HasNameKey/HasLabelKey后独立操作Tooltip名称/标题及Legend原生按钮，动作一次且配置正确。Inactive Tooltip/empty Legend原0尺寸Box仍占父Gap，两个实际布局子例从40≠30转为Hidden(true)后的30。所有独审探针已清理；自由绘图没有自动注入CSS后代样式，Draw需捕获已解析值，独立窗口需重新提供Config，完整平台/字体/AT/视觉及几何动画矩阵继续保留。

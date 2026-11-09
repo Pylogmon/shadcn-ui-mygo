@@ -14,7 +14,7 @@ MessageScroller行为另外核对同一提交的`packages/react/src/message-scro
 
 Questionnaire另核对同一提交的`packages/react/src/questionnaire`完整14份primitive、collection、hooks、类型、测试与说明；原文和MIT许可归档于`pkg/conversation/testdata/questionnaire`。连同registry包装/组合示例、base/react文档和14个独立示例，共32份Git blob与SHA-256记录在[upstream.json](upstream.json)。Go公开API、成功控件数据、草稿/受控输入及浏览器校验差异见[Questionnaire](questionnaire.md)；未把仅包装组件的registry文件当作完整行为源。
 
-Chart另核对同一提交的base `chart.tsx`、Vega样式及base文档，并读取new-york-v4的horizontal、mixed、negative三个Bar示例，原始四份文档/示例、MIT许可与blob/SHA-256归档于`pkg/display/testdata/shadcn-chart`。这些示例提供几何与配置参照，Vega继续是本阶段视觉基线；mixed是单系列逐类别颜色，negative是纵向示例且另含LabelList。固定lockfile的Recharts版本为3.8.0；Go实现使用公开MyGo尺度与绘图能力，没有引入或复制Recharts实现。当前已表达的配置及剩余组合见[Chart](chart.md)。
+Chart另核对同一提交的base `chart.tsx`、Vega样式及base文档，并读取new-york-v4的horizontal、mixed、negative三个Bar示例，原始四份文档/示例，以及base `chart.tsx`和完整Vega样式共六份参考、MIT许可与blob/SHA-256归档于`pkg/display/testdata/shadcn-chart`。这些示例提供几何与配置参照，Vega继续是本阶段视觉基线；mixed是单系列逐类别颜色，negative是纵向示例且另含LabelList。固定lockfile的Recharts版本为3.8.0；Go实现使用公开MyGo尺度与绘图能力，没有引入或复制Recharts实现。当前已表达的配置及剩余组合见[Chart](chart.md)。
 
 Chart默认Tooltip的shadow-xl另与该shadcn lockfile锁定的官方Tailwind CSS 4.3.0发布包核对：下载tarball的SHA-512与lockfile的integrity一致，theme.css及MIT许可原文、各自SHA-256与发布包校验保存在同一Chart归档。两层阴影参数与较早单独归档的Tailwind main主题相同，本次用锁定发布包提供对应版本证据。Cartesian网格的Border/50来自base `chart.tsx` 的selector，不能仅因Vega段未重复声明而忽略。
 

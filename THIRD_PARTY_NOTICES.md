@@ -47,7 +47,8 @@ The shared shadcn MIT license is included in the macOS application bundles.
 
 Chart geometry and configuration are independently implemented using MyGo's
 public native chart primitives. The pinned shadcn horizontal, mixed and negative
-bar examples, base Chart documentation, MIT license and content manifest are
+bar examples, base Chart implementation and documentation, Vega style source,
+MIT license and content manifest are
 archived in `pkg/display/testdata/shadcn-chart/`. They use the same shadcn commit
 and bundled MIT license described above; Recharts is a reference, not a Go runtime
 dependency or copied implementation.

@@ -298,7 +298,8 @@
     },
     {
       "path": "apps/v4/registry/styles/style-vega.css",
-      "sha256": "10fa07bd61b429ae2c14c572ba9975f6e991d68a04f8fec7e354a062597e0d4e"
+      "sha256": "10fa07bd61b429ae2c14c572ba9975f6e991d68a04f8fec7e354a062597e0d4e",
+      "gitBlob": "9f03b3c6dc5a803db963a81743d47d5b5f8f9fe0"
     },
     {
       "path": "apps/v4/content/docs/components/base/typography.mdx",

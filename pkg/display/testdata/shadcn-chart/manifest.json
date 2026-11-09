@@ -25,6 +25,18 @@
       "archive": "chart.mdx",
       "gitBlob": "01861edb21ab52243d9f051d4b5029e4c9af4755",
       "sha256": "2d2a256a5fa2f2dd71faabde8f78108910d65a864fc708d015880bd7d45b2043"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/ui/chart.tsx",
+      "archive": "chart.tsx",
+      "gitBlob": "fa460c956066fbc5720ebe4203ba7353628201d5",
+      "sha256": "cdaa7c2e82aaf7b233c4764cf506cd9912aa1a49d5a02d4fd2f9a8c134687877"
+    },
+    {
+      "path": "apps/v4/registry/styles/style-vega.css",
+      "archive": "style-vega.css",
+      "gitBlob": "9f03b3c6dc5a803db963a81743d47d5b5f8f9fe0",
+      "sha256": "10fa07bd61b429ae2c14c572ba9975f6e991d68a04f8fec7e354a062597e0d4e"
     }
   ],
   "license": {
