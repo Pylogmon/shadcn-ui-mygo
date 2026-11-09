@@ -38,8 +38,8 @@ composition; they do not automatically supply missing upstream behavior.
 | Badge | `display.Badge` | Verify all variants, interactive/link composition, icon spacing and focus states. |
 | Breadcrumb | `navigation.Breadcrumb` | Current route actions and current-page semantics are tested; add overflow/ellipsis menus and linked-route examples. |
 | Bubble | `conversation.Bubble` | Controlled expansion/reactions exist; verify all tails, sizes, streaming content and reaction layouts against current upstream examples. |
-| Button | `control.Button` / `StyleButton` | Verify every size/variant, loading and icon-only composition, underline link behavior and visual geometry. |
-| Button Group | `control.ButtonGroup` | Currently a horizontal keyboard group; joined corner/border geometry, vertical groups and separators need parity. |
+| Button | `control.Button` / `StyleButton` | Vega-aligned variants, loading/busy state, invalid state and all standard/icon sizes are implemented; verify full platform/theme screenshot and screen-reader matrices. |
+| Button Group | `control.ButtonGroup` | Joined horizontal/vertical geometry, RTL, nested groups, text/separators and native roving focus are tested; verify all compound compositions visually. |
 | Calendar | `display.Calendar` | Currently MyGo's single-date calendar; date ranges, multiple selection, disabled/matcher days, month counts and complete navigation variants remain. |
 | Card | `display.Card`, `CardHeader`, `CardContent`, `CardFooter` | Verify action slots, responsive layouts and all size variants. |
 | Carousel | `display.Carousel` | Boundaries are tested; add swipe/drag, orientation, looping options, keyboard arrows, slide transitions and carousel announcements. |
@@ -47,7 +47,7 @@ composition; they do not automatically supply missing upstream behavior.
 | Checkbox | `control.Checkbox` | Native checked/mixed/disabled behavior exists; complete screenshot and mixed-state keyboard acceptance. |
 | Code Block | `display.CodeBlock` | Native syntax editor, selection and copy exist; verify copy feedback, supported language mapping, themes and large-file behavior. |
 | Collapsible | `display.Collapsible` | Verify focus/controls linkage, interrupted/reversed animation and content preservation. |
-| Combobox | `control.Combobox` | Current text filtering and suggestions need multi-select, custom item content, clear/empty/loading and trigger-style variants. |
+| Combobox | `control.Combobox` | Grouped/custom single-select and multi-select chips with filtering/removal/limits exist; verify loading/async sources, full variant examples and platform IME behavior. |
 | Command | `overlay.Command` / `CommandDialog` | Inline filtering/Enter is tested; verify all disabled-navigation cases, scroll-to-highlight, shortcuts, accessibility and large result sets. |
 | Context Menu | `overlay.ContextMenu` | Native secondary-click and actions are tested; verify keyboard context-key/Shift+F10, all submenu directions, touch and collision edges. |
 | Data Table | `display.DataTable` / `DataRows` | Filtering/sorting/paging exist; add column visibility, facets, row-selection toolbar, pinned columns and complete editable/custom-cell examples. |
@@ -57,19 +57,19 @@ composition; they do not automatically supply missing upstream behavior.
 | Drawer | `overlay.Drawer` | Bottom modal with draggable dismiss exists; verify touch gestures, velocity/snap thresholds, nested scrolling, focus and motion interruptions. |
 | Dropdown Menu | `overlay.DropdownMenu` | Checkbox, radio and nested item API exists; keyboard disabled skipping/submenus/focus restoration are tested. Verify typeahead, RTL, collision and custom content. |
 | Empty | `display.Empty` | Verify icon/media/content/action compositions and constrained widths. |
-| Field | `control.Field` | Label/helper/error association exists; verify required/group/fieldset semantics, validation timing and all layout variants. |
+| Field | `control.Field` | Vertical/horizontal/responsive layout, fieldset/group, required state and compound editor label/error linkage are tested; complete IME/screen-reader and validation timing examples. |
 | Hover Card | `overlay.HoverCard` | Open/close timers and pointer-gap persistence exist; verify timer cancellation, Escape suppression, interactive focus and placement on every side. |
 | Input | `control.Input` | Native text editing/readonly/disabled exists; verify IME, password, selection, clipboard, invalid/focus geometry and all sizes. |
-| Input Group | `control.InputGroup` | Text prefix/suffix exists; arbitrary buttons, menus, icons, vertical addons and textarea groups remain. |
+| Input Group | `control.InputGroup` | Inline/block arbitrary addons, buttons, text and compound editor focus/error propagation are implemented; complete textarea/menu/action examples and platform screenshots. |
 | Input OTP | `control.InputOTP` | Native hidden editor + visible cells, filtering and completion exist; verify paste, selection/caret position, IME, grouping and pattern variants. |
 | Item | `display.Item` | Basic leading/body/trailing slots exist; verify interactive/link, media, separators and all variants/sizes. |
 | Kbd | `display.Kbd` | Verify platform modifier mapping, key groups, icons, nested buttons and contrast. |
-| Label | `control.Label` | Static styled text; `Field` supplies association. Verify standalone label-to-editor click/focus linkage. |
+| Label | `control.Label` | Standalone LabelFor and Field associate visible labels with native editors and focus them on click; verify all disabled and screen-reader combinations. |
 | Marker | `conversation.Marker` | Inline/bordered/separator status exists; verify icons, busy states and complete upstream compositions. |
 | Menubar | `overlay.Menubar` | Native menu triggers and horizontal focus grouping exist; sibling-menu switching with Left/Right while open, hover switching and all close/restore paths need tests. |
 | Message | `conversation.Message` | Sender/avatar/header/footer layout exists; complete action/tool/error/branching examples and verify streaming accessibility. |
 | Message Scroller | `conversation.MessageScroller` | Keyed native virtual list, place holding and live-edge following exist; turn anchoring, stream pause heuristics and upstream jump controls remain. |
-| Native Select | `control.NativeSelect` | Currently aliases `Select`; implement/verify a deliberate platform-select adapter or document this as an accepted native adaptation before parity signoff. |
+| Native Select | `control.NativeSelect` | Deliberate MyGo system-menu adapter replaces the alias; native disabled/group/selection and no parent-tree menu painting are tested. Verify real out-of-window menus on every platform. |
 | Navigation Menu | `navigation.NavigationMenu` | Native grouped dropdown route menus exist; shadcn content mega-panels, viewport/indicator motion, hover intent and sibling keyboard switching remain. |
 | Pagination | `navigation.Pagination` | One-based bounds, ellipsis and current page are tested; verify large page counts, responsiveness and full link composition. |
 | Popover | `overlay.Popover` | Native outside/Escape dismissal, attachment and styling exist; verify initial focus, focus restoration, nested overlays, collision and all align variants. |
@@ -78,7 +78,7 @@ composition; they do not automatically supply missing upstream behavior.
 | Radio Group | `control.RadioGroup` | Native selection/arrow behavior exists; verify every orientation, RTL and group/description association. |
 | Resizable | `display.Resizable` | Native two-pane split exists; verify min/max during drag, keyboard resizing, persistence, nested and multi-pane layouts. |
 | Scroll Area | `display.ScrollArea` | Native scrolling exists; verify horizontal/both axes, scrollbar variants, overscroll and nested scroll chaining. |
-| Select | `control.Select` | Native keyboard and disabled skipping are tested; verify grouping, separators, scrolling controls, align/collision and complex option composition. |
+| Select | `control.Select` | Grouped options, custom item/trigger content, keyboard and disabled behavior exist; complete align/collision/scroll examples and screenshots. |
 | Separator | `display.Separator` | Horizontal/vertical rule exists; verify decorative versus semantic separator roles. |
 | Sheet | `overlay.Sheet` | Four-edge modal panel exists; verify every edge, constrained sizing, nested scroll, focus/exit and RTL logical-side behavior. |
 | Sidebar | `navigation.Sidebar` | Current route, grouping, collapse and separate sidebar semantic colors exist; responsive/off-canvas, nested collapsibles, icon tooltips, rail/inset/floating variants remain. |

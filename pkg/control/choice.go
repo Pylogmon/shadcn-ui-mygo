@@ -89,6 +89,9 @@ func Switch(c *ui.Context, on *bool, p SwitchProps) ui.Element {
 type Option struct {
 	Value, Label string
 	Disabled     bool
+	// Group labels adjacent options. Separator inserts a non-selectable rule.
+	Group     string
+	Separator bool
 }
 
 func optionLabel(o Option) string {
@@ -107,6 +110,9 @@ type RadioGroupProps struct {
 func RadioGroup(c *ui.Context, selected *string, p RadioGroupProps) ui.Element {
 	g := ui.RadioGroup(c, func() {
 		for _, o := range p.Options {
+			if o.Separator {
+				continue
+			}
 			Radio(c.Key(o.Value), selected, o.Value, optionLabel(o), o.Disabled || p.Disabled)
 		}
 	}).Label(p.Label).Gap(10).Disabled(p.Disabled)

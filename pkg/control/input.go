@@ -75,12 +75,109 @@ func Label(c *ui.Context, text string) ui.Element {
 type FieldProps struct {
 	Label, Description, Error string
 	Required, Disabled        bool
+	Orientation               FieldOrientation
+	// LabelWidth reserves label room in horizontal layouts; zero uses 140 DIPs.
+	LabelWidth float32
+	// ResponsiveWidth is the enclosing FieldGroup's width for responsive fields.
+	// Without a FieldGroup or this override the window width is used.
+	ResponsiveWidth float32
+}
+
+type FieldOrientation uint8
+
+const (
+	FieldVertical FieldOrientation = iota
+	FieldHorizontal
+	FieldResponsive
+)
+
+type fieldGroupLayout struct {
+	width  float32
+	active bool
+}
+
+// FieldGroup stacks fields and supplies its measured width for responsive
+// fields. A changed layout requests one correction frame; stable groups do not
+// schedule an idle render loop.
+func FieldGroup(c *ui.Context, content func()) ui.Element {
+	root := ui.Column(c).FillWidth().Gap(24)
+	s := ui.Local(c.Root(), "shadcn.control.field-group", func() fieldGroupLayout { return fieldGroupLayout{} })
+	previous := *s
+	measured := ui.Local(root, "responsive-width", func() float32 { return 0 })
+	root.Draw(func(_ *ui.Painter, r ui.Rect) {
+		difference := *measured - r.W
+		if difference > .25 || difference < -.25 {
+			*measured = r.W
+			c.Invalidate()
+		}
+	})
+	width := *measured
+	if width <= 0 {
+		width, _ = c.Size()
+	}
+	s.width, s.active = width, true
+	defer func() { *s = previous }()
+	return root.Children(content)
+}
+
+type FieldSetProps struct {
+	Legend, Description string
+	Disabled            bool
+}
+
+func FieldSet(c *ui.Context, p FieldSetProps, content func()) ui.Element {
+	t := theme.TokensOf(c)
+	root := ui.Column(c).FillWidth().Gap(16).Role(ui.RoleGroup).Label(p.Legend).Disabled(p.Disabled)
+	return root.Children(func() {
+		if p.Legend != "" {
+			ui.Text(c, p.Legend).FontSize(16).FontWeight(500)
+		}
+		if p.Description != "" {
+			d := ui.Text(c, p.Description).FontSize(14).TextColor(t.MutedForeground)
+			root.DescribedBy(d)
+		}
+		if content != nil {
+			content()
+		}
+	})
+}
+
+// LabelFor associates an independently built label with its editor. Native
+// label activation focuses text fields and toggles checkboxes/radios/switches.
+func LabelFor(c *ui.Context, text string, editor ui.Element) ui.Element {
+	label := Label(c, text)
+	fieldTarget(c, editor).LabelledBy(label)
+	return label
+}
+
+func fieldTarget(c *ui.Context, root ui.Element) ui.Element {
+	handle := ui.Local(root, "shadcn.control.editor-target", func() ui.Handle { return ui.Handle{} })
+	if target := c.Resolve(*handle); target.Valid() {
+		return target
+	}
+	return root
 }
 
 // Field links its label and helper text to the returned editor for assistive technology.
 func Field(c *ui.Context, p FieldProps, editor func() ui.Element) ui.Element {
 	t := theme.TokensOf(c)
-	return ui.Column(c).Gap(7).Disabled(p.Disabled).Children(func() {
+	root := ui.Column(c).Gap(7).FillWidth().Disabled(p.Disabled).Role(ui.RoleGroup)
+	horizontal := p.Orientation == FieldHorizontal
+	if p.Orientation == FieldResponsive {
+		width := p.ResponsiveWidth
+		s := ui.Local(c.Root(), "shadcn.control.field-group", func() fieldGroupLayout { return fieldGroupLayout{} })
+		if width <= 0 && s.active {
+			width = s.width
+		}
+		if width <= 0 {
+			width, _ = c.Size()
+		}
+		horizontal = width >= 448
+	}
+	if horizontal {
+		root.Row().AlignItems(ui.Start).Gap(16)
+	}
+	return root.Children(func() {
 		label := p.Label
 		if p.Required {
 			label += " *"
@@ -88,24 +185,39 @@ func Field(c *ui.Context, p FieldProps, editor func() ui.Element) ui.Element {
 		var title ui.Element
 		if label != "" {
 			title = Label(c, label)
+			if horizontal {
+				width := p.LabelWidth
+				if width <= 0 {
+					width = 140
+				}
+				title.Width(width).Shrink(0).PaddingY(8)
+			}
 		}
-		input := editor()
-		if label != "" {
-			input.LabelledBy(title)
-		}
-		if p.Error != "" {
-			desc := ui.Text(c, p.Error).FontSize(13).TextColor(t.Destructive).Role(ui.RoleAlert)
-			input.Invalid(true).DescribedBy(desc)
-		} else if p.Description != "" {
-			desc := ui.Text(c, p.Description).FontSize(13).TextColor(t.MutedForeground)
-			input.DescribedBy(desc)
-		}
+		ui.Column(c).Grow(1).MinWidth(0).Gap(7).Children(func() {
+			input := fieldTarget(c, editor())
+			if label != "" {
+				input.LabelledBy(title)
+			}
+			if p.Required {
+				input.Description("Required")
+			}
+			if p.Description != "" {
+				desc := ui.Text(c, p.Description).FontSize(14).TextColor(t.MutedForeground)
+				input.DescribedBy(desc)
+			}
+			if p.Error != "" {
+				desc := ui.Text(c, p.Error).FontSize(14).TextColor(t.Destructive).Role(ui.RoleAlert)
+				input.Invalid(true).ErrorMessage(desc).DescribedBy(desc)
+			}
+		})
 	})
 }
 
 type InputGroupProps struct {
-	Prefix, Suffix    string
-	Disabled, Invalid bool
+	Prefix, Suffix                               string
+	Disabled, Invalid                            bool
+	InlineStart, InlineEnd, BlockStart, BlockEnd func()
+	Label                                        string
 }
 
 // InputGroup surrounds an editor with units, shortcuts, or supporting text.
@@ -115,19 +227,99 @@ func InputGroup(c *ui.Context, p InputGroupProps, editor func() ui.Element) ui.E
 	if p.Invalid {
 		border = t.Destructive
 	}
-	return ui.Row(c).AlignItems(ui.Center).Gap(8).PaddingX(12).Radius(t.Radius*.8).
-		Border(1, border).Background(t.Background).Disabled(p.Disabled).Children(func() {
-		if p.Prefix != "" {
-			ui.Text(c, p.Prefix).FontSize(14).TextColor(t.MutedForeground)
+	root := ui.Column(c).FillWidth().Radius(t.RadiusMD()).Border(1, border).Background(t.Background).Role(ui.RoleGroup).Disabled(p.Disabled)
+	// Treat the compound control as one joined group item, rather than
+	// accidentally joining the action buttons inside its addons.
+	scope := groupScope(c)
+	var parent *groupBuild
+	before := 0
+	if len(scope.active) > 0 {
+		parent = scope.active[len(scope.active)-1]
+		before = len(parent.items)
+	}
+	if t.Dark {
+		root.Background(t.Input.Alpha(.3))
+	}
+	var input ui.Element
+	handle := ui.Local(root, "shadcn.control.editor-target", func() ui.Handle { return ui.Handle{} })
+	// Buttons inside an addon retain native activation; unhandled addon pointer
+	// presses focus the editor, matching input-group icon/text click behavior.
+	addon := func(key string, block bool, content func()) {
+		if content == nil {
+			return
 		}
-		e := editor().Grow(1).MinWidth(0).Border(0, ui.Transparent).Background(ui.Transparent)
-		if p.Invalid {
-			e.Invalid(true)
+		a := ui.Row(c.Key(key)).Gap(8).AlignItems(ui.Center).TextColor(t.MutedForeground).FontSize(14)
+		if block {
+			a.FillWidth().Padding(8, 10)
+		} else {
+			a.Padding(4, 8).Shrink(0)
 		}
-		if p.Suffix != "" {
-			ui.Text(c, p.Suffix).FontSize(14).TextColor(t.MutedForeground)
-		}
+		a.HandleInput(func(ev ui.InputEvent) bool {
+			if ev.Kind == ui.InputPointerDown && ev.Button == 0 && !p.Disabled {
+				handle.Focus()
+			}
+			return false
+		}).Children(content)
+	}
+	root.Children(func() {
+		addon("block-start", true, p.BlockStart)
+		ui.Row(c.Key("control")).FillWidth().Gap(0).AlignItems(ui.Center).Children(func() {
+			if p.Prefix != "" || p.InlineStart != nil {
+				addon("inline-start", false, func() {
+					if p.Prefix != "" {
+						ui.Text(c, p.Prefix)
+					}
+					if p.InlineStart != nil {
+						p.InlineStart()
+					}
+				})
+			}
+			input = editor().Bind(handle).Grow(1).MinWidth(0).Radius(0).Border(0, ui.Transparent).Background(ui.Transparent).FocusRing(false).Disabled(p.Disabled).Invalid(p.Invalid)
+			if p.Label != "" {
+				input.Label(p.Label)
+			}
+			if p.Suffix != "" || p.InlineEnd != nil {
+				addon("inline-end", false, func() {
+					if p.Suffix != "" {
+						ui.Text(c, p.Suffix)
+					}
+					if p.InlineEnd != nil {
+						p.InlineEnd()
+					}
+				})
+			}
+		})
+		addon("block-end", true, p.BlockEnd)
 	})
+	if input.FocusVisible() {
+		root.Border(1, t.Ring).Shadow(0, 0, 0, 3, t.Ring.Alpha(.5))
+	}
+	if p.Invalid {
+		alpha := float32(.2)
+		if t.Dark {
+			alpha = .4
+		}
+		root.Border(1, t.Destructive).Shadow(0, 0, 0, 3, t.Destructive.Alpha(alpha))
+	}
+	if p.Disabled {
+		root.Opacity(.5)
+	}
+
+	if parent != nil {
+		parent.items = parent.items[:before]
+	}
+	return ButtonGroupItem(c, root)
+}
+
+func InputGroupButton(c *ui.Context, label string, props ...ButtonProps) ui.Element {
+	p := ButtonProps{Variant: Ghost, Size: ExtraSmall}
+	if len(props) > 0 {
+		p = props[0]
+	}
+	if p.Size == DefaultSize {
+		p.Size = ExtraSmall
+	}
+	return Button(c, label, p).Radius(max(0, theme.TokensOf(c).Radius-5)).PaddingX(6)
 }
 
 type InputOTPProps struct {
