@@ -26,7 +26,8 @@
 | 5.D.1 | Menu/NativeMenu 等核心成对组件、跨窗口 Flyout | 已提交 `1859ae3`；30 项 desktop 检查及 macOS 小窗口越窗验证通过 |
 | 5.D.2 | Create 风格 Gallery、真实配置/预览和预设 | 已提交 `07c6e2e`，27 项 Gallery 检查及截图通过 |
 | 5.D.3a | Flyout 可逆退场、原生关闭拦截、减少动画和生命周期 | 23 项针对性检查及 vet 通过，提交本子阶段 |
-| 5.D.3b | Tooltip/HoverCard/DatePicker 等其余浮层成对迁移 | 实施与集成验证中；平台主题语义映射已提交 `d1cf14d` |
+| 5.D.3b | DatePicker/DateRangePicker 与 Native 日期组件对 | 10 项针对性检查及 vet 通过，提交本子阶段 |
+| 5.D.3c | Tooltip/HoverCard 与 Native 组件对 | 实施与集成验证中 |
 | 5.E | Tabs 激活模式、关联、方向键、动态指示器 | 已提交 `d734b28`，9 项导航测试和 vet 通过 |
 | 5.F | 不确定进度、非有限值、原生标题层级与分隔语义 | 已提交 `25d9ca2`，回归与模块检查通过 |
 

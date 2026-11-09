@@ -13,6 +13,8 @@
 | `ContextMenu` | `NativeContextMenu` | 指针、Control-click、菜单键、Shift+F10 |
 | `Popover` | `NativePopover` | 自绘主题与平台原生 Popover 外观 |
 | `Select` | `NativeSelect` | 独立 Flyout 选项与系统菜单选择 |
+| `DatePicker` | `NativeDatePicker` | 独立日期/时间窗口与平台样式容器 |
+| `DateRangePicker` | `NativeDateRangePicker` | 隔离未完成范围、完整范围提交 |
 
 `NativeMenu` 家族和 `NativeSelect` 强制走 `ui.SystemMenus`，并在同一帧恢复调用方的菜单策略；不会因为预览设置而偷偷改成自绘菜单。`NativePopover` 在 macOS 使用 NSPopover 材质/箭头与平台主题；其他平台使用 MyGo 的原生 Flyout 和该窗口的平台默认主题，不声称存在对应的操作系统通用 Popover 控件。
 
@@ -53,7 +55,9 @@ err := desktop.Popover(c, host, "settings", anchor, &open,
 
 `pkg/overlay` 保留 `InWindowDropdownMenu`、`InWindowContextMenu`、`InWindowMenubar`、`InWindowPopover`、`InWindowTooltip`、`InWindowHoverCard`，专门用于明确需要父窗口内表面的场景。第一版同名简写已标记 Deprecated。没有 Host 时，桌面组件可以绘制关闭状态的触发器，但尝试打开会报错，不会静默退回窗口内浮层。
 
-Tooltip、HoverCard、DatePicker 等其余弹出家族的完整成对迁移仍待后续阶段。`Native*` 不会用一个自绘窗口冒充运行时不存在的操作系统控件；适配范围必须在实现与文档中明确。
+日期组件对已实现；`NativeDatePicker` / `NativeDateRangePicker` 使用原生 Popover/Flyout 容器与平台主题的受约束 Go 日历，并不声称 MyGo 暴露了系统日期网格。普通选择提交一次；范围选择在完成有效端点对后才发布；`ShowTime` / `Confirm` 使用 Apply/Cancel 草稿。Footer 接受明确的子 Context，父窗口零参数 Calendar.Footer 不可跨窗口复用。
+
+Tooltip、HoverCard 的成对迁移正在后续阶段完成。`Native*` 不会用一个自绘窗口冒充运行时不存在的操作系统控件；适配范围必须在实现与文档中明确。
 
 ## 验证范围
 
