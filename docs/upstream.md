@@ -14,6 +14,8 @@ MessageScroller行为另外核对同一提交的`packages/react/src/message-scro
 
 Questionnaire另核对同一提交的`packages/react/src/questionnaire`完整14份primitive、collection、hooks、类型、测试与说明；原文和MIT许可归档于`pkg/conversation/testdata/questionnaire`。连同registry包装/组合示例、base/react文档和14个独立示例，共32份Git blob与SHA-256记录在[upstream.json](upstream.json)。Go公开API、成功控件数据、草稿/受控输入及浏览器校验差异见[Questionnaire](questionnaire.md)；未把仅包装组件的registry文件当作完整行为源。
 
+Chart另核对同一提交的base `chart.tsx`、Vega样式及base文档，并读取new-york-v4的horizontal、mixed、negative三个Bar示例，原始四份文档/示例、MIT许可与blob/SHA-256归档于`pkg/display/testdata/shadcn-chart`。这些示例提供几何与配置参照，Vega继续是本阶段视觉基线；mixed是单系列逐类别颜色，negative是纵向示例且另含LabelList。固定lockfile的Recharts版本为3.8.0；Go实现使用公开MyGo尺度与绘图能力，没有引入或复制Recharts实现。当前已表达的配置及剩余组合见[Chart](chart.md)。
+
 共享文字扫光与滚动渐隐对照同一提交的 `packages/shadcn/src/tailwind.css`，Git blob为 `067bfc56fc086420835582f469e2c78d3942c69a`；Shimmer文档blob为 `6b12d933a3b8b421e49b7566857e19afa4fa99c6`。原始CSS/文档、MIT许可与SHA-256归档在 `internal/shimmer/testdata/shadcn`。普通文字仍由MyGo原生排版，公开ColorEffect处理字形覆盖内的扫光；sRGB检查不能推导为全部广色域平台已对齐。
 
 Command 的评分行为另外固定到 shadcn 该提交在 `pnpm-lock.yaml` 锁定的 cmdk 1.1.1：提交 [`fb4ea04e9ec211777fbb39c6104e3c5f2ee107d2`](https://github.com/dip/cmdk/tree/fb4ea04e9ec211777fbb39c6104e3c5f2ee107d2)，原仓库 `pacocoursey/cmdk` 现重定向到 `dip/cmdk`。原始 `command-score.ts`、MIT许可证、来源SHA-256和可离线生成的数值对照在 `pkg/overlay/testdata/cmdk`。Go移植的版权声明见 [第三方声明](../THIRD_PARTY_NOTICES.md)。

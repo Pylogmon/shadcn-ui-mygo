@@ -24,6 +24,31 @@ const (
 	RadialChart
 )
 
+// ChartOrientation chooses the direction in which BarChart values grow.
+// The zero value preserves vertical bars. Other chart kinds ignore it.
+type ChartOrientation uint8
+
+const (
+	ChartVertical ChartOrientation = iota
+	ChartHorizontal
+)
+
+// ChartCartesianProps configures Cartesian axes and marks. Zero values keep
+// existing axes, grid, cursor and radius. It has no effect on polar charts.
+type ChartCartesianProps struct {
+	HideValueAxis, HideCategoryAxis, HideGrid, HideCursor bool
+	// FormatCategory changes axis text only; inspection keeps original labels.
+	FormatCategory func(string) string
+	// FormatValue formats numeric axis ticks (fractions for normalized stacks).
+	// Nil falls back to ChartProps.FormatValue; tooltips always keep raw data.
+	FormatValue func(float64) string
+	// CategoryAxisMaxWidth bounds category text. Horizontal bars default to 60
+	// DIPs; vertical charts have no added cap. Invalid widths use that default.
+	CategoryAxisMaxWidth float32
+	// BarRadius nil or invalid (negative/nonfinite) uses 3 DIPs; 0 is square.
+	BarRadius *float32
+}
+
 type ChartSeries struct {
 	Name   string
 	Values []float64
@@ -31,13 +56,16 @@ type ChartSeries struct {
 }
 
 type ChartProps struct {
-	Labels []string
-	Series []ChartSeries
-	Kind   ChartKind
-	Height float32
-	Label  string
+	Labels      []string
+	Series      []ChartSeries
+	Kind        ChartKind
+	Orientation ChartOrientation
+	Cartesian   ChartCartesianProps
+	Height      float32
+	Label       string
 	// Stacked uses diverging stacks for bars/areas and concentric rings for
-	// pies/donuts. Normalized expresses Cartesian stacks as proportions.
+	// pies/donuts. Normalized uses shares of each category's total absolute
+	// magnitude, preserving diverging positive/negative sides.
 	Stacked, Normalized bool
 	// Legend adds semantic series/category keys below the plot.
 	Legend bool
@@ -52,7 +80,8 @@ type ChartProps struct {
 	InnerRadius float32
 	// MaxValue is the radial/radar domain maximum; zero derives it from data.
 	MaxValue float64
-	// CategoryColors overrides category fills in pie/donut/unstacked radial plots.
+	// CategoryColors overrides fills in pie/donut/unstacked radial plots and
+	// single-series bars. That bar mode also uses category legend/tooltip colors.
 	CategoryColors []ui.Color
 }
 
@@ -127,7 +156,7 @@ func Chart(c *ui.Context, p ChartProps) ui.Element {
 		*selected = -1
 	}
 	height := p.Height
-	if height <= 0 {
+	if height <= 0 || !finite(float64(height)) {
 		height = 220
 	}
 	return root.Children(func() {
@@ -160,7 +189,7 @@ func seriesName(p ChartProps, i int) string {
 }
 func chartLegendItems(c *ui.Context, p ChartProps) []ChartLegendItem {
 	var items []ChartLegendItem
-	if p.Kind == PieChart || p.Kind == DonutChart || p.Kind == RadialChart && !p.Stacked {
+	if p.Kind == PieChart || p.Kind == DonutChart || p.Kind == RadialChart && !p.Stacked || chartCategoryFills(p) {
 		for i, label := range p.Labels {
 			items = append(items, ChartLegendItem{label, categoryColor(c, p, i)})
 		}
@@ -188,6 +217,9 @@ func tooltipData(c *ui.Context, p ChartProps, index int) ChartTooltipData {
 			continue
 		}
 		color := chartColor(c, p, j)
+		if chartCategoryFills(p) {
+			color = categoryColor(c, p, index)
+		}
 		if p.Kind == PieChart || p.Kind == DonutChart || p.Kind == RadialChart || p.Kind == RadarChart {
 			if s.Values[index] < 0 {
 				continue
@@ -267,7 +299,7 @@ func stackSegments(p ChartProps) [][]chart.Segment {
 func cartesianChart(c *ui.Context, p ChartProps, selected *int, height float32) ui.Element {
 	t := theme.TokensOf(c)
 	plot, scale := scaledChartValues(p)
-	hi, lo := float64(1), float64(0)
+	hi, lo := float64(0), float64(0)
 	var stacked [][]chart.Segment
 	if p.Stacked && p.Kind != LineChart {
 		stacked = stackSegments(plot)
@@ -289,43 +321,38 @@ func cartesianChart(c *ui.Context, p ChartProps, selected *int, height float32) 
 		}
 	}
 	x := chart.NewBand(p.Labels...).Padding(.3, .15)
-	y := chart.NewLinear(lo, hi).Nice(4)
-	if scale != 1 {
-		y.Format = func(v float64) string {
-			value := v * scale
-			if !finite(value) {
-				return fmt.Sprintf("%g × %g", v, scale)
-			}
-			if p.FormatValue != nil {
-				return p.FormatValue(value)
-			}
-			return chartFormat(value)
-		}
-	} else if p.FormatValue != nil {
-		y.Format = p.FormatValue
-	}
+	y := cartesianValueScale(p, scale, lo, hi)
+	direction := c.Direction()
+	axes := cartesianAxes(c, p, x, y, direction)
+	horizontal := horizontalBars(p)
 	valid := validCategories(p, false)
-	return chart.Plot(c, chart.Axes{Left: y.Ticks(4), Bottom: x.Ticks()}, func(area ui.Element) {
+	return chart.Plot(c, axes, func(area ui.Element) {
 		label := p.Label
 		if label == "" {
 			label = "Chart"
 		}
-		area.Label(label).Role(ui.RoleGroup).Description("Use Left and Right arrows to inspect values; Home and End move to the first and last category; Escape clears inspection.")
-		cursor := slices.Index(valid, *selected)
-		xs := make([]float32, len(valid))
-		for i, index := range valid {
-			xs[i] = x.At(index)
+		description := "Use Left and Right arrows to inspect values; Home and End move to the first and last category; Escape clears inspection."
+		if horizontal {
+			description = "Use Up and Down arrows to inspect values; Home and End move to the first and last category; Escape clears inspection."
 		}
-		chart.Select(c, area, &cursor, xs, func(i int) string { return describeChart(c, p, valid[i]) })
-		*selected = -1
-		if cursor >= 0 && cursor < len(valid) {
-			*selected = valid[cursor]
+		area.Label(label).Role(ui.RoleGroup).Description(description).Direction(direction)
+		inspectCartesian(c, area, p, selected, x, valid)
+		drawers := []func(*ui.Painter, ui.Rect){}
+		if !p.Cartesian.HideGrid {
+			gridScale := y
+			gridScale.Format = nil
+			gridTicks := gridScale.Ticks(4)
+			drawers = append(drawers, func(painter *ui.Painter, r ui.Rect) {
+				for _, tick := range gridTicks {
+					if horizontal {
+						painter.Line(chart.X(r, tick.At), r.Y, chart.X(r, tick.At), r.Y+r.H, 1, t.Border)
+					} else {
+						painter.Line(r.X, chart.Y(r, tick.At), r.X+r.W, chart.Y(r, tick.At), 1, t.Border)
+					}
+				}
+			})
 		}
-		drawers := []func(*ui.Painter, ui.Rect){func(painter *ui.Painter, r ui.Rect) {
-			for _, tick := range y.Ticks(4) {
-				painter.Line(r.X, chart.Y(r, tick.At), r.X+r.W, chart.Y(r, tick.At), 1, t.Border)
-			}
-		}}
+
 		for j, s := range plot.Series {
 			color := chartColor(c, p, j)
 			n := min(len(s.Values), len(p.Labels))
@@ -343,7 +370,11 @@ func cartesianChart(c *ui.Context, p ChartProps, selected *int, height float32) 
 						band.Lo += float32(j) * width
 						band.Hi = band.Lo + width
 					}
-					mark := motion.ApplyTransition(c, chart.Rect(c, band, y.Span(from, to)).Background(color).Radius(3).Label(fmt.Sprintf("%s %s: %g", seriesName(p, j), p.Labels[i], p.Series[j].Values[i])))
+					xSpan, ySpan := band, y.Span(from, to)
+					if horizontal {
+						xSpan, ySpan = ySpan, horizontalBarBand(band)
+					}
+					mark := motion.ApplyTransition(c, chart.Rect(c.Key(chartBarKey{j, i}), xSpan, ySpan).Background(barColor(c, p, j, i)).Radius(chartBarRadius(p)).Label(fmt.Sprintf("%s %s: %g", seriesName(p, j), p.Labels[i], p.Series[j].Values[i])))
 					if *selected == i {
 						mark.Opacity(.8)
 					}
@@ -354,14 +385,15 @@ func cartesianChart(c *ui.Context, p ChartProps, selected *int, height float32) 
 				if len(stacked) > 0 {
 					segments = stackedSegments(s.Values[:n], stacked[j], x, y)
 				}
+				isArea, zeroBaseline := p.Kind == AreaChart, y.At(0)
 				drawers = append(drawers, func(painter *ui.Painter, r ui.Rect) {
 					for _, segment := range segments {
-						if p.Kind == AreaChart {
+						if isArea {
 							base := segment.Base
 							if len(base) == 0 {
 								base = make([]float32, len(segment.X))
 								for i := range base {
-									base[i] = y.At(0)
+									base[i] = zeroBaseline
 								}
 							}
 							painter.FillPath(chart.Area(r, segment.X, base, segment.Y, chart.CurveMonotone), color.Alpha(.2))
@@ -383,11 +415,15 @@ func cartesianChart(c *ui.Context, p ChartProps, selected *int, height float32) 
 				draw(painter, r)
 			}
 		})
-		if *selected >= 0 {
-			chart.RuleX(c, x.At(*selected), 1).Background(t.Border).IgnoreInput(true)
+		if *selected >= 0 && !p.Cartesian.HideCursor {
+			if horizontal {
+				chart.RuleY(c, 1-x.At(*selected), 1).Background(t.Border).IgnoreInput(true)
+			} else {
+				chart.RuleX(c, x.At(*selected), 1).Background(t.Border).IgnoreInput(true)
+			}
 		}
 		chartTooltipAt(c, p, *selected)
-	}).Height(height).FillWidth().Gap(8).TextColor(t.MutedForeground).FontSize(12)
+	}).Height(height).FillWidth().MinWidth(0).Gap(8).FontSize(12).Direction(ui.LeftToRight)
 }
 
 type plotSegment struct{ X, Y, Base []float32 }

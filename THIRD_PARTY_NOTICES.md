@@ -45,6 +45,13 @@ Its complete reference implementation, collection/hooks, tests, MIT license and
 content manifest are archived in `pkg/conversation/testdata/questionnaire/`.
 The shared shadcn MIT license is included in the macOS application bundles.
 
+Chart geometry and configuration are independently implemented using MyGo's
+public native chart primitives. The pinned shadcn horizontal, mixed and negative
+bar examples, base Chart documentation, MIT license and content manifest are
+archived in `pkg/display/testdata/shadcn-chart/`. They use the same shadcn commit
+and bundled MIT license described above; Recharts is a reference, not a Go runtime
+dependency or copied implementation.
+
 Toast behavior and styles are independently ported against Sonner 2.0.7,
 commit `3ba7aa17ab7e8101b9cf4893936f873b0d4769b3`, the version locked by
 the fixed shadcn reference. The exact source, MIT license (Copyright (c) 2023

@@ -63,7 +63,8 @@
     },
     {
       "path": "apps/v4/registry/bases/base/ui/chart.tsx",
-      "sha256": "cdaa7c2e82aaf7b233c4764cf506cd9912aa1a49d5a02d4fd2f9a8c134687877"
+      "sha256": "cdaa7c2e82aaf7b233c4764cf506cd9912aa1a49d5a02d4fd2f9a8c134687877",
+      "gitBlob": "fa460c956066fbc5720ebe4203ba7353628201d5"
     },
     {
       "path": "apps/v4/registry/bases/base/ui/checkbox.tsx",
@@ -937,6 +938,26 @@
       "gitBlob": "9e9a2a0a3c5b00c3ad79a3f8acba1e9dce8a1e79",
       "sha256": "56616a86a91b4bba801ceec7fecfe279330aa84c4b1863952f721cdee01cfff1",
       "bytes": 15004
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-bar-horizontal.tsx",
+      "gitBlob": "2016a9785c6da00c39e86bdd014dc6d4f0c48d70",
+      "sha256": "0dccb76e8d82c6b113a074ef17a22bd06c5908da3bc42df2a24703d8d3b81f5b"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-bar-mixed.tsx",
+      "gitBlob": "bac07d75f0ac98f892ab4618471e085a2b1f1512",
+      "sha256": "b7e6ee25820af6a54cd995117db4747bda7970be48ce823f82f7c5ed5767d014"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-bar-negative.tsx",
+      "gitBlob": "982bccdb9cd4ebb5010a10cbfd43bfff876dd94c",
+      "sha256": "22733cdd896a6f877170ea7e887b3331640c0727cee41aba87d5178526ed83f6"
+    },
+    {
+      "path": "apps/v4/content/docs/components/base/chart.mdx",
+      "gitBlob": "01861edb21ab52243d9f051d4b5029e4c9af4755",
+      "sha256": "2d2a256a5fa2f2dd71faabde8f78108910d65a864fc708d015880bd7d45b2043"
     }
   ],
   "components": [
