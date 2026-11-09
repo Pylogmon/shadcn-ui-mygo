@@ -72,7 +72,7 @@ composition; they do not automatically supply missing upstream behavior.
 | Kbd | `display.Kbd` | Verify platform modifier mapping, key groups, icons, nested buttons and contrast. |
 | Label | `control.Label` | Standalone LabelFor and Field associate visible labels with native editors and focus them on click; verify all disabled and screen-reader combinations. |
 | Marker | `conversation.Marker` | Inline/bordered/separator status exists; verify icons, busy states and complete upstream compositions. |
-| Menubar | `overlay.Menubar` | NativeMenubar uses platform popup triggers; Menubar retains themed fallback. Verify cross-window native keyboard/hover switching, all close/restore paths and application-level menu-bar integration. |
+| Menubar | `desktop.Menubar` / `NativeMenubar` | One shadcn Flyout reanchors across siblings with keyboard/RTL/hover, submenu priority, rapid child key sequences, stable keys/revisions, dismissal and focus. Native forces OS popup menus, not an application-global menubar; runtime exposes no OS-tracking sibling hook. App-global integration and full platform/edge matrices remain; Tab may use an explicit adjacent Handle callback. |
 | Message | `conversation.Message` | Sender/avatar/header/footer layout exists; complete action/tool/error/branching examples and verify streaming accessibility. |
 | Message Scroller | `conversation.MessageScroller` | Keyed native virtual list, place holding and live-edge following exist; turn anchoring, stream pause heuristics and upstream jump controls remain. |
 | Native Select | `control.NativeSelect` | Deliberate MyGo system-menu adapter replaces the alias; native disabled/group/selection and no parent-tree menu painting are tested. Verify real out-of-window menus on every platform. |

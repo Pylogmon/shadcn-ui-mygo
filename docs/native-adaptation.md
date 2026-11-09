@@ -11,6 +11,7 @@
 | `Menu` | `NativeMenu` | 自绘可测量菜单与系统菜单 |
 | `DropdownMenu` | `NativeDropdownMenu` | 对应菜单对的下拉命名 |
 | `ContextMenu` | `NativeContextMenu` | 指针、Control-click、菜单键、Shift+F10 |
+| `Menubar` | `NativeMenubar` | 同一 Flyout 的兄弟菜单切换与系统弹出菜单触发器组 |
 | `Popover` | `NativePopover` | 自绘主题与平台原生 Popover 外观 |
 | `Select` | `NativeSelect` | 独立 Flyout 选项与系统菜单选择 |
 | `DatePicker` | `NativeDatePicker` | 独立日期/时间窗口与平台样式容器 |
@@ -21,6 +22,8 @@
 `NativeMenu` 家族和 `NativeSelect` 强制走 `ui.SystemMenus`，并在同一帧恢复调用方的菜单策略；不会因为预览设置而偷偷改成自绘菜单。`NativePopover` 在 macOS 使用 NSPopover 材质/箭头与平台主题；其他平台使用 MyGo 的原生 Flyout 和该窗口的平台默认主题，不声称存在对应的操作系统通用 Popover 控件。
 
 自绘 Menu 的内容实际位于 Flyout 子窗口，使用 shadcn 颜色、字体、圆角与状态反馈。子菜单以可测量的相邻面板呈现，可使用键盘、typeahead、禁用项、复选/单选和长菜单滚动；原生窗口负责显示器工作区约束。它没有用父窗口内的绝对定位覆盖层冒充越窗实现。
+
+`Menubar` 使用调用方持有的 `MenubarState{Open,Active}`，同一个 Flyout 在顶层标题间重锚。左右键与RTL、指针切换、子菜单优先、动态移除及结果只回传一次均已测试；子窗口连续按键可在父窗口尚未刷新前操作新菜单。Tab 关闭并恢复当前触发器，可通过 `MenubarProps.OnTab` 用真实控件 Handle 指定相邻目标。`NativeMenubar` 是系统弹出菜单的触发器组，不是应用级操作系统菜单栏；MyGo 目前没有暴露系统 tracking 期间跨顶层触发器切换的 hook。
 
 ## 父窗口与生命周期
 

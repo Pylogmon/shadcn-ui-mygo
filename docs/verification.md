@@ -82,3 +82,5 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 - Resizable：`go test ./pkg/display -run Resizable` 16项检查通过，display全包118项和 vet 通过。覆盖多面板约束推挤、折叠/恢复、真实拖动/取消、横纵向/RTL键盘、原生AX合成方向键、稳定ID/焦点、JSON回载、外部布局替换取消旧拖动、嵌套及禁用拖动时内容仍可编辑。1500次确定性约束分配先复现两侧折叠转移不匹配导致总和96，再修复并验证总和100、有限值和每个范围；非凸折叠模式无解不覆盖调用方布局。旧DIP包装保留原生Split，只修已复现的非有限受控尺寸。
 
 - Flyout 尺寸/方向：`go test ./pkg/desktop -run 'SizeCapability|ParentDirection'` 8项检查通过，独立审计通过。验证普通/平台容器的仅宽高变化保留原子窗口与局部计数、不可变选项仍替换、无尺寸能力后端保留重建，以及父RTL作用域跨独立Context真实改变子布局、打开时切回LTR只刷新一次、空闲不重绘。
+
+- Menubar：`go test ./pkg/desktop -run 'Menubar|MenuContent'` 22项检查及 vet 通过，其中17项针对Menubar。验证独立Context、上下打开首/末项、左右/RTL、同窗口指针切换/重锚、子菜单优先、快速child Right/Down/Enter在父刷新前选中新菜单、空菜单、禁用/移除/重复key、结构/外部Revision刷新、结果/回调各一次、显式Tab邻接目标、关闭/迟到回调/所有者消失。NativeMenubar选项走系统菜单、不画入父树并恢复调用方菜单策略。没有把缺少的OS tracking hook计为已验收。

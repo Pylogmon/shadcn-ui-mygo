@@ -40,7 +40,13 @@ type MenuContentProps struct {
 	NoAutoFocus, KeepOpenOnSelect bool
 	OnChoose                      func(string)
 	OnClose                       func()
-	ItemContent                   func(*ui.Context, overlay.MenuItem)
+	// OnSwitch receives -1/1 for a logical previous/next top-level menu when
+	// a horizontal key has no submenu action. Menubars use it across windows.
+	OnSwitch func(delta int)
+	// OnTab replaces the default Tab close path, allowing a compound menubar
+	// to restore its parent focus and then select an explicit adjacent target.
+	OnTab       func(backward bool)
+	ItemContent func(*ui.Context, overlay.MenuItem)
 }
 
 func menuItemKey(item overlay.MenuItem, index int) string {
@@ -180,11 +186,9 @@ func menuActivate(state *MenuState, items []overlay.MenuItem, depth int, p MenuC
 }
 
 func menuInput(state *MenuState, items []overlay.MenuItem, depth int, p MenuContentProps, rtl bool, ev ui.InputEvent) bool {
-	list := menuAtPath(items, state.Path, depth)
-	if len(list) == 0 {
-		return false
-	}
-	menuLevels(state, items)
+	levels := menuLevels(state, items)
+	depth = max(0, min(depth, len(levels)-1))
+	list := levels[depth]
 	current := menuItemIndex(list, state.Highlighted[depth])
 	openKey, closeKey := ui.KeyRight, ui.KeyLeft
 	if rtl {
@@ -235,6 +239,9 @@ func menuInput(state *MenuState, items []overlay.MenuItem, depth int, p MenuCont
 	if ev.Kind != ui.InputKeyDown {
 		return false
 	}
+	if ev.Mods != 0 && !(ev.Key == ui.KeyTab && ev.Mods == ui.Shift) {
+		return false
+	}
 	switch ev.Key {
 	case ui.KeyUp, ui.KeyDown:
 		delta := 1
@@ -273,12 +280,20 @@ func menuInput(state *MenuState, items []overlay.MenuItem, depth int, p MenuCont
 		state.search = ""
 		return true
 	case openKey:
-		menuOpenChild(state, items, depth, true)
+		if current >= 0 && menuEnabled(list[current]) && len(list[current].Children) > 0 {
+			menuOpenChild(state, items, depth, true)
+		} else if p.OnSwitch != nil {
+			p.OnSwitch(1)
+		}
 		return true
 	case closeKey:
 		if depth > 0 {
 			state.ActiveDepth = depth
 			menuCloseChild(state)
+			return true
+		}
+		if p.OnSwitch != nil {
+			p.OnSwitch(-1)
 			return true
 		}
 	case ui.KeyEnter, ui.KeySpace:
@@ -293,7 +308,9 @@ func menuInput(state *MenuState, items []overlay.MenuItem, depth int, p MenuCont
 		}
 		return true
 	case ui.KeyTab:
-		if p.OnClose != nil {
+		if p.OnTab != nil {
+			p.OnTab(ev.Mods&ui.Shift != 0)
+		} else if p.OnClose != nil {
 			p.OnClose()
 		}
 		return true
