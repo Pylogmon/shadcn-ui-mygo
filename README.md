@@ -72,6 +72,7 @@ Text & layout 页集中展示 [Typography/Kbd](docs/typography.md)、[CodeBlock]
 会话内容面、原生按钮/链接与反应层组合见 [Bubble](docs/bubble.md)。
 文件/图片卡片、应用持有的上传状态与横向附件组见 [Attachment](docs/attachment.md)。
 静态/动作步骤、运行状态扫光、原生展开详情与嵌套状态见 [Trace](docs/trace.md)。
+Messages & questions 页展示反应按钮、共享备注Sheet、五种附件状态与取消/重试/完成、文件预览和可编辑Trace；草稿、反应与展开状态跨页保留，临时弹层在离页时关闭。支持用Bubble、Attachment或Trace等组件名搜索进入。
 Overlays页包含通知类型/位置、状态色与关闭按钮、堆叠、动作保持打开和上传完成更新的交互示例；通知与配置跨预览页保留。
 
 固定上游源码、离线评分对照和对应许可见 [第三方声明](THIRD_PARTY_NOTICES.md)。

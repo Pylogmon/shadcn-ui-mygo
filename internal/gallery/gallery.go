@@ -41,6 +41,7 @@ type State struct {
 	DateRange                                                                      display.DateRange
 	Table                                                                          display.DataTableState
 	tablePreview                                                                   tablePreviewState
+	conversationPreview                                                            conversationPreviewState
 	Questionnaire                                                                  conversation.QuestionnaireState
 	Trace                                                                          conversation.TraceState
 	undo, redo                                                                     []Preset
@@ -94,7 +95,7 @@ var pages = []creatorPage{
 	{Key: "content", Label: "Content & feedback"},
 	{Key: "text-layout", Label: "Text & layout", Keywords: []string{"Typography", "Kbd", "Keyboard", "CodeBlock", "Code", "Spinner", "Skeleton", "ScrollArea", "AspectRatio"}},
 	{Key: "overlays", Label: "Overlays"},
-	{Key: "conversation", Label: "Messages & questions"},
+	{Key: "conversation", Label: "Messages & questions", Keywords: []string{"Bubble", "Attachment", "Trace", "Message", "Questionnaire"}},
 	{Key: "navigation", Label: "Navigation"},
 	{Key: "themes", Label: "Colors & themes"},
 }

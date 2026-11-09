@@ -25,12 +25,19 @@ func columns(c *ui.Context, builds ...func()) {
 	if w >= 980 {
 		available -= 292
 	}
-	if available < 720 {
+	stacked := available < 720
+	if stacked {
 		root.Column()
 	}
 	root.Children(func() {
 		for _, build := range builds {
-			ui.Column(c).Basis(0).Grow(1).MinWidth(0).Gap(20).Children(build)
+			column := ui.Column(c).MinWidth(0).Gap(20)
+			if stacked {
+				column.FillWidth().Shrink(0)
+			} else {
+				column.Basis(0).Grow(1)
+			}
+			column.Children(build)
 		}
 	})
 }

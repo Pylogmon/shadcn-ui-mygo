@@ -211,3 +211,9 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 
 - Gallery Table：新增6项真实集成、Gallery90项通过。选中行AX状态、备注编辑、重排前原生全选保留并在重排后实际替换、跨页状态、空表六列跨度/总额恢复、窄窗口横向滚动到Actions均验证。Status/Actions分别实际打开独立shadcn Flyout和OS Menu并回写正确记录；新组件名进入统一Search命令源。独审另验窄窗口Tab自动显露Note/Actions、空表关闭已开菜单与两类菜单键盘动作；临时探针已清理。
 - Gallery Table明暗/宽窄：导出并查看1100与620DIP两种宽度的四张PNG；页脚/行/控件清晰、窄窗口按源水平溢出，额外内容通过真实滚动或键盘焦点查看。该证据不代表所有平台视觉矩阵。以`d4757d0`仅加入Table Gallery的隔离阶段，全量1206项、14个包（10个有测试、4个无测试）、vet/diff及macOS/Linux/Windows构建通过；未提前包含尚在完善的会话Gallery。
+
+- Gallery会话：新增27项正式集成、Gallery全包117项通过。实际原生反应pressed/回复草稿/共享备注Sheet、附件五状态/三尺寸/两方向/取消重试完成/移除恢复/真实代码预览Dialog、Trace状态/原生编辑器/URL/展开保持，以及五个组件名的完整Search路由均验证。普通动画下四种opener关闭回焦、退出动画中三种离页不重开/抢焦，以及整页中文IME/跨页/reduced idle通过。离页清理通过公开ui.Local Closer持有应用状态和Handle，关闭临时弹层并取消旧目标的待回焦，不保留帧对象。
+- Gallery窄屏实证修正：500宽整页中columns切纵向后仍给子列Basis(0)/Grow(1)，导致Card重叠且Vertical files被其它卡片挡住；改为纵向FillWidth/Shrink(0)自然高度，横向才等分增长。500/1100/1450的真实滚动、竖排卡120DIP边界、取消/重试与Dialog回焦由红转绿。竖排附件的长文字Preview动作移到group下方，绝对动作区只保留图标，避免120DIP卡片溢出。
+- Gallery会话明暗/宽窄：已导出并查看artifacts/gallery-conversation-wide-{light,dark}.png与narrow-{light,dark}.png；四Card在宽屏两列、窄屏按自然高度堆叠，文字/控件可读，无重叠。截图使用减少动画审静态样式，不代替正常动画/所有字体与平台验收。
+- macOS会话实窗：原生Helpful从3/off变4/on；气泡打开Review notes，原生Textarea编辑并Save后实际返回Open review notes焦点；Trace展开显示同一备注，原生Input编辑成功，Finish review实际禁用。附件Cancel后变Failed/Retry，Retry变Uploading25%，Complete变Done并恢复Preview report；实际Dialog显示可选择代码。以上1280宽会话流程在窄屏helper修正前的同分支构建完成，随后已重新打包最终版本。
+- 最终macOS Table补验：重启最终bundle，通过Table搜索进入Data；Status INV001实际打开独立Flyout，选择Pending后父表回写且焦点返回触发器；切System native后实际打开系统Menu并选Processing，父表值正确。未将辅助技术接口点击推导成全部指针/触控验收。最终全量1233项、14个包、vet/diff、macOS .app和Linux/Windows构建通过；bundle中的Lucide及shadcn许可与归档逐字节一致。完整复刻仍未完成，平台/AT/字体/广色域/全示例视觉矩阵继续跟踪。
