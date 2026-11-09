@@ -20,6 +20,11 @@ func NewHost(parent *mygo.Window) *Host {
 }
 
 type nativeBackend struct{ parent *mygo.Window }
+
+func (b *nativeBackend) ApplicationActive() bool {
+	return b.parent != nil && !b.parent.IsDestroyed() && mygo.App.IsActive()
+}
+
 type nativeSurface struct {
 	window  *mygo.Window
 	dismiss func() bool
@@ -68,6 +73,9 @@ func (b *nativeBackend) InvalidateParent() {
 func (s *nativeSurface) SetAnchor(r ui.Rect)       { s.window.SetAnchor(nativeRect(r)) }
 func (s *nativeSurface) SetSize(width, height int) { s.window.SetSize(width, height) }
 func (s *nativeSurface) Invalidate()               { s.window.Invalidate() }
+func (s *nativeSurface) IsFocused() bool {
+	return !s.window.IsDestroyed() && s.window.IsFocused()
+}
 func (s *nativeSurface) Focus() {
 	if !s.window.IsDestroyed() {
 		s.window.Focus()

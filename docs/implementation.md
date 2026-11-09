@@ -28,9 +28,10 @@
 | 5.D.3a | Flyout 可逆退场、原生关闭拦截、减少动画和生命周期 | 已提交 `a451b0a`，23 项针对性检查及 vet 通过 |
 | 5.D.3b | DatePicker/DateRangePicker 与 Native 日期组件对 | 已提交 `6b4cb63`；原生日期标题补充修复 `8f7d8df` |
 | 5.D.3c | Tooltip/HoverCard 与 Native 组件对 | 已提交 `0abc803`，键盘交接修复 `524a63d`；macOS Down/Escape 已核验 |
-| 5.D.3d | Gallery 日期/悬停组件对接入与共享内容刷新 | 36 项 Gallery 检查、独立审计和构建通过，提交本子阶段 |
+| 5.D.3d | Gallery 日期/悬停组件对接入与共享内容刷新 | 已提交 `ea5111c`，36 项 Gallery 检查、独立审计和构建通过 |
 | 5.D.4a | Flyout 原位尺寸更新与父方向作用域传播 | 已提交 `ac345e8`，8 项针对性检查与独立审计通过 |
-| 5.D.4b | Menubar/NativeMenubar、跨窗口兄弟切换 | 17 项 Menubar 与5项既有MenuContent检查及 vet 通过，提交本子阶段 |
+| 5.D.4b | Menubar/NativeMenubar、跨窗口兄弟切换 | 已提交 `4bf8771`，22 项菜单栏/内容检查及 vet 通过 |
+| 5.D.4c | 真实窗口焦点与应用活跃的统一查询 | 2 项能力检查与组件交接回归通过，提交本子阶段 |
 | 5.E | Tabs 激活模式、关联、方向键、动态指示器 | 已提交 `d734b28`，9 项导航测试和 vet 通过 |
 | 5.F | 不确定进度、非有限值、原生标题层级与分隔语义 | 已提交 `25d9ca2`，回归与模块检查通过 |
 | 5.G | Slider 单值/范围/多拇指、竖向、步长间距和原生无障碍 | 已提交 `941199d`，23 项 control 检查、独立审计及 vet 通过 |

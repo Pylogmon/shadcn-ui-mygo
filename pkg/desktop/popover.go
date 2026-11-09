@@ -29,6 +29,11 @@ type Surface interface {
 // native options still require a replacement. Dimensions are window DIPs.
 type SizeSurface interface{ SetSize(width, height int) }
 
+// FocusSurface reports actual keyboard ownership, independently of a native
+// Flyout's inherited active appearance. Backends may expose it for focus-aware
+// compositions; a missing capability is reported as unknown by FocusState.
+type FocusSurface interface{ IsFocused() bool }
+
 // DismissInterceptor is an optional surface capability. The callback returns
 // true when Host retained the surface to animate its dismissal, so the native
 // close event must be prevented. Backends without it preserve immediate close
@@ -627,6 +632,34 @@ func (h *Host) Focus(key string) bool {
 		return true
 	}
 	return false
+}
+
+// FocusState reports a live surface's actual keyboard focus when the backend
+// supports FocusSurface. Active appearance alone does not prove keyboard focus.
+func (h *Host) FocusState(key string) (focused, known bool) {
+	if h == nil {
+		return false, false
+	}
+	entry := h.entries[key]
+	if entry == nil || entry.surface == nil || entry.closing {
+		return false, false
+	}
+	if surface, ok := entry.surface.(FocusSurface); ok {
+		return surface.IsFocused(), true
+	}
+	return false, false
+}
+
+// ApplicationState reports whether the backend's owning application is active.
+// ApplicationActive is an optional Backend capability; unknown backends do not
+// infer application activity from a Flyout's active appearance.
+func (h *Host) ApplicationState() (active, known bool) {
+	if h != nil {
+		if backend, ok := h.backend.(interface{ ApplicationActive() bool }); ok {
+			return backend.ApplicationActive(), true
+		}
+	}
+	return false, false
 }
 
 // NativeWindow exposes the MyGo surface for desktop-only geometry/automation

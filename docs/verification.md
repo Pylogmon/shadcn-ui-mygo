@@ -84,3 +84,5 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 - Flyout 尺寸/方向：`go test ./pkg/desktop -run 'SizeCapability|ParentDirection'` 8项检查通过，独立审计通过。验证普通/平台容器的仅宽高变化保留原子窗口与局部计数、不可变选项仍替换、无尺寸能力后端保留重建，以及父RTL作用域跨独立Context真实改变子布局、打开时切回LTR只刷新一次、空闲不重绘。
 
 - Menubar：`go test ./pkg/desktop -run 'Menubar|MenuContent'` 22项检查及 vet 通过，其中17项针对Menubar。验证独立Context、上下打开首/末项、左右/RTL、同窗口指针切换/重锚、子菜单优先、快速child Right/Down/Enter在父刷新前选中新菜单、空菜单、禁用/移除/重复key、结构/外部Revision刷新、结果/回调各一次、显式Tab邻接目标、关闭/迟到回调/所有者消失。NativeMenubar选项走系统菜单、不画入父树并恢复调用方菜单策略。没有把缺少的OS tracking hook计为已验收。
+
+- 实际窗口焦点能力：Host的 `FocusState` / `ApplicationState` 与对应可选后端能力统一查询原生窗口焦点和应用活跃。2项专门检查验证app活跃但ShowInactive子窗口未聚焦、实际焦点/失活变化、关闭后不报告所有权、缺失key/后端能力为unknown及缺失原生父窗口为inactive。
