@@ -189,12 +189,11 @@ func slider(c *ui.Context, binding sliderBinding, p SliderProps) ui.Element {
 			if i < len(p.ThumbIDs) && p.ThumbIDs[i] != "" {
 				key = p.ThumbIDs[i]
 			}
-			thumb := ui.Box(c).Key(key).Absolute().Size(16, 16).Focusable().
+			thumb := motion.ApplyTransition(c, ui.Box(c).Key(key).Absolute().Size(16, 16).Focusable().
 				Role(ui.RoleSlider).Label(sliderThumbLabel(p, i, len(values))).
 				Disabled(disabled).Invalid(d.invalid).FocusRing(false).
 				Cursor(ui.CursorPointer).Radius(8).Border(1, t.Primary).
-				Background(ui.RGB(255, 255, 255)).Shadow(0, 1, 2, 0, ui.RGBA(0, 0, 0, .05)).
-				Transition(motion.Transition(c))
+				Background(ui.RGB(255, 255, 255)).Shadow(0, 1, 2, 0, ui.RGBA(0, 0, 0, .05)))
 			if thumb.Focused() && !st.focus {
 				st.focused = i
 			}

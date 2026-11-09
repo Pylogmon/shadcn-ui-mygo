@@ -113,10 +113,9 @@ func Accordion(c *ui.Context, p AccordionProps) ui.Element {
 				var part ui.CollapsibleParts
 				ui.Row(c).Role(ui.RoleHeading).Level(level).FillWidth().Children(func() {
 					part = ui.CollapsibleBase(c, it.Open)
-					tr := part.Trigger.FillWidth().Padding(16, 0).Gap(16).AlignItems(ui.Start).
+					tr := motion.ApplyTransition(c, part.Trigger.FillWidth().Padding(16, 0).Gap(16).AlignItems(ui.Start).
 						Disabled(p.Disabled || it.Disabled).Label(it.Title).Description(it.Description).
-						TextColor(t.Foreground).FontSize(14).FontWeight(500).Radius(t.RadiusMD()).
-						Transition(motion.Transition(c))
+						TextColor(t.Foreground).FontSize(14).FontWeight(500).Radius(t.RadiusMD()))
 					tr.Bind(s.Triggers[key])
 					if p.Bordered {
 						tr.PaddingX(16)

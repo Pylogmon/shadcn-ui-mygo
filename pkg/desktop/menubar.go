@@ -148,10 +148,10 @@ func Menubar(c *ui.Context, h *Host, key string, s *MenubarState, p MenubarProps
 	root.Children(func() {
 		for i, item := range p.Items {
 			id := menubarKey(item, i)
-			trigger := ui.ButtonBase(c.Key(id)).Role(ui.RoleMenuItem).Label(item.Label).Disabled(item.Disabled).
+			trigger := motion.ApplyTransition(c, ui.ButtonBase(c.Key(id)).Role(ui.RoleMenuItem).Label(item.Label).Disabled(item.Disabled).
 				Height(28).PaddingX(8).Radius(t.RadiusSM()).FontSize(14).FontWeight(500).
 				TextColor(t.Foreground).HasPopup(ui.PopupMenu).Expanded(s.Open && s.Active == id).
-				Cursor(ui.CursorPointer).Transition(motion.Transition(c)).Bind(s.triggers[id])
+				Cursor(ui.CursorPointer)).Bind(s.triggers[id])
 			anchors[id] = trigger
 			if trigger.Focused() {
 				if s.Open && s.focused != id {

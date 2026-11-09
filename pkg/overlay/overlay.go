@@ -44,8 +44,8 @@ func surface(c *ui.Context, panel ui.Element) ui.Element {
 // button styles a base button while keeping all of its native behavior.
 func button(c *ui.Context, b ui.Element, label string, primary bool) ui.Element {
 	t := theme.TokensOf(c)
-	b.Height(36).PaddingX(12).Radius(t.Radius).FontSize(14).FontWeight(500).
-		Border(1, t.Border).Background(t.Background).TextColor(t.Foreground).Transition(motion.Transition(c))
+	motion.ApplyTransition(c, b.Height(36).PaddingX(12).Radius(t.Radius).FontSize(14).FontWeight(500).
+		Border(1, t.Border).Background(t.Background).TextColor(t.Foreground))
 	if primary {
 		b.Background(t.Primary).TextColor(t.PrimaryForeground).Border(0, ui.Transparent)
 		if b.Hovered() {

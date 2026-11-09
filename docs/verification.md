@@ -136,3 +136,6 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 - Choice独立阶段验证：HEAD仅覆盖本阶段button/choice源码与choice测试，control/Gallery共126项检查通过；未提前包含OTP或Routes增强。
 
 - Routes：原生Breadcrumb链接/当前页、独立Flyout与系统祖先菜单、结构Revision及迟到选择重查；Pagination的MaxInt有界计算、显式零/预算、不合法配置、真实URL/Router、compact/RTL像素与长文本包含均通过。独立审计复现前后按钮目标页作为Key造成连续Enter失焦，改为稳定身份后Button/Link两路径连续激活与回调通过。完整navigation 90项及vet通过；真实平台/AT及超窄视觉矩阵继续跟踪。
+
+- SDK反馈减少动画：所有标准颜色反馈调用改用ApplyTransition，Tabs匹配指示器也在Reduced时跳过注册。motion核心加组件共6项检查通过：运行中改变Button/Badge/Input/OTP/Tabs/Pagination后切偏好，浅/深整幅图像立即等于独立静态Reduced参考，取消全部待绘帧，恢复普通动画并正常收敛。迁移独立diff审查通过；Popup/Modal等presence presets保持原API，完整presence/平台矩阵继续跟踪。
+- SDK反馈迁移独立阶段验证：HEAD仅覆盖本阶段调用点与components_test，`go test ./pkg/... -count=1` 共582项、9包通过，未包含待提交OTP与Gallery集成。

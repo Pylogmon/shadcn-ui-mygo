@@ -500,8 +500,8 @@ func sidebarTree(c *ui.Context, host *desktop.Host, key string, s *SidebarState,
 				} else {
 					trigger = ui.ButtonBase(c).Role(ui.RoleLink)
 				}
-				trigger.Label(item.Label).Description(item.Description).Disabled(itemDisabled).FillWidth().Grow(1).MinWidth(0).Height(32).Padding(8).Gap(8).Radius(t.RadiusMD()).
-					TextColor(t.SidebarForeground).FocusRingColor(t.SidebarRing).Transition(motion.Transition(c))
+				motion.ApplyTransition(c, trigger.Label(item.Label).Description(item.Description).Disabled(itemDisabled).FillWidth().Grow(1).MinWidth(0).Height(32).Padding(8).Gap(8).Radius(t.RadiusMD()).
+					TextColor(t.SidebarForeground).FocusRingColor(t.SidebarRing))
 				if item.Size == SidebarItemSmall {
 					trigger.Height(28).FontSize(12)
 				} else {

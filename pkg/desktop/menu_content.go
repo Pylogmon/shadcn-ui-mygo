@@ -384,7 +384,7 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 						} else if item.Radio {
 							role = ui.RoleMenuItemRadio
 						}
-						row := ui.Row(c.Key(key)).FillWidth().Height(32).PaddingX(8).Gap(8).Radius(max(2, t.Radius-2)).AlignItems(ui.Center).Role(role).Label(item.Label).Disabled(item.Disabled).FontSize(14).TextColor(t.PopoverForeground).Transition(motion.Transition(c))
+						row := motion.ApplyTransition(c, ui.Row(c.Key(key)).FillWidth().Height(32).PaddingX(8).Gap(8).Radius(max(2, t.Radius-2)).AlignItems(ui.Center).Role(role).Label(item.Label).Disabled(item.Disabled).FontSize(14).TextColor(t.PopoverForeground))
 						highlighted := depth < len(state.Highlighted) && key == state.Highlighted[depth]
 						if highlighted {
 							row.Background(t.Accent).TextColor(t.AccentForeground)

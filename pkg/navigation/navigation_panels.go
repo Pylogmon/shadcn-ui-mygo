@@ -243,8 +243,8 @@ func NavigationMenuWith(c *ui.Context, host *desktop.Host, key string, selected 
 	openKey := false
 	root.Children(func() {
 		for i, it := range p.Items {
-			trigger := ui.ButtonBase(c.Key(it.Key)).Bind(s.handles[it.Key]).Label(it.Label).Description(it.Description).Disabled(it.Disabled).
-				Height(36).PaddingX(12).Gap(6).Radius(t.RadiusMD()).FontSize(14).FontWeight(500).TextColor(t.Foreground).Transition(motion.Transition(c))
+			trigger := motion.ApplyTransition(c, ui.ButtonBase(c.Key(it.Key)).Bind(s.handles[it.Key]).Label(it.Label).Description(it.Description).Disabled(it.Disabled).
+				Height(36).PaddingX(12).Gap(6).Radius(t.RadiusMD()).FontSize(14).FontWeight(500).TextColor(t.Foreground))
 			trigger.Draw(func(_ *ui.Painter, bounds ui.Rect) {
 				if s.bounds[it.Key] != bounds {
 					s.bounds[it.Key] = bounds
@@ -690,8 +690,8 @@ func navigationLinks(c *ui.Context, items []NavItem, columns int, selected strin
 				continue
 			}
 			disabled := disabled || item.Disabled
-			link := ui.ButtonBase(c.Key(item.Key)).Role(ui.RoleLink).Label(item.Label).Description(item.Description).Disabled(disabled).DimDisabled(false).
-				Column().AlignItems(ui.Start).Gap(4).Padding(12).Radius(t.RadiusMD()).TextColor(t.Foreground).Transition(motion.Transition(c)).MinWidth(0)
+			link := motion.ApplyTransition(c, ui.ButtonBase(c.Key(item.Key)).Role(ui.RoleLink).Label(item.Label).Description(item.Description).Disabled(disabled).DimDisabled(false).
+				Column().AlignItems(ui.Start).Gap(4).Padding(12).Radius(t.RadiusMD()).TextColor(t.Foreground)).MinWidth(0)
 			if !disabled {
 				*links = append(*links, link)
 			} else {

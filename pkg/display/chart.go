@@ -343,7 +343,7 @@ func cartesianChart(c *ui.Context, p ChartProps, selected *int, height float32) 
 						band.Lo += float32(j) * width
 						band.Hi = band.Lo + width
 					}
-					mark := chart.Rect(c, band, y.Span(from, to)).Background(color).Radius(3).Label(fmt.Sprintf("%s %s: %g", seriesName(p, j), p.Labels[i], p.Series[j].Values[i])).Transition(motion.Transition(c))
+					mark := motion.ApplyTransition(c, chart.Rect(c, band, y.Span(from, to)).Background(color).Radius(3).Label(fmt.Sprintf("%s %s: %g", seriesName(p, j), p.Labels[i], p.Series[j].Values[i])))
 					if *selected == i {
 						mark.Opacity(.8)
 					}

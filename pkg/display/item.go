@@ -93,9 +93,8 @@ func itemMetrics(size ItemSize) (horizontal, vertical, gap float32) {
 func Item(c *ui.Context, p ItemProps) ui.Element {
 	t := theme.TokensOf(c)
 	px, py, gap := itemMetrics(p.Size)
-	root := ui.Column(c).FillWidth().MinWidth(0).Gap(gap).Padding(py, px).Radius(t.RadiusMD()).
-		Border(1, ui.Transparent).TextColor(t.Foreground).FontSize(14).Disabled(p.Disabled).Invalid(p.Invalid).DimDisabled(false).
-		Transition(motion.Transition(c))
+	root := motion.ApplyTransition(c, ui.Column(c).FillWidth().MinWidth(0).Gap(gap).Padding(py, px).Radius(t.RadiusMD()).
+		Border(1, ui.Transparent).TextColor(t.Foreground).FontSize(14).Disabled(p.Disabled).Invalid(p.Invalid).DimDisabled(false))
 	if p.Key != "" {
 		root.Key(itemKey{p.Key})
 	}

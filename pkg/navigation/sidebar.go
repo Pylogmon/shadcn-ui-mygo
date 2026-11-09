@@ -59,8 +59,8 @@ func sidebarItems(c *ui.Context, selected *string, items []NavItem, collapsed bo
 			group = it.Group
 			ui.Text(c, group).Padding(8).FontSize(12).FontWeight(500).TextColor(t.MutedForeground)
 		}
-		b := ui.ButtonBase(c.Key(it.Key + strconv.Itoa(i))).Label(it.Label).Description(it.Description).Disabled(it.Disabled).
-			Height(34).PaddingX(8).Gap(8).Justify(ui.Start).Radius(t.Radius).TextColor(t.SidebarForeground).FocusRingColor(t.SidebarRing).Transition(motion.Transition(c))
+		b := motion.ApplyTransition(c, ui.ButtonBase(c.Key(it.Key+strconv.Itoa(i))).Label(it.Label).Description(it.Description).Disabled(it.Disabled).
+			Height(34).PaddingX(8).Gap(8).Justify(ui.Start).Radius(t.Radius).TextColor(t.SidebarForeground).FocusRingColor(t.SidebarRing))
 		if depth > 0 && !collapsed {
 			b.MarginStart(float32(depth) * 12)
 		}

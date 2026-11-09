@@ -81,9 +81,8 @@ func Tabs(c *ui.Context, selected *int, p TabsProps, panel func(int)) ui.Element
 				if item.Key != "" {
 					key = item.Key
 				}
-				tab := ui.ButtonBase(c.Key(key)).Role(ui.RoleTab).Label(item.Label).Disabled(item.Disabled).Checked(i == *selected).
-					Height(30).PaddingX(12).Gap(6).Radius(t.RadiusMD()).FontSize(14).FontWeight(500).TextColor(t.MutedForeground).
-					Transition(motion.Transition(c))
+				tab := motion.ApplyTransition(c, ui.ButtonBase(c.Key(key)).Role(ui.RoleTab).Label(item.Label).Disabled(item.Disabled).Checked(i == *selected).
+					Height(30).PaddingX(12).Gap(6).Radius(t.RadiusMD()).FontSize(14).FontWeight(500).TextColor(t.MutedForeground))
 				tabs[i] = tab
 				back, forth := ui.KeyLeft, ui.KeyRight
 				if c.Direction() == ui.RightToLeft {
@@ -113,9 +112,12 @@ func Tabs(c *ui.Context, selected *int, p TabsProps, panel func(int)) ui.Element
 				}
 				tab.Children(func() {
 					if i == *selected {
-						tr := motion.Transition(c)
-						tr.Match = tabsIndicatorKey{selected}
-						indicator := ui.Box(c).Absolute().ZIndex(-1).IgnoreInput(true).Transition(tr)
+						indicator := ui.Box(c).Absolute().ZIndex(-1).IgnoreInput(true)
+						if !motion.Reduced(c) {
+							tr := motion.Transition(c)
+							tr.Match = tabsIndicatorKey{selected}
+							indicator.Transition(tr)
+						}
 						if p.Variant == TabsLine {
 							if p.Vertical {
 								indicator.Right(0).Top(0).Bottom(0).Width(2)

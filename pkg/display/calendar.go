@@ -568,7 +568,7 @@ func calendarDayButton(c *ui.Context, grid ui.Element, st *calendarState, p Cale
 		}
 	}
 	slot.Children(func() {
-		cell := ui.ButtonBase(c.Key("button")).Size(32, 32).Radius(t.RadiusMD()).FontSize(14).TabStop(false).Label(label).Disabled(d.Disabled).Checked(d.Selected).Transition(motion.Transition(c))
+		cell := motion.ApplyTransition(c, ui.ButtonBase(c.Key("button")).Size(32, 32).Radius(t.RadiusMD()).FontSize(14).TabStop(false).Label(label).Disabled(d.Disabled).Checked(d.Selected))
 		if d.Selected {
 			cell.Background(t.Primary).TextColor(t.PrimaryForeground)
 		} else if d.Today || cell.Hovered() {

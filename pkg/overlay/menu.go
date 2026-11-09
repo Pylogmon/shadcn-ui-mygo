@@ -87,8 +87,8 @@ func menuItems(c *ui.Context, m ui.MenuParts, items []MenuItem, width float32, c
 		default:
 			row = m.Item()
 		}
-		row.Label(it.Label).Disabled(it.Disabled).Height(32).Padding(6, 8).Gap(8).Radius(max(2, t.Radius-2)).
-			FontSize(14).TextColor(t.PopoverForeground).Transition(motion.Transition(c))
+		motion.ApplyTransition(c, row.Label(it.Label).Disabled(it.Disabled).Height(32).Padding(6, 8).Gap(8).Radius(max(2, t.Radius-2)).
+			FontSize(14).TextColor(t.PopoverForeground))
 		if row.Highlighted() {
 			row.Background(t.Accent).TextColor(t.AccentForeground)
 		}

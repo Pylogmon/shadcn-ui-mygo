@@ -27,9 +27,9 @@ func Select(c *ui.Context, selected *string, p SelectProps) ui.Element {
 	parts := ui.SelectBase(c, selected)
 	tr := parts.Trigger
 	h, px := metrics(p.Size)
-	tr.MinHeight(h).PaddingX(min(px, 12)).Gap(8).AlignItems(ui.Center).Radius(t.Radius*.8).
+	motion.ApplyTransition(c, tr.MinHeight(h).PaddingX(min(px, 12)).Gap(8).AlignItems(ui.Center).Radius(t.Radius*.8).
 		Background(t.Background).TextColor(t.Foreground).FontSize(14).Border(1, t.Input).
-		Disabled(p.Disabled).Invalid(p.Invalid).Cursor(ui.CursorPointer).Transition(motion.Transition(c))
+		Disabled(p.Disabled).Invalid(p.Invalid).Cursor(ui.CursorPointer))
 	if p.Label != "" {
 		tr.Label(p.Label)
 	}
@@ -117,7 +117,7 @@ func Select(c *ui.Context, selected *string, p SelectProps) ui.Element {
 func NativeSelect(c *ui.Context, selected *string, p SelectProps) ui.Element {
 	t := theme.TokensOf(c)
 	h, px := metrics(p.Size)
-	tr := ui.ButtonBase(c).MinHeight(h).PaddingX(min(px, 12)).Gap(8).AlignItems(ui.Center).Radius(t.RadiusMD()).Background(t.Background).TextColor(t.Foreground).FontSize(14).Border(1, t.Input).Disabled(p.Disabled).Invalid(p.Invalid).Cursor(ui.CursorPointer).Transition(motion.Transition(c))
+	tr := motion.ApplyTransition(c, ui.ButtonBase(c).MinHeight(h).PaddingX(min(px, 12)).Gap(8).AlignItems(ui.Center).Radius(t.RadiusMD()).Background(t.Background).TextColor(t.Foreground).FontSize(14).Border(1, t.Input).Disabled(p.Disabled).Invalid(p.Invalid).Cursor(ui.CursorPointer))
 	if p.Disabled {
 		tr.Opacity(.5).Cursor(ui.CursorNotAllowed)
 	}

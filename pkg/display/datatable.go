@@ -207,7 +207,7 @@ func DataFacetValues[T any](state *DataTableState, p DataTableProps[T], column s
 
 func tableAction(c *ui.Context, label string, disabled bool) ui.Element {
 	t := theme.TokensOf(c)
-	e := ui.ButtonBase(c).Height(32).PaddingX(12).Radius(t.RadiusMD()).Border(1, t.Border).Disabled(disabled).TextColor(t.Foreground).Transition(motion.Transition(c))
+	e := motion.ApplyTransition(c, ui.ButtonBase(c).Height(32).PaddingX(12).Radius(t.RadiusMD()).Border(1, t.Border).Disabled(disabled).TextColor(t.Foreground))
 	if e.Hovered() {
 		e.Background(t.Accent)
 	}
