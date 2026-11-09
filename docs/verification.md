@@ -134,3 +134,5 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 
 - Choice：39项针对性检查、control vet和独立审计通过。补齐受控Mixed、Vega Switch默认/小号尺寸及RTL拇指、Radio方向约束/循环/描述、Toggle自定义视觉和多/单选组即时Changed。明暗像素、禁用祖先、原生Space/方向键、稳定重排、边框合并与运行中切ReduceMotion均验证。文字与视觉槽位保持单一原生输入/AX目标；真实AT与完整跨平台视觉矩阵继续跟踪。
 - Choice独立阶段验证：HEAD仅覆盖本阶段button/choice源码与choice测试，control/Gallery共126项检查通过；未提前包含OTP或Routes增强。
+
+- Routes：原生Breadcrumb链接/当前页、独立Flyout与系统祖先菜单、结构Revision及迟到选择重查；Pagination的MaxInt有界计算、显式零/预算、不合法配置、真实URL/Router、compact/RTL像素与长文本包含均通过。独立审计复现前后按钮目标页作为Key造成连续Enter失焦，改为稳定身份后Button/Link两路径连续激活与回调通过。完整navigation 90项及vet通过；真实平台/AT及超窄视觉矩阵继续跟踪。

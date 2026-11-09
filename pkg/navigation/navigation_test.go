@@ -52,7 +52,7 @@ func TestPaginationBoundsAndCurrentPage(t *testing.T) {
 	if !ok || current.Current != ui.CurrentPage {
 		t.Fatalf("current page=%+v found=%v", current, ok)
 	}
-	if err := tt.Click("8"); err != nil {
+	if err := tt.Click("Page 8"); err != nil {
 		t.Fatal(err)
 	}
 	if page != 8 {
