@@ -24,6 +24,7 @@ mkdir -p "$bundle/Contents/MacOS"
 mkdir -p "$bundle/Contents/Resources/licenses"
 cp pkg/overlay/testdata/cmdk/LICENSE.md "$bundle/Contents/Resources/licenses/cmdk.txt"
 cp pkg/control/testdata/input-otp/LICENSE "$bundle/Contents/Resources/licenses/input-otp.txt"
+cp internal/indicator/LICENSE.lucide "$bundle/Contents/Resources/licenses/lucide.txt"
 CGO_ENABLED=0 go build -o "$bundle/Contents/MacOS/gallery" "$package"
 cat > "$bundle/Contents/Info.plist" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>

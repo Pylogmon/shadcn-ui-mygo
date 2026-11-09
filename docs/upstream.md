@@ -11,3 +11,5 @@
 Command 的评分行为另外固定到 shadcn 该提交在 `pnpm-lock.yaml` 锁定的 cmdk 1.1.1：提交 [`fb4ea04e9ec211777fbb39c6104e3c5f2ee107d2`](https://github.com/dip/cmdk/tree/fb4ea04e9ec211777fbb39c6104e3c5f2ee107d2)，原仓库 `pacocoursey/cmdk` 现重定向到 `dip/cmdk`。原始 `command-score.ts`、MIT许可证、来源SHA-256和可离线生成的数值对照在 `pkg/overlay/testdata/cmdk`。Go移植的版权声明见 [第三方声明](../THIRD_PARTY_NOTICES.md)。
 
 Input OTP 的底层行为固定到 input-otp 1.4.2 的发布 gitHead：[`81ccdb48c010d800b24942aa231909f0c971b1ca`](https://github.com/guilhermerodz/input-otp/tree/81ccdb48c010d800b24942aa231909f0c971b1ca)。原始 input.tsx、MIT许可证、SHA-256、发布版本证据和默认字符/完成/粘贴选择的精确行号保存在 `pkg/control/testdata/input-otp`。原生 rune 索引、构建预算、候选窗定位与特殊空剪贴板撤销限制见 [Input OTP](input-otp.md)。
+
+Spinner 的 Loader2 图标对照 shadcn apps/v4 锁定的 Lucide 0.474.0，官方 tag 指向提交 [`97bbe1d6b2adc6767831e52f6b12b2886b6498d5`](https://github.com/lucide-icons/lucide/tree/97bbe1d6b2adc6767831e52f6b12b2886b6498d5)。SVG、ISC许可（包含Feather MIT说明）、来源证据和SHA-256在 `internal/indicator`；原始tag与不可变提交字节相同。Loading样式另外核对本次固定的 spinner.tsx、skeleton.tsx、style-vega.css，以及 globals.css 的比例圆角定义。

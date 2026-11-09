@@ -5,6 +5,7 @@ package control
 
 import (
 	"github.com/egoist/mygo/ui"
+	"github.com/pylogmon/shadcn-ui-mygo/internal/indicator"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/motion"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/theme"
 )
@@ -153,7 +154,7 @@ func StyleButton(c *ui.Context, b ui.Element, label string, p ButtonProps) ui.El
 	}
 	b.Children(func() {
 		if p.Loading {
-			ui.Spinner(c).Size(16, 16).AccessHidden(true)
+			indicator.Spinner(c, indicator.Props{Decorative: true})
 		} else if p.Icon != nil {
 			size := float32(16)
 			if p.Size == ExtraSmall || p.Size == IconExtraSmall {

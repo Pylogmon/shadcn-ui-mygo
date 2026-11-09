@@ -1,0 +1,19 @@
+{
+  "repository": "https://github.com/lucide-icons/lucide",
+  "version": "0.474.0",
+  "commit": "97bbe1d6b2adc6767831e52f6b12b2886b6498d5",
+  "commit_evidence": "https://api.github.com/repos/lucide-icons/lucide/git/ref/tags/0.474.0",
+  "license": "ISC (including Feather MIT portions as recorded in LICENSE.lucide)",
+  "files": [
+    {
+      "file": "loader-circle.svg",
+      "upstream_path": "icons/loader-circle.svg",
+      "sha256": "043021bb903919668804bdb6fee0342072e4ffea5f03fbd857774c440179ad3b"
+    },
+    {
+      "file": "LICENSE.lucide",
+      "upstream_path": "LICENSE",
+      "sha256": "1e7290b35280a048667bbf0ebabac1c7fd52a75300e8b2946ac165715997f2bc"
+    }
+  ]
+}

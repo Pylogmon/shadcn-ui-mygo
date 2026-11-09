@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"math"
 	"strings"
-	"time"
 	"unicode/utf8"
 
 	"github.com/egoist/mygo/ui"
@@ -164,36 +163,6 @@ func Progress(c *ui.Context, value float64, props ...ProgressProps) ui.Element {
 	}
 	return e
 }
-func Spinner(c *ui.Context) ui.Element {
-	return ui.Spinner(c).Size(16, 16).TextColor(theme.TokensOf(c).Primary).Label("Loading")
-}
-
-type SkeletonProps struct {
-	Width, Height  float32
-	Circle, Static bool
-}
-
-func Skeleton(c *ui.Context, p SkeletonProps) ui.Element {
-	t := theme.TokensOf(c)
-	h := p.Height
-	if h <= 0 {
-		h = 16
-	}
-	e := ui.Box(c).Height(h).Radius(t.Radius * .8).Background(t.Muted)
-	if p.Width > 0 {
-		e.Width(p.Width)
-	} else {
-		e.FillWidth()
-	}
-	if p.Circle {
-		e.Width(h).Radius(h / 2)
-	}
-	if !p.Static && !c.Preferences().ReduceMotion {
-		e.Opacity(1 - .5*e.Loop("pulse", 2*time.Second, ui.Bounce(ui.EaseInOut)))
-	}
-	return e
-}
-
 // Initials uses Unicode words and runes so names need not be Latin text.
 func Initials(name string) string {
 	parts := strings.Fields(name)

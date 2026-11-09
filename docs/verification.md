@@ -155,3 +155,7 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 - Gallery明暗像素：重新生成并查看 `artifacts/gallery-controls{,-dark}.png`、`gallery-navigation{,-dark}.png`、`gallery-form-choices{,-dark}.png`；新模块布局与颜色正常。修正Header的Native Go徽章显式居中；详细页截图验证完整百万页标签及底部状态行。截图不是完整组件视觉矩阵。
 - macOS实窗：重启本次构建，Bio输入Runtime bio draft后Tab/Down/Down，原生splitter的AX高度64→80；粘贴123-456后验证码为123456并出现完成状态；AX激活Mixed All permissions后其与Edit projects均为On。Breadcrumb独立Flyout选择Forms，回传Selected parent: Forms并回焦Show parent routes；随后键盘切System native，OS菜单选择Patterns回传Selected parent: Patterns并关闭。未打开外部示例URL；未实测真实中文候选窗、指针resize/触屏或所有AT。
 - 本轮最终收尾：`go test ./... -count=1` 共700项、12包通过；`go vet ./...`、`git diff --check`通过。macOS最终app重建、Linux/Windows amd64交叉编译通过。OTP归档源码、Git内原始字节、manifest SHA与app内MIT许可匹配。各模块分别提交；完整复刻与平台/AT/视觉验收仍进行中，未缩减原始目标。
+
+- Loading：4项基线回归先复现Spinner不继承当前颜色、减少动画重绘仍改变转轮、Skeleton的pulse easing偏差以及instant frame继续脉冲；修复后含扩展共8项检查通过。Spinner用固定Loader2 SVG并匀速一秒一周，实际图形在0/90度逐像素等于独立SVG参考；Skeleton在250ms像素与CSS曲线数值参考一致。动态reduce/static/恢复、原生未知进度、decorative、尺寸/百分比/圆形及卸载idle均覆盖，Busy Button使用同一视觉且原生busy/disabled检查通过。
+- Loading来源与独立阶段：核对0.474.0 tag及不可变Lucide提交的SVG/ISC许可字节一致。HEAD仅覆盖本阶段loading、共享indicator、Button接入与旧块提取后，display/control/Gallery共412项通过，未依赖并行Typography/ScrollArea/CodeBlock改动。radius×.8由本次固定globals.css确认，本阶段没有把正确圆角当作实现bug；旧版减2px对照已撤回。
+- Loading独立审查：2条临时公共API探针覆盖Busy XS按钮单一原生busy/disabled目标、运行中全图静态参考对比、解除loading后实际激活，以及instant/disabled祖先下无idle/动作；全部通过，临时文件已删除。
