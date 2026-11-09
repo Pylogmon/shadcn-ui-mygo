@@ -164,7 +164,9 @@ func PaginationWith(c *ui.Context, page *int, p PaginationProps) ui.Element {
 						outer = ui.Row(c).Role(ui.RoleNone)
 					}
 					motion.ApplyTransition(c, outer.Height(36).MinWidth(36).PaddingX(10).Gap(6).AlignItems(ui.Center).Justify(ui.Center).Radius(t.RadiusMD()).Border(1, ui.Transparent).FontSize(14).FontWeight(500).TextColor(t.Foreground))
-					if kind == 0 || compact {
+					// Keep the source's icon size for ordinary page numbers. Long
+					// native labels need their content width to remain distinguishable.
+					if kind == 0 && len(text) <= 3 || kind != 0 && compact {
 						outer.Width(36).PaddingX(0)
 					}
 					outer.Children(func() {

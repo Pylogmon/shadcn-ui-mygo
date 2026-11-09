@@ -313,6 +313,14 @@ func TestPaginationLongPageTextDoesNotPaintOutsideNumericControl(t *testing.T) {
 		})
 	}, 500, 160)
 	box := routeAccess(t, r, ui.RoleButton, "Page "+strconv.Itoa(math.MaxInt)).Bounds
+	label := strconv.Itoa(math.MaxInt)
+	reference := ui.NewTester(func(c *ui.Context) {
+		ui.Text(c, label).FontSize(14).FontWeight(500).AlignSelf(ui.Start)
+	}, 500, 100)
+	text, ok := reference.Find(label)
+	if !ok || box.W < text.W+2 {
+		t.Fatalf("large page control truncates its actual native text: control=%+v text=%+v", box, text)
+	}
 	im := r.Image()
 	want := color.RGBA{R: background.R, G: background.G, B: background.B, A: background.A}
 	for y := int(box.Y); y < int(box.Y+box.H); y++ {

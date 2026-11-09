@@ -147,3 +147,6 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 - Textarea resize：22项正式检查与独立审计通过。新增TextareaWith保留原生Input并用独立sibling splitter提供drag/capture/cancel、上下/Home/End/Shift及AX桥接键、RTL、caller JSON高度、auto恢复、外部重配置/blur/卸载取消和无idle。独审先复现同批原生Down事件读取旧Draw高度导致丢增量，改为从已接受caller高度继续后累计/反向回归通过。原生undo、caret、编辑器局部状态、只读/仅禁resize与多实例均验证。
 - 组合输入回归：隔离HEAD加新Textarea模块、保留旧InputGroup时，Field真实编辑器名称缺失和内层重复边框两项失败；InputGroup分别处理布局container与fieldTarget原生editor后两项通过，addon焦点/undo/resize仍正常。macOS实窗已编辑Bio并Tab到手柄，连续两次Down后原生AX高度64→80；真实指针/触屏与AT/跨平台矩阵未宣称完成。
 - Textarea独立阶段验证：HEAD仅覆盖新resize/source测试及InputGroup目标解析，control/Gallery共187项与control vet通过；未提前包含Gallery新示例。
+
+- 长页码补充：明暗截图发现百万页边界被截为“10…”。增加独立native Text测量回归后，旧36DIP控件先失败；长页码改为内容宽度，一至三位仍36DIP。navigation/Gallery共147项通过，文本不再依赖只有AX可读的完整标签；超窄容器/完整文字缩放平台矩阵继续跟踪。
+- 长页码独立审查：41条临时公共API探针覆盖Button/URL、LTR/RTL、Compact和1/2/100/百万/MaxInt页码；数字实际像素逐项等于完整native文字参考，普通页码宽36与长数字留白均正确。临时探针未写入仓库，正式MaxInt文字/边界回归保留。

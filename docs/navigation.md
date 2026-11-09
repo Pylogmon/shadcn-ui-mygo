@@ -84,4 +84,4 @@ navigation.PaginationWith(c, &page, navigation.PaginationProps{
 
 SiblingCount/BoundaryCount 的指针允许明确配置零；旧 Siblings 零值仍默认一个相邻页。算法只遍历边界和相邻窗口，支持 MaxInt 总页数；默认最多生成 4096 个数字控件，超出请求标记 Invalid/inert，不静默截断。上一页/下一页的身份不随目标页变化，连续 Enter 保持焦点。
 
-窄窗口自动省略前后按钮文字，Compact 可显式启用；AlwaysShowText 保留文字。箭头适应 RTL；PageContent 为非交互视觉回调，PageLabel 设置完整可访问名称。极大数字保持有限控件区域和完整 AX 名称；完整超窄容器/平台/视觉矩阵仍需验收。
+窄窗口自动省略前后按钮文字，Compact 可显式启用；AlwaysShowText 保留文字。箭头适应 RTL；PageContent 为非交互视觉回调，PageLabel 设置完整可访问名称。一至三位页码保持 36 DIP，长页码按原生文字内容宽度展开，避免多个边界变成无法区分的省略文本。极大数字保持有限控件区域和完整 AX 名称；完整超窄容器/平台/视觉矩阵仍需验收。
