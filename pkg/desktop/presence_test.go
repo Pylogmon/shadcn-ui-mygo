@@ -327,3 +327,48 @@ func TestNonFocusableStyleSwitchUpdatesDismissalCapabilityInPlace(t *testing.T) 
 		t.Fatal("styled passive exit failed")
 	}
 }
+
+func TestInactiveHoverDismissalDoesNotFocusAndReopenAnchor(t *testing.T) {
+	for _, mode := range []string{"controlled", "native-styled", "native-system"} {
+		t.Run(mode, func(t *testing.T) {
+			b := &presenceBackend{}
+			h := NewHostWithBackend(b)
+			open := true
+			value := ""
+			parent := ui.NewTester(func(c *ui.Context) {
+				theme.Apply(c)
+				h.BeginFrame()
+				defer h.EndFrame()
+				ui.Column(c).Children(func() {
+					control.Input(c, &value, control.InputProps{Label: "Existing focus"}).AutoFocus()
+					anchor := control.Button(c, "Hover anchor", control.ButtonProps{})
+					p := PopoverProps{ShowInactive: true, NoFocusRestore: true}
+					content := func(child *ui.Context) { ui.Text(child, "Hover details") }
+					if mode == "native-system" {
+						_ = NativePopover(c, h, "hover", anchor, &open, p, content)
+					} else {
+						_ = Popover(c, h, "hover", anchor, &open, p, content)
+					}
+				})
+			}, 400, 240)
+			f := b.surfaces[0]
+			child := ui.NewTester(f.view, 288, 200)
+			child.Advance(300 * time.Millisecond)
+			if mode == "controlled" {
+				open = false
+				parent.Frame()
+			} else {
+				f.dismiss()
+			}
+			child.Frame()
+			child.Advance(150 * time.Millisecond)
+			parent.Frame()
+			if !parent.Focused("Existing focus") || parent.Focused("Hover anchor") {
+				t.Fatal("inactive dismissal moved focus to its hover anchor")
+			}
+			if f.closes != 1 || open || h.IsPresent("hover") {
+				t.Fatal("inactive hover failed to close once")
+			}
+		})
+	}
+}

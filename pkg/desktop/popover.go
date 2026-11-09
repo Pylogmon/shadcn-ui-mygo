@@ -58,6 +58,10 @@ type PopoverProps struct {
 	FitContent                               bool
 	MinWidth, MinHeight, MaxWidth, MaxHeight int
 	NonFocusable                             bool
+	// NoFocusRestore leaves the parent's existing keyboard focus unchanged on
+	// dismissal. Hover-opened inactive windows use it to avoid turning a
+	// pointer-only preview into anchor focus (and immediately reopening it).
+	NoFocusRestore bool
 	// IgnoreMouseEvents makes tooltips transparent to pointer input. ShowInactive
 	// leaves initial keyboard focus in the parent while permitting later focus.
 	IgnoreMouseEvents, ShowInactive bool
@@ -276,7 +280,7 @@ func (h *Host) Popover(c *ui.Context, key string, anchor ui.Element, open *bool,
 		if e.open != nil {
 			*e.open = false
 		}
-		if !e.props.NonFocusable {
+		if !e.props.NonFocusable && !e.props.NoFocusRestore {
 			e.anchor.Focus()
 		}
 		if e.props.OnDismiss != nil {
@@ -529,7 +533,7 @@ func (h *Host) closeEntry(e *entry) {
 	if e.open != nil {
 		*e.open = false
 	}
-	if e.surface != nil && !e.props.NonFocusable {
+	if e.surface != nil && !e.props.NonFocusable && !e.props.NoFocusRestore {
 		e.anchor.Focus()
 	}
 	e.awaitedAnchor = false

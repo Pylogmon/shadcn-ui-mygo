@@ -15,6 +15,8 @@
 | `Select` | `NativeSelect` | 独立 Flyout 选项与系统菜单选择 |
 | `DatePicker` | `NativeDatePicker` | 独立日期/时间窗口与平台样式容器 |
 | `DateRangePicker` | `NativeDateRangePicker` | 隔离未完成范围、完整范围提交 |
+| `Tooltip` | `NativeTooltip` | 鼠标穿透、不抢焦点的独立提示窗口 |
+| `HoverCard` | `NativeHoverCard` | 延迟预览、跨窗口指针保持、显式键盘进入 |
 
 `NativeMenu` 家族和 `NativeSelect` 强制走 `ui.SystemMenus`，并在同一帧恢复调用方的菜单策略；不会因为预览设置而偷偷改成自绘菜单。`NativePopover` 在 macOS 使用 NSPopover 材质/箭头与平台主题；其他平台使用 MyGo 的原生 Flyout 和该窗口的平台默认主题，不声称存在对应的操作系统通用 Popover 控件。
 
@@ -57,7 +59,9 @@ err := desktop.Popover(c, host, "settings", anchor, &open,
 
 日期组件对已实现；`NativeDatePicker` / `NativeDateRangePicker` 使用原生 Popover/Flyout 容器与平台主题的受约束 Go 日历，并不声称 MyGo 暴露了系统日期网格。原生版月份/年份下拉默认走系统菜单；`CalendarProps.CaptionSelect` 允许显式注入接收当前日历 Context 的选择器。普通选择提交一次；范围选择在完成有效端点对后才发布；`ShowTime` / `Confirm` 使用 Apply/Cancel 草稿。Footer 接受明确的子 Context，父窗口零参数 Calendar.Footer 不可跨窗口复用。
 
-Tooltip、HoverCard 的成对迁移正在后续阶段完成。`Native*` 不会用一个自绘窗口冒充运行时不存在的操作系统控件；适配范围必须在实现与文档中明确。
+`Tooltip` 默认立即显示，`HoverCard` 默认延迟700ms打开、300ms关闭；关闭时取消计时，Escape 后不会因触发器仍有焦点而立即重开。指针打开的 HoverCard 保持父窗口键盘焦点；触发器上的 Down/Tab 可以进入内容，Escape/反向 Tab 返回。`NativeTooltip` 和 `NativeHoverCard` 使用平台主题的普通原生 Flyout：MyGo 没有暴露系统 Tooltip/HoverCard 控件，macOS NSPopover 会抢焦点，也不适合指针预览。NativeTooltip 保留显式反色配置，缺省时沿用 MyGo 的平台文字/背景回退。
+
+`Native*` 的平台适配范围在 API 和文档中明确；拥有系统控件 API 的菜单使用系统实现，其余采用上述平台主题和原生窗口能力。
 
 ## 验证范围
 

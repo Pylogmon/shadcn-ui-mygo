@@ -64,7 +64,7 @@ composition; they do not automatically supply missing upstream behavior.
 | Dropdown Menu | `overlay.DropdownMenu` | desktop.DropdownMenu/NativeDropdownMenu now use independent shadcn Flyout vs OS menus. Typeahead, scoped nested keys, checks/radio/disabled/RTL/scroll, result delivery and focus are tested. Complete platform/window-edge matrices and animated closing remain. |
 | Empty | `display.Empty` | Verify icon/media/content/action compositions and constrained widths. |
 | Field | `control.Field` | Vertical/horizontal/responsive layout, fieldset/group, required state and compound editor label/error linkage are tested; complete IME/screen-reader and validation timing examples. |
-| Hover Card | `overlay.HoverCard` | Open/close timers and pointer-gap persistence exist; verify timer cancellation, Escape suppression, interactive focus and placement on every side. |
+| Hover Card | `desktop.HoverCard` / `NativeHoverCard` | Independent-window delays/cancellation, pointer-gap persistence, Escape suppression, explicit keyboard entry/return and inactive focus are tested. Native uses a platform-themed Flyout, not an OS hover-card widget. Every-side/multi-display runtime placement remains. |
 | Input | `control.Input` | Native text editing/readonly/disabled exists; verify IME, password, selection, clipboard, invalid/focus geometry and all sizes. |
 | Input Group | `control.InputGroup` | Inline/block arbitrary addons, buttons, text and compound editor focus/error propagation are implemented; complete textarea/menu/action examples and platform screenshots. |
 | Input OTP | `control.InputOTP` | Native hidden editor + visible cells, filtering and completion exist; verify paste, selection/caret position, IME, grouping and pattern variants. |
@@ -98,7 +98,7 @@ composition; they do not automatically supply missing upstream behavior.
 | Toast | `overlay.Toast` / `Toaster` | Native queue, action, close and pause semantics are used; action dismissal is tested. Verify timed expiry, hover/focus pause, swipe and every placement. |
 | Toggle | `control.Toggle` | Native pressed state exists; verify icon-only labels, every variant/size and focus/disabled screenshots. |
 | Toggle Group | `control.ToggleGroup` | Controlled single/multiple values and horizontal keyboard grouping exist; verify vertical groups, RTL and group accessibility. |
-| Tooltip | `overlay.Tooltip` | Native delay/focus and trigger description exist; verify all placements, skip-delay groups, Escape and reduced-motion presence. |
+| Tooltip | `desktop.Tooltip` / `NativeTooltip` | Independent pointer-transparent windows, delays, focus, Escape suppression, theme refresh and native inverse-color pixels are tested. Native uses a platform-themed Flyout. Skip-delay groups and full runtime placement/accessibility matrix remain. |
 | Trace | `conversation.Trace` | Recursive controlled status/disclosure exists; verify running/failed transitions, unique nested IDs and all upstream detail/action compositions. |
 | Typography | `display.Typography` | H1-H4 now expose native heading roles/ranks; paragraph/lead/quote/code styles exist. Lists/tables/links, complete font metrics/typesetting and profile visual examples remain. |
 
