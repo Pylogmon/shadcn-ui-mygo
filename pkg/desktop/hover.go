@@ -42,28 +42,35 @@ type hoverApplicationState struct{ known, active bool }
 // WindowActive describes a rendered window and can lag a native focus transfer.
 // Only explicit application activity can bridge that gap; unknown backends keep
 // the conservative window-based dismissal behavior.
-func hoverApplication(h *Host, key string) hoverApplicationState {
-	if h == nil {
-		return hoverApplicationState{}
+func hoverApplication(h *Host) hoverApplicationState {
+	active, known := h.ApplicationState()
+	return hoverApplicationState{known: known, active: active}
+}
+
+// Flyouts inherit their owner's drawn-active appearance even when ShowInactive
+// leaves the keyboard in the parent. Only real window focus may keep a pointer
+// preview alive after the pointer leaves both windows. Injected surfaces can
+// report IsFocused. Without that capability, an exact body focus proves initial
+// keyboard ownership; FocusLeft then tracks a move into its descendants or out
+// of the window without mistaking a merely retained UI focus for ownership.
+func hoverWindowFocused(h *Host, key string, body ui.Element, wasFocused, focusLeft bool) bool {
+	if h != nil {
+		if focused, known := h.FocusState(key); known {
+			return focused
+		}
 	}
-	if activity, ok := h.backend.(interface{ ApplicationActive() bool }); ok {
-		return hoverApplicationState{known: true, active: activity.ApplicationActive()}
-	}
-	if window := h.NativeWindow(key); window != nil && !window.IsDestroyed() {
-		return hoverApplicationState{known: true, active: mygo.App.IsActive()}
-	}
-	return hoverApplicationState{}
+	return body.Focused() || wasFocused && !focusLeft && body.FocusWithin()
 }
 
 type hoverFlyoutState struct {
-	open, suppressed                    bool
-	childHover, childFocus, childActive bool
-	enterChild, keyboardChild           bool
-	enteredAt, leftAt                   time.Time
-	text                                string
-	lastRevision, renderRevision        uint64
-	onOpenChange                        func(bool)
-	anchor                              ui.Handle
+	open, suppressed                           bool
+	childHover, childFocus, childWindowFocus   bool
+	enterChild, keyboardChild, keyboardPending bool
+	enteredAt, leftAt                          time.Time
+	text                                       string
+	lastRevision, renderRevision               uint64
+	onOpenChange                               func(bool)
+	anchor                                     ui.Handle
 }
 
 func (s *hoverFlyoutState) setOpen(open bool) {
@@ -76,22 +83,22 @@ func (s *hoverFlyoutState) setOpen(open bool) {
 	}
 }
 func (s *hoverFlyoutState) dismiss() {
-	if s.keyboardChild {
+	if s.keyboardChild && (s.keyboardPending || s.childWindowFocus) {
 		s.anchor.Focus()
 	}
 	s.suppressed = true
 	s.enteredAt, s.leftAt = time.Time{}, time.Time{}
-	s.childHover, s.childFocus, s.childActive = false, false, false
-	s.enterChild, s.keyboardChild = false, false
+	s.childHover, s.childFocus, s.childWindowFocus = false, false, false
+	s.enterChild, s.keyboardChild, s.keyboardPending = false, false, false
 	s.setOpen(false)
 }
 func (s *hoverFlyoutState) cancel() {
-	if s.keyboardChild {
+	if s.keyboardChild && (s.keyboardPending || s.childWindowFocus) {
 		s.anchor.Focus()
 	}
 	s.enteredAt, s.leftAt = time.Time{}, time.Time{}
-	s.childHover, s.childFocus, s.childActive = false, false, false
-	s.enterChild, s.keyboardChild = false, false
+	s.childHover, s.childFocus, s.childWindowFocus = false, false, false
+	s.enterChild, s.keyboardChild, s.keyboardPending = false, false, false
 	s.setOpen(false)
 }
 
@@ -109,10 +116,10 @@ func hoverArgs(c *ui.Context, key string, anchor ui.Element) error {
 // transitions, not timestamps or parent-frame Elements, so clocked tests and
 // native frames both cancel/re-enter the same state machine without idle loops.
 func advanceHover(c *ui.Context, s *hoverFlyoutState, anchorHot, immediate bool, openDelay, closeDelay time.Duration, interactive bool, application hoverApplicationState) {
-	keyboardActive := interactive && s.keyboardChild && application.known && application.active
-	childHot := interactive && (s.childHover || s.childFocus || s.childActive || keyboardActive)
+	keyboardActive := interactive && s.keyboardPending && application.known && application.active
+	childHot := interactive && (s.childHover || s.childFocus || s.childWindowFocus || keyboardActive)
 	hot := anchorHot || childHot
-	if c.WindowHidden() || application.known && !application.active || !c.WindowActive() && (!interactive || !s.childActive) && !keyboardActive {
+	if c.WindowHidden() || application.known && !application.active || !c.WindowActive() && (!interactive || !s.childWindowFocus) && !keyboardActive {
 		if s.open || !s.enteredAt.IsZero() {
 			s.dismiss()
 		}
@@ -273,9 +280,9 @@ func hoverCard(c *ui.Context, h *Host, key string, anchor ui.Element, p HoverCar
 		}
 		if interactive && (anchor.Shortcut(0, ui.KeyDown) || s.open && anchor.Shortcut(0, ui.KeyTab)) {
 			s.suppressed = false
-			s.enterChild, s.keyboardChild = true, true
+			s.enterChild, s.keyboardChild, s.keyboardPending = true, true, true
 		}
-		advanceHover(c, s, anchorHot, anchor.FocusWithin() || s.enterChild, openDelay, closeDelay, interactive, hoverApplication(h, key))
+		advanceHover(c, s, anchorHot, anchor.FocusWithin() || s.enterChild, openDelay, closeDelay, interactive, hoverApplication(h))
 	}
 	if h == nil {
 		if s.open {
@@ -300,7 +307,14 @@ func hoverCard(c *ui.Context, h *Host, key string, anchor ui.Element, p HoverCar
 		Label: label, Placement: p.Placement, Width: width, Height: p.Height, Gap: p.Gap,
 		FitContent: true, MinWidth: minWidth, MinHeight: p.MinHeight, MaxWidth: maxWidth, MaxHeight: p.MaxHeight,
 		NonFocusable: !interactive, Plain: true, SystemStyle: native, ShowInactive: true, IgnoreMouseEvents: !interactive,
-		ContentRole: ui.RoleNone, ManualTrigger: true, Revision: p.Revision, OnDismiss: s.dismiss, NoFocusRestore: true,
+		ContentRole: ui.RoleNone, ManualTrigger: true, Revision: p.Revision, NoFocusRestore: true,
+		OnDismiss: func() {
+			// Native destruction can precede the child's blur frame. The closed
+			// surface no longer owns the keyboard; preserve whichever parent
+			// control received it. Explicit child Escape restores before closing.
+			s.childWindowFocus, s.keyboardPending = false, false
+			s.dismiss()
+		},
 	}
 	err := h.Popover(c, key, anchor, &s.open, props, func(child *ui.Context) {
 		body := ui.Column(child).FillWidth().Gap(8).Role(ui.RoleGroup).Label(label).Disabled(!interactive)
@@ -321,13 +335,24 @@ func hoverCard(c *ui.Context, h *Host, key string, anchor ui.Element, p HoverCar
 				content(child)
 			}
 		})
-		hover, active := body.Hovered(), child.WindowActive()
-		focus := active && body.FocusWithin()
+		// Observe the native keyboard boundary as well as its drawn appearance;
+		// WindowActive may stay true for both owner and inactive child. This
+		// dependency schedules the child frame that reports a real focus change.
+		focusLeft := body.FocusLeft()
+		hover, windowFocus := body.Hovered(), hoverWindowFocused(h, key, body, s.childWindowFocus, focusLeft)
+		focus := windowFocus && body.FocusWithin()
 		if !interactive {
-			focus, active = false, false
+			focus, windowFocus = false, false
 		}
-		if s.childHover != hover || s.childFocus != focus || s.childActive != active {
-			s.childHover, s.childFocus, s.childActive = hover, focus, active
+		// Application activity bridges only the unconfirmed native transfer.
+		// Once the child actually owns the keyboard, ordinary hover/focus rules
+		// resume so moving to another parent control can close the preview.
+		confirmed := s.keyboardPending && windowFocus
+		if confirmed {
+			s.keyboardPending = false
+		}
+		if s.childHover != hover || s.childFocus != focus || s.childWindowFocus != windowFocus || confirmed {
+			s.childHover, s.childFocus, s.childWindowFocus = hover, focus, windowFocus
 			h.backend.InvalidateParent()
 		}
 	})

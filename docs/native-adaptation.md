@@ -70,6 +70,8 @@ Gallery 的日期、日期范围、Tooltip 和作者 HoverCard 已接入组件�
 
 键盘进入的窗口交接期间，父窗口和子窗口的绘制活跃状态可能短暂都未更新。`Host.FocusState(key)` 通过可选 `FocusSurface.IsFocused()` 查询实际键盘所有权；`Host.ApplicationState()` 通过可选后端 `ApplicationActive() bool` 区分应用交接与失活。标准 MyGo 后端提供两种查询，未知后端保留明确的 unknown 状态，不把继承的活跃外观猜成真实焦点。
 
+HoverCard 仅在尚未确认的键盘交接期间使用应用活跃状态保持窗口；确认后按实际焦点或指针保持。两窗指针均离开、实际子焦点已丢失时按关闭延迟退出；原生关闭早于 blur 刷新的路径不会抢回父窗口新输入框的焦点。
+
 `Native*` 的平台适配范围在 API 和文档中明确；拥有系统控件 API 的菜单使用系统实现，其余采用上述平台主题和原生窗口能力。
 
 ## 验证范围

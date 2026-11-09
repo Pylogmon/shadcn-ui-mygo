@@ -31,6 +31,29 @@ func (b *hoverBackend) Open(s Spec, view func(*ui.Context), closed func()) (Surf
 func (s *hoverSurface) Focus()                  { s.backend.focuses++ }
 func (b *hoverBackend) ApplicationActive() bool { return !b.applicationInactive }
 
+type focusedHoverBackend struct {
+	hoverBackend
+	childFocused bool
+}
+type focusedHoverSurface struct {
+	Surface
+	backend *focusedHoverBackend
+}
+
+func (b *focusedHoverBackend) Open(spec Spec, view func(*ui.Context), closed func()) (Surface, error) {
+	surface, err := b.hoverBackend.Open(spec, view, closed)
+	if err != nil {
+		return nil, err
+	}
+	return &focusedHoverSurface{Surface: surface, backend: b}, nil
+}
+func (s *focusedHoverSurface) IsFocused() bool { return s.backend.childFocused }
+func (s *focusedHoverSurface) Focus() {
+	if focus, ok := s.Surface.(interface{ Focus() }); ok {
+		focus.Focus()
+	}
+}
+
 func moveOver(t *testing.T, view *ui.Tester, label string) {
 	t.Helper()
 	r, ok := view.Find(label)
@@ -347,6 +370,187 @@ func TestHoverCardPointerGapAndChildKeepAliveWithoutFocusSteal(t *testing.T) {
 	parent.Advance(3 * time.Second)
 	if parent.FramePending() {
 		t.Fatal("closed card left an idle timer loop")
+	}
+}
+
+func TestHoverCardPointerLeaveClosesWhileChildRemainsDrawnActive(t *testing.T) {
+	for _, native := range []bool{false, true} {
+		t.Run(fmt.Sprintf("native=%v", native), func(t *testing.T) {
+			b := &hoverBackend{}
+			h := NewHostWithBackend(b)
+			parent := ui.NewTester(func(c *ui.Context) {
+				theme.Apply(c)
+				h.BeginFrame()
+				defer h.EndFrame()
+				anchor := control.Button(c, "Profile", control.ButtonProps{})
+				card := HoverCard
+				if native {
+					card = NativeHoverCard
+				}
+				if err := card(c, h, "profile", anchor, HoverCardProps{OpenDelay: -1, CloseDelay: 50 * time.Millisecond}, func(child *ui.Context) {
+					control.Button(child, "Preview action", control.ButtonProps{})
+				}); err != nil {
+					t.Fatal(err)
+				}
+			}, 420, 220)
+			moveOver(t, parent, "Profile")
+			if len(b.surfaces) != 1 || b.focuses != 0 {
+				t.Fatal("pointer opening did not create an inactive child")
+			}
+			drawnActive := false
+			child := ui.NewTester(func(c *ui.Context) {
+				drawnActive = c.WindowActive()
+				b.surfaces[0].view(c)
+			}, 320, 180)
+			if !drawnActive {
+				t.Fatal("regression requires the drawn-active state inherited from an active parent")
+			}
+			moveOver(t, child, "Preview action")
+			parent.Move(400, 200)
+			parent.Frame()
+			parent.Advance(100 * time.Millisecond)
+			if !h.IsOpen("profile") {
+				t.Fatal("pointer inside the child failed to keep the card open")
+			}
+			child.Move(600, 400)
+			parent.Frame()
+			parent.Advance(51 * time.Millisecond)
+			if h.IsOpen("profile") || b.surfaces[0].closes != 1 || b.focuses != 0 {
+				t.Fatal("drawn-active child kept a pointer-only card after both pointers left")
+			}
+			parent.Advance(time.Second)
+			if parent.FramePending() {
+				t.Fatal("pointer leave left an idle timer loop")
+			}
+		})
+	}
+}
+
+func TestHoverCardUsesRealChildFocusThenClosesAfterFocusAndPointerLeave(t *testing.T) {
+	b := &focusedHoverBackend{}
+	h := NewHostWithBackend(b)
+	parent := ui.NewTester(func(c *ui.Context) {
+		theme.Apply(c)
+		h.BeginFrame()
+		defer h.EndFrame()
+		anchor := control.Button(c, "Profile", control.ButtonProps{})
+		if err := HoverCard(c, h, "profile", anchor, HoverCardProps{OpenDelay: -1, CloseDelay: 50 * time.Millisecond}, func(child *ui.Context) {
+			ui.Text(child, "Preview")
+		}); err != nil {
+			t.Fatal(err)
+		}
+	}, 420, 220)
+	moveOver(t, parent, "Profile")
+	child := ui.NewTester(b.surfaces[0].view, 320, 180)
+	b.childFocused = true
+	child.Frame()
+	parent.Move(400, 200)
+	child.Move(600, 400)
+	parent.Frame()
+	parent.Advance(100 * time.Millisecond)
+	if !h.IsOpen("profile") {
+		t.Fatal("real focused child was dismissed on pointer leave")
+	}
+	b.childFocused = false
+	child.Frame()
+	parent.Frame()
+	parent.Advance(51 * time.Millisecond)
+	if h.IsOpen("profile") || b.surfaces[0].closes != 1 {
+		t.Fatal("child retained the card after true window focus and both pointers left")
+	}
+}
+
+func TestHoverCardCompletedKeyboardHandoffDoesNotKeepCardAfterChildBlur(t *testing.T) {
+	for _, native := range []bool{false, true} {
+		t.Run(fmt.Sprintf("native=%v", native), func(t *testing.T) {
+			b := &focusedHoverBackend{}
+			h := NewHostWithBackend(b)
+			value := ""
+			parent := ui.NewTester(func(c *ui.Context) {
+				theme.Apply(c)
+				h.BeginFrame()
+				defer h.EndFrame()
+				ui.Column(c).Padding(16).Gap(12).Children(func() {
+					anchor := control.Button(c, "Profile", control.ButtonProps{})
+					card := HoverCard
+					if native {
+						card = NativeHoverCard
+					}
+					if err := card(c, h, "profile", anchor, HoverCardProps{Label: "User profile", CloseDelay: 50 * time.Millisecond}, func(child *ui.Context) {
+						control.Button(child, "Visit profile", control.ButtonProps{})
+					}); err != nil {
+						t.Fatal(err)
+					}
+					control.Input(c, &value, control.InputProps{Label: "Other input"})
+				})
+			}, 420, 220)
+			parent.Key(0, ui.KeyTab)
+			parent.Key(0, ui.KeyDown)
+			if b.focuses != 1 {
+				t.Fatal("Down did not request the child keyboard")
+			}
+			b.childFocused = true
+			child := ui.NewTester(b.surfaces[0].view, 320, 180)
+			child.Advance(250 * time.Millisecond)
+			parent.Frame()
+			if !h.IsOpen("profile") || !child.Focused("User profile") {
+				t.Fatal("keyboard handoff did not establish real child focus")
+			}
+			b.childFocused = false
+			child.Frame()
+			child.Move(600, 400)
+			if err := parent.Click("Other input"); err != nil {
+				t.Fatal(err)
+			}
+			parent.Frame()
+			parent.Advance(51 * time.Millisecond)
+			if h.IsOpen("profile") || b.surfaces[0].closes != 1 {
+				t.Fatal("application activity kept a completed keyboard handoff alive after child blur")
+			}
+			if !parent.Focused("Other input") {
+				t.Fatal("closing an unfocused child stole the parent's new input focus")
+			}
+			parent.Advance(time.Second)
+			if parent.FramePending() {
+				t.Fatal("completed handoff left idle timer frames")
+			}
+		})
+	}
+}
+
+func TestHoverCardNativeDismissalBeforeChildBlurFramePreservesNewParentFocus(t *testing.T) {
+	b := &focusedHoverBackend{}
+	h := NewHostWithBackend(b)
+	value := ""
+	parent := ui.NewTester(func(c *ui.Context) {
+		theme.Apply(c)
+		h.BeginFrame()
+		defer h.EndFrame()
+		ui.Column(c).Padding(16).Gap(12).Children(func() {
+			anchor := control.Button(c, "Profile", control.ButtonProps{})
+			if err := NativeHoverCard(c, h, "profile", anchor, HoverCardProps{Label: "User profile"}, func(child *ui.Context) {
+				ui.Text(child, "Preview")
+			}); err != nil {
+				t.Fatal(err)
+			}
+			control.Input(c, &value, control.InputProps{Label: "Other input"})
+		})
+	}, 420, 220)
+	parent.Key(0, ui.KeyTab)
+	parent.Key(0, ui.KeyDown)
+	b.childFocused = true
+	child := ui.NewTester(b.surfaces[0].view, 320, 180)
+	child.Frame()
+	b.childFocused = false
+	if err := parent.Click("Other input"); err != nil {
+		t.Fatal(err)
+	}
+	// Native destruction can deliver OnClosed before a child blur frame had
+	// time to update its last-known focus. That stale bit must not steal focus.
+	b.surfaces[0].dismiss()
+	parent.Frame()
+	if h.IsOpen("profile") || !parent.Focused("Other input") {
+		t.Fatal("late native focus report stole the parent's newly focused editor")
 	}
 }
 
