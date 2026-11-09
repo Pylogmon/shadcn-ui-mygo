@@ -20,7 +20,10 @@ func NewHost(parent *mygo.Window) *Host {
 }
 
 type nativeBackend struct{ parent *mygo.Window }
-type nativeSurface struct{ window *mygo.Window }
+type nativeSurface struct {
+	window  *mygo.Window
+	dismiss func() bool
+}
 
 func (b *nativeBackend) Open(s Spec, view func(*ui.Context), onClosed func()) (surface Surface, err error) {
 	if b.parent == nil {
@@ -41,10 +44,22 @@ func (b *nativeBackend) Open(s Spec, view func(*ui.Context), onClosed func()) (s
 	}()
 	w := mygo.NewFlyout(mygo.FlyoutOptions{Parent: b.parent, Anchor: nativeRect(s.Anchor), Placement: s.Placement, Width: s.Width, Height: s.Height, Gap: s.Gap, FitContent: s.FitContent, MinWidth: s.MinWidth, MinHeight: s.MinHeight, MaxWidth: s.MaxWidth, MaxHeight: s.MaxHeight, Focusable: s.Focusable, Popover: s.SystemPopover, CornerRadius: s.CornerRadius, Shadow: true, Hidden: true, Content: ui.View(view)})
 	created = w
+	native := &nativeSurface{window: w}
+	w.OnClose(func(event *mygo.CloseEvent) {
+		if native.dismiss != nil && native.dismiss() {
+			event.PreventDefault()
+		}
+	})
 	w.OnClosed(onClosed)
-	w.Show()
-	return &nativeSurface{window: w}, nil
+	w.SetIgnoreMouseEvents(s.IgnoreMouseEvents)
+	if s.ShowInactive {
+		w.ShowInactive()
+	} else {
+		w.Show()
+	}
+	return native, nil
 }
+func (s *nativeSurface) SetDismissHandler(handler func() bool) { s.dismiss = handler }
 func (b *nativeBackend) InvalidateParent() {
 	if b.parent != nil && !b.parent.IsDestroyed() {
 		b.parent.Invalidate()
@@ -52,6 +67,11 @@ func (b *nativeBackend) InvalidateParent() {
 }
 func (s *nativeSurface) SetAnchor(r ui.Rect) { s.window.SetAnchor(nativeRect(r)) }
 func (s *nativeSurface) Invalidate()         { s.window.Invalidate() }
+func (s *nativeSurface) Focus() {
+	if !s.window.IsDestroyed() {
+		s.window.Focus()
+	}
+}
 func (s *nativeSurface) Close() {
 	if !s.window.IsDestroyed() {
 		// Closing from the flyout's own UI callback must not destroy the surface

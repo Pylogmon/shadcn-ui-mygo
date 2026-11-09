@@ -60,4 +60,5 @@ Tooltip、HoverCard、DatePicker 等其余弹出家族的完整成对迁移仍�
 - 运行 `go run ./examples/native-popups`；macOS 可用 `make popups-app` 生成小窗口对照应用。
 - 已在 macOS 实际观察 Menu 的 shadcn Flyout 越过父窗口下边界、NativeMenu 的系统菜单样式，以及自绘 Popover 同时越过父窗口右侧/下边界。子窗口 Done 关闭后恢复父窗口焦点。
 - 自动测试验证独立 Context、系统与主题路由、锚点、无空闲帧循环、关闭保护、选择回传、键盘、子菜单与自定义选项。
-- Plain Flyout 完整退场动画/原生外部关闭拦截、多显示器/缩放边界和 Windows/Linux 实际运行矩阵尚未完成；无窗口测试不能代替这些验收。
+- Plain Flyout 已增加可逆的短退场、原生外部/Escape 关闭拦截、减少动画立即关闭、迟到回调保护与所有者清理。NativePopover 保留操作系统动画。真实平台的全部关闭路径、多显示器/缩放边界和 Windows/Linux 运行矩阵仍需验收。
+- `DismissInterceptor` 是扩展 Surface 能力：标准 MyGo 后端支持保留窗口完成退场；显式注入且没有该能力的后端保持立即关闭，避免留下无法驱动的子窗口。无窗口测试不能替代真实平台验收。

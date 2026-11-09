@@ -8,6 +8,7 @@ import (
 	"errors"
 	"fmt"
 	"math"
+	"time"
 
 	"github.com/egoist/mygo"
 	"github.com/egoist/mygo/ui"
@@ -22,6 +23,12 @@ type Surface interface {
 	Invalidate()
 	Close()
 }
+
+// DismissInterceptor is an optional surface capability. The callback returns
+// true when Host retained the surface to animate its dismissal, so the native
+// close event must be prevented. Backends without it preserve immediate close
+// behavior; the native MyGo adapter implements it for plain Flyouts.
+type DismissInterceptor interface{ SetDismissHandler(func() bool) }
 
 // Backend is injectable so lifecycle and independent-context behavior can be
 // tested without a desktop session. Open must install onClosed before showing
@@ -40,6 +47,7 @@ type Spec struct {
 	FitContent                               bool
 	MinWidth, MinHeight, MaxWidth, MaxHeight int
 	Focusable, SystemPopover                 bool
+	IgnoreMouseEvents, ShowInactive          bool
 	CornerRadius                             int
 }
 
@@ -50,6 +58,9 @@ type PopoverProps struct {
 	FitContent                               bool
 	MinWidth, MinHeight, MaxWidth, MaxHeight int
 	NonFocusable                             bool
+	// IgnoreMouseEvents makes tooltips transparent to pointer input. ShowInactive
+	// leaves initial keyboard focus in the parent while permitting later focus.
+	IgnoreMouseEvents, ShowInactive bool
 	// Plain opts out of macOS's material, arrow and system popover animation.
 	// A plain flyout still has its own native window and system shadow. On
 	// Windows/Linux the system-popover option has no effect.
@@ -81,22 +92,24 @@ type Host struct {
 	frame   uint64
 }
 type entry struct {
-	open           *bool
-	props          PopoverProps
-	spec           Spec
-	content        func(*ui.Context)
-	tokens         theme.Tokens
-	nativeTheme    *ui.Theme
-	reduced        bool
-	anchor         ui.Handle
-	surface        Surface
-	generation     uint64
-	seen           uint64
-	awaitedAnchor  bool
-	pendingParent  bool
-	observedAnchor ui.Rect
-	padding        float32
-	presentation   ui.MenuPresentation
+	open                                     *bool
+	props                                    PopoverProps
+	spec                                     Spec
+	content                                  func(*ui.Context)
+	tokens                                   theme.Tokens
+	nativeTheme                              *ui.Theme
+	reduced                                  bool
+	anchor                                   ui.Handle
+	surface                                  Surface
+	generation                               uint64
+	seen                                     uint64
+	awaitedAnchor                            bool
+	pendingParent                            bool
+	observedAnchor                           ui.Rect
+	padding                                  float32
+	presentation                             ui.MenuPresentation
+	closing, nativeDismiss, removeAfterClose bool
+	presented                                bool
 }
 
 // NewHostWithBackend creates an isolated host, primarily for backend adapters
@@ -166,8 +179,16 @@ func (h *Host) Popover(c *ui.Context, key string, anchor ui.Element, open *bool,
 	}
 	if !*open {
 		e.props = p
-		h.closeEntry(e)
+		e.reduced = motion.Reduced(c)
+		h.beginClose(e, false, false)
 		return nil
+	}
+	if e.closing {
+		// The same surface and animation identity survive a close/open reversal.
+		e.closing, e.nativeDismiss, e.removeAfterClose = false, false, false
+		if e.surface != nil {
+			e.surface.Invalidate()
+		}
 	}
 	// Read the anchor's committed geometry after parent layout. A single
 	// correction frame updates a popup after programmatic layout/scroll moves;
@@ -229,6 +250,7 @@ func (h *Host) Popover(c *ui.Context, key string, anchor ui.Element, open *bool,
 	oldAnchor := e.spec.Anchor
 	e.spec = spec
 	if e.surface != nil {
+		h.configureDismiss(e, e.surface, e.generation)
 		if oldAnchor != spec.Anchor {
 			e.surface.SetAnchor(spec.Anchor)
 		}
@@ -245,6 +267,12 @@ func (h *Host) Popover(c *ui.Context, key string, anchor ui.Element, open *bool,
 		}
 		e.generation++
 		e.surface = nil
+		remove := e.removeAfterClose
+		e.presented = false
+		e.closing, e.nativeDismiss, e.removeAfterClose = false, false, false
+		if remove {
+			h.deleteEntry(e)
+		}
 		if e.open != nil {
 			*e.open = false
 		}
@@ -269,7 +297,23 @@ func (h *Host) Popover(c *ui.Context, key string, anchor ui.Element, open *bool,
 		return nil
 	}
 	e.surface = surface
+	h.configureDismiss(e, surface, generation)
 	return nil
+}
+
+func (h *Host) configureDismiss(e *entry, surface Surface, generation uint64) {
+	if interceptor, ok := surface.(DismissInterceptor); ok {
+		if e.props.SystemStyle || e.spec.SystemPopover {
+			interceptor.SetDismissHandler(nil)
+			return
+		}
+		interceptor.SetDismissHandler(func() bool {
+			if e.generation != generation || e.surface != surface {
+				return false
+			}
+			return h.beginClose(e, true, false)
+		})
+	}
 }
 
 func (h *Host) view(c *ui.Context, e *entry, generation uint64) {
@@ -297,6 +341,25 @@ func (h *Host) view(c *ui.Context, e *entry, generation uint64) {
 			c.Invalidate()
 		} else {
 			root.Key("visible").Transition(motion.Popup(c))
+			e.presented = true
+		}
+		// Keep one measurable native surface alive while its styled content
+		// exits. Input and accessibility leave immediately, pixels leave over
+		// 100 ms; switching back to open reverses from the current opacity.
+		target, duration := float32(1), 150*time.Millisecond
+		if e.closing {
+			target, duration = 0, 100*time.Millisecond
+		}
+		progress := root.AnimateWith("shadcn.desktop.presence", target, duration, motion.EaseOut)
+		if e.presented {
+			root.Opacity(progress).Scale(.95+.05*progress, .95+.05*progress).Translate(0, -4*(1-progress))
+		}
+		if e.closing {
+			root.IgnoreInput(true).AccessHidden(true)
+		}
+		if e.closing && (motion.Reduced(c) || progress <= 0) {
+			h.finishExit(e)
+			return
 		}
 	}
 	if e.props.SystemStyle {
@@ -337,7 +400,7 @@ func (h *Host) view(c *ui.Context, e *entry, generation uint64) {
 	// state. Notify the parent only after the child content has applied it.
 	// Closing itself by writing *open=false is also observed here; the parent
 	// then reconciles the native window after this child's frame has finished.
-	if e.pendingParent || e.open != nil && !*e.open {
+	if e.pendingParent || e.open != nil && !*e.open && !e.closing {
 		e.pendingParent = false
 		h.backend.InvalidateParent()
 	}
@@ -397,14 +460,68 @@ func normalize(p PopoverProps, anchor ui.Rect, radius float32) (Spec, error) {
 	if gap == 0 {
 		gap = 4
 	}
-	return Spec{Anchor: anchor, Placement: placement, Width: width, Height: height, Gap: gap, FitContent: p.FitContent, MinWidth: p.MinWidth, MinHeight: p.MinHeight, MaxWidth: p.MaxWidth, MaxHeight: p.MaxHeight, Focusable: !p.NonFocusable, SystemPopover: !p.Plain && !p.NonFocusable, CornerRadius: max(0, int(math.Round(float64(radius))))}, nil
+	return Spec{Anchor: anchor, Placement: placement, Width: width, Height: height, Gap: gap, FitContent: p.FitContent, MinWidth: p.MinWidth, MinHeight: p.MinHeight, MaxWidth: p.MaxWidth, MaxHeight: p.MaxHeight, Focusable: !p.NonFocusable, SystemPopover: !p.Plain && !p.NonFocusable, IgnoreMouseEvents: p.IgnoreMouseEvents, ShowInactive: p.ShowInactive, CornerRadius: max(0, int(math.Round(float64(radius))))}, nil
+}
+
+// beginClose returns whether native destruction is being retained for an exit.
+// A removed anchor or destroyed parent uses closeEntry instead: no orphan
+// window or animation timer may outlive its owning UI.
+func (h *Host) beginClose(e *entry, native, remove bool) bool {
+	if e.open != nil {
+		*e.open = false
+	}
+	if e.closing {
+		e.nativeDismiss = e.nativeDismiss || native
+		e.removeAfterClose = e.removeAfterClose || remove
+		return true
+	}
+	_, capable := e.surface.(DismissInterceptor)
+	if e.surface != nil && capable && e.presented && !e.reduced && !e.props.SystemStyle && !e.spec.SystemPopover {
+		e.closing, e.nativeDismiss, e.removeAfterClose = true, native, remove
+		e.surface.Invalidate()
+		h.backend.InvalidateParent()
+		return true
+	}
+	if native {
+		return false
+	}
+	h.closeEntry(e)
+	if remove {
+		h.deleteEntry(e)
+	}
+	return false
+}
+func (h *Host) deleteEntry(e *entry) {
+	for key, current := range h.entries {
+		if current == e {
+			delete(h.entries, key)
+			return
+		}
+	}
+}
+func (h *Host) finishExit(e *entry) {
+	native, remove := e.nativeDismiss, e.removeAfterClose
+	e.closing, e.nativeDismiss, e.removeAfterClose = false, false, false
+	h.closeEntry(e)
+	if remove {
+		h.deleteEntry(e)
+	}
+	if native && e.props.OnDismiss != nil {
+		e.props.OnDismiss()
+	}
+	h.backend.InvalidateParent()
 }
 
 func (h *Host) releaseSurface(e *entry) {
 	e.generation++
 	surface := e.surface
 	e.surface = nil
+	e.presented = false
+	e.closing, e.nativeDismiss, e.removeAfterClose = false, false, false
 	if surface != nil {
+		if interceptor, ok := surface.(DismissInterceptor); ok {
+			interceptor.SetDismissHandler(nil)
+		}
 		surface.Close()
 	}
 }
@@ -426,8 +543,7 @@ func (h *Host) Close(key string) {
 		return
 	}
 	if e := h.entries[key]; e != nil {
-		h.closeEntry(e)
-		delete(h.entries, key)
+		h.beginClose(e, false, true)
 		h.backend.InvalidateParent()
 	}
 }
@@ -459,7 +575,33 @@ func (h *Host) IsOpen(key string) bool {
 		return false
 	}
 	e := h.entries[key]
+	return e != nil && e.surface != nil && !e.closing
+}
+
+// IsPresent includes a surface retained briefly for its exit animation.
+func (h *Host) IsPresent(key string) bool {
+	if h == nil {
+		return false
+	}
+	e := h.entries[key]
 	return e != nil && e.surface != nil
+}
+
+// Focus enters an already-present, focusable flyout on explicit keyboard intent.
+// Hover opening can remain inactive until the user asks to enter its content.
+func (h *Host) Focus(key string) bool {
+	if h == nil {
+		return false
+	}
+	e := h.entries[key]
+	if e == nil || e.surface == nil || e.closing || e.props.NonFocusable {
+		return false
+	}
+	if focusable, ok := e.surface.(interface{ Focus() }); ok {
+		focusable.Focus()
+		return true
+	}
+	return false
 }
 
 // NativeWindow exposes the MyGo surface for desktop-only geometry/automation
