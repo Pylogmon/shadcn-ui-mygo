@@ -117,3 +117,6 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 
 - Item：26项针对性检查及display vet通过，先复现默认Vega留白偏差；覆盖9种size×variant真实媒体像素、两行说明/RTL、Button鼠标/Space/Enter、实际Link/Router/Enter-only、独立Header/Actions/Footer编辑器、稳定重排/list语义、空callback身份和减少动画收敛。根审计补充窄60DIP主目标溢出与自定义媒体有键盘焦点却无AX节点；改为可收缩basis与保留custom native children后回归通过。超宽固定动作在原生横向Scroll中，检查实际viewport/滚动显露/像素/外部命中及可见动作键鼠；没有伪造运行时完整scrollchild的AX几何。
 - Item独立阶段验证：HEAD加本阶段Item源文件/测试及仅Item旧块提取，display/Gallery共210项通过；没有提前包含Badge或Alert/Empty实现。
+
+- Alert/Empty：28项针对性检查及display vet通过。先复现旧Alert留白/文本间距与Empty默认Padding/空描述问题；覆盖16DIP前导图标、独立操作鼠标/键盘、RTL/错误语义色/原生Alert角色、Empty384限宽/40DIP媒体/75%输入、虚线与有限参数、10种空callback身份。独立审计复现命名自定义媒体隐藏可聚焦Button及固定190DIP动作越界；修复为命名Group保留原生子节点、Decorative真正inert、响应式堆叠和有界横向Scroll。操作编辑器跨容器宽度保持状态/焦点；实际viewport/像素/命中与Enter验证通过，滚动子节点AX保留运行时原始几何。图标槽位无隐藏键盘停靠点的额外探针通过；真实AT播报与完整平台矩阵未完成。
+- Alert/Empty独立阶段验证：HEAD只加本阶段4个文件和对应旧块提取，display/Gallery共238项通过；未包含并行Badge或Gallery新页。

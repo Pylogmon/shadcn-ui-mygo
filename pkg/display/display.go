@@ -56,31 +56,6 @@ func Badge(c *ui.Context, text string, variant BadgeVariant) ui.Element {
 	return ui.Row(c).Padding(2, 8).Radius(999).Border(1, border).Background(bg).TextColor(fg).FontSize(12).FontWeight(500).Children(func() { ui.Text(c, text) })
 }
 
-type AlertProps struct {
-	Title, Description string
-	Destructive        bool
-	Content            func()
-}
-
-func Alert(c *ui.Context, p AlertProps) ui.Element {
-	t := theme.TokensOf(c)
-	fg := t.Foreground
-	if p.Destructive {
-		fg = t.Destructive
-	}
-	return ui.Column(c).FillWidth().Gap(6).Padding(16).Radius(t.Radius).Border(1, t.Border).Background(t.Card).TextColor(fg).Role(ui.RoleAlert).Children(func() {
-		if p.Title != "" {
-			ui.Text(c, p.Title).FontWeight(500)
-		}
-		if p.Description != "" {
-			ui.Text(c, p.Description).FontSize(14).LineHeight(1.5)
-		}
-		if p.Content != nil {
-			p.Content()
-		}
-	})
-}
-
 type SeparatorProps struct {
 	// Semantic exposes a named/oriented separator to assistive technology.
 	// The default is decorative, as in shadcn's separator primitive.
@@ -162,22 +137,6 @@ func Typography(c *ui.Context, text string, style TextStyle) ui.Element {
 		e.FontSize(14).Background(t.Muted).Radius(4).Padding(2, 4)
 	}
 	return e
-}
-
-type EmptyProps struct {
-	Title, Description string
-	Action             func()
-}
-
-func Empty(c *ui.Context, p EmptyProps) ui.Element {
-	t := theme.TokensOf(c)
-	return ui.Column(c).FillWidth().AlignItems(ui.Center).Gap(8).Padding(32).Children(func() {
-		ui.Text(c, p.Title).FontSize(18).FontWeight(600)
-		ui.Text(c, p.Description).FontSize(14).TextColor(t.MutedForeground).TextAlign(ui.Center)
-		if p.Action != nil {
-			ui.Row(c).Margin(8, 0, 0, 0).Children(p.Action)
-		}
-	})
 }
 
 type ProgressProps struct {
