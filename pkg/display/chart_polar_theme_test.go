@@ -66,6 +66,8 @@ func TestPolarScopedBlueMarksUseTheActualLegendPalette(t *testing.T) {
 					tokens := theme.Preset("blue", dark)
 					theme.Scope(c, tokens).Fill().Background(tokens.Background).Padding(20).Children(func() { Chart(c, p) })
 				}, 400, 340)
+				// Sample final scoped palette rather than the initial sector entrance.
+				r.SetPreferences(ui.Preferences{ReduceMotion: true})
 				plot, ok := r.AccessByRole(ui.RoleGroup, "Scoped blue")
 				if !ok {
 					t.Fatal("missing polar plot")
@@ -114,6 +116,8 @@ func TestPolarExplicitColorsKeepOverridesAndScopedFallbacks(t *testing.T) {
 				tk := theme.Preset("blue", false)
 				theme.Scope(c, tk).Fill().Background(tk.Background).Padding(20).Children(func() { Chart(c, p) })
 			}, 400, 340)
+			// This is a final palette/scope pixel contract, not entry timing.
+			r.SetPreferences(ui.Preferences{ReduceMotion: true})
 			plot, _ := r.AccessByRole(ui.RoleGroup, p.Label)
 			names := p.Labels
 			expected := explicitCategory
@@ -156,6 +160,8 @@ func TestPolarSiblingScopesAndLiveThemeChangesPreserveNativeInspection(t *testin
 			})
 		})
 	}, 880, 300)
+	// Isolate scoped palette and native inspection from entry geometry.
+	r.SetPreferences(ui.Preferences{ReduceMotion: true})
 	check := func() {
 		for _, title := range []string{"Left", "Right", "Window"} {
 			b, ok := r.AccessByRole(ui.RoleGroup, title+" scoped plot")

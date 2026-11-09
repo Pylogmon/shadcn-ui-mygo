@@ -50,8 +50,17 @@ public native chart primitives. The pinned shadcn horizontal, mixed and negative
 bar examples, base Chart implementation and documentation, Vega style source,
 MIT license and content manifest are
 archived in `pkg/display/testdata/shadcn-chart/`. They use the same shadcn commit
-and bundled MIT license described above; Recharts is a reference, not a Go runtime
-dependency or copied implementation.
+and bundled MIT license described above. No React or Recharts runtime is linked
+into the native application.
+
+Chart data animation defaults and geometric rules are compared against Recharts
+3.8.0, commit `c04a79039ebc4d5057de163298d2e9917a5e5a66`, locked by that
+shadcn version. Fixed source, selected official npm distribution members,
+metadata, MIT license and integrity manifest are archived in
+`pkg/display/testdata/recharts-animation/`. The npm archive's SHA-512 matches the
+lockfile; the eleven TypeScript reference files also match the official Git tree
+blobs. Native apps include its license as
+`Contents/Resources/licenses/recharts.txt`.
 
 Chart shadow parameters are additionally verified against the official
 Tailwind CSS 4.3.0 package locked by the pinned shadcn reference. Its exact

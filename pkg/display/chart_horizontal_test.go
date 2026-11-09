@@ -475,6 +475,8 @@ func TestChartOrientationDoesNotTransposeNonBarKinds(t *testing.T) {
 func TestChartHorizontalReducedMotionFinishesActiveNativeColorTransition(t *testing.T) {
 	p := ChartProps{Orientation: ChartHorizontal, Height: 240, Label: "Animated bars", HideTooltip: true, Labels: []string{"A", "Anchor"}, Series: []ChartSeries{{Name: "Value", Values: []float64{20, 100}, Color: ui.RGB(220, 30, 30)}}, Cartesian: ChartCartesianProps{HideValueAxis: true, HideCategoryAxis: true, HideGrid: true}}
 	r := ui.NewTester(func(c *ui.Context) { theme.Apply(c); ui.Column(c).Fill().Padding(20).Children(func() { Chart(c, p) }) }, 600, 400)
+	// First settle the independent 400ms data entrance, then isolate color feedback.
+	r.Advance(time.Second)
 	mark := horizontalChartMark(t, r, "Value A: 20")
 	sample := func() color.RGBA { return r.Image().RGBAAt(int(mark.X+mark.W/2), int(mark.Y+mark.H/2)) }
 	before := sample()
@@ -496,6 +498,9 @@ func TestChartHorizontalReducedMotionFinishesActiveNativeColorTransition(t *test
 }
 func TestChartHorizontalMissingObservationKeepsLaterNativeMarkIdentity(t *testing.T) {
 	p := ChartProps{Orientation: ChartHorizontal, Height: 280, Label: "Keyed bars", HideTooltip: true, Labels: []string{"A", "B", "Anchor"}, CategoryColors: []ui.Color{ui.RGB(220, 30, 30), ui.RGB(30, 30, 220), ui.RGB(30, 180, 30)}, Series: []ChartSeries{{Name: "Value", Values: []float64{10, 20, 100}}}, Cartesian: ChartCartesianProps{HideValueAxis: true, HideCategoryAxis: true, HideGrid: true}}
+	// Isolate the existing native color/key contract from source filtered-rectangle
+	// data matching, which can intentionally move the surviving geometry.
+	p.Animation.Disabled = true
 	r := ui.NewTester(func(c *ui.Context) { theme.Apply(c); ui.Column(c).Fill().Padding(20).Children(func() { Chart(c, p) }) }, 600, 400)
 	mark := horizontalChartMark(t, r, "Value B: 20")
 	p.Series[0].Values[0] = math.NaN()

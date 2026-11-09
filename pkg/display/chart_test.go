@@ -51,6 +51,8 @@ func TestDonutPointerHitTestingHonorsHoleAndSliceGeometry(t *testing.T) {
 	p := ChartProps{Kind: DonutChart, Label: "Visitors", Labels: []string{"Desktop", "Mobile"},
 		Series: []ChartSeries{{Name: "Visitors", Values: []float64{1, 1}}}, Selected: &selected, Height: 240}
 	tt := displayTester(func(c *ui.Context) { Chart(c, p) })
+	// Hit testing here is for the completed, full donut.
+	tt.SetPreferences(ui.Preferences{ReduceMotion: true})
 	info, ok := tt.AccessByRole(ui.RoleGroup, "Visitors")
 	if !ok {
 		t.Fatal("missing plot")
@@ -159,6 +161,8 @@ func TestLineChartPaintsEverySeries(t *testing.T) {
 			{Name: "Second", Values: []float64{2, 2, 2}, Color: ui.RGB(30, 30, 240)},
 		}})
 	})
+	// This assertion counts final series stroke colors, not entry length.
+	tt.SetPreferences(ui.Preferences{ReduceMotion: true})
 	image := tt.Image()
 	red, blue := 0, 0
 	for y := image.Bounds().Min.Y; y < image.Bounds().Max.Y; y++ {

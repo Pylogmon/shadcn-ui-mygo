@@ -57,5 +57,11 @@
     "themeArchive": "tailwindcss-4.3.0-theme.css",
     "licenseArchive": "LICENSE.tailwind",
     "lockedBy": "shadcn-ui/ui@8ab27715521cbd4f87ae6886cd989cbb678f6de7:pnpm-lock.yaml"
+  },
+  "rechartsAnimation": {
+    "version": "3.8.0",
+    "commit": "c04a79039ebc4d5057de163298d2e9917a5e5a66",
+    "manifest": "../recharts-animation/manifest.json",
+    "integrity": "sha512-Z/m38DX3L73ExO4Tpc9/iZWHmHnlzWG4njQbxsF5aSjwqmHNDDIm0rdEBArkwsBvR8U6EirlEHiQNYWCVh9sGQ=="
   }
 }

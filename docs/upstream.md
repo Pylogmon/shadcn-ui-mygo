@@ -18,6 +18,8 @@ Chart另核对同一提交的base `chart.tsx`、Vega样式及base文档，并读
 
 Chart默认Tooltip的shadow-xl另与该shadcn lockfile锁定的官方Tailwind CSS 4.3.0发布包核对：下载tarball的SHA-512与lockfile的integrity一致，theme.css及MIT许可原文、各自SHA-256与发布包校验保存在同一Chart归档。两层阴影参数与较早单独归档的Tailwind main主题相同，本次用锁定发布包提供对应版本证据。Cartesian网格的Border/50来自base `chart.tsx` 的selector，不能仅因Vega段未重复声明而忽略。
 
+Chart数据动画另固定Recharts 3.8.0的官方npm发布包及其gitHead `c04a79039ebc4d5057de163298d2e9917a5e5a66`。发布包SHA-512与上述lockfile及官方metadata一致，SHA-1也一致；六家族和动画引擎共11份TS/TSX逐一核对官方Git tree blob。33份原始源码/发布包辅助/包信息/许可及官方metadata，连同各自SHA-256，归档在`pkg/display/testdata/recharts-animation/`。默认时序及原生映射见[Chart动画](chart-animation.md)，没有引入React/Recharts运行时，也不把来源中的测量故障当作必须保留的交互行为。
+
 共享文字扫光与滚动渐隐对照同一提交的 `packages/shadcn/src/tailwind.css`，Git blob为 `067bfc56fc086420835582f469e2c78d3942c69a`；Shimmer文档blob为 `6b12d933a3b8b421e49b7566857e19afa4fa99c6`。原始CSS/文档、MIT许可与SHA-256归档在 `internal/shimmer/testdata/shadcn`。普通文字仍由MyGo原生排版，公开ColorEffect处理字形覆盖内的扫光；sRGB检查不能推导为全部广色域平台已对齐。
 
 Command 的评分行为另外固定到 shadcn 该提交在 `pnpm-lock.yaml` 锁定的 cmdk 1.1.1：提交 [`fb4ea04e9ec211777fbb39c6104e3c5f2ee107d2`](https://github.com/dip/cmdk/tree/fb4ea04e9ec211777fbb39c6104e3c5f2ee107d2)，原仓库 `pacocoursey/cmdk` 现重定向到 `dip/cmdk`。原始 `command-score.ts`、MIT许可证、来源SHA-256和可离线生成的数值对照在 `pkg/overlay/testdata/cmdk`。Go移植的版权声明见 [第三方声明](../THIRD_PARTY_NOTICES.md)。

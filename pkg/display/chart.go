@@ -61,6 +61,7 @@ type ChartProps struct {
 	Kind        ChartKind
 	Orientation ChartOrientation
 	Cartesian   ChartCartesianProps
+	Animation   ChartAnimationProps
 	Height      float32
 	Label       string
 	// Stacked uses diverging stacks for bars/areas and concentric rings for
@@ -153,9 +154,9 @@ func ChartTooltip(c *ui.Context, data ChartTooltipData) ui.Element {
 }
 
 type chartInspection struct {
-	hovering bool
-	x, y     float32
-	last     int
+	hovering, pointer bool
+	x, y              float32
+	last              int
 }
 
 // Chart renders native GPU paths/marks, with one keyboard stop for inspection.
@@ -374,63 +375,39 @@ func cartesianChart(c *ui.Context, p ChartProps, selected *int, height float32) 
 			})
 		}
 
+		plans := cartesianAnimationPlans(p, plot, x, y, stacked)
+		frames := animateChartGeometry(c, area, p.Kind, p.Animation, plans)
 		for j, s := range plot.Series {
 			color := chartColor(c, p, j)
 			n := min(len(s.Values), len(p.Labels))
-			for i := range n {
-				if !finite(s.Values[i]) {
-					continue
-				}
-				band := x.Band(i)
-				if p.Kind == BarChart {
-					from, to := 0.0, s.Values[i]
-					if len(stacked) > 0 {
-						from, to = stacked[j][i].Lo, stacked[j][i].Hi
-					} else {
-						width := (band.Hi - band.Lo) / float32(max(len(p.Series), 1))
-						band.Lo += float32(j) * width
-						band.Hi = band.Lo + width
+			frame := frames[j]
+			if p.Kind == BarChart {
+				for i := range n {
+					if !finite(s.Values[i]) {
+						continue
 					}
-					xSpan, ySpan := band, y.Span(from, to)
-					if horizontal {
-						xSpan, ySpan = ySpan, horizontalBarBand(band)
+					point := frame.points[i]
+					// A source-filtered zero rectangle has no animated mark.
+					if !point.valid {
+						point = plans[j].points[i]
 					}
-					mark := motion.ApplyTransition(c, chart.Rect(c.Key(chartBarKey{j, i}), xSpan, ySpan).Background(barColor(c, p, j, i)).Radius(chartBarRadius(p)).Label(fmt.Sprintf("%s %s: %g", seriesName(p, j), p.Labels[i], p.Series[j].Values[i])))
+					mark := motion.ApplyTransition(c, chart.Rect(c.Key(chartBarKey{j, i}), chart.Span{Lo: float32(point.v[0]), Hi: float32(point.v[1])}, chart.Span{Lo: float32(point.v[2]), Hi: float32(point.v[3])}).Background(barColor(c, p, j, i)).Radius(chartBarRadius(p)).Label(fmt.Sprintf("%s %s: %g", seriesName(p, j), p.Labels[i], p.Series[j].Values[i])))
 					if *selected == i {
 						mark.Opacity(.8)
 					}
 				}
-			}
-			if p.Kind != BarChart {
-				segments := finiteSegments(s.Values[:n], x, y)
-				if len(stacked) > 0 {
-					segments = stackedSegments(s.Values[:n], stacked[j], x, y)
-				}
-				isArea, zeroBaseline := p.Kind == AreaChart, y.At(0)
-				drawers = append(drawers, func(painter *ui.Painter, r ui.Rect) {
-					for _, segment := range segments {
-						if isArea {
-							base := segment.Base
-							if len(base) == 0 {
-								base = make([]float32, len(segment.X))
-								for i := range base {
-									base[i] = zeroBaseline
-								}
-							}
-							painter.FillPath(chart.Area(r, segment.X, base, segment.Y, chart.CurveMonotone), color.Alpha(.2))
-						}
-						painter.StrokePath(chart.Line(r, segment.X, segment.Y, chart.CurveMonotone), 2, color)
-					}
-				})
-				if *selected >= 0 && *selected < n && finite(s.Values[*selected]) {
-					v := s.Values[*selected]
-					if len(stacked) > 0 {
-						v = stacked[j][*selected].Hi
-					}
-					chart.Point(c, x.At(*selected), y.At(v), 7, 7).Radius(4).Background(color).Border(2, t.Background).IgnoreInput(true)
+			} else {
+				isArea := p.Kind == AreaChart
+				drawers = append(drawers, func(painter *ui.Painter, r ui.Rect) { drawAnimatedCartesian(painter, r, frame, isArea, color) })
+				if *selected >= 0 && *selected < len(plans[j].points) && plans[j].points[*selected].valid {
+					// Source active dots use target points outside the animated
+					// curve; tooltip/AX already describe the same latest data.
+					point := plans[j].points[*selected]
+					chart.Point(c, float32(point.v[0]), float32(point.v[1]), 7, 7).Radius(4).Background(color).Border(2, t.Background).IgnoreInput(true)
 				}
 			}
 		}
+
 		area.Draw(func(painter *ui.Painter, r ui.Rect) {
 			for _, draw := range drawers {
 				draw(painter, r)
@@ -581,6 +558,8 @@ type polarPaintSnapshot struct {
 	pies                         []polarPiePaint
 	radialValues                 []float64
 	radialStacks                 [][]chart.Segment
+	radialAngles                 [][]chart.Slice
+	radarPoints                  [][]chartGeometryDatum
 	radarValues                  [][]float64
 	maximum                      float64
 }
@@ -668,7 +647,7 @@ func (paint polarPaintSnapshot) draw(painter *ui.Painter, r ui.Rect) {
 				innerR += 2
 			}
 			for i, slice := range ring.slices {
-				if ring.values[i] <= 0 {
+				if slice.End-slice.Start <= slice.Pad {
 					continue
 				}
 				outer := outerR
@@ -684,25 +663,21 @@ func (paint polarPaintSnapshot) draw(painter *ui.Painter, r ui.Rect) {
 			return
 		}
 		band := radius / float32(count+1)
-		for i, v := range paint.radialValues {
+		for i := range paint.radialValues {
 			outer := radius - float32(i)*band
 			inner := outer - band*.65
 			track := chart.Slice{Start: 0, End: 2 * math.Pi}
 			painter.FillPath(chart.Sector(cx, cy, inner, outer, track), paint.muted)
 			if len(paint.radialStacks) > 0 {
-				for j, series := range paint.radialStacks {
-					seg := series[i]
-					if seg.Hi <= seg.Lo {
-						continue
-					}
-					slice := chart.Slice{Start: 2 * math.Pi * min(1, seg.Lo/paint.maximum), End: 2 * math.Pi * min(1, seg.Hi/paint.maximum)}
+				for j := range paint.radialStacks {
+					slice := paint.radialAngles[j][i]
 					painter.FillPath(chart.Sector(cx, cy, inner, outer, slice), paint.seriesColors[j])
 				}
 				if paint.selected == i {
 					painter.StrokePath(chart.Sector(cx, cy, inner, outer, track), 2, paint.foreground)
 				}
-			} else if v > 0 {
-				slice := chart.Slice{Start: 0, End: 2 * math.Pi * min(1, v/paint.maximum)}
+			} else {
+				slice := paint.radialAngles[0][i]
 				painter.FillPath(chart.Sector(cx, cy, inner, outer, slice), paint.categoryColors[i])
 				if paint.selected == i {
 					painter.StrokePath(chart.Sector(cx, cy, inner, outer, slice), 2, paint.foreground)
@@ -722,27 +697,23 @@ func (paint polarPaintSnapshot) draw(painter *ui.Painter, r ui.Rect) {
 			px, py := chart.Polar(cx, cy, radius, 2*math.Pi*float64(i)/float64(count))
 			painter.Line(cx, cy, px, py, 1, paint.border)
 		}
-		for j, values := range paint.radarValues {
+		for j, points := range paint.radarPoints {
 			color := paint.seriesColors[j]
-			complete := len(values) >= count
-			for i := range count {
-				if i >= len(values) || !finite(values[i]) || values[i] < 0 {
+			complete := len(points) == count
+			for _, point := range points {
+				if !point.valid {
 					complete = false
 					break
 				}
 			}
+			path := chartRadarGeometryPath(cx, cy, radius, points, complete)
 			if complete {
-				path := radarPath(cx, cy, radius, count, values, paint.maximum)
 				painter.FillPath(path, color.Alpha(.15))
-				painter.StrokePath(path, 2, color)
-			} else {
-				for _, path := range radarMissingPaths(cx, cy, radius, count, values, paint.maximum) {
-					painter.StrokePath(path, 2, color)
-				}
 			}
-			if paint.selected >= 0 && paint.selected < len(values) && finite(values[paint.selected]) && values[paint.selected] >= 0 {
-				px, py := chart.Polar(cx, cy, radius*float32(min(1, max(0, values[paint.selected]/paint.maximum))), 2*math.Pi*float64(paint.selected)/float64(count))
-				painter.FillPath((&ui.Path{}).Circle(px, py, 4), color)
+			painter.StrokePath(path, 2, color)
+			if paint.selected >= 0 && paint.selected < len(points) && points[paint.selected].valid {
+				point := points[paint.selected]
+				painter.FillPath((&ui.Path{}).Circle(cx+float32(point.v[0])*radius, cy+float32(point.v[1])*radius, 4), color)
 			}
 		}
 	}
@@ -770,11 +741,23 @@ func polarChart(c *ui.Context, p ChartProps, selected *int, height float32) ui.E
 			}
 		}
 	}
-	if !slices.Contains(valid, *selected) {
-		*selected = -1
+	pointerValid := valid
+	if p.Kind == PieChart || p.Kind == DonutChart {
+		pointerValid = nil
+		for i := range p.Labels {
+			for _, series := range p.Series {
+				if i < len(series.Values) && finite(series.Values[i]) && series.Values[i] >= 0 {
+					pointerValid = append(pointerValid, i)
+					break
+				}
+			}
+		}
 	}
-	inspectPolar(c, area, selected, valid, func(x, y float32, r ui.Rect) int { return polarHit(p, x, y, r) }, func(i int) string { return describeChart(c, p, i) })
-	area.Draw(preparePolarPaint(c, p, *selected).draw)
+	paint := preparePolarPaint(c, p, *selected)
+	animatePolarPaint(c, area, p, &paint)
+	inspectPolar(c, area, selected, valid, pointerValid, func(x, y float32, r ui.Rect) int { return polarAnimatedHit(p, paint, x, y, r) }, func(i int) string { return describeChart(c, p, i) })
+	paint.selected = *selected
+	area.Draw(paint.draw)
 	return area.Children(func() {
 		if p.Kind == RadarChart && len(p.Labels) >= 3 {
 			for i, label := range p.Labels {
@@ -892,9 +875,12 @@ func polarHit(p ChartProps, x, y float32, r ui.Rect) int {
 	return -1
 }
 
-func inspectPolar(c *ui.Context, area ui.Element, index *int, valid []int, hit func(float32, float32, ui.Rect) int, describe func(int) string) {
+func inspectPolar(c *ui.Context, area ui.Element, index *int, valid, pointerValid []int, hit func(float32, float32, ui.Rect) int, describe func(int) string) {
 	area.Focusable()
 	st := ui.Local(area, "polar-inspection", func() chartInspection { return chartInspection{last: -1} })
+	if !slices.Contains(valid, *index) && !(st.pointer && slices.Contains(pointerValid, *index)) {
+		*index = -1
+	}
 	cursor := slices.Index(valid, *index)
 	keyboard := false
 	move := func(at int) {
@@ -920,17 +906,21 @@ func inspectPolar(c *ui.Context, area ui.Element, index *int, valid []int, hit f
 		*index = -1
 		keyboard = true
 	}
+	if keyboard {
+		st.pointer = false
+	}
 	if x, y, over := area.PointerPosition(); over {
-		if !keyboard && (!st.hovering || x != st.x || y != st.y) {
-			candidate := hit(x, y, area.Bounds())
+		if !keyboard && (st.pointer || !st.hovering || x != st.x || y != st.y) {
+			candidate := hit(x, y, area.LayoutBounds())
 			*index = -1
-			if slices.Contains(valid, candidate) {
+			if slices.Contains(pointerValid, candidate) {
 				*index = candidate
 			}
+			st.pointer = true
 		}
 		st.hovering, st.x, st.y = true, x, y
 	} else if st.hovering {
-		st.hovering = false
+		st.hovering, st.pointer = false, false
 		*index = -1
 	}
 	if *index >= 0 {

@@ -1,0 +1,258 @@
+{
+  "repository": "https://github.com/recharts/recharts",
+  "version": "3.8.0",
+  "commit": "c04a79039ebc4d5057de163298d2e9917a5e5a66",
+  "shadcnCommit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "lockedBy": "pnpm-lock.yaml:8551-8552",
+  "metadataURL": "https://registry.npmjs.org/recharts/3.8.0",
+  "tarballURL": "https://registry.npmjs.org/recharts/-/recharts-3.8.0.tgz",
+  "integrity": "sha512-Z/m38DX3L73ExO4Tpc9/iZWHmHnlzWG4njQbxsF5aSjwqmHNDDIm0rdEBArkwsBvR8U6EirlEHiQNYWCVh9sGQ==",
+  "tarballSHA1": "461025818cbb858e7ff2e5820b67c6143e9b418d",
+  "tarballSHA256": "a170e237e47b0c12cd412abc34cbf908e1d545a8517aab2e4be827708c45af4e",
+  "files": [
+    {
+      "origin": "https://raw.githubusercontent.com/recharts/recharts/c04a79039ebc4d5057de163298d2e9917a5e5a66/src/animation/AnimationManager.ts",
+      "sha256": "9c98500fc75b8a9dada073ea62506051a212e2b81cfeec2ff6869e473fcb0094",
+      "sourcePath": "src/animation/AnimationManager.ts",
+      "gitBlob": "67b1739798b9ab9b2e6f749bad966b9b907d014d",
+      "verification": "official fixed Git commit tree blob",
+      "archive": "src/animation/AnimationManager.ts"
+    },
+    {
+      "origin": "https://raw.githubusercontent.com/recharts/recharts/c04a79039ebc4d5057de163298d2e9917a5e5a66/src/animation/JavascriptAnimate.tsx",
+      "sha256": "e2dcb28cb0e7eb696c45f8b88808c59c6a74c66cd4339aaaa4e2804359c6f0ff",
+      "sourcePath": "src/animation/JavascriptAnimate.tsx",
+      "gitBlob": "c2aa74ba67c409fbbc11456e8dcfe1be0e5eb588",
+      "verification": "official fixed Git commit tree blob",
+      "archive": "src/animation/JavascriptAnimate.tsx"
+    },
+    {
+      "origin": "https://raw.githubusercontent.com/recharts/recharts/c04a79039ebc4d5057de163298d2e9917a5e5a66/src/animation/configUpdate.ts",
+      "sha256": "175e036aa12d73ab85ffe36ed7ddd90a3389084b7c32f62d639054638d3afaaf",
+      "sourcePath": "src/animation/configUpdate.ts",
+      "gitBlob": "ee8ea80591ce587e5ad48a2ecb7918e6ec913cae",
+      "verification": "official fixed Git commit tree blob",
+      "archive": "src/animation/configUpdate.ts"
+    },
+    {
+      "origin": "https://raw.githubusercontent.com/recharts/recharts/c04a79039ebc4d5057de163298d2e9917a5e5a66/src/animation/easing.ts",
+      "sha256": "6df827321d40b8434619b5cbfa2c3877555d852643103dfc820a3cc85465afcc",
+      "sourcePath": "src/animation/easing.ts",
+      "gitBlob": "4bd5e01617be0f5221878a73205e6d5ce5486086",
+      "verification": "official fixed Git commit tree blob",
+      "archive": "src/animation/easing.ts"
+    },
+    {
+      "origin": "https://raw.githubusercontent.com/recharts/recharts/c04a79039ebc4d5057de163298d2e9917a5e5a66/src/animation/useAnimationManager.tsx",
+      "sha256": "d87f7d0151c329132e7aee4f9af1953bfcee427823a79fc0a3173fb4354ec313",
+      "sourcePath": "src/animation/useAnimationManager.tsx",
+      "gitBlob": "1706e3a4e02d968e93f87cf673a1bb75ef57e6c8",
+      "verification": "official fixed Git commit tree blob",
+      "archive": "src/animation/useAnimationManager.tsx"
+    },
+    {
+      "origin": "https://raw.githubusercontent.com/recharts/recharts/c04a79039ebc4d5057de163298d2e9917a5e5a66/src/cartesian/Area.tsx",
+      "sha256": "0998b07b86a8ba4d8d98964eaea2c932832b666ae9114851bb0f2ebf42e62111",
+      "sourcePath": "src/cartesian/Area.tsx",
+      "gitBlob": "c64bf7ff96cea7771840021953f5347d6b4c6076",
+      "verification": "official fixed Git commit tree blob",
+      "archive": "src/cartesian/Area.tsx"
+    },
+    {
+      "origin": "https://raw.githubusercontent.com/recharts/recharts/c04a79039ebc4d5057de163298d2e9917a5e5a66/src/cartesian/Bar.tsx",
+      "sha256": "8d293493c2dee1b3e6590ea7e10315cd1616dcf870b32b179199f823bde58155",
+      "sourcePath": "src/cartesian/Bar.tsx",
+      "gitBlob": "39650feccf4c6cad4bd7bf6014a2bfe4c6fa13f0",
+      "verification": "official fixed Git commit tree blob",
+      "archive": "src/cartesian/Bar.tsx"
+    },
+    {
+      "origin": "https://raw.githubusercontent.com/recharts/recharts/c04a79039ebc4d5057de163298d2e9917a5e5a66/src/cartesian/Line.tsx",
+      "sha256": "839c01140fc70e556edbbcd78235908cd44834ffcacedbf8e88ce422d6113f5c",
+      "sourcePath": "src/cartesian/Line.tsx",
+      "gitBlob": "76aa8dd1eda3d6b6a86e2c5c7623cdc272fe05f3",
+      "verification": "official fixed Git commit tree blob",
+      "archive": "src/cartesian/Line.tsx"
+    },
+    {
+      "origin": "https://raw.githubusercontent.com/recharts/recharts/c04a79039ebc4d5057de163298d2e9917a5e5a66/src/polar/Pie.tsx",
+      "sha256": "56fc65d1c3f5c0d90807573bc83a7e2a6586a4fecfce5b697fe602cc62f95da0",
+      "sourcePath": "src/polar/Pie.tsx",
+      "gitBlob": "0ef3d501ae6a206f26d50196b48201be0044e2bf",
+      "verification": "official fixed Git commit tree blob",
+      "archive": "src/polar/Pie.tsx"
+    },
+    {
+      "origin": "https://raw.githubusercontent.com/recharts/recharts/c04a79039ebc4d5057de163298d2e9917a5e5a66/src/polar/Radar.tsx",
+      "sha256": "42a5cef3833cd2052b35f7a778c21b3b2499716124e67d4fd611475a926334e1",
+      "sourcePath": "src/polar/Radar.tsx",
+      "gitBlob": "d30566d766676c0c029375f00811180b90c5c2cc",
+      "verification": "official fixed Git commit tree blob",
+      "archive": "src/polar/Radar.tsx"
+    },
+    {
+      "origin": "https://raw.githubusercontent.com/recharts/recharts/c04a79039ebc4d5057de163298d2e9917a5e5a66/src/polar/RadialBar.tsx",
+      "sha256": "d4d11894649fd4e1916b58c8134b490ac45f83063be08a158134c8fc12a84ce0",
+      "sourcePath": "src/polar/RadialBar.tsx",
+      "gitBlob": "13af49eef4368431c2668df922e2bbb5acec138c",
+      "verification": "official fixed Git commit tree blob",
+      "archive": "src/polar/RadialBar.tsx"
+    },
+    {
+      "origin": "npm 3.8.0 tarball/package/es6/animation/AnimationManager.js",
+      "sha256": "49bd912a884fc86082b2c4e2c67c08578db8ba1e64d23849183b769d4175684d",
+      "sourcePath": "package/es6/animation/AnimationManager.js",
+      "verification": "member of lockfile SHA512-verified official npm tarball",
+      "archive": "npm/es6/animation/AnimationManager.js"
+    },
+    {
+      "origin": "npm 3.8.0 tarball/package/es6/animation/CSSTransitionAnimate.js",
+      "sha256": "b270314374793e481f175ad91804a621413315b0dab83f69838ac876f37de4e3",
+      "sourcePath": "package/es6/animation/CSSTransitionAnimate.js",
+      "verification": "member of lockfile SHA512-verified official npm tarball",
+      "archive": "npm/es6/animation/CSSTransitionAnimate.js"
+    },
+    {
+      "origin": "npm 3.8.0 tarball/package/es6/animation/JavascriptAnimate.js",
+      "sha256": "ae4338e8534ffcaf53e55e217a52f14bdbd13c35db265d9fbbed95722d1d78de",
+      "sourcePath": "package/es6/animation/JavascriptAnimate.js",
+      "verification": "member of lockfile SHA512-verified official npm tarball",
+      "archive": "npm/es6/animation/JavascriptAnimate.js"
+    },
+    {
+      "origin": "npm 3.8.0 tarball/package/es6/animation/configUpdate.js",
+      "sha256": "15e37130bcce57b67829edd604c058e991ad09e10c452b3859616443b8afd53f",
+      "sourcePath": "package/es6/animation/configUpdate.js",
+      "verification": "member of lockfile SHA512-verified official npm tarball",
+      "archive": "npm/es6/animation/configUpdate.js"
+    },
+    {
+      "origin": "npm 3.8.0 tarball/package/es6/animation/createDefaultAnimationManager.js",
+      "sha256": "17e24f84859c0a40b77d3bd690f897e01bc0a5ffcc23860f52ab6d2bc0e3e664",
+      "sourcePath": "package/es6/animation/createDefaultAnimationManager.js",
+      "verification": "member of lockfile SHA512-verified official npm tarball",
+      "archive": "npm/es6/animation/createDefaultAnimationManager.js"
+    },
+    {
+      "origin": "npm 3.8.0 tarball/package/es6/animation/easing.js",
+      "sha256": "87d297d4f5ee0c8065fe753d18ab5e30817aabeb33b1d45381bb5e5b92355216",
+      "sourcePath": "package/es6/animation/easing.js",
+      "verification": "member of lockfile SHA512-verified official npm tarball",
+      "archive": "npm/es6/animation/easing.js"
+    },
+    {
+      "origin": "npm 3.8.0 tarball/package/es6/animation/timeoutController.js",
+      "sha256": "32bb201faf1988bf3c24411f4048b69e9d10bcc48feeee9b4103ada2ab796ea7",
+      "sourcePath": "package/es6/animation/timeoutController.js",
+      "verification": "member of lockfile SHA512-verified official npm tarball",
+      "archive": "npm/es6/animation/timeoutController.js"
+    },
+    {
+      "origin": "npm 3.8.0 tarball/package/es6/animation/useAnimationManager.js",
+      "sha256": "69c4bca23d12027b476532487f6da6db52257c3575cb5093c64b398627ee5515",
+      "sourcePath": "package/es6/animation/useAnimationManager.js",
+      "verification": "member of lockfile SHA512-verified official npm tarball",
+      "archive": "npm/es6/animation/useAnimationManager.js"
+    },
+    {
+      "origin": "npm 3.8.0 tarball/package/es6/animation/util.js",
+      "sha256": "8eb11f9158e4c1a529c023909595d0c5c1c5f13b6a9c77d4bf35b7d2377f5a2a",
+      "sourcePath": "package/es6/animation/util.js",
+      "verification": "member of lockfile SHA512-verified official npm tarball",
+      "archive": "npm/es6/animation/util.js"
+    },
+    {
+      "origin": "npm 3.8.0 tarball/package/es6/util/DataUtils.js",
+      "sha256": "5618ec5bd238bd2025410f8cb6d7b0ebb4692705d11aa7742d5d98686c4f7f54",
+      "sourcePath": "package/es6/util/DataUtils.js",
+      "verification": "member of lockfile SHA512-verified official npm tarball",
+      "archive": "npm/es6/util/DataUtils.js"
+    },
+    {
+      "origin": "npm 3.8.0 tarball/package/es6/util/round.js",
+      "sha256": "82a2a9544111d039c5d7f27f0d7b74836f5aaf24cc9147336607777b5984bfa6",
+      "sourcePath": "package/es6/util/round.js",
+      "verification": "member of lockfile SHA512-verified official npm tarball",
+      "archive": "npm/es6/util/round.js"
+    },
+    {
+      "origin": "npm 3.8.0 tarball/package/es6/util/useAnimationId.js",
+      "sha256": "f4ecbf107225d9c3c8b82dd4ddf744503070386f8dac73ff73f7f24d20ecee35",
+      "sourcePath": "package/es6/util/useAnimationId.js",
+      "verification": "member of lockfile SHA512-verified official npm tarball",
+      "archive": "npm/es6/util/useAnimationId.js"
+    },
+    {
+      "origin": "npm 3.8.0 tarball/package/es6/util/usePrefersReducedMotion.js",
+      "sha256": "1deac6e23c2243ba94fe2cceb4280c15d23d81bcfe89b1f6ffe43e7e14c819cf",
+      "sourcePath": "package/es6/util/usePrefersReducedMotion.js",
+      "verification": "member of lockfile SHA512-verified official npm tarball",
+      "archive": "npm/es6/util/usePrefersReducedMotion.js"
+    },
+    {
+      "origin": "npm 3.8.0 tarball/package/es6/util/Global.js",
+      "sha256": "3c72bb236bcd1bf1c06706263fee657b5bcbb3f6b00f87f5950090bf4fafccad",
+      "sourcePath": "package/es6/util/Global.js",
+      "verification": "member of lockfile SHA512-verified official npm tarball",
+      "archive": "npm/es6/util/Global.js"
+    },
+    {
+      "origin": "npm 3.8.0 tarball/package/package.json",
+      "sha256": "6372ffc286cfc8a73cb32a15077600f23b3231e0b47c90d6f5712953f759ee7a",
+      "sourcePath": "package/package.json",
+      "verification": "member of lockfile SHA512-verified official npm tarball",
+      "archive": "package.json"
+    },
+    {
+      "origin": "npm 3.8.0 tarball/package/LICENSE",
+      "sha256": "2d3aa48a8d1d3b93093680e8e68d3a64cfb590c3ade377ffcaefc69dac7c2ce5",
+      "sourcePath": "package/LICENSE",
+      "verification": "member of lockfile SHA512-verified official npm tarball",
+      "archive": "LICENSE"
+    },
+    {
+      "origin": "npm 3.8.0 tarball/package/es6/chart/PieChart.js",
+      "sha256": "31a7db6f28182e82f2cc628e0e811703ed1ed914323cbe851859a4bd6ed1aaac",
+      "sourcePath": "package/es6/chart/PieChart.js",
+      "verification": "member of lockfile SHA512-verified official npm tarball",
+      "archive": "npm/es6/chart/PieChart.js"
+    },
+    {
+      "origin": "npm 3.8.0 tarball/package/es6/chart/RadialBarChart.js",
+      "sha256": "9a30da8fee2f1cdae73cd8641761ad4820b0cfd98e351bad6f486c26faf97c28",
+      "sourcePath": "package/es6/chart/RadialBarChart.js",
+      "verification": "member of lockfile SHA512-verified official npm tarball",
+      "archive": "npm/es6/chart/RadialBarChart.js"
+    },
+    {
+      "origin": "npm 3.8.0 tarball/package/es6/state/selectors/selectTooltipAxisType.js",
+      "sha256": "a9b0f66deb15a2422bf9b2d0386990b684189023ed3fdcf056492186690153b9",
+      "sourcePath": "package/es6/state/selectors/selectTooltipAxisType.js",
+      "verification": "member of lockfile SHA512-verified official npm tarball",
+      "archive": "npm/es6/state/selectors/selectTooltipAxisType.js"
+    },
+    {
+      "origin": "npm 3.8.0 tarball/package/es6/state/selectors/selectors.js",
+      "sha256": "c3c7686b32b0d8a57ac70bc59214fea65355001bd978ac18fefc60d2fbdef3e4",
+      "sourcePath": "package/es6/state/selectors/selectors.js",
+      "verification": "member of lockfile SHA512-verified official npm tarball",
+      "archive": "npm/es6/state/selectors/selectors.js"
+    },
+    {
+      "origin": "npm 3.8.0 tarball/package/es6/util/PolarUtils.js",
+      "sha256": "749bc5bfd49d99b3cff968d8cec890b2740b092ae5e89123fdcf602caf1f809b",
+      "sourcePath": "package/es6/util/PolarUtils.js",
+      "verification": "member of lockfile SHA512-verified official npm tarball",
+      "archive": "npm/es6/util/PolarUtils.js"
+    },
+    {
+      "origin": "npm 3.8.0 tarball/package/es6/util/ChartUtils.js",
+      "sha256": "7674733c151c11f30f69a177a42013aa87174f7844878e5c525f2d4784eb3a18",
+      "sourcePath": "package/es6/util/ChartUtils.js",
+      "verification": "member of lockfile SHA512-verified official npm tarball",
+      "archive": "npm/es6/util/ChartUtils.js"
+    }
+  ],
+  "metadataArchive": "npm-metadata.json",
+  "metadataSHA256": "1784c4a26f59c60a32309e4a0a7f68395fb3818a67a9f6827137438bfc7a449f"
+}

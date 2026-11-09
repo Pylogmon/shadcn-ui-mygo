@@ -47,4 +47,6 @@ Selected是应用持有的分类索引，-1表示未检查；省略时使用组�
 
 Gallery的Data & display页包含两张交互示例卡。Visitor explorer可切换横纵方向、单系列/分组/堆叠/绝对比例、正负变化和浏览器分类配色，单独显示坐标值、网格与Legend，并更新或恢复实际数据。比例坐标只改变轴格式，Tooltip仍显示原始计数。Chart style explorer可切换Line、堆叠Area、Pie、Donut、Radar和Radial；两个图表分别持有选择状态，离页返回保留应用配置。所有示例均直接调用公开Chart API。
 
-ChartContainer在网页源中负责上下文和样式，Recharts负责几何。高层Chart以外，现在可以通过[Chart自由组合](chart-composition.md)的独立配置作用域、TooltipContent与LegendContent，直接组合原生Plot/Rule/Anchor及其它控件。任意Recharts组合、完整Brush/ReferenceLine/LabelList配置、自由margin语义和Bar几何/路径数据插值动画还未全部具备；当前入口不代表完整图表目录已验收。对应固定示例、文档、MIT许可及文件校验归档于`pkg/display/testdata/shadcn-chart`，完整差异见[parity.md](parity.md)。
+高层Chart默认对七类图表的实际矩形、曲线和极坐标角度做数据动画，可配置时长、延迟及缓动，减少动态效果会立即收敛；具体时序与原生适配见[Chart动画](chart-animation.md)。
+
+ChartContainer在网页源中负责上下文和样式，Recharts负责几何。高层Chart以外，现在可以通过[Chart自由组合](chart-composition.md)的独立配置作用域、TooltipContent与LegendContent，直接组合原生Plot/Rule/Anchor及其它控件。任意Recharts组合、完整Brush/ReferenceLine/LabelList配置、自由margin语义及其它动画选项仍未全部具备；当前入口不代表完整图表目录已验收。对应固定示例、文档、MIT许可及文件校验归档于`pkg/display/testdata/shadcn-chart`，完整差异见[parity.md](parity.md)。

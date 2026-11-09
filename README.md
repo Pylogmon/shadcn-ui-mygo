@@ -79,6 +79,7 @@ Text & layout 页集中展示 [Typography/Kbd](docs/typography.md)、[CodeBlock]
 回合锚定、流式跟随、历史位置保持与跳转见 [Message Scroller](docs/message-scroller.md)。
 严格逐步导航、原生选项/输入、草稿与受控校验组合见 [Questionnaire](docs/questionnaire.md)。
 横向柱形、分组/堆叠、原值检查与坐标轴配置见 [Chart](docs/chart.md)。
+七类图表的数据几何动画、时序配置与减少动态效果见 [Chart动画](docs/chart-animation.md)。
 独立容器、配置与原生Tooltip/Legend内容见 [Chart自由组合](docs/chart-composition.md)，可直接搭配MyGo Plot、Rule、Anchor与原生控件。
 可运行的公开API示例见 [chart-composition](examples/chart-composition/README.md)，包含原生阈值线、柱顶标签、月份范围筛选及可编辑数据。
 Gallery 的 Data & display 页提供可切换方向、数据模式、坐标和图例的访问量图表，以及 Line、Area、Pie、Donut、Radar、Radial 六类预览。
