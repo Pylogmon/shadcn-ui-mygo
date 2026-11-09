@@ -40,6 +40,11 @@ content manifest are archived in `pkg/conversation/testdata/message-scroller/`.
 Its license is the same shadcn MIT license already bundled as
 `Contents/Resources/licenses/shadcn.txt`.
 
+Questionnaire behavior is independently ported against that same shadcn commit.
+Its complete reference implementation, collection/hooks, tests, MIT license and
+content manifest are archived in `pkg/conversation/testdata/questionnaire/`.
+The shared shadcn MIT license is included in the macOS application bundles.
+
 Toast behavior and styles are independently ported against Sonner 2.0.7,
 commit `3ba7aa17ab7e8101b9cf4893936f873b0d4769b3`, the version locked by
 the fixed shadcn reference. The exact source, MIT license (Copyright (c) 2023

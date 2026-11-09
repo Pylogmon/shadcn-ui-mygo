@@ -5,32 +5,73 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/egoist/mygo/ui"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/control"
-	"github.com/pylogmon/shadcn-ui-mygo/pkg/theme"
 )
 
+// Question defines logical order and defaults. IDs and choice values must be
+// unique within their scope. Compound Choice slots may supply native answers
+// without duplicating optional Choices metadata.
 type Question struct {
-	ID, Title, Description       string
+	ID, Title, Description string
+	// Nil Choices uses registered native answer order for shortcuts in
+	// QuestionnaireWith; a nonnil slice declares authoritative shortcut order.
 	Choices                      []control.Option
 	Required, Multiple, Freeform bool
 	InputLabel, Placeholder      string
+	Disabled, Invalid            bool
+	Error                        string
+	DefaultAnswer                Answer
+	Validate                     func(Answer) string
+	OnStatusChange               func(QuestionnaireItemStatus)
 }
 type Answer struct {
 	Values  []string
 	Text    string
 	Skipped bool
+	// Mode records selection independently from the native text draft. Zero
+	// retains legacy inference for restored Answers that predate compound slots.
+	Mode QuestionnaireAnswerMode
 }
+
+// QuestionnaireState is caller owned. Retain it for drafts across page changes;
+// its private UI state stores models and public Handles, never frame Elements.
 type QuestionnaireState struct {
-	Index     int
-	Answers   map[string]Answer
-	Errors    map[string]string
-	Submitted bool
+	Index                   int
+	Answers                 map[string]Answer
+	Errors                  map[string]string
+	Submitted               bool
+	runtime                 map[string]*questionnaireRuntime
+	initialized             bool
+	activeName, pendingName string
+	pendingInvalid          bool
+	focusAttempts           int
+	pending                 []questionnaireAction
+	defaultItem             string
+	lastIndex               int
+	resetVersion            uint64
+	owner                   *questionnaireOwner
+	fallbackRequested       string
 }
+
+// QuestionnaireProps configures both convenience and compound rendering.
+// DefaultItem/Item, callbacks other than OnSubmit, and Validators apply to
+// QuestionnaireWith. The legacy Questionnaire keeps its original contract.
 type QuestionnaireProps struct {
-	Questions []Question
-	Disabled  bool
-	OnSubmit  func(map[string]Answer)
+	Questions   []Question
+	Disabled    bool
+	OnSubmit    func(map[string]Answer)
+	DefaultItem string
+	// Item is a source-style controlled active name. Requests call OnItemChange;
+	// the caller decides whether to update this value. Nil uses State.Index.
+	Item           *string
+	OnItemChange   func(string)
+	Shortcuts      QuestionnaireShortcutMode
+	OnStatusChange func(string, QuestionnaireItemStatus)
+	OnAnswerChange func(string, Answer)
+	OnReset        func(*QuestionnaireResetEvent)
+	// ValidateAll runs after per-item validation on an explicit submission.
+	// Its errors survive until an answer changes; transport remains app owned.
+	ValidateAll func(map[string]Answer) map[string]string
 }
 
 func questionID(q Question, index int) string {
@@ -70,7 +111,7 @@ func answerError(q Question, a Answer) string {
 	return "Please answer this question."
 }
 
-// Select toggles a valid choice, preserving a multi-selection's order.
+// Select is the legacy choice coordinator. It toggles a valid choice, preserving a multi-selection's order.
 // It ignores disabled/unknown values and invalidates a prior submission.
 func (s *QuestionnaireState) Select(q Question, index int, value string) {
 	allowed := false
@@ -101,7 +142,7 @@ func (s *QuestionnaireState) Select(q Question, index int, value string) {
 	s.Submitted = false
 }
 
-// Next validates the active question. On the last question it validates all
+// Next is the legacy required-only coordinator. It validates the active question. On the last question it validates all
 // questions, and only then marks the complete response submitted.
 func (s *QuestionnaireState) Next(questions []Question) bool {
 	s.init()
@@ -122,9 +163,13 @@ func (s *QuestionnaireState) Next(questions []Question) bool {
 	}
 	return s.Submit(questions)
 }
+
+// Previous is the legacy positional coordinator.
 func (s *QuestionnaireState) Previous() {
 	s.Index = max(0, s.Index-1)
 }
+
+// Skip is the legacy coordinator; it clears the skipped draft.
 func (s *QuestionnaireState) Skip(questions []Question) bool {
 	if len(questions) == 0 {
 		return false
@@ -144,6 +189,8 @@ func (s *QuestionnaireState) Skip(questions []Question) bool {
 	}
 	return s.Submit(questions)
 }
+
+// Submit is the legacy required-only validator.
 func (s *QuestionnaireState) Submit(questions []Question) bool {
 	s.init()
 	if len(questions) == 0 {
@@ -177,99 +224,31 @@ func (s *QuestionnaireState) Submit(questions []Question) bool {
 func (s *QuestionnaireState) Result(questions []Question) map[string]Answer {
 	result := make(map[string]Answer, len(questions))
 	for i, q := range questions {
+		if q.Disabled {
+			continue
+		}
 		id := questionID(q, i)
 		a := s.Answers[id]
-		a.Values = validValues(q, a)
-		if !q.Freeform {
+		// Legacy callers never registered compound controls, and zero Mode keeps
+		// their original ability to return fixed values plus freeform text.
+		if s.runtime[id] == nil && a.Mode == QuestionnaireAutomaticAnswer {
+			a.Values = validValues(q, a)
+			if !q.Freeform {
+				a.Text = ""
+			}
+			result[id] = a
+			continue
+		}
+		q = s.effectiveQuestion(q, i)
+		a.Values = s.successfulChoices(q, i, a)
+		if a.Skipped {
+			a.Values = nil
+			a.Text = ""
+		}
+		if !q.Freeform || !questionnaireInputSelected(q, a) || s.inputDisabled(q, i) {
 			a.Text = ""
 		}
 		result[id] = a
 	}
 	return result
-}
-
-func Questionnaire(c *ui.Context, state *QuestionnaireState, p QuestionnaireProps) ui.Element {
-	if state == nil {
-		panic("conversation: Questionnaire requires caller-owned state")
-	}
-	state.init()
-	tk := theme.TokensOf(c)
-	return ui.Column(c).Padding(20).Gap(14).Radius(tk.Radius).Border(1, tk.Border).Background(tk.Card).Role(ui.RoleGroup).Label("Questionnaire").Children(func() {
-		if len(p.Questions) == 0 {
-			ui.Text(c, "No questions").TextColor(tk.MutedForeground)
-			return
-		}
-		state.Index = max(0, min(state.Index, len(p.Questions)-1))
-		q := p.Questions[state.Index]
-		id := questionID(q, state.Index)
-		ui.Text(c, fmt.Sprintf("Question %d of %d", state.Index+1, len(p.Questions))).FontSize(12).TextColor(tk.MutedForeground).Role(ui.RoleStatus)
-		ui.Text(c, q.Title).FontSize(18).FontWeight(600)
-		if q.Description != "" {
-			ui.Text(c, q.Description).TextColor(tk.MutedForeground)
-		}
-		ui.Column(c.Key(id)).Gap(10).Children(func() {
-			a := state.Answers[id]
-			if q.Multiple {
-				for _, option := range q.Choices {
-					selected := slices.Contains(a.Values, option.Value)
-					if control.Checkbox(c.Key(option.Value), &selected, option.Label, control.CheckboxProps{Disabled: p.Disabled || option.Disabled}).Changed() {
-						state.Select(q, state.Index, option.Value)
-						a = state.Answers[id]
-					}
-				}
-			} else if len(q.Choices) > 0 {
-				selected := ""
-				if len(a.Values) > 0 {
-					selected = a.Values[0]
-				}
-				before := selected
-				control.RadioGroup(c, &selected, control.RadioGroupProps{Label: q.Title, Options: q.Choices, Disabled: p.Disabled})
-				if selected != before {
-					state.Select(q, state.Index, selected)
-					a = state.Answers[id]
-				}
-			}
-			if q.Freeform {
-				label := q.InputLabel
-				if label == "" {
-					label = "Your answer"
-				}
-				text := a.Text
-				if control.Input(c, &text, control.InputProps{Label: label, Placeholder: q.Placeholder, Disabled: p.Disabled, Invalid: state.Errors[id] != ""}).Changed() {
-					a.Text = text
-					a.Skipped = false
-					state.Answers[id] = a
-					delete(state.Errors, id)
-					state.Submitted = false
-				}
-			}
-			if err := state.Errors[id]; err != "" {
-				ui.Text(c, err).TextColor(tk.Destructive).FontSize(12).Role(ui.RoleAlert)
-			}
-		})
-		ui.Row(c).Gap(8).Children(func() {
-			if control.Button(c, "Previous", control.ButtonProps{Variant: control.Outline, Disabled: p.Disabled || state.Index == 0}).Clicked() {
-				state.Previous()
-			}
-			if !q.Required && control.Button(c, "Skip", control.ButtonProps{Variant: control.Ghost, Disabled: p.Disabled}).Clicked() {
-				was := state.Submitted
-				if state.Skip(p.Questions) && state.Submitted && !was && p.OnSubmit != nil {
-					p.OnSubmit(state.Result(p.Questions))
-				}
-			}
-			label := "Next"
-			if state.Index == len(p.Questions)-1 {
-				label = "Submit"
-			}
-			if control.Button(c, label, control.ButtonProps{Disabled: p.Disabled || state.Submitted}).Clicked() {
-				was := state.Submitted
-				if state.Next(p.Questions) && state.Submitted && !was && p.OnSubmit != nil {
-					p.OnSubmit(state.Result(p.Questions))
-				}
-			}
-		})
-		if state.Submitted {
-			ui.Text(c, "Response submitted").Role(ui.RoleStatus).TextColor(tk.MutedForeground)
-		}
-	})
 }
