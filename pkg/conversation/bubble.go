@@ -53,6 +53,11 @@ type BubbleTrigger struct {
 	Disabled   bool
 	Handle     *ui.Handle
 	OnActivate func()
+	// TextOnly selects MyGo's direct text-only Link. It derives a natural
+	// name from text children, but cannot contain native boxes or icons.
+	// The default compound link accepts arbitrary inert visuals and uses
+	// Label (or URL when omitted) for its actual native Link target.
+	TextOnly bool
 }
 type BubbleProps struct {
 	Key      string
@@ -107,6 +112,8 @@ const (
 	bubbleFace bubbleSlot = iota
 	bubbleReactions
 	bubbleDisclosure
+	bubbleLinkTarget
+	bubbleLinkVisual
 )
 
 type bubbleIdentity struct{ key string }
@@ -211,16 +218,22 @@ func BubbleWith(c *ui.Context, p BubbleProps, slots BubbleSlots) ui.Element {
 	})
 }
 
-// BubbleContent is the clipped, styled face. Its native trigger reports Clicked
-// and invokes OnActivate; URL links keep MyGo's routing and URL policy.
+// BubbleContent is the clipped, styled face. Changed reports an activation;
+// OnActivate and Handle refer to its real native target. Compound URL faces
+// preserve native routing while their inert visuals can contain native boxes.
 func BubbleContent(c *ui.Context, p BubbleContentProps, content func()) ui.Element {
-	var face ui.Element
+	var face, target ui.Element
+	compoundLink := p.Trigger != nil && p.Trigger.Kind == BubbleLink && !p.Trigger.TextOnly
 	if p.Trigger == nil {
 		face = ui.Column(c)
+	} else if compoundLink {
+		face = ui.Column(c).Role(ui.RoleNone)
 	} else if p.Trigger.Kind == BubbleLink {
 		face = ui.Link(c, "", p.Trigger.URL)
+		target = face
 	} else {
 		face = ui.ButtonBase(c)
+		target = face
 	}
 	face.Column().MinWidth(0).MaxWidthPercent(100).AlignItems(ui.Stretch).TextAlign(ui.Start).Gap(0).Padding(8, 12).Radius(theme.TokensOf(c).RadiusXL()).Border(1, ui.Transparent).FontSize(14).LineHeight(1.625).Clip().Disabled(p.Disabled).DimDisabled(false).FocusRing(false)
 	if p.Align == End {
@@ -232,18 +245,41 @@ func BubbleContent(c *ui.Context, p BubbleContentProps, content func()) ui.Eleme
 		if p.Trigger.Kind == BubbleButton && c.Direction() == ui.RightToLeft {
 			face.TextAlign(ui.End)
 		}
-		face.Label(p.Trigger.Label).Disabled(p.Disabled || p.Trigger.Disabled).Cursor(ui.CursorPointer)
-		if p.Trigger.Handle != nil {
-			face.Bind(p.Trigger.Handle)
+		label := p.Trigger.Label
+		if compoundLink && label == "" {
+			label = p.Trigger.URL
 		}
+		face.Label(label).Disabled(p.Disabled || p.Trigger.Disabled).Cursor(ui.CursorPointer)
+	}
+	face.Children(func() {
+		if !compoundLink {
+			if content != nil {
+				content()
+			}
+			return
+		}
+		// Native Link is a text node, so containers cannot be its children.
+		// Keep the complete clickable face on an actual Link and construct the
+		// source's non-interactive visuals in a separate native sibling.
+		label := p.Trigger.Label
+		if label == "" {
+			label = p.Trigger.URL
+		}
+		target = ui.Link(c.Key(bubbleLinkTarget), "", p.Trigger.URL).Label(label).LabelledBy(face).
+			Absolute().Left(-1).Top(-1).Right(-1).Bottom(-1).Disabled(p.Disabled || p.Trigger.Disabled).DimDisabled(false).FocusRing(false)
+		ui.Column(c.Key(bubbleLinkVisual)).MinWidth(0).MaxWidthPercent(100).Gap(0).IgnoreInput(true).
+			Disabled(true).DimDisabled(false).AccessHidden(true).Children(content)
+	})
+	if p.Trigger != nil && p.Trigger.Handle != nil {
+		target.Bind(p.Trigger.Handle)
 	}
 	t := theme.TokensOf(c)
 	interactive := p.Trigger != nil && !p.Disabled && !p.Trigger.Disabled
-	hover := interactive && face.Hovered()
+	hover := interactive && target.Hovered()
 	bg, fg, border := bubbleColors(t, p.Variant, hover)
 	face.Background(bg).Border(1, border)
 	inheritColor := p.Variant == Muted || ((p.Variant == Outline || p.Variant == Ghost) && !hover)
-	if !inheritColor || p.Trigger != nil && p.Trigger.Kind == BubbleLink {
+	if !inheritColor || p.Trigger != nil && p.Trigger.Kind == BubbleLink && p.Trigger.TextOnly {
 		face.TextColor(fg)
 	}
 	if p.Variant == Ghost {
@@ -251,13 +287,15 @@ func BubbleContent(c *ui.Context, p BubbleContentProps, content func()) ui.Eleme
 	}
 	if p.Trigger != nil {
 		motion.ApplyTransition(c, face)
-		if face.FocusVisible() {
+		if target.FocusVisible() {
 			face.Border(1, t.Ring).Shadow(0, 0, 0, 3, t.Ring.Alpha(.5))
 		}
 	}
-	face.Children(content)
-	if p.Trigger != nil && face.Clicked() && p.Trigger.OnActivate != nil {
-		p.Trigger.OnActivate()
+	if p.Trigger != nil && target.Clicked() {
+		face.SetChanged()
+		if p.Trigger.OnActivate != nil {
+			p.Trigger.OnActivate()
+		}
 	}
 	return face
 }

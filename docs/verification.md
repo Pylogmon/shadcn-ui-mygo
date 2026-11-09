@@ -199,7 +199,7 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 - Table独立阶段：从已提交HEAD仅加入data.go与Table实现/正式检查，display/Gallery共455项通过，vet/diff通过；新Gallery表格演示未混入模块提交。共享原生轨道不是完整HTML intrinsic/rowspan引擎，虚拟Table保留运行时样式，所有平台/字体/AT/视觉矩阵仍需完成。
 
 - Bubble：61项聚焦检查、独立阶段conversation/Gallery共149项与vet通过。实际像素覆盖七变体明暗/hover、Destructive浅色背景、OKLCH相对tint与混色、比例圆角、祖先颜色/字重继承及动态减少动画；普通、Button和Link的字重覆盖缺陷先红后修。原生Button/URL/Router、disabled在press中切换/取消、反应层四侧RTL物理布局/溢出可点击、原生pressed状态、长字换行与80%/Ghost100%上限、同Key流式追加/重排的编辑器焦点/选区和Message祖先End作用域均通过。源示例没有单独tails/size API，旧泛化待办已改正。
-- Bubble保留差异：MyGo公开Link无LinkBase和关闭hover下划线入口，也无法读取计算后的祖先颜色；保留真实原生URL/路由，quiet Link默认Foreground并允许fluent颜色覆盖。所有token已是sRGB，不能从中恢复原始广色域坐标。完整源示例/字体/平台/AT/视觉矩阵仍未完成；独立验证基于`cd5cbc9`加Bubble文件，没有提前纳入Attachment/Trace或新Gallery示例。
+- Bubble当时保留的Link差异已在5.BB继续修正：默认组合Link分离真实交互目标与惰性视觉内容，支持原生Box/Icon并继承quiet颜色；直接文字Link仍可显式TextOnly选择。所有token已是sRGB，不能从中恢复原始广色域坐标。完整源示例/字体/平台/AT/视觉矩阵仍未完成；5.AR独立验证基于`cd5cbc9`加Bubble文件，没有提前纳入Attachment/Trace或新Gallery示例。
 
 - Attachment：68项聚焦检查通过；固定源五状态×三尺寸×两方向、纯内容/图标/图片与Cover/圆角/状态透明度、源卡片/媒体/错误文字token、整卡Trigger与独立动作/编辑器、真实IME/文件拖入路径副本/禁用/取消与重试/进度有限值、原生字体继承、共享文字扫光及动态减少动画均验证。独立审查另验证processing→done保留输入焦点和全选、最新动作callback及真实wheel→snap；临时探针已清理。
 - AttachmentGroup：真实原生横向viewport保留TrackScroll、焦点滚入、首尾键、snap和按接受位置计算的CSS边缘渐隐；稳定ID重排保留原生编辑器/选区，普通竖直滚动仍到父级，纯水平边界包含。源4DIP scroll-padding缺公开API（实测第二卡native192，CSS inset应188）及边界混合轴事件无法只转发一个轴，两项明确保留；未实现上传引擎。
@@ -228,3 +228,6 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 
 - Marker：32项聚焦检查、Root独立conversation/Gallery共368项与vet通过。旧默认RoleStatus误报、12DIP字号、Border全边圆角框先红后修为源静态语义、14DIP/20DIP文字、16DIP最小高度与底边框/padding8。实际像素验证原生字体/字重与token、Separator两侧物理间距/RTL、持久下划线3DIP和明暗字形扫光；真实URL/Router/Enter-only、整行padding命中、Handle/fluent Label、禁用、原生选择/IME、稳定Key前插与空图标槽，以及折叠/Drawer组合通过。明暗PNG已导出并查看；截图与局部检查不代表完整平台/字体/AT视觉矩阵。
 - Marker原生适配：保留Marker便利签名与旧变体常量，但默认不再强制live状态；仅Status/Busy显式使用RoleStatus，Busy另外携带原生busy。根Anchor用实际native Link覆盖惰性视觉行，避免原生Link的text-only子节点限制；MarkerText提供自然名，任意自定义native内容需Label，否则使用URL，fluent Label仍命名实际Link。Shimmer自定义颜色与3ch字体估值显式传递，不读取未知计算祖先样式。primitive/registry/base文档/八独立示例共11份固定Git blob与SHA-256核对，完整示例/平台/辅助技术与视觉矩阵继续跟踪。
+
+- Bubble复杂Link修正：先复现MyGo文字Link包含Column/Icon时的真实构建panic，再用实际native Link覆盖惰性视觉面修复。71项Bubble聚焦检查、基于`feca45e`加Bubble三文件的conversation/Gallery共331项隔离检查及vet通过。原生Handle、URL/Router、Enter-only、整面padding点击、fluent Label、无重复AX和无Label时URL回退均通过；Muted/Outline/Ghost在LTR/RTL与祖先字体/颜色下像素匹配普通内容面。直接文字Link自然名称原回归保留并显式TextOnly。
+- Bubble独审另15项真实原生检查覆盖明暗、长文与复杂嵌套、空callback、同Key前插及内容清空、实际焦点/Space/Enter/URL；全部通过，临时探针已删除。默认复杂Link与显式TextOnly的内容/名称/样式边界已写入指南；未读取私有树或修改MyGo模块缓存，完整平台/AT/视觉矩阵继续跟踪。

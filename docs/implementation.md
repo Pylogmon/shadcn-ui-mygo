@@ -80,8 +80,9 @@
 | 5.AW | Message、Marker与MessageScroller模块拆分 | 已提交 `fc7cfe1`；纯文件拆分，204项会话回归通过 |
 | 5.AX | 模块ZIP与空缓存独立消费者验证 | 已提交 `da22eb5`；无workspace/replace，外部编译、跨进程设置恢复像素及Gallery明暗渲染通过；不代表公共发布或GUI平台矩阵完成 |
 | 5.AY | 可复用滚动条的手动滚动意图回调 | 已提交 `feca45e`；2项真实原生事件检查、490项隔离display/Gallery检查及vet通过 |
-| 5.AZ | Message源槽位、内容宽度与原生顺序 | 本阶段提交；15项聚焦、336项隔离检查、交叉审查及vet通过；后代选择器采用显式native声明 |
-| 5.BA | Marker静态/状态组合、源变体与真实原生链接 | 本阶段提交；32项聚焦、Root独立conversation/Gallery共368项检查、明暗截图及vet通过；Link视觉分离与扫光显式输入限制保留 |
+| 5.AZ | Message源槽位、内容宽度与原生顺序 | 已提交 `092d8af`；15项聚焦、336项隔离检查、交叉审查及vet通过；后代选择器采用显式native声明 |
+| 5.BA | Marker静态/状态组合、源变体与真实原生链接 | 已提交 `47a604e`；32项聚焦、Root独立conversation/Gallery共368项检查、明暗截图及vet通过；Link视觉分离与扫光显式输入限制保留 |
+| 5.BB | Bubble复杂原生链接内容与继承样式修正 | 本阶段提交；71项Bubble聚焦、331项隔离检查、独审另15项真实原生检查及vet通过 |
 
 用户已明确允许原生平台适配：Popover、menu、下拉菜单可以使用 MyGo 的系统菜单与独立 Flyout，超出父窗口范围；无需逐像素照搬网页浮层。Gallery 以 [shadcn/create](https://ui.shadcn.com/create) 的配置与实时预览流程为参考。完整组件功能、主题、动画范围保持不变。
 

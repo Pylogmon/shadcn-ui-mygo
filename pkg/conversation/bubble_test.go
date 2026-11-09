@@ -482,7 +482,7 @@ func TestBubbleTailwindOpacityMultipliesExistingTokenAlpha(t *testing.T) {
 func TestBubbleNativeLinkFluentColorOverrideAndNaturalAccessibleName(t *testing.T) {
 	r := ui.NewTesterWith(bubbleTestView(func(c *ui.Context) {
 		BubbleWith(c, BubbleProps{Variant: Muted}, BubbleSlots{Content: func(c *ui.Context, p BubbleContentProps) {
-			p.Trigger = &BubbleTrigger{Kind: BubbleLink, URL: "https://example.com"}
+			p.Trigger = &BubbleTrigger{Kind: BubbleLink, URL: "https://example.com", TextOnly: true}
 			BubbleContent(c, p, func() { ui.Text(c, "Natural link name") }).TextColor(ui.RGB(30, 100, 170))
 		}})
 	}), 500, 240, ui.TesterOptions{Preferences: ui.Preferences{ReduceMotion: true}})
