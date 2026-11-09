@@ -70,6 +70,7 @@ Text & layout 页集中展示 [Typography/Kbd](docs/typography.md)、[CodeBlock]
 静态共享列组合与原生虚拟表格见 [Table](docs/table.md)。
 会话内容面、原生按钮/链接与反应层组合见 [Bubble](docs/bubble.md)。
 文件/图片卡片、应用持有的上传状态与横向附件组见 [Attachment](docs/attachment.md)。
+静态/动作步骤、运行状态扫光、原生展开详情与嵌套状态见 [Trace](docs/trace.md)。
 Overlays页包含通知类型/位置、状态色与关闭按钮、堆叠、动作保持打开和上传完成更新的交互示例；通知与配置跨预览页保留。
 
 固定上游源码、离线评分对照和对应许可见 [第三方声明](THIRD_PARTY_NOTICES.md)。

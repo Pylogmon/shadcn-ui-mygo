@@ -204,3 +204,7 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 - Attachment：68项聚焦检查通过；固定源五状态×三尺寸×两方向、纯内容/图标/图片与Cover/圆角/状态透明度、源卡片/媒体/错误文字token、整卡Trigger与独立动作/编辑器、真实IME/文件拖入路径副本/禁用/取消与重试/进度有限值、原生字体继承、共享文字扫光及动态减少动画均验证。独立审查另验证processing→done保留输入焦点和全选、最新动作callback及真实wheel→snap；临时探针已清理。
 - AttachmentGroup：真实原生横向viewport保留TrackScroll、焦点滚入、首尾键、snap和按接受位置计算的CSS边缘渐隐；稳定ID重排保留原生编辑器/选区，普通竖直滚动仍到父级，纯水平边界包含。源4DIP scroll-padding缺公开API（实测第二卡native192，CSS inset应188）及边界混合轴事件无法只转发一个轴，两项明确保留；未实现上传引擎。
 - Attachment独立阶段：基于已提交`d8e7cad`仅加入附件实现/正式检查和11枚固定Lucide SVG，conversation/Gallery共217项通过，vet/diff通过；资产SHA-256/XML均核对。已生成并查看浅/深附件矩阵PNG，实际展示状态色、三尺寸、两个方向与图像状态；完整源示例/平台/触控/拖入/AT/视觉矩阵仍继续验收。Gallery新会话流程未提前纳入本模块提交。
+
+- Trace：72项聚焦检查通过。固定源静态Line不会误变按钮、Complete与默认均为Muted、Running标题共享扫光且完成后idle、Pending整行透明度、Error与Link hover错误色、Description alpha/tnum、8DIP间距/16DIP图标/标题截断、正文物理左缩进/border/RTL、源150ms颜色和200ms高度均验证。真实原生Button/URL、可选CodeBlock复制、Dialog/Sheet、Controlled回调替换/反转、惰性KeepMounted输入选区/AutoFocus与关闭回焦、嵌套同名/重复/空ID隔离均通过。
+- Trace独立审查先复现Scale后的Bounds/Draw坐标系反馈环、强制Theme字体与400字重覆盖祖先、Description/Content多余字号重置；修为公开LayoutBounds和按源继承后全部转绿。32项family/weight/ancestor/fluent实际像素/AX/idle与额外22DIP继承参考验证通过；离屏动态正文、首帧显示和多实例静止无待帧通过，不引入独立成对帧循环。
+- Trace独立阶段：基于已提交`e7bb5d7`仅加入Trace实现/正式检查及固定Chevron SVG，conversation/Gallery共288项通过，vet/diff通过；16个固定示例Git blob/SHA-256以及SVG XML/校验值均核对。Native Link整行装饰点击/hover下划线、缺计算祖先字体getter导致3ch估值、compound显式Status传播和完整源示例/平台/触控/AT/视觉矩阵继续保留；Gallery会话流程单独提交。
