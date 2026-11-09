@@ -103,3 +103,5 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 
 - Modal/Drawer：38项针对性检查、overlay vet及diff检查通过。先复现关闭内容仍接收动作、长内容末按钮溢出，改为原生模态scope、立即inert及真实Scroll；覆盖嵌套trap、明确初始/返回Handle、退出反转、Alert响应式Media/Small/Pending、Sheet四边/RTL与固定页脚。Drawer覆盖原生capture/速度投影/取消/失焦、DIP与比例吸附、四边手柄AX方向、键盘、NonModal、滚动上下边界与嵌套。独立审计复现捕获中禁用重启/改变snaps仍由旧手势误关闭；暂停旧Draggable直到释放与收敛后恢复，五种重配置回归通过，正文编辑器只初始化一次。精确嵌套返回使用ReturnFocus；运行时子控件触摸接力与真实触屏/全平台矩阵未完成。
 - 浮层阶段独立提交验证：将已提交HEAD导出到临时目录，仅覆盖本阶段4个Modal/Drawer文件，overlay/Gallery共91项通过，确认不依赖同时开发的Sidebar/Command改动。
+
+- Sidebar：23项针对性检查、navigation全包64项及 vet 通过。覆盖容器自身宽度测量、移动Sheet trap/选择/Escape/回桌面、独立折叠与移动状态、nested/disabled/JSON、RTL与物理边、三种变体200ms反转、sidebar语义色、独立Host Tooltip、rail和局部快捷键。独立审计先复现移动resize关闭漏通知、宽Header/Footer越界绘制/点击、移除触发器失焦和布局前外部trigger丢Controls；修复后真实像素/命中、前后布局trigger关联/实际回焦、无有效opener回主区与空闲收敛通过。未显示offcanvas内容延迟构建，已保留隐藏内容动态显式AutoFocus限制继续记录。
