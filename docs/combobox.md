@@ -73,5 +73,8 @@ Up/Down打开选项。`HideRemove`隐藏移除按钮，保留标签键盘删除�
 [`testdata/shadcn-combobox`](../pkg/control/testdata/shadcn-combobox/README.md)。
 
 此阶段继续使用现有窗口内`motion.Popup`过渡。
-源100ms缩放/侧向进入、保留关闭层与连续反转尚待独立阶段，未计为完整动画对齐。
+源100ms缩放/侧向进入、保留关闭层与连续反转，以及popup内部搜索框的Vega32DIP样式尚待独立阶段，未计为完整动画/视觉对齐。
 独立越窗编辑式Combobox、全部compound组合、平台IME候选窗、真实读屏及完整视觉矩阵仍需验收。
+
+Gallery的Forms & controls页提供可清除框架、国家/城市描述过滤、Office内部搜索、技术多选及
+只读/禁用/必填错误示例。搜索Combobox、MultiCombobox或Chips可匹配该页面；选择与草稿跨页保留。

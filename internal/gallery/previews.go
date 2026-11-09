@@ -126,6 +126,7 @@ func (s *State) controls(c *ui.Context) {
 	})
 	s.choiceVariantsPreview(c)
 	s.sliderRangesPreview(c)
+	s.comboboxPreview(c)
 }
 func (s *State) displays(c *ui.Context) {
 	s.heading(c, "Data & display", "Readable information, useful feedback and considered details.")

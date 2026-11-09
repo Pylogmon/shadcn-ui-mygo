@@ -42,6 +42,7 @@ type State struct {
 	Table                                                                          display.DataTableState
 	tablePreview                                                                   tablePreviewState
 	chartPreview                                                                   chartPreviewState
+	comboboxes                                                                     comboboxPreviewState
 	conversationPreview                                                            conversationPreviewState
 	ConversationComposition                                                        conversationCompositionState
 	Questionnaire                                                                  conversation.QuestionnaireState
@@ -94,7 +95,7 @@ type creatorPage struct {
 
 var pages = []creatorPage{
 	{Key: "overview", Label: "Cards"},
-	{Key: "controls", Label: "Forms & controls"},
+	{Key: "controls", Label: "Forms & controls", Keywords: []string{"Combobox", "MultiCombobox", "Autocomplete"}},
 	{Key: "display", Label: "Data & display", Keywords: []string{"Table", "DataTable", "Calendar", "Avatar", "Card", "Chart", "BarChart", "LineChart", "AreaChart", "PieChart", "DonutChart", "RadarChart", "RadialChart"}},
 	{Key: "content", Label: "Content & feedback"},
 	{Key: "text-layout", Label: "Text & layout", Keywords: []string{"Typography", "Kbd", "Keyboard", "CodeBlock", "Code", "Spinner", "Skeleton", "ScrollArea", "AspectRatio"}},
