@@ -1,6 +1,6 @@
 export GOCACHE := $(CURDIR)/.cache/go-build
 
-.PHONY: test vet run build app popups-app charts-app snapshots generate verify-consumer
+.PHONY: test vet run build app popups-app charts-app icons-app snapshots generate verify-consumer
 test:
 	go test ./...
 vet:
@@ -16,6 +16,8 @@ popups-app:
 	sh scripts/package-macos.sh native-popups
 charts-app:
 	sh scripts/package-macos.sh chart-composition
+icons-app:
+	sh scripts/package-macos.sh material-icons
 snapshots:
 	mkdir -p artifacts
 	go run ./cmd/gallery -snapshot artifacts/gallery-light.png

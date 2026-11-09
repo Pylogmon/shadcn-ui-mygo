@@ -315,3 +315,8 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 - 箭头视觉：Owner与Root实际查看浅/深三入口对照PNG；Root重启最终macOS bundle，查看Gallery左侧Flyout各选择框，再切System native查看相同位置，箭头大小和居中一致。系统菜单展开内容仍由OS绘制；该证据覆盖关闭触发器，不替代其它平台/字体/AT完整矩阵。
 
 - 菜单/Select分发：实际`1d9601e`标准ZIP的八步验证和第二个外部模块五命令/五项公开检查通过，覆盖可选GeometrySurface/DismissInterceptor、实际left侧向进入像素、100ms完成、退出期AX排除/保留窗口与最终一次回调，以及Flyout/Native/窗口内三路Select的真实箭头像素。两套缓存初始为空且完成后删除，GOWORK关闭、无replace；Root核对十个ZIP产品文件与该提交、模块图/源码/图片哈希，并实际查看恢复消费者与Gallery明暗。证据`build/consumer-verification/run-1641041268/menu-distribution-receipt.json`，未纳入并行Combobox候选，也不代替OS放置或三平台GUI验收。
+
+- Material Symbols：固定Google官方`10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7`，4157名称×三风格×FILL0/1共24942份原始SVG，wght400/GRAD0/opsz24。全部Git blob/SHA、XML/尺寸验证，3个独立函数包无catalog/init；全量all包单独内置固定ZIP。8份资产重复离线生成逐字节一致，收据`/private/tmp/material-symbols-generation-receipt.json`。Root核对17候选SHA与独立工程一致，原Apache许可随示例bundle复制。
+- 图标正式/独审：全部24942份SVG通过真实MyGo解析；11项正式覆盖原生颜色/16、24、32DIP与字体隔离、填充/圆角、真实Button点击、decorative/named AX、非有限尺寸、名称/variant错误、并发及按需/全量相同像素。fresh实际`526b066`仅覆盖17份图标/示例/打包文件，完整SDK1898项、25包（15有测试/10无测试）、全量vet及icons-app通过；未带入并行Combobox。另13项独立公开API检查通过，见`/private/tmp/material-icons-linker-audit-mskqbzvt/audit-artifacts/verification-receipt.json`。
+- 按需链接实证：同Go1.27.3/macOS-arm64/trimpath/stripped参数的四个真实应用均通过SVG.Image渲染，像素/PNG哈希完全相同。baseline、空导入outlined、outlined.Home均4271650字节，仅后者保留Home的两份SVG，无其它官方完整字面量或全ZIP；all.Must应用15637314字节且包含完整ZIP。Root读取完整`linker-receipt.json`、命令/候选哈希及原始产物，未把source函数计数当作裁剪证明。
+- 图标视觉/平台：Root查看示例明暗PNG，并在macOS新bundle实际点击Save观察Saved、切Filled/Dark、通过OS菜单选择Rounded，再搜索arrow_drop_down得到2项，查看正确填充/颜色/尺寸。初次键盘菜单操作未改变值，随后真实Rounded菜单项点击才作为通过证据。当前workspace全量1959项及vet、Gallery/图标示例的macOS与Linux/Windows amd64构建通过；此数含并行Combobox早期候选，不作其最终验收。图标静态配置完整名称已提供，其它variable-font轴及完整平台/AT矩阵不计已完成。

@@ -24,7 +24,13 @@ case "${1:-gallery}" in
         identifier='dev.pylogmon.shadcn-charts'
         app_name='Shadcn Charts'
         ;;
-    *) echo 'Expected gallery, native-popups or chart-composition.' >&2; exit 1 ;;
+    material-icons)
+        bundle='build/Shadcn Symbols.app'
+        package='./examples/material-icons'
+        identifier='dev.pylogmon.shadcn-symbols'
+        app_name='Shadcn Symbols'
+        ;;
+    *) echo 'Expected gallery, native-popups, chart-composition or material-icons.' >&2; exit 1 ;;
 esac
 mkdir -p "$bundle/Contents/MacOS"
 mkdir -p "$bundle/Contents/Resources/licenses"
@@ -38,6 +44,9 @@ cp pkg/display/testdata/recharts-animation/LICENSE "$bundle/Contents/Resources/l
 cp pkg/desktop/testdata/shadcn-menu/npm/base-ui-react/LICENSE "$bundle/Contents/Resources/licenses/base-ui.txt"
 cp pkg/desktop/testdata/shadcn-menu/npm/radix-ui-react-menu/LICENSE "$bundle/Contents/Resources/licenses/radix-ui.txt"
 cp pkg/desktop/testdata/shadcn-menu/npm/tw-animate-css/LICENSE "$bundle/Contents/Resources/licenses/tw-animate-css.txt"
+if [ "${1:-gallery}" = material-icons ]; then
+    cp pkg/icons/material/sources/LICENSE "$bundle/Contents/Resources/licenses/material-symbols.txt"
+fi
 CGO_ENABLED=0 go build -o "$bundle/Contents/MacOS/gallery" "$package"
 cat > "$bundle/Contents/Info.plist" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>

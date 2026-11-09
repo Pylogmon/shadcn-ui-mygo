@@ -10,6 +10,16 @@ Theme/color source notices are kept alongside their archived data at
 `pkg/theme/sources/LICENSE.shadcn` and `pkg/theme/sources/LICENSE.tailwind`.
 Go module dependencies retain their respective licenses in their module sources.
 
+The optional Material Symbols module includes Google's original static SVGs
+from `google/material-design-icons` commit
+`10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7`, under Apache-2.0.
+The exact license, upstream README, complete Git-blob/SHA-256 source index and
+deterministic generated-asset manifest are in `pkg/icons/material/sources/`.
+On-demand symbol functions retain only referenced SVG pairs; the separately
+imported `material/all` package embeds the full static catalog. The Material
+Symbols example bundle includes the original license as
+`Contents/Resources/licenses/material-symbols.txt`.
+
 The native text shimmer ports the shared utility in the fixed shadcn commit
 `8ab27715521cbd4f87ae6886cd989cbb678f6de7`. Its exact CSS, documentation,
 MIT license and content manifest are archived in `internal/shimmer/testdata/shadcn/`.
