@@ -62,6 +62,10 @@ type Spec struct {
 }
 
 type PopoverProps struct {
+	// Private profiles keep menu source motion separate from Popover's preset.
+	menuMotion                               menuMotionKind
+	menuIdentity                             string
+	menuContext                              bool
 	Label                                    string
 	Placement                                mygo.Placement
 	Width, Height, Gap                       int
@@ -247,7 +251,7 @@ func (h *Host) Popover(c *ui.Context, key string, anchor ui.Element, open *bool,
 		padding = max(0, *p.ContentPadding)
 	}
 	presentation := c.MenuPresentation()
-	changed := e.nativeTheme == nil || e.tokens != tokens || e.reduced != reduced || e.props.Label != p.Label || e.props.Revision != p.Revision || e.props.SystemStyle != p.SystemStyle || e.padding != padding || e.props.ContentRole != p.ContentRole || e.direction != c.Direction() || !p.SystemStyle && e.presentation != presentation
+	changed := e.nativeTheme == nil || e.tokens != tokens || e.reduced != reduced || e.props.Label != p.Label || e.props.Revision != p.Revision || e.props.SystemStyle != p.SystemStyle || e.padding != padding || e.props.ContentRole != p.ContentRole || e.props.menuMotion != p.menuMotion || e.props.menuIdentity != p.menuIdentity || e.props.menuContext != p.menuContext || e.direction != c.Direction() || !p.SystemStyle && e.presentation != presentation
 	if e.nativeTheme == nil || e.tokens != tokens {
 		e.tokens = tokens
 		e.nativeTheme = tokens.Theme()
@@ -359,7 +363,36 @@ func (h *Host) view(c *ui.Context, e *entry, generation uint64) {
 	}
 	t := e.tokens
 	root := ui.Column(c).Gap(12).Padding(e.padding).Background(t.Popover).TextColor(t.PopoverForeground).Radius(t.Radius).Direction(e.direction)
-	if !e.props.SystemStyle && !e.spec.SystemPopover {
+	frame := menuFrame{}
+	if e.props.menuMotion != menuMotionNone && !e.props.SystemStyle && !e.spec.SystemPopover {
+		root.Background(ui.Transparent).Gap(0).Padding(0)
+		state := ui.Local(root, menuRootMotionKey{}, func() menuRootMotion { return menuRootMotion{identity: e.props.menuIdentity} })
+		if state.identity != e.props.menuIdentity {
+			*state = menuRootMotion{identity: e.props.menuIdentity}
+		}
+		attachment := menuAttachment{x: .5, y: .5}
+		observed := menuGeometry{context: e.props.menuContext}
+		if geometry, ok := e.surface.(GeometrySurface); ok {
+			if anchor, content, known := geometry.Geometry(); known {
+				observed.anchor, observed.content, observed.known = anchor, content, true
+				padding := float32(5)
+				if observed.context {
+					padding = 0
+				}
+				attachment = menuActualAttachment(anchor, content, padding)
+			}
+		}
+		pose := state.tween.update(c, !e.closing, attachment)
+		frame = menuFrame{active: true, closing: e.closing, pose: pose, attachment: attachment, geometry: observed}
+		e.presented = true
+		if e.closing {
+			root.IgnoreInput(true).AccessHidden(true)
+		}
+		if e.closing && pose.opacity <= 0 {
+			h.finishExit(e)
+			return
+		}
+	} else if !e.props.SystemStyle && !e.spec.SystemPopover {
 		// MyGo intentionally skips presence animation on a view's very first
 		// tree. Measure invisibly once, then add the visible keyed panel on the
 		// next frame so a newly created native window really enters. Measuring
@@ -423,7 +456,11 @@ func (h *Host) view(c *ui.Context, e *entry, generation uint64) {
 		}
 	}).Children(func() {
 		if e.content != nil {
-			e.content(c)
+			if frame.active {
+				withMenuFrame(c, frame, func() { e.content(c) })
+			} else {
+				e.content(c)
+			}
 		}
 	})
 	// Native input arrives before controls process their Clicked/Changed

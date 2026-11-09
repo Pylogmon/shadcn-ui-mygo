@@ -1,0 +1,400 @@
+{
+  "repository": "https://github.com/shadcn-ui/ui",
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "primaryComponentBase": "bases/base",
+  "files": [
+    {
+      "archive": "shadcn/base/context-menu.tsx",
+      "sha256": "e4359306eb2242681388aa1b3a541de49dce46c375db1593f8d3362f6bb023ca",
+      "sourcePath": "apps/v4/registry/bases/base/ui/context-menu.tsx",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/ui/context-menu.tsx",
+      "gitBlob": "3fc2b82c358ed8f592a6a13539bb051c9d978d19",
+      "verification": "fixed official Git tree blob"
+    },
+    {
+      "archive": "shadcn/base/dropdown-menu.tsx",
+      "sha256": "18c1829679694a9b9850afcabf1158a80ec3624fb5e03d0d4b13339b729e0503",
+      "sourcePath": "apps/v4/registry/bases/base/ui/dropdown-menu.tsx",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/ui/dropdown-menu.tsx",
+      "gitBlob": "4c4543e2954441c012d3a7dc1d850e99613f5651",
+      "verification": "fixed official Git tree blob"
+    },
+    {
+      "archive": "shadcn/base/menubar.tsx",
+      "sha256": "0abe1b7b30525404044f1bf693e2a31f624260aec61a6d19271ac1c21f9cc26d",
+      "sourcePath": "apps/v4/registry/bases/base/ui/menubar.tsx",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/ui/menubar.tsx",
+      "gitBlob": "ac05ba9b8ef04ea55c038d8b6eb244a8c0f323ef",
+      "verification": "fixed official Git tree blob"
+    },
+    {
+      "archive": "shadcn/radix/context-menu.tsx",
+      "sha256": "4e8fdb4bd33132b7e61d45c318933552993c2360d52164338551159381ccf61f",
+      "sourcePath": "apps/v4/registry/bases/radix/ui/context-menu.tsx",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/radix/ui/context-menu.tsx",
+      "gitBlob": "fddd712d91235f6af91e5cf6e2477e854b4316b9",
+      "verification": "fixed official Git tree blob"
+    },
+    {
+      "archive": "shadcn/radix/dropdown-menu.tsx",
+      "sha256": "f29f9046532435ec183482ad990ac282e5ecfc76af80a6352eaa500a5689c447",
+      "sourcePath": "apps/v4/registry/bases/radix/ui/dropdown-menu.tsx",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/radix/ui/dropdown-menu.tsx",
+      "gitBlob": "4e7077741fb5bd5118251d1b0c8e3770054a3792",
+      "verification": "fixed official Git tree blob"
+    },
+    {
+      "archive": "shadcn/radix/menubar.tsx",
+      "sha256": "d803d245db3a8864f7712f87c5db89018f1cc556c760a8910f2e8d54a067ae90",
+      "sourcePath": "apps/v4/registry/bases/radix/ui/menubar.tsx",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/radix/ui/menubar.tsx",
+      "gitBlob": "3074897d043a4442dffe3d96464499773496575b",
+      "verification": "fixed official Git tree blob"
+    },
+    {
+      "archive": "shadcn/style-vega.css",
+      "sha256": "10fa07bd61b429ae2c14c572ba9975f6e991d68a04f8fec7e354a062597e0d4e",
+      "sourcePath": "apps/v4/registry/styles/style-vega.css",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/styles/style-vega.css",
+      "gitBlob": "9f03b3c6dc5a803db963a81743d47d5b5f8f9fe0",
+      "verification": "fixed official Git tree blob"
+    },
+    {
+      "archive": "shadcn/tailwind.css",
+      "sha256": "4c371f7a1ff5d219ae2f7ff28bd256b4346fd546fe46fbae22092e57db2f0fae",
+      "sourcePath": "packages/shadcn/src/tailwind.css",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/packages/shadcn/src/tailwind.css",
+      "gitBlob": "067bfc56fc086420835582f469e2c78d3942c69a",
+      "verification": "fixed official Git tree blob"
+    },
+    {
+      "archive": "LICENSE.shadcn",
+      "sha256": "1564074e13439397221ffd522e2e504d56561994a23d371aa5e3ad43e4f5423f",
+      "sourcePath": "LICENSE.md",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/LICENSE.md",
+      "gitBlob": "fad4d887a681dd49233e5ed01ee2c7a1513089a0",
+      "verification": "fixed official Git tree blob"
+    },
+    {
+      "archive": "npm/base-ui-react/metadata.json",
+      "sha256": "0b780356653dc015f4594e62ac594e826753458cac157a10dc934a8ad6e10dfb",
+      "package": "@base-ui/react",
+      "sourcePath": "metadata",
+      "origin": "https://registry.npmjs.org/@base-ui/react/1.6.0",
+      "verification": "official fixed npm metadata; integrity cross-checked with lockfile"
+    },
+    {
+      "archive": "npm/base-ui-react/LICENSE",
+      "sha256": "07fc1b39d69d14bc7d40482a628f47226258eb01265db68ae684944b916beb2a",
+      "package": "@base-ui/react",
+      "sourcePath": "package/LICENSE",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member of lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/package.json",
+      "sha256": "20cecb1f4eb5dd608eb62955486adc0bae6e219394ea0e04ff2b7c349e99eed0",
+      "package": "@base-ui/react",
+      "sourcePath": "package/package.json",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member of lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/menu/root/MenuRoot.mjs",
+      "sha256": "19b8453a799d8d2710d7074bbd79b8829740ca9d446d9f7af0479ff0e0e581b7",
+      "package": "@base-ui/react",
+      "sourcePath": "package/menu/root/MenuRoot.mjs",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member of lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/menu/popup/MenuPopup.mjs",
+      "sha256": "f29096f1c2684143512d42a0de73b48041116d27644d2f38e1f8e8eeb36babcb",
+      "package": "@base-ui/react",
+      "sourcePath": "package/menu/popup/MenuPopup.mjs",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member of lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/menu/positioner/MenuPositioner.mjs",
+      "sha256": "4327626774fc96ad5f81cd844050a1c1ff5689a3d99984a8603de74f974022ec",
+      "package": "@base-ui/react",
+      "sourcePath": "package/menu/positioner/MenuPositioner.mjs",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member of lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/menu/store/MenuStore.mjs",
+      "sha256": "235f7ef7015999a490959dbebe007f14f3a6d10974dd3c40679bb5f3ab653520",
+      "package": "@base-ui/react",
+      "sourcePath": "package/menu/store/MenuStore.mjs",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member of lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/utils/popups/popupStoreUtils.mjs",
+      "sha256": "6a81eec29a22a4ba7d41e43ff690aa4404845706961b54339a27940e137fc670",
+      "package": "@base-ui/react",
+      "sourcePath": "package/utils/popups/popupStoreUtils.mjs",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member of lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/utils/useAnchorPositioning.mjs",
+      "sha256": "db276d62a26ca7cfff515230fb67cc5a5cf11a221aa45fa2947f8a258d7c6c0e",
+      "package": "@base-ui/react",
+      "sourcePath": "package/utils/useAnchorPositioning.mjs",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member of lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/floating-ui-react/middleware/arrow.mjs",
+      "sha256": "824af9eb4b299f9c525cb302dc3dfad4204d99d5203df9f0d3c19e0f49449d62",
+      "package": "@base-ui/react",
+      "sourcePath": "package/floating-ui-react/middleware/arrow.mjs",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member of lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/internals/useAnimationsFinished.mjs",
+      "sha256": "e8b6cf8e9949f32ebe4511c35c0684af1dda87a64c05c7dbad584545cb2e954b",
+      "package": "@base-ui/react",
+      "sourcePath": "package/internals/useAnimationsFinished.mjs",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member of lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/internals/useTransitionStatus.mjs",
+      "sha256": "d8c9ac3730d5456f29e31ec620befb0fd7a23c0fd4bb4298357e5c13d8d4bf8b",
+      "package": "@base-ui/react",
+      "sourcePath": "package/internals/useTransitionStatus.mjs",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member of lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-utils/metadata.json",
+      "sha256": "c7d3bb2a52daa49325c8e66a4fb4e32f993930f08f822dc7adb758251ab6b824",
+      "package": "@base-ui/utils",
+      "sourcePath": "metadata",
+      "origin": "https://registry.npmjs.org/@base-ui/utils/0.3.1",
+      "verification": "official fixed npm metadata; integrity cross-checked with lockfile"
+    },
+    {
+      "archive": "npm/base-ui-utils/LICENSE",
+      "sha256": "07fc1b39d69d14bc7d40482a628f47226258eb01265db68ae684944b916beb2a",
+      "package": "@base-ui/utils",
+      "sourcePath": "package/LICENSE",
+      "origin": "https://registry.npmjs.org/@base-ui/utils/-/utils-0.3.1.tgz",
+      "verification": "member of lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-utils/package.json",
+      "sha256": "c314d2cb19bea37677bd07ff3508d883b1c46b6af4caed685cf80b627c2d6f1d",
+      "package": "@base-ui/utils",
+      "sourcePath": "package/package.json",
+      "origin": "https://registry.npmjs.org/@base-ui/utils/-/utils-0.3.1.tgz",
+      "verification": "member of lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-utils/useAnimationFrame.mjs",
+      "sha256": "5198f28569c8a2ef392ffd4d10871d4179148c84df20cb5e2af6f9ad1795df4a",
+      "package": "@base-ui/utils",
+      "sourcePath": "package/useAnimationFrame.mjs",
+      "origin": "https://registry.npmjs.org/@base-ui/utils/-/utils-0.3.1.tgz",
+      "verification": "member of lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-utils/useStableCallback.mjs",
+      "sha256": "5b30b0bd68c60776fa3295a2fdf7be8030061b64894c83913aede21763b87d92",
+      "package": "@base-ui/utils",
+      "sourcePath": "package/useStableCallback.mjs",
+      "origin": "https://registry.npmjs.org/@base-ui/utils/-/utils-0.3.1.tgz",
+      "verification": "member of lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/radix-ui-react-menu/metadata.json",
+      "sha256": "55d7caa7bb60c69d4d03f91b98488cb2c654eb4f977b3f558bdfe2ddbb112648",
+      "package": "@radix-ui/react-menu",
+      "sourcePath": "metadata",
+      "origin": "https://registry.npmjs.org/@radix-ui/react-menu/2.1.16",
+      "verification": "official fixed npm metadata; integrity cross-checked with lockfile"
+    },
+    {
+      "archive": "npm/radix-ui-react-menu/LICENSE",
+      "sha256": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138",
+      "package": "@radix-ui/react-menu",
+      "sourcePath": "package/LICENSE",
+      "origin": "https://registry.npmjs.org/@radix-ui/react-menu/-/react-menu-2.1.16.tgz",
+      "verification": "member of lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/radix-ui-react-menu/package.json",
+      "sha256": "ce4b3e9aec8712c1e56107f1e6572263674d41b87990b9efe4441014a3707715",
+      "package": "@radix-ui/react-menu",
+      "sourcePath": "package/package.json",
+      "origin": "https://registry.npmjs.org/@radix-ui/react-menu/-/react-menu-2.1.16.tgz",
+      "verification": "member of lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/radix-ui-react-menu/dist/index.mjs",
+      "sha256": "da8dafde05ee6cf65c3a2f57ef94fff2b221dfd4a8771844d3c5fded4dde90f5",
+      "package": "@radix-ui/react-menu",
+      "sourcePath": "package/dist/index.mjs",
+      "origin": "https://registry.npmjs.org/@radix-ui/react-menu/-/react-menu-2.1.16.tgz",
+      "verification": "member of lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/radix-ui-react-presence/metadata.json",
+      "sha256": "348da02bfcc659c3988c232cc065f54e17b1be9be022c79093e34d30605d3735",
+      "package": "@radix-ui/react-presence",
+      "sourcePath": "metadata",
+      "origin": "https://registry.npmjs.org/@radix-ui/react-presence/1.1.5",
+      "verification": "official fixed npm metadata; integrity cross-checked with lockfile"
+    },
+    {
+      "archive": "npm/radix-ui-react-presence/LICENSE",
+      "sha256": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138",
+      "package": "@radix-ui/react-presence",
+      "sourcePath": "package/LICENSE",
+      "origin": "https://registry.npmjs.org/@radix-ui/react-presence/-/react-presence-1.1.5.tgz",
+      "verification": "member of lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/radix-ui-react-presence/package.json",
+      "sha256": "34e264d083b47f877d31fe4db1a4ced5c897f40e857362a2e65562b91a4d3c1b",
+      "package": "@radix-ui/react-presence",
+      "sourcePath": "package/package.json",
+      "origin": "https://registry.npmjs.org/@radix-ui/react-presence/-/react-presence-1.1.5.tgz",
+      "verification": "member of lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/radix-ui-react-presence/dist/index.mjs",
+      "sha256": "29223c633b9591e249e0cac62ad7991c959ab9aaee62fa64dc85895a27dc9c93",
+      "package": "@radix-ui/react-presence",
+      "sourcePath": "package/dist/index.mjs",
+      "origin": "https://registry.npmjs.org/@radix-ui/react-presence/-/react-presence-1.1.5.tgz",
+      "verification": "member of lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/tw-animate-css/metadata.json",
+      "sha256": "81ebc86ea98899071720583316faf5a7a27c6b249987c4a38ab95888c99f46dd",
+      "package": "tw-animate-css",
+      "sourcePath": "metadata",
+      "origin": "https://registry.npmjs.org/tw-animate-css/1.4.0",
+      "verification": "official fixed npm metadata; integrity cross-checked with lockfile"
+    },
+    {
+      "archive": "npm/tw-animate-css/LICENSE",
+      "sha256": "039184dfa0a822397b3f45a435b5b1e538721587fbade96b9fa80f86cb354109",
+      "package": "tw-animate-css",
+      "sourcePath": "package/LICENSE",
+      "origin": "https://registry.npmjs.org/tw-animate-css/-/tw-animate-css-1.4.0.tgz",
+      "verification": "member of lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/tw-animate-css/package.json",
+      "sha256": "66849c41b809ccca55c6484bf102044c73847b21a7d3bc3fd95df133c0a578e1",
+      "package": "tw-animate-css",
+      "sourcePath": "package/package.json",
+      "origin": "https://registry.npmjs.org/tw-animate-css/-/tw-animate-css-1.4.0.tgz",
+      "verification": "member of lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/tw-animate-css/dist/tw-animate.css",
+      "sha256": "6035b41301945cd65eb233b4653965e3c235338faae51b0f55676d591daaef23",
+      "package": "tw-animate-css",
+      "sourcePath": "package/dist/tw-animate.css",
+      "origin": "https://registry.npmjs.org/tw-animate-css/-/tw-animate-css-1.4.0.tgz",
+      "verification": "member of lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/menu/portal/MenuPortal.mjs",
+      "sha256": "d0ef464969aaf8ae1c0da83f4a259b19375ca4a6fbc5343b99e3c64b9f731b23",
+      "package": "@base-ui/react",
+      "sourcePath": "package/menu/portal/MenuPortal.mjs",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member of lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/utils/getDisabledMountTransitionStyles.mjs",
+      "sha256": "494f18ba9e87212ab6ad6f01e4b8594bff78b15c1c679fda588c9f5db887a0a4",
+      "package": "@base-ui/react",
+      "sourcePath": "package/utils/getDisabledMountTransitionStyles.mjs",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member of lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/internals/useOpenChangeComplete.mjs",
+      "sha256": "75483c428fdbe44ae8f13ba6294ee392ff3ef7cfdc539b35759943be8ecedd9f",
+      "package": "@base-ui/react",
+      "sourcePath": "package/internals/useOpenChangeComplete.mjs",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member of lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/internals/stateAttributesMapping.mjs",
+      "sha256": "46380fe2afb58dcc54ce24e08340a5f9ff180b2eb832fc337bfd41e5f0cabe1f",
+      "package": "@base-ui/react",
+      "sourcePath": "package/internals/stateAttributesMapping.mjs",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member of lockfile SHA512-verified official npm tarball"
+    }
+  ],
+  "packages": [
+    {
+      "name": "@base-ui/react",
+      "version": "1.6.0",
+      "metadataURL": "https://registry.npmjs.org/@base-ui/react/1.6.0",
+      "tarballURL": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "integrity": "sha512-/jzjTWJYXhRFO45Bev9lc3cHbmjzCMpUqbMZ2AgKy/z25mY9B6shGSNcXcjQar9n5doM0KYW1W8fcFv2jZBuMw==",
+      "tarballSHA1": "143a892157224a57046f3f4886c025eba173c258",
+      "tarballSHA256": "583e60023a77fed45caf8a2f980813e8a75e2f2a97f59c30380d2234cc3e0423",
+      "lockedBy": "shadcn-ui/ui@8ab27715521cbd4f87ae6886cd989cbb678f6de7:pnpm-lock.yaml"
+    },
+    {
+      "name": "@base-ui/utils",
+      "version": "0.3.1",
+      "metadataURL": "https://registry.npmjs.org/@base-ui/utils/0.3.1",
+      "tarballURL": "https://registry.npmjs.org/@base-ui/utils/-/utils-0.3.1.tgz",
+      "integrity": "sha512-gFFiltORVmW/N6IILTGxizP3PBpVpysqML1ALY5Vk0mH+7faVkCknOU31goYHN5Aoek2dkjxva1XOD2Ce9WuIg==",
+      "tarballSHA1": "329b4fbd5e66a78a93df68223061224f474e5c0f",
+      "tarballSHA256": "7cca6bb696f27f1407ddb9682af837321d0b1313bdc97bcd807f54b65be974f7",
+      "lockedBy": "shadcn-ui/ui@8ab27715521cbd4f87ae6886cd989cbb678f6de7:pnpm-lock.yaml"
+    },
+    {
+      "name": "@radix-ui/react-menu",
+      "version": "2.1.16",
+      "metadataURL": "https://registry.npmjs.org/@radix-ui/react-menu/2.1.16",
+      "tarballURL": "https://registry.npmjs.org/@radix-ui/react-menu/-/react-menu-2.1.16.tgz",
+      "integrity": "sha512-72F2T+PLlphrqLcAotYPp0uJMr5SjP5SL01wfEspJbru5Zs5vQaSHb4VB3ZMJPimgHHCHG7gMOeOB9H3Hdmtxg==",
+      "tarballSHA1": "528a5a973c3a7413d3d49eb9ccd229aa52402911",
+      "tarballSHA256": "5ae2e00993edd8042f829666afd0640a1bad8209629a49db0346bc49315b05da",
+      "lockedBy": "shadcn-ui/ui@8ab27715521cbd4f87ae6886cd989cbb678f6de7:pnpm-lock.yaml"
+    },
+    {
+      "name": "@radix-ui/react-presence",
+      "version": "1.1.5",
+      "metadataURL": "https://registry.npmjs.org/@radix-ui/react-presence/1.1.5",
+      "tarballURL": "https://registry.npmjs.org/@radix-ui/react-presence/-/react-presence-1.1.5.tgz",
+      "integrity": "sha512-/jfEwNDdQVBCNvjkGit4h6pMOzq8bHkopq458dPt2lMjx+eBQUohZNG9A7DtO/O5ukSbxuaNGXMjHicgwy6rQQ==",
+      "tarballSHA1": "5d8f28ac316c32f078afce2996839250c10693db",
+      "tarballSHA256": "8f18de2c84a397e546ea265f4e31b4e5fa28e7a620bbe38baaf2d4981ce9d103",
+      "lockedBy": "shadcn-ui/ui@8ab27715521cbd4f87ae6886cd989cbb678f6de7:pnpm-lock.yaml"
+    },
+    {
+      "name": "tw-animate-css",
+      "version": "1.4.0",
+      "metadataURL": "https://registry.npmjs.org/tw-animate-css/1.4.0",
+      "tarballURL": "https://registry.npmjs.org/tw-animate-css/-/tw-animate-css-1.4.0.tgz",
+      "integrity": "sha512-7bziOlRqH0hJx80h/3mbicLW7o8qLsH5+RaLR2t+OHM3D0JlWGODQKQ4cxbK7WlvmUxpcj6Kgu6EKqjrGFe3QQ==",
+      "tarballSHA1": "b4a06f68244cba39428aa47e65e6e4c0babc21ee",
+      "tarballSHA256": "6a69ca418446cae0c325ff7bccc7b56eeeea4b97e6d6dec4e7ba88586e8d844d",
+      "lockedBy": "shadcn-ui/ui@8ab27715521cbd4f87ae6886cd989cbb678f6de7:pnpm-lock.yaml"
+    }
+  ],
+  "notes": {
+    "menubar": "Base MenubarContent composes DropdownMenuContent and inherits its closed animation. Radix direct MenubarContent differs; it is comparison evidence, not this phase target.",
+    "geometry": "Base UI fake arrow projects/clamps the anchor center and can place main-axis origin beyond the panel by sideOffset; rect-only native origin is claimed only where observed geometry suffices.",
+    "runtime": "No Base UI, Radix, React or CSS runtime is linked into native applications."
+  }
+}

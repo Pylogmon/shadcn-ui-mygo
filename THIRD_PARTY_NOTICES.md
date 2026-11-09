@@ -45,6 +45,16 @@ Its complete reference implementation, collection/hooks, tests, MIT license and
 content manifest are archived in `pkg/conversation/testdata/questionnaire/`.
 The shared shadcn MIT license is included in the macOS application bundles.
 
+Flyout menu motion is compared against the fixed shadcn Base UI wrappers and
+Vega utilities, Base UI 1.6.0 / utilities 0.3.1, and tw-animate-css 1.4.0.
+The corresponding Radix Menu 2.1.16 / Presence 1.1.5 wrappers are comparison
+references; the Base Menubar composition is the native target. Exact reference
+files, metadata, MIT licenses and lockfile SHA-512 evidence are archived in
+`pkg/desktop/testdata/shadcn-menu/`. Native application bundles include
+`base-ui.txt` (Material-UI SAS), `radix-ui.txt` (WorkOS) and
+`tw-animate-css.txt` (Wombosvideo) under `Contents/Resources/licenses/`.
+No React, Base UI, Radix or CSS runtime is linked into the native application.
+
 Chart geometry and configuration are independently implemented using MyGo's
 public native chart primitives. The pinned shadcn horizontal, mixed and negative
 bar examples, base Chart implementation and documentation, Vega style source,

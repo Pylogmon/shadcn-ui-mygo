@@ -344,20 +344,110 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 	moved := over && (!state.pointerOver || state.pointerX != x || state.pointerY != y)
 	state.pointerOver, state.pointerX, state.pointerY = over, x, y
 	rtl := c.Direction() == ui.RightToLeft
+	frame := menuFrameOf(c)
+	panels := ui.Local(root, menuPanelsKey{}, func() menuPanels { return menuPanels{} })
+	if panels.anchors == nil {
+		panels.anchors = make(map[string]ui.Rect)
+	}
+	seenAnchors := make(map[string]bool)
+	panels.sync(state, len(levels), frame.closing)
+	subAttachment := menuAttachment{side: menuSideRight, x: .5, y: .5}
+	if rtl {
+		subAttachment.side, subAttachment.x = menuSideLeft, 1
+	}
+	// Resolve retained paths against today's items. A removed/disabled ancestor
+	// cancels that panel immediately; no old item or callback is kept alive.
+	kept := panels.panels[:0]
+	maxDepth := 0
+	for _, presence := range panels.panels {
+		list := menuAtPath(items, presence.path, len(presence.path))
+		valid := len(list) > 0
+		for depth, key := range presence.path {
+			ancestors := menuAtPath(items, presence.path, depth)
+			index := menuItemIndex(ancestors, key)
+			if index < 0 || !menuEnabled(ancestors[index]) {
+				valid = false
+				break
+			}
+		}
+		if !valid {
+			continue
+		}
+		presence.pose = presence.tween.update(c, presence.live, subAttachment)
+		if !presence.live && presence.pose.opacity <= 0 {
+			continue
+		}
+		kept = append(kept, presence)
+		maxDepth = max(maxDepth, len(presence.path))
+	}
+	clear(panels.panels[len(kept):])
+	panels.panels = kept
 	root.Children(func() {
-		for depth, list := range levels {
+		rootPanelBounds := ui.Rect{}
+		renderPanel := func(depth int, list []overlay.MenuItem, path []string, presence *menuPanelPresence, live bool, highlight string) {
 			panelLabel := label
 			if depth > 0 {
-				panelLabel = listLabel(items, state.Path, depth)
+				panelLabel = listLabel(items, path, depth)
 			}
-			panel := ui.Column(c.Key(fmt.Sprintf("%q", state.Path[:min(depth, len(state.Path))]))).Width(width).Padding(4).Radius(t.RadiusMD()).Background(t.Popover).TextColor(t.PopoverForeground).Border(1, t.Border).Role(ui.RoleMenu).Label(panelLabel).Focusable().InputMethod(true).TabStop(depth == state.ActiveDepth).HandleInput(func(ev ui.InputEvent) bool { return menuInput(state, items, depth, p, rtl, ev) })
-			if !p.NoAutoFocus && depth == 0 {
+			panel := ui.Column(c.Key(menuPanelKey(menuPathKey(path)))).Width(width).Padding(4).Radius(t.RadiusMD()).Background(t.Popover).TextColor(t.PopoverForeground).Border(1, t.Border).Role(ui.RoleMenu).Label(panelLabel).InputMethod(live).TabStop(live && depth == state.ActiveDepth)
+			if live {
+				panel.Focusable()
+				panel.HandleInput(func(ev ui.InputEvent) bool { return menuInput(state, items, depth, p, rtl, ev) })
+			} else {
+				panel.Disabled(true).DimDisabled(false).IgnoreInput(true).AccessHidden(true)
+			}
+			if depth == 0 && frame.active {
+				attachment := frame.attachment
+				if frame.geometry.known {
+					geometry := frame.geometry
+					bounds := panel.LayoutBounds()
+					if bounds.W > 0 && bounds.H > 0 {
+						geometry.content.X += bounds.X * c.Zoom()
+						geometry.content.Y += bounds.Y * c.Zoom()
+						geometry.content.W, geometry.content.H = bounds.W*c.Zoom(), bounds.H*c.Zoom()
+					} else {
+						geometry.content.W = width * c.Zoom()
+						geometry.content.H = (min(menuContentHeight(list), max(32, maxHeight-8)) + 10) * c.Zoom()
+						if rtl {
+							geometry.content.X += frame.geometry.content.W - geometry.content.W
+						}
+					}
+					padding := float32(5)
+					if geometry.context {
+						padding = 0
+					}
+					attachment = menuAttachmentForSide(geometry.anchor, geometry.content, frame.attachment.side, padding)
+				}
+				menuApplyPose(panel, frame.pose, attachment)
+			}
+			if depth == 0 {
+				rootPanelBounds = panel.LayoutBounds()
+			}
+			if presence != nil {
+				panel.Absolute().Left(0).Top(0)
+				attachment := subAttachment
+				content := presence.bounds
+				if content.W <= 0 {
+					content = ui.Rect{X: rootPanelBounds.X + float32(depth)*(width+4), Y: rootPanelBounds.Y, W: width, H: min(menuContentHeight(list), max(32, maxHeight-8)) + 10}
+					if rtl {
+						content.X = rootPanelBounds.X - float32(depth)*(width+4)
+					}
+				}
+				if anchor, ok := panels.anchors[menuPathKey(path)]; ok {
+					attachment = menuAttachmentForSide(anchor, content, subAttachment.side, 5)
+				}
+				menuApplyPose(panel, presence.pose, attachment)
+				if bounds := panel.LayoutBounds(); bounds.W > 0 && bounds.H > 0 {
+					presence.bounds = bounds
+				}
+			}
+			if live && !p.NoAutoFocus && depth == 0 {
 				panel.AutoFocus()
 			}
-			if !p.NoAutoFocus && depth == state.ActiveDepth && !root.FocusWithin() {
+			if live && !p.NoAutoFocus && depth == state.ActiveDepth && !root.FocusWithin() {
 				panel.Focus()
 			}
-			if state.focus && depth == state.ActiveDepth {
+			if live && state.focus && depth == state.ActiveDepth {
 				panel.Focus()
 			}
 			panel.Children(func() {
@@ -385,10 +475,10 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 							role = ui.RoleMenuItemRadio
 						}
 						row := motion.ApplyTransition(c, ui.Row(c.Key(key)).FillWidth().Height(32).PaddingX(8).Gap(8).Radius(max(2, t.Radius-2)).AlignItems(ui.Center).Role(role).Label(item.Label).Disabled(item.Disabled).FontSize(14).TextColor(t.PopoverForeground))
-						highlighted := depth < len(state.Highlighted) && key == state.Highlighted[depth]
+						highlighted := key == highlight
 						if highlighted {
 							row.Background(t.Accent).TextColor(t.AccentForeground)
-							if depth == state.ActiveDepth {
+							if live && depth == state.ActiveDepth {
 								panel.ActiveDescendant(row)
 								if state.reveal {
 									row.ScrollIntoView()
@@ -401,6 +491,11 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 							row.Checked(item.Selected)
 						}
 						if len(item.Children) > 0 {
+							anchorKey := menuPathKey(append(slices.Clone(path), key))
+							seenAnchors[anchorKey] = true
+							if bounds := row.LayoutBounds(); bounds.W > 0 && bounds.H > 0 {
+								panels.anchors[anchorKey] = bounds
+							}
 							row.HasPopup(ui.PopupMenu).Expanded(depth < len(state.Path) && state.Path[depth] == key)
 						}
 						if item.Destructive {
@@ -442,7 +537,7 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 							}
 						})
 						hovered := row.Hovered()
-						if moved && hovered && !item.Disabled {
+						if live && moved && hovered && !item.Disabled {
 							menuHighlight(state, depth, key)
 							if len(item.Children) > 0 {
 								menuOpenChild(state, items, depth, false)
@@ -451,7 +546,7 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 							}
 							c.Invalidate()
 						}
-						if row.Clicked() && !item.Disabled {
+						if live && row.Clicked() && !item.Disabled {
 							menuHighlight(state, depth, key)
 							panel.Focus()
 							menuActivate(state, items, depth, p)
@@ -461,8 +556,36 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 				})
 			})
 		}
+		highlight := ""
+		if len(state.Highlighted) > 0 {
+			highlight = state.Highlighted[0]
+		}
+		renderPanel(0, levels[0], nil, nil, !frame.closing, highlight)
+		for depth := 1; depth <= maxDepth; depth++ {
+			height := float32(0)
+			for _, presence := range panels.panels {
+				if len(presence.path) == depth {
+					list := menuAtPath(items, presence.path, depth)
+					height = max(height, min(menuContentHeight(list), max(32, maxHeight-8))+10)
+				}
+			}
+			ui.Box(c.Key(menuDepthKey(depth))).Width(width).Height(height).Children(func() {
+				for _, presence := range panels.panels {
+					if len(presence.path) == depth {
+						// Same-depth replacements overlap while the old panel leaves;
+						// they never widen the Flyout by another column.
+						renderPanel(depth, menuAtPath(items, presence.path, depth), presence.path, presence, presence.live, presence.highlight)
+					}
+				}
+			})
+		}
 	})
 	state.focus, state.reveal = false, false
+	for key := range panels.anchors {
+		if !seenAnchors[key] {
+			delete(panels.anchors, key)
+		}
+	}
 	return root
 }
 func listLabel(items []overlay.MenuItem, path []string, depth int) string {

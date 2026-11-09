@@ -27,6 +27,8 @@ type MenubarState struct {
 	triggers               map[string]*ui.Handle
 	pointerOver            bool
 	pointerX, pointerY     float32
+	pressedTrigger         string
+	pressCloses            bool
 }
 
 type MenubarProps struct {
@@ -145,6 +147,10 @@ func Menubar(c *ui.Context, h *Host, key string, s *MenubarState, p MenubarProps
 	s.pointerOver, s.pointerX, s.pointerY = over, x, y
 	anchors := make(map[string]ui.Element, len(p.Items))
 	fromUp := false
+	// A pointer press can focus a sibling before Clicked is observed. Compare
+	// against the entry state, not the focus handler's newly active sibling.
+	clickedActive, clickedOpen := s.Active, s.Open
+	anyPressed := false
 	root.Children(func() {
 		for i, item := range p.Items {
 			id := menubarKey(item, i)
@@ -153,6 +159,13 @@ func Menubar(c *ui.Context, h *Host, key string, s *MenubarState, p MenubarProps
 				TextColor(t.Foreground).HasPopup(ui.PopupMenu).Expanded(s.Open && s.Active == id).
 				Cursor(ui.CursorPointer)).Bind(s.triggers[id])
 			anchors[id] = trigger
+			if trigger.Pressed() {
+				anyPressed = true
+				if s.pressedTrigger == "" {
+					s.pressedTrigger = id
+					s.pressCloses = clickedOpen && clickedActive == id
+				}
+			}
 			if trigger.Focused() {
 				if s.Open && s.focused != id {
 					s.Active = id
@@ -161,8 +174,13 @@ func Menubar(c *ui.Context, h *Host, key string, s *MenubarState, p MenubarProps
 			}
 			if !item.Disabled {
 				if trigger.Clicked() {
-					if s.Active == id {
-						s.Open = !s.Open
+					close := clickedOpen && clickedActive == id
+					if s.pressedTrigger == id {
+						close = s.pressCloses
+					}
+					s.pressedTrigger = ""
+					if close {
+						s.Open = false
 					} else {
 						s.Active, s.Open = id, true
 					}
@@ -186,6 +204,9 @@ func Menubar(c *ui.Context, h *Host, key string, s *MenubarState, p MenubarProps
 			trigger.Children(func() { ui.Text(c, item.Label).SingleLine() })
 		}
 	})
+	if !anyPressed {
+		s.pressedTrigger = ""
+	}
 	if s.Open && (!s.wasOpen || s.lastActive != s.Active) {
 		s.menu.Reset()
 		s.revision++
@@ -253,7 +274,7 @@ func Menubar(c *ui.Context, h *Host, key string, s *MenubarState, p MenubarProps
 	if gap == 0 {
 		gap = 8
 	}
-	popup := PopoverProps{Label: item.Label, Placement: p.Placement, Gap: gap,
+	popup := PopoverProps{menuMotion: menuMotionBar, menuIdentity: s.Active, Label: item.Label, Placement: p.Placement, Gap: gap,
 		Width: int(math.Ceil(float64(width))), Height: 200, FitContent: true,
 		MaxHeight: int(math.Ceil(float64(maxHeight))), ManualTrigger: true,
 		NoFocusRestore: true, ContentPadding: &zero, ContentRole: ui.RoleGroup,
@@ -302,6 +323,12 @@ func Menubar(c *ui.Context, h *Host, key string, s *MenubarState, p MenubarProps
 				}
 				if next := menubarNext(p.Items, menubarIndex(p.Items, s.Active), delta); next != "" && next != s.Active {
 					s.Active, s.focused = next, next
+					// The child can process several keys before the parent builds.
+					// Enter the new root now, alongside its latest native content;
+					// the parent will separately commit the new window anchor.
+					if entry := h.entries[key]; entry != nil {
+						entry.props.menuIdentity = next
+					}
 					s.menu.Reset()
 					s.lastActive = next
 					s.revision++

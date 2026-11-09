@@ -73,6 +73,8 @@ func TestMenuContentScopedSubmenusChecksAndFocus(t *testing.T) {
 	if state.ActiveDepth != 1 || !slices.Equal(state.Path, []string{"left"}) {
 		t.Fatalf("submenu not opened: %+v", state)
 	}
+	// Inspect the settled adjacent layout after the source 100ms entrance.
+	tt.Advance(110 * time.Millisecond)
 	root, _ := tt.AccessByRole(ui.RoleMenu, "Menu")
 	child, _ := tt.AccessByRole(ui.RoleMenu, "Left")
 	if child.Bounds.X < root.Bounds.X+root.Bounds.W {
@@ -101,6 +103,8 @@ func TestMenuContentRTLSubmenuArrows(t *testing.T) {
 	if state.ActiveDepth != 1 || len(state.Path) != 1 {
 		t.Fatalf("RTL Left did not open: %+v", state)
 	}
+	// The initial 8-DIP slide can cross the final 4-DIP gap temporarily.
+	tt.Advance(110 * time.Millisecond)
 	root, _ := tt.AccessByRole(ui.RoleMenu, "Menu")
 	child, _ := tt.AccessByRole(ui.RoleMenu, "More")
 	if child.Bounds.X+child.Bounds.W > root.Bounds.X {

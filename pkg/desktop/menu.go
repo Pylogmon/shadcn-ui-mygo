@@ -89,7 +89,7 @@ func menu(c *ui.Context, h *Host, key string, anchor ui.Element, open *bool, sta
 		return result, errors.New("desktop: menu dimensions must be finite")
 	}
 	zero := float32(0)
-	props := PopoverProps{Label: p.Label, Placement: p.Placement, Width: int(math.Ceil(float64(width))), Height: 200, Gap: p.Gap, FitContent: true, MaxHeight: int(math.Ceil(float64(maxHeight))), Plain: true, ManualTrigger: manual, Revision: p.Revision, ContentPadding: &zero, ContentRole: ui.RoleGroup,
+	props := PopoverProps{menuMotion: menuMotionPopup, menuContext: manual, Label: p.Label, Placement: p.Placement, Width: int(math.Ceil(float64(width))), Height: 200, Gap: p.Gap, FitContent: true, MaxHeight: int(math.Ceil(float64(maxHeight))), Plain: true, ManualTrigger: manual, Revision: p.Revision, ContentPadding: &zero, ContentRole: ui.RoleGroup,
 		OnDismiss: func() {
 			state.wasOpen = false
 			if manual {

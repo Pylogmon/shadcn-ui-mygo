@@ -35,6 +35,9 @@ cp pkg/overlay/testdata/sonner/LICENSE.md "$bundle/Contents/Resources/licenses/s
 cp internal/shimmer/testdata/shadcn/LICENSE "$bundle/Contents/Resources/licenses/shadcn.txt"
 cp pkg/theme/sources/LICENSE.tailwind "$bundle/Contents/Resources/licenses/tailwind.txt"
 cp pkg/display/testdata/recharts-animation/LICENSE "$bundle/Contents/Resources/licenses/recharts.txt"
+cp pkg/desktop/testdata/shadcn-menu/npm/base-ui-react/LICENSE "$bundle/Contents/Resources/licenses/base-ui.txt"
+cp pkg/desktop/testdata/shadcn-menu/npm/radix-ui-react-menu/LICENSE "$bundle/Contents/Resources/licenses/radix-ui.txt"
+cp pkg/desktop/testdata/shadcn-menu/npm/tw-animate-css/LICENSE "$bundle/Contents/Resources/licenses/tw-animate-css.txt"
 CGO_ENABLED=0 go build -o "$bundle/Contents/MacOS/gallery" "$package"
 cat > "$bundle/Contents/Info.plist" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
