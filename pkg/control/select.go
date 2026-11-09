@@ -19,99 +19,48 @@ type SelectProps struct {
 	// behavior or its accessible text label.
 	ItemContent    func(*ui.Context, Option)
 	TriggerContent func(*ui.Context, Option)
+	// Content configures styled listbox placement. NativeSelect uses OS placement.
+	Content SelectContentProps
+	// ValuesContent renders the multiple convenience trigger.
+	ValuesContent func(*ui.Context, SelectValueView)
 }
 
+// Select is the original single-string convenience API over SelectRoot. The
+// native trigger reports Changed when its bound identity changes. NativeSelect
+// remains the separate operating-system menu route.
 func Select(c *ui.Context, selected *string, p SelectProps) ui.Element {
-	t := theme.TokensOf(c)
-	parts := ui.SelectBase(c, selected)
-	tr := parts.Trigger
-	h, px := metrics(p.Size)
-	motion.ApplyTransition(c, tr.MinHeight(h).PaddingX(min(px, 12)).Gap(8).AlignItems(ui.Center).Radius(t.Radius*.8).
-		Background(t.Background).TextColor(t.Foreground).FontSize(14).Border(1, t.Input).
-		Disabled(p.Disabled).Invalid(p.Invalid).Cursor(ui.CursorPointer))
-	if p.Label != "" {
-		tr.Label(p.Label)
+	if selected == nil {
+		panic("control.Select: selected is required")
 	}
-	if p.Disabled {
-		tr.Opacity(.5).Cursor(ui.CursorNotAllowed)
-	}
-	if p.Invalid {
-		tr.Border(1, t.Destructive)
-	}
-	label := p.Placeholder
-	chosen := false
+	state := SelectState{Value: SelectSelection{Value: *selected}}
 	for _, o := range p.Options {
 		if !o.Separator && o.Value == *selected {
-			label, chosen = optionLabel(o), true
+			state.Value.Valid = true
 			break
 		}
 	}
-	if label == "" {
-		label = "Select an option"
-	}
-	tr.Children(func() {
-		if chosen && p.TriggerContent != nil {
-			ui.Row(c).Grow(1).MinWidth(0).Children(func() {
+	var trigger ui.Element
+	selectRoot(c, nil, &state, SelectRootProps{Options: p.Options, Disabled: p.Disabled}, true, true, func(b *SelectScope) {
+		var valueContent func(*ui.Context, SelectValueView)
+		if p.TriggerContent != nil && state.Value.Valid {
+			valueContent = func(child *ui.Context, v SelectValueView) {
 				for _, o := range p.Options {
-					if !o.Separator && o.Value == *selected {
-						p.TriggerContent(c, o)
+					if !o.Separator && o.Value == v.Value.Value {
+						p.TriggerContent(child, o)
 						break
 					}
 				}
-			})
-		} else {
-			text := ui.Text(c, label).Grow(1).SingleLine()
-			if !chosen {
-				text.TextColor(t.MutedForeground)
 			}
 		}
-		indicator.ChevronDown(c).TextColor(t.MutedForeground)
-	})
-	parts.Popup(func(panel ui.Element) {
-		menu := theme.MenuOf(c).ForScene()
-		t := &menu.Tokens
-		panel.MinWidth(max(float32(128), tr.Bounds().W)).MaxHeight(280).Padding(4).Margin(4, 0, 0, 0).
-			Radius(t.Radius*.8).Border(1, t.Border).Background(t.Popover).TextColor(t.PopoverForeground).
-			Shadow(0, 4, 12, 0, ui.RGBA(0, 0, 0, .12)).Transition(motion.Menu(c))
-		menu.Surface(c, panel)
-		panel.Children(func() {
-			ui.Themed(c, menu.Theme()).FillWidth().Children(func() {
-				ui.Scroll(c).MaxHeight(272).FillWidth().Children(func() {
-					group := ""
-					for _, o := range p.Options {
-						if o.Separator {
-							optionSeparator(c)
-							continue
-						}
-						if o.Group != "" && o.Group != group {
-							group = o.Group
-							optionGroup(c, group)
-						}
-						e := parts.Item(o.Value).Disabled(o.Disabled).MinHeight(32).Padding(6, 8).Gap(8).
-							Radius(t.Radius * .6).AlignItems(ui.Center).AlignSelf(ui.Stretch).FontSize(14).Label(optionLabel(o))
-						if e.Highlighted() {
-							bg, fg := menu.Highlight(false)
-							e.Background(bg).TextColor(fg)
-						}
-						if o.Disabled {
-							e.Opacity(.5).Cursor(ui.CursorNotAllowed)
-						}
-						e.Children(func() {
-							if p.ItemContent != nil {
-								ui.Row(c).Grow(1).MinWidth(0).Children(func() { p.ItemContent(c, o) })
-							} else {
-								ui.Text(c, optionLabel(o)).Grow(1).SingleLine()
-							}
-							if *selected == o.Value {
-								ui.Icon(c, check).FontSize(14)
-							}
-						})
-					}
-				})
-			})
+		trigger = selectTemplate(c, b, SelectWithProps{
+			Trigger: SelectTriggerProps{Label: p.Label, Size: p.Size, Invalid: p.Invalid},
+			Content: p.Content, Placeholder: p.Placeholder, ItemContent: p.ItemContent, ValueContent: valueContent,
 		})
 	})
-	return ButtonGroupItem(c, tr)
+	if state.Value.Valid {
+		*selected = state.Value.Value
+	}
+	return trigger
 }
 
 // NativeSelect uses MyGo's system-menu adapter instead of SelectBase's in-window

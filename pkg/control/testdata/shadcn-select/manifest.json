@@ -1,0 +1,279 @@
+{
+  "repository": "https://github.com/shadcn-ui/ui",
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "primaryComponentBase": "bases/base",
+  "primaryVisualProfile": "vega",
+  "officialTreeSHA256": "62158f625484774b2d812c0c7f447c4d0c56ec72a71b454584abe09606c70054",
+  "npmTarballSHA256": "583e60023a77fed45caf8a2f980813e8a75e2f2a97f59c30380d2234cc3e0423",
+  "files": [
+    {
+      "archive": "shadcn/base/select.tsx",
+      "sourcePath": "apps/v4/registry/bases/base/ui/select.tsx",
+      "gitBlob": "2cb76c117197336324cfaed1300e92ca65273b40",
+      "sha256": "6348d30035b68867d5efffe9b0b1611718226bef9fdeef9554349d6b98252110",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/ui/select.tsx"
+    },
+    {
+      "archive": "shadcn/examples/select-example.tsx",
+      "sourcePath": "apps/v4/registry/bases/base/examples/select-example.tsx",
+      "gitBlob": "efb5741f2eee4cf2f78cc1558017c42587735663",
+      "sha256": "5571f7345411108bbaa1030ef502914b3e1e2cba3136ffac9ffaac73b8f967a7",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/examples/select-example.tsx"
+    },
+    {
+      "archive": "shadcn/docs/select.mdx",
+      "sourcePath": "apps/v4/content/docs/components/base/select.mdx",
+      "gitBlob": "a62f816c3a8a6b8f7b086995e518cb8de8cb981c",
+      "sha256": "6dfdca0d48c9f77190d5dd7d968abfae8c3d85b751f042503c8d56b4a8b9f7e9",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/content/docs/components/base/select.mdx"
+    },
+    {
+      "archive": "shadcn/examples/select-demo.tsx",
+      "sourcePath": "apps/v4/examples/base/select-demo.tsx",
+      "gitBlob": "dfada41ea4ede3925e976931e4966ecbeb3e78d2",
+      "sha256": "cc8c7490bf2ce6579bda00d18793e96053dc23e1b8cd393a005068b87a8dc8db",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/select-demo.tsx"
+    },
+    {
+      "archive": "shadcn/examples/select-align-item.tsx",
+      "sourcePath": "apps/v4/examples/base/select-align-item.tsx",
+      "gitBlob": "1b57cee69c5503d449f09e4b2d3476401630f313",
+      "sha256": "15fe8e38434095cfde0422d563ba27d739000e6f67b7ebe6ba8c0739fa1c4b17",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/select-align-item.tsx"
+    },
+    {
+      "archive": "shadcn/examples/select-groups.tsx",
+      "sourcePath": "apps/v4/examples/base/select-groups.tsx",
+      "gitBlob": "7d9b5aadee0ba8a5f40fc34e9a8b94fcb908063c",
+      "sha256": "235c78c123cd35d3ec435db4db9d67004e3e72b9327ffde14d88cccefe447ecf",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/select-groups.tsx"
+    },
+    {
+      "archive": "shadcn/examples/select-scrollable.tsx",
+      "sourcePath": "apps/v4/examples/base/select-scrollable.tsx",
+      "gitBlob": "2cd12fcf0a58158c0572ff902af3d5a38598e9f5",
+      "sha256": "1f65a9aabcf3863737b528069facc7518c1d5e429f833b501d03370c03903f75",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/select-scrollable.tsx"
+    },
+    {
+      "archive": "shadcn/examples/select-disabled.tsx",
+      "sourcePath": "apps/v4/examples/base/select-disabled.tsx",
+      "gitBlob": "bd0d0e0bad64d59b378c83888d1372d4125539b6",
+      "sha256": "c1d45a73f9fc557488d8a0afe2bb0e223e27eafd343eae914bd9e6c7ef302b3a",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/select-disabled.tsx"
+    },
+    {
+      "archive": "shadcn/examples/select-invalid.tsx",
+      "sourcePath": "apps/v4/examples/base/select-invalid.tsx",
+      "gitBlob": "0488de66cb6a6ee92feebfb2167392dec023f51a",
+      "sha256": "122c65b56c8d31749dd7b3c009d8b10fb571163d6e9ec6dc33fc89a59a37912e",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/select-invalid.tsx"
+    },
+    {
+      "archive": "shadcn/examples/select-rtl.tsx",
+      "sourcePath": "apps/v4/examples/base/select-rtl.tsx",
+      "gitBlob": "0f3041fe446f09550239e2a279ee6d82bb5f3d13",
+      "sha256": "9f077d193a7acbb1bc47309c5c1cde1877c72e5380c604c30937a34fed282e27",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/select-rtl.tsx"
+    },
+    {
+      "archive": "shadcn/styles/style-vega.css",
+      "sourcePath": "apps/v4/registry/styles/style-vega.css",
+      "gitBlob": "9f03b3c6dc5a803db963a81743d47d5b5f8f9fe0",
+      "sha256": "10fa07bd61b429ae2c14c572ba9975f6e991d68a04f8fec7e354a062597e0d4e",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/styles/style-vega.css"
+    },
+    {
+      "archive": "npm/base-ui-react/select/root/SelectRoot.js",
+      "package": "@base-ui/react@1.6.0",
+      "member": "package/select/root/SelectRoot.js",
+      "tarball": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "integrity": "sha512-/jzjTWJYXhRFO45Bev9lc3cHbmjzCMpUqbMZ2AgKy/z25mY9B6shGSNcXcjQar9n5doM0KYW1W8fcFv2jZBuMw==",
+      "sha256": "4ac09a871403b2c8e16468a02391c9da6e722e34c23331a21bdc684b884d97b8"
+    },
+    {
+      "archive": "npm/base-ui-react/select/trigger/SelectTrigger.js",
+      "package": "@base-ui/react@1.6.0",
+      "member": "package/select/trigger/SelectTrigger.js",
+      "tarball": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "integrity": "sha512-/jzjTWJYXhRFO45Bev9lc3cHbmjzCMpUqbMZ2AgKy/z25mY9B6shGSNcXcjQar9n5doM0KYW1W8fcFv2jZBuMw==",
+      "sha256": "fd49c1ddb7df428fa93a50e7b7065f36827e03a3f111b935c5d0d8171510e14e"
+    },
+    {
+      "archive": "npm/base-ui-react/select/item/SelectItem.js",
+      "package": "@base-ui/react@1.6.0",
+      "member": "package/select/item/SelectItem.js",
+      "tarball": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "integrity": "sha512-/jzjTWJYXhRFO45Bev9lc3cHbmjzCMpUqbMZ2AgKy/z25mY9B6shGSNcXcjQar9n5doM0KYW1W8fcFv2jZBuMw==",
+      "sha256": "4e85e5c6eb4f257d0b239942906abf198ad5d30aae2bd57117f7d071a1c083f1"
+    },
+    {
+      "archive": "npm/base-ui-react/select/popup/SelectPopup.js",
+      "package": "@base-ui/react@1.6.0",
+      "member": "package/select/popup/SelectPopup.js",
+      "tarball": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "integrity": "sha512-/jzjTWJYXhRFO45Bev9lc3cHbmjzCMpUqbMZ2AgKy/z25mY9B6shGSNcXcjQar9n5doM0KYW1W8fcFv2jZBuMw==",
+      "sha256": "8da4d6360f29770ac86338c0c0b3b13e311b7ba3f6329bf2a7837f354917a3bc"
+    },
+    {
+      "archive": "npm/base-ui-react/select/popup/utils.js",
+      "package": "@base-ui/react@1.6.0",
+      "member": "package/select/popup/utils.js",
+      "tarball": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "integrity": "sha512-/jzjTWJYXhRFO45Bev9lc3cHbmjzCMpUqbMZ2AgKy/z25mY9B6shGSNcXcjQar9n5doM0KYW1W8fcFv2jZBuMw==",
+      "sha256": "579d9107648603b67d4ee5c3c25e49a9cb451ec67ef13dba4147cb95c8036239"
+    },
+    {
+      "archive": "npm/base-ui-react/select/positioner/SelectPositioner.js",
+      "package": "@base-ui/react@1.6.0",
+      "member": "package/select/positioner/SelectPositioner.js",
+      "tarball": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "integrity": "sha512-/jzjTWJYXhRFO45Bev9lc3cHbmjzCMpUqbMZ2AgKy/z25mY9B6shGSNcXcjQar9n5doM0KYW1W8fcFv2jZBuMw==",
+      "sha256": "3850ad1f5794356ec32901523f5d2d346c90c30715ec7652680b2708b8a2daf4"
+    },
+    {
+      "archive": "npm/base-ui-react/select/list/SelectList.js",
+      "package": "@base-ui/react@1.6.0",
+      "member": "package/select/list/SelectList.js",
+      "tarball": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "integrity": "sha512-/jzjTWJYXhRFO45Bev9lc3cHbmjzCMpUqbMZ2AgKy/z25mY9B6shGSNcXcjQar9n5doM0KYW1W8fcFv2jZBuMw==",
+      "sha256": "a18f9c0b1b8b7aecd69c94860826978836a85bab055a96140f0dcbf9fd7aee01"
+    },
+    {
+      "archive": "npm/base-ui-react/select/value/SelectValue.js",
+      "package": "@base-ui/react@1.6.0",
+      "member": "package/select/value/SelectValue.js",
+      "tarball": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "integrity": "sha512-/jzjTWJYXhRFO45Bev9lc3cHbmjzCMpUqbMZ2AgKy/z25mY9B6shGSNcXcjQar9n5doM0KYW1W8fcFv2jZBuMw==",
+      "sha256": "c46b7fd26ee198ec90025d8dd9706a046ebf0af63b3cd17d682437c7bb233b91"
+    },
+    {
+      "archive": "npm/base-ui-react/select/group/SelectGroup.js",
+      "package": "@base-ui/react@1.6.0",
+      "member": "package/select/group/SelectGroup.js",
+      "tarball": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "integrity": "sha512-/jzjTWJYXhRFO45Bev9lc3cHbmjzCMpUqbMZ2AgKy/z25mY9B6shGSNcXcjQar9n5doM0KYW1W8fcFv2jZBuMw==",
+      "sha256": "6e9c0c4d5a35ccc38e84c404007aed7081c5199c08a62cebba5dddb622ed1966"
+    },
+    {
+      "archive": "npm/base-ui-react/select/group-label/SelectGroupLabel.js",
+      "package": "@base-ui/react@1.6.0",
+      "member": "package/select/group-label/SelectGroupLabel.js",
+      "tarball": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "integrity": "sha512-/jzjTWJYXhRFO45Bev9lc3cHbmjzCMpUqbMZ2AgKy/z25mY9B6shGSNcXcjQar9n5doM0KYW1W8fcFv2jZBuMw==",
+      "sha256": "d7f1ed45223249d1a3de5991b3b678abb9042aa59665d79426c911329188655e"
+    },
+    {
+      "archive": "npm/base-ui-react/select/item-text/SelectItemText.js",
+      "package": "@base-ui/react@1.6.0",
+      "member": "package/select/item-text/SelectItemText.js",
+      "tarball": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "integrity": "sha512-/jzjTWJYXhRFO45Bev9lc3cHbmjzCMpUqbMZ2AgKy/z25mY9B6shGSNcXcjQar9n5doM0KYW1W8fcFv2jZBuMw==",
+      "sha256": "759e600b66edbe9bd666b6bfe158e5004182c976b6ffa4cf0bb5f06cf8a61671"
+    },
+    {
+      "archive": "npm/base-ui-react/select/item-indicator/SelectItemIndicator.js",
+      "package": "@base-ui/react@1.6.0",
+      "member": "package/select/item-indicator/SelectItemIndicator.js",
+      "tarball": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "integrity": "sha512-/jzjTWJYXhRFO45Bev9lc3cHbmjzCMpUqbMZ2AgKy/z25mY9B6shGSNcXcjQar9n5doM0KYW1W8fcFv2jZBuMw==",
+      "sha256": "f7f4d9e3a3483ceee4f11c5d920f0ff8dc9f8d0f6df24a1fbb4b899871c29b87"
+    },
+    {
+      "archive": "npm/base-ui-react/select/scroll-arrow/SelectScrollArrow.js",
+      "package": "@base-ui/react@1.6.0",
+      "member": "package/select/scroll-arrow/SelectScrollArrow.js",
+      "tarball": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "integrity": "sha512-/jzjTWJYXhRFO45Bev9lc3cHbmjzCMpUqbMZ2AgKy/z25mY9B6shGSNcXcjQar9n5doM0KYW1W8fcFv2jZBuMw==",
+      "sha256": "6d0bdbe71fe16eb77102160a6e2bd4fe54214e13cb5441bfbaf1dda029135090"
+    },
+    {
+      "archive": "npm/base-ui-react/select/scroll-up-arrow/SelectScrollUpArrow.js",
+      "package": "@base-ui/react@1.6.0",
+      "member": "package/select/scroll-up-arrow/SelectScrollUpArrow.js",
+      "tarball": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "integrity": "sha512-/jzjTWJYXhRFO45Bev9lc3cHbmjzCMpUqbMZ2AgKy/z25mY9B6shGSNcXcjQar9n5doM0KYW1W8fcFv2jZBuMw==",
+      "sha256": "1621917524878cb736e464e8f85955916e7a7f590c81089bd9a604d7da6674f8"
+    },
+    {
+      "archive": "npm/base-ui-react/select/scroll-down-arrow/SelectScrollDownArrow.js",
+      "package": "@base-ui/react@1.6.0",
+      "member": "package/select/scroll-down-arrow/SelectScrollDownArrow.js",
+      "tarball": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "integrity": "sha512-/jzjTWJYXhRFO45Bev9lc3cHbmjzCMpUqbMZ2AgKy/z25mY9B6shGSNcXcjQar9n5doM0KYW1W8fcFv2jZBuMw==",
+      "sha256": "fc8364dd473db3399317a57606570636cd9b602f50156bba3a51363b2724e8a7"
+    },
+    {
+      "archive": "npm/base-ui-react/select/store.js",
+      "package": "@base-ui/react@1.6.0",
+      "member": "package/select/store.js",
+      "tarball": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "integrity": "sha512-/jzjTWJYXhRFO45Bev9lc3cHbmjzCMpUqbMZ2AgKy/z25mY9B6shGSNcXcjQar9n5doM0KYW1W8fcFv2jZBuMw==",
+      "sha256": "e3e97663226383d9204ea01d74ae6d10e3e56c6af52495685c8edd0c8574b08f"
+    },
+    {
+      "archive": "npm/base-ui-react/floating-ui-react/hooks/useListNavigation.js",
+      "package": "@base-ui/react@1.6.0",
+      "member": "package/floating-ui-react/hooks/useListNavigation.js",
+      "tarball": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "integrity": "sha512-/jzjTWJYXhRFO45Bev9lc3cHbmjzCMpUqbMZ2AgKy/z25mY9B6shGSNcXcjQar9n5doM0KYW1W8fcFv2jZBuMw==",
+      "sha256": "7058d01d9356b4fbf1c48e369e1a1a9b3239e72a6e6abd07ca7e4a82abaa80c6"
+    },
+    {
+      "archive": "npm/base-ui-react/floating-ui-react/hooks/useTypeahead.js",
+      "package": "@base-ui/react@1.6.0",
+      "member": "package/floating-ui-react/hooks/useTypeahead.js",
+      "tarball": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "integrity": "sha512-/jzjTWJYXhRFO45Bev9lc3cHbmjzCMpUqbMZ2AgKy/z25mY9B6shGSNcXcjQar9n5doM0KYW1W8fcFv2jZBuMw==",
+      "sha256": "c1e0d60396d785265a5f43e3867529f61335451f8a7264ab0b3e232bb3843afa"
+    },
+    {
+      "archive": "npm/base-ui-react/floating-ui-react/utils/composite.js",
+      "package": "@base-ui/react@1.6.0",
+      "member": "package/floating-ui-react/utils/composite.js",
+      "tarball": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "integrity": "sha512-/jzjTWJYXhRFO45Bev9lc3cHbmjzCMpUqbMZ2AgKy/z25mY9B6shGSNcXcjQar9n5doM0KYW1W8fcFv2jZBuMw==",
+      "sha256": "ebc8cccea13907d7862b3a72f00335b7e1ec478ca2db010a03b8e2e54e7f5881"
+    },
+    {
+      "archive": "npm/base-ui-react/internals/itemEquality.js",
+      "package": "@base-ui/react@1.6.0",
+      "member": "package/internals/itemEquality.js",
+      "tarball": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "integrity": "sha512-/jzjTWJYXhRFO45Bev9lc3cHbmjzCMpUqbMZ2AgKy/z25mY9B6shGSNcXcjQar9n5doM0KYW1W8fcFv2jZBuMw==",
+      "sha256": "b72865c12c7bcab05366a91ca0fe6a8f6f2ef849d2025db7bf6854591a5760e6"
+    },
+    {
+      "archive": "npm/base-ui-react/internals/resolveValueLabel.js",
+      "package": "@base-ui/react@1.6.0",
+      "member": "package/internals/resolveValueLabel.js",
+      "tarball": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "integrity": "sha512-/jzjTWJYXhRFO45Bev9lc3cHbmjzCMpUqbMZ2AgKy/z25mY9B6shGSNcXcjQar9n5doM0KYW1W8fcFv2jZBuMw==",
+      "sha256": "59ced631f9c0b2b21f0c1957a59f5ead0f4fcb669b253cbb6950be7a3da56721"
+    },
+    {
+      "archive": "npm/base-ui-react/utils/useAnchorPositioning.js",
+      "package": "@base-ui/react@1.6.0",
+      "member": "package/utils/useAnchorPositioning.js",
+      "tarball": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "integrity": "sha512-/jzjTWJYXhRFO45Bev9lc3cHbmjzCMpUqbMZ2AgKy/z25mY9B6shGSNcXcjQar9n5doM0KYW1W8fcFv2jZBuMw==",
+      "sha256": "44189e8779c0915f46ac5f6edb6dc91e3d5a5e0810159c2ed290adb9baf836c3"
+    },
+    {
+      "archive": "npm/base-ui-react/LICENSE",
+      "package": "@base-ui/react@1.6.0",
+      "member": "package/LICENSE",
+      "tarball": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "integrity": "sha512-/jzjTWJYXhRFO45Bev9lc3cHbmjzCMpUqbMZ2AgKy/z25mY9B6shGSNcXcjQar9n5doM0KYW1W8fcFv2jZBuMw==",
+      "sha256": "07fc1b39d69d14bc7d40482a628f47226258eb01265db68ae684944b916beb2a"
+    },
+    {
+      "archive": "npm/base-ui-react/package.json",
+      "package": "@base-ui/react@1.6.0",
+      "member": "package/package.json",
+      "tarball": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "integrity": "sha512-/jzjTWJYXhRFO45Bev9lc3cHbmjzCMpUqbMZ2AgKy/z25mY9B6shGSNcXcjQar9n5doM0KYW1W8fcFv2jZBuMw==",
+      "sha256": "20cecb1f4eb5dd608eb62955486adc0bae6e219394ea0e04ff2b7c349e99eed0"
+    }
+  ]
+}

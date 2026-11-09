@@ -354,12 +354,23 @@ func TestTableStaticSelectPopupWorksOutsideItsRowAndKeepsFocus(t *testing.T) {
 			control.Select(child, &assignee, control.SelectProps{Label: "Assignee", Size: control.Small, Options: []control.Option{{Value: "sarah", Label: "Sarah Chen"}, {Value: "marcus", Label: "Marcus Rodriguez"}}}).Width(160)
 		}}))))
 	}, 480, 300, ui.TesterOptions{Preferences: ui.Preferences{ReduceMotion: true}})
-	trigger := tableAccess(t, r, ui.RolePopUpButton, "Assignee")
+	trigger := tableAccess(t, r, ui.RoleComboBox, "Assignee")
+	if trigger.HasPopup != ui.PopupListBox || trigger.AutoComplete != ui.AutoCompleteNone {
+		t.Fatalf("Select is not a no-editor combobox/listbox trigger: %+v", trigger)
+	}
 	if trigger.Bounds.W != 160 || trigger.Bounds.H != 32 {
 		t.Fatalf("source select dimensions=%v", trigger.Bounds)
 	}
 	if err := r.Click("Assignee"); err != nil {
 		t.Fatal(err)
+	}
+	if _, ok := r.AccessByRole(ui.RoleListBox, ""); !ok {
+		t.Fatal("missing native listbox")
+	}
+	for _, item := range r.AccessAll() {
+		if item.Role == ui.RoleTextField {
+			t.Fatal("no-editor Select introduced an editable field")
+		}
 	}
 	option := tableAccess(t, r, ui.RoleOption, "Marcus Rodriguez")
 	if option.Bounds.Y <= trigger.Bounds.Y+trigger.Bounds.H {

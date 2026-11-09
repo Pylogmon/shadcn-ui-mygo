@@ -1,0 +1,292 @@
+{
+  "kind": "derived native recipe mapping, not upstream text",
+  "sourceCommit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "collectionRecipes": 15,
+  "standaloneRecipes": 7,
+  "entries": [
+    {
+      "sourcePath": "apps/v4/registry/bases/base/examples/select-example.tsx",
+      "gitBlob": "efb5741f2eee4cf2f78cc1558017c42587735663",
+      "sha256": "5571f7345411108bbaa1030ef502914b3e1e2cba3136ffac9ffaac73b8f967a7",
+      "definition": "SelectBasic",
+      "line": 67,
+      "flow": "workbench/basic",
+      "exercise": "Choose Apple, reopen and choose the selectable null item.",
+      "verification": [
+        "TestSelectWorkbenchBasicNullGroupsMultipleAndForm"
+      ]
+    },
+    {
+      "sourcePath": "apps/v4/registry/bases/base/examples/select-example.tsx",
+      "gitBlob": "efb5741f2eee4cf2f78cc1558017c42587735663",
+      "sha256": "5571f7345411108bbaa1030ef502914b3e1e2cba3136ffac9ffaac73b8f967a7",
+      "definition": "SelectSides",
+      "line": 96,
+      "flow": "workbench/side",
+      "exercise": "Turn Align item off; choose six physical/logical sides and enable RTL.",
+      "verification": [
+        "TestSelectWorkbenchRichPlanLargeListAndConfiguration",
+        "TestSelectSourceSidesLogicalAlignmentAndItemAlignment"
+      ]
+    },
+    {
+      "sourcePath": "apps/v4/registry/bases/base/examples/select-example.tsx",
+      "gitBlob": "efb5741f2eee4cf2f78cc1558017c42587735663",
+      "sha256": "5571f7345411108bbaa1030ef502914b3e1e2cba3136ffac9ffaac73b8f967a7",
+      "definition": "SelectWithIcons",
+      "line": 136,
+      "flow": "workbench/icons",
+      "exercise": "Enable Icons; open and choose a richly rendered item.",
+      "verification": [
+        "TestSelectWorkbenchRichPlanLargeListAndConfiguration"
+      ]
+    },
+    {
+      "sourcePath": "apps/v4/registry/bases/base/examples/select-example.tsx",
+      "gitBlob": "efb5741f2eee4cf2f78cc1558017c42587735663",
+      "sha256": "5571f7345411108bbaa1030ef502914b3e1e2cba3136ffac9ffaac73b8f967a7",
+      "definition": "SelectWithGroups",
+      "line": 235,
+      "flow": "workbench/groups",
+      "exercise": "Choose the Groups recipe, inspect Fruits/Vegetables and select Carrot.",
+      "verification": [
+        "TestSelectWorkbenchBasicNullGroupsMultipleAndForm"
+      ]
+    },
+    {
+      "sourcePath": "apps/v4/registry/bases/base/examples/select-example.tsx",
+      "gitBlob": "efb5741f2eee4cf2f78cc1558017c42587735663",
+      "sha256": "5571f7345411108bbaa1030ef502914b3e1e2cba3136ffac9ffaac73b8f967a7",
+      "definition": "SelectLargeList",
+      "line": 281,
+      "flow": "workbench/large",
+      "exercise": "Choose Large list; End reveals Item 99 and Enter commits it. Hover arrows scroll by measured rows.",
+      "verification": [
+        "TestSelectWorkbenchRichPlanLargeListAndConfiguration",
+        "TestSelectSourceLargeListRevealAndHoverArrows",
+        "TestSelectSourceAlignedLongListExpandsAndPreservesNativeReveal"
+      ]
+    },
+    {
+      "sourcePath": "apps/v4/registry/bases/base/examples/select-example.tsx",
+      "gitBlob": "efb5741f2eee4cf2f78cc1558017c42587735663",
+      "sha256": "5571f7345411108bbaa1030ef502914b3e1e2cba3136ffac9ffaac73b8f967a7",
+      "definition": "SelectMultiple",
+      "line": 643,
+      "flow": "workbench/multiple",
+      "exercise": "Choose Multiple, select Apple and Banana without closing, then submit both.",
+      "verification": [
+        "TestSelectWorkbenchBasicNullGroupsMultipleAndForm"
+      ]
+    },
+    {
+      "sourcePath": "apps/v4/registry/bases/base/examples/select-example.tsx",
+      "gitBlob": "efb5741f2eee4cf2f78cc1558017c42587735663",
+      "sha256": "5571f7345411108bbaa1030ef502914b3e1e2cba3136ffac9ffaac73b8f967a7",
+      "definition": "SelectSizes",
+      "line": 309,
+      "flow": "workbench/size",
+      "exercise": "Toggle Small trigger and interact with the 32-DIP trigger.",
+      "verification": [
+        "TestSelectWorkbenchRichPlanLargeListAndConfiguration"
+      ]
+    },
+    {
+      "sourcePath": "apps/v4/registry/bases/base/examples/select-example.tsx",
+      "gitBlob": "efb5741f2eee4cf2f78cc1558017c42587735663",
+      "sha256": "5571f7345411108bbaa1030ef502914b3e1e2cba3136ffac9ffaac73b8f967a7",
+      "definition": "SelectPlan",
+      "line": 604,
+      "flow": "workbench/plan",
+      "exercise": "Choose Subscription plan; inspect app-owned plan description in both value and item; choose Enterprise.",
+      "verification": [
+        "TestSelectWorkbenchRichPlanLargeListAndConfiguration"
+      ]
+    },
+    {
+      "sourcePath": "apps/v4/registry/bases/base/examples/select-example.tsx",
+      "gitBlob": "efb5741f2eee4cf2f78cc1558017c42587735663",
+      "sha256": "5571f7345411108bbaa1030ef502914b3e1e2cba3136ffac9ffaac73b8f967a7",
+      "definition": "SelectWithButton",
+      "line": 352,
+      "flow": "workbench/form",
+      "exercise": "Choose a value and use the adjacent Submit selection button.",
+      "verification": [
+        "TestSelectWorkbenchBasicNullGroupsMultipleAndForm"
+      ]
+    },
+    {
+      "sourcePath": "apps/v4/registry/bases/base/examples/select-example.tsx",
+      "gitBlob": "efb5741f2eee4cf2f78cc1558017c42587735663",
+      "sha256": "5571f7345411108bbaa1030ef502914b3e1e2cba3136ffac9ffaac73b8f967a7",
+      "definition": "SelectItemAligned",
+      "line": 403,
+      "flow": "workbench/aligned",
+      "exercise": "Choose Aligned disabled item, open at Banana; Grapes is disabled. Toggle Align item.",
+      "verification": [
+        "TestSelectWorkbenchRichPlanLargeListAndConfiguration",
+        "TestSelectSourceClosedTypeaheadDisabledAndComposition",
+        "TestSelectSourceSidesLogicalAlignmentAndItemAlignment"
+      ]
+    },
+    {
+      "sourcePath": "apps/v4/registry/bases/base/examples/select-example.tsx",
+      "gitBlob": "efb5741f2eee4cf2f78cc1558017c42587735663",
+      "sha256": "5571f7345411108bbaa1030ef502914b3e1e2cba3136ffac9ffaac73b8f967a7",
+      "definition": "SelectWithField",
+      "line": 436,
+      "flow": "workbench/field",
+      "exercise": "Use the visible Your selection label, description and real native select target.",
+      "verification": [
+        "TestSelectWorkbenchBasicNullGroupsMultipleAndForm",
+        "TestSelectWorkbenchRichPlanLargeListAndConfiguration"
+      ]
+    },
+    {
+      "sourcePath": "apps/v4/registry/bases/base/examples/select-example.tsx",
+      "gitBlob": "efb5741f2eee4cf2f78cc1558017c42587735663",
+      "sha256": "5571f7345411108bbaa1030ef502914b3e1e2cba3136ffac9ffaac73b8f967a7",
+      "definition": "SelectInvalid",
+      "line": 471,
+      "flow": "workbench/invalid",
+      "exercise": "Enable Invalid; inspect actual invalid trigger and Field error.",
+      "verification": [
+        "TestSelectWorkbenchRichPlanLargeListAndConfiguration"
+      ]
+    },
+    {
+      "sourcePath": "apps/v4/registry/bases/base/examples/select-example.tsx",
+      "gitBlob": "efb5741f2eee4cf2f78cc1558017c42587735663",
+      "sha256": "5571f7345411108bbaa1030ef502914b3e1e2cba3136ffac9ffaac73b8f967a7",
+      "definition": "SelectInline",
+      "line": 520,
+      "flow": "workbench/inline",
+      "exercise": "Enable Inline field to put the label beside the editor row.",
+      "verification": [
+        "TestSelectWorkbenchRichPlanLargeListAndConfiguration"
+      ]
+    },
+    {
+      "sourcePath": "apps/v4/registry/bases/base/examples/select-example.tsx",
+      "gitBlob": "efb5741f2eee4cf2f78cc1558017c42587735663",
+      "sha256": "5571f7345411108bbaa1030ef502914b3e1e2cba3136ffac9ffaac73b8f967a7",
+      "definition": "SelectDisabled",
+      "line": 556,
+      "flow": "workbench/disabled",
+      "exercise": "Enable Disabled; actual native trigger reports unavailable.",
+      "verification": [
+        "TestSelectWorkbenchRichPlanLargeListAndConfiguration"
+      ]
+    },
+    {
+      "sourcePath": "apps/v4/registry/bases/base/examples/select-example.tsx",
+      "gitBlob": "efb5741f2eee4cf2f78cc1558017c42587735663",
+      "sha256": "5571f7345411108bbaa1030ef502914b3e1e2cba3136ffac9ffaac73b8f967a7",
+      "definition": "SelectInDialog",
+      "line": 683,
+      "flow": "dialog",
+      "exercise": "Open Choose in dialog, select Pineapple with End/Enter and close Done.",
+      "verification": [
+        "TestSelectCompositionManualDialogAndSystemBoundary"
+      ]
+    },
+    {
+      "sourcePath": "apps/v4/examples/base/select-demo.tsx",
+      "gitBlob": "dfada41ea4ede3925e976931e4966ecbeb3e78d2",
+      "sha256": "cc8c7490bf2ce6579bda00d18793e96053dc23e1b8cd393a005068b87a8dc8db",
+      "definition": "SelectDemo",
+      "line": 20,
+      "flow": "workbench/basic",
+      "exercise": "Choose Apple, reopen and choose the selectable null item.",
+      "verification": [
+        "TestSelectWorkbenchBasicNullGroupsMultipleAndForm"
+      ]
+    },
+    {
+      "sourcePath": "apps/v4/examples/base/select-align-item.tsx",
+      "gitBlob": "1b57cee69c5503d449f09e4b2d3476401630f313",
+      "sha256": "15fe8e38434095cfde0422d563ba27d739000e6f67b7ebe6ba8c0739fa1c4b17",
+      "definition": "SelectAlignItem",
+      "line": 32,
+      "flow": "workbench/aligned",
+      "exercise": "Choose Aligned disabled item, open at Banana; Grapes is disabled. Toggle Align item.",
+      "verification": [
+        "TestSelectWorkbenchRichPlanLargeListAndConfiguration",
+        "TestSelectSourceClosedTypeaheadDisabledAndComposition",
+        "TestSelectSourceSidesLogicalAlignmentAndItemAlignment"
+      ]
+    },
+    {
+      "sourcePath": "apps/v4/examples/base/select-groups.tsx",
+      "gitBlob": "7d9b5aadee0ba8a5f40fc34e9a8b94fcb908063c",
+      "sha256": "235c78c123cd35d3ec435db4db9d67004e3e72b9327ffde14d88cccefe447ecf",
+      "definition": "SelectGroups",
+      "line": 12,
+      "flow": "workbench/groups",
+      "exercise": "Choose the Groups recipe, inspect Fruits/Vegetables and select Carrot.",
+      "verification": [
+        "TestSelectWorkbenchBasicNullGroupsMultipleAndForm"
+      ]
+    },
+    {
+      "sourcePath": "apps/v4/examples/base/select-scrollable.tsx",
+      "gitBlob": "2cd12fcf0a58158c0572ff902af3d5a38598e9f5",
+      "sha256": "1f65a9aabcf3863737b528069facc7518c1d5e429f833b501d03370c03903f75",
+      "definition": "SelectScrollable",
+      "line": 62,
+      "flow": "workbench/large",
+      "exercise": "Choose Large list; End reveals Item 99 and Enter commits it. Hover arrows scroll by measured rows.",
+      "verification": [
+        "TestSelectWorkbenchRichPlanLargeListAndConfiguration",
+        "TestSelectSourceLargeListRevealAndHoverArrows",
+        "TestSelectSourceAlignedLongListExpandsAndPreservesNativeReveal"
+      ]
+    },
+    {
+      "sourcePath": "apps/v4/examples/base/select-disabled.tsx",
+      "gitBlob": "bd0d0e0bad64d59b378c83888d1372d4125539b6",
+      "sha256": "c1d45a73f9fc557488d8a0afe2bb0e223e27eafd343eae914bd9e6c7ef302b3a",
+      "definition": "SelectDisabled",
+      "line": 10,
+      "flow": "workbench/disabled",
+      "exercise": "Enable Disabled; actual native trigger reports unavailable.",
+      "verification": [
+        "TestSelectWorkbenchRichPlanLargeListAndConfiguration"
+      ]
+    },
+    {
+      "sourcePath": "apps/v4/examples/base/select-invalid.tsx",
+      "gitBlob": "0488de66cb6a6ee92feebfb2167392dec023f51a",
+      "sha256": "122c65b56c8d31749dd7b3c009d8b10fb571163d6e9ec6dc33fc89a59a37912e",
+      "definition": "SelectInvalid",
+      "line": 18,
+      "flow": "workbench/invalid",
+      "exercise": "Enable Invalid; inspect actual invalid trigger and Field error.",
+      "verification": [
+        "TestSelectWorkbenchRichPlanLargeListAndConfiguration"
+      ]
+    },
+    {
+      "sourcePath": "apps/v4/examples/base/select-rtl.tsx",
+      "gitBlob": "0f3041fe446f09550239e2a279ee6d82bb5f3d13",
+      "sha256": "9f077d193a7acbb1bc47309c5c1cde1877c72e5380c604c30937a34fed282e27",
+      "definition": "SelectRtl",
+      "line": 72,
+      "flow": "workbench/side",
+      "exercise": "Turn Align item off; choose six physical/logical sides and enable RTL.",
+      "verification": [
+        "TestSelectWorkbenchRichPlanLargeListAndConfiguration",
+        "TestSelectSourceSidesLogicalAlignmentAndItemAlignment"
+      ]
+    }
+  ],
+  "nativeAdaptations": [
+    "String identities map the fixed app-owned Plan objects; renderers receive current values and option metadata.",
+    "UnselectedValue explicitly maps the fixed null item, preserving ordinary empty-string identities.",
+    "MyGo native listbox focus/Tab order and retained Overlay replace DOM FocusManager/portals.",
+    "The native one-DIP border participates in layout, unlike the source outer CSS ring; measured available content includes both edges.",
+    "InputText supports layout/IME committed text; the source JS typeahead is key-event based. Actual platform IME candidate windows/cancellation are not claimed.",
+    "Styled SelectRoot stays in the current window; existing desktop.Select remains an independent-window convenience and NativeSelect keeps its OS menu.",
+    "No generic Base form validation, arbitrary item object equality, browser autofill engine, virtualized grid or unused primitive options are claimed."
+  ]
+}

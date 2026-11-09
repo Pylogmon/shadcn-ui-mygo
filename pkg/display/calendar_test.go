@@ -197,14 +197,20 @@ func TestCalendarDropdownCaptionDoesNotSelectDates(t *testing.T) {
 	tt := displayTester(func(c *ui.Context) {
 		CalendarWith(c, &value, CalendarProps{Month: &month, StartMonth: civil(2025, 1, 1), EndMonth: civil(2027, 12, 1), Caption: CalendarCaptionDropdown})
 	})
-	clickAccessible(t, tt, ui.RolePopUpButton, "Month")
+	for _, label := range []string{"Month", "Year"} {
+		trigger, ok := tt.AccessByRole(ui.RoleComboBox, label)
+		if !ok || trigger.HasPopup != ui.PopupListBox || trigger.AutoComplete != ui.AutoCompleteNone {
+			t.Fatalf("caption is not a no-editor combobox/listbox trigger: %q %+v", label, trigger)
+		}
+	}
+	clickAccessible(t, tt, ui.RoleComboBox, "Month")
 	tt.Key(0, ui.KeyEnd)
 	tt.Key(0, ui.KeyEnter)
 	tt.Frame()
 	if month.Month() != time.December || value.Month() != time.November {
 		t.Fatalf("month dropdown changed selection/wrong month: date=%v month=%v", value, month)
 	}
-	clickAccessible(t, tt, ui.RolePopUpButton, "Year")
+	clickAccessible(t, tt, ui.RoleComboBox, "Year")
 	tt.Key(0, ui.KeyHome)
 	tt.Key(0, ui.KeyEnter)
 	tt.Frame()

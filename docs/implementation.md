@@ -130,7 +130,9 @@
 
 | 5.CR | Tooltip富内容、实际侧向箭头与八例应用 | 已提交 `22f766e`；独立子Context组合、明确描述、Kbd/段落与revision、六侧/RTL和原生几何箭头，保留系统主题对与旧字符串API |
 
-| 5.CS | Tabs独立组合与13例应用 | 本阶段提交；Root/List/Trigger/Content、同栏输入/按钮/菜单与外置面板，保留旧Tabs，真实键盘/AX/RTL与显式icon名称 |
+| 5.CS | Tabs独立组合与13例应用 | 已提交 `3e9c7c3`；Root/List/Trigger/Content、同栏输入/按钮/菜单与外置面板，保留旧Tabs，真实键盘/AX/RTL与显式icon名称 |
+
+| 5.CT | Select独立组合、无编辑器多选与22例映射 | 本阶段提交；复用旧便捷入口，六侧/RTL、item alignment、100项滚动/箭头、富内容及当前表单；修复临时绑定身份兼容与消费角色定位 |
 
 用户已明确允许原生平台适配：Popover、menu、下拉菜单可以使用 MyGo 的系统菜单与独立 Flyout，超出父窗口范围；无需逐像素照搬网页浮层。Gallery 以 [shadcn/create](https://ui.shadcn.com/create) 的配置与实时预览流程为参考。完整组件功能、主题、动画范围保持不变。
 

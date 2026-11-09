@@ -1,0 +1,13 @@
+# Select composition
+
+Run `go run ./examples/select-composition`. `-dark`, `-open` and `-snapshot /path/select.png` also work. The three operation areas cover the fixed 15 collection recipes and seven standalone examples through a shared workbench, independent manual slots, and dialog/system-menu examples. `source-coverage.json` records original blob/hash/definition lines and exact interactive verification names; it is a derived mapping.
+
+The workbench changes basic/groups/100-item/multiple/rich-plan/disabled-item data, all six sides, alignment mode, size, icons, inline Field layout, disabled/invalid state and menu color. Its submission button reads the same caller-owned selection state. The manual collection deliberately supplies no Root Options; its Item/Group/Label slots register native options and final accessibility positions in the same build.
+
+`SelectRoot` owns no visual wrapper. Its mount releases Local state when removed. `SelectState` contains values and open only; native runtime state keeps value/geometry/Handle snapshots, and the build supplies current callbacks. Every public slot rejects an expired scope. Use `List` inside `Content`, then `Group`/`Item`; `Label` belongs inside `Group`. `Content` deliberately does not silently recreate those slots. `SelectWith` and the original `Select`/new `MultiSelect` share this core; original `NativeSelect` remains an OS single-selection menu adapter.
+
+`SelectRootProps.UnselectedValue` explicitly maps a selectable empty/placeholder item to no value. Without it, an empty string is a valid identity. Keep application objects outside the widget and use stable string identities plus `ValueContent`/`ItemContent` for the fixed rich Plan recipe. Application-controlled form submission may call `Scope.FormValues` during the current build or read `SelectState`; this does not create a browser form/validation/autofill engine.
+
+Default Content aligns selected text over the actual value and uses native bounded scrolling with row reveal and hover arrows. This profile has no content animation, matching the fixed wrapper. `AlignItemWithTrigger: &falseValue` enables ordinary side/align/offset placement, logical RTL and the shared fixed 100ms Base/Vega retained inert motion. Translucent menu profiles inherit the committed genuine scene backdrop and no-animation policy. Independent-window desktop adapters retain their own API; the new compound slots are current-window native controls.
+
+Native input, focus, scrolling and pixels are exercised by Go tests. Real screen readers, operating-system IME candidate windows and Cocoa cancellation, Windows/Linux runtime and multi-display acceptance remain platform validation. No generic unused Base configuration universe is presented as implemented.
