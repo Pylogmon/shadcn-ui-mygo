@@ -66,6 +66,12 @@ type State struct {
 	codeLanguage, codeCopied, layoutDraft                                          string
 	codeExample                                                                    display.CodeBlockState
 	articleScroll                                                                  ui.ScrollState
+	toastPreview                                                                   overlay.ToasterState
+	toastKind, toastPosition, toastUploadID, toastResult                           string
+	toastRich, toastClose, toastExpand, toastKeepOpen                              bool
+	toastShow, toastStack, toastStart, toastComplete                               ui.Handle
+	toastPageReturn                                                                ui.Handle
+	toastReturnFocus                                                               *ui.Handle
 	menuStates                                                                     map[string]*creatorMenu
 	pendingMenuAction                                                              string
 }
@@ -347,6 +353,7 @@ func (s *State) preview(c *ui.Context, t *theme.Tokens) {
 		})
 		s.previewIndex = max(0, min(s.previewIndex, len(pages)-1))
 		s.Page = pages[s.previewIndex].Key
+		triggers[s.previewIndex].Bind(&s.toastPageReturn)
 		width, _ := c.Size()
 		if s.Page != s.lastPreviewPage || width != s.lastPreviewWidth {
 			triggers[s.previewIndex].ScrollIntoView()
@@ -428,7 +435,7 @@ func (s *State) previewDialogs(c *ui.Context) {
 		}
 	})
 	overlay.Sheet(c, &s.Sheet, overlay.SheetProps{Title: "Settings", Description: "Your workspace preferences", Side: overlay.Right}, func() { control.Switch(c, &s.Notifications, control.SwitchProps{Label: "Notifications"}) })
-	overlay.Toaster(c)
+	s.notificationViewport(c)
 }
 
 func (s *State) inspector(c *ui.Context, anchor ui.Element, t *theme.Tokens) {

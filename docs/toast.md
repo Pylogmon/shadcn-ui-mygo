@@ -30,6 +30,8 @@ loading 通知持续到应用完成或显式关闭；可用同一ID更新为 suc
 
 `Expand` 控制常驻展开布局，不暂停寿命。用户交互展开、悬停、按住通知和真实 `Context.WindowHidden()` 暂停计时；窗口仅失焦时继续计时。鼠标离开结束交互展开后恢复计时，即使动作按钮仍有焦点，行为对照固定Sonner。默认Alt+T进入通知，Escape收起堆叠；自定义Hotkey同时发布平台原生KeyShortcuts语义。需要精确回到原生触发器时传入 `ReturnFocus *ui.Handle`。
 
+应用切换页面时，ReturnFocus应指向当前仍挂载且可用的控件。MyGo的Handle.Focus会等待尚未出现的目标，持续传递旧页面Handle可能在返回该页时重放请求；Gallery使用当前预览标签作为跨页fallback，完成按钮禁用后改用Start upload。
+
 Action通过ToastOptions.Action接收可调用PreventDefault的事件。Cancel遵循Dismissible，执行后关闭；程序调用Dismiss可以关闭持久或不可手动关闭的通知。OnDismiss、OnAutoClose与兼容的ui.Toast.OnClose区分手动关闭、到期和所有关闭原因。ToastOptions还可覆盖图标、位置、关闭按钮、状态色及内容。
 
 普通Content替换标题/描述列；`Unstyled: true`时Content接管整个通知正文，不加默认背景、边框、内边距、图标或内部按钮。应用可组合真实原生编辑器、媒体与动作，自己调用Dismiss；队列身份、布局、语义、计时和手势仍由Toaster管理。卸载并重新挂载viewport后，存活通知按固定源开始新寿命；已交付关闭的项不重放，未交付的显式关闭仍执行一次。

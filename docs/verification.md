@@ -184,3 +184,9 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 - Toast正式95项检查与交叉审查通过。覆盖默认无close、普通error中性色/富色明暗像素、Vega比例圆角、六物理位置/RTL/mobile、自定义visible数量/真实测量高度、窗口隐藏暂停与失焦区别、loading更新/原生控件身份、动作阻止关闭/取消/回调快照、ID碰撞和关闭重开、更新朗读、闭包清理、viewport卸载重挂及挂起关闭。自定义Hotkey使用实际原生KeyShortcuts并真正进入通知；Unstyled正文的编辑器、动作和更新焦点/选区检查通过。
 - Toast滑动包含51项正式检查：真实native捕获越界、按钮/选中文字/右键排除、六位置×LTR/RTL、45DIP及0.11DIP/ms边界、轴锁/反向阻尼、loading/不可手动关闭、取消/失焦、更新/卸载、减少动画、400ms归位与200ms退出。普通退出先复现直接透明后改为按源400ms曲线绘制前200ms，100ms仍可见且移除后无ghost；手势100ms无错误纵移叠加。原生最小1ms定时器唤醒窗口明确保留。
 - Toast独立阶段：已提交HEAD仅覆盖Toast源/正式测试、图标/参考归档和许可包脚本后，overlay/Gallery共236项检查通过；没有提前包含Gallery通知示例。Root另2项临时混合队列顺序/隐藏编辑器焦点探针通过并清理。当前全工作区929项检查、13个包（9个有测试、4个无测试）通过，vet/diff与macOS、Linux/Windows构建通过；完整原生平台/触控/辅助技术与视觉矩阵继续验收。
+
+- Gallery通知集成：全包84项通过，新增14项实际联动检查。类型/六位置到达真实窗口坐标，动作PreventDefault保留通知且取消后移除，loading跨页/10秒仍在、完成更新同一ID并恢复到期，堆叠/清除/配置保留，以及Alt+T/Tab/Escape回到实际可用触发器均通过。Complete upload执行后禁用自身，因此返回目标明确选为可用Start upload，避免把焦点送入禁用控件；嵌套preview作用域下右/下边距仍精确24DIP。
+- Gallery通知明暗渲染：生成并查看 `artifacts/gallery-notifications.png`、`gallery-notifications-dark.png`，控制项/动作/中性色success图标与关闭按钮可读，无重叠。临时截图导出测试已删除，图片不作为全矩阵验收。
+- Gallery通知macOS实窗：UI退出旧进程并启动新bundle，已观察Notifications页、持续loading通知；Complete upload后原row身份原位变为Upload complete，按钮禁用且状态提示更新。Alt+T进入通知原生list，Escape实际返回Start upload。勾选Keep open后Review触发Notification action selected并保留通知，Later触发Notification postponed并移除通知。实窗未验证本阶段的指针swipe、触控和所有位置；这些继续保留为平台验收工作。
+- Gallery最终交叉审查：先以完整State.View复现跨页后Escape请求已卸载旧触发器、Clear仅清新队列两条红测；改为当前activeTab绑定独立Handle作为跨页fallback，并同时清理MyGo兼容队列后转绿。测试继续验证切回Overlays没有旧Start抢焦点、下一Tab到Edit profile，以及实际Show toast与Start upload均被清除。独立只读14项复核通过。
+- Gallery修正版macOS补验：重新启动最终bundle，Start upload后切Text & layout，Alt+T/Tab/Escape实际返回当前Text & layout标签，通知仍在。返回Overlays后叠加Show toast与loading，Clear实际移除两组文字并禁用Complete。切回页后下一Tab的AX焦点没有明确显示，未把这一步记为实窗通过；完整原生键盘/AT矩阵仍保留。最终全量931项、13个包、vet/diff及三平台构建通过。

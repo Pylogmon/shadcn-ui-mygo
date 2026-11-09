@@ -198,6 +198,7 @@ func (s *State) overlays(c *ui.Context) {
 			}
 		})
 	})
+	s.notificationsPreview(c)
 	display.Card(c, func() {
 		s.cardHeader(c, "Command palette", "Search by name. Select with the keyboard.")
 		overlay.Command(c, &s.Query, overlay.CommandProps{Items: []overlay.CommandItem{{Value: "calendar", Label: "Calendar", Group: "Suggestions"}, {Value: "search", Label: "Search", Group: "Suggestions"}, {Value: "settings", Label: "Settings", Group: "Workspace"}}})
