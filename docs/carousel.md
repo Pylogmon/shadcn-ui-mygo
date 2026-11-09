@@ -63,11 +63,11 @@ Content内必须按索引顺序构建Count个Item，每项一次。
 编辑器内的方向键继续编辑文字，Carousel根或控件取得焦点时才导航；
 垂直方向使用Up/Down，水平RTL反转左右键。这是对网页capture处理的原生适配。
 
-当前组合入口沿用原生分页的250ms EaseOut与拖动阈值，`Duration`、`DragThreshold`是该兼容动画参数，
-不是Embla同名选项；负Duration、减少动态效果和布局重配立即收敛。
-窗口隐藏期间停止调度，恢复后收敛；若隐藏状态下仍执行构建，则立即跳至目标。
-固定源的物理运动、速度投影、Autoplay及插件接口仍需后续阶段实现。
-独立窗口、真实触摸/平台读屏和完整视觉矩阵也尚未验收。
+未传Controller和Options的组合入口保留原生分页的250ms EaseOut与兼容拖动阈值；
+ContainerProps上的正Duration、DragThreshold属于这一兼容路径，不是Embla同名数值选项。
+控制器/Options路径使用下文的源物理运动。减少动态效果及负Props.Duration使运动即时收敛；
+控制器隐藏时暂停并重置累积器，恢复后按源规则重新暖机，不追赶隐藏期间的墙钟时间。
+Autoplay及插件仍需后续阶段实现；真实平台读屏和完整视觉矩阵尚未验收。
 
 固定shadcn、Embla8.5.2、许可和可重现的源函数几何数据见
 [`testdata/shadcn-carousel`](../pkg/display/testdata/shadcn-carousel/README.md)。
@@ -127,9 +127,30 @@ settle、reInit、resize、slidesChanged、slidesInView、pointerDown/Up、slide
 监听器不能捕获跨帧Context或Element。Destroy会清空当时的订阅；显式On/Emit仍可用于应用通知，
 但不恢复引擎。立即跳转的新动画按源顺序先scroll、后select，不额外产生settle。
 
-当前controller沿用兼容运动，Options.Duration/DragThreshold/DragFree/SkipSnaps
-明确返回CarouselRequiresPhysics错误；它们保留Embla原意，待物理阶段实现。
-ContainerProps上原有的Duration/DragThreshold仍是兼容动画参数。
+## 物理运动与原生拖动
+
+控制器路径实现固定Embla8.5.2的吸引力、摩擦、边界阻力、循环目标选择与60Hz累积器，
+首次动画包含源定义的两次暖机seek，绘制在前后物理状态间插值。中途改目标、即时跳转、
+循环换坐标及事件中间状态共用同一求解器。
+
+- Options.Duration默认25，是吸引力参数而非毫秒；0使程序导航即时完成。
+- DragFree控制释放后是否吸附，SkipSnaps控制大速度及目标已变化时的跨吸附位置行为。
+- 释放速度取原始指针点与时间戳的170ms窗口，鼠标/触摸分别使用源速度增益，
+  释放运动采用源25/43速度参数，独立于程序导航的Duration。
+- DragThreshold默认10DIP，记录点击抑制策略；导航的力阈值另按viewport的20%夹到50..225DIP。
+  EngineSnapshot.ClickSuppressed是当前捕获手势的策略状态，不能取消其他原生控件的点击。
+
+这些选项支持部分更新、显式false/0、深拷贝及断点合并。EngineSnapshot还提供Velocity、
+当前Duration/Friction、PointerDown和ClickSuppressed值，供应用查询。
+Content之前和之后的组合快照均按当前物理姿态计算可见项目。
+
+背景区域通过公开Dragged声明捕获，非消费HandleInput取得越过viewport边界的move/up；
+求解器负责全部平移，不叠加MyGo Draggable的独立动画。原生子按钮正常点击，文字编辑器继续编辑。
+取消或窗口失去输入时返回选中吸附位置，不提交甩动；触摸跨轴移动占主导时取消本次捕获。
+
+目前MyGo公开接口无法从已经取得指针的任意子按钮接管拖动，也不能由祖先取消该按钮的点击；
+从这种子控件开始拖动并按源阈值阻止其动作仍是明确缺口。多触点数量及cancelable等完整触摸元数据
+同样尚未提供，单指mouse/touch轨迹验收不代表完整触摸平台验收。
 
 ## Gallery
 
@@ -138,4 +159,4 @@ Data & display页提供可操作的Carousel示例：单项、双项、三项、�
 导航、重排和切换预览页后仍保留。另有270DIP垂直半屏布局及独立RTL示例，
 导航按钮位于viewport外侧，小窗口通过页面滚动到达所有示例。
 搜索Carousel、Slides或Slideshow可进入该页。
-当前示例使用组合API；控制器、源物理和Autoplay的独立示例继续补齐。
+当前示例保留组合兼容路径；控制器、源物理和Autoplay的独立示例继续补齐。

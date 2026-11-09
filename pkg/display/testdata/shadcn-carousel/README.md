@@ -98,9 +98,10 @@ Root/control shortcuts require that target's own focus, preserving editors'
 arrow keys. Vertical Up/Down, horizontal RTL, and Home/End are deliberate native
 adaptations of the web primitive's captured Left/Right handler.
 
-The composed API's current 250ms ease and native drag projection are compatibility
-motion, **not** Embla physics. Source physics, Autoplay/native plugin equivalents,
-and their Gallery examples remain separate implementation stages. Archiving
+The nil-Controller/nil-Options composed API retains its 250ms ease and native
+drag projection as compatibility motion. The Controller/Options profile uses
+the C2 source solver described below. Autoplay/native plugin equivalents and
+their Gallery examples remain separate implementation stages. Archiving
 those packages does not claim they are already implemented. No unrelated
 application/Music source is included.
 
@@ -145,10 +146,77 @@ non-contiguous subset, and rejects foreign/unresolved nodes explicitly.
 
 Options are partial patches with pointer fields for explicit false/zero values.
 Structural validation/configuration errors are atomic and available before a
-build. Explicit source `Duration`, `DragThreshold`, `DragFree`, or `SkipSnaps`
-currently return `CarouselRequiresPhysics`; they must become active source
-options in C2, not remain permanently unsupported. Callback alignment uses an
+build. The source `Duration`, `DragThreshold`, `DragFree`, and `SkipSnaps`
+fields were reserved during C1 and are active in C2 as described below. Callback alignment uses an
 explicitly application-owned pure Aligner. Breakpoint predicates use native
 window dimensions/preferences and stable ordered rule keys. Native focus
 observation preserves the existing offscreen input/AX exclusion; the source's
 recent-Tab default is distinct from pointer/programmatic focus notifications.
+
+
+## C2 physics/native input reference
+
+`physics/oracle.cjs` executes the actual pinned CJS ScrollBody, Bounds, Looper,
+Target, DragTracker, and Animations primitives. Its 43 scenarios produce 48 Go
+checks. `physics/receipt.json` preserves the original **pure-core-only** receipt;
+it is historical evidence rather than a claim of native integration. The three
+kernel files retain those exact hashes. The repository test changes only its
+fixture path. MIT attribution remains in THIRD_PARTY_NOTICES/Embla's license.
+
+`physics/generate-engine-oracle.cjs` reuses the archived C1 rect/DOM fixtures and
+executes the actual upstream Engine and DragHandler together. Its 12 native
+trajectories contain 985 action snapshots, including every scroll/select/settle
+and pointer event's intermediate vectors: default/40/0 Duration, retarget,
+in-flight jump, loop wrap, hidden reset, snap/free/skip drags, touch velocity,
+and loop dragging. Native tests compare these independent values at the source
+60Hz timestamps and sample actual color pixels/visible AX groups. Additional
+native checks cover RTL/vertical, single/empty snap sets, cross-viewport release,
+cancellation, media/partial copies, reduced motion, and preserved child taps.
+Regenerate both independent outputs with:
+
+```sh
+node pkg/display/testdata/shadcn-carousel/physics/oracle.cjs \
+  pkg/display/testdata/shadcn-carousel/npm/embla-carousel/cjs/embla-carousel.cjs.js \
+  "$carousel_audit_dir/physics-oracle.json"
+node pkg/display/testdata/shadcn-carousel/physics/generate-engine-oracle.cjs \
+  pkg/display/testdata/shadcn-carousel/npm/embla-carousel/cjs/embla-carousel.cjs.js \
+  "$carousel_audit_dir/engine-oracle.json"
+```
+
+The controller profile ports source attraction/friction, bounds resistance,
+periodic target selection, drag release force, and the 60Hz accumulator with two
+initial seeks. Source `Duration` defaults to 25 and is an attraction parameter,
+not milliseconds; zero is immediate for programmatic scroll. A drag release
+uses source speed 25 (snap) or 43 (free), independently of this option. Source
+`DragThreshold` defaults to 10 DIPs and records click suppression; the separate
+navigation force threshold is 20% of view clamped to 50..225 DIPs. Source tracker
+uses raw point timestamps over 170ms, rather than the SDK's drag velocity.
+`DragFree` and `SkipSnaps` preserve their distinct source target/force behavior.
+
+Only public SDK input is used. The viewport declares capture via `Dragged`
+without automatic translation; a non-consuming `HandleInput` receives that
+viewport's moves/releases even outside its bounds. The source body supplies all
+track translation. `ObserveInput` supplements descendant interaction events;
+coalesced raw delivery supplies actual device/pressure values omitted by the
+SDK observer. The handlers retain only engine/value records, never a Context or
+Element. Frame-only veto hooks continue running in the current build.
+
+There is an explicit remaining SDK capability gap: an interactive descendant
+(such as a Button) wins its own pointer. The public SDK exposes neither an
+ancestor move/capture stream nor ancestor click cancellation. Ordinary child
+taps remain usable, but starting a carousel drag on an arbitrary interactive
+child and suppressing that child's click after the source threshold are **not
+implemented**. `Engine.ClickSuppressed` reports the captured viewport gesture's
+source policy; it is not a claim to cancel another native widget's action.
+The SDK's current latest public handler has the same limitation. No private
+flags, module-cache patch, fork, or fake ancestor capture is used. Multi-contact
+touch metadata is likewise unavailable through the SDK's single-pointer events.
+
+Native adaptation policies: a canceled/lost-window press returns to its selected
+snap without committing a fling; touch movement dominated by the cross axis
+cancels that capture. Reduced motion (or the preexisting negative Props Duration
+override) resolves programmatic/release animation immediately and schedules no
+continuing animation frames. Hidden windows pause the scheduler and reset its
+accumulator; resuming performs source warm-up rather than replaying hidden wall
+time. These policies do not change the source numeric options or the old
+nil-Controller/nil-Options compatibility path. Autoplay remains the next stage.

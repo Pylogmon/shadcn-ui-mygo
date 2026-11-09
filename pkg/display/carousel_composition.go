@@ -502,8 +502,15 @@ func CarouselSnapshotOf(c *ui.Context) CarouselSnapshot {
 		snapshot.CanScrollPrevious = e.geometry.counter(e.selected-1) != e.selected
 		snapshot.CanScrollNext = e.geometry.counter(e.selected+1) != e.selected
 		snapshot.Visible = nil
-		for _, item := range b.current {
-			if item.shown {
+		items := b.current
+		if !b.content {
+			items = b.state.bound
+		}
+		for _, item := range items {
+			// Before Content, sample the last declared Handle/layout values at
+			// this frame's solver pose instead of returning an empty inventory.
+			_, shown := carouselControllerItemVisual(b, item.index, item.handle)
+			if shown {
 				snapshot.Visible = append(snapshot.Visible, item.index)
 			}
 		}

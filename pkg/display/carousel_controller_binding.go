@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/egoist/mygo/ui"
+	"github.com/pylogmon/shadcn-ui-mygo/internal/carouselphysics"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/motion"
 )
 
@@ -94,16 +95,24 @@ func carouselControllerContainer(c *ui.Context, selected *int, p CarouselContain
 	}
 	frame.resolvedDirection(root, resolved.Direction)
 	if api.Snapshot().Destroyed {
-		e.motion.active = false
-		e.displayedDrag = 0
+		e.scheduler.Stop()
 		e.pointerEvents = nil
 		e.pendingTab = false
 	}
 	// Always subscribe to visibility, including instant/reduced-motion builds.
 	hidden := c.WindowHidden()
-	instant := motion.Reduced(c) || hidden || p.Duration < 0
-	if e.ready && frame.tick(c.Now(), instant) && !instant {
-		c.AnimationFrame()
+	if hidden != e.hidden {
+		e.hidden = hidden
+		e.scheduler.Reset()
+		e.lastTick = time.Time{}
+	}
+	// Sample steady animation before composing independent siblings. Pending
+	// input/commands run first in finalize so a press/retarget cannot see an extra
+	// seek at the old target merely because the owner happened to rebuild.
+	if e.ready && frame.optionsError == nil && !hidden && len(e.pointerEvents) == 0 && !api.hasCommands() {
+		if frame.tick(c.Now(), motion.Reduced(c) || p.Duration < 0) && !(motion.Reduced(c) || p.Duration < 0) {
+			c.AnimationFrame()
+		}
 	}
 	layout := carouselMeasure(state.extent, state.spacing, state.bases, CarouselAlignStart, CarouselTrimSnaps, false)
 	state.geometry = layout
@@ -207,11 +216,15 @@ func carouselControllerContent(c *ui.Context, b *carouselCompositionBuild, p Car
 		height = 240
 	}
 	viewport := ui.Box(c.Key(carouselViewportPart)).FillWidth().MinWidth(0).Clip().Role(ui.RoleGroup).Label("Slides").Bind(&e.root)
-	viewport.ObserveInput(func(event ui.InputEvent) {
-		if event.Kind == ui.InputPointerDown || event.Kind == ui.InputPointerUp {
-			e.pointerEvents = append(e.pointerEvents, carouselObservedPointer{down: event.Kind == ui.InputPointerDown, event: CarouselPointerEvent{Position: ui.Point{X: event.X, Y: event.Y}, Kind: event.Pointer, Cancelled: event.Canceled, Button: event.Button, Clicks: event.Clicks, Modifiers: event.Mods, Time: event.Time, Pressure: event.Pressure}})
-		}
-	})
+	viewport.ObserveInput(func(event ui.InputEvent) { e.recordPointer(event, false) })
+	// Declaring capture does not move the viewport. A non-consuming handler
+	// preserves child buttons, while the viewport receives its own captured
+	// moves/releases even beyond its bounds. The SDK exposes no ancestor takeover.
+	canCapture := frame.optionsError == nil && e.ready && len(e.geometry.snaps) > 0 && e.resolved.Active && e.resolved.WatchDrag && !b.p.NoDrag && !b.p.Disabled && !frame.api.Snapshot().Destroyed
+	if canCapture {
+		_, _, frame.captureHeld = viewport.Dragged()
+		viewport.HandleInput(func(event ui.InputEvent) bool { e.recordPointer(event, true); return false })
+	}
 	frame.viewport = viewport
 	if height > 0 {
 		viewport.Height(height)
@@ -246,69 +259,6 @@ func carouselControllerContent(c *ui.Context, b *carouselCompositionBuild, p Car
 				x = -x
 			}
 			track.Translate(x, 0)
-		}
-		for _, observed := range e.pointerEvents {
-			if !e.ready || !e.resolved.Active || !e.resolved.WatchDrag {
-				continue
-			}
-			if observed.down {
-				allowed := frame.hooks.BeforeDrag == nil || frame.hooks.BeforeDrag(frame.api, observed.event)
-				e.dragDenied = !allowed
-				if allowed && !c.FocusTakesText() {
-					e.pressed = true
-					frame.publish(CarouselPointerDown)
-				}
-			} else {
-				if e.pressed {
-					frame.publish(CarouselPointerUp)
-				}
-				e.pressed = false
-			}
-		}
-		e.pointerEvents = nil
-		canDrag := e.ready && e.resolved.Active && e.resolved.WatchDrag && !b.p.NoDrag && !b.p.Disabled && !e.dragDenied && len(e.geometry.snaps) > 1 && !frame.api.Snapshot().Destroyed
-		e.displayedDrag = 0
-		if canDrag {
-			if canDrag {
-				axis, bounds := ui.Horizontal, ui.Rect{X: -s.extent, W: 2 * s.extent}
-				if b.p.Vertical {
-					axis, bounds = ui.Vertical, ui.Rect{Y: -s.extent, H: 2 * s.extent}
-				}
-				duration := b.p.Duration
-				if duration <= 0 {
-					duration = 250 * time.Millisecond
-				}
-				track.Draggable(&s.drag, ui.DraggableOptions{Axis: axis, Bounds: &bounds, Animation: ui.Animation{Duration: duration, Ease: motion.EaseOut}, Snap: func(projected ui.Point) ui.Point {
-					if track.PressCanceled() || !c.WindowActive() {
-						return ui.Point{}
-					}
-					threshold := b.p.DragThreshold
-					if !carouselFinite(threshold) || threshold <= 0 {
-						threshold = max(24, min(96, s.extent*.15))
-					}
-					movement := -projected.X
-					if b.p.Vertical {
-						movement = -projected.Y
-					} else if s.rtl {
-						movement = -movement
-					}
-					if movement >= threshold {
-						frame.api.ScrollNext(false)
-					} else if movement <= -threshold {
-						frame.api.ScrollPrev(false)
-					}
-					return ui.Point{}
-				}})
-				drag := track.DragOffset()
-				frame.drag = float64(drag.X)
-				if b.p.Vertical {
-					frame.drag = float64(drag.Y)
-				} else if s.rtl {
-					frame.drag = -frame.drag
-				}
-				b.position += float32(frame.drag)
-				e.displayedDrag = frame.drag
-			}
 		}
 		track.Children(func() {
 			b.inContent = true
@@ -414,7 +364,7 @@ func (frame *carouselControllerBuild) finalize(c *ui.Context, b *carouselComposi
 		}
 	}
 	if e.ready && *b.selected != e.lastControlled {
-		frame.scroll(*b.selected, 0, false, c.Now(), carouselCompatibilityDuration(b.p))
+		frame.scroll(*b.selected, 0, false, c.Now())
 		e.lastControlled = *b.selected
 	}
 	oldSelected := e.selected
@@ -430,11 +380,11 @@ func (frame *carouselControllerBuild) finalize(c *ui.Context, b *carouselComposi
 				continue
 			}
 		case carouselCommandNext:
-			frame.scroll(e.selected+1, -1, command.jump, c.Now(), carouselCompatibilityDuration(b.p))
+			frame.scroll(e.selected+1, -1, command.jump, c.Now())
 		case carouselCommandPrevious:
-			frame.scroll(e.selected-1, 1, command.jump, c.Now(), carouselCompatibilityDuration(b.p))
+			frame.scroll(e.selected-1, 1, command.jump, c.Now())
 		case carouselCommandTo:
-			frame.scroll(command.index, 0, command.jump, c.Now(), carouselCompatibilityDuration(b.p))
+			frame.scroll(command.index, 0, command.jump, c.Now())
 		}
 	}
 	*b.selected = e.selected
@@ -452,7 +402,7 @@ func (frame *carouselControllerBuild) finalize(c *ui.Context, b *carouselComposi
 					group := slices.IndexFunc(e.geometry.registry, func(indices []int) bool { return slices.Contains(indices, i) })
 					if group >= 0 {
 						frame.publish(CarouselSlideFocusStart)
-						frame.scroll(group, 0, true, c.Now(), carouselCompatibilityDuration(b.p))
+						frame.scroll(group, 0, true, c.Now())
 						frame.publish(CarouselSlideFocus)
 					}
 				}
@@ -462,15 +412,13 @@ func (frame *carouselControllerBuild) finalize(c *ui.Context, b *carouselComposi
 	}
 	e.focusedSlide = focused
 	e.pendingTab = false
+	frame.processPointers(c, b)
 	*b.selected = e.selected
 	e.lastControlled = e.selected
-	if e.motion.active && (motion.Reduced(c) || c.WindowHidden() || b.p.Duration < 0) {
-		frame.tick(c.Now(), true)
-		if e.motion.active {
-			frame.tick(c.Now(), true)
-		}
+	if e.scheduler.Active() && !e.hidden {
+		frame.tick(c.Now(), motion.Reduced(c) || b.p.Duration < 0)
 	}
-	if e.motion.active {
+	if e.scheduler.Active() && !e.hidden && !(motion.Reduced(c) || b.p.Duration < 0) {
 		c.AnimationFrame()
 	}
 	frame.updateInView(b)
@@ -486,12 +434,6 @@ func (frame *carouselControllerBuild) finalize(c *ui.Context, b *carouselComposi
 	s.bound = b.current
 }
 
-func carouselCompatibilityDuration(p CarouselContainerProps) time.Duration {
-	if p.Duration > 0 {
-		return p.Duration
-	}
-	return 250 * time.Millisecond
-}
 func carouselTrackedResize(baseline carouselGeometry, baselineHandles []ui.Handle, selectedItems []carouselSelectedItem, live carouselGeometry, handles []ui.Handle, threshold float64) bool {
 	changed := func(a, b float32) bool {
 		difference := math.Abs(float64(a - b))
@@ -594,6 +536,7 @@ func (frame *carouselControllerBuild) reinitialize(c *ui.Context, b *carouselCom
 		index = options.StartIndex
 	}
 	e.geometry, e.resolved, e.selectedItems = g, options, selected
+	e.resolved.Loop = g.loop
 	e.observedLayout = live
 	e.resizeBaseline = live
 	e.resizeBaselineHandles = slices.Clone(e.observedHandles)
@@ -606,7 +549,11 @@ func (frame *carouselControllerBuild) reinitialize(c *ui.Context, b *carouselCom
 		e.location = g.snaps[e.selected]
 	}
 	e.offset, e.previousLocation, e.target = e.location, e.location, e.location
-	e.motion = carouselControllerMotion{}
+	e.body = carouselphysics.NewBody(e.location, e.resolved.Duration, .68)
+	e.scheduler.Stop()
+	e.epoch = c.Now()
+	e.lastTick = time.Time{}
+	e.captured, e.pressed = false, false
 	e.inView, e.notInView = nil, nil
 	e.intersections = nil
 	*b.selected = e.selected
@@ -637,7 +584,7 @@ func (frame *carouselControllerBuild) updateInView(b *carouselCompositionBuild) 
 		ratio := float64(0)
 		if index >= 0 && index < len(b.state.geometry.sizes) {
 			g := b.state.geometry
-			start := float64(g.starts[index]-g.spacing) + e.offset + frame.drag + e.geometry.shift(i, e.offset+frame.drag)
+			start := float64(g.starts[index]-g.spacing) + e.offset + e.geometry.shift(i, e.offset)
 			intersects = start <= float64(g.viewport) && start+float64(g.sizes[index]) >= 0
 			if g.sizes[index] > 0 {
 				ratio = max(0, min(float64(g.viewport), start+float64(g.sizes[index]))-max(0, start)) / float64(g.sizes[index])

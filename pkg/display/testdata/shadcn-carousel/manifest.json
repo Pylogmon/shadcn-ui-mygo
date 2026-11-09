@@ -247,5 +247,59 @@
         "sha256": "64f72cea6c6d8dea998f088fe396f7f6488126e1dff83160f9b5fa7174eb9e00"
       }
     ]
+  },
+  "physicsOracle": {
+    "sourceSHA256": "a90f9c822bd7102e4b13c985c7926f910c13fc299a368f72c9c044eb730b2507",
+    "scenarioCounts": {
+      "body": 10,
+      "target": 12,
+      "dragTracker": 6,
+      "releaseForce": 10,
+      "scheduler": 5
+    },
+    "files": [
+      {
+        "archive": "physics/oracle.cjs",
+        "sha256": "7dc60460c11a79e9f4f12dd75996d40514d96ab274396e39621e77ce076ee5ba"
+      },
+      {
+        "archive": "physics/oracle.json",
+        "sha256": "cdc680350bfc9fb0055f3d7c15bd5876f99a65c3e5cfaa84e9bf7ea4510a6005"
+      },
+      {
+        "archive": "physics/receipt.json",
+        "sha256": "bc26083bb6652ef543709458842fd51c5fe284f7b0f0a70692de1097ca924cde"
+      },
+      {
+        "archive": "physics/generate-engine-oracle.cjs",
+        "sha256": "ecc6aae4d482089ce0209bb1c89ef22a938de0be4a679e7b859686d221c286c4"
+      },
+      {
+        "archive": "physics/engine-oracle.json",
+        "sha256": "94bc18ea94a0687a904a98f7b0d6d5b13b811bd6eb1d535b09ab6232ac43344d"
+      }
+    ],
+    "engineScenarios": 12,
+    "engineActionSamples": 985,
+    "engineFixtureBase": "controller/generate-controller-oracle.cjs",
+    "nativeInputBoundary": "Captured viewport move/up uses public SDK; interactive descendants keep their pointer. Arbitrary descendant drag takeover/click cancellation and multi-contact touch metadata remain public SDK gaps.",
+    "kernelFiles": [
+      {
+        "path": "internal/carouselphysics/body.go",
+        "sha256": "73950331b1794617dc2694a242285429ce20198bcdf43a6ca378593b9389d135"
+      },
+      {
+        "path": "internal/carouselphysics/drag.go",
+        "sha256": "1a461018a82388ad1501cf16fe7b31d2d20c3de11df769ab94288e23a0255a54"
+      },
+      {
+        "path": "internal/carouselphysics/oracle_test.go",
+        "sha256": "1cdc51b4931b612fcfec6a86868c259bc6a1ce9157c5d0b924ea9f4dc74320b2"
+      },
+      {
+        "path": "internal/carouselphysics/target.go",
+        "sha256": "ba8040b7515191b4bb230f1c4a888acbc84b297d5004bb90bc3c7837a5e769a8"
+      }
+    ]
   }
 }

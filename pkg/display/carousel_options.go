@@ -118,9 +118,9 @@ type CarouselBreakpoint struct {
 // explicit false, zero, or empty list. Watch veto callbacks belong to the current
 // ContainerProps.Hooks build and are never queued by Configure/ReInit.
 //
-// Explicit Duration, DragThreshold, DragFree, or SkipSnaps currently return
-// CarouselRequiresPhysics. These retain their source meanings for the separate
-// physics stage; native compatibility Duration/DragThreshold remain on Props.
+// Duration is the source attraction parameter (default25), not milliseconds.
+// DragThreshold suppresses clicks (default10DIP), not navigation. Compatibility
+// Duration/DragThreshold on Props remain available on the nil-controller path.
 type CarouselOptions struct {
 	Align                                           *CarouselAlignment
 	Axis                                            *CarouselAxis
@@ -167,17 +167,11 @@ func (o CarouselOptions) Validate() error {
 			}
 		}
 	}
-	if o.Duration != nil {
-		add("Duration", CarouselRequiresPhysics)
+	if o.Duration != nil && (math.IsNaN(*o.Duration) || math.IsInf(*o.Duration, 0) || *o.Duration < 0) {
+		add("Duration", CarouselInvalidOption)
 	}
-	if o.DragThreshold != nil {
-		add("DragThreshold", CarouselRequiresPhysics)
-	}
-	if o.DragFree != nil {
-		add("DragFree", CarouselRequiresPhysics)
-	}
-	if o.SkipSnaps != nil {
-		add("SkipSnaps", CarouselRequiresPhysics)
+	if o.DragThreshold != nil && (math.IsNaN(*o.DragThreshold) || math.IsInf(*o.DragThreshold, 0) || *o.DragThreshold < 0) {
+		add("DragThreshold", CarouselInvalidOption)
 	}
 	keys := make(map[string]bool)
 	for i, rule := range o.Breakpoints {
@@ -219,6 +213,8 @@ func carouselCloneOptions(o CarouselOptions) CarouselOptions {
 	o.Contain = carouselCopyValue(o.Contain)
 	o.SlidesToScroll = carouselCopyValue(o.SlidesToScroll)
 	o.StartIndex = carouselCopyValue(o.StartIndex)
+	o.Duration, o.DragThreshold = carouselCopyValue(o.Duration), carouselCopyValue(o.DragThreshold)
+	o.DragFree, o.SkipSnaps = carouselCopyValue(o.DragFree), carouselCopyValue(o.SkipSnaps)
 	o.Active, o.Loop = carouselCopyValue(o.Active), carouselCopyValue(o.Loop)
 	o.WatchDrag, o.WatchResize = carouselCopyValue(o.WatchDrag), carouselCopyValue(o.WatchResize)
 	o.WatchSlides, o.WatchFocus = carouselCopyValue(o.WatchSlides), carouselCopyValue(o.WatchFocus)
@@ -268,6 +264,18 @@ func carouselMergeOptions(base, patch CarouselOptions) CarouselOptions {
 	}
 	if patch.StartIndex != nil {
 		base.StartIndex = patch.StartIndex
+	}
+	if patch.Duration != nil {
+		base.Duration = patch.Duration
+	}
+	if patch.DragThreshold != nil {
+		base.DragThreshold = patch.DragThreshold
+	}
+	if patch.DragFree != nil {
+		base.DragFree = patch.DragFree
+	}
+	if patch.SkipSnaps != nil {
+		base.SkipSnaps = patch.SkipSnaps
 	}
 	if patch.Active != nil {
 		base.Active = patch.Active
@@ -331,10 +339,12 @@ type CarouselResolvedOptions struct {
 	Container                                       ui.Handle
 	HasContainer, HasSlides                         bool
 	Slides                                          []ui.Handle
+	Duration, DragThreshold                         float64
+	DragFree, SkipSnaps                             bool
 }
 
 func carouselResolveOptions(o CarouselOptions, env CarouselEnvironment) CarouselResolvedOptions {
-	resolved := CarouselResolvedOptions{Active: true, WatchDrag: true, WatchResize: true, WatchSlides: true, WatchFocus: true, SlidesToScroll: CarouselSlideGroup{Count: 1}, InViewThreshold: []float64{0}}
+	resolved := CarouselResolvedOptions{Active: true, WatchDrag: true, WatchResize: true, WatchSlides: true, WatchFocus: true, SlidesToScroll: CarouselSlideGroup{Count: 1}, InViewThreshold: []float64{0}, Duration: 25, DragThreshold: 10}
 	apply := func(p CarouselOptions) {
 		if p.Align != nil {
 			resolved.Align = *p.Align
@@ -353,6 +363,18 @@ func carouselResolveOptions(o CarouselOptions, env CarouselEnvironment) Carousel
 		}
 		if p.StartIndex != nil {
 			resolved.StartIndex = *p.StartIndex
+		}
+		if p.Duration != nil {
+			resolved.Duration = *p.Duration
+		}
+		if p.DragThreshold != nil {
+			resolved.DragThreshold = *p.DragThreshold
+		}
+		if p.DragFree != nil {
+			resolved.DragFree = *p.DragFree
+		}
+		if p.SkipSnaps != nil {
+			resolved.SkipSnaps = *p.SkipSnaps
 		}
 		if p.Active != nil {
 			resolved.Active = *p.Active

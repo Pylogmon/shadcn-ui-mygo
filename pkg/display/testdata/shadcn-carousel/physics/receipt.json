@@ -1,0 +1,23 @@
+{
+  "scope": "pending C2 pure-value core, not native integration",
+  "sourceCJS_SHA256": "a90f9c822bd7102e4b13c985c7926f910c13fc299a368f72c9c044eb730b2507",
+  "counts": {
+    "pass": 48
+  },
+  "scenarios": {
+    "body": 10,
+    "target": 12,
+    "dragTracker": 6,
+    "releaseForce": 10,
+    "scheduler": 5
+  },
+  "filesSHA256": {
+    "body.go": "73950331b1794617dc2694a242285429ce20198bcdf43a6ca378593b9389d135",
+    "target.go": "ba8040b7515191b4bb230f1c4a888acbc84b297d5004bb90bc3c7837a5e769a8",
+    "drag.go": "1a461018a82388ad1501cf16fe7b31d2d20c3de11df769ab94288e23a0255a54",
+    "oracle.cjs": "7dc60460c11a79e9f4f12dd75996d40514d96ab274396e39621e77ce076ee5ba",
+    "oracle.json": "cdc680350bfc9fb0055f3d7c15bd5876f99a65c3e5cfaa84e9bf7ea4510a6005",
+    "oracle_test.go": "6b26b6166f116e9cadf8ca5ef0758994d05c9d97ec1ed90580c3bc77cc96ea29",
+    "result.json": "c7f03ea94e93aacfe3e72270c2fe3998e9e3245e72736e9955fa44fc38ac7a6e"
+  }
+}

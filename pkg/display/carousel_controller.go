@@ -3,7 +3,6 @@ package display
 import (
 	"slices"
 	"sync"
-	"time"
 
 	"github.com/egoist/mygo/ui"
 )
@@ -37,7 +36,16 @@ func NewCarouselListener(callback func(*CarouselController, CarouselEventType)) 
 	return &CarouselListener{callback: callback}
 }
 
+// CarouselEngineSnapshot exposes detached source motion values. Velocity is
+// DIPs per fixed 60Hz step; Duration is the current attraction parameter,
+// including source drag-release adjustments. Options.Duration is its base.
+// PointerDown means captured viewport input. Descendant interaction events
+// can also be observed without ancestor capture in the native SDK.
+// ClickSuppressed reports the source threshold policy for that captured gesture;
+// it cannot cancel another native widget's click (see the source README).
 type CarouselEngineSnapshot struct {
+	Velocity, Duration, Friction                       float64
+	PointerDown, ClickSuppressed                       bool
 	Location, OffsetLocation, PreviousLocation, Target float64
 	Viewport, Content                                  float64
 	SlideRegistry                                      [][]int
@@ -307,6 +315,12 @@ func (a *CarouselController) ownerState() (ui.Handle, ui.Services, bool) {
 	return a.owner, a.services, a.bound
 }
 
+func (a *CarouselController) hasCommands() bool {
+	a.mu.Lock()
+	defer a.mu.Unlock()
+	return len(a.commands) > 0
+}
+
 func (a *CarouselController) takeCommands() []carouselCommand {
 	a.mu.Lock()
 	defer a.mu.Unlock()
@@ -350,11 +364,4 @@ func (lease *carouselControllerLease) Close() error {
 		a.Destroy()
 	}
 	return nil
-}
-
-type carouselControllerMotion struct {
-	from, to float64
-	at       time.Time
-	duration time.Duration
-	active   bool
 }

@@ -58,10 +58,10 @@ func TestCarouselControllerPartialOptionsValidateAtomically(t *testing.T) {
 	if r.Loop || !r.Active || r.StartIndex != 0 || r.SlidesToScroll.Count != 1 {
 		t.Fatalf("partial false/zero/default lost: %+v", r)
 	}
-	err = api.Configure(CarouselOptions{Loop: CarouselValue(true), Duration: CarouselValue(25.0)})
+	err = api.Configure(CarouselOptions{Loop: CarouselValue(true), Duration: CarouselValue(-1.0)})
 	var problem *CarouselOptionError
-	if !errors.As(err, &problem) || problem.Code != CarouselRequiresPhysics || problem.Field != "Duration" {
-		t.Fatalf("pending source physics was silently accepted: %v", err)
+	if !errors.As(err, &problem) || problem.Code != CarouselInvalidOption || problem.Field != "Duration" {
+		t.Fatalf("invalid source duration was silently accepted: %v", err)
 	}
 	if carouselResolveOptions(api.baseOptions(), CarouselEnvironment{}).Loop {
 		t.Fatal("invalid patch partly changed configuration")
@@ -162,7 +162,7 @@ func TestCarouselControllerReInitFIFOAndCurrentErrorRecovery(t *testing.T) {
 		t.Fatalf("configure/scroll/configure lost intermediate source state: select=%v reinit=%v", selections, states)
 	}
 	states = nil
-	invalid := CarouselOptions{Duration: CarouselValue(25.0)}
+	invalid := CarouselOptions{Duration: CarouselValue(-1.0)}
 	p.Options = &invalid
 	r.Frame()
 	if api.Snapshot().Error == nil {
