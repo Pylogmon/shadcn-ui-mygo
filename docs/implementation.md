@@ -113,7 +113,8 @@
 | 5.CD | Material/Combobox同ZIP的独立消费者验收 | 已提交 `bfe9324`；`344311e`标准八步与第二外部模块15命令、4项Combo/13项图标检查通过；双轮空缓存/无replace、527份原文、实际按需裁剪/像素及缓存清理核验 |
 | 5.CE | Gallery全局搜索与示例草稿独立持有 | 已提交 `b857d62`；两条真实输入回归先红后绿，隔离Gallery207项及vet通过；网址、内嵌Command与组件搜索跨页互不修改 |
 | 5.CF | Combobox源进退动画与原生搜索组 | 已提交 `dd685e9`；新增24项、420项隔离与22项独审、全量1994项/vet/三平台编译通过；100ms/实际side和origin、退出inert/保留过滤及编辑选区、反转和32DIP搜索组 |
-| 5.CG | Carousel多项几何、吸附位置与独立组合控件 | 本阶段提交；Carousel48项/display703项、324源函数对照和195项独审通过；全量2020项/vet/三平台编译及许可打包通过；保留完整controller/物理/Autoplay后续范围 |
+| 5.CG | Carousel多项几何、吸附位置与独立组合控件 | 已提交 `4d39f7a`；Carousel48项/display703项、324源函数对照和195项独审通过；全量2020项/vet/三平台编译及许可打包通过；保留完整controller/物理/Autoplay后续范围 |
+| 5.CH | Carousel/Combobox动画制品的双外部消费者复验 | 本阶段提交；`4d39f7a`同ZIP标准八步及第二外部模块八步/4叶公开检查通过，双轮空缓存/无replace、574份原文匹配、原生明暗图及实际100ms时钟验证 |
 
 用户已明确允许原生平台适配：Popover、menu、下拉菜单可以使用 MyGo 的系统菜单与独立 Flyout，超出父窗口范围；无需逐像素照搬网页浮层。Gallery 以 [shadcn/create](https://ui.shadcn.com/create) 的配置与实时预览流程为参考。完整组件功能、主题、动画范围保持不变。
 

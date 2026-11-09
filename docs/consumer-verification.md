@@ -55,3 +55,23 @@ ui.Icon颜色/布局验收。
 完整证据为`build/consumer-verification/run-1850267044/material-combobox-distribution-receipt.json`，
 第二模块的源码、环境、图像、二进制、完整依赖图与复制再运行脚本在同目录的`external-icons-combobox`。
 SDK来自本地标准模块代理；此验证未执行公开发布或替代原生平台/AT验收。
+
+
+Carousel多项组合与Combobox源动画阶段完成后，实际提交
+`4d39f7a6f2fab11152be115fe51d435a342da7fc`以
+`v0.0.0-20261109161542-4d39f7a6f2fa`通过标准八步，ZIP SHA-256为
+`c9d38a7f8252631b1f52a9877472a436fd776b57df2da0a2c6f8f6a33c10a454`。
+另建真正外部模块`example.invalid/carousel-consumer`，另一套全新缓存从同一ZIP执行
+八步：tidy、完整模块图、公开native测试、vet、build、明暗渲染及环境输出。
+四个叶检查（含父项共五条通过结果）覆盖水平LTR/RTL和垂直Carousel、前置controls/snapshot、
+五slides与四snaps、真实选择与禁用边界、独立slice，以及Combobox实际CSS-ease进入和100ms保留退出/AX排除。
+
+两轮GOWORK均关闭、无replace、SDK来自新模块缓存；第二轮全部574份ZIP文件与实际缓存逐字节匹配，
+结束后两套独占缓存均已确认删除。Root核对16条命令完成状态、完整收据、ZIP/源码/日志/二进制及PNG哈希。
+标准四图与此前已实际查看的`run-1850267044`对应图逐字节一致；新增外部Carousel明暗两图实际查看。
+静态导图关闭动画，独立时钟检查保留真实动画；两者的证据范围分开记录。
+
+完整证据为`build/consumer-verification/run-1157201957/carousel-combobox-distribution-receipt.json`，
+第二模块源码、日志和可重现脚本见同目录`external-carousel/README.audit.md`。
+此次不包含在途Combobox Base交互修正，也不把兼容EaseOut计作Embla物理、完整controller/Autoplay，
+更不代表公共发布或全平台GUI/AT验收。
