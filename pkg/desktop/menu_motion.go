@@ -8,6 +8,7 @@ import (
 
 	"github.com/egoist/mygo/ui"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/motion"
+	"github.com/pylogmon/shadcn-ui-mygo/pkg/theme"
 )
 
 // These are the fixed Vega menu utilities, rather than the generic Popover
@@ -166,7 +167,7 @@ func (s *menuTween) update(c *ui.Context, shown bool, a menuAttachment) menuPose
 		seed := menuPoseHidden(a, true)
 		s.from.x, s.from.y = seed.x, seed.y
 	}
-	if motion.Reduced(c) || c.WindowHidden() {
+	if motion.Reduced(c) || c.WindowHidden() || !theme.MenuOf(c).Animated() {
 		s.from, s.to = target, target
 		s.entering = false
 	}

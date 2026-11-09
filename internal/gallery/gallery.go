@@ -19,6 +19,7 @@ import (
 )
 
 type State struct {
+	lastSolidMenuAccent theme.MenuAccent
 	// Theme.Mode remains supported for command-line appearance selection.
 	// The creator's Config controls the scoped live preview independently of chrome.
 	Theme                                                                          theme.Controller
@@ -237,6 +238,15 @@ func (s *State) customizer(c *ui.Context, compact bool, preview *theme.Tokens) {
 					presentation = "native"
 				}
 				s.choice(c, "Menu style", presentation, []string{"flyout", "native"}, func(value string) { p := s.Config; p.NativeMenus = value == "native"; _ = s.ApplyPreset(p) })
+				if !(theme.MenuOptions{Color: s.Config.MenuColor}).ColorIsTranslucent() {
+					s.lastSolidMenuAccent = s.Config.MenuAccent
+				}
+				s.choice(c, "Menu color", string(s.Config.MenuColor), []string{"default", "inverted", "default-translucent", "inverted-translucent"}, func(value string) { s.setMenuColor(theme.MenuColor(value)) })
+				accents := []string{"subtle", "bold"}
+				if (theme.MenuOptions{Color: s.Config.MenuColor}).ColorIsTranslucent() {
+					accents = []string{"subtle"}
+				}
+				s.choice(c, "Menu accent", string(s.Config.MenuAccent), accents, func(value string) { p := s.Config; p.MenuAccent = theme.MenuAccent(value); _ = s.ApplyPreset(p) })
 				s.choiceSwitch(c, "Reduce motion", s.Config.ReduceMotion, func(value bool) { p := s.Config; p.ReduceMotion = value; _ = s.ApplyPreset(p) })
 			})
 		})
@@ -277,6 +287,10 @@ func choiceLabel(value string) string {
 		return "Shadcn Flyout"
 	case "native":
 		return "System native"
+	case "default-translucent":
+		return "Default translucent"
+	case "inverted-translucent":
+		return "Inverted translucent"
 	case "same":
 		return "Same as body"
 	case "serif":
@@ -341,7 +355,7 @@ func (s *State) choiceSwitch(c *ui.Context, label string, value bool, changed fu
 }
 
 func (s *State) preview(c *ui.Context, t *theme.Tokens) {
-	native := t.Theme()
+	native := t.MenuTheme(s.Config.MenuOptions())
 	native.Font = s.Config.BodyFamily()
 	ui.Themed(c, native).Grow(1).MinHeight(0).MinWidth(0).Radius(14).Border(1, t.Border).Clip().Background(t.Background).TextColor(t.Foreground).Font(s.Config.BodyFamily()).Children(func() {
 		var parts ui.TabsParts
@@ -494,7 +508,7 @@ func (s *State) nativeInspectorContent(c *ui.Context, t *theme.Tokens) {
 }
 
 func (s *State) inspectorContent(c *ui.Context, t *theme.Tokens) {
-	native := t.Theme()
+	native := t.MenuTheme(s.Config.MenuOptions())
 	native.Font = s.Config.BodyFamily()
 	ui.Themed(c, native).FillWidth().Padding(16).Gap(12).Background(t.Background).TextColor(t.Foreground).Font(s.Config.BodyFamily()).Children(func() {
 		s.cardHeader(c, "Theme tokens", "Your current preview colors.")

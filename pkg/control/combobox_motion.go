@@ -6,6 +6,7 @@ import (
 
 	"github.com/egoist/mygo/ui"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/motion"
+	"github.com/pylogmon/shadcn-ui-mygo/pkg/theme"
 )
 
 // Fixed Base/Vega content utilities: duration-100, CSS ease, fade/zoom-95,
@@ -153,7 +154,7 @@ func (s *comboMotion) update(c *ui.Context, open bool) (comboPose, bool) {
 		seed := comboPoseHidden(s.attachment, true)
 		s.from.x, s.from.y = seed.x, seed.y
 	}
-	if motion.Reduced(c) || c.WindowHidden() {
+	if motion.Reduced(c) || c.WindowHidden() || !theme.MenuOf(c).Animated() {
 		s.from, s.to, s.entering = target, target, false
 	}
 	p := s.sample(c.Now())

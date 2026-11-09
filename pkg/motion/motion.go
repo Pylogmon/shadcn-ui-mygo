@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/egoist/mygo/ui"
+	"github.com/pylogmon/shadcn-ui-mygo/pkg/theme"
 )
 
 const (
@@ -86,4 +87,13 @@ func Thumb(c *ui.Context) ui.Animation {
 		return ui.Animation{Duration: -1}
 	}
 	return ui.Animation{Duration: 150 * time.Millisecond, Ease: EaseOut}
+}
+
+// Menu is the fixed Base/Vega menu CSS animation profile. Translucent Create
+// presets override animation entirely; ordinary Popover remains independent.
+func Menu(c *ui.Context) ui.ElementTransition {
+	if !theme.MenuOf(c).Animated() {
+		return ui.ElementTransition{Duration: -1, ExitDuration: -1}
+	}
+	return respect(c, ui.ElementTransition{Duration: 100 * time.Millisecond, ExitDuration: 100 * time.Millisecond, Ease: ui.CubicBezier(.25, .1, .25, 1), Enter: &ui.Motion{Scale: .95, Y: -8, Flip: true}, Exit: &ui.Motion{Scale: .95}})
 }

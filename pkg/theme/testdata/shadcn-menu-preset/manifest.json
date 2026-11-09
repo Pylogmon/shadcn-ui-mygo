@@ -1,0 +1,87 @@
+{
+  "repository": "https://github.com/shadcn-ui/ui",
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "files": [
+    {
+      "path": "apps/v4/registry/config.ts",
+      "git_blob": "6f256f1434c2fca95bd591da6e583ea66eb659f4",
+      "sha256": "4b93e49cdb39c146a548396511da2c493fcd322acb63140b2f3fe34e27fd0c43",
+      "bytes": 24450
+    },
+    {
+      "path": "apps/v4/registry/config.test.ts",
+      "git_blob": "875fc9e63818268d53c22f9517437ee1c0184a3d",
+      "sha256": "eb3f4f997de7eb47c6e653493bb2cc51e6b1a531a857414f1644ab50709e6065",
+      "bytes": 8396
+    },
+    {
+      "path": "apps/v4/app/(app)/(create)/components/design-system-provider.tsx",
+      "git_blob": "c844e77a51769a9f51148b2857d40b8ee9652e4e",
+      "sha256": "2a9fcce4704ac4854a64fa1aa2c81b89cb355af3c5aec5c5cfd4dff0c9496a3a",
+      "bytes": 8844
+    },
+    {
+      "path": "apps/v4/app/(app)/(create)/components/menu-picker.tsx",
+      "git_blob": "39c3f8850279422686e19c7c1e181354d3a04193",
+      "sha256": "6a0b8eb169a72f9857be3423484957eee3bd859e046d5df26ba0e3b1c1d15aca",
+      "bytes": 6652
+    },
+    {
+      "path": "apps/v4/app/(app)/(create)/components/accent-picker.tsx",
+      "git_blob": "1ad793d196aec15b043a62764443f41eda67d97e",
+      "sha256": "dd2a9ba0537fe2e438cf8f9509e501f359580424fbbee83df2c9f438d51a3a22",
+      "bytes": 4385
+    },
+    {
+      "path": "apps/v4/app/(app)/(create)/lib/search-params.ts",
+      "git_blob": "5bc9c2161ce8167defcc359e4d0f1c80da40563c",
+      "sha256": "833b42a4d78feb27ae7b6a6e9349e85b890d990732faaa73e4f5be2f652c9959",
+      "bytes": 9797
+    },
+    {
+      "path": "apps/v4/registry/bases/base/ui/select.tsx",
+      "git_blob": "2cb76c117197336324cfaed1300e92ca65273b40",
+      "sha256": "6348d30035b68867d5efffe9b0b1611718226bef9fdeef9554349d6b98252110",
+      "bytes": 5904
+    }
+  ],
+  "references": [
+    {
+      "path": "pkg/control/testdata/shadcn-combobox/shadcn/base/combobox.tsx",
+      "sha256": "214523dfe45facff2d8ddf4e07fe048a963278431bea997387fd5d21466e19fc"
+    },
+    {
+      "path": "pkg/desktop/testdata/shadcn-menu/shadcn/base/dropdown-menu.tsx",
+      "sha256": "18c1829679694a9b9850afcabf1158a80ec3624fb5e03d0d4b13339b729e0503"
+    },
+    {
+      "path": "pkg/desktop/testdata/shadcn-menu/shadcn/base/context-menu.tsx",
+      "sha256": "e4359306eb2242681388aa1b3a541de49dce46c375db1593f8d3362f6bb023ca"
+    },
+    {
+      "path": "pkg/desktop/testdata/shadcn-menu/shadcn/base/menubar.tsx",
+      "sha256": "0abe1b7b30525404044f1bf693e2a31f624260aec61a6d19271ac1c21f9cc26d"
+    },
+    {
+      "path": "pkg/desktop/testdata/shadcn-menu/shadcn/style-vega.css",
+      "sha256": "10fa07bd61b429ae2c14c572ba9975f6e991d68a04f8fec7e354a062597e0d4e"
+    },
+    {
+      "path": "pkg/theme/sources/tailwind-theme.css",
+      "sha256": "443d7af364200f8ec8352dc78e39485a118a1840d498c97967bf0ae402b39167"
+    },
+    {
+      "path": "pkg/control/testdata/shadcn-combobox/shadcn/create/packages/registry/src/transformers/transform-menu.ts",
+      "sha256": "012ee0e8df0127b50ae5fa3f715fc91428fa7b403e8a4afbde15bfd769b96954"
+    },
+    {
+      "path": "pkg/control/testdata/shadcn-combobox/shadcn/create/packages/shadcn/src/preset/defaults.ts",
+      "sha256": "6635295938de993a3b08470f8999e85f527435b14bcef665e6972502ac4b4b6d"
+    },
+    {
+      "path": "pkg/control/testdata/shadcn-combobox/shadcn/create/packages/shadcn/src/styles/transform-style-map.ts",
+      "sha256": "b262a052592eef9d1d3761a8230c1dc68fcdf360415de291d6a3fb9258db4e26"
+    }
+  ],
+  "scope": "Create four menuColor profiles, theme-wide bold accent, forced subtle translucency, menu-only markers and source blur40/tint70/saturation150."
+}

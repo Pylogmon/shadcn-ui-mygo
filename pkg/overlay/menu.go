@@ -27,7 +27,10 @@ type MenuProps struct {
 }
 
 func menuPanel(c *ui.Context, panel ui.Element, width float32) {
-	surface(c, panel).Padding(4).Gap(0)
+	profile := theme.MenuOf(c).ForScene()
+	t := &profile.Tokens
+	panel.Column().Padding(4).Gap(0).Radius(t.RadiusMD()).FontSize(14).Shadow(0, 4, 12, 0, ui.RGBA(0, 0, 0, .12)).Transition(motion.Menu(c))
+	profile.Surface(c, panel)
 	if width <= 0 {
 		width = 192
 	}
@@ -46,7 +49,10 @@ func InWindowDropdownMenu(c *ui.Context, open *bool, p MenuProps, trigger func(u
 	chosen := ""
 	m.Popup(func(panel ui.Element) {
 		menuPanel(c, panel, p.Width)
-		panel.Children(func() { menuItems(c, m, p.Items, p.Width, &chosen) })
+		panel.Children(func() {
+			profile := theme.MenuOf(c).ForScene()
+			ui.Themed(c, profile.Theme()).FillWidth().Children(func() { menuItems(c, m, p.Items, p.Width, &chosen) })
+		})
 	})
 	return chosen
 }
@@ -58,18 +64,22 @@ func InWindowContextMenu(c *ui.Context, target ui.Element, p MenuProps) string {
 	chosen := ""
 	m.Popup(func(panel ui.Element) {
 		menuPanel(c, panel, p.Width)
-		panel.Children(func() { menuItems(c, m, p.Items, p.Width, &chosen) })
+		panel.Children(func() {
+			profile := theme.MenuOf(c).ForScene()
+			ui.Themed(c, profile.Theme()).FillWidth().Children(func() { menuItems(c, m, p.Items, p.Width, &chosen) })
+		})
 	})
 	return chosen
 }
 
 func menuItems(c *ui.Context, m ui.MenuParts, items []MenuItem, width float32, chosen *string) {
-	t := theme.TokensOf(c)
+	profile := theme.MenuOf(c)
+	t := &profile.Tokens
 	group := ""
 	for i := range items {
 		it := items[i]
 		if it.Separator {
-			ui.Box(c.Key(i)).Height(1).Margin(4, -4).Background(t.Border)
+			ui.Box(c.Key(i)).Height(1).Margin(4, -4).Background(profile.Separator())
 			continue
 		}
 		if it.Group != "" && it.Group != group {
@@ -87,15 +97,22 @@ func menuItems(c *ui.Context, m ui.MenuParts, items []MenuItem, width float32, c
 		default:
 			row = m.Item()
 		}
-		motion.ApplyTransition(c, row.Label(it.Label).Disabled(it.Disabled).Height(32).Padding(6, 8).Gap(8).Radius(max(2, t.Radius-2)).
-			FontSize(14).TextColor(t.PopoverForeground))
+		row.Label(it.Label).Disabled(it.Disabled).Height(32).Padding(6, 8).Gap(8).Radius(max(2, t.Radius-2)).FontSize(14).TextColor(t.PopoverForeground)
+		if profile.Animated() {
+			motion.ApplyTransition(c, row)
+		}
 		if row.Highlighted() {
-			row.Background(t.Accent).TextColor(t.AccentForeground)
+			bg, fg := profile.Highlight(it.Destructive)
+			row.Background(bg).TextColor(fg)
 		}
 		if it.Destructive {
 			row.TextColor(t.Destructive)
+			if profile.Translucent() {
+				row.TextColor(t.AccentForeground)
+			}
 			if row.Highlighted() {
-				row.Background(t.Destructive.Alpha(0.1))
+				bg, fg := profile.Highlight(true)
+				row.Background(bg).TextColor(fg)
 			}
 		}
 		if it.Disabled {
@@ -116,7 +133,11 @@ func menuItems(c *ui.Context, m ui.MenuParts, items []MenuItem, width float32, c
 			}
 			ui.Text(c, it.Label).Grow(1).SingleLine()
 			if it.Shortcut != "" {
-				ui.Text(c, it.Shortcut).FontSize(12).TextColor(t.MutedForeground).MarginStart(24)
+				shortcutColor := t.MutedForeground
+				if it.Destructive && profile.Translucent() {
+					shortcutColor = t.AccentForeground
+				}
+				ui.Text(c, it.Shortcut).FontSize(12).TextColor(shortcutColor).MarginStart(24)
 			}
 			if len(it.Children) > 0 {
 				ui.Text(c, "›").FontSize(16)
@@ -125,7 +146,10 @@ func menuItems(c *ui.Context, m ui.MenuParts, items []MenuItem, width float32, c
 		if len(it.Children) > 0 {
 			m.Submenu(row, func(panel ui.Element) {
 				menuPanel(c, panel, width)
-				panel.Children(func() { menuItems(c, m, it.Children, width, chosen) })
+				panel.Children(func() {
+					profile := theme.MenuOf(c).ForScene()
+					ui.Themed(c, profile.Theme()).FillWidth().Children(func() { menuItems(c, m, it.Children, width, chosen) })
+				})
 			})
 		}
 		if row.Clicked() && !it.Disabled && len(it.Children) == 0 {

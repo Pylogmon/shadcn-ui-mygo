@@ -17,7 +17,12 @@ import (
 // Metadata associates an immutable token snapshot with its native theme.
 // There is no global current theme: every Context and Themed subtree keeps its
 // own identity. Weak keys and cleanup avoid retaining finished windows/themes.
-var metadata sync.Map // map[weak.Pointer[ui.Theme]]Tokens
+type themeMetadata struct {
+	tokens Tokens
+	menu   MenuSnapshot
+}
+
+var metadata sync.Map // map[weak.Pointer[ui.Theme]]themeMetadata
 
 func (t *Tokens) Theme() *ui.Theme {
 	n := &ui.Theme{
@@ -35,7 +40,7 @@ func (t *Tokens) Theme() *ui.Theme {
 
 func remember(native *ui.Theme, tokens *Tokens) {
 	key := weak.Make(native)
-	metadata.Store(key, *tokens)
+	metadata.Store(key, themeMetadata{tokens: *tokens, menu: MenuSnapshot{Color: MenuDefault, Accent: MenuSubtle, Tokens: *tokens, scopeTokens: *tokens}})
 	runtime.AddCleanup(native, func(k weak.Pointer[ui.Theme]) { metadata.Delete(k) }, key)
 	runtime.KeepAlive(native)
 }
@@ -45,7 +50,7 @@ func remember(native *ui.Theme, tokens *Tokens) {
 func TokensOf(c *ui.Context) *Tokens {
 	if native := c.Theme(); native != nil {
 		if value, ok := metadata.Load(weak.Make(native)); ok {
-			t := value.(Tokens)
+			t := value.(themeMetadata).tokens
 			return &t
 		}
 		if native.Dark {
@@ -57,7 +62,13 @@ func TokensOf(c *ui.Context) *Tokens {
 
 // Scope builds a container with its own complete semantic tokens. Overlays
 // opened within its children inherit the same theme through MyGo.
-func Scope(c *ui.Context, t *Tokens) ui.Element { return ui.Themed(c, t.Theme()) }
+func Scope(c *ui.Context, t *Tokens) ui.Element { return ui.Themed(c, menuTheme(c, t, nil)) }
+
+// MenuScope configures Create menu appearance and its matching inverted palette
+// while retaining the ordinary theme for controls outside menu surfaces.
+func MenuScope(c *ui.Context, t *Tokens, menus MenuOptions) ui.Element {
+	return ui.Themed(c, menuTheme(c, t, []MenuOptions{menus}))
+}
 
 // Apply installs Neutral, following the appearance supplied by MyGo for this
 // frame. Call at the start of the view. Existing complete scoped themes stay.
@@ -82,14 +93,18 @@ const (
 // Apply belongs at the beginning of each frame, before any theme override.
 // Public fields may be changed by controls on the UI thread.
 type Controller struct {
-	Mode   Mode   `json:"mode"`
-	Preset string `json:"preset"`
+	Mode       Mode       `json:"mode"`
+	Preset     string     `json:"preset"`
+	MenuColor  MenuColor  `json:"menuColor,omitempty"`
+	MenuAccent MenuAccent `json:"menuAccent,omitempty"`
 	// Radius is in DIPs. Zero keeps the theme default; RadiusOverride can
 	// explicitly select square corners.
 	Radius         float32  `json:"radius,omitempty"`
 	RadiusOverride *float32 `json:"radiusOverride,omitempty"`
 	ReduceMotion   bool     `json:"reduceMotion,omitempty"`
 	last           Tokens
+	lastMenuColor  MenuColor
+	lastMenuAccent MenuAccent
 	native         *ui.Theme
 }
 
@@ -108,6 +123,9 @@ func (s *Controller) Resolve(systemDark bool) *Tokens {
 	if s.RadiusOverride != nil {
 		t.Radius = max(0, *s.RadiusOverride)
 	}
+	if (MenuOptions{Color: s.MenuColor, Accent: s.MenuAccent}).Normalized().Accent == MenuBold {
+		t.Accent, t.AccentForeground = t.Primary, t.PrimaryForeground
+	}
 	return t
 }
 
@@ -118,6 +136,23 @@ func (s *Controller) Apply(c *ui.Context) {
 	}
 	t := s.Resolve(dark)
 	p := c.Preferences()
+	applyPreferences(t, p)
+	if s.native == nil || s.last != *t || s.lastMenuColor != s.MenuColor || s.lastMenuAccent != s.MenuAccent {
+		s.lastMenuColor, s.lastMenuAccent = s.MenuColor, s.MenuAccent
+		s.last = *t
+		darkController := *s
+		darkController.Mode = DarkMode
+		darkTokens := darkController.Resolve(true)
+		applyPreferences(darkTokens, p)
+		s.native = menuTheme(c, t, []MenuOptions{{Color: s.MenuColor, Accent: s.MenuAccent, InvertedTokens: darkTokens}})
+	}
+	c.SetTheme(s.native)
+	if s.ReduceMotion {
+		c.DisableAnimations()
+	}
+}
+
+func applyPreferences(t *Tokens, p ui.Preferences) {
 	if p.TextScale > 0 {
 		t.FontSize *= p.TextScale
 	}
@@ -128,14 +163,6 @@ func (s *Controller) Apply(c *ui.Context) {
 		t.Ring = t.Foreground
 		t.SidebarBorder = t.Border
 		t.SidebarRing = t.Ring
-	}
-	if s.native == nil || s.last != *t {
-		s.last = *t
-		s.native = t.Theme()
-	}
-	c.SetTheme(s.native)
-	if s.ReduceMotion {
-		c.DisableAnimations()
 	}
 }
 
@@ -149,6 +176,9 @@ func (s *Controller) Toggle(systemDark bool) {
 }
 
 func (s *Controller) validate() error {
+	if err := (MenuOptions{Color: s.MenuColor, Accent: s.MenuAccent}).Validate(); err != nil {
+		return err
+	}
 	if s.Mode != "" && s.Mode != System && s.Mode != LightMode && s.Mode != DarkMode {
 		return fmt.Errorf("unknown appearance %q", s.Mode)
 	}
@@ -178,7 +208,10 @@ func (s *Controller) Save(path string) error {
 	if err := s.validate(); err != nil {
 		return err
 	}
-	b, err := json.MarshalIndent(s, "", "  ")
+	saved := *s
+	menus := (MenuOptions{Color: s.MenuColor, Accent: s.MenuAccent}).Normalized()
+	saved.MenuColor, saved.MenuAccent = menus.Color, menus.Accent
+	b, err := json.MarshalIndent(&saved, "", "  ")
 	if err != nil {
 		return err
 	}
@@ -228,6 +261,8 @@ func (s *Controller) Load(path string) error {
 	if err = next.validate(); err != nil {
 		return err
 	}
+	menus := (MenuOptions{Color: next.MenuColor, Accent: next.MenuAccent}).Normalized()
+	next.MenuColor, next.MenuAccent = menus.Color, menus.Accent
 	*s = next
 	return nil
 }

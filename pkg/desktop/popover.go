@@ -34,6 +34,9 @@ type SizeSurface interface{ SetSize(width, height int) }
 // compositions; a missing capability is reported as unknown by FocusState.
 type FocusSurface interface{ IsFocused() bool }
 
+// MaterialSurface updates a live native window material without remounting its content.
+type MaterialSurface interface{ SetVibrancy(mygo.Vibrancy) }
+
 // DismissInterceptor is an optional surface capability. The callback returns
 // true when Host retained the surface to animate its dismissal, so the native
 // close event must be prevented. Backends without it preserve immediate close
@@ -59,6 +62,7 @@ type Spec struct {
 	Focusable, SystemPopover                 bool
 	IgnoreMouseEvents, ShowInactive          bool
 	CornerRadius                             int
+	Vibrancy                                 mygo.Vibrancy
 }
 
 type PopoverProps struct {
@@ -115,6 +119,7 @@ type entry struct {
 	spec                                     Spec
 	content                                  func(*ui.Context)
 	tokens                                   theme.Tokens
+	menu                                     theme.MenuSnapshot
 	nativeTheme                              *ui.Theme
 	reduced                                  bool
 	anchor                                   ui.Handle
@@ -196,6 +201,8 @@ func (h *Host) Popover(c *ui.Context, key string, anchor ui.Element, open *bool,
 	} else {
 		anchor.HasPopup(ui.PopupDialog).Expanded(*open)
 	}
+	previousMenu := e.menu
+	e.menu = theme.MenuOf(c)
 	if !*open {
 		e.props = p
 		e.reduced = motion.Reduced(c)
@@ -237,6 +244,9 @@ func (h *Host) Popover(c *ui.Context, key string, anchor ui.Element, open *bool,
 	if err != nil {
 		return err
 	}
+	if p.menuMotion != menuMotionNone && !p.SystemStyle && !spec.SystemPopover && e.menu.Translucent() && !c.Preferences().ReduceTransparency && !c.Preferences().HighContrast {
+		spec.Vibrancy = mygo.VibrancyMenu
+	}
 	if spec.Anchor.W <= 0 || spec.Anchor.H <= 0 {
 		if !e.awaitedAnchor {
 			e.awaitedAnchor = true
@@ -251,10 +261,11 @@ func (h *Host) Popover(c *ui.Context, key string, anchor ui.Element, open *bool,
 		padding = max(0, *p.ContentPadding)
 	}
 	presentation := c.MenuPresentation()
-	changed := e.nativeTheme == nil || e.tokens != tokens || e.reduced != reduced || e.props.Label != p.Label || e.props.Revision != p.Revision || e.props.SystemStyle != p.SystemStyle || e.padding != padding || e.props.ContentRole != p.ContentRole || e.props.menuMotion != p.menuMotion || e.props.menuIdentity != p.menuIdentity || e.props.menuContext != p.menuContext || e.direction != c.Direction() || !p.SystemStyle && e.presentation != presentation
-	if e.nativeTheme == nil || e.tokens != tokens {
+	menuSnapshot := theme.MenuOf(c)
+	changed := e.nativeTheme == nil || previousMenu != menuSnapshot || e.tokens != tokens || e.reduced != reduced || e.props.Label != p.Label || e.props.Revision != p.Revision || e.props.SystemStyle != p.SystemStyle || e.padding != padding || e.props.ContentRole != p.ContentRole || e.props.menuMotion != p.menuMotion || e.props.menuIdentity != p.menuIdentity || e.props.menuContext != p.menuContext || e.direction != c.Direction() || !p.SystemStyle && e.presentation != presentation
+	if e.nativeTheme == nil || e.tokens != tokens || previousMenu != menuSnapshot {
 		e.tokens = tokens
-		e.nativeTheme = tokens.Theme()
+		e.nativeTheme = tokens.ThemeWithMenus(menuSnapshot.ForNativeWindow())
 	}
 	e.reduced = reduced
 	e.padding, e.presentation = padding, presentation
@@ -263,6 +274,14 @@ func (h *Host) Popover(c *ui.Context, key string, anchor ui.Element, open *bool,
 	// complete tokens and content do not require reopening an existing one.
 	previous := e.spec
 	previous.Anchor = spec.Anchor
+	var material MaterialSurface
+	if e.surface != nil && previous.Vibrancy != spec.Vibrancy {
+		if capability, ok := e.surface.(MaterialSurface); ok {
+			previous.Vibrancy = spec.Vibrancy
+			material = capability
+			changed = true
+		}
+	}
 	var resize SizeSurface
 	if e.surface != nil && (previous.Width != spec.Width || previous.Height != spec.Height) {
 		if sized, ok := e.surface.(SizeSurface); ok {
@@ -281,6 +300,9 @@ func (h *Host) Popover(c *ui.Context, key string, anchor ui.Element, open *bool,
 	oldAnchor := e.spec.Anchor
 	e.spec = spec
 	if e.surface != nil {
+		if material != nil {
+			material.SetVibrancy(spec.Vibrancy)
+		}
 		if resize != nil {
 			resize.SetSize(spec.Width, spec.Height)
 		}
@@ -436,6 +458,11 @@ func (h *Host) view(c *ui.Context, e *entry, generation uint64) {
 	}
 	if c.Vibrancy() {
 		root.Background(ui.Transparent)
+		if e.props.menuMotion != menuMotionNone && e.menu.Translucent() && !c.Preferences().ReduceTransparency && !c.Preferences().HighContrast {
+			// The native root otherwise paints the theme background over the
+			// system material. Menu panels supply their own 70% tint above it.
+			c.Root().Background(ui.Transparent)
+		}
 	}
 	label := e.props.Label
 	if label == "" {
@@ -543,7 +570,7 @@ func (h *Host) beginClose(e *entry, native, remove bool) bool {
 		return true
 	}
 	_, capable := e.surface.(DismissInterceptor)
-	if e.surface != nil && capable && e.presented && !e.reduced && !e.props.SystemStyle && !e.spec.SystemPopover {
+	if e.surface != nil && capable && e.presented && !e.reduced && (e.props.menuMotion == menuMotionNone || e.menu.Animated()) && !e.props.SystemStyle && !e.spec.SystemPopover {
 		e.closing, e.nativeDismiss, e.removeAfterClose = true, native, remove
 		e.surface.Invalidate()
 		h.backend.InvalidateParent()

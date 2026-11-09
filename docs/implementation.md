@@ -120,13 +120,15 @@
 | 5.CK | Carousel应用控制器、部分选项、事件与原生观察器 | 已提交 `069c355`；新增9项、display712项及18项独立公开检查通过，全量2087项/vet/三平台构建通过；FIFO、源事件中间状态、Handle子集、累计resize及单owner生命周期验证 |
 | 5.CL | Combobox对象状态、独立槽位、Content配置与交互示例 | 已提交 `1d50ec2`；新增9项control/3项Gallery，268/222项及4项独立公开检查通过；全量2099项/vet/三平台构建、四张明暗宽窄图通过；With共用运行时、单构建手写集合、Grid/原生虚拟窗与12+20例配置映射完成 |
 | 5.CM | 新公开API的独立制品复验与Chart源例范围核对 | 已提交 `3402c85`；`1d50ec2`同ZIP两轮空缓存共16命令/1条公开集成流程通过，605文件匹配；132份固定Chart原文/70例逐项盘点，静态需求清单不计作功能或平台验收 |
-| 5.CN | Carousel源物理、数值选项与背景原生拖动 | 本阶段提交；12条官方Engine轨迹/985时点、43纯核场景通过，display732/kernel48结果，全量2167项/vet/三平台构建及四张真实时钟逐帧图通过；子控件接管/click取消和多触点SDK缺口仍保留 |
+| 5.CN | Carousel源物理、数值选项与背景原生拖动 | 已提交 `cd3f14c`；12条官方Engine轨迹/985时点、43纯核场景通过，display732/kernel48结果，全量2167项/vet/三平台构建及四张真实时钟逐帧图通过；子控件接管/click取消和多触点SDK缺口仍保留 |
+
+| 5.CO | Create菜单颜色、强调与原生透明材质 | 本阶段提交；六种有效配置、同窗Gaussian/饱和度/tint和独立Flyout系统材质、原有Scope兼容及Creator预设流程完成；全量2174结果/vet/三平台构建和macOS实窗选值通过，系统材质核不声明CSS逐像素等价 |
 
 用户已明确允许原生平台适配：Popover、menu、下拉菜单可以使用 MyGo 的系统菜单与独立 Flyout，超出父窗口范围；无需逐像素照搬网页浮层。Gallery 以 [shadcn/create](https://ui.shadcn.com/create) 的配置与实时预览流程为参考。完整组件功能、主题、动画范围保持不变。
 
 ## 下一轮的明确缺口
 
-- Combobox九类Base交互差距及原生组合API已在5.CI/5.CL交付：Content定位/anchor宽度、Empty/List、可取消状态事件/Always/Grid/虚拟窗口及12+20例配置完成。可选translucent preset、独立越窗编辑弹层、完整locale/Unicode及平台IME/AT继续验收。
+- Combobox九类Base交互差距及原生组合API已在5.CI/5.CL交付：Content定位/anchor宽度、Empty/List、可取消状态事件/Always/Grid/虚拟窗口及12+20例配置完成。菜单可选translucent preset已在5.CO交付；独立越窗编辑弹层、完整locale/Unicode及平台IME/AT继续验收。
 - macOS实窗无active Enter复验：本轮自动化出现旧bundle/AX目标失效及首次Return仍留列表的观测。补充12项公开settled输入检查全绿；Tester无公开batch接口，无帧输入时序仍未证实。先辨明实际进程、IME与事件时序，再依据实证修正。
 - Carousel多项布局、controller/options/events及源物理/数值选项/背景拖动已在5.CG/5.CK/5.CN完成；Autoplay/插件与源示例继续实现。从任意子控件起拖并抑制其click、完整多触点信息仍缺MyGo公开能力；保持原生子控件正常输入，未计完整源gesture闭环。按parity表补齐Chart高级配置及所有组件例子；Windows/Linux实际窗口、真实AT/IME、多显示器/缩放和完整视觉矩阵仍是最终验收要求。
 - Chart按[固定源需求清单](chart-source-coverage.json)实施三个完整模块：Cartesian30例的margin/曲线/渐变/标记/LabelList与既有动画；Polar31例的角度/半径/网格/扇区/中心内容；Tooltip9例及交互、docs/RTL/Create与Gallery目录整合。Brush、ReferenceLine和额外显式动画参数未在132份固定原文中使用，列为Recharts扩展能力，不以其替代真正缺失的源例功能。该清单记录`1d50ec2`时的静态差距，不能当通过计数。

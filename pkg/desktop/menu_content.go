@@ -325,7 +325,8 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 	if state == nil {
 		panic("desktop: MenuContent requires caller-owned MenuState")
 	}
-	t := theme.TokensOf(c)
+	menu := theme.MenuOf(c)
+	t := &menu.Tokens
 	levels := menuLevels(state, items)
 	width := p.Width
 	if width <= 0 {
@@ -339,7 +340,7 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 	if label == "" {
 		label = "Menu"
 	}
-	root := ui.Row(c).Gap(4).AlignItems(ui.Start).Role(ui.RoleGroup).Label(label)
+	root := ui.Themed(c, menu.Theme()).Row().Gap(4).AlignItems(ui.Start).Role(ui.RoleGroup).Label(label)
 	x, y, over := root.PointerPosition()
 	moved := over && (!state.pointerOver || state.pointerX != x || state.pointerY != y)
 	state.pointerOver, state.pointerX, state.pointerY = over, x, y
@@ -390,6 +391,7 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 				panelLabel = listLabel(items, path, depth)
 			}
 			panel := ui.Column(c.Key(menuPanelKey(menuPathKey(path)))).Width(width).Padding(4).Radius(t.RadiusMD()).Background(t.Popover).TextColor(t.PopoverForeground).Border(1, t.Border).Role(ui.RoleMenu).Label(panelLabel).InputMethod(live).TabStop(live && depth == state.ActiveDepth)
+			menu.Surface(c, panel)
 			if live {
 				panel.Focusable()
 				panel.HandleInput(func(ev ui.InputEvent) bool { return menuInput(state, items, depth, p, rtl, ev) })
@@ -461,7 +463,7 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 					for i, item := range list {
 						key := menuItemKey(item, i)
 						if item.Separator {
-							ui.Box(c.Key(key)).Height(1).Margin(4, 0).Background(t.Border).Role(ui.RoleSeparator)
+							ui.Box(c.Key(key)).Height(1).Margin(4, 0).Background(menu.Separator()).Role(ui.RoleSeparator)
 							continue
 						}
 						if item.Group != "" && item.Group != group {
@@ -474,10 +476,14 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 						} else if item.Radio {
 							role = ui.RoleMenuItemRadio
 						}
-						row := motion.ApplyTransition(c, ui.Row(c.Key(key)).FillWidth().Height(32).PaddingX(8).Gap(8).Radius(max(2, t.Radius-2)).AlignItems(ui.Center).Role(role).Label(item.Label).Disabled(item.Disabled).FontSize(14).TextColor(t.PopoverForeground))
+						row := ui.Row(c.Key(key)).FillWidth().Height(32).PaddingX(8).Gap(8).Radius(max(2, t.Radius-2)).AlignItems(ui.Center).Role(role).Label(item.Label).Disabled(item.Disabled).FontSize(14).TextColor(t.PopoverForeground)
+						if menu.Animated() {
+							motion.ApplyTransition(c, row)
+						}
 						highlighted := key == highlight
 						if highlighted {
-							row.Background(t.Accent).TextColor(t.AccentForeground)
+							bg, fg := menu.Highlight(item.Destructive)
+							row.Background(bg).TextColor(fg)
 							if live && depth == state.ActiveDepth {
 								panel.ActiveDescendant(row)
 								if state.reveal {
@@ -500,8 +506,12 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 						}
 						if item.Destructive {
 							row.TextColor(t.Destructive)
+							if menu.Translucent() {
+								row.TextColor(t.AccentForeground)
+							}
 							if highlighted {
-								row.Background(t.Destructive.Alpha(.1))
+								bg, fg := menu.Highlight(true)
+								row.Background(bg).TextColor(fg)
 							}
 						}
 						if item.Disabled {
@@ -526,7 +536,11 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 								ui.Text(c, item.Label).Grow(1).MinWidth(0).SingleLine()
 							}
 							if item.Shortcut != "" {
-								ui.Text(c, item.Shortcut).FontSize(12).TextColor(t.MutedForeground).MarginStart(20)
+								shortcutColor := t.MutedForeground
+								if item.Destructive && menu.Translucent() {
+									shortcutColor = t.AccentForeground
+								}
+								ui.Text(c, item.Shortcut).FontSize(12).TextColor(shortcutColor).MarginStart(20)
 							}
 							if len(item.Children) > 0 {
 								arrow := "›"

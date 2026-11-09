@@ -16,16 +16,18 @@ import (
 // Preset is the portable design state of the creator. Fonts name actual native
 // font families/categories; it deliberately has no unimplemented style/icon API.
 type Preset struct {
-	Version      int        `json:"version"`
-	Base         string     `json:"base"`
-	Accent       string     `json:"accent"`
-	Chart        string     `json:"chart"`
-	Radius       float32    `json:"radius"`
-	BodyFont     string     `json:"bodyFont"`
-	HeadingFont  string     `json:"headingFont"`
-	Appearance   theme.Mode `json:"appearance"`
-	ReduceMotion bool       `json:"reduceMotion"`
-	NativeMenus  bool       `json:"nativeMenus"`
+	Version      int              `json:"version"`
+	Base         string           `json:"base"`
+	Accent       string           `json:"accent"`
+	Chart        string           `json:"chart"`
+	Radius       float32          `json:"radius"`
+	BodyFont     string           `json:"bodyFont"`
+	HeadingFont  string           `json:"headingFont"`
+	Appearance   theme.Mode       `json:"appearance"`
+	ReduceMotion bool             `json:"reduceMotion"`
+	NativeMenus  bool             `json:"nativeMenus"`
+	MenuColor    theme.MenuColor  `json:"menuColor"`
+	MenuAccent   theme.MenuAccent `json:"menuAccent"`
 }
 
 var baseColors = []string{"neutral", "stone", "zinc", "mauve", "olive", "mist", "taupe"}
@@ -34,9 +36,12 @@ var headingFonts = []string{"same", "system", "serif", "mono"}
 var radiusValues = []float32{0, 4, 6, 8, 10, 12, 16, 24}
 
 func DefaultPreset() Preset {
-	return Preset{Version: 1, Base: "neutral", Accent: "neutral", Chart: "neutral", Radius: 10, BodyFont: "system", HeadingFont: "same", Appearance: theme.System, NativeMenus: false}
+	return Preset{Version: 1, Base: "neutral", Accent: "neutral", Chart: "neutral", Radius: 10, BodyFont: "system", HeadingFont: "same", Appearance: theme.System, NativeMenus: false, MenuColor: theme.MenuDefault, MenuAccent: theme.MenuSubtle}
 }
 func (p Preset) Validate() error {
+	if err := (theme.MenuOptions{Color: p.MenuColor, Accent: p.MenuAccent}).Validate(); err != nil {
+		return err
+	}
 	if p.Version != 1 {
 		return fmt.Errorf("unsupported preset version %d", p.Version)
 	}
@@ -81,9 +86,12 @@ func ParsePreset(source string) (Preset, error) {
 	if err := p.Validate(); err != nil {
 		return Preset{}, err
 	}
-	return p, nil
+	return p.Normalized(), nil
 }
-func (p Preset) JSON() string { b, _ := json.MarshalIndent(p, "", "  "); return string(b) + "\n" }
+func (p Preset) JSON() string {
+	b, _ := json.MarshalIndent(p.Normalized(), "", "  ")
+	return string(b) + "\n"
+}
 
 // Tokens composes full base surfaces with independent accent and chart colors.
 // Neutral accent retains the base palette's own neutral emphasis colors.
@@ -107,6 +115,9 @@ func (p Preset) Tokens(systemDark bool) *theme.Tokens {
 	chart := theme.Preset(p.Chart, dark)
 	t.Chart1, t.Chart2, t.Chart3, t.Chart4, t.Chart5 = chart.Chart1, chart.Chart2, chart.Chart3, chart.Chart4, chart.Chart5
 	t.Radius = p.Radius
+	if (theme.MenuOptions{Color: p.MenuColor, Accent: p.MenuAccent}).Normalized().Accent == theme.MenuBold {
+		t.Accent, t.AccentForeground = t.Primary, t.PrimaryForeground
+	}
 	return t
 }
 func nativeFont(name string) string {
@@ -131,6 +142,7 @@ func (s *State) ApplyPreset(p Preset) error {
 	if err := p.Validate(); err != nil {
 		return err
 	}
+	p = p.Normalized()
 	if p == s.Config {
 		return nil
 	}
@@ -149,6 +161,7 @@ func (s *State) setPreset(p Preset) {
 	s.Theme.Preset = p.Accent
 	s.Theme.Radius = p.Radius
 	s.Theme.ReduceMotion = p.ReduceMotion
+	s.Theme.MenuColor, s.Theme.MenuAccent = p.MenuColor, p.MenuAccent
 	s.lastThemeMode = p.Appearance
 }
 func (s *State) ImportPreset(source string) error {
@@ -192,6 +205,12 @@ func (s *State) Randomize(seed uint64) {
 	next.Radius = radiusValues[r.IntN(len(radiusValues))]
 	next.BodyFont = bodyFonts[r.IntN(len(bodyFonts))]
 	next.HeadingFont = headingFonts[r.IntN(len(headingFonts))]
+	colors := []theme.MenuColor{theme.MenuDefault, theme.MenuInverted, theme.MenuDefaultTranslucent, theme.MenuInvertedTranslucent}
+	next.MenuColor = colors[r.IntN(len(colors))]
+	next.MenuAccent = theme.MenuSubtle
+	if r.IntN(2) == 1 {
+		next.MenuAccent = theme.MenuBold
+	}
 	_ = s.ApplyPreset(next)
 }
 
@@ -207,4 +226,28 @@ func chromeTokens() *theme.Tokens {
 	t.MutedForeground = ui.Hex("#9a9aa3")
 	t.Radius = 12
 	return t
+}
+
+func (p Preset) Normalized() Preset {
+	m := (theme.MenuOptions{Color: p.MenuColor, Accent: p.MenuAccent}).Normalized()
+	p.MenuColor, p.MenuAccent = m.Color, m.Accent
+	return p
+}
+func (p Preset) MenuOptions() theme.MenuOptions {
+	dark := p
+	dark.Appearance = theme.DarkMode
+	return theme.MenuOptions{Color: p.MenuColor, Accent: p.MenuAccent, InvertedTokens: dark.Tokens(true)}
+}
+func (s *State) setMenuColor(color theme.MenuColor) {
+	p := s.Config
+	if !(theme.MenuOptions{Color: p.MenuColor}).Normalized().ColorIsTranslucent() {
+		s.lastSolidMenuAccent = p.MenuAccent
+	}
+	p.MenuColor = color
+	if (theme.MenuOptions{Color: color}).Normalized().ColorIsTranslucent() {
+		p.MenuAccent = theme.MenuSubtle
+	} else {
+		p.MenuAccent = s.lastSolidMenuAccent
+	}
+	_ = s.ApplyPreset(p)
 }

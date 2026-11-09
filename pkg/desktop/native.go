@@ -59,7 +59,7 @@ func (b *nativeBackend) Open(s Spec, view func(*ui.Context), onClosed func()) (s
 		}
 	}()
 	anchor := nativeRect(s.Anchor)
-	w := mygo.NewFlyout(mygo.FlyoutOptions{Parent: b.parent, Anchor: anchor, Placement: s.Placement, Width: s.Width, Height: s.Height, Gap: s.Gap, FitContent: s.FitContent, MinWidth: s.MinWidth, MinHeight: s.MinHeight, MaxWidth: s.MaxWidth, MaxHeight: s.MaxHeight, Focusable: s.Focusable, Popover: s.SystemPopover, CornerRadius: s.CornerRadius, Shadow: true, Hidden: true, Content: ui.View(view)})
+	w := mygo.NewFlyout(mygo.FlyoutOptions{Parent: b.parent, Anchor: anchor, Placement: s.Placement, Width: s.Width, Height: s.Height, Gap: s.Gap, FitContent: s.FitContent, MinWidth: s.MinWidth, MinHeight: s.MinHeight, MaxWidth: s.MaxWidth, MaxHeight: s.MaxHeight, Focusable: s.Focusable, Popover: s.SystemPopover, Vibrancy: s.Vibrancy, CornerRadius: s.CornerRadius, Shadow: true, Hidden: true, Content: ui.View(view)})
 	created = w
 	native := &nativeSurface{window: w, anchor: anchor}
 	w.OnClose(func(event *mygo.CloseEvent) {
@@ -195,4 +195,10 @@ func (s *nativeSurface) releaseGeometryObservers() {
 func nativeRect(r ui.Rect) mygo.Rectangle {
 	x, y := int(math.Floor(float64(r.X))), int(math.Floor(float64(r.Y)))
 	return mygo.Rectangle{X: x, Y: y, Width: max(0, int(math.Ceil(float64(r.X+r.W)))-x), Height: max(0, int(math.Ceil(float64(r.Y+r.H)))-y)}
+}
+
+func (s *nativeSurface) SetVibrancy(value mygo.Vibrancy) {
+	if !s.window.IsDestroyed() {
+		s.window.SetVibrancy(value)
+	}
 }

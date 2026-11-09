@@ -688,7 +688,7 @@ func (f *comboFrame) groupTitle(c *ui.Context, label string) ui.Element {
 	return ui.Text(c, label).Padding(6, 8).FontSize(12).TextColor(theme.TokensOf(c).MutedForeground)
 }
 func (f *comboFrame) separator(c *ui.Context) ui.Element {
-	return ui.Box(c).Height(1).FillWidth().Margin(4, -4).Background(theme.TokensOf(c).Border).Role(ui.RoleSeparator).Orientation(ui.Horizontal)
+	return ui.Box(c).Height(1).FillWidth().Margin(4, -4).Background(theme.MenuOf(c).Separator()).Role(ui.RoleSeparator).Orientation(ui.Horizontal)
 }
 func (f *comboFrame) list(c *ui.Context, p ComboboxListProps, children func()) ui.Element {
 	f.check()
@@ -797,7 +797,8 @@ func (f *comboFrame) item(c *ui.Context, key string, p ComboboxItemProps, childr
 		active = true
 	}
 	if active {
-		option.Background(t.Accent).TextColor(t.AccentForeground)
+		background, foreground := theme.MenuOf(c).Highlight(false)
+		option.Background(background).TextColor(foreground)
 		if f.editorElement.Valid() {
 			f.editorElement.ActiveDescendant(option)
 		}
@@ -862,10 +863,12 @@ func (f *comboFrame) content(c *ui.Context, p ComboboxContentProps, children fun
 	}
 	f.contentGap = gap
 	at, self := comboAnchors(side, align, c.Direction())
-	t := theme.TokensOf(c)
+	menu := theme.MenuOf(c).ForScene()
+	t := &menu.Tokens
 	var panel ui.Element
 	ui.Overlay(c, func() {
-		panel = ui.Box(c).Key(f.s).Role(ui.RolePopup).AttachTo(anchor, at, self).AttachEdgeMargin(5).Clip().Radius(t.RadiusMD()).Border(1, t.Foreground.Alpha(.1)).Background(t.Popover).TextColor(t.PopoverForeground).Shadow(0, 4, 12, 0, ui.RGBA(0, 0, 0, .12)).IgnoreInput(!f.s.open).AccessHidden(!f.s.open)
+		panel = ui.Themed(c, menu.Theme()).Key(f.s).Role(ui.RolePopup).AttachTo(anchor, at, self).AttachEdgeMargin(5).Clip().Radius(t.RadiusMD()).Border(1, t.Foreground.Alpha(.1)).Background(t.Popover).TextColor(t.PopoverForeground).Shadow(0, 4, 12, 0, ui.RGBA(0, 0, 0, .12)).IgnoreInput(!f.s.open).AccessHidden(!f.s.open)
+		menu.Surface(c, panel)
 		panel.Clicked()
 		f.panel = panel
 		if f.p.PopupInput {
@@ -1147,7 +1150,8 @@ func (f *comboFrame) reconcileManual() {
 		if active != item.active {
 			t := theme.TokensOf(item.c)
 			if active {
-				item.element.Background(t.Accent).TextColor(t.AccentForeground)
+				background, foreground := theme.MenuOf(item.c).Highlight(false)
+				item.element.Background(background).TextColor(foreground)
 			} else {
 				item.element.Background(ui.Transparent).TextColor(t.PopoverForeground)
 			}

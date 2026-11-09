@@ -68,40 +68,46 @@ func Select(c *ui.Context, selected *string, p SelectProps) ui.Element {
 		indicator.ChevronDown(c).TextColor(t.MutedForeground)
 	})
 	parts.Popup(func(panel ui.Element) {
+		menu := theme.MenuOf(c).ForScene()
+		t := &menu.Tokens
 		panel.MinWidth(max(float32(128), tr.Bounds().W)).MaxHeight(280).Padding(4).Margin(4, 0, 0, 0).
 			Radius(t.Radius*.8).Border(1, t.Border).Background(t.Popover).TextColor(t.PopoverForeground).
-			Shadow(0, 4, 12, 0, ui.RGBA(0, 0, 0, .12)).Transition(motion.Popup(c))
+			Shadow(0, 4, 12, 0, ui.RGBA(0, 0, 0, .12)).Transition(motion.Menu(c))
+		menu.Surface(c, panel)
 		panel.Children(func() {
-			ui.Scroll(c).MaxHeight(272).FillWidth().Children(func() {
-				group := ""
-				for _, o := range p.Options {
-					if o.Separator {
-						optionSeparator(c)
-						continue
-					}
-					if o.Group != "" && o.Group != group {
-						group = o.Group
-						optionGroup(c, group)
-					}
-					e := parts.Item(o.Value).Disabled(o.Disabled).MinHeight(32).Padding(6, 8).Gap(8).
-						Radius(t.Radius * .6).AlignItems(ui.Center).AlignSelf(ui.Stretch).FontSize(14).Label(optionLabel(o))
-					if e.Highlighted() {
-						e.Background(t.Accent).TextColor(t.AccentForeground)
-					}
-					if o.Disabled {
-						e.Opacity(.5).Cursor(ui.CursorNotAllowed)
-					}
-					e.Children(func() {
-						if p.ItemContent != nil {
-							ui.Row(c).Grow(1).MinWidth(0).Children(func() { p.ItemContent(c, o) })
-						} else {
-							ui.Text(c, optionLabel(o)).Grow(1).SingleLine()
+			ui.Themed(c, menu.Theme()).FillWidth().Children(func() {
+				ui.Scroll(c).MaxHeight(272).FillWidth().Children(func() {
+					group := ""
+					for _, o := range p.Options {
+						if o.Separator {
+							optionSeparator(c)
+							continue
 						}
-						if *selected == o.Value {
-							ui.Icon(c, check).FontSize(14)
+						if o.Group != "" && o.Group != group {
+							group = o.Group
+							optionGroup(c, group)
 						}
-					})
-				}
+						e := parts.Item(o.Value).Disabled(o.Disabled).MinHeight(32).Padding(6, 8).Gap(8).
+							Radius(t.Radius * .6).AlignItems(ui.Center).AlignSelf(ui.Stretch).FontSize(14).Label(optionLabel(o))
+						if e.Highlighted() {
+							bg, fg := menu.Highlight(false)
+							e.Background(bg).TextColor(fg)
+						}
+						if o.Disabled {
+							e.Opacity(.5).Cursor(ui.CursorNotAllowed)
+						}
+						e.Children(func() {
+							if p.ItemContent != nil {
+								ui.Row(c).Grow(1).MinWidth(0).Children(func() { p.ItemContent(c, o) })
+							} else {
+								ui.Text(c, optionLabel(o)).Grow(1).SingleLine()
+							}
+							if *selected == o.Value {
+								ui.Icon(c, check).FontSize(14)
+							}
+						})
+					}
+				})
 			})
 		})
 	})
@@ -188,7 +194,6 @@ type ComboboxProps struct {
 
 // Combobox supports free text and filtered value/label suggestions. A chosen option writes its Value.
 func Combobox(c *ui.Context, value *string, p ComboboxProps) ui.Element {
-	t := theme.TokensOf(c)
 	parts := ui.ComboboxBase(c, value)
 	input := styleInput(c, parts.Input, InputProps{Placeholder: p.Placeholder, Label: p.Label, Disabled: p.Disabled, Invalid: p.Invalid}).AutoComplete(ui.AutoCompleteList)
 	composition := ui.Local(input, "combobox-composition", func() comboboxComposition { return comboboxComposition{} })
@@ -208,46 +213,52 @@ func Combobox(c *ui.Context, value *string, p ComboboxProps) ui.Element {
 		}
 	}
 	parts.Popup(func(panel ui.Element) {
+		menu := theme.MenuOf(c).ForScene()
+		t := &menu.Tokens
 		panel.MinWidth(max(float32(160), input.Bounds().W)).MaxHeight(280).Padding(4).Margin(4, 0, 0, 0).
 			Radius(t.Radius*.8).Border(1, t.Border).Background(t.Popover).TextColor(t.PopoverForeground).
-			Shadow(0, 4, 12, 0, ui.RGBA(0, 0, 0, .12)).Transition(motion.Popup(c))
+			Shadow(0, 4, 12, 0, ui.RGBA(0, 0, 0, .12)).Transition(motion.Menu(c))
+		menu.Surface(c, panel)
 		panel.Children(func() {
-			ui.Scroll(c).MaxHeight(272).FillWidth().Children(func() {
-				if len(shown) == 0 {
-					empty := p.EmptyText
-					if empty == "" {
-						empty = "No results found."
-					}
-					ui.Text(c, empty).FontSize(14).Padding(12).TextColor(t.MutedForeground)
-				}
-				group := ""
-				for _, o := range shown {
-					if o.Group != "" && o.Group != group {
-						group = o.Group
-						optionGroup(c, group)
-					}
-					var item ui.Element
-					if o.Disabled {
-						item = ui.Row(c.Key(choiceOptionKey{value: o.Value})).Role(ui.RoleListItem).Disabled(true)
-					} else {
-						item = parts.Item(o.Value)
-					}
-					item.Padding(6, 8).MinHeight(32).
-						Radius(t.Radius * .6).AlignSelf(ui.Stretch).FontSize(14).Label(optionLabel(o))
-					if item.Highlighted() {
-						item.Background(t.Accent).TextColor(t.AccentForeground)
-					}
-					if o.Disabled {
-						item.Opacity(.5)
-					}
-					item.Children(func() {
-						if p.ItemContent != nil {
-							p.ItemContent(c, o)
-						} else {
-							ui.Text(c, optionLabel(o)).SingleLine()
+			ui.Themed(c, menu.Theme()).FillWidth().Children(func() {
+				ui.Scroll(c).MaxHeight(272).FillWidth().Children(func() {
+					if len(shown) == 0 {
+						empty := p.EmptyText
+						if empty == "" {
+							empty = "No results found."
 						}
-					})
-				}
+						ui.Text(c, empty).FontSize(14).Padding(12).TextColor(t.MutedForeground)
+					}
+					group := ""
+					for _, o := range shown {
+						if o.Group != "" && o.Group != group {
+							group = o.Group
+							optionGroup(c, group)
+						}
+						var item ui.Element
+						if o.Disabled {
+							item = ui.Row(c.Key(choiceOptionKey{value: o.Value})).Role(ui.RoleListItem).Disabled(true)
+						} else {
+							item = parts.Item(o.Value)
+						}
+						item.Padding(6, 8).MinHeight(32).
+							Radius(t.Radius * .6).AlignSelf(ui.Stretch).FontSize(14).Label(optionLabel(o))
+						if item.Highlighted() {
+							bg, fg := menu.Highlight(false)
+							item.Background(bg).TextColor(fg)
+						}
+						if o.Disabled {
+							item.Opacity(.5)
+						}
+						item.Children(func() {
+							if p.ItemContent != nil {
+								p.ItemContent(c, o)
+							} else {
+								ui.Text(c, optionLabel(o)).SingleLine()
+							}
+						})
+					}
+				})
 			})
 		})
 	})
@@ -264,7 +275,7 @@ func Combobox(c *ui.Context, value *string, p ComboboxProps) ui.Element {
 }
 
 func optionSeparator(c *ui.Context) {
-	ui.Box(c).Height(1).FillWidth().Margin(4, 0).Background(theme.TokensOf(c).Border).AccessHidden(true)
+	ui.Box(c).Height(1).FillWidth().Margin(4, 0).Background(theme.MenuOf(c).Separator()).AccessHidden(true)
 }
 func optionGroup(c *ui.Context, label string) {
 	ui.Text(c, label).Padding(6, 8).FontSize(12).FontWeight(500).TextColor(theme.TokensOf(c).MutedForeground)
@@ -284,7 +295,6 @@ type MultiComboboxProps struct {
 // search query. Selected values have keyboard-focusable remove buttons; native
 // combo-box semantics retain arrow navigation, IME and clipboard editing.
 func MultiCombobox(c *ui.Context, selected *[]string, query *string, p MultiComboboxProps) ui.Element {
-	t := theme.TokensOf(c)
 	root := ui.Column(c).FillWidth().Gap(6)
 	var input ui.Element
 	handle := ui.Local(root, "shadcn.control.editor-target", func() ui.Handle { return ui.Handle{} })
@@ -334,43 +344,50 @@ func MultiCombobox(c *ui.Context, selected *[]string, query *string, p MultiComb
 			}
 		}
 		parts.Popup(func(panel ui.Element) {
-			panel.MinWidth(max(float32(160), input.Bounds().W)).MaxHeight(280).Padding(4).Margin(4, 0, 0, 0).Radius(t.RadiusMD()).Border(1, t.Border).Background(t.Popover).TextColor(t.PopoverForeground).Transition(motion.Popup(c)).Children(func() {
-				ui.Scroll(c).FillWidth().MaxHeight(272).Children(func() {
-					if len(shown) == 0 {
-						empty := p.EmptyText
-						if empty == "" {
-							empty = "No results found."
-						}
-						ui.Text(c, empty).Padding(12).FontSize(14).TextColor(t.MutedForeground)
-					}
-					group := ""
-					for _, o := range shown {
-						if o.Group != "" && o.Group != group {
-							group = o.Group
-							optionGroup(c, group)
-						}
-						disabled := o.Disabled || p.MaxSelected > 0 && len(*selected) >= p.MaxSelected
-						var item ui.Element
-						if disabled {
-							item = ui.Row(c.Key(choiceOptionKey{value: o.Value})).Role(ui.RoleListItem).Disabled(true)
-						} else {
-							item = parts.Item(o.Value)
-						}
-						item.Label(optionLabel(o)).Padding(6, 8).MinHeight(32).Radius(t.RadiusSM()).AlignSelf(ui.Stretch).FontSize(14)
-						if item.Highlighted() {
-							item.Background(t.Accent).TextColor(t.AccentForeground)
-						}
-						if disabled {
-							item.Opacity(.5)
-						}
-						item.Children(func() {
-							if p.ItemContent != nil {
-								p.ItemContent(c, o)
-							} else {
-								ui.Text(c, optionLabel(o))
+			menu := theme.MenuOf(c).ForScene()
+			t := &menu.Tokens
+			panel.MinWidth(max(float32(160), input.Bounds().W)).MaxHeight(280).Padding(4).Margin(4, 0, 0, 0).Radius(t.RadiusMD()).Border(1, t.Border).Background(t.Popover).TextColor(t.PopoverForeground).Transition(motion.Menu(c))
+			menu.Surface(c, panel)
+			panel.Children(func() {
+				ui.Themed(c, menu.Theme()).FillWidth().Children(func() {
+					ui.Scroll(c).FillWidth().MaxHeight(272).Children(func() {
+						if len(shown) == 0 {
+							empty := p.EmptyText
+							if empty == "" {
+								empty = "No results found."
 							}
-						})
-					}
+							ui.Text(c, empty).Padding(12).FontSize(14).TextColor(t.MutedForeground)
+						}
+						group := ""
+						for _, o := range shown {
+							if o.Group != "" && o.Group != group {
+								group = o.Group
+								optionGroup(c, group)
+							}
+							disabled := o.Disabled || p.MaxSelected > 0 && len(*selected) >= p.MaxSelected
+							var item ui.Element
+							if disabled {
+								item = ui.Row(c.Key(choiceOptionKey{value: o.Value})).Role(ui.RoleListItem).Disabled(true)
+							} else {
+								item = parts.Item(o.Value)
+							}
+							item.Label(optionLabel(o)).Padding(6, 8).MinHeight(32).Radius(t.RadiusSM()).AlignSelf(ui.Stretch).FontSize(14)
+							if item.Highlighted() {
+								bg, fg := menu.Highlight(false)
+								item.Background(bg).TextColor(fg)
+							}
+							if disabled {
+								item.Opacity(.5)
+							}
+							item.Children(func() {
+								if p.ItemContent != nil {
+									p.ItemContent(c, o)
+								} else {
+									ui.Text(c, optionLabel(o))
+								}
+							})
+						}
+					})
 				})
 			})
 		})
