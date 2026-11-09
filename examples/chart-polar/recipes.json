@@ -1,0 +1,1524 @@
+[
+  {
+    "id": "chart-pie-donut-active",
+    "title": "Pie Chart - Donut Active",
+    "arrays": {
+      "chartData": [
+        {
+          "browser": "chrome",
+          "visitors": 275,
+          "fill": "var(--color-chrome)"
+        },
+        {
+          "browser": "safari",
+          "visitors": 200,
+          "fill": "var(--color-safari)"
+        },
+        {
+          "browser": "firefox",
+          "visitors": 187,
+          "fill": "var(--color-firefox)"
+        },
+        {
+          "browser": "edge",
+          "visitors": 173,
+          "fill": "var(--color-edge)"
+        },
+        {
+          "browser": "other",
+          "visitors": 90,
+          "fill": "var(--color-other)"
+        }
+      ]
+    },
+    "colors": {
+      "chrome": 0,
+      "safari": 1,
+      "firefox": 2,
+      "edge": 3,
+      "other": 4
+    },
+    "labels": {
+      "visitors": "Visitors",
+      "chrome": "Chrome",
+      "safari": "Safari",
+      "firefox": "Firefox",
+      "edge": "Edge",
+      "other": "Other"
+    },
+    "margins": {},
+    "height": 250,
+    "series": [
+      "visitors"
+    ]
+  },
+  {
+    "id": "chart-pie-donut-text",
+    "title": "Pie Chart - Donut with Text",
+    "arrays": {
+      "chartData": [
+        {
+          "browser": "chrome",
+          "visitors": 275,
+          "fill": "var(--color-chrome)"
+        },
+        {
+          "browser": "safari",
+          "visitors": 200,
+          "fill": "var(--color-safari)"
+        },
+        {
+          "browser": "firefox",
+          "visitors": 287,
+          "fill": "var(--color-firefox)"
+        },
+        {
+          "browser": "edge",
+          "visitors": 173,
+          "fill": "var(--color-edge)"
+        },
+        {
+          "browser": "other",
+          "visitors": 190,
+          "fill": "var(--color-other)"
+        }
+      ]
+    },
+    "colors": {
+      "chrome": 0,
+      "safari": 1,
+      "firefox": 2,
+      "edge": 3,
+      "other": 4
+    },
+    "labels": {
+      "visitors": "Visitors",
+      "chrome": "Chrome",
+      "safari": "Safari",
+      "firefox": "Firefox",
+      "edge": "Edge",
+      "other": "Other"
+    },
+    "margins": {},
+    "height": 250,
+    "series": [
+      "visitors"
+    ]
+  },
+  {
+    "id": "chart-pie-donut",
+    "title": "Pie Chart - Donut",
+    "arrays": {
+      "chartData": [
+        {
+          "browser": "chrome",
+          "visitors": 275,
+          "fill": "var(--color-chrome)"
+        },
+        {
+          "browser": "safari",
+          "visitors": 200,
+          "fill": "var(--color-safari)"
+        },
+        {
+          "browser": "firefox",
+          "visitors": 187,
+          "fill": "var(--color-firefox)"
+        },
+        {
+          "browser": "edge",
+          "visitors": 173,
+          "fill": "var(--color-edge)"
+        },
+        {
+          "browser": "other",
+          "visitors": 90,
+          "fill": "var(--color-other)"
+        }
+      ]
+    },
+    "colors": {
+      "chrome": 0,
+      "safari": 1,
+      "firefox": 2,
+      "edge": 3,
+      "other": 4
+    },
+    "labels": {
+      "visitors": "Visitors",
+      "chrome": "Chrome",
+      "safari": "Safari",
+      "firefox": "Firefox",
+      "edge": "Edge",
+      "other": "Other"
+    },
+    "margins": {},
+    "height": 250,
+    "series": [
+      "visitors"
+    ]
+  },
+  {
+    "id": "chart-pie-interactive",
+    "title": "Pie Chart - Interactive",
+    "arrays": {
+      "desktopData": [
+        {
+          "month": "january",
+          "desktop": 186,
+          "fill": "var(--color-january)"
+        },
+        {
+          "month": "february",
+          "desktop": 305,
+          "fill": "var(--color-february)"
+        },
+        {
+          "month": "march",
+          "desktop": 237,
+          "fill": "var(--color-march)"
+        },
+        {
+          "month": "april",
+          "desktop": 173,
+          "fill": "var(--color-april)"
+        },
+        {
+          "month": "may",
+          "desktop": 209,
+          "fill": "var(--color-may)"
+        }
+      ]
+    },
+    "colors": {
+      "january": 0,
+      "february": 1,
+      "march": 2,
+      "april": 3,
+      "may": 4
+    },
+    "labels": {
+      "visitors": "Visitors",
+      "desktop": "Desktop",
+      "mobile": "Mobile",
+      "january": "January",
+      "february": "February",
+      "march": "March",
+      "april": "April",
+      "may": "May"
+    },
+    "margins": {},
+    "height": 250,
+    "series": [
+      "desktop"
+    ]
+  },
+  {
+    "id": "chart-pie-label-custom",
+    "title": "Pie Chart - Custom Label",
+    "arrays": {
+      "chartData": [
+        {
+          "browser": "chrome",
+          "visitors": 275,
+          "fill": "var(--color-chrome)"
+        },
+        {
+          "browser": "safari",
+          "visitors": 200,
+          "fill": "var(--color-safari)"
+        },
+        {
+          "browser": "firefox",
+          "visitors": 187,
+          "fill": "var(--color-firefox)"
+        },
+        {
+          "browser": "edge",
+          "visitors": 173,
+          "fill": "var(--color-edge)"
+        },
+        {
+          "browser": "other",
+          "visitors": 90,
+          "fill": "var(--color-other)"
+        }
+      ]
+    },
+    "colors": {
+      "chrome": 0,
+      "safari": 1,
+      "firefox": 2,
+      "edge": 3,
+      "other": 4
+    },
+    "labels": {
+      "visitors": "Visitors",
+      "chrome": "Chrome",
+      "safari": "Safari",
+      "firefox": "Firefox",
+      "edge": "Edge",
+      "other": "Other"
+    },
+    "margins": {},
+    "height": 250,
+    "series": [
+      "visitors"
+    ]
+  },
+  {
+    "id": "chart-pie-label-list",
+    "title": "Pie Chart - Label List",
+    "arrays": {
+      "chartData": [
+        {
+          "browser": "chrome",
+          "visitors": 275,
+          "fill": "var(--color-chrome)"
+        },
+        {
+          "browser": "safari",
+          "visitors": 200,
+          "fill": "var(--color-safari)"
+        },
+        {
+          "browser": "firefox",
+          "visitors": 187,
+          "fill": "var(--color-firefox)"
+        },
+        {
+          "browser": "edge",
+          "visitors": 173,
+          "fill": "var(--color-edge)"
+        },
+        {
+          "browser": "other",
+          "visitors": 90,
+          "fill": "var(--color-other)"
+        }
+      ]
+    },
+    "colors": {
+      "chrome": 0,
+      "safari": 1,
+      "firefox": 2,
+      "edge": 3,
+      "other": 4
+    },
+    "labels": {
+      "visitors": "Visitors",
+      "chrome": "Chrome",
+      "safari": "Safari",
+      "firefox": "Firefox",
+      "edge": "Edge",
+      "other": "Other"
+    },
+    "margins": {},
+    "height": 250,
+    "series": [
+      "visitors"
+    ]
+  },
+  {
+    "id": "chart-pie-label",
+    "title": "Pie Chart - Label",
+    "arrays": {
+      "chartData": [
+        {
+          "browser": "chrome",
+          "visitors": 275,
+          "fill": "var(--color-chrome)"
+        },
+        {
+          "browser": "safari",
+          "visitors": 200,
+          "fill": "var(--color-safari)"
+        },
+        {
+          "browser": "firefox",
+          "visitors": 187,
+          "fill": "var(--color-firefox)"
+        },
+        {
+          "browser": "edge",
+          "visitors": 173,
+          "fill": "var(--color-edge)"
+        },
+        {
+          "browser": "other",
+          "visitors": 90,
+          "fill": "var(--color-other)"
+        }
+      ]
+    },
+    "colors": {
+      "chrome": 0,
+      "safari": 1,
+      "firefox": 2,
+      "edge": 3,
+      "other": 4
+    },
+    "labels": {
+      "visitors": "Visitors",
+      "chrome": "Chrome",
+      "safari": "Safari",
+      "firefox": "Firefox",
+      "edge": "Edge",
+      "other": "Other"
+    },
+    "margins": {},
+    "height": 250,
+    "series": [
+      "visitors"
+    ]
+  },
+  {
+    "id": "chart-pie-legend",
+    "title": "Pie Chart - Legend",
+    "arrays": {
+      "chartData": [
+        {
+          "browser": "chrome",
+          "visitors": 275,
+          "fill": "var(--color-chrome)"
+        },
+        {
+          "browser": "safari",
+          "visitors": 200,
+          "fill": "var(--color-safari)"
+        },
+        {
+          "browser": "firefox",
+          "visitors": 187,
+          "fill": "var(--color-firefox)"
+        },
+        {
+          "browser": "edge",
+          "visitors": 173,
+          "fill": "var(--color-edge)"
+        },
+        {
+          "browser": "other",
+          "visitors": 90,
+          "fill": "var(--color-other)"
+        }
+      ]
+    },
+    "colors": {
+      "chrome": 0,
+      "safari": 1,
+      "firefox": 2,
+      "edge": 3,
+      "other": 4
+    },
+    "labels": {
+      "visitors": "Visitors",
+      "chrome": "Chrome",
+      "safari": "Safari",
+      "firefox": "Firefox",
+      "edge": "Edge",
+      "other": "Other"
+    },
+    "margins": {},
+    "height": 300,
+    "series": [
+      "visitors"
+    ]
+  },
+  {
+    "id": "chart-pie-separator-none",
+    "title": "Pie Chart - Separator None",
+    "arrays": {
+      "chartData": [
+        {
+          "browser": "chrome",
+          "visitors": 275,
+          "fill": "var(--color-chrome)"
+        },
+        {
+          "browser": "safari",
+          "visitors": 200,
+          "fill": "var(--color-safari)"
+        },
+        {
+          "browser": "firefox",
+          "visitors": 187,
+          "fill": "var(--color-firefox)"
+        },
+        {
+          "browser": "edge",
+          "visitors": 173,
+          "fill": "var(--color-edge)"
+        },
+        {
+          "browser": "other",
+          "visitors": 90,
+          "fill": "var(--color-other)"
+        }
+      ]
+    },
+    "colors": {
+      "chrome": 0,
+      "safari": 1,
+      "firefox": 2,
+      "edge": 3,
+      "other": 4
+    },
+    "labels": {
+      "visitors": "Visitors",
+      "chrome": "Chrome",
+      "safari": "Safari",
+      "firefox": "Firefox",
+      "edge": "Edge",
+      "other": "Other"
+    },
+    "margins": {},
+    "height": 250,
+    "series": [
+      "visitors"
+    ]
+  },
+  {
+    "id": "chart-pie-simple",
+    "title": "Pie Chart",
+    "arrays": {
+      "chartData": [
+        {
+          "browser": "chrome",
+          "visitors": 275,
+          "fill": "var(--color-chrome)"
+        },
+        {
+          "browser": "safari",
+          "visitors": 200,
+          "fill": "var(--color-safari)"
+        },
+        {
+          "browser": "firefox",
+          "visitors": 187,
+          "fill": "var(--color-firefox)"
+        },
+        {
+          "browser": "edge",
+          "visitors": 173,
+          "fill": "var(--color-edge)"
+        },
+        {
+          "browser": "other",
+          "visitors": 90,
+          "fill": "var(--color-other)"
+        }
+      ]
+    },
+    "colors": {
+      "chrome": 0,
+      "safari": 1,
+      "firefox": 2,
+      "edge": 3,
+      "other": 4
+    },
+    "labels": {
+      "visitors": "Visitors",
+      "chrome": "Chrome",
+      "safari": "Safari",
+      "firefox": "Firefox",
+      "edge": "Edge",
+      "other": "Other"
+    },
+    "margins": {},
+    "height": 250,
+    "series": [
+      "visitors"
+    ]
+  },
+  {
+    "id": "chart-pie-stacked",
+    "title": "Pie Chart - Stacked",
+    "arrays": {
+      "desktopData": [
+        {
+          "month": "january",
+          "desktop": 186,
+          "fill": "var(--color-january)"
+        },
+        {
+          "month": "february",
+          "desktop": 305,
+          "fill": "var(--color-february)"
+        },
+        {
+          "month": "march",
+          "desktop": 237,
+          "fill": "var(--color-march)"
+        },
+        {
+          "month": "april",
+          "desktop": 173,
+          "fill": "var(--color-april)"
+        },
+        {
+          "month": "may",
+          "desktop": 209,
+          "fill": "var(--color-may)"
+        }
+      ],
+      "mobileData": [
+        {
+          "month": "january",
+          "mobile": 80,
+          "fill": "var(--color-january)"
+        },
+        {
+          "month": "february",
+          "mobile": 200,
+          "fill": "var(--color-february)"
+        },
+        {
+          "month": "march",
+          "mobile": 120,
+          "fill": "var(--color-march)"
+        },
+        {
+          "month": "april",
+          "mobile": 190,
+          "fill": "var(--color-april)"
+        },
+        {
+          "month": "may",
+          "mobile": 130,
+          "fill": "var(--color-may)"
+        }
+      ]
+    },
+    "colors": {
+      "january": 0,
+      "february": 1,
+      "march": 2,
+      "april": 3,
+      "may": 4
+    },
+    "labels": {
+      "visitors": "Visitors",
+      "desktop": "Desktop",
+      "mobile": "Mobile",
+      "january": "January",
+      "february": "February",
+      "march": "March",
+      "april": "April",
+      "may": "May"
+    },
+    "margins": {},
+    "height": 250,
+    "series": [
+      "desktop",
+      "mobile"
+    ]
+  },
+  {
+    "id": "chart-radar-default",
+    "title": "Radar Chart",
+    "arrays": {
+      "chartData": [
+        {
+          "month": "January",
+          "desktop": 186
+        },
+        {
+          "month": "February",
+          "desktop": 305
+        },
+        {
+          "month": "March",
+          "desktop": 237
+        },
+        {
+          "month": "April",
+          "desktop": 273
+        },
+        {
+          "month": "May",
+          "desktop": 209
+        },
+        {
+          "month": "June",
+          "desktop": 214
+        }
+      ]
+    },
+    "colors": {
+      "desktop": 0
+    },
+    "labels": {
+      "desktop": "Desktop"
+    },
+    "margins": {},
+    "height": 250,
+    "series": [
+      "desktop"
+    ]
+  },
+  {
+    "id": "chart-radar-dots",
+    "title": "Radar Chart - Dots",
+    "arrays": {
+      "chartData": [
+        {
+          "month": "January",
+          "desktop": 186
+        },
+        {
+          "month": "February",
+          "desktop": 305
+        },
+        {
+          "month": "March",
+          "desktop": 237
+        },
+        {
+          "month": "April",
+          "desktop": 273
+        },
+        {
+          "month": "May",
+          "desktop": 209
+        },
+        {
+          "month": "June",
+          "desktop": 214
+        }
+      ]
+    },
+    "colors": {
+      "desktop": 0
+    },
+    "labels": {
+      "desktop": "Desktop"
+    },
+    "margins": {},
+    "height": 250,
+    "series": [
+      "desktop"
+    ]
+  },
+  {
+    "id": "chart-radar-grid-circle-fill",
+    "title": "Radar Chart - Grid Circle Filled",
+    "arrays": {
+      "chartData": [
+        {
+          "month": "January",
+          "desktop": 186
+        },
+        {
+          "month": "February",
+          "desktop": 285
+        },
+        {
+          "month": "March",
+          "desktop": 237
+        },
+        {
+          "month": "April",
+          "desktop": 203
+        },
+        {
+          "month": "May",
+          "desktop": 209
+        },
+        {
+          "month": "June",
+          "desktop": 264
+        }
+      ]
+    },
+    "colors": {
+      "desktop": 0
+    },
+    "labels": {
+      "desktop": "Desktop"
+    },
+    "margins": {},
+    "height": 250,
+    "series": [
+      "desktop"
+    ]
+  },
+  {
+    "id": "chart-radar-grid-circle-no-lines",
+    "title": "Radar Chart - Grid Circle - No lines",
+    "arrays": {
+      "chartData": [
+        {
+          "month": "January",
+          "desktop": 186
+        },
+        {
+          "month": "February",
+          "desktop": 305
+        },
+        {
+          "month": "March",
+          "desktop": 237
+        },
+        {
+          "month": "April",
+          "desktop": 203
+        },
+        {
+          "month": "May",
+          "desktop": 209
+        },
+        {
+          "month": "June",
+          "desktop": 214
+        }
+      ]
+    },
+    "colors": {
+      "desktop": 0
+    },
+    "labels": {
+      "desktop": "Desktop"
+    },
+    "margins": {},
+    "height": 250,
+    "series": [
+      "desktop"
+    ]
+  },
+  {
+    "id": "chart-radar-grid-circle",
+    "title": "Radar Chart - Grid Circle",
+    "arrays": {
+      "chartData": [
+        {
+          "month": "January",
+          "desktop": 186
+        },
+        {
+          "month": "February",
+          "desktop": 305
+        },
+        {
+          "month": "March",
+          "desktop": 237
+        },
+        {
+          "month": "April",
+          "desktop": 273
+        },
+        {
+          "month": "May",
+          "desktop": 209
+        },
+        {
+          "month": "June",
+          "desktop": 214
+        }
+      ]
+    },
+    "colors": {
+      "desktop": 0
+    },
+    "labels": {
+      "desktop": "Desktop"
+    },
+    "margins": {},
+    "height": 250,
+    "series": [
+      "desktop"
+    ]
+  },
+  {
+    "id": "chart-radar-grid-custom",
+    "title": "Radar Chart - Grid Custom",
+    "arrays": {
+      "chartData": [
+        {
+          "month": "January",
+          "desktop": 186
+        },
+        {
+          "month": "February",
+          "desktop": 305
+        },
+        {
+          "month": "March",
+          "desktop": 237
+        },
+        {
+          "month": "April",
+          "desktop": 273
+        },
+        {
+          "month": "May",
+          "desktop": 209
+        },
+        {
+          "month": "June",
+          "desktop": 214
+        }
+      ]
+    },
+    "colors": {
+      "desktop": 0
+    },
+    "labels": {
+      "desktop": "Desktop"
+    },
+    "margins": {},
+    "height": 250,
+    "series": [
+      "desktop"
+    ]
+  },
+  {
+    "id": "chart-radar-grid-fill",
+    "title": "Radar Chart - Grid Filled",
+    "arrays": {
+      "chartData": [
+        {
+          "month": "January",
+          "desktop": 186
+        },
+        {
+          "month": "February",
+          "desktop": 285
+        },
+        {
+          "month": "March",
+          "desktop": 237
+        },
+        {
+          "month": "April",
+          "desktop": 203
+        },
+        {
+          "month": "May",
+          "desktop": 209
+        },
+        {
+          "month": "June",
+          "desktop": 264
+        }
+      ]
+    },
+    "colors": {
+      "desktop": 0
+    },
+    "labels": {
+      "desktop": "Desktop"
+    },
+    "margins": {},
+    "height": 250,
+    "series": [
+      "desktop"
+    ]
+  },
+  {
+    "id": "chart-radar-grid-none",
+    "title": "Radar Chart - Grid None",
+    "arrays": {
+      "chartData": [
+        {
+          "month": "January",
+          "desktop": 186
+        },
+        {
+          "month": "February",
+          "desktop": 305
+        },
+        {
+          "month": "March",
+          "desktop": 237
+        },
+        {
+          "month": "April",
+          "desktop": 273
+        },
+        {
+          "month": "May",
+          "desktop": 209
+        },
+        {
+          "month": "June",
+          "desktop": 214
+        }
+      ]
+    },
+    "colors": {
+      "desktop": 0
+    },
+    "labels": {
+      "desktop": "Desktop"
+    },
+    "margins": {},
+    "height": 250,
+    "series": [
+      "desktop"
+    ]
+  },
+  {
+    "id": "chart-radar-icons",
+    "title": "Radar Chart - Icons",
+    "arrays": {
+      "chartData": [
+        {
+          "month": "January",
+          "desktop": 186,
+          "mobile": 80
+        },
+        {
+          "month": "February",
+          "desktop": 305,
+          "mobile": 200
+        },
+        {
+          "month": "March",
+          "desktop": 237,
+          "mobile": 120
+        },
+        {
+          "month": "April",
+          "desktop": 73,
+          "mobile": 190
+        },
+        {
+          "month": "May",
+          "desktop": 209,
+          "mobile": 130
+        },
+        {
+          "month": "June",
+          "desktop": 214,
+          "mobile": 140
+        }
+      ]
+    },
+    "colors": {
+      "desktop": 0,
+      "mobile": 1
+    },
+    "labels": {
+      "desktop": "Desktop",
+      "mobile": "Mobile"
+    },
+    "margins": {
+      "top": -40.0,
+      "bottom": -10.0,
+      "left": 0.0,
+      "right": 0.0
+    },
+    "height": 250,
+    "series": [
+      "desktop",
+      "mobile"
+    ]
+  },
+  {
+    "id": "chart-radar-label-custom",
+    "title": "Radar Chart - Custom Label",
+    "arrays": {
+      "chartData": [
+        {
+          "month": "January",
+          "desktop": 186,
+          "mobile": 80
+        },
+        {
+          "month": "February",
+          "desktop": 305,
+          "mobile": 200
+        },
+        {
+          "month": "March",
+          "desktop": 237,
+          "mobile": 120
+        },
+        {
+          "month": "April",
+          "desktop": 73,
+          "mobile": 190
+        },
+        {
+          "month": "May",
+          "desktop": 209,
+          "mobile": 130
+        },
+        {
+          "month": "June",
+          "desktop": 214,
+          "mobile": 140
+        }
+      ]
+    },
+    "colors": {
+      "desktop": 0,
+      "mobile": 1
+    },
+    "labels": {
+      "desktop": "Desktop",
+      "mobile": "Mobile"
+    },
+    "margins": {
+      "top": 10.0,
+      "right": 10.0,
+      "bottom": 10.0,
+      "left": 10.0
+    },
+    "height": 250,
+    "series": [
+      "desktop",
+      "mobile"
+    ]
+  },
+  {
+    "id": "chart-radar-legend",
+    "title": "Radar Chart - Legend",
+    "arrays": {
+      "chartData": [
+        {
+          "month": "January",
+          "desktop": 186,
+          "mobile": 80
+        },
+        {
+          "month": "February",
+          "desktop": 305,
+          "mobile": 200
+        },
+        {
+          "month": "March",
+          "desktop": 237,
+          "mobile": 120
+        },
+        {
+          "month": "April",
+          "desktop": 73,
+          "mobile": 190
+        },
+        {
+          "month": "May",
+          "desktop": 209,
+          "mobile": 130
+        },
+        {
+          "month": "June",
+          "desktop": 214,
+          "mobile": 140
+        }
+      ]
+    },
+    "colors": {
+      "desktop": 0,
+      "mobile": 1
+    },
+    "labels": {
+      "desktop": "Desktop",
+      "mobile": "Mobile"
+    },
+    "margins": {
+      "top": -40.0,
+      "bottom": -10.0,
+      "left": 0.0,
+      "right": 0.0
+    },
+    "height": 250,
+    "series": [
+      "desktop",
+      "mobile"
+    ]
+  },
+  {
+    "id": "chart-radar-lines-only",
+    "title": "Radar Chart - Lines Only",
+    "arrays": {
+      "chartData": [
+        {
+          "month": "January",
+          "desktop": 186,
+          "mobile": 160
+        },
+        {
+          "month": "February",
+          "desktop": 185,
+          "mobile": 170
+        },
+        {
+          "month": "March",
+          "desktop": 207,
+          "mobile": 180
+        },
+        {
+          "month": "April",
+          "desktop": 173,
+          "mobile": 160
+        },
+        {
+          "month": "May",
+          "desktop": 160,
+          "mobile": 190
+        },
+        {
+          "month": "June",
+          "desktop": 174,
+          "mobile": 204
+        }
+      ]
+    },
+    "colors": {
+      "desktop": 0,
+      "mobile": 1
+    },
+    "labels": {
+      "desktop": "Desktop",
+      "mobile": "Mobile"
+    },
+    "margins": {},
+    "height": 250,
+    "series": [
+      "desktop",
+      "mobile"
+    ]
+  },
+  {
+    "id": "chart-radar-multiple",
+    "title": "Radar Chart - Multiple",
+    "arrays": {
+      "chartData": [
+        {
+          "month": "January",
+          "desktop": 186,
+          "mobile": 80
+        },
+        {
+          "month": "February",
+          "desktop": 305,
+          "mobile": 200
+        },
+        {
+          "month": "March",
+          "desktop": 237,
+          "mobile": 120
+        },
+        {
+          "month": "April",
+          "desktop": 73,
+          "mobile": 190
+        },
+        {
+          "month": "May",
+          "desktop": 209,
+          "mobile": 130
+        },
+        {
+          "month": "June",
+          "desktop": 214,
+          "mobile": 140
+        }
+      ]
+    },
+    "colors": {
+      "desktop": 0,
+      "mobile": 1
+    },
+    "labels": {
+      "desktop": "Desktop",
+      "mobile": "Mobile"
+    },
+    "margins": {},
+    "height": 250,
+    "series": [
+      "desktop",
+      "mobile"
+    ]
+  },
+  {
+    "id": "chart-radar-radius",
+    "title": "Radar Chart - Radius Axis",
+    "arrays": {
+      "chartData": [
+        {
+          "month": "January",
+          "desktop": 186,
+          "mobile": 80
+        },
+        {
+          "month": "February",
+          "desktop": 305,
+          "mobile": 200
+        },
+        {
+          "month": "March",
+          "desktop": 237,
+          "mobile": 120
+        },
+        {
+          "month": "April",
+          "desktop": 73,
+          "mobile": 190
+        },
+        {
+          "month": "May",
+          "desktop": 209,
+          "mobile": 130
+        },
+        {
+          "month": "June",
+          "desktop": 214,
+          "mobile": 140
+        }
+      ]
+    },
+    "colors": {
+      "desktop": 0,
+      "mobile": 1
+    },
+    "labels": {
+      "desktop": "Desktop",
+      "mobile": "Mobile"
+    },
+    "margins": {},
+    "height": 250,
+    "series": [
+      "desktop",
+      "mobile"
+    ]
+  },
+  {
+    "id": "chart-radial-grid",
+    "title": "Radial Chart - Grid",
+    "arrays": {
+      "chartData": [
+        {
+          "browser": "chrome",
+          "visitors": 275,
+          "fill": "var(--color-chrome)"
+        },
+        {
+          "browser": "safari",
+          "visitors": 200,
+          "fill": "var(--color-safari)"
+        },
+        {
+          "browser": "firefox",
+          "visitors": 187,
+          "fill": "var(--color-firefox)"
+        },
+        {
+          "browser": "edge",
+          "visitors": 173,
+          "fill": "var(--color-edge)"
+        },
+        {
+          "browser": "other",
+          "visitors": 90,
+          "fill": "var(--color-other)"
+        }
+      ]
+    },
+    "colors": {
+      "chrome": 0,
+      "safari": 1,
+      "firefox": 2,
+      "edge": 3,
+      "other": 4
+    },
+    "labels": {
+      "visitors": "Visitors",
+      "chrome": "Chrome",
+      "safari": "Safari",
+      "firefox": "Firefox",
+      "edge": "Edge",
+      "other": "Other"
+    },
+    "margins": {},
+    "height": 250,
+    "series": [
+      "visitors"
+    ]
+  },
+  {
+    "id": "chart-radial-label",
+    "title": "Radial Chart - Label",
+    "arrays": {
+      "chartData": [
+        {
+          "browser": "chrome",
+          "visitors": 275,
+          "fill": "var(--color-chrome)"
+        },
+        {
+          "browser": "safari",
+          "visitors": 200,
+          "fill": "var(--color-safari)"
+        },
+        {
+          "browser": "firefox",
+          "visitors": 187,
+          "fill": "var(--color-firefox)"
+        },
+        {
+          "browser": "edge",
+          "visitors": 173,
+          "fill": "var(--color-edge)"
+        },
+        {
+          "browser": "other",
+          "visitors": 90,
+          "fill": "var(--color-other)"
+        }
+      ]
+    },
+    "colors": {
+      "chrome": 0,
+      "safari": 1,
+      "firefox": 2,
+      "edge": 3,
+      "other": 4
+    },
+    "labels": {
+      "visitors": "Visitors",
+      "chrome": "Chrome",
+      "safari": "Safari",
+      "firefox": "Firefox",
+      "edge": "Edge",
+      "other": "Other"
+    },
+    "margins": {},
+    "height": 250,
+    "series": [
+      "visitors"
+    ]
+  },
+  {
+    "id": "chart-radial-shape",
+    "title": "Radial Chart - Shape",
+    "arrays": {
+      "chartData": [
+        {
+          "browser": "safari",
+          "visitors": 1260,
+          "fill": "var(--color-safari)"
+        }
+      ]
+    },
+    "colors": {
+      "safari": 1
+    },
+    "labels": {
+      "visitors": "Visitors",
+      "safari": "Safari"
+    },
+    "margins": {},
+    "height": 250,
+    "series": [
+      "visitors"
+    ]
+  },
+  {
+    "id": "chart-radial-simple",
+    "title": "Radial Chart",
+    "arrays": {
+      "chartData": [
+        {
+          "browser": "chrome",
+          "visitors": 275,
+          "fill": "var(--color-chrome)"
+        },
+        {
+          "browser": "safari",
+          "visitors": 200,
+          "fill": "var(--color-safari)"
+        },
+        {
+          "browser": "firefox",
+          "visitors": 187,
+          "fill": "var(--color-firefox)"
+        },
+        {
+          "browser": "edge",
+          "visitors": 173,
+          "fill": "var(--color-edge)"
+        },
+        {
+          "browser": "other",
+          "visitors": 90,
+          "fill": "var(--color-other)"
+        }
+      ]
+    },
+    "colors": {
+      "chrome": 0,
+      "safari": 1,
+      "firefox": 2,
+      "edge": 3,
+      "other": 4
+    },
+    "labels": {
+      "visitors": "Visitors",
+      "chrome": "Chrome",
+      "safari": "Safari",
+      "firefox": "Firefox",
+      "edge": "Edge",
+      "other": "Other"
+    },
+    "margins": {},
+    "height": 250,
+    "series": [
+      "visitors"
+    ]
+  },
+  {
+    "id": "chart-radial-stacked",
+    "title": "Radial Chart - Stacked",
+    "arrays": {
+      "chartData": [
+        {
+          "month": "january",
+          "mobile": 570,
+          "desktop": 1260
+        }
+      ]
+    },
+    "colors": {
+      "desktop": 0,
+      "mobile": 1
+    },
+    "labels": {
+      "desktop": "Desktop",
+      "mobile": "Mobile"
+    },
+    "margins": {},
+    "height": 250,
+    "series": [
+      "mobile",
+      "desktop"
+    ]
+  },
+  {
+    "id": "chart-radial-text",
+    "title": "Radial Chart - Text",
+    "arrays": {
+      "chartData": [
+        {
+          "browser": "safari",
+          "visitors": 200,
+          "fill": "var(--color-safari)"
+        }
+      ]
+    },
+    "colors": {
+      "safari": 1
+    },
+    "labels": {
+      "visitors": "Visitors",
+      "safari": "Safari"
+    },
+    "margins": {},
+    "height": 250,
+    "series": [
+      "visitors"
+    ]
+  }
+]

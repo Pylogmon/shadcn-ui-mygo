@@ -86,9 +86,12 @@ type ChartProps struct {
 	Kind        ChartKind
 	Orientation ChartOrientation
 	Cartesian   ChartCartesianProps
-	Animation   ChartAnimationProps
-	Height      float32
-	Label       string
+	// Polar nil preserves the legacy polar profile; a non-nil configuration
+	// enables source-oriented degrees, radii, sectors, axes and native content.
+	Polar     *ChartPolarProps
+	Animation ChartAnimationProps
+	Height    float32
+	Label     string
 	// Stacked uses diverging stacks for bars/areas and concentric rings for
 	// pies/donuts. Normalized uses shares of each category's total absolute
 	// magnitude, preserving diverging positive/negative sides.
@@ -831,6 +834,9 @@ func (paint polarPaintSnapshot) draw(painter *ui.Painter, r ui.Rect) {
 }
 
 func polarChart(c *ui.Context, p ChartProps, selected *int, height float32) ui.Element {
+	if p.Polar != nil {
+		return chartSourcePolar(c, p, selected, height)
+	}
 	t := theme.TokensOf(c)
 	label := p.Label
 	if label == "" {

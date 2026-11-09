@@ -94,6 +94,11 @@ type ChartLabelProps struct {
 // before Draw. BarContent can style or draw over the real native bar element.
 // Callbacks are build-only and never stored in the geometry animation state.
 type ChartSeriesStyle struct {
+	// Polar supplies per-ring radii, sector layers and polar labels.
+	// FillOpacity, Stroke, StrokeWidth, Dots and ActiveDot are also used by
+	// the source polar profile. Curves, gradients, bar corners and Cartesian
+	// Labels remain Cartesian options.
+	Polar           *ChartPolarSeriesProps
 	Curve           *ChartCurve
 	FillOpacity     *float32
 	Stroke          *ui.Color

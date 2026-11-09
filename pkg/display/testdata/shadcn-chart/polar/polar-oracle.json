@@ -1,0 +1,579 @@
+{
+  "source": "recharts3.8.0 c04a79039ebc4d5057de163298d2e9917a5e5a66",
+  "method": "direct complete official CJS modules with inert React/state dependencies",
+  "executedModules": [
+    "polar/Pie.js",
+    "util/PolarUtils.js",
+    "util/DataUtils.js",
+    "util/round.js",
+    "util/ChartUtils.js",
+    "util/getSliced.js",
+    "util/isWellBehavedNumber.js",
+    "util/resolveDefaultProps.js",
+    "polar/Radar.js",
+    "polar/RadialBar.js",
+    "shape/Sector.js",
+    "util/scale/getNiceTickValues.js",
+    "util/scale/util/arithmetic.js",
+    "util/getActiveCoordinate.js"
+  ],
+  "axisHitCases": [
+    {
+      "point": {
+        "relativeX": 48,
+        "relativeY": 125
+      },
+      "viewBox": {
+        "cx": 150,
+        "cy": 125,
+        "innerRadius": 30,
+        "outerRadius": 110,
+        "startAngle": 0,
+        "endAngle": 360
+      },
+      "expected": 4
+    },
+    {
+      "point": {
+        "relativeX": 150,
+        "relativeY": 175
+      },
+      "viewBox": {
+        "cx": 150,
+        "cy": 125,
+        "innerRadius": 30,
+        "outerRadius": 110,
+        "startAngle": 0,
+        "endAngle": 360
+      },
+      "expected": 1
+    }
+  ],
+  "pieCases": [
+    {
+      "settings": {
+        "name": "pie",
+        "innerRadius": 0,
+        "outerRadius": "80%"
+      },
+      "result": [
+        {
+          "cx": 150,
+          "cy": 125,
+          "innerRadius": 0,
+          "outerRadius": 96,
+          "startAngle": 0,
+          "endAngle": 107.02702702702703,
+          "value": 275
+        },
+        {
+          "cx": 150,
+          "cy": 125,
+          "innerRadius": 0,
+          "outerRadius": 96,
+          "startAngle": 107.02702702702703,
+          "endAngle": 184.86486486486487,
+          "value": 200
+        },
+        {
+          "cx": 150,
+          "cy": 125,
+          "innerRadius": 0,
+          "outerRadius": 96,
+          "startAngle": 184.86486486486487,
+          "endAngle": 257.64324324324326,
+          "value": 187
+        },
+        {
+          "cx": 150,
+          "cy": 125,
+          "innerRadius": 0,
+          "outerRadius": 96,
+          "startAngle": 257.64324324324326,
+          "endAngle": 324.972972972973,
+          "value": 173
+        },
+        {
+          "cx": 150,
+          "cy": 125,
+          "innerRadius": 0,
+          "outerRadius": 96,
+          "startAngle": 324.972972972973,
+          "endAngle": 360.00000000000006,
+          "value": 90
+        }
+      ]
+    },
+    {
+      "settings": {
+        "name": "donut60",
+        "innerRadius": 60,
+        "outerRadius": "80%"
+      },
+      "result": [
+        {
+          "cx": 150,
+          "cy": 125,
+          "innerRadius": 60,
+          "outerRadius": 96,
+          "startAngle": 0,
+          "endAngle": 107.02702702702703,
+          "value": 275
+        },
+        {
+          "cx": 150,
+          "cy": 125,
+          "innerRadius": 60,
+          "outerRadius": 96,
+          "startAngle": 107.02702702702703,
+          "endAngle": 184.86486486486487,
+          "value": 200
+        },
+        {
+          "cx": 150,
+          "cy": 125,
+          "innerRadius": 60,
+          "outerRadius": 96,
+          "startAngle": 184.86486486486487,
+          "endAngle": 257.64324324324326,
+          "value": 187
+        },
+        {
+          "cx": 150,
+          "cy": 125,
+          "innerRadius": 60,
+          "outerRadius": 96,
+          "startAngle": 257.64324324324326,
+          "endAngle": 324.972972972973,
+          "value": 173
+        },
+        {
+          "cx": 150,
+          "cy": 125,
+          "innerRadius": 60,
+          "outerRadius": 96,
+          "startAngle": 324.972972972973,
+          "endAngle": 360.00000000000006,
+          "value": 90
+        }
+      ]
+    },
+    {
+      "settings": {
+        "name": "inner-ring",
+        "innerRadius": 0,
+        "outerRadius": 60
+      },
+      "result": [
+        {
+          "cx": 150,
+          "cy": 125,
+          "innerRadius": 0,
+          "outerRadius": 60,
+          "startAngle": 0,
+          "endAngle": 107.02702702702703,
+          "value": 275
+        },
+        {
+          "cx": 150,
+          "cy": 125,
+          "innerRadius": 0,
+          "outerRadius": 60,
+          "startAngle": 107.02702702702703,
+          "endAngle": 184.86486486486487,
+          "value": 200
+        },
+        {
+          "cx": 150,
+          "cy": 125,
+          "innerRadius": 0,
+          "outerRadius": 60,
+          "startAngle": 184.86486486486487,
+          "endAngle": 257.64324324324326,
+          "value": 187
+        },
+        {
+          "cx": 150,
+          "cy": 125,
+          "innerRadius": 0,
+          "outerRadius": 60,
+          "startAngle": 257.64324324324326,
+          "endAngle": 324.972972972973,
+          "value": 173
+        },
+        {
+          "cx": 150,
+          "cy": 125,
+          "innerRadius": 0,
+          "outerRadius": 60,
+          "startAngle": 324.972972972973,
+          "endAngle": 360.00000000000006,
+          "value": 90
+        }
+      ]
+    },
+    {
+      "settings": {
+        "name": "outer-ring",
+        "innerRadius": 70,
+        "outerRadius": 90
+      },
+      "result": [
+        {
+          "cx": 150,
+          "cy": 125,
+          "innerRadius": 70,
+          "outerRadius": 90,
+          "startAngle": 0,
+          "endAngle": 107.02702702702703,
+          "value": 275
+        },
+        {
+          "cx": 150,
+          "cy": 125,
+          "innerRadius": 70,
+          "outerRadius": 90,
+          "startAngle": 107.02702702702703,
+          "endAngle": 184.86486486486487,
+          "value": 200
+        },
+        {
+          "cx": 150,
+          "cy": 125,
+          "innerRadius": 70,
+          "outerRadius": 90,
+          "startAngle": 184.86486486486487,
+          "endAngle": 257.64324324324326,
+          "value": 187
+        },
+        {
+          "cx": 150,
+          "cy": 125,
+          "innerRadius": 70,
+          "outerRadius": 90,
+          "startAngle": 257.64324324324326,
+          "endAngle": 324.972972972973,
+          "value": 173
+        },
+        {
+          "cx": 150,
+          "cy": 125,
+          "innerRadius": 70,
+          "outerRadius": 90,
+          "startAngle": 324.972972972973,
+          "endAngle": 360.00000000000006,
+          "value": 90
+        }
+      ]
+    }
+  ],
+  "radar": {
+    "ticks": [
+      0,
+      80,
+      160,
+      240,
+      320
+    ],
+    "result": [
+      {
+        "x": 150,
+        "y": 69.2,
+        "radius": 55.8,
+        "angle": 90,
+        "value": 186
+      },
+      {
+        "x": 229.24132444627614,
+        "y": 79.25,
+        "radius": 91.5,
+        "angle": 30,
+        "value": 305
+      },
+      {
+        "x": 211.57440620907357,
+        "y": 160.54999999999998,
+        "radius": 71.1,
+        "angle": -30,
+        "value": 237
+      },
+      {
+        "x": 150,
+        "y": 146.9,
+        "radius": 21.9,
+        "angle": -90,
+        "value": 73
+      },
+      {
+        "x": 95.7002071827157,
+        "y": 156.35,
+        "radius": 62.7,
+        "angle": -150,
+        "value": 209
+      },
+      {
+        "x": 94.40116907703904,
+        "y": 92.89999999999999,
+        "radius": 64.2,
+        "angle": -210,
+        "value": 214
+      }
+    ]
+  },
+  "radialCases": [
+    {
+      "start": 0,
+      "end": 360,
+      "inner": 30,
+      "outer": 110,
+      "maximum": 275,
+      "result": [
+        {
+          "innerRadius": 31.6,
+          "outerRadius": 44.400000000000006,
+          "startAngle": 0,
+          "endAngle": 360,
+          "value": 275
+        },
+        {
+          "innerRadius": 47.6,
+          "outerRadius": 60.400000000000006,
+          "startAngle": 0,
+          "endAngle": 261.8181818181818,
+          "value": 200
+        },
+        {
+          "innerRadius": 63.6,
+          "outerRadius": 76.4,
+          "startAngle": 0,
+          "endAngle": 244.8,
+          "value": 187
+        },
+        {
+          "innerRadius": 79.6,
+          "outerRadius": 92.39999999999999,
+          "startAngle": 0,
+          "endAngle": 226.47272727272727,
+          "value": 173
+        },
+        {
+          "innerRadius": 95.6,
+          "outerRadius": 108.39999999999999,
+          "startAngle": 0,
+          "endAngle": 117.81818181818181,
+          "value": 90
+        }
+      ]
+    },
+    {
+      "start": -90,
+      "end": 380,
+      "inner": 30,
+      "outer": 110,
+      "maximum": 275,
+      "result": [
+        {
+          "innerRadius": 31.6,
+          "outerRadius": 44.400000000000006,
+          "startAngle": -90,
+          "endAngle": 380,
+          "value": 275
+        },
+        {
+          "innerRadius": 47.6,
+          "outerRadius": 60.400000000000006,
+          "startAngle": -90,
+          "endAngle": 251.8181818181818,
+          "value": 200
+        },
+        {
+          "innerRadius": 63.6,
+          "outerRadius": 76.4,
+          "startAngle": -90,
+          "endAngle": 229.60000000000002,
+          "value": 187
+        },
+        {
+          "innerRadius": 79.6,
+          "outerRadius": 92.39999999999999,
+          "startAngle": -90,
+          "endAngle": 205.6727272727273,
+          "value": 173
+        },
+        {
+          "innerRadius": 95.6,
+          "outerRadius": 108.39999999999999,
+          "startAngle": -90,
+          "endAngle": 63.81818181818181,
+          "value": 90
+        }
+      ]
+    },
+    {
+      "start": 0,
+      "end": 100,
+      "inner": 65,
+      "outer": 95,
+      "maximum": 275,
+      "result": [
+        {
+          "innerRadius": 65.6,
+          "outerRadius": 70.39999999999999,
+          "startAngle": 0,
+          "endAngle": 100,
+          "value": 275
+        },
+        {
+          "innerRadius": 71.6,
+          "outerRadius": 76.39999999999999,
+          "startAngle": 0,
+          "endAngle": 72.72727272727273,
+          "value": 200
+        },
+        {
+          "innerRadius": 77.6,
+          "outerRadius": 82.39999999999999,
+          "startAngle": 0,
+          "endAngle": 68,
+          "value": 187
+        },
+        {
+          "innerRadius": 83.6,
+          "outerRadius": 88.39999999999999,
+          "startAngle": 0,
+          "endAngle": 62.90909090909091,
+          "value": 173
+        },
+        {
+          "innerRadius": 89.6,
+          "outerRadius": 94.39999999999999,
+          "startAngle": 0,
+          "endAngle": 32.72727272727273,
+          "value": 90
+        }
+      ]
+    },
+    {
+      "start": 0,
+      "end": 180,
+      "inner": 80,
+      "outer": 110,
+      "maximum": 1830,
+      "result": [
+        {
+          "innerRadius": 83,
+          "outerRadius": 107,
+          "startAngle": 0,
+          "endAngle": 56.0655737704918,
+          "value": 570
+        }
+      ]
+    },
+    {
+      "start": 0,
+      "end": 250,
+      "inner": 80,
+      "outer": 90,
+      "maximum": 275,
+      "result": [
+        {
+          "innerRadius": 80.2,
+          "outerRadius": 81.8,
+          "startAngle": 0,
+          "endAngle": 250,
+          "value": 275
+        },
+        {
+          "innerRadius": 82.2,
+          "outerRadius": 83.8,
+          "startAngle": 0,
+          "endAngle": 181.8181818181818,
+          "value": 200
+        },
+        {
+          "innerRadius": 84.2,
+          "outerRadius": 85.8,
+          "startAngle": 0,
+          "endAngle": 170,
+          "value": 187
+        },
+        {
+          "innerRadius": 86.2,
+          "outerRadius": 87.8,
+          "startAngle": 0,
+          "endAngle": 157.27272727272728,
+          "value": 173
+        },
+        {
+          "innerRadius": 88.2,
+          "outerRadius": 89.8,
+          "startAngle": 0,
+          "endAngle": 81.81818181818181,
+          "value": 90
+        }
+      ]
+    }
+  ],
+  "sectorCases": [
+    {
+      "props": {
+        "cx": 150,
+        "cy": 125,
+        "innerRadius": 65,
+        "outerRadius": 95,
+        "startAngle": 0,
+        "endAngle": 100,
+        "cornerRadius": 0
+      },
+      "path": "M 245,125\n    A 95,95,0,\n    0,0,\n    133.5034,31.4433\n  L 138.7129,60.9875\n            A 65,65,0,\n            0,1,\n            215,125 Z"
+    },
+    {
+      "props": {
+        "cx": 150,
+        "cy": 125,
+        "innerRadius": 80,
+        "outerRadius": 90,
+        "startAngle": 0,
+        "endAngle": 250,
+        "cornerRadius": 10
+      },
+      "path": "M 234.8528,125\n    A5,5,0,0,0,239.8442,119.7059\n    A90,90,0,1,0,114.2966,207.6152\n    A5,5,0,0,0,120.9786,204.7356\n  L120.9786,204.7356\n      A5,5,0,0,0,118.2637,198.4357\n      A80,80,0,1,1,229.8615,120.2941\n      A5,5,0,0,0,234.8528,125Z"
+    },
+    {
+      "props": {
+        "cx": 150,
+        "cy": 125,
+        "innerRadius": 80,
+        "outerRadius": 110,
+        "startAngle": 0,
+        "endAngle": 180,
+        "cornerRadius": 5
+      },
+      "path": "M 254.8809,125\n    A5,5,0,0,0,259.8752,119.7619\n    A110,110,0,0,0,40.1248,119.7619\n    A5,5,0,0,0,45.1191,125\n  L65.1472,125\n      A5,5,0,0,0,70.1385,120.2941\n      A80,80,0,0,1,229.8615,120.2941\n      A5,5,0,0,0,234.8528,125Z"
+    },
+    {
+      "props": {
+        "cx": 150,
+        "cy": 125,
+        "innerRadius": 60,
+        "outerRadius": 96,
+        "startAngle": 90,
+        "endAngle": 270,
+        "cornerRadius": 0
+      },
+      "path": "M 150,29\n    A 96,96,0,\n    0,0,\n    150,221\n  L 150,185\n            A 60,60,0,\n            0,1,\n            150,65 Z"
+    },
+    {
+      "props": {
+        "cx": 150,
+        "cy": 125,
+        "innerRadius": 30,
+        "outerRadius": 44,
+        "startAngle": -90,
+        "endAngle": 380,
+        "cornerRadius": 0
+      },
+      "path": "M 150,169\n    A 44,44,0,\n    1,0,\n    149.9992,169\n  L 149.9995,155\n            A 30,30,0,\n            1,1,\n            150,155 Z"
+    }
+  ]
+}

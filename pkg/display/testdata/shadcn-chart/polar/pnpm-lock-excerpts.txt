@@ -1,0 +1,7 @@
+shadcn8ab27715521cbd4f87ae6886cd989cbb678f6de7 pnpm-lock.yaml SHA256 5d1903905c5020aec5062fc18b4d1856a91914f9adb9226a9c069c0b4754bf82
+5655:   decimal.js-light@2.5.1:
+5656:     resolution: {integrity: sha512-qIMFpTMZmny+MMIitAB6D7iVPEorVw6YQRWkvarTkT4tBeSLLiHzcwj6q0MmYSFCiVpiqPJTJEYIrpcPzVEIvg==}
+5657: 
+8551:   recharts@3.8.0:
+8552:     resolution: {integrity: sha512-Z/m38DX3L73ExO4Tpc9/iZWHmHnlzWG4njQbxsF5aSjwqmHNDDIm0rdEBArkwsBvR8U6EirlEHiQNYWCVh9sGQ==}
+8553:     engines: {node: '>=18'}

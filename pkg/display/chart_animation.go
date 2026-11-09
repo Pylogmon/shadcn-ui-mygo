@@ -183,7 +183,11 @@ func chartSafeEase(ease ui.Easing, t float64) float64 {
 }
 
 func animateChartGeometry(c *ui.Context, owner ui.Element, kind ChartKind, p ChartAnimationProps, plans []chartGeometryPlan) []chartGeometryFrame {
-	state := ui.Local(owner, chartAnimationKey{}, func() chartGeometryAnimation { return chartGeometryAnimation{} })
+	return animateChartGeometryWithKey(c, owner, kind, p, plans, chartAnimationKey{})
+}
+
+func animateChartGeometryWithKey(c *ui.Context, owner ui.Element, kind ChartKind, p ChartAnimationProps, plans []chartGeometryPlan, key any) []chartGeometryFrame {
+	state := ui.Local(owner, key, func() chartGeometryAnimation { return chartGeometryAnimation{} })
 	// Pie and donut are one source component; changing the hole applies the new
 	// target radius immediately while continuing/interpolating its angle spans.
 	family := kind

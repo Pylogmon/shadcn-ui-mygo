@@ -199,6 +199,192 @@
       "archive": "chart-line-step.tsx",
       "gitBlob": "5dce7fcbbcbc32f34441e3793bdbe152d91e45f7",
       "sha256": "7de698cb7d6f1b1772b9cfa402a0b159185bb8fca0ba110f2e86a751602ee39d"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-pie-donut-active.tsx",
+      "archive": "chart-pie-donut-active.tsx",
+      "gitBlob": "b2e41b5ebbd9fe392435e1f3417aecf2df35ae8b",
+      "sha256": "c8a88201e324eb09acdc3fa0ad1b42945c7df4b3e5b21082d58f02d4032ee9be"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-pie-donut-text.tsx",
+      "archive": "chart-pie-donut-text.tsx",
+      "gitBlob": "c7e3d834954dbee3af6a33eac6a8cf74b333350f",
+      "sha256": "b4a6f121057f5363995682ad47df137a6ab6c858ac48088364deae231788d7fb"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-pie-donut.tsx",
+      "archive": "chart-pie-donut.tsx",
+      "gitBlob": "c4ca8674ee42a22e9572fa385318cb4b42da2fac",
+      "sha256": "655444c98fb8f6738f9bf02a7058f0b5ba60e4930511b6cf4ac6678aada9ed42"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-pie-interactive.tsx",
+      "archive": "chart-pie-interactive.tsx",
+      "gitBlob": "dfe17b688b3dd35a36ccda5435966b9f4160c128",
+      "sha256": "da332a1b7a5bfc383162e3e77a726e82bae1cebd011d84cafb4c79a0bc445328"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-pie-label-custom.tsx",
+      "archive": "chart-pie-label-custom.tsx",
+      "gitBlob": "465c78c2a8d83f4c924433db265f524bb4962a6e",
+      "sha256": "d6cd8f628cebcc435c33d998d5d449eaf7ae07d2a748e773148e10c76de0c9de"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-pie-label-list.tsx",
+      "archive": "chart-pie-label-list.tsx",
+      "gitBlob": "ff179593352b9f541743e50eb8303fcf92320913",
+      "sha256": "b57910a13d969e4098f22b2caf9bec8a4fc83ab9d90668605086a351918bb779"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-pie-label.tsx",
+      "archive": "chart-pie-label.tsx",
+      "gitBlob": "3257c585110fb58deb95c4d5d61fe15c5ec3bde5",
+      "sha256": "9473abe1c22d47fbc9676f38fcaf7b718ed5499bf9164d4f442fb2da51666039"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-pie-legend.tsx",
+      "archive": "chart-pie-legend.tsx",
+      "gitBlob": "aa6ca2705c5bdd3a4e2f6be9fc08870298eb37ef",
+      "sha256": "2902062d5a46d853d9ed96d3ca837de48e8dc3c780847c4622fa89b4fee3842a"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-pie-separator-none.tsx",
+      "archive": "chart-pie-separator-none.tsx",
+      "gitBlob": "e313ea46e768bf54d89ee2db59c8d6f519a40b46",
+      "sha256": "4811ddc719959d4b0a4d9013b0756131d4fc4f5322bacec3ed85f3fb9e5385a6"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-pie-simple.tsx",
+      "archive": "chart-pie-simple.tsx",
+      "gitBlob": "1c90420f93ce32ecfa3810dfa264f51ad2e501c6",
+      "sha256": "9298f436da5adc7288c7b6ae10fb52bbcbcb99ea9c0d324bb47da61c5b8af518"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-pie-stacked.tsx",
+      "archive": "chart-pie-stacked.tsx",
+      "gitBlob": "e7e984972554d171a5a957a059558db827e0e307",
+      "sha256": "26d04271e4c0a752f4cd41f0c53cb6480db6d3ca540cf9dd35d1c9b1d446c59d"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-default.tsx",
+      "archive": "chart-radar-default.tsx",
+      "gitBlob": "425afde7ff3e7c972e20934b63218c537455f82d",
+      "sha256": "e503bd2c88e20d5f37082dcdfd2a95d1e61cfcc0855844d0050e114fa7428394"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-dots.tsx",
+      "archive": "chart-radar-dots.tsx",
+      "gitBlob": "be84261030eaa17694843243463244a016a311b0",
+      "sha256": "e844857ce448a56bece540cb2cf083081ffdb6e46fdfb250ed5c1eb1f4d7c77b"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-grid-circle-fill.tsx",
+      "archive": "chart-radar-grid-circle-fill.tsx",
+      "gitBlob": "bb58bce241bf01efcb649cbba144a7dc55fc7637",
+      "sha256": "9a9213b59eb2dd1e5073f49ce53901f527f6ffb874e90676733ced917143a0da"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-grid-circle-no-lines.tsx",
+      "archive": "chart-radar-grid-circle-no-lines.tsx",
+      "gitBlob": "e098f0f1b91900fc4950610f8da0d987f0a1fe35",
+      "sha256": "d454bfaffa340c067e63cf4b4d93d70e91febadea5c2ea00f48780cee925d3c1"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-grid-circle.tsx",
+      "archive": "chart-radar-grid-circle.tsx",
+      "gitBlob": "67601f06ae0e5449167607683564a96a04b80fd7",
+      "sha256": "41bde9ca02b741e473638c16df15f1f4dccb48ea76dfd3d0d6bf4cd08c498865"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-grid-custom.tsx",
+      "archive": "chart-radar-grid-custom.tsx",
+      "gitBlob": "9ab8ad6127646c42c4a005ad7c369ff25b60994a",
+      "sha256": "f64de58f8c60c1c41b8554a25d3f343ce1b1e46e992e8fc7112b1c6a5e8af0e5"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-grid-fill.tsx",
+      "archive": "chart-radar-grid-fill.tsx",
+      "gitBlob": "b3ebb61358b3c51528385402fee7697ae11516c5",
+      "sha256": "f5a7395f16784687624b7cf36e0a074fd6792c314c3aab0be05ff60153fec88a"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-grid-none.tsx",
+      "archive": "chart-radar-grid-none.tsx",
+      "gitBlob": "0bdb7769a9113342db51b3a1250433cfb9c3fc4d",
+      "sha256": "daf5a704c336412a9c41184d797d5fdfa1830bc9e427d2d9ca2e1cd0b54ec520"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-icons.tsx",
+      "archive": "chart-radar-icons.tsx",
+      "gitBlob": "3c4eec62fb8756910bf8968973d616b918f9764b",
+      "sha256": "305d1e3c1fad1503ce9cf29ac9531bf1c53800c79706955fcb84bf120f3c5f26"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-label-custom.tsx",
+      "archive": "chart-radar-label-custom.tsx",
+      "gitBlob": "bf16fa743613a25c3641593c7a60ef052fe861ca",
+      "sha256": "a0501d1d977350aa1b9bfa09117accb41847792d84c7882b6dfd34fcb342a54c"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-legend.tsx",
+      "archive": "chart-radar-legend.tsx",
+      "gitBlob": "31bdb565433854385b152710a3fade68f5823bc7",
+      "sha256": "132b18d5502fa68887fa6639a304d26f56ca80b5264cebef945224482cc11cc5"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-lines-only.tsx",
+      "archive": "chart-radar-lines-only.tsx",
+      "gitBlob": "c62cddf7355f0a003d072a93c77456883deed4ab",
+      "sha256": "f8535625d8b71a2f789aa1a33f5ccfe9db92a8660c8eae5e25f2be91c0a24908"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-multiple.tsx",
+      "archive": "chart-radar-multiple.tsx",
+      "gitBlob": "b7d2102f9588a4b86f6cc281ae61eb7efe97e5ed",
+      "sha256": "f6a2b2323e758e88e5dad518e0cd0de90026da45fee4f0498db5a658e7697338"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radar-radius.tsx",
+      "archive": "chart-radar-radius.tsx",
+      "gitBlob": "61f29bb5b8262c6917d9b0a19f1e4509f228e09c",
+      "sha256": "5a64fa9fa2300034b7451dddce0e84afb2005218d461c4385e641837760e60c6"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radial-grid.tsx",
+      "archive": "chart-radial-grid.tsx",
+      "gitBlob": "032eb98a9e2cab56d7b7a1413af496193477d04c",
+      "sha256": "e15a6b20f96a96dcac0528147a666952b53a69ce3794d2c1ee8967e34d27f602"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radial-label.tsx",
+      "archive": "chart-radial-label.tsx",
+      "gitBlob": "effb735c84fb1ecee61fd8bab07f1daba1d65135",
+      "sha256": "104be078d10b6d1a11fef591b2bbb10e1e0af1fecf9f59bdadfcbeec0a3de56e"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radial-shape.tsx",
+      "archive": "chart-radial-shape.tsx",
+      "gitBlob": "9550a5bf0f2eab53933f8709d25ca1439964ec3d",
+      "sha256": "e5f7fd025fd83a4aff2fc4ba28b626801ef41fc68e6e839e3e0716472cfc2619"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radial-simple.tsx",
+      "archive": "chart-radial-simple.tsx",
+      "gitBlob": "b13e20e5b584ca18b44201ba4c147fefa8a00f1d",
+      "sha256": "c21d5bc4776a2be310515c6ccfa21b48e263cf340bd6c08ff8402ba6f7bd6790"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radial-stacked.tsx",
+      "archive": "chart-radial-stacked.tsx",
+      "gitBlob": "71fbf5756f9811672c7881fa9d1ef87db549391d",
+      "sha256": "d94e8253ad22dadfb74b18f6497d4a771b16cb968399c659c43d28ff7813fd17"
+    },
+    {
+      "path": "apps/v4/registry/new-york-v4/charts/chart-radial-text.tsx",
+      "archive": "chart-radial-text.tsx",
+      "gitBlob": "f10347522cd27689bd960a4ed7e5033c5659b93c",
+      "sha256": "d02a7c05bb28a4a76e7cb2d16df8ae33bd4e50e06a095f8d13a02cd78d33818e"
     }
   ],
   "license": {
@@ -231,5 +417,11 @@
     "algorithmManifest": "cartesian/manifest.json",
     "oracle": "cartesian/curve-oracle.json",
     "generator": "cartesian/generate-oracle.mjs"
+  },
+  "polar": {
+    "sourceExamples": 31,
+    "algorithmManifest": "polar/manifest.json",
+    "oracle": "polar/polar-oracle.json",
+    "generator": "polar/generate-oracle.cjs"
   }
 }

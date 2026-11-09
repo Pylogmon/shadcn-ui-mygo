@@ -1,0 +1,225 @@
+{
+  "rechartsCommit": "c04a79039ebc4d5057de163298d2e9917a5e5a66",
+  "version": "3.8.0",
+  "npm": {
+    "version": "3.8.0",
+    "integrity": "sha512-Z/m38DX3L73ExO4Tpc9/iZWHmHnlzWG4njQbxsF5aSjwqmHNDDIm0rdEBArkwsBvR8U6EirlEHiQNYWCVh9sGQ==",
+    "sha256": "a170e237e47b0c12cd412abc34cbf908e1d545a8517aab2e4be827708c45af4e"
+  },
+  "files": [
+    {
+      "origin": "recharts3.8.0 published package/lib/polar/Pie.js",
+      "archive": "lib/polar/Pie.js",
+      "sha256": "151cecf32eba6e459c584512aa98d3b3048c076ee148dbed22e08d50365d8df8"
+    },
+    {
+      "origin": "recharts3.8.0 published package/lib/util/PolarUtils.js",
+      "archive": "lib/util/PolarUtils.js",
+      "sha256": "787bdc3657e802ebfc30dff69686e042ebea2312c2b0da99eb973315e0fb14c5"
+    },
+    {
+      "origin": "recharts3.8.0 published package/lib/util/DataUtils.js",
+      "archive": "lib/util/DataUtils.js",
+      "sha256": "d54fa962d218a64ec35eb88b17197ff4dc9260b5102fa706f6410a4a4201b91e"
+    },
+    {
+      "origin": "recharts3.8.0 published package/lib/util/round.js",
+      "archive": "lib/util/round.js",
+      "sha256": "90590857bf296f9588954043f9fe723a0bbf229865560a26cd5ec488675c4679"
+    },
+    {
+      "origin": "recharts3.8.0 published package/lib/util/ChartUtils.js",
+      "archive": "lib/util/ChartUtils.js",
+      "sha256": "1b81877035593d6e3746daffac57a2678bb3548385ec0a1401cdebc9564cdd0f"
+    },
+    {
+      "origin": "recharts3.8.0 published package/lib/util/getSliced.js",
+      "archive": "lib/util/getSliced.js",
+      "sha256": "1ddea4a27e7b0a89e09dbbf6a80e9aa94b396a31b8515b95d791de5c1fde54ce"
+    },
+    {
+      "origin": "recharts3.8.0 published package/lib/util/isWellBehavedNumber.js",
+      "archive": "lib/util/isWellBehavedNumber.js",
+      "sha256": "bf1653bcb5ebbb5a5e0e7497ca76d7f3abcb5233f7a4a223a258fabeb99b4dcb"
+    },
+    {
+      "origin": "recharts3.8.0 published package/lib/util/resolveDefaultProps.js",
+      "archive": "lib/util/resolveDefaultProps.js",
+      "sha256": "1b72bc34660d59f216c2b0d8c9f62c24df16727ef969dbf539c971a5f26cb141"
+    },
+    {
+      "origin": "recharts3.8.0 published package/lib/polar/Radar.js",
+      "archive": "lib/polar/Radar.js",
+      "sha256": "7cd7f15435d7dd475f3048accc483ba3f333e7de3648c96e41e92803878e29ab"
+    },
+    {
+      "origin": "recharts3.8.0 published package/lib/polar/RadialBar.js",
+      "archive": "lib/polar/RadialBar.js",
+      "sha256": "aa18ad0d2a29a9b578a2ff0efc05f0515fd2703740e25e110edfb61c8aa6261d"
+    },
+    {
+      "origin": "recharts3.8.0 published package/lib/shape/Sector.js",
+      "archive": "lib/shape/Sector.js",
+      "sha256": "0beb55823a610c11c751780613760528072bcb9182b4668cd0d2b618820c7b5d"
+    },
+    {
+      "origin": "recharts3.8.0 published package/lib/util/scale/getNiceTickValues.js",
+      "archive": "lib/util/scale/getNiceTickValues.js",
+      "sha256": "dbba6fe758e70f3836c6698e9bbab6b3affc49fd8b12b01e4cc366839c106e50"
+    },
+    {
+      "origin": "recharts3.8.0 published package/lib/util/scale/util/arithmetic.js",
+      "archive": "lib/util/scale/util/arithmetic.js",
+      "sha256": "c056105ca69f55db86a4ce7214f1f85f7325751560104870e52fdcfb372fe986"
+    },
+    {
+      "archive": "decimal.js",
+      "sha256": "0ddb18449753c77e0ecff1cdddc3ac4fc747731194b59a3c5dbd953e863d896f"
+    },
+    {
+      "archive": "decimal-metadata.json",
+      "sha256": "f762445d3158b10a1f17191e55e6b4792c7b12666472c00098ce2c338d3c8161"
+    },
+    {
+      "archive": "npm-metadata.json",
+      "sha256": "1784c4a26f59c60a32309e4a0a7f68395fb3818a67a9f6827137438bfc7a449f"
+    },
+    {
+      "archive": "generate-oracle.cjs",
+      "sha256": "fd5ba3730746dda497336fe0157d89d2cade5389f4af81051f204f8f588be447"
+    },
+    {
+      "archive": "polar-oracle.json",
+      "sha256": "9c55580b36f6b78037cbad8f8ea51b944fe82c1e74d83921031da602f2b6c56e"
+    },
+    {
+      "path": "src/shape/Sector.tsx",
+      "url": "https://raw.githubusercontent.com/recharts/recharts/c04a79039ebc4d5057de163298d2e9917a5e5a66/src/shape/Sector.tsx",
+      "sha256": "bf481c3e4a3973044775b7c55688dde858772c504932d323e1deee3c02897309",
+      "archive": "src/shape/Sector.tsx"
+    },
+    {
+      "path": "src/util/PolarUtils.ts",
+      "url": "https://raw.githubusercontent.com/recharts/recharts/c04a79039ebc4d5057de163298d2e9917a5e5a66/src/util/PolarUtils.ts",
+      "sha256": "42a5cbcb70b05ed260a255e888c5c10d3c73bc0639f857beb82610cd5f4ad225",
+      "archive": "src/util/PolarUtils.ts"
+    },
+    {
+      "path": "src/polar/PolarGrid.tsx",
+      "url": "https://raw.githubusercontent.com/recharts/recharts/c04a79039ebc4d5057de163298d2e9917a5e5a66/src/polar/PolarGrid.tsx",
+      "sha256": "d8b8ce8dfbb86c33b10ddcccab8a3c49f8add3e42dc943e79392d18ce6278224",
+      "archive": "src/polar/PolarGrid.tsx"
+    },
+    {
+      "path": "src/polar/PolarAngleAxis.tsx",
+      "url": "https://raw.githubusercontent.com/recharts/recharts/c04a79039ebc4d5057de163298d2e9917a5e5a66/src/polar/PolarAngleAxis.tsx",
+      "sha256": "3a59155ffa39b9272cf193f0b9aa90c7f904184650b629532b8885d2be1d70c5",
+      "archive": "src/polar/PolarAngleAxis.tsx"
+    },
+    {
+      "path": "src/polar/PolarRadiusAxis.tsx",
+      "url": "https://raw.githubusercontent.com/recharts/recharts/c04a79039ebc4d5057de163298d2e9917a5e5a66/src/polar/PolarRadiusAxis.tsx",
+      "sha256": "c963a6462abd0c06ec6167ec6a36a6f010574f1a8888d03fe8ba9fadb63205cc",
+      "archive": "src/polar/PolarRadiusAxis.tsx"
+    },
+    {
+      "path": "src/state/selectors/radialBarSelectors.ts",
+      "url": "https://raw.githubusercontent.com/recharts/recharts/c04a79039ebc4d5057de163298d2e9917a5e5a66/src/state/selectors/radialBarSelectors.ts",
+      "sha256": "fceda097d9412f5b3c85c24fb212d63f9612001f8cf34abafbb3b680494a99d8",
+      "archive": "src/state/selectors/radialBarSelectors.ts"
+    },
+    {
+      "path": "src/state/selectors/polarScaleSelectors.ts",
+      "url": "https://raw.githubusercontent.com/recharts/recharts/c04a79039ebc4d5057de163298d2e9917a5e5a66/src/state/selectors/polarScaleSelectors.ts",
+      "sha256": "b6543fc3f72c3d02663a1244a888566289a21f6382ce4595475d68b83844d35d",
+      "archive": "src/state/selectors/polarScaleSelectors.ts"
+    },
+    {
+      "path": "src/state/selectors/polarAxisSelectors.ts",
+      "url": "https://raw.githubusercontent.com/recharts/recharts/c04a79039ebc4d5057de163298d2e9917a5e5a66/src/state/selectors/polarAxisSelectors.ts",
+      "sha256": "8735b3a6575144e1e658175da0c9e12de13607019cbb3ea320d1587aa1531b9b",
+      "archive": "src/state/selectors/polarAxisSelectors.ts"
+    },
+    {
+      "path": "src/state/selectors/polarSelectors.ts",
+      "url": "https://raw.githubusercontent.com/recharts/recharts/c04a79039ebc4d5057de163298d2e9917a5e5a66/src/state/selectors/polarSelectors.ts",
+      "sha256": "1aa57c765a07dfee69752a040e1796ce84bb92cf40d4e533392ca0ac48b0bbab",
+      "archive": "src/state/selectors/polarSelectors.ts"
+    },
+    {
+      "path": "src/state/selectors/axisSelectors.ts",
+      "url": "https://raw.githubusercontent.com/recharts/recharts/c04a79039ebc4d5057de163298d2e9917a5e5a66/src/state/selectors/axisSelectors.ts",
+      "sha256": "e236d3e57d7742fd64591104978c30dfb696ef37aa043c25765e443e2a151d71",
+      "archive": "src/state/selectors/axisSelectors.ts"
+    },
+    {
+      "path": "src/chart/RadialBarChart.tsx",
+      "url": "https://raw.githubusercontent.com/recharts/recharts/c04a79039ebc4d5057de163298d2e9917a5e5a66/src/chart/RadialBarChart.tsx",
+      "sha256": "6493f28b5bf0c8704543dea29e4abf5cb7653b2b58779f2e5a428924044e0e23",
+      "archive": "src/chart/RadialBarChart.tsx"
+    },
+    {
+      "path": "src/chart/RadarChart.tsx",
+      "url": "https://raw.githubusercontent.com/recharts/recharts/c04a79039ebc4d5057de163298d2e9917a5e5a66/src/chart/RadarChart.tsx",
+      "sha256": "90857dff1b95c782b3e491f0a7f0f1bf3de5d138a227c097e916e1a54c25d84a",
+      "archive": "src/chart/RadarChart.tsx"
+    },
+    {
+      "path": "src/polar/defaultPolarAngleAxisProps.tsx",
+      "url": "https://raw.githubusercontent.com/recharts/recharts/c04a79039ebc4d5057de163298d2e9917a5e5a66/src/polar/defaultPolarAngleAxisProps.tsx",
+      "sha256": "dfc625c8824239dd91a416da72f47d9c1f7086fa605ee5b97ebd2d088504d63a",
+      "archive": "src/polar/defaultPolarAngleAxisProps.tsx"
+    },
+    {
+      "path": "src/polar/defaultPolarRadiusAxisProps.tsx",
+      "url": "https://raw.githubusercontent.com/recharts/recharts/c04a79039ebc4d5057de163298d2e9917a5e5a66/src/polar/defaultPolarRadiusAxisProps.tsx",
+      "sha256": "99c3c87d9f56e595851cb81e954aa7cd59bc37b87a060106fff36cf28944e244",
+      "archive": "src/polar/defaultPolarRadiusAxisProps.tsx"
+    },
+    {
+      "origin": "recharts3.8.0 published package/lib/util/getActiveCoordinate.js",
+      "archive": "lib/util/getActiveCoordinate.js",
+      "sha256": "2c23d8c45c19b28b360597da529883dd596615b18b55b5f5c7dcfdeae9699b04"
+    },
+    {
+      "origin": "recharts3.8.0 published package/lib/chart/PolarChart.js",
+      "archive": "lib/chart/PolarChart.js",
+      "sha256": "1e950c8ec8cf18434fa9ddfa97795ae55a119c00c9b347084d8cd3c71653b099"
+    },
+    {
+      "origin": "recharts3.8.0 published package/lib/chart/RadialBarChart.js",
+      "archive": "lib/chart/RadialBarChart.js",
+      "sha256": "13da356a5f2ff5a402ba14a34614aa9ef84867f595e107445efe4105a33e211f"
+    },
+    {
+      "origin": "recharts3.8.0 published package/lib/chart/RadarChart.js",
+      "archive": "lib/chart/RadarChart.js",
+      "sha256": "9eb0b709126e27dab68860a0b19b20fbbdf88ad9582356a5ce293324b43078ee"
+    },
+    {
+      "origin": "recharts3.8.0 published package/lib/state/selectors/selectors.js",
+      "archive": "lib/state/selectors/selectors.js",
+      "sha256": "b8db0b76cafa952287949ac88819fce4a366f10f53007031e635aca5ea4291cc"
+    },
+    {
+      "archive": "LICENSE.recharts",
+      "sha256": "2d3aa48a8d1d3b93093680e8e68d3a64cfb590c3ade377ffcaefc69dac7c2ce5"
+    },
+    {
+      "archive": "LICENSE.decimal",
+      "sha256": "fc0397fbd5c128bec7edef4e8d3f45e15db5fd043cdd0a2edfc4f14d47fbc3e4"
+    },
+    {
+      "archive": "pnpm-lock-excerpts.txt",
+      "sha256": "48fa46fd5dc187b72929700d3d89478d27862bce0618c48dc9b24bd2286cf9a9"
+    }
+  ],
+  "oracle": "Actual verified complete CJS geometry modules, inert rendering/state dependencies; flat property lookup and React element capture only; no Go/product/reference geometry implementation.",
+  "sourceSemantics": {
+    "pie": "item inspection includes current fill layers and painted strokes",
+    "radar": "angular axis inspection; idle dots follow current polygon while active dots use targets",
+    "radial": "radial axis inspection includes unfilled track; angle domain is not extended with nice ticks",
+    "radiusAxis": "source adaptive five ticks; actual fixed data max305 produces0/80/160/240/320",
+    "profileState": "separate source/legacy local animation keys prevent radians/degrees and normalized/DIP state reinterpretation"
+  }
+}

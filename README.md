@@ -87,6 +87,7 @@ Forms & controls页已接入框架搜索、国家分组/城市描述过滤、Off
 严格逐步导航、原生选项/输入、草稿与受控校验组合见 [Questionnaire](docs/questionnaire.md)。
 横向柱形、分组/堆叠、原值检查与坐标轴配置见 [Chart](docs/chart.md)。
 30个Area/Bar/Line源例及曲线、渐变、标签和自定义标记见[Cartesian配置](docs/chart-cartesian.md)。
+31个Pie/Radar/Radial源例及角度、半径、扇区、网格与中心内容见[Polar配置](docs/chart-polar.md)。
 七类图表的数据几何动画、时序配置与减少动态效果见 [Chart动画](docs/chart-animation.md)。
 独立容器、配置与原生Tooltip/Legend内容见 [Chart自由组合](docs/chart-composition.md)，可直接搭配MyGo Plot、Rule、Anchor与原生控件。
 可运行的公开API示例见 [chart-composition](examples/chart-composition/README.md)，包含原生阈值线、柱顶标签、月份范围筛选及可编辑数据。

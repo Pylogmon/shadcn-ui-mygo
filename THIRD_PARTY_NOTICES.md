@@ -107,6 +107,13 @@ lockfile; the eleven TypeScript reference files also match the official Git tree
 blobs. Native apps include its license as
 `Contents/Resources/licenses/recharts.txt`.
 
+Source Polar sector corner geometry and native polar calculations additionally
+translate the fixed Recharts MIT reference. Complete official CJS geometry
+functions, original Sector/axis/grid source and licenses are archived under
+`pkg/display/testdata/shadcn-chart/polar/`; its decimal.js-light MIT reference
+is oracle-only and not a native runtime dependency. The existing bundled
+Recharts license covers the native translation.
+
 Chart shadow parameters are additionally verified against the official
 Tailwind CSS 4.3.0 package locked by the pinned shadcn reference. Its exact
 theme CSS, MIT license and npm integrity evidence are archived with the chart
