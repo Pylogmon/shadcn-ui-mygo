@@ -49,7 +49,7 @@ func newComboMotionHarness(t *testing.T, popup, multiple, top, rtl bool) *comboM
 			y = 280
 		}
 		root.Absolute().Left(40).Top(y).Width(240)
-		h.state = ui.Local(root, "shadcn.control.selection-combobox", func() comboRuntime { return comboRuntime{} })
+		h.state = ui.Local(root, "shadcn.control.combobox-controller", func() comboRuntimeReference { return comboRuntimeReference{} }).runtime
 		Button(c, "After", ButtonProps{}).Absolute().Left(300).Top(10)
 	}, 420, 340)
 	return h

@@ -42,6 +42,7 @@ type State struct {
 	Table                                                                          display.DataTableState
 	tablePreview                                                                   tablePreviewState
 	chartPreview                                                                   chartPreviewState
+	comboboxCompound                                                               comboboxCompoundPreviewState
 	comboboxes                                                                     comboboxPreviewState
 	carousels                                                                      carouselPreviewState
 	conversationPreview                                                            conversationPreviewState

@@ -2,6 +2,7 @@
 
 `ComboboxWith`和`MultiComboboxWith`使用真实MyGo文字编辑器，区分已选值、显示标签和搜索文本。
 应用持有状态；组件使用稳定的`Option.Value`标识建议和已选标签。
+需要对象值、独立槽位或自定义列表布局时，可使用共享同一实现的`ComboboxRoot`。
 
 ```go
 selected := control.ComboboxValue{Value: "mygo", Valid: true}
@@ -68,7 +69,7 @@ Up/Down打开选项。可打印字符（含数字、标点和Shift字符）把�
 `ItemContent`和`TriggerContent`可定制视觉，仍需明确的Option.Label。
 默认trim查询后按标签做大小写/重音/字宽宽松匹配，`Locale`指定区域；
 自定义`Filter(option,query)`仍接收原始query，可搜索描述等元数据。
-过滤后空组及首尾/连续分隔线被归一化；这不代替独立的compound Group/Collection结构。
+过滤后空组及首尾/连续分隔线被归一化。独立Group/Collection结构见下文组合API。
 应用更新Options即可替换建议；请求调度、加载与数据竞争处理由应用负责。
 
 `Field`、`LabelFor`、`InputGroup`通过实际editor-target关联原生输入，保留标签、描述、错误、
@@ -76,7 +77,72 @@ Up/Down打开选项。可打印字符（含数字、标点和Shift字符）把�
 
 旧`Combobox(c,*string,ComboboxProps)`保留自由文本和首项高亮行为，旧`MultiCombobox`
 保留独立标签行与选择策略；两者继续可用，并修复禁用项、IME及重排焦点缺陷。
-需要上述选值/标签/query契约的新代码应使用With入口。
+需要上述选值/标签/query契约的新代码可使用With或Root入口。
+
+## 组合API与对象值
+
+`ComboboxState[T]`由应用持有，包含Value、Values、Query和Open。地址在挂载期间保持稳定；
+`ComboboxSelection[T].Valid`区分未选中与合法的零值。Root不增加包围槽位的布局容器，
+内部状态由零尺寸、无输入/AX的原生挂载节点管理，卸载时通过公开Local清理。
+
+```go
+// state保存在应用状态中。
+control.ComboboxRoot(c, &state, control.ComboboxRootProps[string]{
+    Items: []string{"Go", "Rust", "Swift"},
+    Adapter: control.ComboboxStringAdapter(),
+    AutoHighlight: control.ComboboxHighlightOnInput,
+}, func(b *control.ComboboxScope[string]) {
+    parts := b.Input(c, control.ComboboxInputProps{
+        Label: "Language", Placeholder: "Search languages", ShowClear: true,
+    })
+    parts.Editor.OnSubmit(submitForm)
+    b.Content(c, control.ComboboxContentProps{}, func() {
+        b.Empty(c, "No languages found.")
+        b.List(c, control.ComboboxListProps{}, func() {
+            b.Collection(c, func(c *ui.Context, value string, _ int) {
+                b.Item(c, value, control.ComboboxItemProps{}, nil)
+            })
+        })
+    })
+})
+```
+
+对象值通过`ComboboxAdapter[T]`提供Key、Label、FormValue、Equal及Disabled。
+Key必须唯一，Equal默认比较Key；显式Equal可独立决定选择相等性，查找按集合声明顺序进行。
+`FormValues()`返回当前选择的提交字符串，原生Editor可继续接OnSubmit、Field目标或其他编辑能力。
+适配器、渲染器和事件回调每次构建重新提供，不保存在内部长期状态中。
+
+Root支持Items或Groups数据，也可省略二者，通过手写Group/Item注册集合。
+Group、Label、Collection、Separator、Item、Empty和List可独立组合；Empty是List的兄弟状态节点，
+有结果时保留空的status节点，空结果时显示文字。自定义Item正文仍需适配器提供可访问名称。
+Scope及其返回Element只在Root同步回调内有效，不能放入应用状态或延迟列表回调。
+所有公开Scope调用在回调结束后都会拒绝继续使用。
+
+Trigger搭配Value显示所选值，Content内放Input即可形成弹层内部搜索；
+Chips、Chip和ChipsInput可组成对象多选，Chip.HideRemove隐藏移除按钮并保留原生标签键盘操作。
+Clear可独立放置，Input返回Root和实际Editor，支持InputGroup的内联/上下addon。
+
+`QueryControlled`保留显式的空Query，不由已选标签覆盖；否则外部单选编辑器在初次挂载及
+非编辑期间选值变化时显示所选标签。AutoHighlight支持Off、OnInput和Always。
+OnValueChange、OnValuesChange、OnQueryChange、OnOpenChange和OnHighlighted接收当前构建的
+ComboboxChange，调用Cancel可否决本次变化；OnOpenChangeComplete在进退动画完成后通知。
+程序直接修改应用状态不会伪造用户选值事件。
+
+## Content定位与自定义列表
+
+Content支持Top/Bottom/Left/Right/InlineStart/InlineEnd、Start/Center/End、SideOffset和AlignOffset。
+默认在下方、start对齐、间距6DIP，SideOffset指向0可明确取消间距。逻辑侧向随RTL解析。
+未提供Anchor时，外部输入跟随实际Editor，弹层搜索跟随Trigger，默认最小宽度为anchor加28DIP；
+显式Anchor使用公开Handle，采用源data-chips分支，最小宽度等于anchor。
+Chips容器作为Anchor时，应在本帧先Bind再传入Content。
+Width可扩大该宽度，MaxHeight默认288DIP；原生AttachTo翻转与可用窗口尺寸共同限制弹层。
+Style回调可继续调整当前Element的外观。
+
+Grid开启四方向导航和原生grid/row/cell语义，Row可声明不等长行；GridColumns默认2。
+自定义渲染决定布局，禁用项跳过。普通列表继续使用原有的上下键与未高亮输入位置。
+Virtualized不自动创建延迟渲染器：应用使用FilteredItems、自己的ScrollState和当前帧Item窗口，
+Reveal收到完整过滤集合的索引并滚动到对应项；Item保留完整PosInSet/SetSize和活动项关联。
+Gallery演示100项集合只构建约12项的原生滚动窗口。
 
 ## 来源与尚待验收
 
@@ -89,10 +155,14 @@ With入口使用100ms CSS `ease`淡入淡出和95%缩放，进入时按实际布
 快速重开从当前姿态反转并保留编辑选区。外部多选输入立即清空，但退出列表保留原过滤结果。
 减少动态效果或窗口隐藏时立即收敛。内部搜索组默认32DIP，文本缩放时可增高。
 
-源Content定位参数、独立compound槽位、anchor宽度偏移与空态结构仍待补齐。
-完整controlled事件、autoHighlight的always模式、grid/virtualized选项及全部locale/Unicode路径也未计为完成。
+Content定位、独立槽位、anchor宽度分支、空态/List结构、可取消状态回调、Always、Grid和
+调用方持有的虚拟窗口已提供。可选translucent预设、完整locale/Unicode路径仍需补齐与验收。
 独立越窗编辑式Combobox、平台IME候选窗、真实读屏及完整视觉矩阵仍需验收；
 这些范围不因原生Tester和三平台编译通过而视为完成。
 
 Gallery的Forms & controls页提供可清除框架、国家/城市描述过滤、Office内部搜索、技术多选及
 只读/禁用/必填错误示例。搜索Combobox、MultiCombobox或Chips可匹配该页面；选择与草稿跨页保留。
+另有Content placement、Destination form、Grid及Large collection操作区，覆盖六侧/对齐/RTL、
+对象多选、分组分隔线、隐藏移除、只读/错误、真实表单提交及Dialog内搜索。
+固定源的12个独立例子和20个集合例子去重映射见[示例对应表](combobox-examples.json)；
+这些配置共用真实操作区，不重复生成32张相同功能的卡片。

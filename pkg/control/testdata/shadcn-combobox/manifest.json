@@ -411,6 +411,62 @@
       "sourcePath": "package/internals/filter.js",
       "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
       "verification": "member bytes of full lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/floating-ui-react/hooks/gridNavigation.js",
+      "sha256": "4f1e757e4e90dfe66cfd92991ef6f8247d1f557196f7b097a4ac1d2a7bb250cd",
+      "package": "@base-ui/react",
+      "sourcePath": "package/floating-ui-react/hooks/gridNavigation.js",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member bytes of full lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/floating-ui-react/utils/composite.js",
+      "sha256": "ebc8cccea13907d7862b3a72f00335b7e1ec478ca2db010a03b8e2e54e7f5881",
+      "package": "@base-ui/react",
+      "sourcePath": "package/floating-ui-react/utils/composite.js",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member bytes of full lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "npm/base-ui-react/combobox/input-group/ComboboxInputGroup.js",
+      "sha256": "58670234d807cf44153688f253201c87e48b390be8b3dcb8736fa41340192605",
+      "package": "@base-ui/react",
+      "sourcePath": "package/combobox/input-group/ComboboxInputGroup.js",
+      "origin": "https://registry.npmjs.org/@base-ui/react/-/react-1.6.0.tgz",
+      "verification": "member bytes of full lockfile SHA512-verified official npm tarball"
+    },
+    {
+      "archive": "shadcn/base/input-group.tsx",
+      "sha256": "b1ed344e05b4161c240fff21b6e224fcc61cbe35d5a3aaa997de02c8fb25e1fe",
+      "sourcePath": "apps/v4/registry/bases/base/ui/input-group.tsx",
+      "gitBlob": "cb328462c7c372f1b22342b25d396704d87247c1",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/ui/input-group.tsx",
+      "verification": "fixed official Git tree blob, byte-for-byte archive"
+    },
+    {
+      "archive": "shadcn/create/packages/registry/src/transformers/transform-menu.ts",
+      "sha256": "012ee0e8df0127b50ae5fa3f715fc91428fa7b403e8a4afbde15bfd769b96954",
+      "sourcePath": "packages/registry/src/transformers/transform-menu.ts",
+      "gitBlob": "f3d6594d274a9341b0c45e6ed05adba6a81e3711",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/packages/registry/src/transformers/transform-menu.ts",
+      "verification": "fixed official Git tree blob, byte-for-byte archive"
+    },
+    {
+      "archive": "shadcn/create/packages/shadcn/src/preset/defaults.ts",
+      "sha256": "6635295938de993a3b08470f8999e85f527435b14bcef665e6972502ac4b4b6d",
+      "sourcePath": "packages/shadcn/src/preset/defaults.ts",
+      "gitBlob": "79f3968164d1a8d1c4198cccaa56acb5707676de",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/packages/shadcn/src/preset/defaults.ts",
+      "verification": "fixed official Git tree blob, byte-for-byte archive"
+    },
+    {
+      "archive": "shadcn/create/packages/shadcn/src/styles/transform-style-map.ts",
+      "sha256": "b262a052592eef9d1d3761a8230c1dc68fcdf360415de291d6a3fb9258db4e26",
+      "sourcePath": "packages/shadcn/src/styles/transform-style-map.ts",
+      "gitBlob": "44d65e685760d43377f4977b0034988cf46d90d0",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/packages/shadcn/src/styles/transform-style-map.ts",
+      "verification": "fixed official Git tree blob, byte-for-byte archive"
     }
   ],
   "existingSourceReferences": [
@@ -479,7 +535,7 @@
       "lockedBy": "shadcn-ui/ui@8ab27715521cbd4f87ae6886cd989cbb678f6de7:pnpm-lock.yaml",
       "lockfileGitBlob": "5e588df5ffb2bfaec0673b426fb657d44200560b",
       "lockfileSHA256": "5d1903905c5020aec5062fc18b4d1856a91914f9adb9226a9c069c0b4754bf82",
-      "tarballMembersVerified": 34
+      "tarballMembersVerified": 37
     }
   ]
 }

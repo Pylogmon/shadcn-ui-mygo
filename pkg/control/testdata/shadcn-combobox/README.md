@@ -41,9 +41,28 @@ JavaScript package is a dependency of the Go kit.
 | From input caret start, the logical previous arrow enters the last chip; empty-input Backspace deletes the last selection | `input/ComboboxInput.js` |
 | Chip arrows navigate logically in LTR/RTL; deletion selects the nearest remaining chip; Enter/Space returns to input; Up/Down opens the list | `chip/ComboboxChip.js` |
 | Popup trigger with internal search, custom object labels/content, InputGroup addons, invalid/disabled and RTL examples | `shadcn/examples/combobox-{popup,custom,input-group,invalid,disabled,rtl}.tsx` |
+| The generic shadcn InputGroup does not register Base ComboboxInputGroup's anchor; default external content therefore anchors to the editor | `shadcn/base/input-group.tsx`, `combobox/input-group/ComboboxInputGroup.js`, `positioner/ComboboxPositioner.js` |
+| Content defaults to six sides/logical sides, 6px offset and start alignment; an explicit anchor selects the data-chips minimum-width branch | `shadcn/base/combobox.tsx`, existing Vega stylesheet |
+| Grid navigation uses row/column cells, disabled skipping and uneven-row handling | `floating-ui-react/hooks/gridNavigation.js`, `floating-ui-react/utils/composite.js`, `floating-ui-react/hooks/useListNavigation.js` |
 
 The fixed shadcn documentation and examples do not define a loading/async data
 transport component. Applications can replace their item collections; loading
 status and request ownership need explicit native contracts if added. The archive
 is source evidence, not a claim that every behavior or platform has passed native
 acceptance.
+
+The native compound stage shares its runtime and slot builders with the With
+convenience APIs. Its application-owned typed state, current-build adapters,
+cancelable changes, layout-transparent mount and caller-owned native scroll
+window are Go adaptations; no React context or delayed frame builder is stored.
+The 12 standalone and 20 collection examples are mapped to actual Gallery
+configurations in [`docs/combobox-examples.json`](../../../../docs/combobox-examples.json).
+This mapping is derived documentation, not an upstream source file or a claim
+that optional translucent presets and platform/IME/AT acceptance are complete.
+
+`shadcn/create` also retains the fixed menu transformer, preset defaults and
+style-map exclusions. The default presets select `menuColor: "default"`, whose
+transform removes both menu marker classes. Optional translucent configurations
+instead inline a 70% popover background, backdrop blur and `animate-none!`.
+The shipped solid/default 100ms animation contract does not imply that this
+optional translucent preset is implemented.

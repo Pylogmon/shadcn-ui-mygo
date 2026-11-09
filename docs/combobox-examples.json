@@ -1,0 +1,337 @@
+{
+  "fixed_shadcn_commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "base_ui": "1.6.0",
+  "standalone": 12,
+  "fullcollection": 20,
+  "entries": [
+    {
+      "source": "pkg/control/testdata/shadcn-combobox/shadcn/examples/combobox-demo.tsx",
+      "source_sha256": "9cb9c735fd4a30e9dde964860e110d6eb5c9bed52f44c3aa1cec60f30d42ca24",
+      "entry": "combobox-demo",
+      "gallery": "Framework selection",
+      "configuration": "Framework search",
+      "interaction": "Search, arrow then Enter, clear selection",
+      "verification": "TestCreatorComboboxQuerySelectionClearAndExplicitKeyboardChoice"
+    },
+    {
+      "source": "pkg/control/testdata/shadcn-combobox/shadcn/examples/combobox-basic.tsx",
+      "source_sha256": "9cb9c735fd4a30e9dde964860e110d6eb5c9bed52f44c3aa1cec60f30d42ca24",
+      "entry": "combobox-basic",
+      "gallery": "Framework selection",
+      "configuration": "Framework search",
+      "interaction": "Search and explicitly choose",
+      "verification": "TestCreatorComboboxQuerySelectionClearAndExplicitKeyboardChoice"
+    },
+    {
+      "source": "pkg/control/testdata/shadcn-combobox/shadcn/examples/combobox-clear.tsx",
+      "source_sha256": "2367eaa6d835f95b0bcab955d89c371d469f2ba830964ef93ac52f5410e1186a",
+      "entry": "combobox-clear",
+      "gallery": "Framework selection",
+      "configuration": "Framework search",
+      "interaction": "Choose then use Clear",
+      "verification": "TestCreatorComboboxQuerySelectionClearAndExplicitKeyboardChoice"
+    },
+    {
+      "source": "pkg/control/testdata/shadcn-combobox/shadcn/examples/combobox-custom.tsx",
+      "source_sha256": "b5a1a81a8d295a100ac0de85575cc8d17e8e90422bcdf9500f54513e3fd9be30",
+      "entry": "combobox-custom",
+      "gallery": "Destination selection / Destination form",
+      "configuration": "Trip destinations",
+      "interaction": "Search region text; choose metadata row",
+      "verification": "TestCreatorComboboxGroupsFilterCustomMetadataAndSkipDisabled"
+    },
+    {
+      "source": "pkg/control/testdata/shadcn-combobox/shadcn/examples/combobox-groups.tsx",
+      "source_sha256": "6c0b501ef81f7f18f58bde3cb5f88e2ab07b4ac77a1a62f363f87347edf3c146",
+      "entry": "combobox-groups",
+      "gallery": "Destination selection / Destination form",
+      "configuration": "Trip destinations + Group separators",
+      "interaction": "Toggle separators; filter to one group",
+      "verification": "TestComboboxCompoundManualItemsGroupsAndEmptyListLayers"
+    },
+    {
+      "source": "pkg/control/testdata/shadcn-combobox/shadcn/examples/combobox-auto-highlight.tsx",
+      "source_sha256": "c5b4b9f6548ccaf97e8acd572477a13f54ddf746481ac0ac32e4892a1af38c08",
+      "entry": "combobox-auto-highlight",
+      "gallery": "Content placement",
+      "configuration": "Highlight mode",
+      "interaction": "Choose On input or Always; type and Enter",
+      "verification": "TestComboboxCompoundTypedControlledChangesAndCallbacks"
+    },
+    {
+      "source": "pkg/control/testdata/shadcn-combobox/shadcn/examples/combobox-disabled.tsx",
+      "source_sha256": "f993445bb803cb41e12a1d6d2952afbb186f7e22906d65dd38361f13ca4d6e75",
+      "entry": "combobox-disabled",
+      "gallery": "Selection permissions / Destination form",
+      "configuration": "Disable destination field",
+      "interaction": "Disable single or multiple field; native editor refuses choice",
+      "verification": "TestCreatorCompoundObjectChipsPopupFormAndPermissions"
+    },
+    {
+      "source": "pkg/control/testdata/shadcn-combobox/shadcn/examples/combobox-invalid.tsx",
+      "source_sha256": "26b680c1fe2b4433f030146fbddbfbb51af15949d0287659a70299655103380c",
+      "entry": "combobox-invalid",
+      "gallery": "Selection permissions / Destination form",
+      "configuration": "Show destination error",
+      "interaction": "Toggle invalid and observe editor/Field error",
+      "verification": "TestCreatorCompoundObjectChipsPopupFormAndPermissions"
+    },
+    {
+      "source": "pkg/control/testdata/shadcn-combobox/shadcn/examples/combobox-input-group.tsx",
+      "source_sha256": "f0e4118ddb94c82ecbb8bd9eef6f142f6776eb46c8272403222a052e75854c88",
+      "entry": "combobox-input-group",
+      "gallery": "Content placement",
+      "configuration": "Icon addon",
+      "interaction": "Enable addon; search using actual editor with offset -28 and width240",
+      "verification": "TestCreatorCompoundContentExplorerAndNativeChoice"
+    },
+    {
+      "source": "pkg/control/testdata/shadcn-combobox/shadcn/examples/combobox-multiple.tsx",
+      "source_sha256": "90f60e0bcefc53844a48b01fdfc473e69ed3962c404a58c4cbf98590f5b6ac92",
+      "entry": "combobox-multiple",
+      "gallery": "Technology selection / Destination form",
+      "configuration": "Multiple destinations",
+      "interaction": "Select, remove chip, keyboard backspace/arrow",
+      "verification": "TestCreatorCompoundObjectChipsPopupFormAndPermissions"
+    },
+    {
+      "source": "pkg/control/testdata/shadcn-combobox/shadcn/examples/combobox-popup.tsx",
+      "source_sha256": "8b824e8004dc6b9bb4af2e11e251f48c487c4da9437c30d8f0090cbaa2592de1",
+      "entry": "combobox-popup",
+      "gallery": "Office selection / Destination form",
+      "configuration": "Search in dialog popup",
+      "interaction": "Open actual dialog-role popup; search and choose",
+      "verification": "TestComboboxCompoundIndependentSlotsUseNativeEditorAndSelection"
+    },
+    {
+      "source": "pkg/control/testdata/shadcn-combobox/shadcn/examples/combobox-rtl.tsx",
+      "source_sha256": "c2a6d689561547bba872a48a6d461b71c65a2eb7a3a968513c12ac325ec579ce",
+      "entry": "combobox-rtl",
+      "gallery": "Content placement",
+      "configuration": "Right to left",
+      "interaction": "Enable RTL and logical side; actual native choice",
+      "verification": "TestComboboxCompoundContentPlacementAndAnchorSizing"
+    },
+    {
+      "source": "pkg/control/testdata/shadcn-combobox/shadcn/examples/combobox-example.tsx",
+      "source_sha256": "6b63f6a5671af4738a91b738830ef645da299b5088e59a084ea1ca5d2748ff2a",
+      "source_line": 550,
+      "entry": "ComboboxBasic",
+      "gallery": "Framework selection",
+      "configuration": "Framework search",
+      "interaction": "Search and explicitly choose",
+      "verification": "TestCreatorComboboxQuerySelectionClearAndExplicitKeyboardChoice"
+    },
+    {
+      "source": "pkg/control/testdata/shadcn-combobox/shadcn/examples/combobox-example.tsx",
+      "source_sha256": "6b63f6a5671af4738a91b738830ef645da299b5088e59a084ea1ca5d2748ff2a",
+      "source_line": 570,
+      "entry": "ComboboxSides",
+      "gallery": "Content placement",
+      "configuration": "Content side / Content alignment / 12 DIP gap",
+      "interaction": "Choose all six sides and alignments then open native Content",
+      "verification": "TestComboboxCompoundContentPlacementAndAnchorSizing"
+    },
+    {
+      "source": "pkg/control/testdata/shadcn-combobox/shadcn/examples/combobox-example.tsx",
+      "source_sha256": "6b63f6a5671af4738a91b738830ef645da299b5088e59a084ea1ca5d2748ff2a",
+      "source_line": 606,
+      "entry": "ComboboxDisabled",
+      "gallery": "Selection permissions / Destination form",
+      "configuration": "Disable destination field",
+      "interaction": "Disable single or multiple field; native editor refuses choice",
+      "verification": "TestCreatorCompoundObjectChipsPopupFormAndPermissions"
+    },
+    {
+      "source": "pkg/control/testdata/shadcn-combobox/shadcn/examples/combobox-example.tsx",
+      "source_sha256": "6b63f6a5671af4738a91b738830ef645da299b5088e59a084ea1ca5d2748ff2a",
+      "source_line": 628,
+      "entry": "ComboboxDisabledItems",
+      "gallery": "Destination selection / Destination form",
+      "configuration": "Trip destinations",
+      "interaction": "Search Norway; attempt keyboard selection; selected values stay unchanged",
+      "verification": "TestCreatorCompoundObjectChipsPopupFormAndPermissions"
+    },
+    {
+      "source": "pkg/control/testdata/shadcn-combobox/shadcn/examples/combobox-example.tsx",
+      "source_sha256": "6b63f6a5671af4738a91b738830ef645da299b5088e59a084ea1ca5d2748ff2a",
+      "source_line": 652,
+      "entry": "ComboboxInvalid",
+      "gallery": "Selection permissions / Destination form",
+      "configuration": "Show destination error",
+      "interaction": "Toggle invalid and observe editor/Field error",
+      "verification": "TestCreatorCompoundObjectChipsPopupFormAndPermissions"
+    },
+    {
+      "source": "pkg/control/testdata/shadcn-combobox/shadcn/examples/combobox-example.tsx",
+      "source_sha256": "6b63f6a5671af4738a91b738830ef645da299b5088e59a084ea1ca5d2748ff2a",
+      "source_line": 698,
+      "entry": "ComboboxWithClear",
+      "gallery": "Framework selection",
+      "configuration": "Framework search",
+      "interaction": "Choose then use Clear",
+      "verification": "TestCreatorComboboxQuerySelectionClearAndExplicitKeyboardChoice"
+    },
+    {
+      "source": "pkg/control/testdata/shadcn-combobox/shadcn/examples/combobox-example.tsx",
+      "source_sha256": "6b63f6a5671af4738a91b738830ef645da299b5088e59a084ea1ca5d2748ff2a",
+      "source_line": 718,
+      "entry": "ComboboxWithGroups",
+      "gallery": "Destination form",
+      "configuration": "Group separators = off",
+      "interaction": "Grouped custom collection filters and keeps only real groups",
+      "verification": "TestComboboxCompoundManualItemsGroupsAndEmptyListLayers"
+    },
+    {
+      "source": "pkg/control/testdata/shadcn-combobox/shadcn/examples/combobox-example.tsx",
+      "source_sha256": "6b63f6a5671af4738a91b738830ef645da299b5088e59a084ea1ca5d2748ff2a",
+      "source_line": 745,
+      "entry": "ComboboxWithGroupsAndSeparator",
+      "gallery": "Destination selection / Destination form",
+      "configuration": "Trip destinations + Group separators",
+      "interaction": "Toggle separators; filter to one group",
+      "verification": "TestComboboxCompoundManualItemsGroupsAndEmptyListLayers"
+    },
+    {
+      "source": "pkg/control/testdata/shadcn-combobox/shadcn/examples/combobox-example.tsx",
+      "source_sha256": "6b63f6a5671af4738a91b738830ef645da299b5088e59a084ea1ca5d2748ff2a",
+      "source_line": 773,
+      "entry": "ComboboxWithForm",
+      "gallery": "Destination form",
+      "configuration": "Multiple destinations = off / Submit trip",
+      "interaction": "Choose typed value and submit using button or exposed native Editor.OnSubmit",
+      "verification": "TestComboboxCompoundTypedControlledChangesAndCallbacks"
+    },
+    {
+      "source": "pkg/control/testdata/shadcn-combobox/shadcn/examples/combobox-example.tsx",
+      "source_sha256": "6b63f6a5671af4738a91b738830ef645da299b5088e59a084ea1ca5d2748ff2a",
+      "source_line": 827,
+      "entry": "ComboboxLargeList",
+      "gallery": "Large collection",
+      "configuration": "Large collection search",
+      "interaction": "Search100 items or reveal offscreen80 through actual native scroll window",
+      "verification": "TestComboboxCompoundVirtualWindowRevealsNativeScrollAndFullPositions"
+    },
+    {
+      "source": "pkg/control/testdata/shadcn-combobox/shadcn/examples/combobox-example.tsx",
+      "source_sha256": "6b63f6a5671af4738a91b738830ef645da299b5088e59a084ea1ca5d2748ff2a",
+      "source_line": 847,
+      "entry": "ComboboxAutoHighlight",
+      "gallery": "Content placement",
+      "configuration": "Highlight mode",
+      "interaction": "Choose On input or Always; type and Enter",
+      "verification": "TestComboboxCompoundTypedControlledChangesAndCallbacks"
+    },
+    {
+      "source": "pkg/control/testdata/shadcn-combobox/shadcn/examples/combobox-example.tsx",
+      "source_sha256": "6b63f6a5671af4738a91b738830ef645da299b5088e59a084ea1ca5d2748ff2a",
+      "source_line": 867,
+      "entry": "ComboxboxInputAddon",
+      "gallery": "Content placement",
+      "configuration": "Icon addon",
+      "interaction": "Enable addon; search using actual editor with offset -28 and width240",
+      "verification": "TestCreatorCompoundContentExplorerAndNativeChoice"
+    },
+    {
+      "source": "pkg/control/testdata/shadcn-combobox/shadcn/examples/combobox-example.tsx",
+      "source_sha256": "6b63f6a5671af4738a91b738830ef645da299b5088e59a084ea1ca5d2748ff2a",
+      "source_line": 904,
+      "entry": "ComboboxInPopup",
+      "gallery": "Office selection / Destination form",
+      "configuration": "Search in dialog popup",
+      "interaction": "Open actual dialog-role popup; search and choose",
+      "verification": "TestComboboxCompoundIndependentSlotsUseNativeEditorAndSelection"
+    },
+    {
+      "source": "pkg/control/testdata/shadcn-combobox/shadcn/examples/combobox-example.tsx",
+      "source_sha256": "6b63f6a5671af4738a91b738830ef645da299b5088e59a084ea1ca5d2748ff2a",
+      "source_line": 934,
+      "entry": "ComboboxMultiple",
+      "gallery": "Technology selection / Destination form",
+      "configuration": "Multiple destinations",
+      "interaction": "Select, remove chip, keyboard backspace/arrow",
+      "verification": "TestCreatorCompoundObjectChipsPopupFormAndPermissions"
+    },
+    {
+      "source": "pkg/control/testdata/shadcn-combobox/shadcn/examples/combobox-example.tsx",
+      "source_sha256": "6b63f6a5671af4738a91b738830ef645da299b5088e59a084ea1ca5d2748ff2a",
+      "source_line": 972,
+      "entry": "ComboboxMultipleDisabled",
+      "gallery": "Destination form",
+      "configuration": "Multiple destinations + Disable destination field",
+      "interaction": "Disabled multiple native editor refuses input/choice",
+      "verification": "TestCreatorCompoundObjectChipsPopupFormAndPermissions"
+    },
+    {
+      "source": "pkg/control/testdata/shadcn-combobox/shadcn/examples/combobox-example.tsx",
+      "source_sha256": "6b63f6a5671af4738a91b738830ef645da299b5088e59a084ea1ca5d2748ff2a",
+      "source_line": 1011,
+      "entry": "ComboboxMultipleInvalid",
+      "gallery": "Destination form",
+      "configuration": "Multiple destinations + Show destination error",
+      "interaction": "Actual chips editor receives Invalid and Field error",
+      "verification": "TestCreatorCompoundObjectChipsPopupFormAndPermissions"
+    },
+    {
+      "source": "pkg/control/testdata/shadcn-combobox/shadcn/examples/combobox-example.tsx",
+      "source_sha256": "6b63f6a5671af4738a91b738830ef645da299b5088e59a084ea1ca5d2748ff2a",
+      "source_line": 1093,
+      "entry": "ComboboxMultipleNoRemove",
+      "gallery": "Destination form",
+      "configuration": "Multiple destinations + Hide chip remove buttons",
+      "interaction": "Remove actions disappear; native chip keyboard editing retained",
+      "verification": "TestCreatorCompoundObjectChipsPopupFormAndPermissions"
+    },
+    {
+      "source": "pkg/control/testdata/shadcn-combobox/shadcn/examples/combobox-example.tsx",
+      "source_sha256": "6b63f6a5671af4738a91b738830ef645da299b5088e59a084ea1ca5d2748ff2a",
+      "source_line": 1133,
+      "entry": "ComboboxWithCustomItems",
+      "gallery": "Destination selection / Destination form",
+      "configuration": "Trip destinations",
+      "interaction": "Search region text; choose metadata row",
+      "verification": "TestCreatorComboboxGroupsFilterCustomMetadataAndSkipDisabled"
+    },
+    {
+      "source": "pkg/control/testdata/shadcn-combobox/shadcn/examples/combobox-example.tsx",
+      "source_sha256": "6b63f6a5671af4738a91b738830ef645da299b5088e59a084ea1ca5d2748ff2a",
+      "source_line": 1167,
+      "entry": "ComboboxInDialog",
+      "gallery": "Destination form",
+      "configuration": "Choose framework in dialog",
+      "interaction": "Open real overlay.Dialog, search/choose nested Combobox, confirm",
+      "verification": "TestCreatorCompoundGridVirtualCollectionAndDialog"
+    },
+    {
+      "source": "pkg/control/testdata/shadcn-combobox/shadcn/examples/combobox-example.tsx",
+      "source_sha256": "6b63f6a5671af4738a91b738830ef645da299b5088e59a084ea1ca5d2748ff2a",
+      "source_line": 1263,
+      "entry": "ComboboxWithOtherInputs",
+      "gallery": "Destination form / existing Forms controls",
+      "configuration": "Trip contact email / Select / Button / existing InputGroup",
+      "interaction": "Combine actual native editors with separate controls; Field and submit continue to work",
+      "verification": "TestCreatorCompoundGridVirtualCollectionAndDialog"
+    }
+  ],
+  "additional": [
+    {
+      "capability": "Always / controlled query-open-value / typed Equal and FormValue",
+      "verification": "TestComboboxCompoundTypedControlledChangesAndCallbacks"
+    },
+    {
+      "capability": "Grid row-aware native navigation and accessibility",
+      "verification": "TestComboboxCompoundGridNavigationAndNativeAccessibility"
+    },
+    {
+      "capability": "External native ScrollState virtual window, full positions and reveal",
+      "verification": "TestComboboxCompoundVirtualWindowRevealsNativeScrollAndFullPositions"
+    }
+  ],
+  "boundaries": [
+    "No real Cocoa IME cancellation proof; prior 24 observations preserved separately",
+    "Actual OS screen reader and Linux/Windows native execution are independent platform closure",
+    "Source solid/default Base/Vega 100ms contract; optional translucent presets are not claimed",
+    "Source examples use 100 items, not automatic virtualization; native windowing is caller-owned ui.ScrollState with full indexed item semantics",
+    "Native opaque objects require a unique Key; equality and presentation use current-frame adapters"
+  ]
+}
