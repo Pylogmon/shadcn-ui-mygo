@@ -129,3 +129,5 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 - 本轮收尾：`go test ./... -count=1` 共551项、12包通过，`go vet ./...`与`git diff --check`通过；macOS app及Linux/Windows amd64交叉编译通过。cmdk归档源码/许可证与不可变提交逐字节一致，app内携带的许可也匹配。完整组件复刻继续进行，未改变原始范围。
 
 - Motion基础：新增 `ApplyTransition(c, element)`；先复现进行中的背景/边框颜色过渡在切换ReduceMotion后仍保留混色，再验证立即到目标像素、取消待绘帧、后续即时更新及恢复普通动画。底层 `Transition` 值 API 保持兼容；SDK调用点迁移作为后续独立子阶段。
+
+- Input/Textarea：13项针对性检查、control vet与独立审计通过。先复现父line-height改变Input尺寸、错误实底色和Textarea八行增长上限，再验证全宽/24·32·36·40DIP、明暗真实像素、文字缩放光标、UTF-16 typed/paste/undo、readonly/password/search、可消费OnPaste/OnTextKey、候选Enter仅提交文字及第二Enter提交表单、Field作用域与InputGroup保留显式Disabled/Invalid及回调。用户拖动resize仍待实施；原生客户端检查不替代真实输入法候选窗与AT验收。

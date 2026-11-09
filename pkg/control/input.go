@@ -5,68 +5,8 @@ import (
 	"unicode"
 
 	"github.com/egoist/mygo/ui"
-	"github.com/pylogmon/shadcn-ui-mygo/pkg/motion"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/theme"
 )
-
-type InputProps struct {
-	Placeholder, Label                    string
-	Size                                  Size
-	Disabled, Invalid, ReadOnly, Password bool
-}
-
-func styleInput(c *ui.Context, e ui.Element, p InputProps) ui.Element {
-	t := theme.TokensOf(c)
-	h, px := metrics(p.Size)
-	border := t.Input
-	if p.Invalid {
-		border = t.Destructive
-	}
-	e.MinHeight(h).PaddingX(min(px, 12)).PaddingY(7).Radius(t.Radius*.8).
-		FontSize(14).Background(t.Background).TextColor(t.Foreground).
-		Border(1, border).PlaceholderColor(t.MutedForeground).
-		Placeholder(p.Placeholder).Disabled(p.Disabled).ReadOnly(p.ReadOnly).
-		Invalid(p.Invalid).Cursor(ui.CursorText).Transition(motion.Transition(c)).
-		FocusRingColor(t.Ring.Alpha(.5)).FocusRingOffset(0)
-	if p.Label != "" {
-		e.Label(p.Label)
-	}
-	if p.Disabled {
-		e.Opacity(.5).Cursor(ui.CursorNotAllowed)
-	}
-	if p.Invalid {
-		e.FocusRingColor(t.Destructive.Alpha(.4))
-	}
-	return e
-}
-
-func Input(c *ui.Context, value *string, p InputProps) ui.Element {
-	e := styleInput(c, ui.TextInputBase(c, value), p)
-	if p.Password {
-		e.Password()
-	}
-	return e
-}
-
-type TextareaProps struct {
-	Placeholder, Label          string
-	MinRows, MaxRows            int
-	Disabled, Invalid, ReadOnly bool
-}
-
-func Textarea(c *ui.Context, value *string, p TextareaProps) ui.Element {
-	lo, hi := p.MinRows, p.MaxRows
-	if lo <= 0 {
-		lo = 3
-	}
-	if hi <= 0 {
-		hi = 8
-	}
-	hi = max(lo, hi)
-	return styleInput(c, ui.TextAreaBase(c, value).Lines(lo, hi), InputProps{
-		Placeholder: p.Placeholder, Label: p.Label, Disabled: p.Disabled, Invalid: p.Invalid, ReadOnly: p.ReadOnly,
-	})
-}
 
 func Label(c *ui.Context, text string) ui.Element {
 	return ui.Text(c, text).FontSize(14).FontWeight(500).TextColor(theme.TokensOf(c).Foreground)
@@ -194,7 +134,7 @@ func Field(c *ui.Context, p FieldProps, editor func() ui.Element) ui.Element {
 			}
 		}
 		ui.Column(c).Grow(1).MinWidth(0).Gap(7).Children(func() {
-			input := fieldTarget(c, editor())
+			input := fieldTarget(c, fieldEditor(c, p.Error != "", editor))
 			if label != "" {
 				input.LabelledBy(title)
 			}
@@ -222,6 +162,7 @@ type InputGroupProps struct {
 
 // InputGroup surrounds an editor with units, shortcuts, or supporting text.
 func InputGroup(c *ui.Context, p InputGroupProps, editor func() ui.Element) ui.Element {
+	p.Invalid = fieldInputInvalid(c, p.Invalid)
 	t := theme.TokensOf(c)
 	border := t.Input
 	if p.Invalid {
@@ -274,7 +215,18 @@ func InputGroup(c *ui.Context, p InputGroupProps, editor func() ui.Element) ui.E
 					}
 				})
 			}
-			input = editor().Bind(handle).Grow(1).MinWidth(0).Radius(0).Border(0, ui.Transparent).Background(ui.Transparent).FocusRing(false).Disabled(p.Disabled).Invalid(p.Invalid)
+			var childInvalid bool
+			input, childInvalid = inputGroupEditor(c, editor)
+			p.Invalid = p.Invalid || childInvalid
+			input.Bind(handle).Grow(1).MinWidth(0).Radius(0).Border(0, ui.Transparent).Background(ui.Transparent).FocusRing(false).Shadow(0, 0, 0, 0, ui.Transparent)
+			// The enclosing disabled group is inherited. Do not overwrite an
+			// editor's explicit Disabled/Invalid with the wrapper's false values.
+			if p.Disabled {
+				input.Disabled(true)
+			}
+			if p.Invalid {
+				input.Invalid(true)
+			}
 			if p.Label != "" {
 				input.Label(p.Label)
 			}
@@ -299,7 +251,7 @@ func InputGroup(c *ui.Context, p InputGroupProps, editor func() ui.Element) ui.E
 		if t.Dark {
 			alpha = .4
 		}
-		root.Border(1, t.Destructive).Shadow(0, 0, 0, 3, t.Destructive.Alpha(alpha))
+		root.Invalid(true).Border(1, t.Destructive).Shadow(0, 0, 0, 3, t.Destructive.Alpha(alpha))
 	}
 	if p.Disabled {
 		root.Opacity(.5)
