@@ -85,7 +85,7 @@ func FieldSet(c *ui.Context, p FieldSetProps, content func()) ui.Element {
 // label activation focuses text fields and toggles checkboxes/radios/switches.
 func LabelFor(c *ui.Context, text string, editor ui.Element) ui.Element {
 	label := Label(c, text)
-	fieldTarget(c, editor).LabelledBy(label)
+	fieldTarget(c, editor).Label(text).LabelledBy(label)
 	return label
 }
 
@@ -135,7 +135,7 @@ func Field(c *ui.Context, p FieldProps, editor func() ui.Element) ui.Element {
 		ui.Column(c).Grow(1).MinWidth(0).Gap(7).Children(func() {
 			input := fieldTarget(c, fieldEditor(c, p.Error != "", editor))
 			if label != "" {
-				input.LabelledBy(title)
+				input.Label(label).LabelledBy(title)
 			}
 			if p.Required {
 				input.Description("Required")

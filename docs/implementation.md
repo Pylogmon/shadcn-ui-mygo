@@ -128,7 +128,8 @@
 | 5.CS | Tabs独立组合与13例应用 | 已提交 `3e9c7c3`；Root/List/Trigger/Content、同栏输入/按钮/菜单与外置面板，保留旧Tabs，真实键盘/AX/RTL与显式icon名称 |
 | 5.CT | Select独立组合、无编辑器多选与22例映射 | 已提交 `c371168`；复用旧便捷入口，六侧/RTL、item alignment、100项滚动/箭头、富内容及当前表单；修复临时绑定身份兼容与消费角色定位 |
 | 5.CU | Polar源几何/内容/命中与31例应用 | 已提交 `15ad058`；源角度/半径/扇区/网格/中心/沿弧标签与既有动画、真实ring/axis检查；Tooltip/Gallery整合继续实施 |
-| 5.CV | Gallery独立Tabs、多选Select与富Tooltip | 本阶段提交；现有模型同步格式选择与跨页保留、header动作/面板关联及真实全局搜索快捷键，保留旧manual Tabs与popup清理 |
+| 5.CV | Gallery独立Tabs、多选Select与富Tooltip | 已提交 `6f6d947`；现有模型同步格式选择与跨页保留、header动作/面板关联及真实全局搜索快捷键，保留旧manual Tabs与popup清理 |
+| 5.CW | 类型化数值、日期、时间和文件输入 | 本阶段提交；真实原生编辑器/分段/系统对话框、应用模型绑定、Field/InputGroup与当前回调，提供完整可运行输入示例 |
 
 用户已明确允许原生平台适配：Popover、menu、下拉菜单可以使用 MyGo 的系统菜单与独立 Flyout，超出父窗口范围；无需逐像素照搬网页浮层。Gallery 以 [shadcn/create](https://ui.shadcn.com/create) 的配置与实时预览流程为参考。完整组件功能、主题、动画范围保持不变。
 

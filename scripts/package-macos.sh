@@ -54,13 +54,19 @@ case "${1:-gallery}" in
         identifier='dev.pylogmon.shadcn-selects'
         app_name='Shadcn Selects'
         ;;
+    typed-input)
+        bundle='build/Shadcn Inputs.app'
+        package='./examples/typed-input'
+        identifier='dev.pylogmon.shadcn-inputs'
+        app_name='Shadcn Inputs'
+        ;;
     material-icons)
         bundle='build/Shadcn Symbols.app'
         package='./examples/material-icons'
         identifier='dev.pylogmon.shadcn-symbols'
         app_name='Shadcn Symbols'
         ;;
-    *) echo 'Expected gallery, native-popups, chart-composition, chart-cartesian, chart-polar, tooltip-composition, tabs-composition, select-composition or material-icons.' >&2; exit 1 ;;
+    *) echo 'Expected gallery, native-popups, chart-composition, chart-cartesian, chart-polar, tooltip-composition, tabs-composition, select-composition, typed-input or material-icons.' >&2; exit 1 ;;
 esac
 mkdir -p "$bundle/Contents/MacOS"
 mkdir -p "$bundle/Contents/Resources/licenses"

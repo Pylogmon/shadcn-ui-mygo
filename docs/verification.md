@@ -397,3 +397,6 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 
 - Gallery组合整合：现有格式模型同时连接ToggleGroup和真正无编辑器MultiSelect，独立Tabs header动作/面板关联与跨页状态保留，Tooltip包含可读说明、平台快捷键及styled Kbd。新增两条实际原生流程覆盖双向选值、键盘、窄布局和离页返回；旧popup检查改为真正hover后核富内容，再使用实际全局搜索快捷键。Tooltip完成click会关闭，先前测试入口修正不计产品缺陷。
 - Gallery组合收尾：Root fresh实际15ad058仅叠8冻结文件，全量2270结果、32包、Gallery226结果、全量vet、macOS Gallery bundle及Linux/Windows编译通过；收据`/private/tmp/gallery-primitive-root-final-65egcs70/artifacts/verification-receipt.json`。Root查看实际多选打开态及360宽深色Tabs原生图，确认三项选值/计数和窄栏换行。私有静态表单画布高度600，底部裁切不作整页视觉证据；未混入typed-input、Calendar或Chart目录候选，也未扩展为真实平台/AT验收。
+
+- 类型化输入：NumberInput使用真实TextInput编辑器，有限范围/步进、独立draft与提交、IME/Field/InputGroup均保留；Date/Time复用公开本地化日期/分段，File由用户激活后异步打开系统选择器，取消保留值、卸载/换绑丢弃旧结果、当前构建回调。Time元数据位于SDK公开group，未虚构内部段ReadOnly/AutoFocus。外部NaN模型曾因NaN!=NaN导致每帧Changed，原定向检查修正后通过。
+- 类型化输入收尾：fresh实际6f6d947仅叠30冻结模块/包装说明文件，全量2288结果、33包（control295、example8）、全量vet、macOS Gallery/Inputs bundle及Linux/Windows Gallery编译通过。Root核对冻结文件和收据，逐张查看由exact最终Inputs可执行文件导出的三张原生PNG，含types明暗与Field/InputGroup/file组合；两bundle各14份许可字节相同。收据`/private/tmp/typed-input-stage-final-e1baevri/receipt.json`；未重复运行独立消费者或旧检查矩阵，未混入Calendar/Chart3。实际OS文件选择器、平台候选窗和AT仍待验收。
