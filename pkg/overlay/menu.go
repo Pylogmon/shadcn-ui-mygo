@@ -9,8 +9,10 @@ import (
 // MenuItem supports nested submenus, checkbox items and radio selections.
 // Key identifies the result; Shortcut is display text rather than a key binding.
 type MenuItem struct {
-	Key, Label, Shortcut             string
-	Icon                             *ui.SVG
+	Key, Label, Shortcut string
+	Icon                 *ui.SVG
+	// NativeIcon is a reusable platform image made by mygo.NewMenuIconSVG.
+	NativeIcon                       ui.MenuIcon
 	Disabled, Destructive, Separator bool
 	Group                            string
 	Checked                          *bool
@@ -136,6 +138,7 @@ func menuItems(c *ui.Context, m ui.MenuParts, items []MenuItem, width float32, c
 }
 
 type MenubarItem struct {
+	Key      string
 	Label    string
 	Items    []MenuItem
 	Disabled bool

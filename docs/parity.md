@@ -4,6 +4,12 @@ This project is a native Go implementation of the shadcn design system. The
 current API inventory is a baseline, not evidence of complete behavioral or
 visual parity. **Full shadcn parity remains incomplete.**
 
+The user explicitly permits native adaptations for popovers, menus and dropdowns
+that extend beyond their parent window. Their functional native equivalents,
+rather than literal parent-bounded DOM copies, are the acceptance target; see
+[native-adaptation.md](native-adaptation.md). The Gallery now targets the
+configuration/live-preview workflow of [shadcn/create](https://ui.shadcn.com/create).
+
 The inventory below follows the 66 entries under **All Components** in the
 [official component index](https://ui.shadcn.com/docs/components), inspected on
 2026-11-09. The separate AI Elements collection, site templates, documentation
@@ -49,7 +55,7 @@ composition; they do not automatically supply missing upstream behavior.
 | Collapsible | `display.Collapsible` | Verify focus/controls linkage, interrupted/reversed animation and content preservation. |
 | Combobox | `control.Combobox` | Grouped/custom single-select and multi-select chips with filtering/removal/limits exist; verify loading/async sources, full variant examples and platform IME behavior. |
 | Command | `overlay.Command` / `CommandDialog` | Inline filtering/Enter is tested; verify all disabled-navigation cases, scroll-to-highlight, shortcuts, accessibility and large result sets. |
-| Context Menu | `overlay.ContextMenu` | Native secondary-click and actions are tested; verify keyboard context-key/Shift+F10, all submenu directions, touch and collision edges. |
+| Context Menu | `overlay.ContextMenu` | System-menu and themed alternatives both exist; secondary-click and nested native actions are tested. Verify real keyboard context key/Shift+F10, touch and cross-window/screen-edge placement. |
 | Data Table | `display.DataTable` / `DataRows` | Filtering/sorting/paging exist; add column visibility, facets, row-selection toolbar, pinned columns and complete editable/custom-cell examples. |
 | Date Picker | `display.DatePicker` | Single-date browse/commit and empty value are tested; ranges, disabled dates, date-time, timezone and formatting variants remain. |
 | Dialog | `overlay.Dialog` | Escape, accessible metadata, exit and focus restoration are tested; verify nested focus traps, long scroll content and all interrupted transitions. |
@@ -66,7 +72,7 @@ composition; they do not automatically supply missing upstream behavior.
 | Kbd | `display.Kbd` | Verify platform modifier mapping, key groups, icons, nested buttons and contrast. |
 | Label | `control.Label` | Standalone LabelFor and Field associate visible labels with native editors and focus them on click; verify all disabled and screen-reader combinations. |
 | Marker | `conversation.Marker` | Inline/bordered/separator status exists; verify icons, busy states and complete upstream compositions. |
-| Menubar | `overlay.Menubar` | Native menu triggers and horizontal focus grouping exist; sibling-menu switching with Left/Right while open, hover switching and all close/restore paths need tests. |
+| Menubar | `overlay.Menubar` | NativeMenubar uses platform popup triggers; Menubar retains themed fallback. Verify cross-window native keyboard/hover switching, all close/restore paths and application-level menu-bar integration. |
 | Message | `conversation.Message` | Sender/avatar/header/footer layout exists; complete action/tool/error/branching examples and verify streaming accessibility. |
 | Message Scroller | `conversation.MessageScroller` | Keyed native virtual list, place holding and live-edge following exist; turn anchoring, stream pause heuristics and upstream jump controls remain. |
 | Native Select | `control.NativeSelect` | Deliberate MyGo system-menu adapter replaces the alias; native disabled/group/selection and no parent-tree menu painting are tested. Verify real out-of-window menus on every platform. |
