@@ -1,0 +1,209 @@
+package display
+
+import (
+	"github.com/egoist/mygo/ui"
+	"github.com/pylogmon/shadcn-ui-mygo/pkg/motion"
+	"github.com/pylogmon/shadcn-ui-mygo/pkg/theme"
+)
+
+type BadgeVariant int
+
+const (
+	BadgeDefault BadgeVariant = iota
+	BadgeSecondary
+	BadgeOutline
+	BadgeDestructive
+	BadgeGhost
+	BadgeLink
+)
+
+type BadgeProps struct {
+	Variant            BadgeVariant
+	Label, Description string
+	Icon, EndIcon      *ui.SVG
+	// Leading and Trailing replace their icons inside 12-DIP visual slots.
+	// Content replaces text. Callbacks build non-interactive content; provide
+	// Label when their meaning differs from text or no text is supplied.
+	Leading, Trailing, Content func(*ui.Context)
+	// Button requests a native button. URL requests a native Link instead;
+	// BadgeLink by itself is only a visual variant, like upstream's span.
+	Button                  bool
+	URL                     string
+	Disabled, Invalid, Busy bool
+	// Handle binds the real button/link, including the Link in a compound badge.
+	Handle *ui.Handle
+	// OnActivate and the returned Element.Changed are alternative action
+	// notification paths. URL links also use MyGo's native URL/router action.
+	OnActivate func()
+}
+
+type badgeSlotKey uint8
+
+const (
+	badgeVisual badgeSlotKey = iota
+	badgeLeading
+	badgeContent
+	badgeTrailing
+	badgeTarget
+)
+
+// Badge is the non-interactive, content-sized legacy entry point.
+func Badge(c *ui.Context, text string, variant BadgeVariant) ui.Element {
+	return BadgeWith(c, text, BadgeProps{Variant: variant})
+}
+
+// BadgeWith supports all Vega variants, visual slots and native button/link
+// composition. Its returned element styles the whole badge; Changed reports a
+// primary activation. Handle identifies the actual focus target of a URL badge.
+func BadgeWith(c *ui.Context, text string, p BadgeProps) ui.Element {
+	label := p.Label
+	if label == "" {
+		label = text
+	}
+	interactive := p.Button || p.OnActivate != nil || p.URL != ""
+	var root, target ui.Element
+	if p.URL == "" && interactive {
+		root = ui.ButtonBase(c).Role(ui.RoleButton)
+		target = root
+	} else {
+		root = ui.Row(c)
+		if p.URL == "" {
+			root.Role(ui.RoleText)
+		} else {
+			root.Role(ui.RoleNone)
+		}
+	}
+	disabled := p.Disabled || p.Busy && interactive
+	root.AlignSelf(ui.Start).Shrink(0).Height(20).Radius(999).Gap(4).Padding(2, 8).Clip().
+		AlignItems(ui.Center).Justify(ui.Center).FontSize(12).LineHeight(4.0 / 3.0).FontWeight(500).Label(label).Description(p.Description).
+		Disabled(disabled).DimDisabled(false).Busy(p.Busy).Invalid(p.Invalid).FocusRing(false).Transition(motion.Transition(c))
+	start, end := p.Icon != nil || p.Leading != nil, p.EndIcon != nil || p.Trailing != nil
+	if start {
+		root.PaddingStart(6)
+	}
+	if end {
+		root.PaddingEnd(6)
+	}
+	buildContent := func() {
+		if start {
+			ui.Box(c.Key(badgeLeading)).Size(12, 12).Shrink(0).Center().Children(func() {
+				if p.Leading != nil {
+					p.Leading(c)
+				} else {
+					ui.Icon(c, p.Icon).Size(12, 12)
+				}
+			})
+		}
+		if p.Content != nil {
+			ui.Row(c.Key(badgeContent)).MinWidth(0).Center().Children(func() { p.Content(c) })
+		} else if text != "" {
+			ui.Text(c.Key(badgeContent), text).SingleLine()
+		}
+		if end {
+			ui.Box(c.Key(badgeTrailing)).Size(12, 12).Shrink(0).Center().Children(func() {
+				if p.Trailing != nil {
+					p.Trailing(c)
+				} else {
+					ui.Icon(c, p.EndIcon).Size(12, 12)
+				}
+			})
+		}
+	}
+	root.Children(func() {
+		if p.URL != "" {
+			// MyGo Link owns native URL/router navigation and keyboard semantics.
+			// Link is text-only, so visuals occupy a separate inert sibling row.
+			target = ui.Link(c.Key(badgeTarget), "", p.URL).Label(label).Description(p.Description).Absolute().Left(-1).Top(-1).Right(-1).Bottom(-1).SingleLine().
+				Disabled(disabled).DimDisabled(false).Busy(p.Busy).Invalid(p.Invalid).FocusRing(false)
+		}
+		ui.Row(c.Key(badgeVisual)).Gap(4).AlignItems(ui.Center).IgnoreInput(true).Disabled(true).DimDisabled(false).AccessHidden(true).Children(buildContent)
+	})
+	if p.Handle != nil && target.Valid() {
+		target.Bind(p.Handle)
+	}
+	if target.Valid() {
+		target.Cursor(ui.CursorPointer)
+	}
+	disabled = disabled || root.IsDisabled()
+	badgeAppearance(c, root, target, p.Variant, p.Invalid, disabled)
+	if target.Valid() && target.Clicked() && !disabled {
+		root.SetChanged()
+		if p.OnActivate != nil {
+			p.OnActivate()
+		}
+	}
+	return root
+}
+
+func badgeAppearance(c *ui.Context, root, target ui.Element, variant BadgeVariant, invalid, disabled bool) {
+	t := theme.TokensOf(c)
+	bg, fg, border := t.Primary, t.PrimaryForeground, ui.Transparent
+	switch variant {
+	case BadgeSecondary:
+		bg, fg = t.Secondary, t.SecondaryForeground
+	case BadgeOutline:
+		bg, fg, border = ui.Transparent, t.Foreground, t.Border
+	case BadgeDestructive:
+		bg, fg = t.Destructive.Alpha(.1), t.Destructive
+		if t.Dark {
+			bg = t.Destructive.Alpha(.2)
+		}
+	case BadgeGhost:
+		bg, fg = ui.Transparent, t.Foreground
+	case BadgeLink:
+		bg, fg = ui.Transparent, t.Primary
+	}
+	hovered := !disabled && (target.Valid() && target.Hovered() || !target.Valid() && root.Hovered())
+	if hovered {
+		switch variant {
+		case BadgeGhost:
+			bg, fg = t.Muted, t.MutedForeground
+			if t.Dark {
+				bg = t.Muted.Alpha(.5)
+			}
+		case BadgeLink:
+			// MyGo offsets from the native font's baseline. Four DIPs puts
+			// the line outside this 20-DIP pill's clip with system fonts;
+			// one DIP keeps it visible. Inherit decoration through the whole
+			// visual subtree so custom text has the same hover behavior.
+			root.Underline().UnderlineOffset(1)
+		default:
+			if target.Valid() {
+				switch variant {
+				case BadgeOutline:
+					bg, fg = t.Muted, t.MutedForeground
+				case BadgeDestructive:
+					bg = t.Destructive.Alpha(.2)
+				case BadgeSecondary:
+					bg = t.Secondary.Alpha(.8)
+				default:
+					bg = t.Primary.Alpha(.8)
+				}
+			}
+		}
+	}
+	root.Background(bg).TextColor(fg).Border(1, border)
+	if invalid {
+		root.Border(1, t.Destructive)
+	}
+	if target.Valid() && target.FocusVisible() {
+		ring := t.Ring.Alpha(.5)
+		if variant == BadgeDestructive || invalid {
+			ring = t.Destructive.Alpha(.2)
+			if t.Dark {
+				ring = t.Destructive.Alpha(.4)
+			}
+		}
+		border := t.Ring
+		if invalid {
+			border = t.Destructive
+		}
+		root.Border(1, border).Shadow(0, 0, 0, 3, ring)
+	}
+	if disabled {
+		root.Opacity(.5)
+		if target.Valid() {
+			target.Cursor(ui.CursorNotAllowed)
+		}
+	}
+}

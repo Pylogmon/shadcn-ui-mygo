@@ -33,29 +33,6 @@ func CardFooter(c *ui.Context, content func()) ui.Element {
 	return ui.Row(c).FillWidth().Gap(8).AlignItems(ui.Center).Children(content)
 }
 
-type BadgeVariant int
-
-const (
-	BadgeDefault BadgeVariant = iota
-	BadgeSecondary
-	BadgeOutline
-	BadgeDestructive
-)
-
-func Badge(c *ui.Context, text string, variant BadgeVariant) ui.Element {
-	t := theme.TokensOf(c)
-	bg, fg, border := t.Primary, t.PrimaryForeground, ui.Transparent
-	switch variant {
-	case BadgeSecondary:
-		bg, fg = t.Secondary, t.SecondaryForeground
-	case BadgeOutline:
-		bg, fg, border = ui.Transparent, t.Foreground, t.Border
-	case BadgeDestructive:
-		bg, fg = t.Destructive, t.DestructiveForeground
-	}
-	return ui.Row(c).Padding(2, 8).Radius(999).Border(1, border).Background(bg).TextColor(fg).FontSize(12).FontWeight(500).Children(func() { ui.Text(c, text) })
-}
-
 type SeparatorProps struct {
 	// Semantic exposes a named/oriented separator to assistive technology.
 	// The default is decorative, as in shadcn's separator primitive.

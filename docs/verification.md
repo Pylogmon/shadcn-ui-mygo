@@ -120,3 +120,6 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 
 - Alert/Empty：28项针对性检查及display vet通过。先复现旧Alert留白/文本间距与Empty默认Padding/空描述问题；覆盖16DIP前导图标、独立操作鼠标/键盘、RTL/错误语义色/原生Alert角色、Empty384限宽/40DIP媒体/75%输入、虚线与有限参数、10种空callback身份。独立审计复现命名自定义媒体隐藏可聚焦Button及固定190DIP动作越界；修复为命名Group保留原生子节点、Decorative真正inert、响应式堆叠和有界横向Scroll。操作编辑器跨容器宽度保持状态/焦点；实际viewport/像素/命中与Enter验证通过，滚动子节点AX保留运行时原始几何。图标槽位无隐藏键盘停靠点的额外探针通过；真实AT播报与完整平台矩阵未完成。
 - Alert/Empty独立阶段验证：HEAD只加本阶段4个文件和对应旧块提取，display/Gallery共238项通过；未包含并行Badge或Gallery新页。
+
+- Badge：21项针对性检查与vet通过。先复现旧徽章高度20.13DIP/父级stretch和Destructive实底色偏差，完成6种变体明暗真实像素、原生Button/Link/Router/Enter-only、逻辑12DIP图标/6DIP边距、AX/RTL/禁用祖先/Busy/焦点/Invalid、空callback身份和有限宽长文本。独立审计用真实像素先复现静态/Button/URL的默认与custom Link文字hover均0变化；CSS偏移4在native20DIP裁剪外，改为继承下划线及1DIP偏移后6种回归通过，独立默认/custom探针各出现30个可见下划线像素。
+- Badge独立阶段验证：HEAD只加Badge源码/测试和旧块提取，display/Gallery共259项通过，Gallery新页仍单独提交。
