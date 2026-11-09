@@ -1,0 +1,111 @@
+{
+  "repository": "https://github.com/shadcn-ui/ui",
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "files": [
+    {
+      "path": "packages/react/src/message-scroller/PERFORMANCE.md",
+      "gitBlob": "ce3308571da25066d7ae19d8f206627ef36958ef",
+      "sha256": "e73084c90369aca91b64f8c5a28e16ac3c0ddc745fc327908c156b4a4227d8fd",
+      "bytes": 9035,
+      "archive": "PERFORMANCE.md"
+    },
+    {
+      "path": "packages/react/src/message-scroller/README.md",
+      "gitBlob": "70a60a4658ef5fcab8e1eea6876a7f4aa317188b",
+      "sha256": "7a85eb61ad48b470e36099771c5e85e09bf05d867e74567eb34d36ad2b3decfd",
+      "bytes": 4719,
+      "archive": "README.md"
+    },
+    {
+      "path": "packages/react/src/message-scroller/components.tsx",
+      "gitBlob": "5174d9c55b799077c6a38fe59854af411bef64ef",
+      "sha256": "90868cf6011c9532064b39f40f5da804cb2bcfac49215ce515ce6613bb7c0670",
+      "bytes": 10597,
+      "archive": "components.tsx"
+    },
+    {
+      "path": "packages/react/src/message-scroller/geometry.test.ts",
+      "gitBlob": "c0698b2f3b1fb8dffaf53e54665a81ff39b2b28d",
+      "sha256": "d96490790e1b55a7b4b0520cf61364f9ec61c2bb4b8742466ff39361f0afdbe3",
+      "bytes": 12662,
+      "archive": "geometry.test.ts"
+    },
+    {
+      "path": "packages/react/src/message-scroller/geometry.ts",
+      "gitBlob": "c3137f68e659c9640d45f377f82c2c63ddd80e2e",
+      "sha256": "52a11fc0ece219f48e8388a3c6226c52b27e8157d4611b1eae07a3a5c222e035",
+      "bytes": 9304,
+      "archive": "geometry.ts"
+    },
+    {
+      "path": "packages/react/src/message-scroller/index.ts",
+      "gitBlob": "66391058f4f02feeeedd581b76684588c51aa9c8",
+      "sha256": "82255cb7633049d1471dddaa8806264a349394ee2d7b9f1594e7269993fed510",
+      "bytes": 651,
+      "archive": "index.ts"
+    },
+    {
+      "path": "packages/react/src/message-scroller/message-scroller.browser.test.tsx",
+      "gitBlob": "778cb5333d4521028e62aa563444b158be2b914f",
+      "sha256": "2da733db49cda37994582ee47ca85a54ce0d229bcf0e2837dfb989bbf6b49efb",
+      "bytes": 23462,
+      "archive": "message-scroller.browser.test.tsx"
+    },
+    {
+      "path": "packages/react/src/message-scroller/message-scroller.perf.browser.test.tsx",
+      "gitBlob": "7b220f6dfc7609116777e541fb09f25c179c6f41",
+      "sha256": "11800f94c55f3ece102cd74b33bf5b9e60ba251980c76d9c8cfe45d32eed1a36",
+      "bytes": 27663,
+      "archive": "message-scroller.perf.browser.test.tsx"
+    },
+    {
+      "path": "packages/react/src/message-scroller/message-scroller.test.tsx",
+      "gitBlob": "2c66e7172d9ce2a281d2c108e6ca600eee28c145",
+      "sha256": "58c87604079cafe694f56d3967b8caad41e37d7e76555ced33ce32fbae7b8798",
+      "bytes": 64523,
+      "archive": "message-scroller.test.tsx"
+    },
+    {
+      "path": "packages/react/src/message-scroller/stores.ts",
+      "gitBlob": "7d670b5800537bd3ed0c09339f2274a795631401",
+      "sha256": "21e790031cedcfb4ff0c90ece0aefc9303bddac1bd7ab87d6bb0ca16129df15d",
+      "bytes": 2435,
+      "archive": "stores.ts"
+    },
+    {
+      "path": "packages/react/src/message-scroller/types.ts",
+      "gitBlob": "7959990d925c01ef30d025c9235210453fbcfec4",
+      "sha256": "9a7b9d83f92ca275ac8008a54e261fe0ad2800961c478ed67f73e1cc5379fd5f",
+      "bytes": 8785,
+      "archive": "types.ts"
+    },
+    {
+      "path": "packages/react/src/message-scroller/use-message-scroller-commands.ts",
+      "gitBlob": "129571293efb1c958a7d1d500e72f347fc630498",
+      "sha256": "9cab943edf1bd5754bcc0a2f4419973df928c99431d967e3cfa444cf7816375d",
+      "bytes": 9082,
+      "archive": "use-message-scroller-commands.ts"
+    },
+    {
+      "path": "packages/react/src/message-scroller/use-message-scroller-controller.ts",
+      "gitBlob": "1773201ecd8bfd96b4c9c2d3bc24aada53566f78",
+      "sha256": "1fbd81e722167a0c189e1f7ca87a2a2e2164442d5a29cba0977e1d283d289719",
+      "bytes": 26862,
+      "archive": "use-message-scroller-controller.ts"
+    },
+    {
+      "path": "packages/react/src/message-scroller/use-message-scroller-refs.ts",
+      "gitBlob": "79f16a54b758753ca199d0b46645f8c1c56a7584",
+      "sha256": "595a267fe6de1c92bddd1381709115e439c6ee2c16cd7663690eef4cdb9c594a",
+      "bytes": 7660,
+      "archive": "use-message-scroller-refs.ts"
+    },
+    {
+      "path": "packages/react/src/message-scroller/utils.ts",
+      "gitBlob": "6396aecb1cf6a37f1089d998dd66628023077414",
+      "sha256": "b2979c481307eec66110ce30910ea92a649edc012a0a007b2f38846a6f05a373",
+      "bytes": 161,
+      "archive": "utils.ts"
+    }
+  ]
+}

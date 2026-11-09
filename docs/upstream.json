@@ -152,7 +152,9 @@
     },
     {
       "path": "apps/v4/registry/bases/base/ui/message-scroller.tsx",
-      "sha256": "385d9b66036e6fcf4b21997914791121c55749223d4f28f95d72862c4bd724c0"
+      "sha256": "385d9b66036e6fcf4b21997914791121c55749223d4f28f95d72862c4bd724c0",
+      "gitBlob": "37268f119d3298c7c428bda0751c2af32f0ada9e",
+      "bytes": 4460
     },
     {
       "path": "apps/v4/registry/bases/base/ui/message.tsx",
@@ -567,6 +569,186 @@
       "path": "apps/v4/examples/base/marker-variants.tsx",
       "gitBlob": "64609a002c910ac065f72f92365062bf04791ba1",
       "sha256": "59c617b087cdfe7b6441c4ac47161bcc143eee75b437989a964e5c1f8d7e685b"
+    },
+    {
+      "path": "apps/v4/content/docs/components/base/message-scroller.mdx",
+      "gitBlob": "85d25d8338c26cd048cad80da0d129c4efbd7337",
+      "sha256": "4a0d32c3b4ce045eb320a965e924c81dcad624d035ca7e3c76e46f369ca07c51",
+      "bytes": 24504
+    },
+    {
+      "path": "apps/v4/content/docs/react/message-scroller.mdx",
+      "gitBlob": "33d55553b8b6e0cff21679179efe6067d7072f77",
+      "sha256": "3b56a1836fe3bb86c11b4ad2d4f807b46b1a8dd08c9a6c3e232d7789478948e0",
+      "bytes": 21387
+    },
+    {
+      "path": "apps/v4/examples/base/message-scroller-anchoring.tsx",
+      "gitBlob": "4b251d979e397dff0883d41e0cb73f0edee6ce84",
+      "sha256": "16ab12ebaef043cff039ccb25975c4f0ea9d4c7f761f656763992dba5bd539b2",
+      "bytes": 5960
+    },
+    {
+      "path": "apps/v4/examples/base/message-scroller-animation.tsx",
+      "gitBlob": "430656da6de30b153259c60f1d19c138405afaee",
+      "sha256": "75dbd2fcdae68b3086769b1bbb1f64b13d5cfbe2478d65adb93824e458a0322a",
+      "bytes": 6271
+    },
+    {
+      "path": "apps/v4/examples/base/message-scroller-commands.tsx",
+      "gitBlob": "e88bbb4aeeef108eb5f5de061c88711ef33d6934",
+      "sha256": "b7af7fa2261cb4a96aa4828bc8a58f3f7d3bae839283e8d7c6767777cfbb3ed0",
+      "bytes": 6517
+    },
+    {
+      "path": "apps/v4/examples/base/message-scroller-demo.tsx",
+      "gitBlob": "3db8af7743de79e64d4575fa16516c3db156c26b",
+      "sha256": "339a7629c3deb0d238566ef63207c38eb625f0a7bafa9bc0d778652e6f8f3454",
+      "bytes": 9290
+    },
+    {
+      "path": "apps/v4/examples/base/message-scroller-group-chat.tsx",
+      "gitBlob": "3d4717ce338d50d4b918f39d671077c4b055fa47",
+      "sha256": "c8f741d634dbec070680e5bbab34b70362460f571cc473d5b3cf56cd7aac762c",
+      "bytes": 6890
+    },
+    {
+      "path": "apps/v4/examples/base/message-scroller-load-history.tsx",
+      "gitBlob": "155c7d9060b21325ea90c42897581a9635ff1c1f",
+      "sha256": "0656d681170087108a44afddc6063d02dd3ce9ddd3168d4301c506840930f8c8",
+      "bytes": 7167
+    },
+    {
+      "path": "apps/v4/examples/base/message-scroller-opening-position.tsx",
+      "gitBlob": "4ef5ee316cdb0f909be95e7806fdebe9c73a24bc",
+      "sha256": "2085ff8012df04552114449e65c86970a5f8a28514a49732b70aa71c184ba7b0",
+      "bytes": 5961
+    },
+    {
+      "path": "apps/v4/examples/base/message-scroller-previous-context.tsx",
+      "gitBlob": "dc23e5189cc71820349398c62e5c69f240cccec6",
+      "sha256": "2c33050eda0b5d54bd9920c701b565ff582153b0740461f76edea206f97bec94",
+      "bytes": 9863
+    },
+    {
+      "path": "apps/v4/examples/base/message-scroller-scrollable.tsx",
+      "gitBlob": "8eae32d06ca88f98c5ebf943c28b66d5674e5c4c",
+      "sha256": "4b111d95f3802a3eda031c7e4c2f129fec7d14eff64030254d669a2444110e41",
+      "bytes": 3135
+    },
+    {
+      "path": "apps/v4/examples/base/message-scroller-state.tsx",
+      "gitBlob": "16fee78893d07b3f3d1ce17c540ee099813a93a9",
+      "sha256": "5cbb48d5df247a9b628659059d06994e6cf64d7e5a2e12b221ff2465ff282d25",
+      "bytes": 3265
+    },
+    {
+      "path": "apps/v4/examples/base/message-scroller-streaming.tsx",
+      "gitBlob": "ae577336f0fce0019b73adbd308819b40cbb3251",
+      "sha256": "e866a14e202b788c751313b6c34722c09de48edfb55a719ba0d1fdc07b3813a3",
+      "bytes": 9345
+    },
+    {
+      "path": "apps/v4/examples/base/message-scroller-visibility.tsx",
+      "gitBlob": "72994f8b539f87f87b42a7fb442238ab51ba4aa2",
+      "sha256": "4d34bc0cf216d9bf9423c0254d7a3de565655ef82fffa33bfed7d7ac63286720",
+      "bytes": 7434
+    },
+    {
+      "path": "packages/react/src/message-scroller/PERFORMANCE.md",
+      "gitBlob": "ce3308571da25066d7ae19d8f206627ef36958ef",
+      "sha256": "e73084c90369aca91b64f8c5a28e16ac3c0ddc745fc327908c156b4a4227d8fd",
+      "bytes": 9035
+    },
+    {
+      "path": "packages/react/src/message-scroller/README.md",
+      "gitBlob": "70a60a4658ef5fcab8e1eea6876a7f4aa317188b",
+      "sha256": "7a85eb61ad48b470e36099771c5e85e09bf05d867e74567eb34d36ad2b3decfd",
+      "bytes": 4719
+    },
+    {
+      "path": "packages/react/src/message-scroller/components.tsx",
+      "gitBlob": "5174d9c55b799077c6a38fe59854af411bef64ef",
+      "sha256": "90868cf6011c9532064b39f40f5da804cb2bcfac49215ce515ce6613bb7c0670",
+      "bytes": 10597
+    },
+    {
+      "path": "packages/react/src/message-scroller/geometry.test.ts",
+      "gitBlob": "c0698b2f3b1fb8dffaf53e54665a81ff39b2b28d",
+      "sha256": "d96490790e1b55a7b4b0520cf61364f9ec61c2bb4b8742466ff39361f0afdbe3",
+      "bytes": 12662
+    },
+    {
+      "path": "packages/react/src/message-scroller/geometry.ts",
+      "gitBlob": "c3137f68e659c9640d45f377f82c2c63ddd80e2e",
+      "sha256": "52a11fc0ece219f48e8388a3c6226c52b27e8157d4611b1eae07a3a5c222e035",
+      "bytes": 9304
+    },
+    {
+      "path": "packages/react/src/message-scroller/index.ts",
+      "gitBlob": "66391058f4f02feeeedd581b76684588c51aa9c8",
+      "sha256": "82255cb7633049d1471dddaa8806264a349394ee2d7b9f1594e7269993fed510",
+      "bytes": 651
+    },
+    {
+      "path": "packages/react/src/message-scroller/message-scroller.browser.test.tsx",
+      "gitBlob": "778cb5333d4521028e62aa563444b158be2b914f",
+      "sha256": "2da733db49cda37994582ee47ca85a54ce0d229bcf0e2837dfb989bbf6b49efb",
+      "bytes": 23462
+    },
+    {
+      "path": "packages/react/src/message-scroller/message-scroller.perf.browser.test.tsx",
+      "gitBlob": "7b220f6dfc7609116777e541fb09f25c179c6f41",
+      "sha256": "11800f94c55f3ece102cd74b33bf5b9e60ba251980c76d9c8cfe45d32eed1a36",
+      "bytes": 27663
+    },
+    {
+      "path": "packages/react/src/message-scroller/message-scroller.test.tsx",
+      "gitBlob": "2c66e7172d9ce2a281d2c108e6ca600eee28c145",
+      "sha256": "58c87604079cafe694f56d3967b8caad41e37d7e76555ced33ce32fbae7b8798",
+      "bytes": 64523
+    },
+    {
+      "path": "packages/react/src/message-scroller/stores.ts",
+      "gitBlob": "7d670b5800537bd3ed0c09339f2274a795631401",
+      "sha256": "21e790031cedcfb4ff0c90ece0aefc9303bddac1bd7ab87d6bb0ca16129df15d",
+      "bytes": 2435
+    },
+    {
+      "path": "packages/react/src/message-scroller/types.ts",
+      "gitBlob": "7959990d925c01ef30d025c9235210453fbcfec4",
+      "sha256": "9a7b9d83f92ca275ac8008a54e261fe0ad2800961c478ed67f73e1cc5379fd5f",
+      "bytes": 8785
+    },
+    {
+      "path": "packages/react/src/message-scroller/use-message-scroller-commands.ts",
+      "gitBlob": "129571293efb1c958a7d1d500e72f347fc630498",
+      "sha256": "9cab943edf1bd5754bcc0a2f4419973df928c99431d967e3cfa444cf7816375d",
+      "bytes": 9082
+    },
+    {
+      "path": "packages/react/src/message-scroller/use-message-scroller-controller.ts",
+      "gitBlob": "1773201ecd8bfd96b4c9c2d3bc24aada53566f78",
+      "sha256": "1fbd81e722167a0c189e1f7ca87a2a2e2164442d5a29cba0977e1d283d289719",
+      "bytes": 26862
+    },
+    {
+      "path": "packages/react/src/message-scroller/use-message-scroller-refs.ts",
+      "gitBlob": "79f16a54b758753ca199d0b46645f8c1c56a7584",
+      "sha256": "595a267fe6de1c92bddd1381709115e439c6ee2c16cd7663690eef4cdb9c594a",
+      "bytes": 7660
+    },
+    {
+      "path": "packages/react/src/message-scroller/utils.ts",
+      "gitBlob": "6396aecb1cf6a37f1089d998dd66628023077414",
+      "sha256": "b2979c481307eec66110ce30910ea92a649edc012a0a007b2f38846a6f05a373",
+      "bytes": 161
+    },
+    {
+      "path": "apps/v4/registry/bases/base/examples/message-scroller-example.tsx",
+      "gitBlob": "716efa1352bbd132b20f8be00514aae03cb247af",
+      "sha256": "43ab1c6161d424cb42168573d8ec442af96c558022061cdf0f60088ec0925f10",
+      "bytes": 9027
     }
   ],
   "components": [

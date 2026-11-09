@@ -13,7 +13,9 @@ type MessageScrollerProps struct {
 	FollowEnd bool
 }
 
-// MessageScroller uses MyGo's virtual variable-height list. FollowEnd follows
+// MessageScroller is the compatible virtual variable-height list entry point.
+// MessageScrollerWith and its compound parts implement source turn anchoring.
+// FollowEnd follows
 // new content only at the live edge; user scrolling away suspends following.
 // Call state.ScrollToEnd() for "Jump to latest", state.ScrollTo(i,ui.Start)
 // for search, and state.HoldPlace() when expanding a streaming message.

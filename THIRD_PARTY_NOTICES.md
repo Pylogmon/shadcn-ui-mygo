@@ -30,7 +30,15 @@ exact CodeBlock copy/check SVGs and their manifest are in `pkg/display/assets/`.
 Toast status SVGs are archived in `pkg/overlay/assets/` with their own manifest.
 Attachment file/state/action SVGs and their manifest are in `pkg/conversation/assets/`.
 The Trace chevron uses the same pinned Lucide source with a separate manifest there.
+The MessageScroller jump arrow uses that same source and a separate manifest.
 The macOS bundles include that license as `Contents/Resources/licenses/lucide.txt`.
+
+MessageScroller behavior is independently ported against the shadcn primitive at
+commit `8ab27715521cbd4f87ae6886cd989cbb678f6de7`. The complete reference
+implementation, geometry/controller/command sources, tests, MIT license and
+content manifest are archived in `pkg/conversation/testdata/message-scroller/`.
+Its license is the same shadcn MIT license already bundled as
+`Contents/Resources/licenses/shadcn.txt`.
 
 Toast behavior and styles are independently ported against Sonner 2.0.7,
 commit `3ba7aa17ab7e8101b9cf4893936f873b0d4769b3`, the version locked by

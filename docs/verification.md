@@ -231,3 +231,7 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 
 - Bubble复杂Link修正：先复现MyGo文字Link包含Column/Icon时的真实构建panic，再用实际native Link覆盖惰性视觉面修复。71项Bubble聚焦检查、基于`feca45e`加Bubble三文件的conversation/Gallery共331项隔离检查及vet通过。原生Handle、URL/Router、Enter-only、整面padding点击、fluent Label、无重复AX和无Label时URL回退均通过；Muted/Outline/Ghost在LTR/RTL与祖先字体/颜色下像素匹配普通内容面。直接文字Link自然名称原回归保留并显式TextOnly。
 - Bubble独审另15项真实原生检查覆盖明暗、长文与复杂嵌套、空callback、同Key前插及内容清空、实际焦点/Space/Enter/URL；全部通过，临时探针已删除。默认复杂Link与显式TextOnly的内容/名称/样式边界已写入指南；未读取私有树或修改MyGo模块缓存，完整平台/AT/视觉矩阵继续跟踪。
+
+- MessageScroller：66项聚焦（含旧virtual入口）、基于`092d8af`加本模块13文件与源归档的conversation/Gallery共401项隔离检查及vet通过。跟随/自由/锚定/跳转、初始位置和待出现ID、四种对齐/负margin/显式padding、单/批量锚点、流式增长/尾部空白消耗、前插与同帧回答折叠、可见ID/阅读线、真实细滚动条拖动/取消/透明时操作、原生wheel/键盘打断、动态减少动画、隐藏/卸载/重挂载、原生编辑器选择/IME与稳定Key均验证。
+- MessageScroller交叉审查：先复现并修复Viewport独立卸载残留可见性、空→非空未恢复follow、排队ID被边缘命令覆盖、边缘处理器吞嵌套原生Scroll、手动输入未撤销尚未应用命令，以及Content卸载原生glide残留。独审原始8项探针最终全绿并清理；后加入第二实例、离屏、0.75缩放和三实例idle验证，避免补测量反馈环。明暗1320×790双实例PNG已导出并由Root查看，左侧锚定留白、右侧历史/跳转/fade符合该状态。
+- MessageScroller适配范围：组合入口使用完整原生Scroll；旧10k可变高度virtual List入口继续保留，不声称提供VirtualViewport锚定。默认保留任意嵌套原生滚动，ContainScrollAtEdges仅为平面正文显式开启，缺少公开overscroll/wheel处理后查询；RoleLog缺独立ARIA relevant/live字段。31份参考文件blob/SHA核对，归档15原文与MIT许可、ArrowDown来源校验均通过。完整示例、触摸、平台、字体/AT/视觉矩阵仍未完成。

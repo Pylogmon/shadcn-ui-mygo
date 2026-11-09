@@ -10,6 +10,8 @@
 
 Marker另核对同一固定提交的primitive（Git blob `4fcf772c96f7649cea01ad6f7a688a521a817a42`）、registry组合示例（`d9eb82ae1ee3b405040716140b88991cea2c4a03`）、base文档，以及demo、variants、border、separator、icon、status、shimmer、link-button八个独立示例，共11份原始文件。Git blob与SHA-256记录在[upstream.json](upstream.json)；样式对照Vega的Marker段，不将独立示例中的base-rhea导入路径误作本阶段视觉基线。静态/显式状态语义与原生链接组合差异见[Marker指南](marker.md)。
 
+MessageScroller行为另外核对同一提交的`packages/react/src/message-scroller`完整15份primitive、几何、命令、控制器、类型、测试与说明，原文及MIT许可归档于`pkg/conversation/testdata/message-scroller`。连同registry包装/组合示例、base/react文档和12个独立示例，共31份固定Git blob与SHA-256记录在[upstream.json](upstream.json)。Jump箭头为上述固定Lucide提交的ArrowDown，单独SVG/manifest在`pkg/conversation/assets`。CSS的thin滚动条映射为当前MyGo主题的细条宽度，源渐隐采用同提交共享CSS；原生嵌套滚动、ARIA和虚拟化边界见[Message Scroller](message-scroller.md)。
+
 共享文字扫光与滚动渐隐对照同一提交的 `packages/shadcn/src/tailwind.css`，Git blob为 `067bfc56fc086420835582f469e2c78d3942c69a`；Shimmer文档blob为 `6b12d933a3b8b421e49b7566857e19afa4fa99c6`。原始CSS/文档、MIT许可与SHA-256归档在 `internal/shimmer/testdata/shadcn`。普通文字仍由MyGo原生排版，公开ColorEffect处理字形覆盖内的扫光；sRGB检查不能推导为全部广色域平台已对齐。
 
 Command 的评分行为另外固定到 shadcn 该提交在 `pnpm-lock.yaml` 锁定的 cmdk 1.1.1：提交 [`fb4ea04e9ec211777fbb39c6104e3c5f2ee107d2`](https://github.com/dip/cmdk/tree/fb4ea04e9ec211777fbb39c6104e3c5f2ee107d2)，原仓库 `pacocoursey/cmdk` 现重定向到 `dip/cmdk`。原始 `command-score.ts`、MIT许可证、来源SHA-256和可离线生成的数值对照在 `pkg/overlay/testdata/cmdk`。Go移植的版权声明见 [第三方声明](../THIRD_PARTY_NOTICES.md)。

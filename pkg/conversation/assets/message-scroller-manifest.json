@@ -1,0 +1,13 @@
+{
+  "repository": "https://github.com/lucide-icons/lucide",
+  "version": "0.474.0",
+  "commit": "97bbe1d6b2adc6767831e52f6b12b2886b6498d5",
+  "license": "../../../internal/indicator/LICENSE.lucide",
+  "files": [
+    {
+      "file": "message-scroller-arrow-down.svg",
+      "upstream_path": "icons/arrow-down.svg",
+      "sha256": "2b641c7a59d39450edfed72067fcc9940a1a316a737346af23b4b9103c0689f2"
+    }
+  ]
+}
