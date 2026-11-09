@@ -277,3 +277,5 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 - Chart实际绘制数据：独审先复现未堆叠Pie/Donut/Radial只绘制首系列，却把第二系列加入默认Tooltip/AX；Radial的domain/scaling也会受该未绘制巨大值影响。现在在Chart入口派生first-only数据，统一交给绘制、域、命中和检查，不改调用方Series或Stacked/Radar行为。10项正式检查从基线5红/5绿到全绿，真实默认提示、原生AX、全图像素、额外MaxFloat64对首系列弧形/命中的影响，以及四种多系列极坐标图形确实保留后续系列均验证；原141项Chart聚焦和vet也通过。
 - Chart旧空内容布局：Tooltip/Legend空内容原0尺寸Box仍把父Gap算两次，两个实际布局子例先红；改Hidden(true)后，3项正式检查通过，包含空→非空→空布局和相邻原生编辑器原选区保留。自由组合入口已在5.BM独立修复，此处补齐旧的无Config兼容入口。以`c6517f7`仅加入本阶段三个Go文件，display529/Gallery154共683项隔离检查与vet通过，三个文件与workspace哈希一致；不纳入并行示例候选。
 - 本轮收尾：最终`go test ./... -count=1`共1617项、17包（11个有测试、6个无测试），全量`go vet ./...`与diff检查通过，最终Gallery macOS app及Linux/Windows amd64重新编译通过。完整平台、读屏/实际系统IME、字体/主题/视觉矩阵、其余组件复杂变体及几何/路径动画仍须按原目标继续实施，未把本次绿色检查视为最终交付完成。
+
+- 消费者验证器缓存清理：实际分发复验发现原defer os.RemoveAll忽略错误，Go只读模块目录残留。新增真实只读嵌套目录回归先红，再恢复本次独占缓存的owner权限并删除；符号链接外目标内容/权限不变、重复清理也成功，共2项与cmd vet通过。清理错误通过named return与原错误合并，CLI会失败而不静默报完成。改后以代码制品`4f370c1`执行完整八步空缓存验证，`build/consumer-verification/run-3088365774`退出0；Root核对go-env中的模块/构建缓存共同父目录已自动消失，cleanup-verification.json记录准确工具源码SHA。该修正未包含并行图表动画或Gallery候选。

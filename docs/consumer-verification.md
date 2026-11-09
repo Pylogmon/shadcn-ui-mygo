@@ -14,6 +14,8 @@ make verify-consumer
 
 输出保留在 `build/consumer-verification/run-*`：模块ZIP/版本信息、外部go.mod/go.sum、依赖图、命令日志、设置文件、四张PNG与receipt.json。记录包含SDK提交、伪版本、ZIP和示例SHA-256、Go版本及目标平台。临时模块/构建缓存完成后删除。
 
+清理会先恢复本次独占缓存中只读目录/文件的owner权限，避免Go下载模块的只读目录残留；不沿符号链接进入其它目录。清理失败会与原验证错误合并并返回非零退出状态，不再静默忽略。此清理只作用于验证器自行创建的临时缓存，不处理用户现有缓存。
+
 ```sh
 go run ./cmd/verify-consumer -ref <commit> -out build/consumer-verification
 ```

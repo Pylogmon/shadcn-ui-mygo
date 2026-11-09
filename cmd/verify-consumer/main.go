@@ -9,6 +9,7 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"encoding/json"
+	"errors"
 	"flag"
 	"fmt"
 	"image/png"
@@ -57,7 +58,7 @@ func output(dir string, args ...string) ([]byte, error) {
 	return b, nil
 }
 
-func verify(ref, parent string) error {
+func verify(ref, parent string) (result error) {
 	rootBytes, err := output("", "rev-parse", "--show-toplevel")
 	if err != nil {
 		return err
@@ -99,7 +100,11 @@ func verify(ref, parent string) error {
 	if err != nil {
 		return err
 	}
-	defer os.RemoveAll(cache)
+	defer func() {
+		if err := cleanupCache(cache); err != nil {
+			result = errors.Join(result, fmt.Errorf("remove temporary consumer cache %q: %w", cache, err))
+		}
+	}()
 	proxy := filepath.Join(dir, "proxy")
 	versions := filepath.Join(proxy, filepath.FromSlash(kitModule), "@v")
 	if err := os.MkdirAll(versions, 0755); err != nil {
