@@ -105,3 +105,5 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 - 浮层阶段独立提交验证：将已提交HEAD导出到临时目录，仅覆盖本阶段4个Modal/Drawer文件，overlay/Gallery共91项通过，确认不依赖同时开发的Sidebar/Command改动。
 
 - Sidebar：23项针对性检查、navigation全包64项及 vet 通过。覆盖容器自身宽度测量、移动Sheet trap/选择/Escape/回桌面、独立折叠与移动状态、nested/disabled/JSON、RTL与物理边、三种变体200ms反转、sidebar语义色、独立Host Tooltip、rail和局部快捷键。独立审计先复现移动resize关闭漏通知、宽Header/Footer越界绘制/点击、移除触发器失焦和布局前外部trigger丢Controls；修复后真实像素/命中、前后布局trigger关联/实际回焦、无有效opener回主区与空闲收敛通过。未显示offcanvas内容延迟构建，已保留隐藏内容动态显式AutoFocus限制继续记录。
+
+- Command：21项针对性检查、overlay全包65项和 vet 通过。实际10000行虚拟化、稳定Key/重复Value/异步重排、禁用/loop/Home/End/Page、精确Binding/重复抑制、原生caret/全选/组字、custom/group/status及Dialog返回焦点均有回归。独立审计先复现Page忽略description/heading高度，按实际行高度累计后1000项混合行999→998；后续修复评分打散分组、首行孤立分隔符、overscan隐藏项继续AX聚焦和零宽容器重复失效。CommandDialog默认448宽、窗口1/3定位和180×64极小窗口限制经检查；默认子串筛选与完整上游模糊评分的差异继续记录。

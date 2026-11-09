@@ -58,6 +58,7 @@ Gallery 的 Navigation 页展示菜单栏和可切换尺寸的导航内容面板
 Data 页也展示头像尺寸、状态角标、加载/回退和头像组。对应 API 见 [Avatar](docs/avatar.md) 与 [Card 槽位](docs/card.md)。
 
 响应式导航布局见 [Sidebar](docs/sidebar.md)；对话框焦点、固定页脚与抽屉吸附手势见 [Modal API](docs/modals.md)。
+命令面板的虚拟列表、过滤、快捷键与自定义内容见 [Command](docs/command.md)。
 
 预设可从 Gallery 复制，并用 `go run ./cmd/gallery -preset path/to/preset.json` 加载；无效预设会在修改配置之前被拒绝。
 
