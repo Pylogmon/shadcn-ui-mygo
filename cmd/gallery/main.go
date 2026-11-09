@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"image"
 	"image/png"
 	"log"
 	"os"
@@ -39,7 +40,7 @@ func main() {
 			log.Fatal(err)
 		}
 		defer f.Close()
-		if err = png.Encode(f, ui.Render(state.View, 1280, 900, 1)); err != nil {
+		if err = png.Encode(f, renderSnapshot(state)); err != nil {
 			log.Fatal(err)
 		}
 		return
@@ -52,4 +53,11 @@ func main() {
 	if err := mygo.App.Run(); err != nil {
 		log.Fatal(err)
 	}
+}
+
+func renderSnapshot(state *gallery.State) *image.RGBA {
+	return ui.Render(func(c *ui.Context) {
+		c.DisableAnimations()
+		state.View(c)
+	}, 1280, 900, 1)
 }
