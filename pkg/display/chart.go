@@ -240,7 +240,7 @@ func tooltipData(c *ui.Context, p ChartProps, index int) ChartTooltipData {
 			if s.Values[index] < 0 {
 				continue
 			}
-			if p.Kind != RadialChart || !p.Stacked {
+			if p.Kind == PieChart || p.Kind == DonutChart || p.Kind == RadialChart && !p.Stacked {
 				color = categoryColor(c, p, index)
 			}
 		}
