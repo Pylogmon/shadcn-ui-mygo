@@ -159,3 +159,6 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 - Loading：4项基线回归先复现Spinner不继承当前颜色、减少动画重绘仍改变转轮、Skeleton的pulse easing偏差以及instant frame继续脉冲；修复后含扩展共8项检查通过。Spinner用固定Loader2 SVG并匀速一秒一周，实际图形在0/90度逐像素等于独立SVG参考；Skeleton在250ms像素与CSS曲线数值参考一致。动态reduce/static/恢复、原生未知进度、decorative、尺寸/百分比/圆形及卸载idle均覆盖，Busy Button使用同一视觉且原生busy/disabled检查通过。
 - Loading来源与独立阶段：核对0.474.0 tag及不可变Lucide提交的SVG/ISC许可字节一致。HEAD仅覆盖本阶段loading、共享indicator、Button接入与旧块提取后，display/control/Gallery共412项通过，未依赖并行Typography/ScrollArea/CodeBlock改动。radius×.8由本次固定globals.css确认，本阶段没有把正确圆角当作实现bug；旧版减2px对照已撤回。
 - Loading独立审查：2条临时公共API探针覆盖Busy XS按钮单一原生busy/disabled目标、运行中全图静态参考对比、解除loading后实际激活，以及instant/disabled祖先下无idle/动作；全部通过，临时文件已删除。
+
+- Typography/Kbd：21项聚焦检查与display vet通过。先复现Kbd在Column内stretch、H2缺pb8/分隔线，以及局部mono父字体污染键帽；修复后完整body family/fluent font像素参考、原生RichText选择/复制/链接、代码背景padding、文档间距/Scope、RTL引用与列表标记、带稳定Key的交互列表/表格、empty callback身份、Tooltip明暗逆色及真实外层Button键鼠均通过。TypographyTable为等宽静态语义表格，不把此项当成完整HTML排版引擎。固定MDX blob为 `21953c1ed037c79181e7ca03e1898f31eefe4901`，与已缓存checkout tree一致。
+- Typography独立阶段：HEAD仅加入Typography/Kbd源码与正式测试、保留AspectRatio旧块，display/Gallery共296项通过；17个新增对照文件（MDX、15个base排版示例与globals.css）逐个git blob核对一致，再记录SHA-256。未依赖并行CodeBlock/ScrollArea或Gallery新页。

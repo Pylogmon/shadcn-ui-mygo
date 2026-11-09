@@ -66,55 +66,6 @@ func AspectRatio(c *ui.Context, ratio float32, content func()) ui.Element {
 	}
 	return ui.Box(c).FillWidth().AspectRatio(ratio).Clip().Children(content)
 }
-func Kbd(c *ui.Context, key string) ui.Element {
-	t := theme.TokensOf(c)
-	return ui.Row(c).Padding(2, 5).Radius(4).Background(t.Muted).Border(1, t.Border).TextColor(t.MutedForeground).FontSize(12).Children(func() { ui.Text(c, key) })
-}
-
-type TextStyle int
-
-const (
-	Paragraph TextStyle = iota
-	H1
-	H2
-	H3
-	H4
-	Lead
-	Large
-	Small
-	Muted
-	Blockquote
-	InlineCode
-)
-
-func Typography(c *ui.Context, text string, style TextStyle) ui.Element {
-	t := theme.TokensOf(c)
-	e := ui.Text(c, text).TextColor(t.Foreground).FontSize(16).LineHeight(1.6)
-	switch style {
-	case H1:
-		e.FontSize(36).FontWeight(800).LineHeight(1.15).Role(ui.RoleHeading).Level(1)
-	case H2:
-		e.FontSize(30).FontWeight(600).LineHeight(1.2).Role(ui.RoleHeading).Level(2)
-	case H3:
-		e.FontSize(24).FontWeight(600).LineHeight(1.25).Role(ui.RoleHeading).Level(3)
-	case H4:
-		e.FontSize(20).FontWeight(600).Role(ui.RoleHeading).Level(4)
-	case Lead:
-		e.FontSize(20).TextColor(t.MutedForeground)
-	case Large:
-		e.FontSize(18).FontWeight(600)
-	case Small:
-		e.FontSize(14).FontWeight(500)
-	case Muted:
-		e.FontSize(14).TextColor(t.MutedForeground)
-	case Blockquote:
-		e.Padding(0, 0, 0, 24).InsetShadow(2, 0, 0, 0, t.Border)
-	case InlineCode:
-		e.FontSize(14).Background(t.Muted).Radius(4).Padding(2, 4)
-	}
-	return e
-}
-
 type ProgressProps struct {
 	Label, ValueText       string
 	Height                 float32

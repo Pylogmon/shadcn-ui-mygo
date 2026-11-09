@@ -292,6 +292,74 @@
     {
       "path": "apps/v4/registry/styles/style-vega.css",
       "sha256": "10fa07bd61b429ae2c14c572ba9975f6e991d68a04f8fec7e354a062597e0d4e"
+    },
+    {
+      "path": "apps/v4/content/docs/components/base/typography.mdx",
+      "sha256": "94675f629d08d41feca386477ee4b66f7e3db551980ea9061ac66d2c699cfd70"
+    },
+    {
+      "path": "apps/v4/app/globals.css",
+      "sha256": "c5e271374236f23bcfd559ce64aaf6b8641ee7276156c0f803dd9cb24277af12"
+    },
+    {
+      "path": "apps/v4/examples/base/typography-blockquote.tsx",
+      "sha256": "91e4005ae86a5df1c80d71e97249b860c2729bfae721d10ea1b66d0481e056b6"
+    },
+    {
+      "path": "apps/v4/examples/base/typography-muted.tsx",
+      "sha256": "f0dfc348b866bcec400d74230aa0ec67e1a0c67e2c4917887381209b5453cbc0"
+    },
+    {
+      "path": "apps/v4/examples/base/typography-demo.tsx",
+      "sha256": "4fb115115db5f65215a302c5c167ce642ef7f787b6250bf2795029239a7437e6"
+    },
+    {
+      "path": "apps/v4/examples/base/typography-list.tsx",
+      "sha256": "b2c2d829405df2950ee050f92ebf12731b990853a4f0fb09af8bcd19ec97b638"
+    },
+    {
+      "path": "apps/v4/examples/base/typography-h2.tsx",
+      "sha256": "52b9ba6c96baa968433bd0e364c7cab439f6e375f7e3bce278d3d4dfad06659e"
+    },
+    {
+      "path": "apps/v4/examples/base/typography-rtl.tsx",
+      "sha256": "0068016227cdbfb39e1f851b54f62c768fa76fcec1093fb0ca02bd841213f676"
+    },
+    {
+      "path": "apps/v4/examples/base/typography-h3.tsx",
+      "sha256": "b7ce0fe42def3d440b0365657bdfb766fdad7b0a489a0d4e9f99bcb823f99d51"
+    },
+    {
+      "path": "apps/v4/examples/base/typography-h1.tsx",
+      "sha256": "dc9143fa11f2450a3e16b570c63be782381a802413d51e040e176b1ad77a078f"
+    },
+    {
+      "path": "apps/v4/examples/base/typography-h4.tsx",
+      "sha256": "346c7b646ef34a7829c1506206b47687c5ebcad29bc7ea681f696dd7ffebf044"
+    },
+    {
+      "path": "apps/v4/examples/base/typography-table.tsx",
+      "sha256": "916d4bad2b4b3f13ed4d8aac680c7eab8550e8a91b63fa8bb30ebf46e48715b7"
+    },
+    {
+      "path": "apps/v4/examples/base/typography-inline-code.tsx",
+      "sha256": "1c584644b11f6dddf958feaf73d1ffc677bb9e7c72cfd92f8b4a434a395ad2ab"
+    },
+    {
+      "path": "apps/v4/examples/base/typography-small.tsx",
+      "sha256": "0a7156d1aa9533d1d99856ec0ac98cb35d8dc0b6b392fed810d8130862149268"
+    },
+    {
+      "path": "apps/v4/examples/base/typography-p.tsx",
+      "sha256": "7df2b94e75a622f01506d479e443f878e432ecac7ed814337c938a84cf79d8ef"
+    },
+    {
+      "path": "apps/v4/examples/base/typography-large.tsx",
+      "sha256": "a1b93e6aadafcb1d7eae51476293be622439ffcc3b7a7b7496969e1dbc679be3"
+    },
+    {
+      "path": "apps/v4/examples/base/typography-lead.tsx",
+      "sha256": "656f642e35581509659f87cd8a950e73ce8f1dabfdd6f2d0fa7bef425a7f104a"
     }
   ],
   "components": [
