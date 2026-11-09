@@ -1,0 +1,39 @@
+name: native-go-kit
+on:
+  push:
+  pull_request:
+jobs:
+  test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - run: go test ./...
+      - run: go vet ./...
+      - run: go generate ./...
+      - run: git diff --exit-code
+      - run: make snapshots
+      - uses: actions/upload-artifact@v4
+        with:
+          name: native-gallery
+          path: artifacts/*.png
+  cross-build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target:
+          - {os: darwin, arch: arm64}
+          - {os: linux, arch: amd64}
+          - {os: windows, arch: amd64}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - run: go build ./cmd/gallery
+        env:
+          CGO_ENABLED: '0'
+          GOOS: '${{ matrix.target.os }}'
+          GOARCH: '${{ matrix.target.arch }}'

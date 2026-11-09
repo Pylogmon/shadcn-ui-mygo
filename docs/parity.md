@@ -133,6 +133,6 @@ composition; they do not automatically supply missing upstream behavior.
    and use documented APIs without local module replacements or cached files.
 
 Tests currently present cover selected interactions in `control`, `display`,
-`navigation`, `overlay`, `theme` and `motion`. Their names and assertions in the
+`navigation`, `overlay`, `theme`, `motion`, `conversation` and the Gallery. Their names and assertions in the
 source are the evidence for what they verify. Unexecuted, missing or narrowly
 scoped tests leave the corresponding gate open.

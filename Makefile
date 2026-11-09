@@ -1,0 +1,21 @@
+export GOCACHE := $(CURDIR)/.cache/go-build
+
+.PHONY: test vet run build app snapshots generate
+test:
+	go test ./...
+vet:
+	go vet ./...
+run:
+	go run ./cmd/gallery
+build:
+	mkdir -p build
+	CGO_ENABLED=0 go build -o build/gallery ./cmd/gallery
+app:
+	sh scripts/package-macos.sh
+snapshots:
+	mkdir -p artifacts
+	go run ./cmd/gallery -snapshot artifacts/gallery-light.png
+	go run ./cmd/gallery -dark -snapshot artifacts/gallery-dark.png
+	go run ./cmd/gallery -page themes -snapshot artifacts/gallery-themes.png
+generate:
+	go generate ./...
