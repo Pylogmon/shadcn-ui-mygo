@@ -21,3 +21,5 @@ go run ./cmd/verify-consumer -ref <commit> -out build/consumer-verification
 该流程证明本地模块制品可被独立消费者使用并运行无窗口原生渲染，没有发布到公共Go代理，也没有替代真正窗口的启动、系统主题变化、三平台运行或完整组件验收。新模块实现提交后可再次使用同一流程验证该提交。
 
 会话SDK与Gallery阶段完成后，于2026-11-09再次验证提交`09a56667eac94250dc89a8fbc42534c5458faf77`，伪版本为`v0.0.0-20261109111738-09a56667eac9`。空模块/构建缓存、关闭workspace、无replace的外部构建、跨进程主题恢复像素及Gallery明暗渲染均通过。证据保存在`build/consumer-verification/run-1723552001`，模块ZIP的SHA-256为`1f1e7069991f4a38803b4bec0d4630f42a3a28cdc378b9821e4c8593934a0ba4`；消费者源码SHA-256为`b678ffb61c408baf655f9a26dfc89effa00a3c54041f25949d347a4c85efa91f`。Root另外核对receipt、实际依赖图、ZIP哈希，并查看恢复后的消费者与模块Gallery深色PNG。
+
+图表SDK与Gallery阶段完成后，同日验证提交`d72dbc0238b7a6455be8838917b34d665469b224`，伪版本为`v0.0.0-20261109122650-d72dbc0238b7`。全新缓存、关闭workspace、无replace条件下的tidy、模块图、消费者编译、首次渲染、第二进程恢复、Gallery明暗渲染与环境检查八步通过。证据为`build/consumer-verification/run-3091013942`；ZIP SHA-256为`1fa04441a4665e63c2f909afe2ce822dd1ca90d03ef56a86474fc8a6cf17ba69`，消费者源码校验值不变。独审与Root均实际查看恢复消费者和Gallery深色PNG，Root另核验收据、实际模块图及两个文件哈希。该记录只覆盖该提交，不包含后续在途Chart自由组合实现。
