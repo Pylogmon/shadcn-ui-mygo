@@ -1,0 +1,113 @@
+{
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "recipes": [
+    {
+      "path": "apps/v4/examples/base/progress-label.tsx",
+      "git_blob": "4648483e52ce9dd6b288e71905cd52eb62b989fb",
+      "sha256": "102789f83117fea9819ae490d57421470f74a1ad0e33d65d6391fd28b9b231e0",
+      "bytes": 298,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/progress-label.tsx",
+      "lines": [
+        9,
+        10,
+        11
+      ],
+      "contract": "visible Upload progress + 56%, native .56 progress",
+      "actualSHA256": "102789f83117fea9819ae490d57421470f74a1ad0e33d65d6391fd28b9b231e0"
+    },
+    {
+      "path": "apps/v4/examples/base/progress-controlled.tsx",
+      "git_blob": "6275e36b10f05078e453e7ba88e46008ffa18227",
+      "sha256": "6cc9730406838b8cd1c70693b92483a6db7bcf5ddb4246cbed9a150882707afb",
+      "bytes": 541,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/progress-controlled.tsx",
+      "lines": [
+        9,
+        13,
+        19
+      ],
+      "contract": "independent initial50, slider0..100 step1 shares actual progress value",
+      "actualSHA256": "6cc9730406838b8cd1c70693b92483a6db7bcf5ddb4246cbed9a150882707afb"
+    },
+    {
+      "path": "apps/v4/examples/base/radio-group-choice-card.tsx",
+      "git_blob": "468cf730dc2f610bd29d8c2ac2527c14dffd6e45",
+      "sha256": "c9c4054e7e74f5fd85c4c53b36506dfd613e818f618b940ea4ef9086dab17ca5",
+      "bytes": 1447,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/radio-group-choice-card.tsx",
+      "lines": [
+        12,
+        16,
+        25,
+        34
+      ],
+      "contract": "Plus/Pro/Enterprise; plus default; entire native radio card activates",
+      "actualSHA256": "c9c4054e7e74f5fd85c4c53b36506dfd613e818f618b940ea4ef9086dab17ca5"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/examples/radio-group-example.tsx",
+      "git_blob": "c0d11c9591a370891c657f4ae7aebf0d0cdf224e",
+      "sha256": "abb4e0ca3f42884001666c790aa061c31f6e1ae01c1451d80ed8c6f699f55ea0",
+      "bytes": 7072,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/examples/radio-group-example.tsx",
+      "lines": [
+        131,
+        135,
+        159
+      ],
+      "contract": "two-column size grid, gap8, medium default; ordinary native linear radio navigation",
+      "actualSHA256": "abb4e0ca3f42884001666c790aa061c31f6e1ae01c1451d80ed8c6f699f55ea0"
+    },
+    {
+      "path": "apps/v4/examples/base/avatar-basic.tsx",
+      "git_blob": "5ed3f80c99de3c22e7f8ab43de7bf92a0fadd317",
+      "sha256": "55c47c83c4f9fa3629bf1dc2183fef62f9ca88ec20703acae7d8708b1677cbd0",
+      "bytes": 340,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/avatar-basic.tsx",
+      "lines": [
+        9,
+        15
+      ],
+      "contract": "actual gray image in Avatar; local authored SVG substitutes network image; public SVG.Image/ui.NewBitmap app preprocessing, not inert Box.Grayscale",
+      "actualSHA256": "55c47c83c4f9fa3629bf1dc2183fef62f9ca88ec20703acae7d8708b1677cbd0"
+    },
+    {
+      "path": "apps/v4/examples/base/skeleton-form.tsx",
+      "git_blob": "90a4be56ac227f800296723b5dcb2c7bdfe7cd7a",
+      "sha256": "49ac8cf65ef29a5cadd75dbf507df747fb1adc64b4c10972e311f8a15cc42936",
+      "bytes": 504,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/skeleton-form.tsx",
+      "lines": [
+        5,
+        17
+      ],
+      "contract": "320 max width; labels80/96x16, two full32 fields,96x32 final placeholder; gaps28/12",
+      "actualSHA256": "49ac8cf65ef29a5cadd75dbf507df747fb1adc64b4c10972e311f8a15cc42936"
+    },
+    {
+      "path": "apps/v4/examples/base/skeleton-table.tsx",
+      "git_blob": "28a14ab89db88628c2eb7233adafcc1ed77100a4",
+      "sha256": "9527111993cfbf10bf769912f99a6e6f6deb922bb62557c86c6721660e1e9928",
+      "bytes": 440,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/skeleton-table.tsx",
+      "lines": [
+        5,
+        12
+      ],
+      "contract": "384 max width;5 rows16 high,flex1/96/80 columns,gaps16/8",
+      "actualSHA256": "9527111993cfbf10bf769912f99a6e6f6deb922bb62557c86c6721660e1e9928"
+    }
+  ],
+  "preserved": [
+    "existing ordinary Plan radio",
+    "existing Avatar image/initials/loading/error/group workflow",
+    "existing loading spinner/static/draft and basic skeleton workflow"
+  ],
+  "limits": [
+    "source docs skeleton form/table chosen; registry size/row variants not claimed identical",
+    "no new SDK/API or generic radio state machine",
+    "bitmap grayscale is application image preprocessing; fluent Grayscale on Avatar Box does not reach internal image",
+    "native AX assertions are headless semantic checks, not real AT/platform acceptance",
+    "no style-mirroring tests or family-wide visual matrix"
+  ]
+}

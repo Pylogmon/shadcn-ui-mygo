@@ -127,6 +127,7 @@ func (s *State) controls(c *ui.Context) {
 		})
 	})
 	s.choiceVariantsPreview(c)
+	s.recipeChoicesPreview(c)
 	s.sliderRangesPreview(c)
 	s.comboboxPreview(c)
 	s.comboboxCompoundPreview(c)
@@ -164,6 +165,9 @@ func (s *State) displays(c *ui.Context) {
 		display.Alert(c, display.AlertProps{Title: "Everything is up to date", Description: "Your workspace is ready for the next idea."})
 		display.CodeBlock(c, display.CodeBlockProps{Title: "main.go", Language: "go", Code: "func view(c *ui.Context) {\n    theme.Apply(c)\n    control.Button(c, \"Hello, Go\", control.ButtonProps{})\n}", LineNumbers: true, Height: 130})
 	})
+	s.recipeProgressPreview(c)
+	s.recipeAvatarPreview(c)
+	s.recipeSkeletonPreview(c)
 	s.tableCompositionPreview(c)
 	display.Card(c, func() {
 		s.cardHeader(c, "Recent invoices", "Sortable columns and paginated rows.")
