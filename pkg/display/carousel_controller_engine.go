@@ -47,6 +47,11 @@ type carouselControllerEngine struct {
 	tracker                                    carouselphysics.DragTracker
 	pointerStart, pointerLast, crossStart      float64
 	pointerMouse, suppressClick, preventScroll bool
+	plugins                                    []CarouselPlugin
+	pluginBindings                             []*carouselPluginBinding
+	lastPluginProps                            []CarouselPlugin
+	pluginPropsSet                             bool
+	pluginMediaPending                         bool
 }
 
 type carouselIntersection struct {
@@ -75,6 +80,8 @@ type carouselControllerBuild struct {
 	onSelect              func(int)
 	invalidOptions        bool
 	previousOptions       CarouselOptions
+	now                   time.Time
+	pluginRoots           map[*carouselPluginDefinition]ui.Handle
 }
 
 func (engine *carouselControllerEngine) snapshot(api *CarouselController) CarouselControllerSnapshot {

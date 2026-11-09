@@ -1,0 +1,34 @@
+{
+  "scope": "Pending C3 value-only Autoplay preparation; not a connected native plugin",
+  "officialSource": "Embla Autoplay 8.5.2 archived original ESM",
+  "sourceSHA256": "84911d2f9b684038360e7be1019923462ffb8a34659b868f6fb046eb13edd42a",
+  "scenarios": 13,
+  "tracePoints": 209,
+  "goPassResults": 14,
+  "sourceExecution": "Node VM runs the original verified function; no mirrored JS Autoplay implementation",
+  "covered": [
+    "play/stop/reset/destroy and jump override",
+    "intermediate event isPlaying/timeUntilNext",
+    "variable per-snap delay and selected query vs scheduled deadline",
+    "default/restarting pointer and focus interactions",
+    "hover precedence and permanent stop",
+    "hidden initial/visible resume with full new delay",
+    "stopOnLastSnap, finite end and looping",
+    "one-snap inert initialization, manual start"
+  ],
+  "remaining": [
+    "Native controller/plugin lifecycle and public typed API",
+    "Native owner wakeups/deadline scheduling and real input/focus/hover bindings",
+    "Plugin media options and explicit root Handle resolution",
+    "Source source-function delay resolver and custom plugin lifecycle",
+    "Source Gallery examples and native/platform verification"
+  ],
+  "filesSHA256": {
+    "autoplay.go": "bef105012a2935be23e0e1fa1614424647ee0b8b57df22770cb4d8b7d0c3ca06",
+    "autoplay_test.go": "328b40f6934c69065d0abd206b51a0da04a8d85b04cbdbe995a56528035098d2",
+    "go.mod": "f6fb3a4743ba932c1ac3d0c64258f77f9459adcacf58377c4d65111ba55e4973",
+    "result.json": "29ef545203b601548d7cffb16b41905d69f9462d359ef2ff8dcade3d12fbd998",
+    "oracle.json": "6520441773e11a4c950ced7bf523f5794d4083c3a57d0f352b36d4708262b5ff",
+    "oracle.cjs": "4336c39574aa1b8b4dd73ed29a53b599658aa51885f1a0b4894c9bd5147fa535"
+  }
+}

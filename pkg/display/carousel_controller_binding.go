@@ -62,9 +62,18 @@ func carouselControllerContainer(c *ui.Context, selected *int, p CarouselContain
 	if !e.initialized {
 		e.options = carouselMergeOptions(CarouselOptions{Axis: &axis, Direction: &direction, Align: &CarouselAlignment{Mode: p.Align}, Contain: &p.Contain, Loop: &p.Loop}, api.baseOptions())
 		e.lastControlled = *selected
+		e.plugins = api.basePlugins()
 		e.initialized = true
 	}
-	frame := &carouselControllerBuild{api: api, engine: e, lease: lease, hooks: p.Hooks, options: p.Options, root: root, contextEnvironment: env, optionsError: attachError, onSelect: p.OnSelect}
+	frame := &carouselControllerBuild{api: api, engine: e, lease: lease, hooks: p.Hooks, options: p.Options, root: root, contextEnvironment: env, optionsError: attachError, onSelect: p.OnSelect, now: c.Now()}
+	api.mu.Lock()
+	previousFrame := api.pluginFrame
+	if attachError == nil {
+		api.pluginFrame = frame
+		api.lastNow = frame.now
+	}
+	api.mu.Unlock()
+	defer func() { api.mu.Lock(); api.pluginFrame = previousFrame; api.mu.Unlock() }()
 	frame.previousOptions = e.options
 	if p.Options != nil {
 		if err := p.Options.Validate(); err != nil {
@@ -76,9 +85,35 @@ func carouselControllerContainer(c *ui.Context, selected *int, p CarouselContain
 			frame.startIndex = p.Options.StartIndex
 		}
 	}
+	if p.Plugins != nil && (!e.pluginPropsSet || !carouselSamePlugins(e.lastPluginProps, p.Plugins)) {
+		if err := carouselValidatePlugins(p.Plugins); err != nil {
+			frame.optionsError = err
+			frame.invalidOptions = true
+		} else {
+			e.plugins = slices.Clone(p.Plugins)
+			e.lastPluginProps = slices.Clone(p.Plugins)
+			e.pluginPropsSet = true
+			frame.forceReInit = true
+		}
+	}
 	resolved := carouselResolveOptions(e.options, env)
 	if e.ready && (resolved.Axis != e.resolved.Axis || resolved.Direction != e.resolved.Direction || !carouselMediaEnvironmentSame(e.lastEnvironment, env, e.options.Breakpoints)) {
 		frame.forceReInit = true
+	}
+	if e.pluginMediaPending {
+		frame.forceReInit = true
+		e.pluginMediaPending = false
+	}
+	if e.ready && carouselPluginMediaChanged(e.plugins, e.lastEnvironment, env) {
+		if env.Width != e.lastEnvironment.Width || env.Height != e.lastEnvironment.Height {
+			// Resolve a size-driven plugin media change after the viewport has had one
+			// real layout. This also works with watchResize=false and avoids Init at an
+			// obsolete viewport size followed by a second resize-driven Init.
+			e.pluginMediaPending = true
+			c.Invalidate()
+		} else {
+			frame.forceReInit = true
+		}
 	}
 	e.lastEnvironment = env
 	p.Vertical = resolved.Axis == CarouselVertical
@@ -348,7 +383,10 @@ func (frame *carouselControllerBuild) finalize(c *ui.Context, b *carouselComposi
 	if !e.ready {
 		kept := commands[:0]
 		for _, command := range commands {
-			if command.kind == carouselCommandConfigure || command.kind == carouselCommandReInit {
+			if command.kind == carouselCommandConfigure || command.kind == carouselCommandReInit || command.kind == carouselCommandPlugins {
+				if command.kind == carouselCommandPlugins {
+					e.plugins = slices.Clone(command.plugins)
+				}
 				e.options = carouselMergeOptions(e.options, command.patch)
 			} else {
 				kept = append(kept, command)
@@ -370,15 +408,22 @@ func (frame *carouselControllerBuild) finalize(c *ui.Context, b *carouselComposi
 	oldSelected := e.selected
 	for _, command := range commands {
 		switch command.kind {
-		case carouselCommandConfigure, carouselCommandReInit:
+		case carouselCommandConfigure, carouselCommandReInit, carouselCommandPlugins:
+			previousPlugins := e.plugins
+			if command.kind == carouselCommandPlugins {
+				e.plugins = slices.Clone(command.plugins)
+			}
 			previousOptions := e.options
 			e.options = carouselMergeOptions(e.options, command.patch)
 			frame.startIndex = command.patch.StartIndex
 			resolved = carouselResolveOptions(e.options, frame.contextEnvironment)
 			if !frame.reinitialize(c, b, resolved, "") {
 				e.options = previousOptions
+				e.plugins = previousPlugins
 				continue
 			}
+		case carouselCommandAutoplay:
+			frame.autoplayCommand(command)
 		case carouselCommandNext:
 			frame.scroll(e.selected+1, -1, command.jump, c.Now())
 		case carouselCommandPrevious:
@@ -392,6 +437,7 @@ func (frame *carouselControllerBuild) finalize(c *ui.Context, b *carouselComposi
 	if oldSelected != e.selected {
 		c.Invalidate()
 	}
+	frame.updatePlugins(c, b, true)
 	var focused ui.Handle
 	for i, item := range e.selectedItems {
 		if item.canonical.FocusWithin(c) {
@@ -413,6 +459,7 @@ func (frame *carouselControllerBuild) finalize(c *ui.Context, b *carouselComposi
 	e.focusedSlide = focused
 	e.pendingTab = false
 	frame.processPointers(c, b)
+	frame.updatePlugins(c, b, false)
 	*b.selected = e.selected
 	e.lastControlled = e.selected
 	if e.scheduler.Active() && !e.hidden {
@@ -525,6 +572,12 @@ func (frame *carouselControllerBuild) reinitialize(c *ui.Context, b *carouselCom
 		frame.publish("")
 		return false
 	}
+	if err := frame.validatePlugins(c, e.plugins, len(g.snaps), options.Active); err != nil {
+		e.lastError = err
+		frame.publish("")
+		return false
+	}
+	frame.api.destroyPlugins(frame)
 	wasReady := e.ready
 	index := e.selected
 	if !wasReady {
@@ -554,10 +607,13 @@ func (frame *carouselControllerBuild) reinitialize(c *ui.Context, b *carouselCom
 	e.epoch = c.Now()
 	e.lastTick = time.Time{}
 	e.captured, e.pressed = false, false
+	e.pointerMouse, e.suppressClick, e.preventScroll = false, false, false
 	e.inView, e.notInView = nil, nil
 	e.intersections = nil
 	*b.selected = e.selected
 	e.lastControlled = e.selected
+	frame.publish("")
+	frame.initPlugins(c)
 	if !wasReady {
 		frame.publish(CarouselInit)
 	} else {

@@ -219,4 +219,96 @@ override) resolves programmatic/release animation immediately and schedules no
 continuing animation frames. Hidden windows pause the scheduler and reset its
 accumulator; resuming performs source warm-up rather than replaying hidden wall
 time. These policies do not change the source numeric options or the old
-nil-Controller/nil-Options compatibility path. Autoplay remains the next stage.
+nil-Controller/nil-Options compatibility path. Autoplay is implemented by C3 below.
+
+
+## C3 typed plugins and Autoplay
+
+`autoplay/oracle.cjs` runs the original verified ESM Autoplay function in a Node
+VM. Its 13 cases contain 209 synchronous states/events. The archived receipt is
+the original **pure-core-only** preparation receipt. `internal/carouselautoplay`
+changes its package/fixture path and adds value-only Carry/Started accessors;
+Carry preserves the source object's mouseIsOver/playOnDocumentVisible values
+across destroy/init while timers, active state and owner bindings are fresh.
+`autoplay/plugins-oracle.cjs` executes the original PluginsHandler/EventHandler
+and Autoplay, locking both original source hashes. Four lifecycle cases cover
+inactive-map entries, duplicate names, duplicate identities and replacement;
+four nested-listener cases cover source registration order and intermediate
+isPlaying/timeUntilNext states. Native tests consume these independent outputs.
+
+```sh
+node pkg/display/testdata/shadcn-carousel/autoplay/oracle.cjs \
+  pkg/display/testdata/shadcn-carousel/npm/embla-carousel-autoplay/esm/embla-carousel-autoplay.esm.js \
+  "$carousel_audit_dir/autoplay-oracle.json"
+node pkg/display/testdata/shadcn-carousel/autoplay/plugins-oracle.cjs \
+  pkg/display/testdata/shadcn-carousel/npm/embla-carousel/cjs/embla-carousel.cjs.js \
+  pkg/display/testdata/shadcn-carousel/npm/embla-carousel-autoplay/esm/embla-carousel-autoplay.esm.js \
+  "$carousel_audit_dir/plugins-oracle.json"
+```
+
+`Props.Plugins` is an ordered application-owned list: nil retains the current
+configuration and a non-nil empty slice clears it. Explicit SetPlugins and
+ReInitWithPlugins replace the list (nil also clears on these explicit setters);
+the original ReInit signature preserves it. Distinct plugins sharing a name all
+initialize/destroy in order; Plugins() returns the last for that name. Repeating
+one identity also repeats init/destroy/listener registration. An Autoplay identity
+shares its state within that list, preserving the source's first play plus two
+timerset events on a duplicate init. An instance cannot concurrently bind another
+controller; failed attachment and obsolete owner cleanup cannot steal or destroy
+its accepted binding. Engine inactivity destroys bindings without initializing
+new ones; like the source, Plugins() then retains the last initialized map.
+Plugin media changes rebuild after actual native viewport measurement, including
+with watchResize disabled. ReInit always removes old subscriptions/timers before
+new initialization. A one-snap Autoplay remains inert, including manual Play,
+rather than invoking the source's uninitialized delay state.
+
+NewCarouselPlugin creates a typed custom plugin with explicitly app-owned hooks
+and listener identities. Init/Destroy/Event/Frame receive time, environment,
+Handle and detached snapshot values. Their Actions facade supports synchronous
+scroll/emit/autoplay operations and value deadlines; it is invalidated and its
+frame pointer cleared when the hook returns. It cannot retain a Context/Element
+across frames. Native Frame polling runs once per identity per owner build;
+source event registrations still repeat for repeated init entries. Hooks that
+register additional listeners directly own their corresponding Off cleanup.
+
+NewCarouselAutoplay exposes Play (optional jump override), Stop, Reset,
+IsPlaying and TimeUntilNext(now). External commands share the controller's FIFO;
+internal plugin actions run synchronously within the current owner frame. A timer
+therefore updates the real engine and emits scroll/select before autoplay:select
+and timerset. Event callbacks observe each actual intermediate playing/timer
+state, rather than only the final state. TimeUntilNext takes c.Now()/Tester.Now()
+explicitly and uses the current selected delay, matching the source even when
+manual selection changed after a different timer deadline was scheduled. No
+clock or callback is stored by the core. Context.After wakes the owner at a
+value deadline; it does not replay timers missed during blocked/hidden UI time.
+A previously armed SDK wake may build once after removal, but no removed plugin
+runs or reschedules from it.
+
+Autoplay options support all source booleans, explicit numeric duration or pure
+DelayResolver, ordered partial media patches and a native Root Handle. Resolver
+objects are explicitly application-owned and may capture model/Handle values,
+never frame objects. RootResolver(defaultRoot) is the native source rootNode
+function; zero falls back to the viewport, while a foreign/unresolved nonzero
+Handle reports a typed binding error. Root pointers clone values rather than
+retaining pointers to a View's local Handles. Delay resolver results must contain
+one nonnegative duration per snap; invalid shape/value reports a typed error.
+Native scheduling uses the actual value deadline, separately from the source's
+millisecond Date snapshot, so a fractional initial frame cannot fire early.
+
+Hover, pointer, recent-Tab slideFocusStart, native focusout adaptation, hidden
+pause/full-delay resume, last-snap stop, loop, jump and plugin replacement/removal
+are connected to the real engine. ReInit establishes observation baselines instead
+of synthesizing mouseenter/focusout merely because listeners were reinstalled.
+Exact arbitrary pointer focusout between multiple editors inside the same native
+slide is not observable through the public SDK; track/declared-slide changes and
+Tab are adapted explicitly. Existing interactive-child drag/click-cancellation
+and multi-contact touch limitations described in C2 remain. No private scanning
+or synthetic ancestor takeover is used.
+
+The Gallery now uses real controllers/physics and the 2-second source plugin
+configuration. All eight official examples are covered by the manifest's explicit
+configuration map: full/demo, API, responsive multiple, vertical, plugin, RTL,
+responsive size, and centered compact spacing. Additional native controls expose
+jump, duration, dragFree, skipSnaps and playback. Page removal destroys bindings;
+remount creates a fresh controller while retaining application selection, keyed
+project notes and source Autoplay interaction carry.

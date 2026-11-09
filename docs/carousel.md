@@ -152,6 +152,36 @@ Content之前和之后的组合快照均按当前物理姿态计算可见项目�
 从这种子控件开始拖动并按源阈值阻止其动作仍是明确缺口。多触点数量及cancelable等完整触摸元数据
 同样尚未提供，单指mouse/touch轨迹验收不代表完整触摸平台验收。
 
+
+## 插件与自动播放
+
+`NewCarouselAutoplay(options)` 创建应用持有的插件身份，构造错误需由调用方处理。
+将其传给 `CarouselContainerProps.Plugins`；例如使用
+`Delay: display.CarouselValue(2*time.Second)` 配置两秒间隔。默认间隔四秒，
+默认播放，用户交互或焦点进入后停止。Play（可选jump）、Stop、Reset与控制器共享命令FIFO；
+IsPlaying读取已提交状态。`TimeUntilNext(c.Now())` 显式使用当前UI时钟，
+返回剩余时间及是否有timer；它按当前选中snap的delay计算，可能区别于先前已安排的deadline。
+
+选项支持Jump、PlayOnInit、StopOnFocusIn、StopOnInteraction、StopOnMouseEnter、
+StopOnLastSnap、Active与有序媒体断点。纯DelayResolver为每个snap返回非负duration；
+Root Handle或纯RootResolver选择原生hover区域，返回零Handle使用默认viewport，
+无法解析的非零Handle报告typed error。Resolver显式由应用持有，只能捕获模型与Handle值。
+
+`NewCarouselPlugin` 提供typed Init/Destroy/Event/Frame钩子。每次调用收到时间、
+环境、快照、Root Handle及当前回调有效的Actions，可同步导航、发事件、控制Autoplay、
+设置下次deadline。回调返回后Actions失效并清除帧引用；不能保留Context、Element或旧帧。
+外部指令继续排队，插件内同步操作保留源事件的中间状态与注册顺序。
+
+Props.Plugins为nil时保留配置，非nil空slice清空；显式SetPlugins/ReInitWithPlugins替换列表，
+其nil也表示清空。原ReInit保留插件。插件按slice顺序初始化/销毁；重名实例都运行，
+Plugins返回每个名称最后的实例。重复同一身份保留源重复订阅行为。一个身份不能同时绑定两个
+存活的原生owner；更换、销毁及视图卸载都会移除订阅和timer。媒体变化在新布局测量后重建。
+
+自动播放接通实际物理引擎，支持hover、pointer、Tab焦点、隐藏暂停与恢复、末项停止和loop。
+重新初始化保留源mouseIsOver/playOnDocumentVisible纯状态，同时清除旧timer；
+单snap时保持静止，包括手动Play。公开SDK不能精确观测同一slide内部任意两个editor间的
+pointer focusout，使用track/slide变化和Tab进行适配。完整平台输入与AT仍需验收。
+
 ## Gallery
 
 Data & display页提供可操作的Carousel示例：单项、双项、三项、响应式和固定宽度，
@@ -159,4 +189,6 @@ Data & display页提供可操作的Carousel示例：单项、双项、三项、�
 导航、重排和切换预览页后仍保留。另有270DIP垂直半屏布局及独立RTL示例，
 导航按钮位于viewport外侧，小窗口通过页面滚动到达所有示例。
 搜索Carousel、Slides或Slideshow可进入该页。
-当前示例保留组合兼容路径；控制器、源物理和Autoplay的独立示例继续补齐。
+示例已使用实际controller/源物理；可操作jump、duration、dragFree、skipSnaps与alignment，
+另有两秒Autoplay及播放/停止/重置。八份固定官方例子映射到这些实际配置，具体见source manifest。
+离页销毁绑定，返回时创建新controller，项目选择、备注与插件源交互carry保留。

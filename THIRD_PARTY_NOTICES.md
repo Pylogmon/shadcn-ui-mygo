@@ -118,14 +118,14 @@ include its license as `Contents/Resources/licenses/sonner.txt`.
 
 ## Embla Carousel
 
-The composed Carousel's layout, snap geometry, controller and motion primitives are native Go translations
+The composed Carousel's layout, snap geometry, controller, motion, plugin lifecycle and Autoplay primitives are native Go translations
 of Embla Carousel 8.5.2, commit `5ee3c4ed0251dc685198d0ac21dc3e754b865476`,
 under the MIT license, Copyright (c) David Jerleke.
 The exact source, license, four lockfile-verified npm packages and source-function
-geometry/controller/physics fixtures are archived in `pkg/display/testdata/shadcn-carousel/`.
+geometry/controller/physics/plugin/Autoplay fixtures are archived in `pkg/display/testdata/shadcn-carousel/`.
 The macOS application bundles include the full license as
 `Contents/Resources/licenses/embla.txt`. No JavaScript package is a runtime
-dependency of the Go kit. Autoplay remains a separate implementation stage.
+dependency of the Go kit.
 
 ## cmdk
 

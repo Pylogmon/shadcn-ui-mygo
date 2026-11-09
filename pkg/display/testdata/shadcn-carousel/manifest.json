@@ -301,5 +301,62 @@
         "sha256": "ba8040b7515191b4bb230f1c4a888acbc84b297d5004bb90bc3c7837a5e769a8"
       }
     ]
+  },
+  "autoplayOracle": {
+    "sourcePackage": "embla-carousel-autoplay@8.5.2",
+    "sourceSHA256": "84911d2f9b684038360e7be1019923462ffb8a34659b868f6fb046eb13edd42a",
+    "engineSHA256": "a90f9c822bd7102e4b13c985c7926f910c13fc299a368f72c9c044eb730b2507",
+    "coreScenarios": 13,
+    "coreTracePoints": 209,
+    "pluginsHandlerScenarios": 4,
+    "nestedListenerScenarios": 4,
+    "files": [
+      {
+        "archive": "autoplay/oracle.cjs",
+        "sha256": "4336c39574aa1b8b4dd73ed29a53b599658aa51885f1a0b4894c9bd5147fa535"
+      },
+      {
+        "archive": "autoplay/oracle.json",
+        "sha256": "6520441773e11a4c950ced7bf523f5794d4083c3a57d0f352b36d4708262b5ff"
+      },
+      {
+        "archive": "autoplay/plugins-oracle.cjs",
+        "sha256": "d8723cc35041e22d44f6ae89c238c523cdf970cb68f71fda058a76fb61a8b655"
+      },
+      {
+        "archive": "autoplay/plugins-oracle.json",
+        "sha256": "31584b7823af880459cd91e706fba57dee02df208de73f4bb24f24bb9fa911de"
+      },
+      {
+        "archive": "autoplay/receipt.json",
+        "sha256": "d32940d4fe13eed368ef4a27a17dd04da071eae7afa7d11d95b0ecb8c942f96d"
+      }
+    ],
+    "kernelFiles": [
+      {
+        "path": "internal/carouselautoplay/autoplay.go",
+        "sha256": "00a84bb6fd4b808c84a4d14f14d04b1ef8023ef61cea0d8e626443d1884a42ab"
+      },
+      {
+        "path": "internal/carouselautoplay/autoplay_test.go",
+        "sha256": "50d3dfddeefb12556aa5b4df7aea4b66a9a4b72baaab903fb65f20ebdf281102"
+      }
+    ],
+    "nativeTimer": "Caller supplies current time to TimeUntilNext. Values-only core; public Context.After schedules owner frames; synchronous plugin-frame actions preserve scroll/select/autoplay event snapshots.",
+    "nativeBoundaries": [
+      "Interactive descendants retain SDK pointer ownership and native click actions.",
+      "SDK single-pointer events have no multi-contact metadata.",
+      "Focusout is adapted from native track/declared-slide focus transitions and recent Tab; arbitrary same-slide pointer focusout metadata is unavailable."
+    ],
+    "galleryConfigurations": {
+      "carousel-demo.tsx": "One card",
+      "carousel-api.tsx": "Controller jump controls, selection events and live position",
+      "carousel-multiple.tsx": "Responsive cards + Start alignment + regular spacing",
+      "carousel-orientation.tsx": "Vertical example, half items, 4-DIP spacing, Start alignment",
+      "carousel-plugin.tsx": "2-second delay, stopOnInteraction true, outer source onMouseEnter stop/onMouseLeave reset plus explicit playback controls",
+      "carousel-rtl.tsx": "RTL example, full items, finite source bounds",
+      "carousel-size.tsx": "Responsive item size + Start alignment + regular spacing",
+      "carousel-spacing.tsx": "Responsive item size + Centered alignment + compact 4-DIP spacing"
+    }
   }
 }

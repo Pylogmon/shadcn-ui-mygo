@@ -9,6 +9,7 @@ import (
 
 	"github.com/egoist/mygo/ui"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/control"
+	"github.com/pylogmon/shadcn-ui-mygo/pkg/display"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/theme"
 )
 
@@ -116,28 +117,28 @@ func TestCreatorCarouselDraftFollowsKeyAcrossNavigationReorderAndPages(t *testin
 
 func TestCreatorCarouselNativeMotionVerticalAndRTLKeys(t *testing.T) {
 	s := New()
-	r := carouselPreviewTester(s, 1000, 1800, false)
+	r := carouselPreviewTester(s, 1000, 2500, false)
 	advancedClick(t, r, "Next project")
 	r.Advance(100 * time.Millisecond)
 	r.Frame()
 	if !slices.Equal(s.carousels.horizontalView.Visible, []int{0, 1, 2}) {
 		t.Fatalf("moving multi-item view was not actually partial: %+v", s.carousels.horizontalView)
 	}
-	r.Advance(200 * time.Millisecond)
+	r.Advance(2 * time.Second)
 	r.Frame()
 	if !slices.Equal(s.carousels.horizontalView.Visible, []int{1, 2}) {
-		t.Fatal("native compatibility transition failed to settle")
+		t.Fatal("source physics transition failed to settle")
 	}
 	advancedClick(t, r, "Next vertical project")
 	r.Key(0, ui.KeyDown)
-	r.Advance(300 * time.Millisecond)
+	r.Advance(2 * time.Second)
 	r.Frame()
 	if s.carousels.vertical != 2 || !slices.Equal(s.carousels.verticalView.Visible, []int{2, 3}) || s.carousels.horizontal != 1 {
 		t.Fatal("vertical keys did not navigate the independent vertical track")
 	}
 	advancedClick(t, r, "Next RTL project")
 	r.Key(0, ui.KeyLeft)
-	r.Advance(300 * time.Millisecond)
+	r.Advance(2 * time.Second)
 	r.Frame()
 	if s.carousels.rtl != 2 || !slices.Equal(s.carousels.rtlView.Visible, []int{2}) {
 		t.Fatal("RTL Left did not move forward along the real RTL track")
@@ -170,7 +171,7 @@ func TestCreatorCarouselResponsiveControlsRemainInsideCards(t *testing.T) {
 		t.Run(fmt.Sprint(width), func(t *testing.T) {
 			s := New()
 			s.Theme.Mode = theme.DarkMode
-			r := carouselPreviewTester(s, width, 1800, true)
+			r := carouselPreviewTester(s, width, 2500, true)
 			advancedClick(t, r, "Responsive cards")
 			want := 5
 			if width >= 1024 {
@@ -203,5 +204,58 @@ func TestCreatorCarouselSearchEntersActualDataPage(t *testing.T) {
 				t.Fatalf("%q did not navigate to the actual source composition", query)
 			}
 		})
+	}
+}
+
+func TestCreatorCarouselControllerAutoplayAndSourceConfigurations(t *testing.T) {
+	s := New()
+	r := carouselPreviewTester(s, 1000, 2800, true)
+	p := &s.carousels
+	if !p.controllers[0].Snapshot().Ready || !p.autoplay.IsPlaying() {
+		t.Fatal("gallery did not bind real controller/plugin")
+	}
+	advancedClick(t, r, "Jump to last")
+	if p.horizontal != len(p.horizontalView.Snaps)-1 || p.selectionEvents == 0 {
+		t.Fatal("API example did not execute controller/listener")
+	}
+	advancedClick(t, r, "Instant motion")
+	advancedClick(t, r, "Jump to first")
+	if p.controllers[0].EngineSnapshot().Options.Duration != 0 || p.horizontal != 0 {
+		t.Fatal("motion control did not configure source option")
+	}
+	advancedClick(t, r, "Responsive item size")
+	advancedClick(t, r, "Compact card spacing")
+	advancedClick(t, r, "Centered alignment")
+	engine := p.controllers[0].EngineSnapshot()
+	if engine.Options.Align.Mode != display.CarouselAlignCenter || math.Abs(p.controllers[0].Snapshot().SnapOffsets[1]+engine.Viewport/4) > .01 {
+		t.Fatal("source spacing example was only a cosmetic preset")
+	}
+	r.Advance(2 * time.Second)
+	if p.autoplaySelected != 1 {
+		t.Fatal("source plugin delay did not advance actual cards")
+	}
+	advancedClick(t, r, "Pause autoplay")
+	paused := p.autoplaySelected
+	r.Advance(3 * time.Second)
+	if p.autoplay.IsPlaying() || p.autoplaySelected != paused {
+		t.Fatal("autoplay pause retained a live action")
+	}
+	advancedClick(t, r, "Play with instant transitions")
+	r.Advance(2 * time.Second)
+	if p.autoplaySelected == paused || p.controllers[3].EngineSnapshot().Duration != 0 {
+		t.Fatal("jump override did not reach physics/controller")
+	}
+	oldController, oldAutoplay := p.controllers[0], p.controllers[3]
+	saved, autoSelected := p.horizontal, p.autoplaySelected
+	s.Page = "overview"
+	r.Frame()
+	r.Advance(3 * time.Second)
+	if !oldController.Snapshot().Destroyed || !oldAutoplay.Snapshot().Destroyed || p.autoplay.IsPlaying() {
+		t.Fatal("page removal retained controller/plugin")
+	}
+	s.Page = "display"
+	r.Frame()
+	if p.controllers[0] == oldController || p.controllers[3] == oldAutoplay || p.horizontal != saved || p.autoplaySelected != autoSelected || !p.autoplay.IsPlaying() {
+		t.Fatal("page remount revived destroyed controller or lost application selection")
 	}
 }

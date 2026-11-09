@@ -22,16 +22,20 @@ type CarouselContainerProps struct {
 	Count      int
 	// Controller is application-owned. Options contains explicit source patches;
 	// only supplied fields override compatibility props. Hooks are frame-only.
-	Controller               *CarouselController
-	Options                  *CarouselOptions
+	Controller *CarouselController
+	Options    *CarouselOptions
+	// Plugins is an ordered application-owned list: nil preserves, a non-nil
+	// empty slice clears. Repeated identities/names follow source ordering.
+	Plugins                  []CarouselPlugin
 	Hooks                    CarouselWatchHooks
 	Vertical, Loop, Disabled bool
 	NoDrag                   bool
 	Height                   float32
 	Align                    CarouselAlign
 	Contain                  CarouselContain
-	// Duration/DragThreshold retain the native pager's motion for this stage.
-	// They are not Embla's duration/dragThreshold options or physics model.
+	// Duration/DragThreshold configure the nil-Controller/nil-Options/nil-Plugins
+	// compatibility profile. Source engine options live in Options; a negative
+	// Duration additionally requests the native instant-motion policy.
 	Duration      time.Duration
 	DragThreshold float32
 	OnSelect      func(int)
@@ -139,7 +143,7 @@ func carouselCurrent(c *ui.Context) *carouselCompositionBuild {
 // RTL, and Home/End select boundary snaps. This intentionally differs from the
 // web primitive's captured Left/Right handler on all descendants.
 func CarouselContainer(c *ui.Context, selected *int, p CarouselContainerProps, children func(*ui.Context)) ui.Element {
-	if p.Controller != nil || p.Options != nil {
+	if p.Controller != nil || p.Options != nil || p.Plugins != nil {
 		return carouselControllerContainer(c, selected, p, children)
 	}
 	if selected == nil {

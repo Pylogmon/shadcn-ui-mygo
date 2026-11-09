@@ -124,7 +124,9 @@
 
 | 5.CO | Create菜单颜色、强调与原生透明材质 | 已提交 `d2ec705`；六种有效配置、同窗Gaussian/饱和度/tint和独立Flyout系统材质、原有Scope兼容及Creator预设流程完成；全量2174结果/vet/三平台构建和macOS实窗选值通过，系统材质核不声明CSS逐像素等价 |
 
-| 5.CP | Chart Cartesian源能力与30例应用 | 本阶段提交；内边距/轴预算、四曲线、渐变/标记/LabelList与既有动画接通；30个可运行源配置，Polar/Tooltip/Gallery目录继续实施 |
+| 5.CP | Chart Cartesian源能力与30例应用 | 已提交 `9092002`；内边距/轴预算、四曲线、渐变/标记/LabelList与既有动画接通；30个可运行源配置，Polar/Tooltip/Gallery目录继续实施 |
+
+| 5.CQ | Carousel typed插件、Autoplay与源Gallery配置 | 本阶段提交；公开生命周期/插件动作、源timer/事件状态与原生hover/focus/hidden接通；Gallery使用controller与两秒自动播放，固定八例配置可操作 |
 
 用户已明确允许原生平台适配：Popover、menu、下拉菜单可以使用 MyGo 的系统菜单与独立 Flyout，超出父窗口范围；无需逐像素照搬网页浮层。Gallery 以 [shadcn/create](https://ui.shadcn.com/create) 的配置与实时预览流程为参考。完整组件功能、主题、动画范围保持不变。
 
@@ -132,7 +134,7 @@
 
 - Combobox九类Base交互差距及原生组合API已在5.CI/5.CL交付：Content定位/anchor宽度、Empty/List、可取消状态事件/Always/Grid/虚拟窗口及12+20例配置完成。菜单可选translucent preset已在5.CO交付；独立越窗编辑弹层、完整locale/Unicode及平台IME/AT继续验收。
 - macOS实窗无active Enter复验：本轮自动化出现旧bundle/AX目标失效及首次Return仍留列表的观测。补充12项公开settled输入检查全绿；Tester无公开batch接口，无帧输入时序仍未证实。先辨明实际进程、IME与事件时序，再依据实证修正。
-- Carousel多项布局、controller/options/events及源物理/数值选项/背景拖动已在5.CG/5.CK/5.CN完成；Autoplay/插件与源示例继续实现。从任意子控件起拖并抑制其click、完整多触点信息仍缺MyGo公开能力；保持原生子控件正常输入，未计完整源gesture闭环。按parity表补齐Chart高级配置及所有组件例子；Windows/Linux实际窗口、真实AT/IME、多显示器/缩放和完整视觉矩阵仍是最终验收要求。
+- Carousel多项布局、controller/options/events及源物理/数值选项/背景拖动已在5.CG/5.CK/5.CN完成；Autoplay/插件与源Gallery配置已在5.CQ交付。从任意子控件起拖并抑制其click、完整多触点信息仍缺MyGo公开能力；保持原生子控件正常输入，未计完整源gesture闭环。按parity表补齐Chart高级配置及所有组件例子；Windows/Linux实际窗口、真实AT/IME、多显示器/缩放和完整视觉矩阵仍是最终验收要求。
 - Chart按[固定源需求清单](chart-source-coverage.json)实施三个完整模块：Cartesian30例的margin/曲线/渐变/标记/LabelList与既有动画已在5.CP交付；后续Polar31例的角度/半径/网格/扇区/中心内容；Tooltip9例及交互、docs/RTL/Create与Gallery目录整合。Brush、ReferenceLine和额外显式动画参数未在132份固定原文中使用，列为Recharts扩展能力，不以其替代真正缺失的源例功能。该清单记录`1d50ec2`时的静态差距，不能当通过计数。
 
 ## 实施约定

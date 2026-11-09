@@ -1,0 +1,202 @@
+{
+  "engineSHA256": "a90f9c822bd7102e4b13c985c7926f910c13fc299a368f72c9c044eb730b2507",
+  "autoplaySHA256": "84911d2f9b684038360e7be1019923462ffb8a34659b868f6fb046eb13edd42a",
+  "lifecycle": [
+    {
+      "name": "active-inactive-replacement",
+      "map": [
+        {
+          "name": "alpha",
+          "sourceIndex": 0
+        },
+        {
+          "name": "beta",
+          "sourceIndex": 1
+        },
+        {
+          "name": "gamma",
+          "sourceIndex": 2
+        }
+      ],
+      "trace": [
+        "init:A",
+        "init:C",
+        "destroy:A",
+        "destroy:C",
+        "init:B",
+        "init:D",
+        "destroy:B",
+        "destroy:D"
+      ]
+    },
+    {
+      "name": "duplicate-name",
+      "map": [
+        {
+          "name": "alpha",
+          "sourceIndex": 1
+        },
+        {
+          "name": "gamma",
+          "sourceIndex": 2
+        }
+      ],
+      "trace": [
+        "init:A",
+        "init:D",
+        "init:C",
+        "destroy:A",
+        "destroy:D",
+        "destroy:C"
+      ]
+    },
+    {
+      "name": "duplicate-identity",
+      "map": [
+        {
+          "name": "alpha",
+          "sourceIndex": 1
+        }
+      ],
+      "trace": [
+        "init:A",
+        "init:A",
+        "destroy:A",
+        "destroy:A"
+      ]
+    },
+    {
+      "name": "all-inactive",
+      "map": [
+        {
+          "name": "beta",
+          "sourceIndex": 0
+        }
+      ],
+      "trace": []
+    }
+  ],
+  "ordering": [
+    {
+      "kind": "pointerDown",
+      "userRegistration": "before",
+      "trace": [
+        {
+          "kind": "emit",
+          "event": "pointerDown",
+          "playing": true,
+          "remaining": 4000
+        },
+        {
+          "kind": "user",
+          "event": "pointerDown",
+          "playing": true,
+          "remaining": 4000
+        },
+        {
+          "kind": "emit",
+          "event": "autoplay:stop",
+          "playing": true,
+          "remaining": 4000
+        },
+        {
+          "kind": "emit",
+          "event": "autoplay:timerstopped",
+          "playing": true,
+          "remaining": null
+        }
+      ]
+    },
+    {
+      "kind": "pointerDown",
+      "userRegistration": "after",
+      "trace": [
+        {
+          "kind": "emit",
+          "event": "pointerDown",
+          "playing": true,
+          "remaining": 4000
+        },
+        {
+          "kind": "emit",
+          "event": "autoplay:stop",
+          "playing": true,
+          "remaining": 4000
+        },
+        {
+          "kind": "emit",
+          "event": "autoplay:timerstopped",
+          "playing": true,
+          "remaining": null
+        },
+        {
+          "kind": "user",
+          "event": "pointerDown",
+          "playing": false,
+          "remaining": null
+        }
+      ]
+    },
+    {
+      "kind": "slideFocusStart",
+      "userRegistration": "before",
+      "trace": [
+        {
+          "kind": "emit",
+          "event": "slideFocusStart",
+          "playing": true,
+          "remaining": 4000
+        },
+        {
+          "kind": "user",
+          "event": "slideFocusStart",
+          "playing": true,
+          "remaining": 4000
+        },
+        {
+          "kind": "emit",
+          "event": "autoplay:stop",
+          "playing": true,
+          "remaining": 4000
+        },
+        {
+          "kind": "emit",
+          "event": "autoplay:timerstopped",
+          "playing": true,
+          "remaining": null
+        }
+      ]
+    },
+    {
+      "kind": "slideFocusStart",
+      "userRegistration": "after",
+      "trace": [
+        {
+          "kind": "emit",
+          "event": "slideFocusStart",
+          "playing": true,
+          "remaining": 4000
+        },
+        {
+          "kind": "emit",
+          "event": "autoplay:stop",
+          "playing": true,
+          "remaining": 4000
+        },
+        {
+          "kind": "emit",
+          "event": "autoplay:timerstopped",
+          "playing": true,
+          "remaining": null
+        },
+        {
+          "kind": "user",
+          "event": "slideFocusStart",
+          "playing": false,
+          "remaining": null
+        }
+      ]
+    }
+  ],
+  "scope": "actual fixed PluginsHandler/EventHandler/Autoplay execution; not native bridge acceptance"
+}

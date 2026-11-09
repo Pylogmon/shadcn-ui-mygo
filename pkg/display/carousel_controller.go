@@ -3,6 +3,7 @@ package display
 import (
 	"slices"
 	"sync"
+	"time"
 
 	"github.com/egoist/mygo/ui"
 )
@@ -77,13 +78,19 @@ const (
 	carouselCommandPrevious
 	carouselCommandConfigure
 	carouselCommandReInit
+	carouselCommandPlugins
+	carouselCommandAutoplay
 )
 
 type carouselCommand struct {
-	kind  carouselCommandKind
-	index int
-	jump  bool
-	patch CarouselOptions
+	kind         carouselCommandKind
+	index        int
+	jump         bool
+	patch        CarouselOptions
+	plugins      []CarouselPlugin
+	plugin       *carouselPluginDefinition
+	pluginAction string
+	jumpOverride *bool
 }
 
 // CarouselController belongs to application state, never a frame. Scroll and
@@ -93,17 +100,24 @@ type carouselCommand struct {
 // Emit/Destroy and listener callbacks run on the UI thread. Use Window.Update
 // when invoking those methods from asynchronous application work.
 type CarouselController struct {
-	mu             sync.Mutex
-	options        CarouselOptions
-	appliedOptions CarouselOptions
-	appliedSet     bool
-	commands       []carouselCommand
-	listeners      map[CarouselEventType][]*CarouselListener
-	snapshot       CarouselControllerSnapshot
-	services       ui.Services
-	owner          ui.Handle
-	bound          bool
-	generation     uint64
+	mu                sync.Mutex
+	options           CarouselOptions
+	appliedOptions    CarouselOptions
+	appliedSet        bool
+	commands          []carouselCommand
+	listeners         map[CarouselEventType][]*CarouselListener
+	snapshot          CarouselControllerSnapshot
+	services          ui.Services
+	owner             ui.Handle
+	bound             bool
+	generation        uint64
+	desiredPlugins    []CarouselPlugin
+	appliedPlugins    []CarouselPlugin
+	appliedPluginsSet bool
+	pluginMap         map[string]CarouselPlugin
+	pluginBindings    []*carouselPluginBinding
+	pluginFrame       *carouselControllerBuild
+	lastNow           time.Time
 }
 
 func NewCarouselController(options CarouselOptions) (*CarouselController, error) {
@@ -222,6 +236,10 @@ func (a *CarouselController) Destroy() {
 	services := a.services
 	a.services, a.bound = ui.Services{}, false
 	a.mu.Unlock()
+	a.mu.Lock()
+	frame := a.pluginFrame
+	a.mu.Unlock()
+	a.destroyPlugins(frame)
 	a.Emit(CarouselDestroy)
 	a.mu.Lock()
 	a.listeners = nil

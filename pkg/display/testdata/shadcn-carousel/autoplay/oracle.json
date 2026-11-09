@@ -1,0 +1,2510 @@
+{
+  "SourceSHA256": "84911d2f9b684038360e7be1019923462ffb8a34659b868f6fb046eb13edd42a",
+  "Cases": [
+    {
+      "Name": "default-controls-and-expired-ui-time",
+      "Ops": [
+        [
+          "tick",
+          4999
+        ],
+        [
+          "tick",
+          5000
+        ],
+        [
+          "reset",
+          5100
+        ],
+        [
+          "stop",
+          5200
+        ],
+        [
+          "stop",
+          5300
+        ],
+        [
+          "reset",
+          5400
+        ],
+        [
+          "play",
+          5500,
+          true
+        ],
+        [
+          "tick",
+          12000
+        ],
+        [
+          "play",
+          12010,
+          false
+        ],
+        [
+          "tick",
+          16010
+        ],
+        [
+          "destroy",
+          16100
+        ],
+        [
+          "play",
+          16200
+        ]
+      ],
+      "Records": [
+        {
+          "Now": 1000,
+          "Kind": "event",
+          "Event": "autoplay:play",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 1000,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": 4000
+        },
+        {
+          "Now": 1000,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 4999,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 1
+        },
+        {
+          "Now": 5000,
+          "Kind": "scrollNext",
+          "Event": "",
+          "Index": 1,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 0
+        },
+        {
+          "Now": 5000,
+          "Kind": "event",
+          "Event": "autoplay:select",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 0
+        },
+        {
+          "Now": 5000,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 5000,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 5100,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 5100,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 5200,
+          "Kind": "event",
+          "Event": "autoplay:stop",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 3900
+        },
+        {
+          "Now": 5200,
+          "Kind": "event",
+          "Event": "autoplay:timerstopped",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": null
+        },
+        {
+          "Now": 5200,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 5300,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 5400,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 5500,
+          "Kind": "event",
+          "Event": "autoplay:play",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 5500,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": false,
+          "Remaining": 4000
+        },
+        {
+          "Now": 5500,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 12000,
+          "Kind": "scrollNext",
+          "Event": "",
+          "Index": 2,
+          "Jump": true,
+          "Selected": 2,
+          "Playing": true,
+          "Remaining": -2500
+        },
+        {
+          "Now": 12000,
+          "Kind": "event",
+          "Event": "autoplay:select",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 2,
+          "Playing": true,
+          "Remaining": -2500
+        },
+        {
+          "Now": 12000,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 2,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 12000,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 2,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 12010,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 2,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 12010,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 2,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 16010,
+          "Kind": "scrollTo",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 0
+        },
+        {
+          "Now": 16010,
+          "Kind": "event",
+          "Event": "autoplay:select",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 0
+        },
+        {
+          "Now": 16010,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 16010,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 16100,
+          "Kind": "event",
+          "Event": "autoplay:stop",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 3910
+        },
+        {
+          "Now": 16100,
+          "Kind": "event",
+          "Event": "autoplay:timerstopped",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": null
+        },
+        {
+          "Now": 16100,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 16200,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        }
+      ]
+    },
+    {
+      "Name": "varying-delay-selected-query-vs-scheduled-deadline",
+      "Delay": [
+        100,
+        300,
+        700
+      ],
+      "Ops": [
+        [
+          "select",
+          1050,
+          2
+        ],
+        [
+          "observe",
+          1060
+        ],
+        [
+          "tick",
+          1100
+        ],
+        [
+          "tick",
+          1799
+        ],
+        [
+          "tick",
+          1800
+        ],
+        [
+          "reset",
+          1810
+        ],
+        [
+          "tick",
+          1910
+        ]
+      ],
+      "Records": [
+        {
+          "Now": 1000,
+          "Kind": "event",
+          "Event": "autoplay:play",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 1000,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": 100
+        },
+        {
+          "Now": 1000,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 100
+        },
+        {
+          "Now": 1050,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 2,
+          "Playing": true,
+          "Remaining": 650
+        },
+        {
+          "Now": 1060,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 2,
+          "Playing": true,
+          "Remaining": 640
+        },
+        {
+          "Now": 1100,
+          "Kind": "scrollTo",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 0
+        },
+        {
+          "Now": 1100,
+          "Kind": "event",
+          "Event": "autoplay:select",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 0
+        },
+        {
+          "Now": 1100,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 100
+        },
+        {
+          "Now": 1100,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 100
+        },
+        {
+          "Now": 1799,
+          "Kind": "scrollNext",
+          "Event": "",
+          "Index": 1,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": -399
+        },
+        {
+          "Now": 1799,
+          "Kind": "event",
+          "Event": "autoplay:select",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": -399
+        },
+        {
+          "Now": 1799,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 300
+        },
+        {
+          "Now": 1799,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 300
+        },
+        {
+          "Now": 1800,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 299
+        },
+        {
+          "Now": 1810,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 300
+        },
+        {
+          "Now": 1810,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 300
+        },
+        {
+          "Now": 1910,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 200
+        }
+      ]
+    },
+    {
+      "Name": "pointer-default-permanent-stop",
+      "Ops": [
+        [
+          "pointerDown",
+          1200
+        ],
+        [
+          "pointerUp",
+          1300
+        ],
+        [
+          "tick",
+          6000
+        ],
+        [
+          "play",
+          6100
+        ],
+        [
+          "tick",
+          10100
+        ]
+      ],
+      "Records": [
+        {
+          "Now": 1000,
+          "Kind": "event",
+          "Event": "autoplay:play",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 1000,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": 4000
+        },
+        {
+          "Now": 1000,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 1200,
+          "Kind": "event",
+          "Event": "autoplay:stop",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 3800
+        },
+        {
+          "Now": 1200,
+          "Kind": "event",
+          "Event": "autoplay:timerstopped",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": null
+        },
+        {
+          "Now": 1200,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 1300,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 6000,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 6100,
+          "Kind": "event",
+          "Event": "autoplay:play",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 6100,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": 4000
+        },
+        {
+          "Now": 6100,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 10100,
+          "Kind": "scrollNext",
+          "Event": "",
+          "Index": 1,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 0
+        },
+        {
+          "Now": 10100,
+          "Kind": "event",
+          "Event": "autoplay:select",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 0
+        },
+        {
+          "Now": 10100,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 10100,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 4000
+        }
+      ]
+    },
+    {
+      "Name": "pointer-focus-restart",
+      "Options": {
+        "stopOnInteraction": false
+      },
+      "Ops": [
+        [
+          "pointerDown",
+          1200
+        ],
+        [
+          "pointerUp",
+          1300
+        ],
+        [
+          "focusStart",
+          1400
+        ],
+        [
+          "focusOut",
+          1500
+        ],
+        [
+          "tick",
+          5500
+        ]
+      ],
+      "Records": [
+        {
+          "Now": 1000,
+          "Kind": "event",
+          "Event": "autoplay:play",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 1000,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": 4000
+        },
+        {
+          "Now": 1000,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 1200,
+          "Kind": "event",
+          "Event": "autoplay:stop",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 3800
+        },
+        {
+          "Now": 1200,
+          "Kind": "event",
+          "Event": "autoplay:timerstopped",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": null
+        },
+        {
+          "Now": 1200,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 1300,
+          "Kind": "event",
+          "Event": "autoplay:play",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 1300,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": 4000
+        },
+        {
+          "Now": 1300,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 1400,
+          "Kind": "event",
+          "Event": "autoplay:stop",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 3900
+        },
+        {
+          "Now": 1400,
+          "Kind": "event",
+          "Event": "autoplay:timerstopped",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": null
+        },
+        {
+          "Now": 1400,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 1500,
+          "Kind": "event",
+          "Event": "autoplay:play",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 1500,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": 4000
+        },
+        {
+          "Now": 1500,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 5500,
+          "Kind": "scrollNext",
+          "Event": "",
+          "Index": 1,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 0
+        },
+        {
+          "Now": 5500,
+          "Kind": "event",
+          "Event": "autoplay:select",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 0
+        },
+        {
+          "Now": 5500,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 5500,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 4000
+        }
+      ]
+    },
+    {
+      "Name": "watch-drag-off-and-focus-off",
+      "WatchDrag": false,
+      "Options": {
+        "stopOnFocusIn": false,
+        "stopOnInteraction": false
+      },
+      "Ops": [
+        [
+          "pointerDown",
+          1200
+        ],
+        [
+          "pointerUp",
+          1300
+        ],
+        [
+          "focusStart",
+          1400
+        ],
+        [
+          "focusOut",
+          1500
+        ],
+        [
+          "tick",
+          5000
+        ]
+      ],
+      "Records": [
+        {
+          "Now": 1000,
+          "Kind": "event",
+          "Event": "autoplay:play",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 1000,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": 4000
+        },
+        {
+          "Now": 1000,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 1200,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 3800
+        },
+        {
+          "Now": 1300,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 3700
+        },
+        {
+          "Now": 1400,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 3600
+        },
+        {
+          "Now": 1500,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 3500
+        },
+        {
+          "Now": 5000,
+          "Kind": "scrollNext",
+          "Event": "",
+          "Index": 1,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 0
+        },
+        {
+          "Now": 5000,
+          "Kind": "event",
+          "Event": "autoplay:select",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 0
+        },
+        {
+          "Now": 5000,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 5000,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 4000
+        }
+      ]
+    },
+    {
+      "Name": "hover-excludes-pointer-resume",
+      "Options": {
+        "stopOnMouseEnter": true,
+        "stopOnInteraction": false
+      },
+      "Ops": [
+        [
+          "mouseEnter",
+          1200
+        ],
+        [
+          "pointerDown",
+          1250
+        ],
+        [
+          "pointerUp",
+          1300
+        ],
+        [
+          "mouseLeave",
+          1400
+        ],
+        [
+          "tick",
+          5400
+        ]
+      ],
+      "Records": [
+        {
+          "Now": 1000,
+          "Kind": "event",
+          "Event": "autoplay:play",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 1000,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": 4000
+        },
+        {
+          "Now": 1000,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 1200,
+          "Kind": "event",
+          "Event": "autoplay:stop",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 3800
+        },
+        {
+          "Now": 1200,
+          "Kind": "event",
+          "Event": "autoplay:timerstopped",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": null
+        },
+        {
+          "Now": 1200,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 1250,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 1300,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 1400,
+          "Kind": "event",
+          "Event": "autoplay:play",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 1400,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": 4000
+        },
+        {
+          "Now": 1400,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 5400,
+          "Kind": "scrollNext",
+          "Event": "",
+          "Index": 1,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 0
+        },
+        {
+          "Now": 5400,
+          "Kind": "event",
+          "Event": "autoplay:select",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 0
+        },
+        {
+          "Now": 5400,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 5400,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 4000
+        }
+      ]
+    },
+    {
+      "Name": "hover-permanent-stop",
+      "Options": {
+        "stopOnMouseEnter": true
+      },
+      "Ops": [
+        [
+          "mouseEnter",
+          1200
+        ],
+        [
+          "mouseLeave",
+          1300
+        ],
+        [
+          "tick",
+          6000
+        ]
+      ],
+      "Records": [
+        {
+          "Now": 1000,
+          "Kind": "event",
+          "Event": "autoplay:play",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 1000,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": 4000
+        },
+        {
+          "Now": 1000,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 1200,
+          "Kind": "event",
+          "Event": "autoplay:stop",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 3800
+        },
+        {
+          "Now": 1200,
+          "Kind": "event",
+          "Event": "autoplay:timerstopped",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": null
+        },
+        {
+          "Now": 1200,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 1300,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 6000,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        }
+      ]
+    },
+    {
+      "Name": "visibility-restarts-full-delay",
+      "Ops": [
+        [
+          "visibility",
+          2500,
+          true
+        ],
+        [
+          "tick",
+          10000
+        ],
+        [
+          "visibility",
+          12000,
+          false
+        ],
+        [
+          "tick",
+          15999
+        ],
+        [
+          "tick",
+          16000
+        ]
+      ],
+      "Records": [
+        {
+          "Now": 1000,
+          "Kind": "event",
+          "Event": "autoplay:play",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 1000,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": 4000
+        },
+        {
+          "Now": 1000,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 2500,
+          "Kind": "event",
+          "Event": "autoplay:stop",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 2500
+        },
+        {
+          "Now": 2500,
+          "Kind": "event",
+          "Event": "autoplay:timerstopped",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": null
+        },
+        {
+          "Now": 2500,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 10000,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 12000,
+          "Kind": "event",
+          "Event": "autoplay:play",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 12000,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": 4000
+        },
+        {
+          "Now": 12000,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 15999,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 1
+        },
+        {
+          "Now": 16000,
+          "Kind": "scrollNext",
+          "Event": "",
+          "Index": 1,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 0
+        },
+        {
+          "Now": 16000,
+          "Kind": "event",
+          "Event": "autoplay:select",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 0
+        },
+        {
+          "Now": 16000,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 16000,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 4000
+        }
+      ]
+    },
+    {
+      "Name": "initially-hidden-and-manual-play",
+      "Hidden": true,
+      "Ops": [
+        [
+          "play",
+          1200,
+          true
+        ],
+        [
+          "visibility",
+          1300,
+          false
+        ],
+        [
+          "tick",
+          5300
+        ],
+        [
+          "visibility",
+          5400,
+          true
+        ],
+        [
+          "visibility",
+          5500,
+          false
+        ]
+      ],
+      "Records": [
+        {
+          "Now": 1000,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 1200,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 1300,
+          "Kind": "event",
+          "Event": "autoplay:play",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 1300,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": 4000
+        },
+        {
+          "Now": 1300,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 5300,
+          "Kind": "scrollNext",
+          "Event": "",
+          "Index": 1,
+          "Jump": true,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 0
+        },
+        {
+          "Now": 5300,
+          "Kind": "event",
+          "Event": "autoplay:select",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 0
+        },
+        {
+          "Now": 5300,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 5300,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 5400,
+          "Kind": "event",
+          "Event": "autoplay:stop",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 3900
+        },
+        {
+          "Now": 5400,
+          "Kind": "event",
+          "Event": "autoplay:timerstopped",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": null
+        },
+        {
+          "Now": 5400,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 5500,
+          "Kind": "event",
+          "Event": "autoplay:play",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 5500,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": false,
+          "Remaining": 4000
+        },
+        {
+          "Now": 5500,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 4000
+        }
+      ]
+    },
+    {
+      "Name": "stop-on-last",
+      "Options": {
+        "stopOnLastSnap": true
+      },
+      "Ops": [
+        [
+          "tick",
+          5000
+        ],
+        [
+          "tick",
+          9000
+        ],
+        [
+          "play",
+          9100
+        ],
+        [
+          "tick",
+          13100
+        ]
+      ],
+      "Records": [
+        {
+          "Now": 1000,
+          "Kind": "event",
+          "Event": "autoplay:play",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 1000,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": 4000
+        },
+        {
+          "Now": 1000,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 5000,
+          "Kind": "scrollNext",
+          "Event": "",
+          "Index": 1,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 0
+        },
+        {
+          "Now": 5000,
+          "Kind": "event",
+          "Event": "autoplay:select",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 0
+        },
+        {
+          "Now": 5000,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 5000,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 9000,
+          "Kind": "scrollNext",
+          "Event": "",
+          "Index": 2,
+          "Jump": false,
+          "Selected": 2,
+          "Playing": true,
+          "Remaining": 0
+        },
+        {
+          "Now": 9000,
+          "Kind": "event",
+          "Event": "autoplay:select",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 2,
+          "Playing": true,
+          "Remaining": 0
+        },
+        {
+          "Now": 9000,
+          "Kind": "event",
+          "Event": "autoplay:stop",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 2,
+          "Playing": true,
+          "Remaining": 0
+        },
+        {
+          "Now": 9000,
+          "Kind": "event",
+          "Event": "autoplay:timerstopped",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 2,
+          "Playing": true,
+          "Remaining": null
+        },
+        {
+          "Now": 9000,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 2,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 9100,
+          "Kind": "event",
+          "Event": "autoplay:play",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 2,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 9100,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 2,
+          "Playing": false,
+          "Remaining": 4000
+        },
+        {
+          "Now": 9100,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 2,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 13100,
+          "Kind": "scrollTo",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 0
+        },
+        {
+          "Now": 13100,
+          "Kind": "event",
+          "Event": "autoplay:select",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 0
+        },
+        {
+          "Now": 13100,
+          "Kind": "event",
+          "Event": "autoplay:stop",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 0
+        },
+        {
+          "Now": 13100,
+          "Kind": "event",
+          "Event": "autoplay:timerstopped",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": null
+        },
+        {
+          "Now": 13100,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        }
+      ]
+    },
+    {
+      "Name": "loop-with-jump-override",
+      "Loop": true,
+      "Options": {
+        "stopOnLastSnap": true
+      },
+      "Ops": [
+        [
+          "select",
+          1100,
+          2
+        ],
+        [
+          "play",
+          1200,
+          true
+        ],
+        [
+          "tick",
+          5200
+        ],
+        [
+          "tick",
+          9200
+        ],
+        [
+          "tick",
+          13200
+        ]
+      ],
+      "Records": [
+        {
+          "Now": 1000,
+          "Kind": "event",
+          "Event": "autoplay:play",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 1000,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": 4000
+        },
+        {
+          "Now": 1000,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 1100,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 2,
+          "Playing": true,
+          "Remaining": 3900
+        },
+        {
+          "Now": 1200,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 2,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 1200,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 2,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 5200,
+          "Kind": "scrollNext",
+          "Event": "",
+          "Index": 0,
+          "Jump": true,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 0
+        },
+        {
+          "Now": 5200,
+          "Kind": "event",
+          "Event": "autoplay:select",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 0
+        },
+        {
+          "Now": 5200,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 5200,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 9200,
+          "Kind": "scrollNext",
+          "Event": "",
+          "Index": 1,
+          "Jump": true,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 0
+        },
+        {
+          "Now": 9200,
+          "Kind": "event",
+          "Event": "autoplay:select",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 0
+        },
+        {
+          "Now": 9200,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 9200,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 13200,
+          "Kind": "scrollNext",
+          "Event": "",
+          "Index": 2,
+          "Jump": true,
+          "Selected": 2,
+          "Playing": true,
+          "Remaining": 0
+        },
+        {
+          "Now": 13200,
+          "Kind": "event",
+          "Event": "autoplay:select",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 2,
+          "Playing": true,
+          "Remaining": 0
+        },
+        {
+          "Now": 13200,
+          "Kind": "event",
+          "Event": "autoplay:stop",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 2,
+          "Playing": true,
+          "Remaining": 0
+        },
+        {
+          "Now": 13200,
+          "Kind": "event",
+          "Event": "autoplay:timerstopped",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 2,
+          "Playing": true,
+          "Remaining": null
+        },
+        {
+          "Now": 13200,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 2,
+          "Playing": false,
+          "Remaining": null
+        }
+      ]
+    },
+    {
+      "Name": "play-on-init-false-and-one-snap",
+      "Count": 1,
+      "Options": {
+        "playOnInit": false
+      },
+      "Ops": [
+        [
+          "observe",
+          2000
+        ],
+        [
+          "destroy",
+          2100
+        ]
+      ],
+      "Records": [
+        {
+          "Now": 1000,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 2000,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 2100,
+          "Kind": "event",
+          "Event": "autoplay:timerstopped",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 2100,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        }
+      ]
+    },
+    {
+      "Name": "explicit-manual-start",
+      "Options": {
+        "playOnInit": false,
+        "jump": true
+      },
+      "Ops": [
+        [
+          "reset",
+          1100
+        ],
+        [
+          "play",
+          1200
+        ],
+        [
+          "tick",
+          5200
+        ],
+        [
+          "stop",
+          5300
+        ],
+        [
+          "play",
+          5400,
+          false
+        ],
+        [
+          "tick",
+          9400
+        ]
+      ],
+      "Records": [
+        {
+          "Now": 1000,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 1100,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 1200,
+          "Kind": "event",
+          "Event": "autoplay:play",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 1200,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": false,
+          "Remaining": 4000
+        },
+        {
+          "Now": 1200,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 0,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 5200,
+          "Kind": "scrollNext",
+          "Event": "",
+          "Index": 1,
+          "Jump": true,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 0
+        },
+        {
+          "Now": 5200,
+          "Kind": "event",
+          "Event": "autoplay:select",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 0
+        },
+        {
+          "Now": 5200,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 5200,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 5300,
+          "Kind": "event",
+          "Event": "autoplay:stop",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 3900
+        },
+        {
+          "Now": 5300,
+          "Kind": "event",
+          "Event": "autoplay:timerstopped",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": null
+        },
+        {
+          "Now": 5300,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 5400,
+          "Kind": "event",
+          "Event": "autoplay:play",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": false,
+          "Remaining": null
+        },
+        {
+          "Now": 5400,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": false,
+          "Remaining": 4000
+        },
+        {
+          "Now": 5400,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 1,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 9400,
+          "Kind": "scrollNext",
+          "Event": "",
+          "Index": 2,
+          "Jump": false,
+          "Selected": 2,
+          "Playing": true,
+          "Remaining": 0
+        },
+        {
+          "Now": 9400,
+          "Kind": "event",
+          "Event": "autoplay:select",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 2,
+          "Playing": true,
+          "Remaining": 0
+        },
+        {
+          "Now": 9400,
+          "Kind": "event",
+          "Event": "autoplay:timerset",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 2,
+          "Playing": true,
+          "Remaining": 4000
+        },
+        {
+          "Now": 9400,
+          "Kind": "state",
+          "Event": "",
+          "Index": 0,
+          "Jump": false,
+          "Selected": 2,
+          "Playing": true,
+          "Remaining": 4000
+        }
+      ]
+    }
+  ]
+}
