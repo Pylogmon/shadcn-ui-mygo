@@ -36,7 +36,7 @@ func horizontalBarBand(band chart.Span) chart.Span {
 	return chart.Span{Lo: 1 - band.Hi, Hi: 1 - band.Lo}
 }
 
-func cartesianAxes(c *ui.Context, p ChartProps, band chart.Band, value chart.Linear, direction ui.Direction) chart.Axes {
+func cartesianAxes(c *ui.Context, p ChartProps, band chart.Band, value chart.Linear, direction ui.Direction, scale float64, extent float32) chart.Axes {
 	var categoryTicks []chart.Tick
 	if !p.Cartesian.HideCategoryAxis {
 		categoryTicks = band.Ticks()
@@ -49,9 +49,29 @@ func cartesianAxes(c *ui.Context, p ChartProps, band chart.Band, value chart.Lin
 			categoryTicks[i].Label = p.Cartesian.FormatCategory(categoryTicks[i].Label)
 		}
 	}
+	if p.Cartesian.CategoryMinTickGap != nil {
+		gap := chartNonnegative(p.Cartesian.CategoryMinTickGap, 0)
+		kept := make([]chart.Tick, 0, len(categoryTicks))
+		edge := float32(math.Inf(1))
+		for i := len(categoryTicks) - 1; i >= 0; i-- {
+			tick := categoryTicks[i]
+			w, h := ui.ShapeText(tick.Label, ui.Font{Size: 12}, 0).Size()
+			at, size := tick.At, w
+			if horizontalBars(p) {
+				at, size = 1-tick.At, h
+			}
+			center := at * extent
+			if len(kept) == 0 || center+size/2+gap <= edge {
+				kept = append(kept, tick)
+				edge = center - size/2
+			}
+		}
+		slices.Reverse(kept)
+		categoryTicks = kept
+	}
 	var valueTicks []chart.Tick
 	if !p.Cartesian.HideValueAxis {
-		valueTicks = value.Ticks(4)
+		valueTicks = value.Ticks(chartTickCount(p))
 	}
 	axes := chart.Axes{Left: valueTicks, Bottom: categoryTicks}
 	if horizontalBars(p) {
@@ -65,11 +85,32 @@ func cartesianAxes(c *ui.Context, p ChartProps, band chart.Band, value chart.Lin
 		}
 	}
 	axes.Label = func(side chart.Side, tick chart.Tick) {
-		label := ui.Text(c, tick.Label).NoWrap().Direction(direction).TextColor(theme.TokensOf(c).MutedForeground)
 		categorySide := side == chart.Bottom
 		if horizontalBars(p) {
 			categorySide = side == chart.Left
 		}
+		if p.Cartesian.TickContent != nil {
+			index := -1
+			if categorySide {
+				for i := range p.Labels {
+					at := band.At(i)
+					if horizontalBars(p) {
+						at = 1 - at
+					}
+					if math.Abs(float64(at-tick.At)) < 1e-5 {
+						index = i
+						break
+					}
+				}
+			}
+			v := tick.Value
+			if !categorySide && !(p.Stacked && p.Normalized && p.Kind != LineChart) {
+				v *= scale
+			}
+			p.Cartesian.TickContent(c, ChartAxisTick{Side: side, Category: categorySide, Index: index, Value: v, Label: tick.Label})
+			return
+		}
+		label := ui.Text(c, tick.Label).NoWrap().Direction(direction).TextColor(theme.TokensOf(c).MutedForeground)
 		if categorySide && cap > 0 {
 			label.MaxWidth(cap).SingleLine()
 		}
@@ -81,7 +122,7 @@ func cartesianValueScale(p ChartProps, scale, lo, hi float64) chart.Linear {
 	if lo == hi {
 		hi = lo + 1
 	}
-	value := chart.NewLinear(lo, hi).Nice(4)
+	value := chart.NewLinear(lo, hi).Nice(chartTickCount(p))
 	format := p.Cartesian.FormatValue
 	if format == nil {
 		format = p.FormatValue

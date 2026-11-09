@@ -47,12 +47,37 @@ type ChartCartesianProps struct {
 	CategoryAxisMaxWidth float32
 	// BarRadius nil or invalid (negative/nonfinite) uses 3 DIPs; 0 is square.
 	BarRadius *float32
+	// Margin is inside the chart's outer size, including its axes. Finite
+	// negative insets expand that side, as in the source chart examples.
+	Margin *ChartInsets
+	// Curve's zero value preserves the existing monotone interpolation.
+	Curve ChartCurve
+	// PointScale places line/area endpoints at 0 and 1 instead of band centers.
+	PointScale bool
+	// BandPadding changes the fractions of a category step left between and
+	// outside bars. GroupGap is the DIP gap between unstacked series (nil: 0).
+	BandPadding *ChartBandPadding
+	GroupGap    *float32
+	// Axis gaps are DIPs; nil preserves 8. ValueTickCount defaults to 4.
+	CategoryTickMargin, ValueTickMargin *float32
+	// CategoryMinTickGap enables native font-aware tick thinning. It preserves
+	// the last tick, as in the source's default preserveEnd axis policy.
+	CategoryMinTickGap *float32
+	ValueTickCount     int
+	// TickContent runs during this build. It may build native text or icons.
+	TickContent func(*ui.Context, ChartAxisTick)
+	// Cursor nil preserves the inspection rule. Band fills the entire hovered
+	// Bar category behind its marks, as the source Tooltip rectangle does.
+	Cursor *ChartCursorProps
 }
 
 type ChartSeries struct {
 	Name   string
 	Values []float64
 	Color  ui.Color
+	// Style is evaluated during the current build; only copied paint values
+	// and geometry are retained by animation and drawing.
+	Style ChartSeriesStyle
 }
 
 type ChartProps struct {
@@ -319,6 +344,20 @@ func stackSegments(p ChartProps) [][]chart.Segment {
 }
 
 func cartesianChart(c *ui.Context, p ChartProps, selected *int, height float32) ui.Element {
+	m := chartMargins(p)
+	root := ui.Box(c).Height(height).FillWidth().MinWidth(0)
+	metrics := ui.Local(root, "chart-axis-layout", func() chartAxisLayout { return chartAxisLayout{} })
+	if (p.Cartesian.CategoryMinTickGap != nil || p.Cartesian.GroupGap != nil) && !metrics.primed {
+		metrics.primed = true
+		c.Invalidate()
+	}
+	return root.Children(func() {
+		plot := cartesianChartPlot(c, p, selected, metrics)
+		plot.Absolute().Top(m.Top).Right(m.Right).Bottom(m.Bottom).Left(m.Left)
+	})
+}
+
+func cartesianChartPlot(c *ui.Context, p ChartProps, selected *int, metrics *chartAxisLayout) ui.Element {
 	t := theme.TokensOf(c)
 	plot, scale := scaledChartValues(p)
 	hi, lo := float64(0), float64(0)
@@ -343,12 +382,30 @@ func cartesianChart(c *ui.Context, p ChartProps, selected *int, height float32) 
 		}
 	}
 	x := chart.NewBand(p.Labels...).Padding(.3, .15)
+	if padding := p.Cartesian.BandPadding; padding != nil {
+		x = x.Padding(chartFinite32(padding.Inner, .3), chartFinite32(padding.Outer, .15))
+	}
+	if p.Kind != BarChart && p.Cartesian.PointScale {
+		x = x.Padding(1, 0)
+	}
 	y := cartesianValueScale(p, scale, lo, hi)
 	direction := c.Direction()
-	axes := cartesianAxes(c, p, x, y, direction)
+	extent := metrics.bounds.W
+	if horizontalBars(p) {
+		extent = metrics.bounds.H
+	}
+	axes := cartesianAxes(c, p, x, y, direction, scale, extent)
 	horizontal := horizontalBars(p)
 	valid := validCategories(p, false)
-	return chart.Plot(c, axes, func(area ui.Element) {
+	result := chart.Plot(c, axes, func(area ui.Element) {
+		needsMetrics := p.Cartesian.CategoryMinTickGap != nil || p.Cartesian.GroupGap != nil
+		if needsMetrics {
+			bounds := area.LayoutBounds()
+			if math.Abs(float64(bounds.W-metrics.bounds.W)) > .25 || math.Abs(float64(bounds.H-metrics.bounds.H)) > .25 {
+				metrics.bounds = bounds
+				c.Invalidate()
+			}
+		}
 		label := p.Label
 		if label == "" {
 			label = "Chart"
@@ -359,11 +416,29 @@ func cartesianChart(c *ui.Context, p ChartProps, selected *int, height float32) 
 		}
 		area.Label(label).Role(ui.RoleGroup).Description(description).Direction(direction)
 		inspectCartesian(c, area, p, selected, x, valid)
+		bandCursor := p.Kind == BarChart && p.Cartesian.Cursor != nil && p.Cartesian.Cursor.Band
+		if *selected >= 0 && !p.Cartesian.HideCursor && bandCursor {
+			step := float32(1)
+			if len(p.Labels) > 1 {
+				step = x.At(1) - x.At(0)
+			}
+			center := x.At(*selected)
+			span := chart.Span{Lo: center - step/2, Hi: center + step/2}
+			color := t.Muted
+			if p.Cartesian.Cursor.Color != nil {
+				color = *p.Cartesian.Cursor.Color
+			}
+			if horizontal {
+				chart.Rect(c, chart.Span{Lo: 0, Hi: 1}, horizontalBarBand(span)).Background(color).IgnoreInput(true).AccessHidden(true)
+			} else {
+				chart.Rect(c, span, chart.Span{Lo: 0, Hi: 1}).Background(color).IgnoreInput(true).AccessHidden(true)
+			}
+		}
 		drawers := []func(*ui.Painter, ui.Rect){}
 		if !p.Cartesian.HideGrid {
 			gridScale := y
 			gridScale.Format = nil
-			gridTicks := gridScale.Ticks(4)
+			gridTicks := gridScale.Ticks(chartTickCount(p))
 			drawers = append(drawers, func(painter *ui.Painter, r ui.Rect) {
 				for _, tick := range gridTicks {
 					if horizontal {
@@ -376,6 +451,15 @@ func cartesianChart(c *ui.Context, p ChartProps, selected *int, height float32) 
 		}
 
 		plans := cartesianAnimationPlans(p, plot, x, y, stacked)
+		if p.Kind == BarChart && !p.Stacked && p.Cartesian.GroupGap != nil && len(plans) > 1 {
+			extent := area.LayoutBounds().W
+			if horizontal {
+				extent = area.LayoutBounds().H
+			}
+			if extent > 0 {
+				chartGroupGap(plans, horizontal, chartNonnegative(p.Cartesian.GroupGap, 0)/extent)
+			}
+		}
 		frames := animateChartGeometry(c, area, p.Kind, p.Animation, plans)
 		for j, s := range plot.Series {
 			color := chartColor(c, p, j)
@@ -395,25 +479,44 @@ func cartesianChart(c *ui.Context, p ChartProps, selected *int, height float32) 
 					if *selected == i {
 						mark.Opacity(.8)
 					}
+					chartStyleBar(c, p, j, chartDatum(p, j, i, point, barColor(c, p, j, i), *selected), mark)
 				}
 			} else {
 				isArea := p.Kind == AreaChart
-				drawers = append(drawers, func(painter *ui.Painter, r ui.Rect) { drawAnimatedCartesian(painter, r, frame, isArea, color) })
+				paint := chartCartesianStyle(p, j, color)
+				drawers = append(drawers, func(painter *ui.Painter, r ui.Rect) { drawStyledCartesian(painter, r, frame, isArea, paint) })
+				if spec := s.Style.Dots; spec != nil && !frame.state.active {
+					for i, point := range plans[j].points {
+						if point.valid {
+							chartBuildDot(c, p, j, i, point, color, *selected, false, spec)
+						}
+					}
+				}
 				if *selected >= 0 && *selected < len(plans[j].points) && plans[j].points[*selected].valid {
 					// Source active dots use target points outside the animated
 					// curve; tooltip/AX already describe the same latest data.
 					point := plans[j].points[*selected]
-					chart.Point(c, float32(point.v[0]), float32(point.v[1]), 7, 7).Radius(4).Background(color).Border(2, t.Background).IgnoreInput(true)
+					chartBuildDot(c, p, j, *selected, point, color, *selected, true, s.Style.ActiveDot)
 				}
+			}
+			if !frame.state.active {
+				chartBuildLabels(c, p, j, plans[j], *selected, color)
 			}
 		}
 
+		services := c.Services()
 		area.Draw(func(painter *ui.Painter, r ui.Rect) {
+			// Size observation uses copied geometry plus weak window services,
+			// never Context. It also catches a hidden plot becoming visible.
+			if needsMetrics && (math.Abs(float64(r.W-metrics.bounds.W)) > .25 || math.Abs(float64(r.H-metrics.bounds.H)) > .25) {
+				metrics.bounds = ui.Rect{W: r.W, H: r.H}
+				services.Invalidate()
+			}
 			for _, draw := range drawers {
 				draw(painter, r)
 			}
 		})
-		if *selected >= 0 && !p.Cartesian.HideCursor {
+		if *selected >= 0 && !p.Cartesian.HideCursor && !bandCursor {
 			if horizontal {
 				chart.RuleY(c, 1-x.At(*selected), 1).Background(t.Border).IgnoreInput(true)
 			} else {
@@ -421,7 +524,15 @@ func cartesianChart(c *ui.Context, p ChartProps, selected *int, height float32) 
 			}
 		}
 		chartTooltipAt(c, p, *selected)
-	}).Height(height).FillWidth().MinWidth(0).Gap(8).FontSize(12).Direction(ui.LeftToRight)
+	}).MinWidth(0).Gap(8).FontSize(12).Direction(ui.LeftToRight)
+	categoryGap := chartNonnegative(p.Cartesian.CategoryTickMargin, 8)
+	valueGap := chartNonnegative(p.Cartesian.ValueTickMargin, 8)
+	if horizontal {
+		result.GapX(categoryGap).GapY(valueGap)
+	} else {
+		result.GapX(valueGap).GapY(categoryGap)
+	}
+	return result
 }
 
 type plotSegment struct{ X, Y, Base []float32 }

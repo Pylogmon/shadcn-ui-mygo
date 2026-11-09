@@ -86,6 +86,14 @@ archived in `pkg/display/testdata/shadcn-chart/`. They use the same shadcn commi
 and bundled MIT license described above. No React or Recharts runtime is linked
 into the native application.
 
+Cartesian natural curves adapt D3-shape 3.2.0's ISC-licensed natural spline
+algorithm to public MyGo paths; the full notice is retained in
+`pkg/display/chart_curves.go`. Exact D3-shape/D3-path distribution members,
+licenses and an oracle executing the official factories are archived in
+`pkg/display/testdata/shadcn-chart/cartesian/`. Native bundles include the ISC
+notices as `licenses/d3-shape.txt` and `licenses/d3-path.txt`. JavaScript
+packages are reference/oracle inputs and are not linked as a runtime.
+
 Chart data animation defaults and geometric rules are compared against Recharts
 3.8.0, commit `c04a79039ebc4d5057de163298d2e9917a5e5a66`, locked by that
 shadcn version. Fixed source, selected official npm distribution members,

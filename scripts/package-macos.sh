@@ -24,13 +24,19 @@ case "${1:-gallery}" in
         identifier='dev.pylogmon.shadcn-charts'
         app_name='Shadcn Charts'
         ;;
+    chart-cartesian)
+        bundle='build/Shadcn Cartesian.app'
+        package='./examples/chart-cartesian'
+        identifier='dev.pylogmon.shadcn-cartesian'
+        app_name='Shadcn Cartesian'
+        ;;
     material-icons)
         bundle='build/Shadcn Symbols.app'
         package='./examples/material-icons'
         identifier='dev.pylogmon.shadcn-symbols'
         app_name='Shadcn Symbols'
         ;;
-    *) echo 'Expected gallery, native-popups, chart-composition or material-icons.' >&2; exit 1 ;;
+    *) echo 'Expected gallery, native-popups, chart-composition, chart-cartesian or material-icons.' >&2; exit 1 ;;
 esac
 mkdir -p "$bundle/Contents/MacOS"
 mkdir -p "$bundle/Contents/Resources/licenses"
@@ -41,6 +47,8 @@ cp pkg/overlay/testdata/sonner/LICENSE.md "$bundle/Contents/Resources/licenses/s
 cp internal/shimmer/testdata/shadcn/LICENSE "$bundle/Contents/Resources/licenses/shadcn.txt"
 cp pkg/theme/sources/LICENSE.tailwind "$bundle/Contents/Resources/licenses/tailwind.txt"
 cp pkg/display/testdata/recharts-animation/LICENSE "$bundle/Contents/Resources/licenses/recharts.txt"
+cp pkg/display/testdata/shadcn-chart/cartesian/LICENSE.d3-shape "$bundle/Contents/Resources/licenses/d3-shape.txt"
+cp pkg/display/testdata/shadcn-chart/cartesian/LICENSE.d3-path "$bundle/Contents/Resources/licenses/d3-path.txt"
 cp pkg/display/testdata/shadcn-carousel/npm/LICENSE.embla "$bundle/Contents/Resources/licenses/embla.txt"
 cp pkg/desktop/testdata/shadcn-menu/npm/base-ui-react/LICENSE "$bundle/Contents/Resources/licenses/base-ui.txt"
 cp pkg/desktop/testdata/shadcn-menu/npm/radix-ui-react-menu/LICENSE "$bundle/Contents/Resources/licenses/radix-ui.txt"

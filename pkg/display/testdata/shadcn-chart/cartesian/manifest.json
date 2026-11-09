@@ -1,0 +1,89 @@
+{
+  "shadcnCommit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "rechartsCommit": "c04a79039ebc4d5057de163298d2e9917a5e5a66",
+  "d3ShapeCommit": "8ec82658454750cfa29efb1e0ea514e3dd9b2297",
+  "verification": "curve bytes match npm package whose SHA512 is verified against official metadata and fixed shadcn lock d3-shape@3.2.0; official Recharts fixed raw sources",
+  "files": [
+    {
+      "archive": "natural.js",
+      "url": "https://raw.githubusercontent.com/d3/d3-shape/v3.2.0/src/curve/natural.js",
+      "sha256": "be8d0d5fa2627d733b2950ea88ec42c4bd5fc70ff64a8858bde68a51d6f27e62"
+    },
+    {
+      "archive": "monotone.js",
+      "url": "https://raw.githubusercontent.com/d3/d3-shape/v3.2.0/src/curve/monotone.js",
+      "sha256": "6f6fe0f729d096814f8282128d4caf6337de0b13e2ea5cedc1c528223c64056c"
+    },
+    {
+      "archive": "step.js",
+      "url": "https://raw.githubusercontent.com/d3/d3-shape/v3.2.0/src/curve/step.js",
+      "sha256": "ca0436ff3c69e55272927ef94c9f909280496f492e9649ffd4f4fded0c977c7b"
+    },
+    {
+      "archive": "linear.js",
+      "url": "https://raw.githubusercontent.com/d3/d3-shape/v3.2.0/src/curve/linear.js",
+      "sha256": "e377d1440cd2547ad2e38050898e2cd765eb9d248cc5702f287763353ac43b87"
+    },
+    {
+      "archive": "LICENSE.d3-shape",
+      "url": "https://raw.githubusercontent.com/d3/d3-shape/v3.2.0/LICENSE",
+      "sha256": "faa682e3e430941f958d26180458f5934a62f58dac4d70ccdd15608c15d0f884"
+    },
+    {
+      "archive": "Label.tsx",
+      "url": "https://raw.githubusercontent.com/recharts/recharts/c04a79039ebc4d5057de163298d2e9917a5e5a66/src/component/Label.tsx",
+      "sha256": "26e15365c00f3fe177ef147c6021fe4f6de6afa1742aadad31b8d607abf045cb"
+    },
+    {
+      "archive": "LabelList.tsx",
+      "url": "https://raw.githubusercontent.com/recharts/recharts/c04a79039ebc4d5057de163298d2e9917a5e5a66/src/component/LabelList.tsx",
+      "sha256": "fcdf2557742e4cd7f165d36fec9c487e14b8801735a9e69d06bc26cf9e860f0a"
+    },
+    {
+      "archive": "Curve.tsx",
+      "url": "https://raw.githubusercontent.com/recharts/recharts/c04a79039ebc4d5057de163298d2e9917a5e5a66/src/shape/Curve.tsx",
+      "sha256": "afabb6b6132a5163c92e0a7d07c05b54b1b616ed521013b8776413688a333882"
+    },
+    {
+      "archive": "getCartesianPosition.tsx",
+      "url": "https://raw.githubusercontent.com/recharts/recharts/c04a79039ebc4d5057de163298d2e9917a5e5a66/src/cartesian/getCartesianPosition.tsx",
+      "sha256": "1e8e7b03be429318f933bfc928576686590d4d18872702281f2464e30c6ae703"
+    },
+    {
+      "package": "d3-shape",
+      "version": "3.2.0",
+      "gitHead": "8ec82658454750cfa29efb1e0ea514e3dd9b2297",
+      "integrity": "sha512-SaLBuwGm3MOViRq2ABk3eLoxwZELpH6zhl3FbAoJ7Vm1gofKx6El1Ib5z23NUEhF9AsGl7y+dzLe5Cw2AArGTA==",
+      "tarballSHA256": "8b4b2bc9daa99a957abe17656c5944fd3f28efb88f788e6b4fdba346cb80e602",
+      "metadata": "d3-shape-metadata.json",
+      "license": "LICENSE.d3-shape"
+    },
+    {
+      "package": "d3-path",
+      "version": "3.1.0",
+      "gitHead": "58bce7a53df2b03f70092a9b00b78055c4ffee04",
+      "integrity": "sha512-p3KP5HCf/bvjBSSKuXid6Zqijx7wIfNW+J/maPs+iwR35at5JCbLUT0LzF1cnjbCHWhqzQTIN2Jpe8pRebIEFQ==",
+      "tarballSHA256": "94e9b69f82f113ed4ada36703c05f6b7406723c55affe2a443d69729d6d5da14",
+      "metadata": "d3-path-metadata.json",
+      "license": "LICENSE.d3-path"
+    }
+  ],
+  "artifacts": [
+    {
+      "archive": "generate-oracle.mjs",
+      "sha256": "d024d10a01df3c4969a05bc6c6816efac6ab1a85917409df4c75ac29cb277b74"
+    },
+    {
+      "archive": "curve-oracle.json",
+      "sha256": "7af7858025ffb943129929b25e3bfe9586d65cfb58e9cb54f5bbe7baeec2b8e4"
+    },
+    {
+      "archive": "pnpm-lock-excerpts.txt",
+      "sha256": "6a01c1a7ac65c830e9e3d093c697d4f21ab375b416d6d1717c7e897741a498b7"
+    },
+    {
+      "archive": "LICENSE.recharts",
+      "sha256": "2d3aa48a8d1d3b93093680e8e68d3a64cfb590c3ade377ffcaefc69dac7c2ce5"
+    }
+  ]
+}

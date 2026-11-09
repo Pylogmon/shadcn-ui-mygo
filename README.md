@@ -17,6 +17,7 @@ make build     # CGO_ENABLED=0 构建
 make app       # macOS .app 输出 build/Shadcn Gallery.app
 make popups-app # 小窗口对照：菜单、Popover、日期与悬停组件对
 make charts-app # 自由组合图表：build/Shadcn Charts.app
+make cartesian-app # 30个Cartesian源例：build/Shadcn Cartesian.app
 make icons-app # Material Symbols 图标浏览：build/Shadcn Symbols.app
 make verify-consumer # 空缓存、无replace的外部消费者和模块ZIP验收
 ```
@@ -85,6 +86,7 @@ Forms & controls页已接入框架搜索、国家分组/城市描述过滤、Off
 回合锚定、流式跟随、历史位置保持与跳转见 [Message Scroller](docs/message-scroller.md)。
 严格逐步导航、原生选项/输入、草稿与受控校验组合见 [Questionnaire](docs/questionnaire.md)。
 横向柱形、分组/堆叠、原值检查与坐标轴配置见 [Chart](docs/chart.md)。
+30个Area/Bar/Line源例及曲线、渐变、标签和自定义标记见[Cartesian配置](docs/chart-cartesian.md)。
 七类图表的数据几何动画、时序配置与减少动态效果见 [Chart动画](docs/chart-animation.md)。
 独立容器、配置与原生Tooltip/Legend内容见 [Chart自由组合](docs/chart-composition.md)，可直接搭配MyGo Plot、Rule、Anchor与原生控件。
 可运行的公开API示例见 [chart-composition](examples/chart-composition/README.md)，包含原生阈值线、柱顶标签、月份范围筛选及可编辑数据。

@@ -438,14 +438,24 @@ func chartPathCoordinates(points []chartGeometryDatum) (xs, ys, base []float32) 
 }
 
 func drawAnimatedCartesian(painter *ui.Painter, r ui.Rect, frame chartGeometryFrame, isArea bool, color ui.Color) {
-	xs, ys, base := chartPathCoordinates(frame.points)
+	drawStyledCartesian(painter, r, frame, isArea, chartCartesianPaint{curve: ChartCurveMonotone, fill: color.Alpha(.2), stroke: color, width: 2})
+}
+
+func drawStyledCartesian(painter *ui.Painter, r ui.Rect, frame chartGeometryFrame, isArea bool, paint chartCartesianPaint) {
 	draw := func() {
 		if isArea {
-			painter.FillPath(chart.Area(r, xs, base, ys, chart.CurveMonotone), color.Alpha(.2))
-			painter.StrokePath(chart.Line(r, xs, ys, chart.CurveMonotone), 2, color)
+			path := chartCartesianPath(r, frame.points, paint.curve, true)
+			if paint.gradient != nil {
+				painter.FillPathGradient(path, *paint.gradient)
+			} else {
+				painter.FillPath(path, paint.fill)
+			}
+			if paint.width > 0 {
+				painter.StrokePath(chartCartesianPath(r, frame.points, paint.curve, false), paint.width, paint.stroke)
+			}
 			return
 		}
-		total := chartCurveLength(r, frame.points)
+		total := chartCurveLengthFor(r, frame.points, paint.curve)
 		if total <= 0 {
 			return
 		}
@@ -457,7 +467,7 @@ func drawAnimatedCartesian(painter *ui.Painter, r ui.Rect, frame chartGeometryFr
 		if budget <= 0 {
 			return
 		}
-		path := chart.Line(r, xs, ys, chart.CurveMonotone)
+		path := chartCartesianPath(r, frame.points, paint.curve, false)
 		// Public Path.Dash restarts at every subpath, like SVG. Its gap is
 		// the current total length, at least as long as any individual run,
 		// so a reveal cannot repeat inside that run. Recomputing this length
@@ -465,7 +475,9 @@ func drawAnimatedCartesian(painter *ui.Painter, r ui.Rect, frame chartGeometryFr
 		if budget < total {
 			path.Dash(0, float32(budget), float32(total))
 		}
-		painter.StrokePath(path, 2, color)
+		if paint.width > 0 {
+			painter.StrokePath(path, paint.width, paint.stroke)
+		}
 	}
 	if isArea && frame.reveal < 1 && len(frame.points) > 0 {
 		start, end := frame.points[0].v[0], frame.points[len(frame.points)-1].v[0]
