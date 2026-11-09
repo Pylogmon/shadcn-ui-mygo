@@ -76,7 +76,9 @@
 | 5.AS | Attachment五状态、复合槽位与横向附件组 | 已提交 `e7bb5d7`；68项聚焦、217项隔离检查、交叉审查及vet通过；源scroll-padding和混合轴边界差异保留 |
 | 5.AT | Trace独立槽位、原生详情及稳定嵌套状态 | 已提交 `d4757d0`；72项聚焦、288项隔离检查、交叉审查及vet通过；字体继承/缩放测量修正纳入正式回归 |
 | 5.AU | Gallery静态Table应用组合与双菜单家族 | 已提交 `1a8bd24`；新增6项集成、Gallery90项、隔离全量1206项、独审明暗宽窄截图、vet与三平台构建通过 |
-| 5.AV | Gallery会话/附件/Trace应用流程及窄屏自然高度 | 本阶段提交；新增27项集成、Gallery117项、全量1233项、交叉审查/明暗宽窄截图、vet、三平台构建及macOS实窗流程通过 |
+| 5.AV | Gallery会话/附件/Trace应用流程及窄屏自然高度 | 已提交 `f54630f`；新增27项集成、Gallery117项、全量1233项、交叉审查/明暗宽窄截图、vet、三平台构建及macOS实窗流程通过 |
+| 5.AW | Message、Marker与MessageScroller模块拆分 | 已提交 `fc7cfe1`；纯文件拆分，204项会话回归通过 |
+| 5.AX | 模块ZIP与空缓存独立消费者验证 | 本阶段提交；无workspace/replace，外部编译、跨进程设置恢复像素及Gallery明暗渲染通过；不代表公共发布或GUI平台矩阵完成 |
 
 用户已明确允许原生平台适配：Popover、menu、下拉菜单可以使用 MyGo 的系统菜单与独立 Flyout，超出父窗口范围；无需逐像素照搬网页浮层。Gallery 以 [shadcn/create](https://ui.shadcn.com/create) 的配置与实时预览流程为参考。完整组件功能、主题、动画范围保持不变。
 

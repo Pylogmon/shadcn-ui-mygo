@@ -1,6 +1,6 @@
 export GOCACHE := $(CURDIR)/.cache/go-build
 
-.PHONY: test vet run build app popups-app snapshots generate
+.PHONY: test vet run build app popups-app snapshots generate verify-consumer
 test:
 	go test ./...
 vet:
@@ -21,3 +21,5 @@ snapshots:
 	go run ./cmd/gallery -page themes -snapshot artifacts/gallery-themes.png
 generate:
 	go generate ./...
+verify-consumer:
+	go run ./cmd/verify-consumer

@@ -16,6 +16,7 @@ make snapshots  # 浅色、深色和主题页 PNG，输出 artifacts/
 make build     # CGO_ENABLED=0 构建
 make app       # macOS .app 输出 build/Shadcn Gallery.app
 make popups-app # 小窗口对照：菜单、Popover、日期与悬停组件对
+make verify-consumer # 空缓存、无replace的外部消费者和模块ZIP验收
 ```
 
 ```go
@@ -82,3 +83,4 @@ Overlays页包含通知类型/位置、状态色与关闭按钮、堆叠、动�
 参考 [Lobe MyGo](https://github.com/lobehub/lobe-mygo) 的分层组件库架构、[MyGo Music](https://github.com/egoist/mygo-music) 的原生应用实践，以及 [shadcn/ui](https://github.com/shadcn-ui/ui) 的组件与主题规范。来源及固定版本见实施文档和主题数据目录。
 
 已执行的验证和平台范围见 [验证记录](docs/verification.md)。
+公开API应用示例、模块ZIP和独立消费者构建流程见 [消费者验证](docs/consumer-verification.md)。
