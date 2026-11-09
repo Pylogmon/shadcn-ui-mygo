@@ -1,0 +1,20 @@
+{
+  "repository": "https://github.com/dip/cmdk",
+  "originalRepository": "https://github.com/pacocoursey/cmdk",
+  "version": "1.1.1",
+  "commit": "fb4ea04e9ec211777fbb39c6104e3c5f2ee107d2",
+  "retrieved": "2026-11-09",
+  "license": "MIT",
+  "files": [
+    {
+      "file": "command-score.ts",
+      "url": "https://raw.githubusercontent.com/dip/cmdk/fb4ea04e9ec211777fbb39c6104e3c5f2ee107d2/cmdk/src/command-score.ts",
+      "sha256": "ccfd0d66e3d31b8197fc4dbb217c9672e7562569775ec3a4f3b7e567eb81dfc7"
+    },
+    {
+      "file": "LICENSE.md",
+      "url": "https://raw.githubusercontent.com/dip/cmdk/fb4ea04e9ec211777fbb39c6104e3c5f2ee107d2/LICENSE.md",
+      "sha256": "b5acfd21b3b61508365224c40ec1b03ec71091248baaf989d4be916551e7d532"
+    }
+  ]
+}

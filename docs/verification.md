@@ -111,3 +111,6 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 - Gallery Sidebar：全包47项通过，新增集成验证真实路由选择、owner输入草稿、图标折叠、容器变窄切移动Sheet、移动选择关闭和实际返回Toggle焦点；桌面折叠状态与草稿均保持。独立审计通过。macOS实际应用命令搜索Navigation后选择，页面切换成功；通过AX激活Sidebar触发器后Header从Acme Studio变为AC并折叠分组。实窗自动滚动未可靠移动到侧栏，未将侧栏视觉/拖动记为完成。
 - macOS最终构建重启后实际使用Tab聚焦Search→Return打开命令面板→Escape关闭，AX确认焦点返回Search components。macOS app构建与Linux/Windows amd64交叉编译均通过；其他平台真实运行、所有组件视觉/触摸/屏幕阅读器矩阵继续待验收。
 - 本轮模块收尾：最终 `go test ./... -count=1` 共465项检查、12个包通过；`go vet ./...`、`git diff --check`通过，`go generate ./...`后生成源码无差异。所有阶段分别提交，完整复刻目标仍进行中。
+
+- Command模糊评分：28项针对性检查、overlay全包72项和vet通过。默认子串实现先在缩写排序、清空顺序与默认分组评分3项回归失败，再接入cmdk 1.1.1的原生Go移植。固定2,299条JavaScript数值（ASCII/空白/分隔符/转置/重复键/别名/UTF-16/Unicode大小写）逐条误差≤1e-14；独立新seed生成15,986条对照再次零差异。另有5条固定及14条临时上游RangeError输入，Go终止越过原始长度的递归。清空搜索绕过自定义Filter，默认也按分数排序并保持分组连续、未分组在前；真实键盘选择仍返回业务Value。10,000条候选本机3次benchmark约7.6ms/轮、5.6MB分配，仅为M4 Pro本机证据。源文件/许可证/哈希归档，可离线再验，macOS包脚本带上cmdk许可。
+- 评分阶段将已提交HEAD导出到临时目录，只覆盖本阶段Command/go.mod/许可脚本文件，overlay/Gallery共119项通过，确认不依赖并行展示组件变更。

@@ -36,7 +36,8 @@ type CommandProps struct {
 	NoLoop, NoFilter, ShowScrollbar     bool
 	// Filter returns a positive match score. Higher scores come first within a
 	// group; groups stay together and are ordered by their best matching item.
-	// The default matches query words against label, value and keywords.
+	// The default uses cmdk's fuzzy score for Label, with a distinct Value and
+	// Keywords as aliases. An empty query retains registration order.
 	Filter func(CommandItem, string) float64
 	// ItemContent builds non-interactive option content with the current row's context.
 	ItemContent                  func(*ui.Context, CommandItem, bool)
@@ -71,16 +72,6 @@ type commandState struct {
 	pointerOver                                     bool
 }
 
-func matchesCommand(item CommandItem, query string) bool {
-	haystack := strings.ToLower(item.Label + " " + item.Value + " " + strings.Join(item.Keywords, " "))
-	for _, word := range strings.Fields(strings.ToLower(query)) {
-		if !strings.Contains(haystack, word) {
-			return false
-		}
-	}
-	return true
-}
-
 func commandEntries(p CommandProps, query string) []commandEntry {
 	entries := make([]commandEntry, 0, len(p.Items))
 	occurrences := make(map[commandKey]int)
@@ -106,11 +97,11 @@ func commandEntries(p CommandProps, query string) []commandEntry {
 		key.ordinal = occurrences[key]
 		occurrences[commandKey{explicit: key.explicit, value: key.value}]++
 		score := 1.0
-		if !p.NoFilter {
+		if !p.NoFilter && query != "" {
 			if p.Filter != nil {
 				score = p.Filter(item, query)
-			} else if !matchesCommand(item, query) {
-				score = 0
+			} else {
+				score = commandDefaultScore(item, query)
 			}
 		}
 		if score > 0 && !math.IsNaN(score) {
@@ -118,7 +109,7 @@ func commandEntries(p CommandProps, query string) []commandEntry {
 			separator = false
 		}
 	}
-	if p.Filter != nil && !p.NoFilter {
+	if query != "" && !p.NoFilter {
 		groupScores := make(map[string]float64)
 		groupOrder := make(map[string]int)
 		groupSeparators := make(map[string]bool)
@@ -134,6 +125,10 @@ func commandEntries(p CommandProps, query string) []commandEntry {
 			a, b := entries[i], entries[j]
 			if a.item.Group == b.item.Group {
 				return a.score > b.score
+			}
+			// cmdk keeps ungrouped results before the ranked group sections.
+			if a.item.Group == "" || b.item.Group == "" {
+				return a.item.Group == ""
 			}
 			if groupScores[a.item.Group] != groupScores[b.item.Group] {
 				return groupScores[a.item.Group] > groupScores[b.item.Group]

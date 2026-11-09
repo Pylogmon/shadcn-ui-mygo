@@ -84,6 +84,7 @@ func TestCommandTenThousandRowsAreVirtualAndFocusTracksVisibleOption(t *testing.
 	for i := range items {
 		items[i] = CommandItem{Value: fmt.Sprint(i), Label: fmt.Sprintf("Command %05d", i)}
 	}
+	items[len(items)-1].Keywords = []string{"unique last"}
 	built := 0
 	r := ui.NewTester(view(func(c *ui.Context) {
 		Command(c, &query, CommandProps{Items: items, Width: 360, AutoFocus: true, ItemContent: func(row *ui.Context, item CommandItem, active bool) {
@@ -133,7 +134,9 @@ func TestCommandTenThousandRowsAreVirtualAndFocusTracksVisibleOption(t *testing.
 	if first := requireCommandHighlight(t, r, "Command 00000"); first.Offscreen || !first.Focused {
 		t.Fatalf("Home did not reveal an already-active item after manual scroll: %+v", first)
 	}
-	query = "09999"
+	// A unique alias isolates viewport reset from the default fuzzy matcher's
+	// intentional repeated-key tolerance (09999 can also match 00999).
+	query = "uniquelast"
 	r.Frame()
 	result := requireCommandHighlight(t, r, "Command 09999")
 	if result.PosInSet != 1 || result.SetSize != 1 || !result.Focused || result.Offscreen {
@@ -529,6 +532,18 @@ func TestCommandScoresKeepSectionsContiguousAndDoNotMoveSeparatorToTop(t *testin
 			}
 		}})
 	}), 480, 400)
+	// An empty upstream search keeps registration order and its separators.
+	var emptyNames []string
+	for _, info := range r.AccessAll() {
+		if info.Role == ui.RoleOption {
+			emptyNames = append(emptyNames, info.Name)
+		}
+	}
+	if fmt.Sprint(emptyNames) != "[A low A high B middle]" {
+		t.Fatalf("empty search lost registration order: %v", emptyNames)
+	}
+	query = "rank"
+	r.Frame()
 	var names []string
 	groupA := 0
 	firstOptionY, separatorY := float32(0), float32(0)
@@ -546,7 +561,7 @@ func TestCommandScoresKeepSectionsContiguousAndDoNotMoveSeparatorToTop(t *testin
 			separatorY = info.Bounds.Y
 		}
 	}
-	if fmt.Sprint(names) != "[A high A low B middle]" || groupA != 1 || separatorY <= firstOptionY {
+	if fmt.Sprint(names) != "[A high A low B middle]" || groupA != 1 || separatorY != 0 {
 		t.Fatalf("scores fragmented a section: options=%v A-headings=%d separatorY=%g firstY=%g", names, groupA, separatorY, firstOptionY)
 	}
 }

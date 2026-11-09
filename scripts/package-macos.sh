@@ -21,6 +21,8 @@ case "${1:-gallery}" in
     *) echo 'Expected gallery or native-popups.' >&2; exit 1 ;;
 esac
 mkdir -p "$bundle/Contents/MacOS"
+mkdir -p "$bundle/Contents/Resources/licenses"
+cp pkg/overlay/testdata/cmdk/LICENSE.md "$bundle/Contents/Resources/licenses/cmdk.txt"
 CGO_ENABLED=0 go build -o "$bundle/Contents/MacOS/gallery" "$package"
 cat > "$bundle/Contents/Info.plist" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
