@@ -18,8 +18,13 @@ import (
 // defaults to center, as in the source primitive; its multiple-item examples
 // explicitly choose CarouselAlignStart. Count is the number of CarouselItems.
 type CarouselContainerProps struct {
-	Key, Label               string
-	Count                    int
+	Key, Label string
+	Count      int
+	// Controller is application-owned. Options contains explicit source patches;
+	// only supplied fields override compatibility props. Hooks are frame-only.
+	Controller               *CarouselController
+	Options                  *CarouselOptions
+	Hooks                    CarouselWatchHooks
 	Vertical, Loop, Disabled bool
 	NoDrag                   bool
 	Height                   float32
@@ -100,19 +105,20 @@ type carouselCompositionState struct {
 
 type carouselCompositionScope struct{ build *carouselCompositionBuild }
 type carouselCompositionBuild struct {
-	root      ui.Element
-	state     *carouselCompositionState
-	p         CarouselContainerProps
-	selected  *int
-	choose    func(int)
-	keys      func(ui.Element)
-	content   bool
-	inContent bool
-	seen      []bool
-	usedKeys  map[any]bool
-	current   []carouselBoundItem
-	position  float32
-	geometry  carouselGeometry
+	root       ui.Element
+	state      *carouselCompositionState
+	p          CarouselContainerProps
+	selected   *int
+	choose     func(int)
+	keys       func(ui.Element)
+	content    bool
+	inContent  bool
+	seen       []bool
+	usedKeys   map[any]bool
+	current    []carouselBoundItem
+	position   float32
+	geometry   carouselGeometry
+	controller *carouselControllerBuild
 }
 
 func carouselCurrent(c *ui.Context) *carouselCompositionBuild {
@@ -133,6 +139,9 @@ func carouselCurrent(c *ui.Context) *carouselCompositionBuild {
 // RTL, and Home/End select boundary snaps. This intentionally differs from the
 // web primitive's captured Left/Right handler on all descendants.
 func CarouselContainer(c *ui.Context, selected *int, p CarouselContainerProps, children func(*ui.Context)) ui.Element {
+	if p.Controller != nil || p.Options != nil {
+		return carouselControllerContainer(c, selected, p, children)
+	}
 	if selected == nil {
 		panic("display: CarouselContainer requires selected snap state")
 	}
@@ -276,6 +285,9 @@ func carouselCompositionPose(c *ui.Context, b *carouselCompositionBuild) (float3
 // than overriding the track's or item's axial size.
 func CarouselContent(c *ui.Context, p CarouselContentProps, children func(*ui.Context)) ui.Element {
 	b := carouselCurrent(c)
+	if b.controller != nil {
+		return carouselControllerContent(c, b, p, children)
+	}
 	if b.content {
 		panic("display: CarouselContainer accepts one CarouselContent")
 	}
@@ -436,16 +448,22 @@ func CarouselItem(c *ui.Context, index int, p CarouselItemProps, children func(*
 	item := ui.Box(c.Key(key)).Shrink(0).MinWidth(0).Role(ui.RoleGroup).RoleDescription("slide").Label(fmt.Sprintf("Slide %d of %d", index+1, b.p.Count)).AccessHidden(!shown).IgnoreInput(!shown)
 	handle := ui.Local(item, "carousel.item.handle", func() ui.Handle { return ui.Handle{} })
 	item.Bind(handle)
+	shift := g.occurrence(index, b.position)
+	if b.controller != nil {
+		shift, shown = carouselControllerItemVisual(b, index, *handle)
+		item.AccessHidden(!shown).IgnoreInput(!shown)
+		b.controller.items = append(b.controller.items, item)
+	}
 	b.current = append(b.current, carouselBoundItem{index: index, key: key, handle: *handle, shown: shown})
 	size := float32(0)
 	if index < len(g.sizes) {
 		size = g.sizes[index]
 	}
 	if b.p.Vertical {
-		item.FillWidth().Height(size).Padding(g.spacing, 0, 0, 0).Translate(0, g.occurrence(index, b.position))
+		item.FillWidth().Height(size).Padding(g.spacing, 0, 0, 0).Translate(0, shift)
 	} else {
 		item.Width(size).PaddingStart(g.spacing)
-		offset := g.occurrence(index, b.position)
+		offset := shift
 		if b.state.rtl {
 			offset = -offset
 		}
@@ -473,6 +491,23 @@ func CarouselSnapshotOf(c *ui.Context) CarouselSnapshot {
 		}
 	}
 	snapshot.CanScrollPrevious, snapshot.CanScrollNext = carouselCanScroll(g, *b.selected)
+	if b.controller != nil {
+		e := b.controller.engine
+		snapshot.SelectedSnap = e.selected
+		snapshot.Snaps = nil
+		snapshot.Loop = e.geometry.loop
+		for _, snap := range e.geometry.snaps {
+			snapshot.Snaps = append(snapshot.Snaps, float32(snap))
+		}
+		snapshot.CanScrollPrevious = e.geometry.counter(e.selected-1) != e.selected
+		snapshot.CanScrollNext = e.geometry.counter(e.selected+1) != e.selected
+		snapshot.Visible = nil
+		for _, item := range b.current {
+			if item.shown {
+				snapshot.Visible = append(snapshot.Visible, item.index)
+			}
+		}
+	}
 	return snapshot
 }
 
@@ -491,6 +526,11 @@ func CarouselNext(c *ui.Context, p CarouselControlProps) ui.Element {
 func carouselControl(c *ui.Context, p CarouselControlProps, previous bool) ui.Element {
 	b := carouselCurrent(c)
 	canPrevious, canNext := carouselCanScroll(b.state.geometry, *b.selected)
+	if b.controller != nil {
+		e := b.controller.engine
+		canPrevious = e.ready && e.geometry.counter(e.selected-1) != e.selected
+		canNext = e.ready && e.geometry.counter(e.selected+1) != e.selected
+	}
 	label, enabled, part := "Next slide", canNext, carouselNextPart
 	if previous {
 		label, enabled, part = "Previous slide", canPrevious, carouselPreviousPart

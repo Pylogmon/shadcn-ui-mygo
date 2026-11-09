@@ -1,0 +1,38 @@
+{
+  "stage": "C1 Controller, source Options, events and lifecycle; C2 physical integration and C3 autoplay excluded",
+  "source": "embla-carousel@8.5.2 official verified CJS",
+  "sourceSHA256": "a90f9c822bd7102e4b13c985c7926f910c13fc299a368f72c9c044eb730b2507",
+  "oracleSHA256": "5874c5a2b7d6d6e2d49bc83312153e484f55eb5f9336b587f1a7cc2b76cd0ed6",
+  "generatorSHA256": "9f90fe0c75cca6c72f67921895216580d2812e14ac429d3afc2e448d91f12cc3",
+  "frozenRequirements": [
+    "fresh jump emits scroll with old selected/previous and new location/progress, then select; schedules no RAF and no settle",
+    "fresh smooth emits select before motion; same-target no-op; repeated-position different snap emits select only",
+    "smooth-to-jump preserves already queued RAF, which can emit settle once; do not globally synthesize settle for all jumps",
+    "loop ScrollTo shortest path differs from directed Next/Previous; previous index tracks each selection and resets to selected on reInit",
+    "EventHandler current emit-list snapshot, duplicate On registrations, Off removes all same-identity registrations, different listener identities remain, nested Emit sees current list",
+    "ScrollSnapList is normalized by source ScrollLimit; expose DIP offsets separately; loop last normalized snap may be below 1",
+    "ScrollProgress reflects position relative to source limits and allows negative/>1 overscroll",
+    "slidesToScroll positive integer and auto grouping affect snap geometry and slide registry; preserve source Align start/center/end/custom function inputs",
+    "StartIndex clamped or looped at init; partial reInit preserves selected unless startIndex explicitly supplied",
+    "Active false retains measurable engine/options, blocks scrolling/watch activation, may retain true canScrollNext/Previous; current layout and inactive engine semantics must be explicit",
+    "WatchResize false or callback veto freezes engine geometry while current layout dimensions continue; successful watcher emits reInit before resize",
+    "WatchSlides false or callback veto freezes engine node/index snapshot while current layout content changes; successful watcher emits reInit before slidesChanged",
+    "Direction and axis/options overrides, containment/loop fallback and geometry normalization are source-compatible",
+    "inViewThreshold scalar/array drives notification threshold; slidesInView uses isIntersecting, not ratio>=threshold; root/container/slide Handle selection identity is explicit",
+    "frame-only watch hooks may veto defaults; app Controller lifetime, owner generations, unmount/rebind/destroy, stale handle resolution and queued actions must be verified",
+    "init is asynchronous once per source instance; reInit listeners persist and options merge; destroy is idempotent, emits once, then clears listeners",
+    "C2-only options explicitly configured during C1 produce a typed RequiresPhysics/Unsupported outcome, never silent acceptance",
+    "old Carousel/CarouselWith and prior composition geometry/AX/editor/motion gates must remain intact"
+  ],
+  "nativeProbeState": "pending full public API review and product freeze; no native C1 passes claimed",
+  "sourceNuancesToDocument": [
+    "source event registration after destroy can still receive explicit Emit; the destroy callback clears listeners registered during destroy itself",
+    "source initial active=false emits init with no initialized eventHandler API argument; native listener API adaptation should not be confused with literal JS argument identity",
+    "native current layout must not be conflated with engine node/geometry snapshot when observers are disabled",
+    "source Init/IntersectionObserver delivery ordering is asynchronous; headless deterministic native lifecycle is an adaptation where specified"
+  ],
+  "oracleVersion": 3,
+  "priorOracleSHA256": "c8a3252685c757b2a64b3e43d80754daeeba17a61180d9e0a85f77b1117ffead",
+  "selectorObservation": "explicit subsets retain physical rect starts and user-specified node order; selected nodes must not be tightly recomposed from basis sizes",
+  "outOfRangeSourceObservation": "source loop Counter abs((n+count)%count) differs from positive modulo for large negative n; native API validation/domain policy must be explicit"
+}

@@ -99,7 +99,56 @@ arrow keys. Vertical Up/Down, horizontal RTL, and Home/End are deliberate native
 adaptations of the web primitive's captured Left/Right handler.
 
 The composed API's current 250ms ease and native drag projection are compatibility
-motion, **not** Embla physics. Complete controller/options/events, source physics,
-Autoplay/native plugin equivalents, and their Gallery examples remain separate
-implementation stages. Archiving those upstream packages does not claim they
-are already implemented. No unrelated application/Music source is included.
+motion, **not** Embla physics. Source physics, Autoplay/native plugin equivalents,
+and their Gallery examples remain separate implementation stages. Archiving
+those packages does not claim they are already implemented. No unrelated
+application/Music source is included.
+
+## C1 controller/options/events reference
+
+`controller/` contains an additional independent executable oracle and its
+frozen requirements. Its generator executes the actual verified CJS `Engine`,
+`EmblaCarousel`, and `EventHandler` with explicit fake observer/RAF deliveries.
+It records command event snapshots, listener identity/mutation, grouping,
+partial reinitialization, disabled watchers, inactive behavior, visibility,
+native-selector equivalents, and large-negative source counter behavior.
+Regenerate it with:
+
+```sh
+node pkg/display/testdata/shadcn-carousel/controller/generate-controller-oracle.cjs \
+  pkg/display/testdata/shadcn-carousel/npm/embla-carousel/cjs/embla-carousel.cjs.js \
+  "$carousel_audit_dir/controller-oracle.json"
+```
+
+The full-source traces include physics values for later stages. C1 checks source
+controller/event semantics and geometry; it does not claim those physics curves.
+In particular, a fresh jump emits `scroll` while the old selected index is still
+observable, then `select`; it does not start a RAF or automatically emit `settle`.
+An already scheduled animation can still settle after an intervening jump.
+
+The native controller belongs to application state. Commands queue until an
+owner build, retaining FIFO configuration/selection event states. `Emit` and
+`Destroy` run on the UI thread; listener callbacks use explicit application-owned
+identity and may not retain frame objects. Destroy terminates the engine and
+clears subscriptions, while explicit later `On`/`Emit` remains possible like the
+source. A same-window owner transfer advances a generation so obsolete Local
+cleanup cannot destroy its replacement. Weak public Services wake the owner;
+public `ui.Local`/`io.Closer` handles removal without retaining Context/Element.
+
+Source `ScrollSnapList` is normalized; native `SnapOffsets`/the original composed
+`Snapshot.Snaps` are DIPs. Progress is not clamped to 0..1. Disabled resize/slide
+watchers retain the committed engine geometry while native layout/input remain
+live; explicit ReInit resolves the current declared track/items. Inactive is
+separate from Disabled. Watch hooks are frame-only veto callbacks. Handle
+selection preserves declared physical positions/order, including gaps in a
+non-contiguous subset, and rejects foreign/unresolved nodes explicitly.
+
+Options are partial patches with pointer fields for explicit false/zero values.
+Structural validation/configuration errors are atomic and available before a
+build. Explicit source `Duration`, `DragThreshold`, `DragFree`, or `SkipSnaps`
+currently return `CarouselRequiresPhysics`; they must become active source
+options in C2, not remain permanently unsupported. Callback alignment uses an
+explicitly application-owned pure Aligner. Breakpoint predicates use native
+window dimensions/preferences and stable ordered rule keys. Native focus
+observation preserves the existing offscreen input/AX exclusion; the source's
+recent-Tab default is distinct from pointer/programmatic focus notifications.

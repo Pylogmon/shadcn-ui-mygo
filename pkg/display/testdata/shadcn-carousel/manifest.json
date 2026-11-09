@@ -230,5 +230,22 @@
     ],
     "derivation": "LTR cases selected unchanged from 1296 independent official-function cases; axis/direction do not change logical geometry. The complete generator also produces RTL/vertical inputs.",
     "fullOracleSHA256": "67074ba8aa8e1ef38d08571c13330e51fe7b8adcbed549654a5b2461a4e36a68"
+  },
+  "controllerOracle": {
+    "sourceSHA256": "a90f9c822bd7102e4b13c985c7926f910c13fc299a368f72c9c044eb730b2507",
+    "files": [
+      {
+        "archive": "controller/controller-oracle.json",
+        "sha256": "5874c5a2b7d6d6e2d49bc83312153e484f55eb5f9336b587f1a7cc2b76cd0ed6"
+      },
+      {
+        "archive": "controller/generate-controller-oracle.cjs",
+        "sha256": "3ba62f451536da566ac2bfba0f0f992e1d39bc73c060f9ad72541c5b31ce74e7"
+      },
+      {
+        "archive": "controller/oracle-requirements.json",
+        "sha256": "64f72cea6c6d8dea998f088fe396f7f6488126e1dff83160f9b5fa7174eb9e00"
+      }
+    ]
   }
 }
