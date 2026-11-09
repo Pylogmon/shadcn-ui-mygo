@@ -61,7 +61,8 @@
 | 5.AA | Checkbox/Switch/Radio/Toggle 原生状态、组合与Vega样式 | 已提交 `1cf77eb`；39项针对性、126项隔离检查与独立审计通过 |
 | 5.AB | Breadcrumb越窗菜单对与有界原生Pagination | 已提交 `d5b3719`；navigation/Gallery隔离141项及独立审计通过 |
 | 5.AC | SDK反馈过渡统一接入动态减少动画 | 已提交 `63aa7f4`；motion共6项检查、SDK隔离582项及迁移审查通过 |
-| 5.AD | InputOTP原生编辑、分组、过滤及固定上游行为 | 40项OTP检查与独立审计通过；实际候选窗/AT及特殊空粘贴撤销限制明确保留 |
+| 5.AD | InputOTP原生编辑、分组、过滤及固定上游行为 | 已提交 `7fdfd6e`；40项针对性与165项隔离检查通过；候选窗/AT及特殊空粘贴撤销限制明确保留 |
+| 5.AE | Textarea原生拖拽/键盘调整与组合编辑器目标 | 指针/取消/批次按键/持久化/原生编辑与独立审计通过，提交本子阶段 |
 
 用户已明确允许原生平台适配：Popover、menu、下拉菜单可以使用 MyGo 的系统菜单与独立 Flyout，超出父窗口范围；无需逐像素照搬网页浮层。Gallery 以 [shadcn/create](https://ui.shadcn.com/create) 的配置与实时预览流程为参考。完整组件功能、主题、动画范围保持不变。
 

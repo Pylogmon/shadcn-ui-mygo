@@ -214,8 +214,9 @@ func InputGroup(c *ui.Context, p InputGroupProps, editor func() ui.Element) ui.E
 					}
 				})
 			}
-			var childInvalid bool
-			input, childInvalid = inputGroupEditor(c, editor)
+			container, childInvalid := inputGroupEditor(c, editor)
+			container.Grow(1).MinWidth(0)
+			input = fieldTarget(c, container)
 			p.Invalid = p.Invalid || childInvalid
 			input.Bind(handle).Grow(1).MinWidth(0).Radius(0).Border(0, ui.Transparent).Background(ui.Transparent).FocusRing(false).Shadow(0, 0, 0, 0, ui.Transparent)
 			// The enclosing disabled group is inherited. Do not overwrite an

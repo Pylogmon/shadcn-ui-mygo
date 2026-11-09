@@ -26,7 +26,7 @@ control.Textarea(c, &notes, control.TextareaProps{
 })
 ```
 
-Textarea 默认最小高度 64 DIP，按换行和折行内容增长；`MaxRows: 0` 不额外限制增长，`Rows > 0` 固定原生行数。达到显式上限后，原生编辑器滚动以保持光标可见。用户拖拽改变尺寸的手柄尚待实施。
+Textarea 默认最小高度 64 DIP，按换行和折行内容增长；`MaxRows: 0` 不额外限制增长，`Rows > 0` 固定原生行数。达到显式上限后，原生编辑器滚动以保持光标可见。用户拖拽/键盘调整高度使用 [TextareaWith](textarea.md)，保留原 Textarea 的原生编辑器契约。
 
 `Field.Error` 在构建编辑器时作用于错误外观，并关联原生错误描述。`InputGroup` 把环与边框放在组合根节点，保留内部编辑器自己的 Disabled/Invalid、原生回调和选择状态；独立输入不继承相邻字段的错误状态。
 

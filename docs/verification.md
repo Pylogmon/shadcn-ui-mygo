@@ -143,3 +143,7 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 - InputOTP：40项检查与独立审计通过。覆盖36DIP与自定义槽/分组、默认不限字符、显式过滤/正则、原生选择/覆盖/拖选/RTL、剪贴板/非空转换粘贴undo/redo、IME选区取消及clear→commit、明暗像素/caret居中、reentrant回调和idle。审计先复现取消preedit静默丢字、转换粘贴raw未Changed导致漏回调、极大间距/组数造成非有限几何，修复后均有正式回归。完成回调与转换粘贴后的末尾选择核对精确input-otp1.4.2源码。真实逐格候选窗定位及特殊空clipboard转非空的undo事务缺少公开API，明确记录限制，没有伪造运行时或撤销历史。
 - OTP源归档：官方不可变commit的input.tsx与LICENSE逐字节核对，SHA-256分别为 `9045a8bbed30895c1749ae71b98460181bb8f68bfca54e212591643c4545dcc2` 与 `079031192fea535a245aa64a637d8433c406b82a14f91c3606b1d63e41c00152`。仅对该归档源码保留其原有行尾空格；MIT通知与macOS许可打包同步补齐。
 - OTP独立阶段验证：HEAD仅加入本阶段OTP源码/测试、旧块提取及数字过滤兼容测试调整，control/Gallery共165项检查与control vet通过；未依赖同时开发的Textarea resize或Gallery新示例。
+
+- Textarea resize：22项正式检查与独立审计通过。新增TextareaWith保留原生Input并用独立sibling splitter提供drag/capture/cancel、上下/Home/End/Shift及AX桥接键、RTL、caller JSON高度、auto恢复、外部重配置/blur/卸载取消和无idle。独审先复现同批原生Down事件读取旧Draw高度导致丢增量，改为从已接受caller高度继续后累计/反向回归通过。原生undo、caret、编辑器局部状态、只读/仅禁resize与多实例均验证。
+- 组合输入回归：隔离HEAD加新Textarea模块、保留旧InputGroup时，Field真实编辑器名称缺失和内层重复边框两项失败；InputGroup分别处理布局container与fieldTarget原生editor后两项通过，addon焦点/undo/resize仍正常。macOS实窗已编辑Bio并Tab到手柄，连续两次Down后原生AX高度64→80；真实指针/触屏与AT/跨平台矩阵未宣称完成。
+- Textarea独立阶段验证：HEAD仅覆盖新resize/source测试及InputGroup目标解析，control/Gallery共187项与control vet通过；未提前包含Gallery新示例。
