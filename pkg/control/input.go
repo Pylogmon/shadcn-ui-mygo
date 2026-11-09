@@ -2,7 +2,6 @@ package control
 
 import (
 	"strings"
-	"unicode"
 
 	"github.com/egoist/mygo/ui"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/theme"
@@ -272,66 +271,6 @@ func InputGroupButton(c *ui.Context, label string, props ...ButtonProps) ui.Elem
 		p.Size = ExtraSmall
 	}
 	return Button(c, label, p).Radius(max(0, theme.TokensOf(c).Radius-5)).PaddingX(6)
-}
-
-type InputOTPProps struct {
-	Length                          int
-	Label                           string
-	Alphanumeric, Disabled, Invalid bool
-	OnComplete                      func(string)
-}
-
-// InputOTP uses a single real editor, so paste, selection, and Backspace retain native behavior.
-func InputOTP(c *ui.Context, value *string, p InputOTPProps) ui.Element {
-	n := p.Length
-	if n <= 0 {
-		n = 6
-	}
-	clean := make([]rune, 0, n)
-	for _, ch := range *value {
-		if len(clean) < n && (ch >= '0' && ch <= '9' || p.Alphanumeric && unicode.IsLetter(ch)) {
-			clean = append(clean, ch)
-		}
-	}
-	*value = string(clean)
-	t := theme.TokensOf(c)
-	root := ui.Row(c).Gap(0).AlignSelf(ui.Start).Disabled(p.Disabled)
-	previous := ui.Local(root, "completed", func() string { return *value })
-	if *previous != *value {
-		*previous = *value
-		if len(clean) == n && p.OnComplete != nil {
-			p.OnComplete(*value)
-		}
-	}
-	var input ui.Element
-	root.Children(func() {
-		input = ui.TextInputBase(c, value).Absolute().Left(0).Right(0).Top(0).Bottom(0).
-			Opacity(0).FocusRing(false).Disabled(p.Disabled).Invalid(p.Invalid)
-		label := p.Label
-		if label == "" {
-			label = "One-time code"
-		}
-		input.Label(label)
-		for i := range n {
-			border := t.Input
-			if p.Invalid {
-				border = t.Destructive
-			}
-			cell := ui.Box(c.Key(i)).Size(40, 40).Border(1, border).Center().IgnoreInput(true)
-			if i == 0 || i == n-1 {
-				cell.Radius(t.Radius * .8)
-			}
-			if input.Focused() && (i == len(clean) || i == n-1 && len(clean) == n) {
-				cell.Border(1, t.Ring).Shadow(0, 0, 0, 3, t.Ring.Alpha(.3))
-			}
-			cell.Children(func() {
-				if i < len(clean) {
-					ui.Text(c, string(clean[i])).FontSize(14).TextColor(t.Foreground)
-				}
-			})
-		}
-	})
-	return input
 }
 
 // Validator returns an empty string for a valid value, or a user-facing error.

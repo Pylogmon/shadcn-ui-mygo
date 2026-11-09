@@ -9,3 +9,5 @@
 这些记录提供可复查的对照来源，不证明 Go 组件已与上游一致。行为、状态、视觉与平台验收继续记录在 [parity.md](parity.md) 与各阶段验证记录中。
 
 Command 的评分行为另外固定到 shadcn 该提交在 `pnpm-lock.yaml` 锁定的 cmdk 1.1.1：提交 [`fb4ea04e9ec211777fbb39c6104e3c5f2ee107d2`](https://github.com/dip/cmdk/tree/fb4ea04e9ec211777fbb39c6104e3c5f2ee107d2)，原仓库 `pacocoursey/cmdk` 现重定向到 `dip/cmdk`。原始 `command-score.ts`、MIT许可证、来源SHA-256和可离线生成的数值对照在 `pkg/overlay/testdata/cmdk`。Go移植的版权声明见 [第三方声明](../THIRD_PARTY_NOTICES.md)。
+
+Input OTP 的底层行为固定到 input-otp 1.4.2 的发布 gitHead：[`81ccdb48c010d800b24942aa231909f0c971b1ca`](https://github.com/guilhermerodz/input-otp/tree/81ccdb48c010d800b24942aa231909f0c971b1ca)。原始 input.tsx、MIT许可证、SHA-256、发布版本证据和默认字符/完成/粘贴选择的精确行号保存在 `pkg/control/testdata/input-otp`。原生 rune 索引、构建预算、候选窗定位与特殊空剪贴板撤销限制见 [Input OTP](input-otp.md)。

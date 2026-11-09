@@ -1,0 +1,2 @@
+# Preserve the exact archived upstream bytes, including its trailing spaces.
+pkg/control/testdata/input-otp/input.tsx whitespace=-blank-at-eol

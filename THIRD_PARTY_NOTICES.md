@@ -10,6 +10,13 @@ Theme/color source notices are kept alongside their archived data at
 `pkg/theme/sources/LICENSE.shadcn` and `pkg/theme/sources/LICENSE.tailwind`.
 Go module dependencies retain their respective licenses in their module sources.
 
+Input OTP behavior is independently implemented against input-otp 1.4.2,
+commit `81ccdb48c010d800b24942aa231909f0c971b1ca`.
+The exact reference source and its MIT license (Copyright (c) 2024 Guilherme Rodz)
+are archived under `pkg/control/testdata/input-otp/` with a SHA-256 manifest.
+The macOS application bundles include this license under
+`Contents/Resources/licenses/input-otp.txt`.
+
 ## cmdk
 
 MIT License

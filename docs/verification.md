@@ -139,3 +139,7 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 
 - SDK反馈减少动画：所有标准颜色反馈调用改用ApplyTransition，Tabs匹配指示器也在Reduced时跳过注册。motion核心加组件共6项检查通过：运行中改变Button/Badge/Input/OTP/Tabs/Pagination后切偏好，浅/深整幅图像立即等于独立静态Reduced参考，取消全部待绘帧，恢复普通动画并正常收敛。迁移独立diff审查通过；Popup/Modal等presence presets保持原API，完整presence/平台矩阵继续跟踪。
 - SDK反馈迁移独立阶段验证：HEAD仅覆盖本阶段调用点与components_test，`go test ./pkg/... -count=1` 共582项、9包通过，未包含待提交OTP与Gallery集成。
+
+- InputOTP：40项检查与独立审计通过。覆盖36DIP与自定义槽/分组、默认不限字符、显式过滤/正则、原生选择/覆盖/拖选/RTL、剪贴板/非空转换粘贴undo/redo、IME选区取消及clear→commit、明暗像素/caret居中、reentrant回调和idle。审计先复现取消preedit静默丢字、转换粘贴raw未Changed导致漏回调、极大间距/组数造成非有限几何，修复后均有正式回归。完成回调与转换粘贴后的末尾选择核对精确input-otp1.4.2源码。真实逐格候选窗定位及特殊空clipboard转非空的undo事务缺少公开API，明确记录限制，没有伪造运行时或撤销历史。
+- OTP源归档：官方不可变commit的input.tsx与LICENSE逐字节核对，SHA-256分别为 `9045a8bbed30895c1749ae71b98460181bb8f68bfca54e212591643c4545dcc2` 与 `079031192fea535a245aa64a637d8433c406b82a14f91c3606b1d63e41c00152`。仅对该归档源码保留其原有行尾空格；MIT通知与macOS许可打包同步补齐。
+- OTP独立阶段验证：HEAD仅加入本阶段OTP源码/测试、旧块提取及数字过滤兼容测试调整，control/Gallery共165项检查与control vet通过；未依赖同时开发的Textarea resize或Gallery新示例。

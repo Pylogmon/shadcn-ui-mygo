@@ -161,7 +161,7 @@ func TestOTPFiltersAndCompletesOnce(t *testing.T) {
 	value, completed := "", ""
 	calls := 0
 	tt := tester(func(c *ui.Context) {
-		InputOTP(c, &value, InputOTPProps{Length: 4, OnComplete: func(s string) { completed = s; calls++ }})
+		InputOTP(c, &value, InputOTPProps{Length: 4, DigitsOnly: true, OnComplete: func(s string) { completed = s; calls++ }})
 	})
 	field, ok := tt.AccessByRole(ui.RoleTextField, "One-time code")
 	if !ok {
