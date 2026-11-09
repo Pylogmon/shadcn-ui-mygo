@@ -372,6 +372,11 @@
       "sha256": "9a269ebb0d5bb33bfdef6e003ed36bed65d605103611a78db3fc92c18d7044c0"
     },
     {
+      "path": "apps/v4/registry/bases/base/examples/bubble-example.tsx",
+      "gitBlob": "1e9f435b3cd50182d5c55b841acc50dc8ec01de6",
+      "sha256": "9164d600a337d988bfca1124916ceaecb14c95bbb129ae0291d230dbdec61361"
+    },
+    {
       "path": "apps/v4/registry/bases/base/examples/table-example.tsx",
       "gitBlob": "18f7f3dc1a0900daa1c0db9e9b177fecc482e116",
       "sha256": "dcfd2fa9f630c6fc5440f1f0af57e8c8b9062a31879e1fc0be29ee8621ccf0c2"

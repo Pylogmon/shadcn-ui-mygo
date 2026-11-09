@@ -197,3 +197,6 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 - Table静态组合：48项聚焦检查通过；header/body/footer共享测量列、row header/原生索引与跨列、caption16DIP间距、自然行高、Checkbox物理右padding、RTL、selected/expanded/hover像素、明暗自定义token、原生Select/Input/动作、稳定列/记录Key、实际编辑选区与IME、指针取消和100,000行虚拟入口均验证。Style回调配置当前真实Row/Cell，内容只按原生build执行一次，不重复调用来测量。
 - Table离屏与调度：先实证离屏第十列漏测、同Key编辑器宽度变化后陈旧、多表独立成对帧永久互相触发以及Scale坐标系来回覆盖四类失败，再改为公开LayoutBounds加窗口共享postpaint补测。无绘制/AX/输入的1×1 overlay只携带数值和持久model，所有Table共享一次纠正波次；首尾插入、重排、删除/重挂、离屏多表宽度增长/缩小及normal/reduced静止后无待帧均通过。不保留Context/Element，也不读取运行时私有树。
 - Table独立阶段：从已提交HEAD仅加入data.go与Table实现/正式检查，display/Gallery共455项通过，vet/diff通过；新Gallery表格演示未混入模块提交。共享原生轨道不是完整HTML intrinsic/rowspan引擎，虚拟Table保留运行时样式，所有平台/字体/AT/视觉矩阵仍需完成。
+
+- Bubble：61项聚焦检查、独立阶段conversation/Gallery共149项与vet通过。实际像素覆盖七变体明暗/hover、Destructive浅色背景、OKLCH相对tint与混色、比例圆角、祖先颜色/字重继承及动态减少动画；普通、Button和Link的字重覆盖缺陷先红后修。原生Button/URL/Router、disabled在press中切换/取消、反应层四侧RTL物理布局/溢出可点击、原生pressed状态、长字换行与80%/Ghost100%上限、同Key流式追加/重排的编辑器焦点/选区和Message祖先End作用域均通过。源示例没有单独tails/size API，旧泛化待办已改正。
+- Bubble保留差异：MyGo公开Link无LinkBase和关闭hover下划线入口，也无法读取计算后的祖先颜色；保留真实原生URL/路由，quiet Link默认Foreground并允许fluent颜色覆盖。所有token已是sRGB，不能从中恢复原始广色域坐标。完整源示例/字体/平台/AT/视觉矩阵仍未完成；独立验证基于`cd5cbc9`加Bubble文件，没有提前纳入Attachment/Trace或新Gallery示例。

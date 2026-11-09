@@ -44,7 +44,7 @@ func Message(c *ui.Context, p MessageProps, content func()) ui.Element {
 				ui.Text(c, p.Sender).FontSize(12).TextColor(theme.TokensOf(c).MutedForeground)
 			}
 			if content != nil {
-				content()
+				withBubbleMessageAlignment(c, p.Align, content)
 			}
 			if p.Footer != nil {
 				p.Footer()
