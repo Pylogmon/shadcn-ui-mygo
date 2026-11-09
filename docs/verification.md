@@ -96,3 +96,5 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 - 本次阶段收尾：`go test ./...` 共364项检查通过；`go vet ./...`、`git diff --check`通过。`go generate ./...` 后颜色生成文件无差异。macOS `.app` 构建及最终导航实窗路径通过，Linux/Windows amd64 Gallery交叉编译通过。完整组件/变体视觉对照、运行时inert焦点约束及Windows/Linux真实运行仍未完成，完整目标保持进行中。
 
 - Avatar：10项针对性检查及 display vet 通过。先复现默认直径偏离Vega、没有原生image角色和无效解码图像隐藏回退，再验证三种尺寸、延迟背景/回退、应用控制的加载/错误/成功状态及一次通知、Cover真实像素、圆形裁剪外的角标、头像组重叠/计数/RTL/重排和空闲收敛。独立审计复现成员Key="remaining"撞上内部计数标识导致panic；内部使用私有类型的标识后，延迟/删除计数回归通过。组件接受MyGo已解码ImageSource，不隐式联网；应用异步加载后经Window.Update发布结果。完整图像滤镜/示例和跨平台视觉验证仍待完成。
+
+- Card：`CardWith` 新增默认/小号与可覆盖间距、动作/自定义头部、分隔页脚、贴边媒体和正文；保留旧Card的统一内边距契约。9项针对性检查和 vet 通过，display/Gallery合计183项通过。独立审计先复现空Header/Media/Content/Footer回调留下未消费的Context.Key、造成后续编辑器身份改变与失焦；移除回调边界多余Key，保留私有容器身份后四种回归与正文局部草稿/焦点保持通过。已检查窄宽度换行、RTL动作位置、媒体真实边缘像素；完整示例视觉矩阵仍待完成。
