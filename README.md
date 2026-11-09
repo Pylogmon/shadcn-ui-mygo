@@ -55,6 +55,8 @@ func view(c *ui.Context) {
 
 Gallery 的 Navigation 页展示菜单栏、可切换尺寸的导航内容面板和响应式侧栏，Forms 页展示范围/多拇指滑块，Data 页包含保留状态的折叠内容和嵌套可调整面板。导航面板的子 Context、路由回传和 Tab 边界用法见 [导航 API](docs/navigation.md)。
 
+Forms 页也包含 [原生文本输入](docs/text-input.md)、[可调整高度的 Textarea](docs/textarea.md)、[分组 OTP](docs/input-otp.md) 与 [三态/单多选控件](docs/choices.md)。Bio 草稿和高度、验证码与选择状态跨页保留；Navigation 页的面包屑可切换独立 Flyout／系统菜单，并展示有界的大页数分页。
+
 Data 页也展示头像尺寸、状态角标、加载/回退和头像组。对应 API 见 [Avatar](docs/avatar.md) 与 [Card 槽位](docs/card.md)。
 
 Content & feedback 页展示 [Badge](docs/badge.md)、[Item](docs/item.md)、[Alert/Empty](docs/status-surfaces.md) 的组合示例，包含真实原生按钮/链接、独立主动作、通知操作和空状态表单。

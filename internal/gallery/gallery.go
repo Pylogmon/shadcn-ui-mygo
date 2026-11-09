@@ -57,13 +57,17 @@ type State struct {
 	sidebarRoute                                                                   string
 	contentAction, contentProject                                                  string
 	contentPinned, contentDismissed                                                bool
+	formStatus, inviteCode, breadcrumbSelection                                    string
+	formatting                                                                     []string
+	readAccess, writeAccess, quietNotifications                                    bool
+	bioResize                                                                      control.TextareaResizeState
 	menuStates                                                                     map[string]*creatorMenu
 	pendingMenuAction                                                              string
 }
 
 func New() *State {
 	p := DefaultPreset()
-	return &State{Config: p, Theme: theme.Controller{Mode: p.Appearance, Preset: p.Accent, Radius: p.Radius}, lastThemeMode: p.Appearance, Page: "overview", Name: "Sofia Davis", Email: "sofia@example.com", Framework: "go", Plan: "pro", Slider: 65, SliderRange: [2]float64{25, 75}, SliderBands: []float64{20, 50, 80}, VerticalLevel: 60, Notifications: true, Accordion: true, PageNumber: 1, Date: time.Date(2026, 11, 9, 0, 0, 0, 0, time.Local)}
+	return &State{Config: p, Theme: theme.Controller{Mode: p.Appearance, Preset: p.Accent, Radius: p.Radius}, lastThemeMode: p.Appearance, Page: "overview", Name: "Sofia Davis", Email: "sofia@example.com", Framework: "go", Plan: "pro", Slider: 65, SliderRange: [2]float64{25, 75}, SliderBands: []float64{20, 50, 80}, VerticalLevel: 60, Notifications: true, readAccess: true, formatting: []string{"bold"}, Accordion: true, PageNumber: 1, Date: time.Date(2026, 11, 9, 0, 0, 0, 0, time.Local)}
 }
 
 var pages = []navigation.NavItem{
@@ -136,7 +140,7 @@ func (s *State) header(c *ui.Context, preview *theme.Tokens) {
 		ui.Text(c, "shadcn/ui").FontSize(16).FontWeight(600)
 		ui.Text(c, "/").TextColor(t.MutedForeground).Margin(0, 6)
 		ui.Text(c, "Create").FontSize(14).FontWeight(500)
-		display.Badge(c, "Native Go", display.BadgeOutline)
+		display.Badge(c, "Native Go", display.BadgeOutline).AlignSelf(ui.Center)
 		ui.Box(c).Grow(1)
 		if control.Button(c, "Search", control.ButtonProps{Variant: control.Ghost, Size: control.Small, Label: "Search components"}).Clicked() {
 			s.Command = true

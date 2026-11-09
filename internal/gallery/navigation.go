@@ -19,7 +19,7 @@ func (s *State) cardHeader(c *ui.Context, title, description string) ui.Element 
 }
 func (s *State) navigationPreview(c *ui.Context) {
 	s.heading(c, "Find your way.", "Tabs, routes and menus with native keyboard and focus behavior.")
-	navigation.Breadcrumb(c, []navigation.BreadcrumbItem{{Key: "home", Label: "Home"}, {Key: "components", Label: "Components"}, {Key: "navigation", Label: "Navigation"}})
+	s.breadcrumbPreview(c)
 	columns(c, func() {
 		display.Card(c, func() {
 			s.cardHeader(c, "Tabs", "Arrow keys select a tab. Each trigger controls its panel.")
@@ -42,8 +42,5 @@ func (s *State) navigationPreview(c *ui.Context) {
 	})
 	s.routePanelsPreview(c)
 	s.sidebarPreview(c)
-	display.Card(c, func() {
-		s.cardHeader(c, "Pagination", "A single controlled page value, with bounds and current-page semantics.")
-		navigation.Pagination(c, &s.PageNumber, navigation.PaginationProps{Pages: 20})
-	})
+	s.paginationPreview(c)
 }

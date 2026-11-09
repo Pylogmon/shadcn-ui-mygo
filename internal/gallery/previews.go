@@ -93,10 +93,10 @@ func (s *State) controls(c *ui.Context) {
 			s.cardHeader(c, "Profile", "Labels, descriptions and inline validation.")
 			control.Field(c, control.FieldProps{Label: "Full name", Required: true}, func() ui.Element { return control.Input(c, &s.Name, control.InputProps{}) })
 			control.Field(c, control.FieldProps{Label: "Bio", Description: "Tell us a little about yourself."}, func() ui.Element {
-				return control.Textarea(c, &s.Bio, control.TextareaProps{Placeholder: "I build things with Go…"})
+				return control.TextareaWith(c, &s.Bio, control.TextareaProps{Placeholder: "I build things with Go…"}, control.TextareaResizeProps{State: &s.bioResize, Label: "Resize bio"}).Root
 			})
 			control.InputGroup(c, control.InputGroupProps{Prefix: "https://", Suffix: ".dev"}, func() ui.Element { return control.Input(c, &s.Query, control.InputProps{Placeholder: "your-name"}) })
-			control.InputOTP(c, &s.OTP, control.InputOTPProps{Length: 6, Label: "Verification code"})
+			s.otpPreview(c)
 		})
 	}, func() {
 		display.Card(c, func() {
@@ -109,7 +109,7 @@ func (s *State) controls(c *ui.Context) {
 					s.popupError(c, err)
 				}
 			}
-			control.RadioGroup(c, &s.Plan, control.RadioGroupProps{Label: "Plan", Options: []control.Option{{Value: "free", Label: "Free"}, {Value: "pro", Label: "Pro"}, {Value: "team", Label: "Team"}}})
+			control.RadioGroup(c, &s.Plan, control.RadioGroupProps{Label: "Plan", Orientation: ui.Vertical, Description: "Choose your workspace plan.", Options: []control.Option{{Value: "free", Label: "Free", Description: "For personal projects"}, {Value: "pro", Label: "Pro", Description: "For growing teams"}, {Value: "team", Label: "Team", Description: "For your organization"}}})
 			control.Switch(c, &s.Notifications, control.SwitchProps{Label: "Notifications"})
 			control.Checkbox(c, &s.Checked, "Accept terms and conditions", control.CheckboxProps{})
 			control.Slider(c, &s.Slider, control.SliderProps{Min: 0, Max: 100, Step: 1, Label: "Volume"})
@@ -117,6 +117,7 @@ func (s *State) controls(c *ui.Context) {
 			control.Toggle(c, &s.Bold, "Bold", control.ToggleProps{Outline: true})
 		})
 	})
+	s.choiceVariantsPreview(c)
 	s.sliderRangesPreview(c)
 }
 func (s *State) displays(c *ui.Context) {

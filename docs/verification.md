@@ -150,3 +150,8 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 
 - 长页码补充：明暗截图发现百万页边界被截为“10…”。增加独立native Text测量回归后，旧36DIP控件先失败；长页码改为内容宽度，一至三位仍36DIP。navigation/Gallery共147项通过，文本不再依赖只有AX可读的完整标签；超窄容器/完整文字缩放平台矩阵继续跟踪。
 - 长页码独立审查：41条临时公共API探针覆盖Button/URL、LTR/RTL、Compact和1/2/100/百万/MaxInt页码；数字实际像素逐项等于完整native文字参考，普通页码宽36与长数字留白均正确。临时探针未写入仓库，正式MaxInt文字/边界回归保留。
+
+- Gallery表单/路由集成：全包57项、6项新增集成及独立审计通过。验证码3+3分组显式数字过滤/完成反馈，2+4邀请代码不限字符且转换粘贴；原生Mixed权限联动、小号Switch与多选格式ToggleGroup实际改变State。Bio使用TextareaWith保存草稿/高度，跨页保留。面包屑按Menu style选Flyout或OS菜单并回传祖先选择；百万页分页支持连续Enter/远端边界，长数字可读。隔离HEAD加本阶段Gallery文件后57项通过。
+- Gallery明暗像素：重新生成并查看 `artifacts/gallery-controls{,-dark}.png`、`gallery-navigation{,-dark}.png`、`gallery-form-choices{,-dark}.png`；新模块布局与颜色正常。修正Header的Native Go徽章显式居中；详细页截图验证完整百万页标签及底部状态行。截图不是完整组件视觉矩阵。
+- macOS实窗：重启本次构建，Bio输入Runtime bio draft后Tab/Down/Down，原生splitter的AX高度64→80；粘贴123-456后验证码为123456并出现完成状态；AX激活Mixed All permissions后其与Edit projects均为On。Breadcrumb独立Flyout选择Forms，回传Selected parent: Forms并回焦Show parent routes；随后键盘切System native，OS菜单选择Patterns回传Selected parent: Patterns并关闭。未打开外部示例URL；未实测真实中文候选窗、指针resize/触屏或所有AT。
+- 本轮最终收尾：`go test ./... -count=1` 共700项、12包通过；`go vet ./...`、`git diff --check`通过。macOS最终app重建、Linux/Windows amd64交叉编译通过。OTP归档源码、Git内原始字节、manifest SHA与app内MIT许可匹配。各模块分别提交；完整复刻与平台/AT/视觉验收仍进行中，未缩减原始目标。
