@@ -2,6 +2,8 @@
 
 `display.Chart`使用MyGo原生Plot、坐标尺度、矩形和路径绘图，支持Bar、Line、Area、Pie、Donut、Radar与Radial。数据来自应用的Labels和Series，颜色默认取当前主题的五个Chart token；也可为系列显式设置Color。
 
+Pie、Donut、Radial和Radar会在当前构建作用域内解析调色板，再把独立颜色与数值快照交给延迟绘制。局部主题、并列的不同主题及动态换色因此与各自的Legend和Tooltip保持一致；显式Series.Color和CategoryColors仍优先。绘制回调不保留Context或应用格式化/内容回调。
+
 ```go
 radius := float32(5)
 display.Chart(c, display.ChartProps{

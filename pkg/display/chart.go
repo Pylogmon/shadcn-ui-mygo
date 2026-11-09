@@ -564,6 +564,185 @@ func polarMaximum(p ChartProps) float64 {
 	return hi
 }
 
+// polarPaintSnapshot contains only resolved colors and numeric geometry data.
+// The painter runs after scoped Children have restored Context.Theme, so it
+// must not retain Context or ChartProps callbacks and resolve a theme there.
+type polarPaintSnapshot struct {
+	kind                         ChartKind
+	selected, count              int
+	inner                        float32
+	categoryColors, seriesColors []ui.Color
+	muted, foreground, border    ui.Color
+	pies                         []polarPiePaint
+	radialValues                 []float64
+	radialStacks                 [][]chart.Segment
+	radarValues                  [][]float64
+	maximum                      float64
+}
+
+type polarPiePaint struct {
+	values []float64
+	slices []chart.Slice
+}
+
+func preparePolarPaint(c *ui.Context, p ChartProps, selected int) polarPaintSnapshot {
+	t := theme.TokensOf(c)
+	paint := polarPaintSnapshot{kind: p.Kind, selected: selected, count: len(p.Labels), muted: t.Muted, foreground: t.Foreground, border: t.Border}
+	paint.categoryColors = make([]ui.Color, len(p.Labels))
+	for i := range paint.categoryColors {
+		paint.categoryColors[i] = categoryColor(c, p, i)
+	}
+	paint.seriesColors = make([]ui.Color, len(p.Series))
+	for j := range paint.seriesColors {
+		paint.seriesColors[j] = chartColor(c, p, j)
+	}
+	plot, _ := scaledChartValues(p)
+	switch p.Kind {
+	case PieChart, DonutChart:
+		rings := min(len(p.Series), 1)
+		if p.Stacked {
+			rings = len(p.Series)
+		}
+		if p.Kind == DonutChart {
+			paint.inner = p.InnerRadius
+			if paint.inner <= 0 {
+				paint.inner = .6
+			}
+			paint.inner = min(.9, max(0, paint.inner))
+		}
+		paint.pies = make([]polarPiePaint, rings)
+		for j := range paint.pies {
+			values := positiveValues(p, j)
+			paint.pies[j] = polarPiePaint{values: values, slices: pieSlices(values)}
+		}
+	case RadialChart:
+		paint.radialValues = positiveValues(plot, 0)
+		paint.maximum = polarMaximum(plot)
+		if p.Stacked {
+			positive := plot
+			positive.Normalized = false
+			positive.Series = make([]ChartSeries, len(plot.Series))
+			for j, series := range plot.Series {
+				positive.Series[j] = series
+				positive.Series[j].Values = positiveValues(plot, j)
+			}
+			paint.radialStacks = stackSegments(positive)
+			if p.MaxValue <= 0 {
+				for _, series := range paint.radialStacks {
+					for _, seg := range series {
+						paint.maximum = max(paint.maximum, seg.Hi)
+					}
+				}
+			}
+		}
+	case RadarChart:
+		paint.maximum = polarMaximum(plot)
+		paint.radarValues = make([][]float64, len(plot.Series))
+		for j, series := range plot.Series {
+			paint.radarValues[j] = append([]float64(nil), series.Values...)
+		}
+	}
+	return paint
+}
+
+func (paint polarPaintSnapshot) draw(painter *ui.Painter, r ui.Rect) {
+	cx, cy, radius := polarGeometry(r)
+	if radius <= 0 {
+		return
+	}
+	switch paint.kind {
+	case PieChart, DonutChart:
+		rings := len(paint.pies)
+		if rings == 0 {
+			return
+		}
+		for j, ring := range paint.pies {
+			outerR := radius - float32(j)*(radius*(1-paint.inner))/float32(rings)
+			innerR := radius - float32(j+1)*(radius*(1-paint.inner))/float32(rings)
+			if rings > 1 {
+				innerR += 2
+			}
+			for i, slice := range ring.slices {
+				if ring.values[i] <= 0 {
+					continue
+				}
+				outer := outerR
+				if paint.selected == i {
+					outer += 3
+				}
+				painter.FillPath(chart.Sector(cx, cy, innerR, outer, slice), paint.categoryColors[i])
+			}
+		}
+	case RadialChart:
+		count := len(paint.radialValues)
+		if count == 0 {
+			return
+		}
+		band := radius / float32(count+1)
+		for i, v := range paint.radialValues {
+			outer := radius - float32(i)*band
+			inner := outer - band*.65
+			track := chart.Slice{Start: 0, End: 2 * math.Pi}
+			painter.FillPath(chart.Sector(cx, cy, inner, outer, track), paint.muted)
+			if len(paint.radialStacks) > 0 {
+				for j, series := range paint.radialStacks {
+					seg := series[i]
+					if seg.Hi <= seg.Lo {
+						continue
+					}
+					slice := chart.Slice{Start: 2 * math.Pi * min(1, seg.Lo/paint.maximum), End: 2 * math.Pi * min(1, seg.Hi/paint.maximum)}
+					painter.FillPath(chart.Sector(cx, cy, inner, outer, slice), paint.seriesColors[j])
+				}
+				if paint.selected == i {
+					painter.StrokePath(chart.Sector(cx, cy, inner, outer, track), 2, paint.foreground)
+				}
+			} else if v > 0 {
+				slice := chart.Slice{Start: 0, End: 2 * math.Pi * min(1, v/paint.maximum)}
+				painter.FillPath(chart.Sector(cx, cy, inner, outer, slice), paint.categoryColors[i])
+				if paint.selected == i {
+					painter.StrokePath(chart.Sector(cx, cy, inner, outer, slice), 2, paint.foreground)
+				}
+			}
+		}
+	case RadarChart:
+		count := paint.count
+		if count < 3 {
+			return
+		}
+		for level := 1; level <= 4; level++ {
+			path := radarPath(cx, cy, radius*float32(level)/4, count, nil, paint.maximum)
+			painter.StrokePath(path, 1, paint.border)
+		}
+		for i := range count {
+			px, py := chart.Polar(cx, cy, radius, 2*math.Pi*float64(i)/float64(count))
+			painter.Line(cx, cy, px, py, 1, paint.border)
+		}
+		for j, values := range paint.radarValues {
+			color := paint.seriesColors[j]
+			complete := len(values) >= count
+			for i := range count {
+				if i >= len(values) || !finite(values[i]) || values[i] < 0 {
+					complete = false
+					break
+				}
+			}
+			if complete {
+				path := radarPath(cx, cy, radius, count, values, paint.maximum)
+				painter.FillPath(path, color.Alpha(.15))
+				painter.StrokePath(path, 2, color)
+			} else {
+				for _, path := range radarMissingPaths(cx, cy, radius, count, values, paint.maximum) {
+					painter.StrokePath(path, 2, color)
+				}
+			}
+			if paint.selected >= 0 && paint.selected < len(values) && finite(values[paint.selected]) && values[paint.selected] >= 0 {
+				px, py := chart.Polar(cx, cy, radius*float32(min(1, max(0, values[paint.selected]/paint.maximum))), 2*math.Pi*float64(paint.selected)/float64(count))
+				painter.FillPath((&ui.Path{}).Circle(px, py, 4), color)
+			}
+		}
+	}
+}
+
 func polarChart(c *ui.Context, p ChartProps, selected *int, height float32) ui.Element {
 	t := theme.TokensOf(c)
 	label := p.Label
@@ -571,7 +750,6 @@ func polarChart(c *ui.Context, p ChartProps, selected *int, height float32) ui.E
 		label = "Chart"
 	}
 	area := ui.Box(c).Width(height).MaxWidthPercent(100).AspectRatio(1).AlignSelf(ui.Center).Label(label).Role(ui.RoleGroup).Description("Use arrow keys to inspect categories; Home and End move to the first and last category; Escape clears inspection.")
-	plot, _ := scaledChartValues(p)
 	valid := validCategories(p, true)
 	if p.Kind == RadarChart || p.Kind == RadialChart {
 		valid = nil
@@ -591,137 +769,7 @@ func polarChart(c *ui.Context, p ChartProps, selected *int, height float32) ui.E
 		*selected = -1
 	}
 	inspectPolar(c, area, selected, valid, func(x, y float32, r ui.Rect) int { return polarHit(p, x, y, r) }, func(i int) string { return describeChart(c, p, i) })
-	area.Draw(func(painter *ui.Painter, r ui.Rect) {
-		cx, cy, radius := polarGeometry(r)
-		if radius <= 0 {
-			return
-		}
-		switch p.Kind {
-		case PieChart, DonutChart:
-			rings := min(len(p.Series), 1)
-			if p.Stacked {
-				rings = len(p.Series)
-			}
-			if rings == 0 {
-				return
-			}
-			inner := float32(0)
-			if p.Kind == DonutChart {
-				inner = p.InnerRadius
-				if inner <= 0 {
-					inner = .6
-				}
-				inner = min(.9, max(0, inner))
-			}
-			for j := range rings {
-				outerR := radius - float32(j)*(radius*(1-inner))/float32(rings)
-				innerR := radius - float32(j+1)*(radius*(1-inner))/float32(rings)
-				if rings > 1 {
-					innerR += 2
-				}
-				values := positiveValues(p, j)
-				for i, slice := range pieSlices(values) {
-					if values[i] <= 0 {
-						continue
-					}
-					color := categoryColor(c, p, i)
-					outer := outerR
-					if *selected == i {
-						outer += 3
-					}
-					painter.FillPath(chart.Sector(cx, cy, innerR, outer, slice), color)
-				}
-			}
-		case RadialChart:
-			values := positiveValues(plot, 0)
-			maxValue := polarMaximum(plot)
-			var stacks [][]chart.Segment
-			if p.Stacked {
-				positive := plot
-				positive.Normalized = false
-				positive.Series = make([]ChartSeries, len(plot.Series))
-				for j, series := range plot.Series {
-					positive.Series[j] = series
-					positive.Series[j].Values = positiveValues(plot, j)
-				}
-				stacks = stackSegments(positive)
-				if p.MaxValue <= 0 {
-					for _, series := range stacks {
-						for _, seg := range series {
-							maxValue = max(maxValue, seg.Hi)
-						}
-					}
-				}
-			}
-			count := len(values)
-			if count == 0 {
-				return
-			}
-			band := radius / float32(count+1)
-			for i, v := range values {
-				outer := radius - float32(i)*band
-				inner := outer - band*.65
-				track := chart.Slice{Start: 0, End: 2 * math.Pi}
-				painter.FillPath(chart.Sector(cx, cy, inner, outer, track), t.Muted)
-				if len(stacks) > 0 {
-					for j, series := range stacks {
-						seg := series[i]
-						if seg.Hi <= seg.Lo {
-							continue
-						}
-						slice := chart.Slice{Start: 2 * math.Pi * min(1, seg.Lo/maxValue), End: 2 * math.Pi * min(1, seg.Hi/maxValue)}
-						painter.FillPath(chart.Sector(cx, cy, inner, outer, slice), chartColor(c, p, j))
-					}
-					if *selected == i {
-						painter.StrokePath(chart.Sector(cx, cy, inner, outer, track), 2, t.Foreground)
-					}
-				} else if v > 0 {
-					slice := chart.Slice{Start: 0, End: 2 * math.Pi * min(1, v/maxValue)}
-					painter.FillPath(chart.Sector(cx, cy, inner, outer, slice), categoryColor(c, p, i))
-					if *selected == i {
-						painter.StrokePath(chart.Sector(cx, cy, inner, outer, slice), 2, t.Foreground)
-					}
-				}
-			}
-		case RadarChart:
-			count := len(p.Labels)
-			if count < 3 {
-				return
-			}
-			maxValue := polarMaximum(plot)
-			for level := 1; level <= 4; level++ {
-				path := radarPath(cx, cy, radius*float32(level)/4, count, nil, maxValue)
-				painter.StrokePath(path, 1, t.Border)
-			}
-			for i := range count {
-				px, py := chart.Polar(cx, cy, radius, 2*math.Pi*float64(i)/float64(count))
-				painter.Line(cx, cy, px, py, 1, t.Border)
-			}
-			for j, s := range plot.Series {
-				color := chartColor(c, p, j)
-				complete := len(s.Values) >= count
-				for i := range count {
-					if i >= len(s.Values) || !finite(s.Values[i]) || s.Values[i] < 0 {
-						complete = false
-						break
-					}
-				}
-				if complete {
-					path := radarPath(cx, cy, radius, count, s.Values, maxValue)
-					painter.FillPath(path, color.Alpha(.15))
-					painter.StrokePath(path, 2, color)
-				} else {
-					for _, path := range radarMissingPaths(cx, cy, radius, count, s.Values, maxValue) {
-						painter.StrokePath(path, 2, color)
-					}
-				}
-				if *selected >= 0 && *selected < len(s.Values) && finite(s.Values[*selected]) && s.Values[*selected] >= 0 {
-					px, py := chart.Polar(cx, cy, radius*float32(min(1, max(0, s.Values[*selected]/maxValue))), 2*math.Pi*float64(*selected)/float64(count))
-					painter.FillPath((&ui.Path{}).Circle(px, py, 4), color)
-				}
-			}
-		}
-	})
+	area.Draw(preparePolarPaint(c, p, *selected).draw)
 	return area.Children(func() {
 		if p.Kind == RadarChart && len(p.Labels) >= 3 {
 			for i, label := range p.Labels {
