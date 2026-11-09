@@ -313,3 +313,5 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 - Select箭头修复：Flyout原用文本`⌄`，Gallery12DIP字号下实际着墨6×5、中心Y46.5，而44DIP触发器中心为42；大字号还会变成13×11、中心Y50.5。现在三个入口共享从既有control.Select原样迁移的SVG，固定16DIP布局/字形、禁止压缩、垂直居中及IgnoreInput/AX hidden；所有字体和LTR/RTL的实际着墨均为10×6、中心Y42。未新增Material Symbols资源或公共图标集，迁移来源和literal/helper SHA记录于indicator manifest。
 - 箭头检查：新增32项（3顶层/29子例），包括字体/尺寸/长自定义标签/RTL的独立SVG参考像素、点击箭头打开菜单及选择/AX；基于`51ce6e7`的隔离desktop/control/旧Gallery共500项与vet通过。独审仅覆盖三个产品文件，原8绿5红、修复13项全绿，收据`/private/tmp/select-chevron-final-audit.avojMI/audit-receipt.json`。Root核验四个候选哈希，最终全量1887项、17包（13有测试/4无测试）、全量vet、macOS app与Linux/Windows amd64构建通过。
 - 箭头视觉：Owner与Root实际查看浅/深三入口对照PNG；Root重启最终macOS bundle，查看Gallery左侧Flyout各选择框，再切System native查看相同位置，箭头大小和居中一致。系统菜单展开内容仍由OS绘制；该证据覆盖关闭触发器，不替代其它平台/字体/AT完整矩阵。
+
+- 菜单/Select分发：实际`1d9601e`标准ZIP的八步验证和第二个外部模块五命令/五项公开检查通过，覆盖可选GeometrySurface/DismissInterceptor、实际left侧向进入像素、100ms完成、退出期AX排除/保留窗口与最终一次回调，以及Flyout/Native/窗口内三路Select的真实箭头像素。两套缓存初始为空且完成后删除，GOWORK关闭、无replace；Root核对十个ZIP产品文件与该提交、模块图/源码/图片哈希，并实际查看恢复消费者与Gallery明暗。证据`build/consumer-verification/run-1641041268/menu-distribution-receipt.json`，未纳入并行Combobox候选，也不代替OS放置或三平台GUI验收。

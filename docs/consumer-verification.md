@@ -33,3 +33,7 @@ go run ./cmd/verify-consumer -ref <commit> -out build/consumer-verification
 动画SDK、Line历史补修及静态导出修复完成后，最终提交`edbbf871116923d2a31348d50813aaa655af1e3b`以`v0.0.0-20261109135517-edbbf8711169`验证，模块ZIP SHA-256为`1626954f38f42faedeee69f0f856b204b97253145cc905321ae63237a0e2b5c4`。同一制品标准八步，以及另一个真正外部模块`example.invalid/chart-animation-consumer`的七条命令和11项公开API检查均通过。两轮模块/构建缓存均从空开始、GOWORK关闭且无replace，SDK从新缓存解析；两套临时缓存均已自动删除。外部工程实际使用Animation的Duration、Begin、Ease和Disabled，验证Bar/Line的100ms延迟、400ms linear半程像素、最新AX原值、减少动态效果及Line缺失/清空后恢复，另导出真实时钟明暗对照图。
 
 最终证据位于`build/consumer-verification/run-3352262293/animation-distribution-receipt.json`，包含两份完整收据、15条命令、模块图、环境、SDK/消费者源码及PNG哈希。五张图由Owner逐张实际查看，Root核验ZIP内SDK/CLI源码与workspace逐字一致，并查看最终Gallery深色和外部动画深色图。旧提交`2c544f6`虽通过标准命令，但Gallery静态图停在动画入口；其诊断证据保留于`run-1965657269`，不冒充视觉通过。最终同ref已重新执行所有步骤，Gallery明暗六柱完整，不复用旧图或只靠文件大小判完成。此步骤仍是本地制品验收，不是公共发布或三平台实窗验收。
+
+菜单动画、Gallery子菜单与Select箭头阶段提交`1d9601ef61be21cefe9585689b62d852fca84749`以`v0.0.0-20261109144504-1d9601ef61be`复验，ZIP SHA-256为`af88a0645342beee03f9b4803d02d681b18d2e95ac7591d8f027c463de638e47`。标准八步及第二个外部模块`example.invalid/menu-consumer`的tidy/模块图/test/vet/env五命令均通过；公开检查共五项，包括实现GeometrySurface/DismissInterceptor、实际左侧几何的进入像素、100ms完成、保留退出/AX排除/最终一次关闭回调，以及三路Select关闭触发器的10×6着墨与精确居中。
+
+两轮缓存均从空开始并已删除，GOWORK关闭、依赖图无replace、SDK确来自同一ZIP。Root核对ZIP内十个产品文件与该提交原文、完整收据/哈希，并查看恢复消费者及Gallery明暗图。证据`build/consumer-verification/run-1641041268/menu-distribution-receipt.json`。首次自定义探针把OnDismiss误断言为退场开始时调用；按既有完成退场契约纠正测试后，最终五命令在另一套全新缓存完整重跑，产品未因此修改。并行Combobox候选未混入制品；公共发布、OS放置/实窗及完整平台矩阵仍未完成。
