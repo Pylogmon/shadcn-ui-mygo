@@ -193,3 +193,7 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 
 - Shimmer基础模块：固定CSS/MDX的Git blob逐字节核对；20项内部检查及1项外部package公开API检查通过。实际原生字形像素验证空间扫光、2秒线性、RTL/reverse、一次播放恢复、明暗高光与透明度、OKLCH中间色/OKLab插值和sRGB色域映射；原生中文/字体继承/ellipsis/AX及动态减少动画、Instant和停止后的idle均通过。默认3ch估值需要已知字体，Base需显式传递非Theme祖先颜色；公开运行时没有计算样式getter，不读取私有状态。
 - Shimmer独立阶段：从已提交HEAD仅加入内部实现和公开display入口，internal/shimmer与display共343项检查通过，vet及macOS/Linux/Windows构建通过；没有把尚未完成的Table、Attachment或Trace候选算入隔离验收。完整实窗、字体、广色域和辅助技术矩阵继续跟踪。
+
+- Table静态组合：48项聚焦检查通过；header/body/footer共享测量列、row header/原生索引与跨列、caption16DIP间距、自然行高、Checkbox物理右padding、RTL、selected/expanded/hover像素、明暗自定义token、原生Select/Input/动作、稳定列/记录Key、实际编辑选区与IME、指针取消和100,000行虚拟入口均验证。Style回调配置当前真实Row/Cell，内容只按原生build执行一次，不重复调用来测量。
+- Table离屏与调度：先实证离屏第十列漏测、同Key编辑器宽度变化后陈旧、多表独立成对帧永久互相触发以及Scale坐标系来回覆盖四类失败，再改为公开LayoutBounds加窗口共享postpaint补测。无绘制/AX/输入的1×1 overlay只携带数值和持久model，所有Table共享一次纠正波次；首尾插入、重排、删除/重挂、离屏多表宽度增长/缩小及normal/reduced静止后无待帧均通过。不保留Context/Element，也不读取运行时私有树。
+- Table独立阶段：从已提交HEAD仅加入data.go与Table实现/正式检查，display/Gallery共455项通过，vet/diff通过；新Gallery表格演示未混入模块提交。共享原生轨道不是完整HTML intrinsic/rowspan引擎，虚拟Table保留运行时样式，所有平台/字体/AT/视觉矩阵仍需完成。
