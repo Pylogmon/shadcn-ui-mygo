@@ -71,3 +71,5 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 - Slider：保留单值 API，新增 `RangeSlider`、`SliderValues`。`go test ./pkg/control` 23项检查及 vet 通过，独立审计通过。新增8项检查覆盖原生指针捕获/取消、最近拇指选择、不可交叉和步长间距、每拇指 Tab/方向键、竖向/RTL、受控 slice 替换的稳定焦点、格式化值和受约束 AX 数字范围，以及小数步长/极大有限值/不合法约束。
 
 - Carousel：`go test ./pkg/display` 93项检查、其中 `-run Carousel` 22项检查及 vet 通过。保留原 API，新增 `CarouselWith`。验证横纵向/RTL、原生拖拽捕获与取消、循环及两页回绕、键盘/圆点/状态播报、隐藏页输入与 AX 排除、受控切换焦点回收、减少动画、稳定页内状态。独立审计复现快速/受控中途切页搬走仍可见源页造成空白；改为依据当前动画/拖拽位置循环布局后，多方向像素回归、连续切换与空闲收敛均通过。
+
+- HoverCard 原生焦点交接：补充回归后 `-run 'Tooltip|HoverCard|InactiveHover'` 26项检查及 vet 通过。先复现父失活/子活跃状态尚未更新时被误关，再验证平台主题/自绘的交接、真实应用失活关闭、未知后端保守关闭和无空闲重绘。macOS 更新后的应用已实际观察 NativeHoverCard 的 Down 进入 Native author 子窗口及 Escape 返回触发器；自绘 HoverCard 同路径通过。DatePicker 也已实际观察越过父窗口下边界、选择日期回传并关闭；NativeDatePicker 显示平台 Popover 材质和箭头。仍不代表全平台/全部关闭路径验收。

@@ -1,6 +1,7 @@
 package desktop
 
 import (
+	"fmt"
 	"slices"
 	"testing"
 	"time"
@@ -12,7 +13,8 @@ import (
 
 type hoverBackend struct {
 	fakeBackend
-	focuses int
+	focuses             int
+	applicationInactive bool
 }
 type hoverSurface struct {
 	*fakeSurface
@@ -26,7 +28,8 @@ func (b *hoverBackend) Open(s Spec, view func(*ui.Context), closed func()) (Surf
 	}
 	return &hoverSurface{fakeSurface: surface.(*fakeSurface), backend: b}, nil
 }
-func (s *hoverSurface) Focus() { s.backend.focuses++ }
+func (s *hoverSurface) Focus()                  { s.backend.focuses++ }
+func (b *hoverBackend) ApplicationActive() bool { return !b.applicationInactive }
 
 func moveOver(t *testing.T, view *ui.Tester, label string) {
 	t.Helper()
@@ -413,6 +416,98 @@ func TestHoverCardKeyboardEntryEscapeAndNativeDismissal(t *testing.T) {
 	parent.Frame()
 	if h.IsOpen("profile") {
 		t.Fatal("native dismissal reopened from restored focus")
+	}
+}
+
+func TestHoverCardKeyboardTransferSurvivesInactiveChildFrameButNotAppDeactivation(t *testing.T) {
+	for _, native := range []bool{false, true} {
+		for _, completed := range []bool{false, true} {
+			t.Run(fmt.Sprintf("native=%v/completed=%v", native, completed), func(t *testing.T) {
+				b := &hoverBackend{}
+				h := NewHostWithBackend(b)
+				parent := ui.NewTester(func(c *ui.Context) {
+					theme.Apply(c)
+					h.BeginFrame()
+					defer h.EndFrame()
+					anchor := control.Button(c, "Profile", control.ButtonProps{})
+					card := HoverCard
+					if native {
+						card = NativeHoverCard
+					}
+					if err := card(c, h, "profile", anchor, HoverCardProps{Label: "User profile"}, func(child *ui.Context) { control.Button(child, "Visit profile", control.ButtonProps{}) }); err != nil {
+						t.Fatal(err)
+					}
+				}, 420, 220)
+				parent.Key(0, ui.KeyTab)
+				parent.Key(0, ui.KeyDown)
+				if b.focuses != 1 {
+					t.Fatalf("native focus requests=%d", b.focuses)
+				}
+				parent.SetWindowActive(false)
+				if !h.IsOpen("profile") {
+					t.Fatal("parent blur cancelled explicit child keyboard entry")
+				}
+				renderChild := false
+				child := ui.NewTester(func(c *ui.Context) {
+					if renderChild {
+						b.surfaces[0].view(c)
+					}
+				}, 320, 180)
+				child.SetWindowActive(false)
+				renderChild = true
+				child.Frame()
+				parent.Frame()
+				if !h.IsOpen("profile") {
+					t.Fatal("inactive first child frame cancelled keyboard transfer")
+				}
+				child.Advance(300 * time.Millisecond)
+				parent.Advance(300 * time.Millisecond)
+				if child.FramePending() || parent.FramePending() {
+					t.Fatal("pending keyboard transfer scheduled idle frames")
+				}
+				if completed {
+					child.SetWindowActive(true)
+					parent.Frame()
+					if !h.IsOpen("profile") {
+						t.Fatal("completed keyboard transfer lost its child")
+					}
+				}
+				b.applicationInactive = true
+				child.SetWindowActive(false)
+				parent.Frame()
+				if h.IsOpen("profile") || b.surfaces[0].closes != 1 {
+					t.Fatal("application deactivation retained the keyboard child")
+				}
+				parent.Advance(time.Second)
+				if parent.FramePending() {
+					t.Fatal("dismissed keyboard transfer left idle frames")
+				}
+			})
+		}
+	}
+}
+
+func TestHoverCardKeyboardTransferDoesNotAssumeUnknownApplicationIsActive(t *testing.T) {
+	b := &hoverBackend{}
+	// Expose only the required Backend methods, not ApplicationActive.
+	h := NewHostWithBackend(struct{ Backend }{b})
+	parent := ui.NewTester(func(c *ui.Context) {
+		theme.Apply(c)
+		h.BeginFrame()
+		defer h.EndFrame()
+		anchor := control.Button(c, "Profile", control.ButtonProps{})
+		if err := NativeHoverCard(c, h, "profile", anchor, HoverCardProps{}, func(child *ui.Context) { ui.Text(child, "Details") }); err != nil {
+			t.Fatal(err)
+		}
+	}, 420, 220)
+	parent.Key(0, ui.KeyTab)
+	parent.Key(0, ui.KeyDown)
+	if b.focuses != 1 {
+		t.Fatal("keyboard did not request native child focus")
+	}
+	parent.SetWindowActive(false)
+	if h.IsOpen("profile") || b.surfaces[0].closes != 1 {
+		t.Fatal("unknown application activity kept the inactive child alive")
 	}
 }
 

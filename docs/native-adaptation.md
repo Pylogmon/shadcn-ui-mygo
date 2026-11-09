@@ -61,6 +61,8 @@ err := desktop.Popover(c, host, "settings", anchor, &open,
 
 `Tooltip` 默认立即显示，`HoverCard` 默认延迟700ms打开、300ms关闭；关闭时取消计时，Escape 后不会因触发器仍有焦点而立即重开。指针打开的 HoverCard 保持父窗口键盘焦点；触发器上的 Down/Tab 可以进入内容，Escape/反向 Tab 返回。`NativeTooltip` 和 `NativeHoverCard` 使用平台主题的普通原生 Flyout：MyGo 没有暴露系统 Tooltip/HoverCard 控件，macOS NSPopover 会抢焦点，也不适合指针预览。NativeTooltip 保留显式反色配置，缺省时沿用 MyGo 的平台文字/背景回退。
 
+键盘进入的窗口交接期间，父窗口和子窗口的绘制活跃状态可能短暂都未更新。Host 已有真实子窗口时使用 MyGo 的应用活跃状态区分交接与应用失活；显式注入后端可选择提供 `ApplicationActive() bool`。未知后端保留保守关闭行为，不通过固定延迟猜测焦点交接。
+
 `Native*` 的平台适配范围在 API 和文档中明确；拥有系统控件 API 的菜单使用系统实现，其余采用上述平台主题和原生窗口能力。
 
 ## 验证范围

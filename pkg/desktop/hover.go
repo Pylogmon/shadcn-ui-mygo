@@ -36,6 +36,25 @@ type HoverCardProps struct {
 }
 
 type hoverKey struct{ kind, key string }
+
+type hoverApplicationState struct{ known, active bool }
+
+// WindowActive describes a rendered window and can lag a native focus transfer.
+// Only explicit application activity can bridge that gap; unknown backends keep
+// the conservative window-based dismissal behavior.
+func hoverApplication(h *Host, key string) hoverApplicationState {
+	if h == nil {
+		return hoverApplicationState{}
+	}
+	if activity, ok := h.backend.(interface{ ApplicationActive() bool }); ok {
+		return hoverApplicationState{known: true, active: activity.ApplicationActive()}
+	}
+	if window := h.NativeWindow(key); window != nil && !window.IsDestroyed() {
+		return hoverApplicationState{known: true, active: mygo.App.IsActive()}
+	}
+	return hoverApplicationState{}
+}
+
 type hoverFlyoutState struct {
 	open, suppressed                    bool
 	childHover, childFocus, childActive bool
@@ -89,10 +108,11 @@ func hoverArgs(c *ui.Context, key string, anchor ui.Element) error {
 // advanceHover runs the timer only in the parent Context. Child windows report
 // transitions, not timestamps or parent-frame Elements, so clocked tests and
 // native frames both cancel/re-enter the same state machine without idle loops.
-func advanceHover(c *ui.Context, s *hoverFlyoutState, anchorHot, immediate bool, openDelay, closeDelay time.Duration, interactive bool) {
-	childHot := interactive && (s.childHover || s.childFocus || s.childActive)
+func advanceHover(c *ui.Context, s *hoverFlyoutState, anchorHot, immediate bool, openDelay, closeDelay time.Duration, interactive bool, application hoverApplicationState) {
+	keyboardActive := interactive && s.keyboardChild && application.known && application.active
+	childHot := interactive && (s.childHover || s.childFocus || s.childActive || keyboardActive)
 	hot := anchorHot || childHot
-	if c.WindowHidden() || !c.WindowActive() && (!interactive || !s.childActive) {
+	if c.WindowHidden() || application.known && !application.active || !c.WindowActive() && (!interactive || !s.childActive) && !keyboardActive {
 		if s.open || !s.enteredAt.IsZero() {
 			s.dismiss()
 		}
@@ -165,7 +185,7 @@ func tooltip(c *ui.Context, h *Host, key string, anchor ui.Element, text string,
 		if (s.open || !s.enteredAt.IsZero()) && c.Shortcut(0, ui.KeyEscape) || anchor.Clicked() {
 			s.dismiss()
 		}
-		advanceHover(c, s, anchorHot, anchor.FocusWithin(), max(0, p.OpenDelay), max(0, p.CloseDelay), false)
+		advanceHover(c, s, anchorHot, anchor.FocusWithin(), max(0, p.OpenDelay), max(0, p.CloseDelay), false, hoverApplicationState{})
 	}
 	if h == nil {
 		if s.open {
@@ -255,7 +275,7 @@ func hoverCard(c *ui.Context, h *Host, key string, anchor ui.Element, p HoverCar
 			s.suppressed = false
 			s.enterChild, s.keyboardChild = true, true
 		}
-		advanceHover(c, s, anchorHot, anchor.FocusWithin() || s.enterChild, openDelay, closeDelay, interactive)
+		advanceHover(c, s, anchorHot, anchor.FocusWithin() || s.enterChild, openDelay, closeDelay, interactive, hoverApplication(h, key))
 	}
 	if h == nil {
 		if s.open {
