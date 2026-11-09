@@ -104,7 +104,8 @@
 | 5.BU | Gallery静态导出完成动画后几何 | 已提交 `edbbf87`；3项明暗真实柱形像素回归先红后绿，CLI明暗PNG逐张复核；全量1783项、vet与三平台构建通过，不改变应用动画偏好 |
 | 5.BV | 动画SDK及静态Gallery最终模块ZIP验收 | 已提交 `2beb4bf`；`edbbf87`同制品标准八步及独立动画消费者七命令/11项公开检查通过，全新缓存/无workspace/无replace、明暗最终柱形与真实时钟中间帧逐张复核 |
 | 5.BW | Base/Vega Flyout菜单与子面板动画 | 已提交 `51ce6e7`；32项动画/19项几何正式检查、332项隔离与vet、18项独立原生复核通过；100ms进退、当前side/origin、退出期inert、反转/编辑器与Menubar真实点击修正 |
-| 5.BX | Gallery菜单/右键菜单与Export子菜单演示 | 本阶段提交；新增21项、Gallery188项、全量1855项及vet通过；明暗逐帧图、三平台构建和macOS Flyout/系统菜单实际动作回写通过 |
+| 5.BX | Gallery菜单/右键菜单与Export子菜单演示 | 已提交 `905fbe9`；新增21项、Gallery188项、全量1855项及vet通过；明暗逐帧图、三平台构建和macOS Flyout/系统菜单实际动作回写通过 |
+| 5.BY | Select两类菜单触发器统一矢量箭头 | 本阶段提交；新增32项真实像素/交互检查、13项独审、全量1887项及vet通过；固定16DIP图标、明暗/RTL/字体对照和macOS实窗两种路由一致 |
 
 用户已明确允许原生平台适配：Popover、menu、下拉菜单可以使用 MyGo 的系统菜单与独立 Flyout，超出父窗口范围；无需逐像素照搬网页浮层。Gallery 以 [shadcn/create](https://ui.shadcn.com/create) 的配置与实时预览流程为参考。完整组件功能、主题、动画范围保持不变。
 

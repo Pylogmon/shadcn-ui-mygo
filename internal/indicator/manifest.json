@@ -11,6 +11,18 @@
       "sha256": "043021bb903919668804bdb6fee0342072e4ffea5f03fbd857774c440179ad3b"
     },
     {
+      "file": "chevron.go",
+      "source_kind": "existing-inline-svg",
+      "source_repository": "https://github.com/pylogmon/shadcn-ui-mygo",
+      "source_commit": "51ce6e7d84b77a5b5ba0a0af55399b3ad8fa2e6b",
+      "source_path": "pkg/control/select.go",
+      "source_symbol": "chevron",
+      "inline_svg_sha256": "1a270506b8e89eda78c4780d1132a33416c4603c14fce709588d4e918662405e",
+      "sha256": "563423dd976f01fb6cb62c5607d863834f49e6ba55e2ed2d516d05954608a045",
+      "license": "Existing Lucide ISC and Feather MIT notices in LICENSE.lucide",
+      "note": "The SVG literal was moved byte-for-byte into the shared Select indicator; this entry records that local migration rather than a newly downloaded upstream file."
+    },
+    {
       "file": "LICENSE.lucide",
       "upstream_path": "LICENSE",
       "sha256": "1e7290b35280a048667bbf0ebabac1c7fd52a75300e8b2946ac165715997f2bc"

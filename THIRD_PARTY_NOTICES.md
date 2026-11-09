@@ -27,6 +27,10 @@ commit `97bbe1d6b2adc6767831e52f6b12b2886b6498d5`, matching the pinned
 shadcn app's direct icon dependency. The loading SVG, ISC license (including its
 Feather MIT notice) and SHA-256 manifest are in `internal/indicator/`;
 exact CodeBlock copy/check SVGs and their manifest are in `pkg/display/assets/`.
+The shared Select chevron reuses the existing inline SVG from
+`pkg/control/select.go`, with the same Lucide/Feather license notice. Its local
+migration source, original literal digest and shared helper digest are recorded
+in `internal/indicator/manifest.json`.
 Toast status SVGs are archived in `pkg/overlay/assets/` with their own manifest.
 Attachment file/state/action SVGs and their manifest are in `pkg/conversation/assets/`.
 The Trace chevron uses the same pinned Lucide source with a separate manifest there.

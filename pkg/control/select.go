@@ -5,11 +5,10 @@ import (
 	"strings"
 
 	"github.com/egoist/mygo/ui"
+	"github.com/pylogmon/shadcn-ui-mygo/internal/indicator"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/motion"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/theme"
 )
-
-var chevron = ui.MustParseSVG([]byte(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>`))
 
 type SelectProps struct {
 	Options            []Option
@@ -66,7 +65,7 @@ func Select(c *ui.Context, selected *string, p SelectProps) ui.Element {
 				text.TextColor(t.MutedForeground)
 			}
 		}
-		ui.Icon(c, chevron).FontSize(16).TextColor(t.MutedForeground)
+		indicator.ChevronDown(c).TextColor(t.MutedForeground)
 	})
 	parts.Popup(func(panel ui.Element) {
 		panel.MinWidth(max(float32(128), tr.Bounds().W)).MaxHeight(280).Padding(4).Margin(4, 0, 0, 0).
@@ -150,7 +149,7 @@ func NativeSelect(c *ui.Context, selected *string, p SelectProps) ui.Element {
 				text.TextColor(t.MutedForeground)
 			}
 		}
-		ui.Icon(c, chevron).FontSize(16).TextColor(t.MutedForeground)
+		indicator.ChevronDown(c).TextColor(t.MutedForeground)
 	})
 	previousPresentation := c.MenuPresentation()
 	c.SetMenuPresentation(ui.SystemMenus)

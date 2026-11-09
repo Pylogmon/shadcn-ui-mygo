@@ -22,6 +22,8 @@
 
 `NativeMenu` 家族和 `NativeSelect` 强制走 `ui.SystemMenus`，并在同一帧恢复调用方的菜单策略；不会因为预览设置而偷偷改成自绘菜单。`NativePopover` 在 macOS 使用 NSPopover 材质/箭头与平台主题；其他平台使用 MyGo 的原生 Flyout 和该窗口的平台默认主题，不声称存在对应的操作系统通用 Popover 控件。
 
+`Select` 与 `NativeSelect` 的关闭触发器都采用主题绘制，共享固定16DIP的SVG下箭头；系统负责后者展开后的菜单。箭头不继承文字字号/行高，禁止压缩并垂直居中，隐藏于无障碍树且不拦截触发器点击。
+
 自绘 Menu 的内容实际位于 Flyout 子窗口，使用 shadcn 颜色、字体、圆角与状态反馈。子菜单以可测量的相邻面板呈现，可使用键盘、typeahead、禁用项、复选/单选和长菜单滚动；原生窗口负责显示器工作区约束。它没有用父窗口内的绝对定位覆盖层冒充越窗实现。
 
 菜单面板使用固定Base/Vega的100ms进退动画，退出时保留测量空间并立即移出输入及无障碍树，同路径重开接续当前姿态。方向与缩放原点采用可观测的原生几何；自定义Backend的可选GeometrySurface、未知side及平台边界见[菜单动画](menu-motion.md)。

@@ -39,4 +39,6 @@ Spacing 为 nil 使用 8 DIP，指向零则合并边框和外角；Vertical 支�
 
 Toggle 可用 Icon/EndIcon 或 Content 定制视觉。所有 Content/ItemContent 槽位为非交互内容；真实输入和可访问性由外围原生控件承担。图标按钮应提供明确 Label，Rich Content 仍应同时提供可访问名称与描述。
 
+Select的窗口内、独立Flyout和系统菜单入口使用同一个16×16DIP SVG下箭头，保持主题MutedForeground。图标尺寸独立于字体与行高，长标签不压缩图标，RTL位于逻辑末端；自定义Trigger内容仍由外围真实控件处理点击与名称。独立窗口与系统菜单的组件对见[桌面浮层](native-adaptation.md)。
+
 39 项针对性检查覆盖原生状态、键鼠、RTL、尺寸/变体明暗像素、焦点、无效/禁用、稳定身份、同事件回调和动态减少动画。完整平台、屏幕阅读器和示例视觉矩阵仍需验收；固定上游基线见 [upstream.md](upstream.md)。

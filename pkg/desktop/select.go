@@ -2,6 +2,7 @@ package desktop
 
 import (
 	"github.com/egoist/mygo/ui"
+	"github.com/pylogmon/shadcn-ui-mygo/internal/indicator"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/control"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/overlay"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/theme"
@@ -57,7 +58,7 @@ func Select(c *ui.Context, host *Host, key string, selected *string, p control.S
 				}
 			}
 		})
-		ui.Text(c, "⌄").TextColor(t.MutedForeground).AccessHidden(true)
+		indicator.ChevronDown(c).TextColor(t.MutedForeground)
 	})
 	if p.Disabled {
 		s.open = false
