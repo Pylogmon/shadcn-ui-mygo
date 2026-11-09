@@ -222,3 +222,6 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 - 消费者验证范围：该证据覆盖本地模块制品、公开API、无本地替换/预热缓存依赖及跨进程设置恢复。SDK没有因此发布到公共代理；PNG运行不是原生窗口启动，系统主题监听、真实窗口重启和Windows/Linux运行矩阵继续跟踪。此验证锁定已提交SDK，未把并行Message/Marker/Questionnaire/Scroller候选提前计入。
 
 - ScrollBar意图回调：新增OnScrollIntent在有效手动操作改变原生offset之前通知，供会话自动跟随释放使用。2项真实原生检查验证wheel/key之前的位置、最新callback、程序滚动静默、禁用/非滚动键/零轴输入排除及callback更新不取消现有捕获；回调没有加入comparable布局配置。仅HEAD加这两个文件的隔离display/Gallery共490项通过，vet通过；没有提前包含Scroller候选。
+
+- Message：15项聚焦、独立conversation/Gallery共336项与vet通过。旧90%正文二次限宽导致Bubble288而源应320、存在Footer时Avatar少32DIP位移先红后修。完整slot/group/custom Children、metadata12/500/padding12与Ghost0、8/10DIP间距、原生Reverse/RTL视觉与原DOM Tab序、空Avatar、非slot裸内容、Bubble/显式MessageSlot的End作用域恢复、稳定Key前插/空Header切换后实际IME/全选替换，以及附件/URL/原生可选文字均验证。独审另10项字体/继承/长无断点换行/复杂嵌套/RTL编辑检查与Root旧便利入口空Header全选探针通过；临时探针已清理。
+- Message原生适配：无公开data-slot后代查询，Ghost与完全自组Children中的HasFooter需调用方声明，其它slot可用零wrapper MessageSlot显式对齐；不读取私有树或保留帧对象。固定registry、base文档与八个独立示例共11份Git blob/SHA-256核对。完整示例/字体/平台/AT/视觉矩阵继续跟踪，未将函数名或组合入口本身视为全矩阵完成。

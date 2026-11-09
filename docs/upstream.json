@@ -155,7 +155,8 @@
     },
     {
       "path": "apps/v4/registry/bases/base/ui/message.tsx",
-      "sha256": "b57f3c9921ceb0695cb8164c7be8ce229519f2b485b95923bb980a5e39e11c72"
+      "sha256": "b57f3c9921ceb0695cb8164c7be8ce229519f2b485b95923bb980a5e39e11c72",
+      "gitBlob": "ae7aef393f0714997c632fdac0755ce9d830f965"
     },
     {
       "path": "apps/v4/registry/bases/base/ui/native-select.tsx",
@@ -465,6 +466,56 @@
       "path": "apps/v4/examples/base/trace-turn.tsx",
       "gitBlob": "197df5d2a0764d09217a46733c0550f79a8dbcfb",
       "sha256": "73b666f8735d9d8787af734f9e8377f24ee6876af03ba577b29bc4ddc6e35c3d"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/examples/message-example.tsx",
+      "gitBlob": "efe428ad7b488508b447b96302ce8c13e94d6f91",
+      "sha256": "2b653b3ae6de3b1dcbdb74743a4b94faf4dbc42f325e9957dfdcfc28fa529212"
+    },
+    {
+      "path": "apps/v4/content/docs/components/base/message.mdx",
+      "gitBlob": "2e47c8b00a1e293614a6a0463f27d4b29517915c",
+      "sha256": "e89794ca20b01689aae4cc0028a77ae8e96782846e54993c78f8ac5eee2d4848"
+    },
+    {
+      "path": "apps/v4/examples/base/message-actions.tsx",
+      "gitBlob": "e63a55b302dd286555eec3bb41895bd2b889c6a5",
+      "sha256": "8529453c6f811e6510cd9de3d6d311bd0b18f120d72e4446b7b22dda8754598c"
+    },
+    {
+      "path": "apps/v4/examples/base/message-attachment.tsx",
+      "gitBlob": "61e90d8624c65d8b96140cd6549e4747088dd804",
+      "sha256": "89821bb1c3754fc05a85ba7f08454a4c1397af561bbc222b50e4f29a68bb97f9"
+    },
+    {
+      "path": "apps/v4/examples/base/message-avatar.tsx",
+      "gitBlob": "39846c10e1e27bb668058bdb26f949bbc9c32ff2",
+      "sha256": "89d08c4adb5cf5cf9d139c55420ac20a3b48865d5ef18aae9b168d44633c5dc6"
+    },
+    {
+      "path": "apps/v4/examples/base/message-demo.tsx",
+      "gitBlob": "2ceac4b058b6d58561f76e05faa8261881cfe8a2",
+      "sha256": "053b71ab986a03be75b6eda9692e04ffa5b7513a0e1063d04aa7161a8ea01e2a"
+    },
+    {
+      "path": "apps/v4/examples/base/message-group.tsx",
+      "gitBlob": "39a4147494d7f50b2e14fd8a4b4234b6cfaf0524",
+      "sha256": "6f9f2c74c62901d28e1b58d174af374fde9c8a77fe0a2c786b88b4df2e8c82ef"
+    },
+    {
+      "path": "apps/v4/examples/base/message-header-footer.tsx",
+      "gitBlob": "6defb43182e239ca7bd302cf64f51975ad70fc51",
+      "sha256": "a8f94b271b5efbb653bb169209f710e1881fdd2096a95cc41455367d858c12d8"
+    },
+    {
+      "path": "apps/v4/examples/base/message-markdown.tsx",
+      "gitBlob": "deeeaaec9af43895fb386f663f87ae3e33545a9c",
+      "sha256": "268c61337e391b94606865163b4c149ccc67d9b6582fdd8cd4c7122581134b94"
+    },
+    {
+      "path": "apps/v4/examples/base/message-pattern.tsx",
+      "gitBlob": "4e6b9db1f2031295273452b64430eef46313a94b",
+      "sha256": "ded1dfbd51ad78cacd2208bc55cfcc425b7eba638400d1cceb1b282a63117684"
     }
   ],
   "components": [
