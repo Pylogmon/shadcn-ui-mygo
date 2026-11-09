@@ -238,6 +238,31 @@ func TestCarouselAutoplayNativeTimerCommandsAndSelectedDelay(t *testing.T) {
 		t.Fatal("clearing plugins retained playback")
 	}
 }
+
+func TestCarouselAutoplayZeroDelayRemainsAsynchronous(t *testing.T) {
+	auto, err := NewCarouselAutoplay(CarouselAutoplayOptions{Delay: CarouselValue(time.Duration(0)), Jump: CarouselValue(true)})
+	if err != nil {
+		t.Fatal(err)
+	}
+	api, _ := NewCarouselController(CarouselOptions{})
+	if err := api.SetPlugins([]CarouselPlugin{auto}); err != nil {
+		t.Fatal(err)
+	}
+	fired := 0
+	api.On(CarouselAutoplaySelect, NewCarouselListener(func(*CarouselController, CarouselEventType) {
+		fired++
+		auto.Stop()
+	}))
+	count := 3
+	r := carouselPluginTester(api, nil, &count, nil)
+	if fired != 0 || api.SelectedScrollSnap() != 0 || !auto.IsPlaying() {
+		t.Fatal("zero delay ran synchronously during the initial build")
+	}
+	r.Advance(time.Millisecond)
+	if fired != 1 || api.SelectedScrollSnap() != 1 || auto.IsPlaying() {
+		t.Fatal("zero delay did not run once through the native async timer")
+	}
+}
 func TestCarouselCustomPluginFrameActionsExpireAndMedia(t *testing.T) {
 	var saved CarouselPluginActions
 	inits, destroys, frames := 0, 0, 0

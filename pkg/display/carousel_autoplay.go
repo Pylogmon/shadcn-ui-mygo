@@ -254,7 +254,9 @@ func (s *carouselAutoplaySession) emit(frame *carouselControllerBuild) func(caro
 			}
 			index := s.core.Selected()
 			if index >= 0 && index < len(s.delays) {
-				s.deadline = now.Add(time.Duration(s.delays[index] * float64(time.Millisecond)))
+				// Native After has a 1ms minimum. Keep even a zero source delay
+				// asynchronous, rather than advancing during the init/reset build.
+				s.deadline = now.Add(max(time.Millisecond, time.Duration(s.delays[index]*float64(time.Millisecond))))
 			}
 		} else if effect.Event == string(CarouselAutoplayTimerStopped) {
 			s.deadline = time.Time{}

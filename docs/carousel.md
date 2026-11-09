@@ -160,6 +160,7 @@ Content之前和之后的组合快照均按当前物理姿态计算可见项目�
 `Delay: display.CarouselValue(2*time.Second)` 配置两秒间隔。默认间隔四秒，
 默认播放，用户交互或焦点进入后停止。Play（可选jump）、Stop、Reset与控制器共享命令FIFO；
 IsPlaying读取已提交状态。`TimeUntilNext(c.Now())` 显式使用当前UI时钟，
+零及亚毫秒间隔按原生调度器的最小1ms异步安排，不在初始化或重置构建中同步切换。
 返回剩余时间及是否有timer；它按当前选中snap的delay计算，可能区别于先前已安排的deadline。
 
 选项支持Jump、PlayOnInit、StopOnFocusIn、StopOnInteraction、StopOnMouseEnter、

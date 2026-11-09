@@ -378,3 +378,5 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 
 - Carousel插件/Autoplay：typed应用插件与当前回调Actions、ordered lifecycle/重复名称及身份、FIFO外部命令、完整source timer和事件中间状态、pure delay/root resolver、媒体重建及原生hover/Tab/focus/hidden接通。纯core13场景/209时点，14结果；实际原始PluginsHandler/EventHandler/Autoplay执行器覆盖4生命周期及4嵌套订阅顺序。Controller/Options源物理不回退；旧12项Gallery结果保留，物理settle等待替代旧250ms兼容等待，新增实际API/配置/播放/离页重挂流程。
 - Carousel C3收尾：Root fresh实际`9092002`只叠19份冻结模块文件与3份说明，全量2211结果、28包（display752/Gallery224/core14）、vet及macOS bundle/Linux/Windows amd64构建通过。公开原生Tester正常时钟0→2000ms→3500ms逐帧运行，实际Autoplay由01/Discover切到02/Create，播放保持有效；两张原生图逐张查看，未关闭动画。收据`/private/tmp/carousel-c3-root-final-igpqmxig/artifacts/verification-receipt.json`，附独立native visual原文与日志；未混入并行Polar/Select。八份固定源例有显式可操作配置映射；同slide任意editor间pointer focusout、交互子控件拖动/click取消、多触点及完整平台/AT仍保留SDK/验收边界。
+
+- Autoplay零间隔修正：最小公开原生探针在9d21a84初次挂载未Advance时已选下一项，同probe定向修正后保持首项、Advance1ms才触发一次并被listener停止。源码setTimeout是异步，MyGo windowHost.afterTimer最短1ms；调度deadline据此归一化，TimeUntilNext继续保留source当前delay查询语义。fresh9d21a84仅两份候选文件，Carousel92结果和display vet通过，收据`/private/tmp/carousel-zero-delay-root-j2jokr5b/receipt.json`；未重跑无关全库/三平台。
