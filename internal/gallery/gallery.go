@@ -42,7 +42,9 @@ type State struct {
 	Table                                                                          display.DataTableState
 	tablePreview                                                                   tablePreviewState
 	conversationPreview                                                            conversationPreviewState
+	ConversationComposition                                                        conversationCompositionState
 	Questionnaire                                                                  conversation.QuestionnaireState
+	QuestionnairePreview                                                           questionnairePreviewState
 	Trace                                                                          conversation.TraceState
 	undo, redo                                                                     []Preset
 	lastThemeMode                                                                  theme.Mode
@@ -95,7 +97,7 @@ var pages = []creatorPage{
 	{Key: "content", Label: "Content & feedback"},
 	{Key: "text-layout", Label: "Text & layout", Keywords: []string{"Typography", "Kbd", "Keyboard", "CodeBlock", "Code", "Spinner", "Skeleton", "ScrollArea", "AspectRatio"}},
 	{Key: "overlays", Label: "Overlays"},
-	{Key: "conversation", Label: "Messages & questions", Keywords: []string{"Bubble", "Attachment", "Trace", "Message", "Questionnaire"}},
+	{Key: "conversation", Label: "Messages & questions", Keywords: []string{"Bubble", "Attachment", "Trace", "Message", "Marker", "MessageScroller", "Questionnaire"}},
 	{Key: "navigation", Label: "Navigation"},
 	{Key: "themes", Label: "Colors & themes"},
 }
