@@ -1,0 +1,247 @@
+// Package display provides shadcn's surfaces, typography and status components.
+package display
+
+import (
+	"strings"
+	"time"
+	"unicode/utf8"
+
+	"github.com/egoist/mygo/ui"
+	"github.com/pylogmon/shadcn-ui-mygo/pkg/theme"
+)
+
+func Card(c *ui.Context, content func()) ui.Element {
+	t := theme.TokensOf(c)
+	return ui.Column(c).FillWidth().Gap(24).Padding(24).Radius(t.Radius*1.4).
+		Background(t.Card).TextColor(t.CardForeground).Border(1, t.Border).Children(content)
+}
+func CardHeader(c *ui.Context, title, description string) ui.Element {
+	return ui.Column(c).Gap(6).Children(func() {
+		ui.Text(c, title).FontSize(18).FontWeight(600)
+		if description != "" {
+			ui.Text(c, description).FontSize(14).TextColor(theme.TokensOf(c).MutedForeground)
+		}
+	})
+}
+func CardContent(c *ui.Context, content func()) ui.Element {
+	return ui.Column(c).FillWidth().Gap(12).Children(content)
+}
+func CardFooter(c *ui.Context, content func()) ui.Element {
+	return ui.Row(c).FillWidth().Gap(8).AlignItems(ui.Center).Children(content)
+}
+
+type BadgeVariant int
+
+const (
+	BadgeDefault BadgeVariant = iota
+	BadgeSecondary
+	BadgeOutline
+	BadgeDestructive
+)
+
+func Badge(c *ui.Context, text string, variant BadgeVariant) ui.Element {
+	t := theme.TokensOf(c)
+	bg, fg, border := t.Primary, t.PrimaryForeground, ui.Transparent
+	switch variant {
+	case BadgeSecondary:
+		bg, fg = t.Secondary, t.SecondaryForeground
+	case BadgeOutline:
+		bg, fg, border = ui.Transparent, t.Foreground, t.Border
+	case BadgeDestructive:
+		bg, fg = t.Destructive, t.DestructiveForeground
+	}
+	return ui.Row(c).Padding(2, 8).Radius(999).Border(1, border).Background(bg).TextColor(fg).FontSize(12).FontWeight(500).Children(func() { ui.Text(c, text) })
+}
+
+type AlertProps struct {
+	Title, Description string
+	Destructive        bool
+	Content            func()
+}
+
+func Alert(c *ui.Context, p AlertProps) ui.Element {
+	t := theme.TokensOf(c)
+	fg := t.Foreground
+	if p.Destructive {
+		fg = t.Destructive
+	}
+	return ui.Column(c).FillWidth().Gap(6).Padding(16).Radius(t.Radius).Border(1, t.Border).Background(t.Card).TextColor(fg).Role(ui.RoleAlert).Children(func() {
+		if p.Title != "" {
+			ui.Text(c, p.Title).FontWeight(500)
+		}
+		if p.Description != "" {
+			ui.Text(c, p.Description).FontSize(14).LineHeight(1.5)
+		}
+		if p.Content != nil {
+			p.Content()
+		}
+	})
+}
+
+type AvatarProps struct {
+	Image           ui.ImageSource
+	Fallback, Label string
+	Size            float32
+}
+
+func Avatar(c *ui.Context, p AvatarProps) ui.Element {
+	t := theme.TokensOf(c)
+	size := p.Size
+	if size <= 0 {
+		size = 40
+	}
+	return ui.Box(c).Size(size, size).Radius(size / 2).Clip().Background(t.Muted).TextColor(t.MutedForeground).AlignItems(ui.Center).Justify(ui.Center).Label(p.Label).Children(func() {
+		if p.Image != nil {
+			ui.Image(c, p.Image).Fill().Fit(ui.Cover)
+		} else {
+			ui.Text(c, p.Fallback).FontSize(size * 0.35).FontWeight(500)
+		}
+	})
+}
+func Separator(c *ui.Context, vertical bool) ui.Element {
+	e := ui.Box(c).Background(theme.TokensOf(c).Border).Shrink(0)
+	if vertical {
+		return e.Width(1).AlignSelf(ui.Stretch)
+	}
+	return e.Height(1).FillWidth()
+}
+func AspectRatio(c *ui.Context, ratio float32, content func()) ui.Element {
+	if ratio <= 0 {
+		ratio = 1
+	}
+	return ui.Box(c).FillWidth().AspectRatio(ratio).Clip().Children(content)
+}
+func Kbd(c *ui.Context, key string) ui.Element {
+	t := theme.TokensOf(c)
+	return ui.Row(c).Padding(2, 5).Radius(4).Background(t.Muted).Border(1, t.Border).TextColor(t.MutedForeground).FontSize(12).Children(func() { ui.Text(c, key) })
+}
+
+type TextStyle int
+
+const (
+	Paragraph TextStyle = iota
+	H1
+	H2
+	H3
+	H4
+	Lead
+	Large
+	Small
+	Muted
+	Blockquote
+	InlineCode
+)
+
+func Typography(c *ui.Context, text string, style TextStyle) ui.Element {
+	t := theme.TokensOf(c)
+	e := ui.Text(c, text).TextColor(t.Foreground).FontSize(16).LineHeight(1.6)
+	switch style {
+	case H1:
+		e.FontSize(36).FontWeight(800).LineHeight(1.15)
+	case H2:
+		e.FontSize(30).FontWeight(600).LineHeight(1.2)
+	case H3:
+		e.FontSize(24).FontWeight(600).LineHeight(1.25)
+	case H4:
+		e.FontSize(20).FontWeight(600)
+	case Lead:
+		e.FontSize(20).TextColor(t.MutedForeground)
+	case Large:
+		e.FontSize(18).FontWeight(600)
+	case Small:
+		e.FontSize(14).FontWeight(500)
+	case Muted:
+		e.FontSize(14).TextColor(t.MutedForeground)
+	case Blockquote:
+		e.Padding(0, 0, 0, 24).InsetShadow(2, 0, 0, 0, t.Border)
+	case InlineCode:
+		e.FontSize(14).Background(t.Muted).Radius(4).Padding(2, 4)
+	}
+	return e
+}
+
+type EmptyProps struct {
+	Title, Description string
+	Action             func()
+}
+
+func Empty(c *ui.Context, p EmptyProps) ui.Element {
+	t := theme.TokensOf(c)
+	return ui.Column(c).FillWidth().AlignItems(ui.Center).Gap(8).Padding(32).Children(func() {
+		ui.Text(c, p.Title).FontSize(18).FontWeight(600)
+		ui.Text(c, p.Description).FontSize(14).TextColor(t.MutedForeground).TextAlign(ui.Center)
+		if p.Action != nil {
+			ui.Row(c).Margin(8, 0, 0, 0).Children(p.Action)
+		}
+	})
+}
+
+type ItemProps struct {
+	Title, Description string
+	Leading, Trailing  func()
+}
+
+func Item(c *ui.Context, p ItemProps) ui.Element {
+	return ui.Row(c).FillWidth().Gap(12).AlignItems(ui.Center).Padding(12).Children(func() {
+		if p.Leading != nil {
+			p.Leading()
+		}
+		ui.Column(c).Grow(1).MinWidth(0).Gap(4).Children(func() {
+			Typography(c, p.Title, Small)
+			if p.Description != "" {
+				Typography(c, p.Description, Muted)
+			}
+		})
+		if p.Trailing != nil {
+			p.Trailing()
+		}
+	})
+}
+func Progress(c *ui.Context, value float64) ui.Element {
+	t := theme.TokensOf(c)
+	return ui.Progress(c, max(0, min(1, value))).Height(8).Radius(999).Background(t.Secondary).TextColor(t.Primary)
+}
+func Spinner(c *ui.Context) ui.Element {
+	return ui.Spinner(c).Size(16, 16).TextColor(theme.TokensOf(c).Primary).Label("Loading")
+}
+
+type SkeletonProps struct {
+	Width, Height  float32
+	Circle, Static bool
+}
+
+func Skeleton(c *ui.Context, p SkeletonProps) ui.Element {
+	t := theme.TokensOf(c)
+	h := p.Height
+	if h <= 0 {
+		h = 16
+	}
+	e := ui.Box(c).Height(h).Radius(t.Radius * .8).Background(t.Muted)
+	if p.Width > 0 {
+		e.Width(p.Width)
+	} else {
+		e.FillWidth()
+	}
+	if p.Circle {
+		e.Width(h).Radius(h / 2)
+	}
+	if !p.Static && !c.Preferences().ReduceMotion {
+		e.Opacity(1 - .5*e.Loop("pulse", 2*time.Second, ui.Bounce(ui.EaseInOut)))
+	}
+	return e
+}
+
+// Initials uses Unicode words and runes so names need not be Latin text.
+func Initials(name string) string {
+	parts := strings.Fields(name)
+	if len(parts) == 0 {
+		return ""
+	}
+	first, _ := utf8.DecodeRuneInString(parts[0])
+	result := string(first)
+	if len(parts) > 1 {
+		last, _ := utf8.DecodeRuneInString(parts[len(parts)-1])
+		result += string(last)
+	}
+	return strings.ToUpper(result)
+}
