@@ -1,6 +1,8 @@
 package gallery
 
 import (
+	"runtime"
+
 	"github.com/egoist/mygo/ui"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/control"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/desktop"
@@ -49,12 +51,33 @@ func (s *State) previewDateRangePicker(c *ui.Context) {
 }
 
 func (s *State) previewTooltip(c *ui.Context, anchor ui.Element) {
-	var err error
-	if s.Config.NativeMenus {
-		err = desktop.NativeTooltip(c, s.Popovers, "preview-tooltip", anchor, "Small details make a difference.", desktop.TooltipProps{})
-	} else {
-		err = desktop.Tooltip(c, s.Popovers, "preview-tooltip", anchor, "Small details make a difference.", desktop.TooltipProps{})
+	native := s.Config.NativeMenus
+	modifier, shortcut := "Ctrl", "Control+K"
+	if runtime.GOOS == "darwin" {
+		modifier, shortcut = "⌘", "Command+K"
 	}
+	build := desktop.TooltipWith
+	if native {
+		build = desktop.NativeTooltipWith
+	}
+	err := build(c, s.Popovers, "preview-tooltip", anchor, desktop.TooltipProps{
+		Description: "Small details make a difference. Search components with " + shortcut + ".",
+	}, func(child *ui.Context) {
+		ui.Column(child).Gap(6).Children(func() {
+			ui.Text(child, "Small details make a difference.")
+			ui.Row(child).Gap(6).AlignItems(ui.Center).Children(func() {
+				ui.Text(child, "Search components")
+				if native {
+					ui.Text(child, modifier+" K")
+				} else {
+					display.KbdGroup(child, func(child *ui.Context) {
+						display.KbdWith(child, modifier, display.KbdProps{InTooltip: true})
+						display.KbdWith(child, "K", display.KbdProps{InTooltip: true})
+					})
+				}
+			})
+		})
+	})
 	if err != nil {
 		s.popupError(c, err)
 	}

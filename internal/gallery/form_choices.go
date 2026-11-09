@@ -1,6 +1,7 @@
 package gallery
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/egoist/mygo/ui"
@@ -54,6 +55,17 @@ func (s *State) choiceVariantsPreview(c *ui.Context) {
 						text.Underline()
 					}
 				}})
+			control.MultiSelect(c, &s.formatting, control.SelectProps{
+				Label: "Selected formatting", Placeholder: "Choose formatting",
+				Options: []control.Option{{Value: "bold", Label: "Bold"}, {Value: "italic", Label: "Italic"}, {Value: "underline", Label: "Underline"}},
+				ValuesContent: func(child *ui.Context, view control.SelectValueView) {
+					label := fmt.Sprintf("%d styles selected", len(view.Values))
+					if len(view.Values) == 1 {
+						label = "1 style selected"
+					}
+					ui.Text(child, label).SingleLine()
+				},
+			}).MaxWidth(260)
 			control.Field(c, control.FieldProps{Label: "Invite code", Description: "Letters, numbers and symbols are welcome. Pasted codes are capitalized."}, func() ui.Element {
 				return control.InputOTP(c, &s.inviteCode, control.InputOTPProps{Length: 6, Groups: []int{2, 4}, PasteTransform: strings.ToUpper})
 			})

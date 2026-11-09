@@ -121,20 +121,14 @@
 | 5.CL | Combobox对象状态、独立槽位、Content配置与交互示例 | 已提交 `1d50ec2`；新增9项control/3项Gallery，268/222项及4项独立公开检查通过；全量2099项/vet/三平台构建、四张明暗宽窄图通过；With共用运行时、单构建手写集合、Grid/原生虚拟窗与12+20例配置映射完成 |
 | 5.CM | 新公开API的独立制品复验与Chart源例范围核对 | 已提交 `3402c85`；`1d50ec2`同ZIP两轮空缓存共16命令/1条公开集成流程通过，605文件匹配；132份固定Chart原文/70例逐项盘点，静态需求清单不计作功能或平台验收 |
 | 5.CN | Carousel源物理、数值选项与背景原生拖动 | 已提交 `cd3f14c`；12条官方Engine轨迹/985时点、43纯核场景通过，display732/kernel48结果，全量2167项/vet/三平台构建及四张真实时钟逐帧图通过；子控件接管/click取消和多触点SDK缺口仍保留 |
-
 | 5.CO | Create菜单颜色、强调与原生透明材质 | 已提交 `d2ec705`；六种有效配置、同窗Gaussian/饱和度/tint和独立Flyout系统材质、原有Scope兼容及Creator预设流程完成；全量2174结果/vet/三平台构建和macOS实窗选值通过，系统材质核不声明CSS逐像素等价 |
-
 | 5.CP | Chart Cartesian源能力与30例应用 | 已提交 `9092002`；内边距/轴预算、四曲线、渐变/标记/LabelList与既有动画接通；30个可运行源配置，Polar/Tooltip/Gallery目录继续实施 |
-
 | 5.CQ | Carousel typed插件、Autoplay与源Gallery配置 | 已提交 `9d21a84`（零间隔异步修正`9bf0c55`）；公开生命周期/插件动作、源timer/事件状态与原生hover/focus/hidden接通；Gallery使用controller与两秒自动播放，固定八例配置可操作 |
-
 | 5.CR | Tooltip富内容、实际侧向箭头与八例应用 | 已提交 `22f766e`；独立子Context组合、明确描述、Kbd/段落与revision、六侧/RTL和原生几何箭头，保留系统主题对与旧字符串API |
-
 | 5.CS | Tabs独立组合与13例应用 | 已提交 `3e9c7c3`；Root/List/Trigger/Content、同栏输入/按钮/菜单与外置面板，保留旧Tabs，真实键盘/AX/RTL与显式icon名称 |
-
 | 5.CT | Select独立组合、无编辑器多选与22例映射 | 已提交 `c371168`；复用旧便捷入口，六侧/RTL、item alignment、100项滚动/箭头、富内容及当前表单；修复临时绑定身份兼容与消费角色定位 |
-
-| 5.CU | Polar源几何/内容/命中与31例应用 | 本阶段提交；源角度/半径/扇区/网格/中心/沿弧标签与既有动画、真实ring/axis检查；Tooltip/Gallery整合继续实施 |
+| 5.CU | Polar源几何/内容/命中与31例应用 | 已提交 `15ad058`；源角度/半径/扇区/网格/中心/沿弧标签与既有动画、真实ring/axis检查；Tooltip/Gallery整合继续实施 |
+| 5.CV | Gallery独立Tabs、多选Select与富Tooltip | 本阶段提交；现有模型同步格式选择与跨页保留、header动作/面板关联及真实全局搜索快捷键，保留旧manual Tabs与popup清理 |
 
 用户已明确允许原生平台适配：Popover、menu、下拉菜单可以使用 MyGo 的系统菜单与独立 Flyout，超出父窗口范围；无需逐像素照搬网页浮层。Gallery 以 [shadcn/create](https://ui.shadcn.com/create) 的配置与实时预览流程为参考。完整组件功能、主题、动画范围保持不变。
 

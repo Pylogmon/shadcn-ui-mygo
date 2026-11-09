@@ -75,9 +75,11 @@ func TestCreatorSecondaryDateAndHoverPopupsUseDesktopHost(t *testing.T) {
 			}
 			s.Page = "overlays"
 			r.Frame()
-			if err := r.Click("Hover for a tip"); err != nil {
-				t.Fatal(err)
+			trigger, ok := r.Find("Hover for a tip")
+			if !ok {
+				t.Fatal("tooltip trigger missing")
 			}
+			r.Move(trigger.X+trigger.W/2, trigger.Y+trigger.H/2)
 			if len(b.surfaces) != 2 {
 				t.Fatalf("tooltip surfaces=%d", len(b.surfaces))
 			}
@@ -87,6 +89,23 @@ func TestCreatorSecondaryDateAndHoverPopupsUseDesktopHost(t *testing.T) {
 			}
 			if !tip.tester.HasText("Small details make a difference.") {
 				t.Fatal("tooltip did not render in child window")
+			}
+			tip.tester.SetSize(tip.spec.MaxWidth, 100)
+			if !tip.tester.HasText("Search components") {
+				t.Fatal("rich tooltip omitted the actual application action")
+			}
+			if !native {
+				if key, ok := tip.tester.Find("K"); !ok || key.H != 20 {
+					t.Fatal("styled tooltip did not build a native Kbd")
+				}
+			}
+			r.Key(ui.Cmd, ui.KeyK)
+			r.Frame()
+			if !s.Command {
+				t.Fatal("tooltip advertised a shortcut without an application action")
+			}
+			if _, ok := r.AccessByRole(ui.RoleComboBox, "Search commands"); !ok {
+				t.Fatal("advertised search shortcut did not open the real command input")
 			}
 			s.Page = "overview"
 			r.Frame()

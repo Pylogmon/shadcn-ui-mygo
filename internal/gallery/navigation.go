@@ -91,10 +91,8 @@ func (s *State) navigationPreview(c *ui.Context) {
 	s.breadcrumbPreview(c)
 	columns(c, func() {
 		display.Card(c, func() {
-			s.cardHeader(c, "Tabs", "Arrow keys select a tab. Each trigger controls its panel.")
-			navigation.Tabs(c, &s.lineTab, navigation.TabsProps{Label: "Project view", Variant: navigation.TabsLine, Items: []navigation.TabItem{{Label: "Overview"}, {Label: "Activity"}, {Label: "Settings"}}}, func(i int) {
-				ui.Text(c, []string{"Your project at a glance.", "Your latest project updates.", "Manage your project preferences."}[i]).Padding(12)
-			})
+			s.cardHeader(c, "Tabs", "Arrow keys select a tab. The header action shares the selected view.")
+			s.composedProjectTabs(c)
 			display.Separator(c, false)
 			s.cardHeader(c, "Manual activation", "Move focus with arrows; press Enter to select.")
 			navigation.Tabs(c, &s.manualTab, navigation.TabsProps{Label: "Manual tabs", Manual: true, Items: []navigation.TabItem{{Label: "Account"}, {Label: "Security"}, {Label: "Unavailable", Disabled: true}}}, func(i int) {
