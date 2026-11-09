@@ -128,7 +128,9 @@
 
 | 5.CQ | Carousel typed插件、Autoplay与源Gallery配置 | 已提交 `9d21a84`（零间隔异步修正`9bf0c55`）；公开生命周期/插件动作、源timer/事件状态与原生hover/focus/hidden接通；Gallery使用controller与两秒自动播放，固定八例配置可操作 |
 
-| 5.CR | Tooltip富内容、实际侧向箭头与八例应用 | 本阶段提交；独立子Context组合、明确描述、Kbd/段落与revision、六侧/RTL和原生几何箭头，保留系统主题对与旧字符串API |
+| 5.CR | Tooltip富内容、实际侧向箭头与八例应用 | 已提交 `22f766e`；独立子Context组合、明确描述、Kbd/段落与revision、六侧/RTL和原生几何箭头，保留系统主题对与旧字符串API |
+
+| 5.CS | Tabs独立组合与13例应用 | 本阶段提交；Root/List/Trigger/Content、同栏输入/按钮/菜单与外置面板，保留旧Tabs，真实键盘/AX/RTL与显式icon名称 |
 
 用户已明确允许原生平台适配：Popover、menu、下拉菜单可以使用 MyGo 的系统菜单与独立 Flyout，超出父窗口范围；无需逐像素照搬网页浮层。Gallery 以 [shadcn/create](https://ui.shadcn.com/create) 的配置与实时预览流程为参考。完整组件功能、主题、动画范围保持不变。
 

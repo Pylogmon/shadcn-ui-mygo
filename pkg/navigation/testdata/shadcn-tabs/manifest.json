@@ -1,0 +1,100 @@
+{
+  "upstream": "shadcn-ui/ui",
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "files": [
+    {
+      "path": "apps/v4/content/docs/components/base/tabs.mdx",
+      "archive": "tabs.mdx",
+      "git_blob": "b9842842cfa4bccb6ab1649c7c3fa1fefaeecec0",
+      "sha256": "dfdad7346332d0dfc9c21cba8325c32833560ec105b04cec89102af79eacd3b9",
+      "bytes": 2406,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/content/docs/components/base/tabs.mdx"
+    },
+    {
+      "path": "apps/v4/examples/base/tabs-demo.tsx",
+      "archive": "examples/tabs-demo.tsx",
+      "git_blob": "db6b8461a64e79966a6cfddb736540d48af3df3e",
+      "sha256": "c18cc0202d363aaf330092d660f87685517dd430fdacb8b8db4c4a369a8b54df",
+      "bytes": 2661,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/tabs-demo.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/tabs-disabled.tsx",
+      "archive": "examples/tabs-disabled.tsx",
+      "git_blob": "0b0574547705d5efbc8a782ff7faa95e383da103",
+      "sha256": "127b4b6a2c5d778fd0b103ae7f47e59ed49126f8b56d939a3280e58fb3aee5c7",
+      "bytes": 345,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/tabs-disabled.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/tabs-icons.tsx",
+      "archive": "examples/tabs-icons.tsx",
+      "git_blob": "3f2ba34caaae150329362e2460d183720c894c59",
+      "sha256": "42366fce32443934aa6039aead4c87b0745be23234631f403ca8e4fe4e4b29b7",
+      "bytes": 461,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/tabs-icons.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/tabs-line.tsx",
+      "archive": "examples/tabs-line.tsx",
+      "git_blob": "5cb967f2bf23a4e74279908aac492cdc41d5bd37",
+      "sha256": "e92af625ab9f399fb34dedcd382fd9ca4be8105d0c036f7bfee5af2e8840896d",
+      "bytes": 400,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/tabs-line.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/tabs-rtl.tsx",
+      "archive": "examples/tabs-rtl.tsx",
+      "git_blob": "13a6c708e94f38fd1afbe75793ffb88e8d6944a7",
+      "sha256": "6a594ff1ad1cd1640d60420443ffd08bb2c70022b907f15fae3df4161e892a52",
+      "bytes": 6361,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/tabs-rtl.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/tabs-vertical.tsx",
+      "archive": "examples/tabs-vertical.tsx",
+      "git_blob": "28ffa1699cbe1f206aa14bda2c0fdadd49a5deeb",
+      "sha256": "127f4af062695fecd0af209af63353cb1347c81436630ba983b0735be999a854",
+      "bytes": 419,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/tabs-vertical.tsx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/examples/tabs-example.tsx",
+      "archive": "tabs-example.tsx",
+      "git_blob": "f222f266381fed0cd2f654abb5f8e08aaf939267",
+      "sha256": "8df264574f17761f00573bca98bf77823506fe60abfb887a2a9f8ee6ea8c8eaa",
+      "bytes": 12128,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/examples/tabs-example.tsx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/ui/tabs.tsx",
+      "archive": "tabs.tsx",
+      "git_blob": "2b39bbfe73883fcb8a6630e0d6af953ed0b08f49",
+      "sha256": "1eda25325a7aae9184224247d837b94f98f162d4f697740cc2b1bd53bd35cec6",
+      "bytes": 3195,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/ui/tabs.tsx"
+    }
+  ],
+  "collectionExamples": [
+    "TabsBasic",
+    "TabsLine",
+    "TabsVariantsComparison",
+    "TabsDisabled",
+    "TabsWithIcons",
+    "TabsIconOnly",
+    "TabsMultiple",
+    "TabsWithContent",
+    "TabsLineWithContent",
+    "TabsLineDisabled",
+    "TabsWithDropdown",
+    "TabsVertical",
+    "TabsWithInputAndButton"
+  ],
+  "scope": "Native Root/List/Trigger/Content for the fixed collection; legacy API stays intact. Actual list-side unrelated input/button/menu, external panels, tablist/Controls/LabelledBy, orientation/manual/disabled/RTL. Single selection; icon-only native Label stays useful.",
+  "nativeAdaptations": [
+    "Application-owned string value replaces source defaultValue; unmatched values may address an untriggered panel.",
+    "Inactive Content callbacks unmount instead of retaining hidden focusable subtrees.",
+    "Native LabelledBy includes caption activation, so default tab activation retains native trigger focus after linking.",
+    "Indicator uses existing native reduced-motion/transition policy rather than claiming browser CSS animation equivalence."
+  ]
+}

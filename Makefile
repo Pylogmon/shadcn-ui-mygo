@@ -1,6 +1,6 @@
 export GOCACHE := $(CURDIR)/.cache/go-build
 
-.PHONY: test vet run build app popups-app charts-app cartesian-app tooltips-app icons-app snapshots generate verify-consumer
+.PHONY: test vet run build app popups-app charts-app cartesian-app tooltips-app tabs-app icons-app snapshots generate verify-consumer
 test:
 	go test ./...
 vet:
@@ -20,6 +20,8 @@ cartesian-app:
 	sh scripts/package-macos.sh chart-cartesian
 tooltips-app:
 	sh scripts/package-macos.sh tooltip-composition
+tabs-app:
+	sh scripts/package-macos.sh tabs-composition
 icons-app:
 	sh scripts/package-macos.sh material-icons
 snapshots:
