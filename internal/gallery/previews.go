@@ -136,6 +136,7 @@ func (s *State) displays(c *ui.Context) {
 			display.Spinner(c)
 		})
 	}, func() {
+		s.avatarsPreview(c)
 		display.Card(c, func() {
 			s.cardHeader(c, "Frequently asked", "Composable disclosure patterns.")
 			display.Accordion(c, display.AccordionProps{Single: true, Bordered: true, Items: []display.AccordionItem{{Key: "native", Title: "Is this a native app?", Open: &s.Accordion, Content: func() {
