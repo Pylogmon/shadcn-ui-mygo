@@ -559,5 +559,66 @@
       "name": "Typography",
       "reference": "apps/v4/content/docs/components/base/typography.mdx"
     }
-  ]
+  ],
+  "creatorReference": {
+    "url": "https://ui.shadcn.com/create",
+    "paths": [
+      {
+        "path": "apps/v4/app/(app)/(create)/create/page.tsx",
+        "sha256": "5e9151dde8890264c769c69816e73e5311c294bd1b7a71753c4681b1d3998734"
+      },
+      {
+        "path": "apps/v4/app/(app)/(create)/components/customizer.tsx",
+        "sha256": "2355563e17deb69ade20295b1c527002329926f3bd03a44b59555d5ebec0f34f"
+      },
+      {
+        "path": "apps/v4/app/(app)/(create)/components/preview.tsx",
+        "sha256": "c1b4730cbfce75d54976b1fdc5f76f2c77b1088cb88619b0e96e42e7dd68e2be"
+      },
+      {
+        "path": "apps/v4/app/(app)/(create)/components/radius-picker.tsx",
+        "sha256": "27ecb3c6ea77748bf5c6d92506a46c562576a449973ea1c06844eddd7e25288c"
+      },
+      {
+        "path": "apps/v4/app/(app)/(create)/components/mode-switcher.tsx",
+        "sha256": "7ee99ec71ef0933c5b112239b5b6c80d9eb9df8ba2b86badc035be0ac50a6fea"
+      },
+      {
+        "path": "apps/v4/app/(app)/(create)/components/font-picker.tsx",
+        "sha256": "b6a9722191319e4efe53b512d778cbccf50b318364e3c9de6fd6dd11dfedea01"
+      },
+      {
+        "path": "apps/v4/app/(app)/(create)/components/base-color-picker.tsx",
+        "sha256": "8bf52ce8b3a7ed125b85d256a95da0893f3407135ceee71e5ff2b9955b3cdbec"
+      },
+      {
+        "path": "apps/v4/app/(app)/(create)/components/theme-picker.tsx",
+        "sha256": "4b38f4412ffb342f419e3fac21a2663569b51a82ddf0d99d73dc01568543155f"
+      },
+      {
+        "path": "apps/v4/app/(app)/(create)/components/chart-color-picker.tsx",
+        "sha256": "2b4b7fa2081abe67615a16ca78c576fbe5a762d9b9721e7627af98027b6c62d4"
+      },
+      {
+        "path": "apps/v4/app/(app)/(create)/components/copy-preset.tsx",
+        "sha256": "9a108698a270efff73d37fc90cb3fae68dae0029fa0ae0717e9365397aec3617"
+      },
+      {
+        "path": "apps/v4/app/(app)/(create)/components/open-preset.tsx",
+        "sha256": "dd38d49011197382dcd0b62f4f4f284860cacebdc3fe363d36bc90550945c1f0"
+      },
+      {
+        "path": "apps/v4/app/(app)/(create)/components/history-buttons.tsx",
+        "sha256": "f0bbe29145a663df772c2241e525de6fd312184b5056296dc02f63c11c099bfe"
+      },
+      {
+        "path": "apps/v4/app/(app)/(create)/components/random-button.tsx",
+        "sha256": "bb5ed9c77f1b1f94e98b21ad5bbfb77c99d949e698e40550189f6baf5c601377"
+      },
+      {
+        "path": "apps/v4/app/(app)/(create)/components/reset-button.tsx",
+        "sha256": "dce9ba8510590d23d0f67acf404e0633fc821b2ef4078ec1508ee533e66034ca"
+      }
+    ]
+  }
 }

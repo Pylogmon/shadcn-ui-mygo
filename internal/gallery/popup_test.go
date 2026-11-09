@@ -1,0 +1,200 @@
+package gallery
+
+import (
+	"fmt"
+	"testing"
+	"time"
+
+	"github.com/egoist/mygo/ui"
+	"github.com/pylogmon/shadcn-ui-mygo/pkg/desktop"
+)
+
+type creatorPopupBackend struct {
+	surfaces    []*creatorPopupSurface
+	invalidates int
+}
+type creatorPopupSurface struct {
+	spec     desktop.Spec
+	view     func(*ui.Context)
+	tester   *ui.Tester
+	closed   func()
+	didClose bool
+}
+
+func (b *creatorPopupBackend) Open(spec desktop.Spec, view func(*ui.Context), closed func()) (desktop.Surface, error) {
+	s := &creatorPopupSurface{spec: spec, view: view, closed: closed}
+	b.surfaces = append(b.surfaces, s)
+	s.tester = ui.NewTester(view, max(1, spec.Width), max(1, spec.Height))
+	return s, nil
+}
+func (b *creatorPopupBackend) InvalidateParent()   { b.invalidates++ }
+func (s *creatorPopupSurface) SetAnchor(r ui.Rect) { s.spec.Anchor = r }
+func (s *creatorPopupSurface) Invalidate() {
+	if s.tester != nil {
+		s.tester.Frame()
+	}
+}
+func (s *creatorPopupSurface) Close() {
+	if !s.didClose {
+		s.didClose = true
+		s.closed()
+	}
+}
+
+func TestCreatorInspectorUsesIndependentShadcnAndSystemSurfaces(t *testing.T) {
+	for _, native := range []bool{false, true} {
+		s := New()
+		s.Config.NativeMenus = native
+		b := &creatorPopupBackend{}
+		s.Popovers = desktop.NewHostWithBackend(b)
+		r := ui.NewTester(s.View, 1280, 900)
+		if err := r.Click("Inspect theme"); err != nil {
+			t.Fatal(err)
+		}
+		if len(b.surfaces) != 1 {
+			t.Fatalf("native=%v surfaces=%d", native, len(b.surfaces))
+		}
+		popup := b.surfaces[0]
+		if popup.spec.SystemPopover != native {
+			t.Fatalf("wrong presentation native=%v spec=%+v", native, popup.spec)
+		}
+		if !popup.tester.HasText("Theme tokens") || r.HasText("Theme tokens") {
+			t.Fatal("inspector did not build in an independent child context")
+		}
+		if popup.spec.Width < 300 {
+			t.Fatal("independent popup was constrained to customizer card width")
+		}
+		p := s.Config
+		p.Accent = "blue"
+		if err := s.ApplyPreset(p); err != nil {
+			t.Fatal(err)
+		}
+		r.Frame()
+		color := s.Config.Tokens(false).Primary
+		label := fmt.Sprintf("#%02x%02x%02x", color.R, color.G, color.B)
+		if !popup.tester.HasText(label) {
+			t.Fatalf("open inspector did not refresh after design change: %v", popup.tester.Texts())
+		}
+		if err := popup.tester.Click("Copy preset"); err != nil {
+			t.Fatal(err)
+		}
+		if p, err := ParsePreset(popup.tester.Clipboard()); err != nil || p != s.Config {
+			t.Fatalf("child clipboard output=%+v err=%v", p, err)
+		}
+		s.Popovers.CloseAll()
+		r.Frame()
+		if s.tokenOpen || !popup.didClose {
+			t.Fatal("closing popup did not synchronize controlled state")
+		}
+	}
+}
+
+func TestCreatorMissingPopupHostReportsErrorWithoutFakeWindowContent(t *testing.T) {
+	s := New()
+	r := ui.NewTester(s.View, 1280, 900)
+	if err := r.Click("Inspect theme"); err != nil {
+		t.Fatal(err)
+	}
+	if !r.HasText("Could not open popup") || r.HasText("Theme tokens") {
+		t.Fatalf("missing host was hidden or rendered parent-bounded content: %v", r.Texts())
+	}
+}
+
+func TestCreatorFlyoutThemeChoiceChangesLivePreviewAndDismisses(t *testing.T) {
+	s := New()
+	b := &creatorPopupBackend{}
+	s.Popovers = desktop.NewHostWithBackend(b)
+	r := ui.NewTester(s.View, 1280, 900)
+	field, ok := r.AccessByRole(ui.RoleMenuButton, "Theme")
+	if !ok {
+		field, ok = r.AccessByRole(ui.RoleButton, "Theme")
+	}
+	if !ok {
+		t.Fatal("theme selector missing")
+	}
+	r.ClickAt(field.Bounds.X+field.Bounds.W/2, field.Bounds.Y+field.Bounds.H/2)
+	if len(b.surfaces) != 1 || b.surfaces[0].spec.SystemPopover {
+		t.Fatal("theme choice did not use a shadcn Flyout")
+	}
+	child := b.surfaces[0].tester
+	if r.HasText("Blue") {
+		t.Fatal("Flyout choices painted inside parent window")
+	}
+	if err := child.Click("Blue"); err != nil {
+		t.Fatal(err)
+	}
+	r.Frame()
+	r.Advance(time.Second)
+	if s.Config.Accent != "blue" || !s.CanUndo() || !b.surfaces[0].didClose {
+		t.Fatalf("choice did not commit/close: %+v", s.Config)
+	}
+	button, ok := r.AccessByRole(ui.RoleButton, "Create account")
+	if !ok {
+		t.Fatal("live preview action missing")
+	}
+	color := s.Config.Tokens(false).Primary
+	pixel := r.Image().RGBAAt(int(button.Bounds.X+5), int(button.Bounds.Y+button.Bounds.H/2))
+	if pixel.R != color.R || pixel.G != color.G || pixel.B != color.B {
+		t.Fatalf("preview pixels did not update to selected theme: %v want %+v", pixel, color)
+	}
+}
+
+func TestCreatorMenuStyleSwitchesBetweenFlyoutAndSystemAdapters(t *testing.T) {
+	s := New()
+	b := &creatorPopupBackend{}
+	s.Popovers = desktop.NewHostWithBackend(b)
+	r := ui.NewTester(s.View, 1280, 900)
+	field, ok := r.AccessByRole(ui.RoleMenuButton, "Menu style")
+	if !ok {
+		field, ok = r.AccessByRole(ui.RoleButton, "Menu style")
+	}
+	if !ok {
+		t.Fatal("menu style selector missing")
+	}
+	r.ClickAt(field.Bounds.X+field.Bounds.W/2, field.Bounds.Y+field.Bounds.H/2)
+	if len(b.surfaces) != 1 {
+		t.Fatalf("style list did not open Flyout: %d", len(b.surfaces))
+	}
+	if err := b.surfaces[0].tester.Click("System native"); err != nil {
+		t.Fatal(err)
+	}
+	r.Frame()
+	if !s.Config.NativeMenus {
+		t.Fatal("style choice did not change popup adapter")
+	}
+	field, ok = r.AccessByRole(ui.RoleMenuButton, "Theme")
+	if !ok {
+		t.Fatal("native Theme selector missing")
+	}
+	r.ClickAt(field.Bounds.X+field.Bounds.W/2, field.Bounds.Y+field.Bounds.H/2)
+	if len(r.Menu()) == 0 || len(b.surfaces) != 1 {
+		t.Fatal("system choice did not use OS menu route")
+	}
+	if err := r.ChooseMenuItem("Violet"); err != nil {
+		t.Fatal(err)
+	}
+	if s.Config.Accent != "violet" {
+		t.Fatal("native adapter did not write design state")
+	}
+}
+
+func TestCreatorPreviewMenuUsesIndependentFlyoutAndQueuesParentAction(t *testing.T) {
+	s := New()
+	s.Page = "overlays"
+	b := &creatorPopupBackend{}
+	s.Popovers = desktop.NewHostWithBackend(b)
+	r := ui.NewTester(s.View, 1280, 900)
+	if err := r.Click("Open menu"); err != nil {
+		t.Fatal(err)
+	}
+	if len(b.surfaces) != 1 || r.HasText("Log out") {
+		t.Fatal("preview menu did not leave parent window")
+	}
+	if err := b.surfaces[0].tester.Click("Profile"); err != nil {
+		t.Fatal(err)
+	}
+	r.Frame()
+	if !r.HasText("Menu action") || !b.surfaces[0].didClose {
+		t.Fatal("Flyout action did not close and notify parent preview")
+	}
+}

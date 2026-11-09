@@ -23,8 +23,8 @@
 | 5.A | 按钮/分组、Field/InputGroup、分组选项、多选 Combobox、原生 NativeSelect | 已提交 `4e7459e`，15 项控件测试和 vet 通过 |
 | 5.B | 单/多/范围日期、限制、月份导航、时间与预设 | 已提交 `4be2188`，独立审计修复后 24 项日期检查和 vet 通过 |
 | 5.C | 图表家族与交互、数据表选择/过滤/原生菜单 | 已提交 `8c6c6cf`，34 项针对性检查和 vet 通过 |
-| 5.D.1 | Menu/NativeMenu 等核心成对组件、跨窗口 Flyout | 自动与 macOS 小窗口验证通过，提交本子阶段 |
-| 5.D.2 | Create 风格 Gallery、真实配置/预览和预设 | 集成验证通过，待提交 |
+| 5.D.1 | Menu/NativeMenu 等核心成对组件、跨窗口 Flyout | 已提交 `1859ae3`；30 项 desktop 检查及 macOS 小窗口越窗验证通过 |
+| 5.D.2 | Create 风格 Gallery、真实配置/预览和预设 | 27 项 Gallery 检查及截图通过，提交本子阶段 |
 | 5.D.3 | Tooltip/HoverCard/DatePicker 等其余浮层成对迁移、退场动画 | 待实施 |
 | 5.E | Tabs 激活模式、关联、方向键、动态指示器 | 已提交 `d734b28`，9 项导航测试和 vet 通过 |
 

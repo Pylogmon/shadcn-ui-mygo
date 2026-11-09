@@ -1,13 +1,17 @@
-// Package gallery is the native, executable component showcase.
+// Package gallery is a native design-system creator and live component preview.
 package gallery
 
 import (
 	"fmt"
+	"strconv"
+	"strings"
 	"time"
 
+	"github.com/egoist/mygo"
 	"github.com/egoist/mygo/ui"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/control"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/conversation"
+	"github.com/pylogmon/shadcn-ui-mygo/pkg/desktop"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/display"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/navigation"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/overlay"
@@ -15,7 +19,11 @@ import (
 )
 
 type State struct {
+	// Theme.Mode remains supported for command-line appearance selection.
+	// The creator's Config controls the scoped live preview independently of chrome.
 	Theme                                                                          theme.Controller
+	Config                                                                         Preset
+	Popovers                                                                       *desktop.Host
 	Page                                                                           string
 	Name, Email, Bio, Framework, Plan, OTP, Query                                  string
 	Notifications, Marketing, Checked, Bold, Dialog, Sheet, Popover, Menu, Command bool
@@ -26,70 +34,353 @@ type State struct {
 	Table                                                                          display.DataTableState
 	Questionnaire                                                                  conversation.QuestionnaireState
 	Trace                                                                          conversation.TraceState
+	undo, redo                                                                     []Preset
+	lastThemeMode                                                                  theme.Mode
+	previewIndex                                                                   int
+	lastPreviewPage                                                                string
+	lastPreviewWidth                                                               float32
+	randomSequence                                                                 uint64
+	designRevision                                                                 uint64
+	importOpen, tokenOpen                                                          bool
+	importText, importError, status                                                string
+	nativeMenuOpen                                                                 bool
+	lineTab, manualTab                                                             int
+	navRoute                                                                       string
+	menuStates                                                                     map[string]*creatorMenu
+	pendingMenuAction                                                              string
 }
 
 func New() *State {
-	return &State{Page: "overview", Name: "Sofia Davis", Email: "sofia@example.com", Framework: "go", Plan: "pro", Slider: 65, Notifications: true, Accordion: true, PageNumber: 1, Date: time.Date(2026, 11, 9, 0, 0, 0, 0, time.Local)}
+	p := DefaultPreset()
+	return &State{Config: p, Theme: theme.Controller{Mode: p.Appearance, Preset: p.Accent, Radius: p.Radius}, lastThemeMode: p.Appearance, Page: "overview", Name: "Sofia Davis", Email: "sofia@example.com", Framework: "go", Plan: "pro", Slider: 65, Notifications: true, Accordion: true, PageNumber: 1, Date: time.Date(2026, 11, 9, 0, 0, 0, 0, time.Local)}
 }
 
 var pages = []navigation.NavItem{
-	{Key: "overview", Label: "Overview", Group: "Get started"},
-	{Key: "controls", Label: "Forms & controls", Group: "Components"},
+	{Key: "overview", Label: "Cards"},
+	{Key: "controls", Label: "Forms & controls"},
 	{Key: "display", Label: "Data & display"},
 	{Key: "overlays", Label: "Overlays"},
 	{Key: "conversation", Label: "Messages & questions"},
-	{Key: "themes", Label: "Colors & themes", Group: "Design system"},
+	{Key: "navigation", Label: "Navigation"},
+	{Key: "themes", Label: "Colors & themes"},
 }
 
 func (s *State) View(c *ui.Context) {
-	s.Theme.Apply(c)
+	if s.Popovers != nil {
+		s.Popovers.BeginFrame()
+		defer s.Popovers.EndFrame()
+	}
+	// A command-line mode is an initial application preference, not an undo step.
+	if s.Theme.Mode != s.lastThemeMode {
+		mode := s.Theme.Mode
+		if mode == "" {
+			mode = theme.System
+		}
+		s.Config.Appearance = mode
+		s.lastThemeMode = mode
+		s.Theme.Mode = mode
+		s.designRevision++
+	}
+	systemDark := c.Theme().Dark
+	if s.Config.ReduceMotion {
+		c.DisableAnimations()
+	}
+	for i, page := range pages {
+		if page.Key == s.Page {
+			s.previewIndex = i
+			break
+		}
+	}
+	preview := s.Config.Tokens(systemDark)
+	chrome := chromeTokens()
+	theme.Scope(c, chrome).Fill().Background(chrome.Background).TextColor(chrome.Foreground).FontSize(13).Children(func() {
+		s.header(c, preview)
+		width, _ := c.Size()
+		compact := width < 980
+		body := ui.Row(c).Grow(1).MinHeight(0).FillWidth().Padding(20).Gap(20).AlignItems(ui.Stretch)
+		if compact {
+			body.Column().Padding(12).Gap(12)
+		}
+		body.Children(func() {
+			s.customizer(c, compact, preview)
+			s.preview(c, preview)
+		})
+		s.creatorDialogs(c)
+	})
+	if c.Shortcut(ui.Cmd|ui.Shift, ui.KeyZ) {
+		s.Redo()
+	} else if c.Shortcut(ui.Cmd, ui.KeyZ) {
+		s.Undo()
+	}
+	if c.Shortcut(ui.Cmd, ui.KeyK) {
+		s.Command = true
+	}
+}
+
+func (s *State) header(c *ui.Context, preview *theme.Tokens) {
 	t := theme.TokensOf(c)
-	ui.Column(c).Fill().Background(t.Background).TextColor(t.Foreground).FontSize(14).Children(func() {
-		ui.Row(c).Height(64).FillWidth().PaddingX(28).Gap(16).AlignItems(ui.Center).InsetShadow(0, -1, 0, 0, t.Border).Children(func() {
-			ui.Text(c, "◩").FontSize(28).FontWeight(700)
-			ui.Text(c, "shadcn/ui").FontSize(18).FontWeight(600)
-			display.Badge(c, "GO", display.BadgeOutline)
-			ui.Box(c).Grow(1)
-			b := control.Button(c, "Search components…", control.ButtonProps{Variant: control.Outline}).Width(200).Justify(ui.Start)
-			if b.Clicked() {
-				s.Command = true
+	ui.Row(c).Height(58).FillWidth().PaddingX(24).Gap(10).AlignItems(ui.Center).InsetShadow(0, -1, 0, 0, t.Border).Children(func() {
+		ui.Text(c, "◩").FontSize(25).FontWeight(700)
+		ui.Text(c, "shadcn/ui").FontSize(16).FontWeight(600)
+		ui.Text(c, "/").TextColor(t.MutedForeground).Margin(0, 6)
+		ui.Text(c, "Create").FontSize(14).FontWeight(500)
+		display.Badge(c, "Native Go", display.BadgeOutline)
+		ui.Box(c).Grow(1)
+		if control.Button(c, "Search", control.ButtonProps{Variant: control.Ghost, Size: control.Small, Label: "Search components"}).Clicked() {
+			s.Command = true
+		}
+		if control.Button(c, "◐", control.ButtonProps{Variant: control.Ghost, Size: control.IconSmall, Label: "Toggle theme"}).Clicked() {
+			p := s.Config
+			if preview.Dark {
+				p.Appearance = theme.LightMode
+			} else {
+				p.Appearance = theme.DarkMode
 			}
-			b = control.Button(c, "◐", control.ButtonProps{Variant: control.Ghost, Size: control.Icon}).Label("Toggle theme")
-			if b.Clicked() {
-				s.Theme.Toggle(c.Theme().Dark)
+			_ = s.ApplyPreset(p)
+		}
+	})
+}
+
+func (s *State) customizer(c *ui.Context, compact bool, preview *theme.Tokens) {
+	t := theme.TokensOf(c)
+	card := ui.Column(c).Width(232).MinHeight(0).Radius(14).Border(1, t.Border).Background(t.Card).Clip()
+	if compact {
+		card.FillWidth().Height(252)
+	}
+	card.Children(func() {
+		ui.Row(c).Height(48).FillWidth().PaddingX(14).Gap(6).AlignItems(ui.Center).InsetShadow(0, -1, 0, 0, t.Border).Children(func() {
+			ui.Text(c, "Design system").FontSize(13).FontWeight(600).Grow(1)
+			if control.Button(c, "↶", control.ButtonProps{Variant: control.Ghost, Size: control.IconSmall, Disabled: !s.CanUndo(), Label: "Undo design change"}).Clicked() {
+				s.Undo()
+			}
+			if control.Button(c, "↷", control.ButtonProps{Variant: control.Ghost, Size: control.IconSmall, Disabled: !s.CanRedo(), Label: "Redo design change"}).Clicked() {
+				s.Redo()
 			}
 		})
-		ui.Row(c).Grow(1).MinHeight(0).FillWidth().AlignItems(ui.Stretch).Children(func() {
-			navigation.Sidebar(c, &s.Page, navigation.SidebarProps{Items: pages, Width: 210, Label: "Gallery sections"}, func() {
-				display.Typography(c, "Native Go components", display.Small)
-				display.Typography(c, "Powered by MyGo", display.Muted)
-			}).InsetShadow(-1, 0, 0, 0, t.Border)
-			ui.Scroll(c.Key(s.Page)).Grow(1).MinWidth(0).Children(func() {
-				ui.Column(c).FillWidth().MaxWidth(1120).Padding(32).Gap(28).Children(func() {
-					switch s.Page {
-					case "controls":
-						s.controls(c)
-					case "display":
-						s.displays(c)
-					case "overlays":
-						s.overlays(c)
-					case "conversation":
-						s.conversation(c)
-					case "themes":
-						s.themes(c)
-					default:
-						s.overview(c)
+		ui.Scroll(c).Grow(1).MinHeight(0).FillWidth().Children(func() {
+			ui.Column(c).FillWidth().Padding(14).Gap(14).Children(func() {
+				s.choice(c, "Base color", s.Config.Base, baseColors, func(v string) { p := s.Config; p.Base = v; _ = s.ApplyPreset(p) })
+				s.choice(c, "Theme", s.Config.Accent, theme.Presets(), func(v string) { p := s.Config; p.Accent = v; _ = s.ApplyPreset(p) })
+				s.choice(c, "Chart color", s.Config.Chart, theme.Presets(), func(v string) { p := s.Config; p.Chart = v; _ = s.ApplyPreset(p) })
+				display.Separator(c, false)
+				s.choice(c, "Heading", s.Config.HeadingFont, headingFonts, func(v string) { p := s.Config; p.HeadingFont = v; _ = s.ApplyPreset(p) })
+				s.choice(c, "Font", s.Config.BodyFont, bodyFonts, func(v string) { p := s.Config; p.BodyFont = v; _ = s.ApplyPreset(p) })
+				display.Separator(c, false)
+				radii := make([]string, len(radiusValues))
+				for i, r := range radiusValues {
+					radii[i] = strconv.FormatFloat(float64(r), 'f', -1, 32)
+				}
+				radiusValue := strconv.FormatFloat(float64(s.Config.Radius), 'f', -1, 32)
+				foundRadius := false
+				for _, r := range radii {
+					if r == radiusValue {
+						foundRadius = true
+						break
+					}
+				}
+				if !foundRadius {
+					radii = append(radii, radiusValue)
+				}
+				s.choice(c, "Radius", radiusValue, radii, func(v string) {
+					r, _ := strconv.ParseFloat(v, 32)
+					p := s.Config
+					p.Radius = float32(r)
+					_ = s.ApplyPreset(p)
+				})
+				s.choice(c, "Appearance", string(s.Config.Appearance), []string{"system", "light", "dark"}, func(v string) { p := s.Config; p.Appearance = theme.Mode(v); _ = s.ApplyPreset(p) })
+				display.Separator(c, false)
+				presentation := "flyout"
+				if s.Config.NativeMenus {
+					presentation = "native"
+				}
+				s.choice(c, "Menu style", presentation, []string{"flyout", "native"}, func(value string) { p := s.Config; p.NativeMenus = value == "native"; _ = s.ApplyPreset(p) })
+				s.choiceSwitch(c, "Reduce motion", s.Config.ReduceMotion, func(value bool) { p := s.Config; p.ReduceMotion = value; _ = s.ApplyPreset(p) })
+			})
+		})
+		ui.Column(c).FillWidth().Padding(12).Gap(8).InsetShadow(0, 1, 0, 0, t.Border).Children(func() {
+			ui.Row(c).FillWidth().Gap(6).Children(func() {
+				if control.Button(c, "Copy preset", control.ButtonProps{Variant: control.Outline, Size: control.Small}).Grow(1).Clicked() {
+					c.WriteClipboard(s.ExportPreset())
+					s.status = "Preset copied"
+				}
+				if control.Button(c, "Open", control.ButtonProps{Variant: control.Outline, Size: control.Small, Label: "Open preset"}).Clicked() {
+					s.importOpen = true
+					s.importError = ""
+				}
+			})
+			ui.Row(c).FillWidth().Gap(6).Children(func() {
+				if control.Button(c, "Shuffle", control.ButtonProps{Variant: control.Outline, Size: control.Small, Label: "Randomize design"}).Grow(1).Clicked() {
+					s.randomSequence++
+					s.Randomize(uint64(c.Now().UnixNano()) ^ s.randomSequence)
+				}
+				if control.Button(c, "Reset", control.ButtonProps{Variant: control.Ghost, Size: control.Small}).Clicked() {
+					s.Reset()
+				}
+			})
+			anchor := control.Button(c, "Inspect theme", control.ButtonProps{Variant: control.Ghost, Size: control.Small}).FillWidth()
+			s.inspector(c, anchor, preview)
+			if s.status != "" {
+				ui.Text(c, s.status).FontSize(11).TextColor(t.MutedForeground).Role(ui.RoleStatus)
+			}
+		})
+	})
+}
+
+func choiceLabel(value string) string {
+	switch value {
+	case "system":
+		return "System"
+	case "flyout":
+		return "Shadcn Flyout"
+	case "native":
+		return "System native"
+	case "same":
+		return "Same as body"
+	case "serif":
+		return "Serif"
+	case "mono":
+		return "Monospace"
+	}
+	if len(value) > 0 {
+		return strings.ToUpper(value[:1]) + value[1:]
+	}
+	return value
+}
+func (s *State) choice(c *ui.Context, label, value string, values []string, changed func(string)) {
+	t := theme.TokensOf(c)
+	root := ui.Column(c.Key(label)).FillWidth().Gap(6)
+	state := ui.Local(root, "value", func() creatorChoice { return creatorChoice{Value: value, Last: value} })
+	if state.Last != value {
+		state.Value, state.Last = value, value
+	}
+	root.Children(func() {
+		ui.Text(c, label).FontSize(11).FontWeight(500).TextColor(t.MutedForeground)
+		options := make([]control.Option, len(values))
+		for i, v := range values {
+			options[i] = control.Option{Value: v, Label: choiceLabel(v)}
+		}
+		props := control.SelectProps{Label: label, Options: options, Size: control.Small}
+		var field ui.Element
+		if s.Config.NativeMenus {
+			field = desktop.NativeSelect(c, &state.Value, props)
+		} else {
+			var err error
+			field, err = desktop.Select(c, s.Popovers, "creator-choice:"+label, &state.Value, props)
+			if err != nil {
+				s.popupError(c, err)
+			}
+		}
+		field.FillWidth().MinHeight(32).Height(32).FontSize(12)
+		if field.Changed() {
+			state.Last = state.Value
+			changed(state.Value)
+			c.Invalidate()
+		}
+	})
+}
+
+type creatorChoice struct{ Value, Last string }
+type creatorSwitch struct{ Value, Last bool }
+
+func (s *State) choiceSwitch(c *ui.Context, label string, value bool, changed func(bool)) {
+	root := ui.Column(c.Key(label))
+	state := ui.Local(root, "value", func() creatorSwitch { return creatorSwitch{Value: value, Last: value} })
+	if state.Last != value {
+		state.Value, state.Last = value, value
+	}
+	root.Children(func() {
+		if control.Switch(c, &state.Value, control.SwitchProps{Label: label}).Changed() {
+			state.Last = state.Value
+			changed(state.Value)
+			c.Invalidate()
+		}
+	})
+}
+
+func (s *State) preview(c *ui.Context, t *theme.Tokens) {
+	theme.Scope(c, t).Grow(1).MinHeight(0).MinWidth(0).Radius(14).Border(1, t.Border).Clip().Background(t.Background).TextColor(t.Foreground).Font(s.Config.BodyFamily()).Children(func() {
+		var parts ui.TabsParts
+		triggers := make([]ui.Element, len(pages))
+		ui.Row(c).Height(48).FillWidth().InsetShadow(0, -1, 0, 0, t.Border).Background(t.Card).Children(func() {
+			ui.ScrollHorizontal(c).Grow(1).MinWidth(0).Children(func() {
+				parts = ui.TabsBase(c, &s.previewIndex, len(pages))
+				parts.List.Label("Component previews").Gap(2).PaddingX(12).Height(48).Children(func() {
+					for i, page := range pages {
+						b := parts.Tab(i).Height(48).PaddingX(11).FontSize(12).TextColor(t.MutedForeground)
+						if i == s.previewIndex {
+							b.TextColor(t.Foreground).InsetShadow(0, -2, 0, 0, t.Primary)
+						}
+						triggers[i] = b
+						b.Children(func() { ui.Text(c, page.Label).SingleLine() })
 					}
 				})
 			})
 		})
+		s.previewIndex = max(0, min(s.previewIndex, len(pages)-1))
+		s.Page = pages[s.previewIndex].Key
+		width, _ := c.Size()
+		if s.Page != s.lastPreviewPage || width != s.lastPreviewWidth {
+			triggers[s.previewIndex].ScrollIntoView()
+			s.lastPreviewPage = s.Page
+			s.lastPreviewWidth = width
+		}
+		panel := ui.Scroll(c.Key(s.Page)).Grow(1).MinHeight(0).FillWidth().Role(ui.RoleRegion).Label(pages[s.previewIndex].Label)
+		panel.LabelledBy(triggers[s.previewIndex])
+		triggers[s.previewIndex].Controls(panel)
+		panel.Children(func() {
+			ui.Column(c).FillWidth().Padding(24).Gap(20).Children(func() {
+				switch s.Page {
+				case "controls":
+					s.controls(c)
+				case "display":
+					s.displays(c)
+				case "overlays":
+					s.overlays(c)
+				case "conversation":
+					s.conversation(c)
+				case "navigation":
+					s.navigationPreview(c)
+				case "themes":
+					s.themes(c)
+				default:
+					s.overview(c)
+				}
+			})
+		})
+		s.previewDialogs(c)
 	})
-	if c.Shortcut(ui.Cmd, ui.KeyK) {
-		s.Command = true
-	}
-	if choice := overlay.CommandDialog(c, &s.Command, &s.Query, overlay.CommandProps{Items: []overlay.CommandItem{{Value: "overview", Label: "Overview"}, {Value: "controls", Label: "Forms & controls"}, {Value: "display", Label: "Data & display"}, {Value: "overlays", Label: "Overlays"}, {Value: "themes", Label: "Colors & themes"}}, Placeholder: "Find a section…"}); choice != "" {
+}
+
+func (s *State) creatorDialogs(c *ui.Context) {
+	if choice := overlay.CommandDialog(c, &s.Command, &s.Query, overlay.CommandProps{Items: []overlay.CommandItem{{Value: "overview", Label: "Cards"}, {Value: "controls", Label: "Forms & controls"}, {Value: "display", Label: "Data & display"}, {Value: "overlays", Label: "Overlays"}, {Value: "conversation", Label: "Messages & questions"}, {Value: "navigation", Label: "Navigation"}, {Value: "themes", Label: "Colors & themes"}}, Placeholder: "Find a preview…"}); choice != "" {
 		s.Page = choice
 		s.Command = false
+	}
+	overlay.Dialog(c, &s.importOpen, overlay.DialogProps{Title: "Open preset", Description: "Paste a Native Go design preset. Changes apply only after validation."}, func() {
+		control.Textarea(c, &s.importText, control.TextareaProps{Label: "Preset JSON", Placeholder: DefaultPreset().JSON(), MinRows: 8, MaxRows: 12, Invalid: s.importError != ""}).FillWidth().Font("monospace")
+		if s.importError != "" {
+			ui.Text(c, s.importError).TextColor(theme.TokensOf(c).Destructive).FontSize(12).Role(ui.RoleAlert)
+		}
+		ui.Row(c).Gap(8).Justify(ui.End).Children(func() {
+			if control.Button(c, "Paste clipboard", control.ButtonProps{Variant: control.Outline, Size: control.Small}).Clicked() {
+				s.importText = c.ReadClipboard()
+			}
+			if control.Button(c, "Apply preset", control.ButtonProps{Size: control.Small}).Clicked() {
+				if err := s.ImportPreset(s.importText); err != nil {
+					s.importError = err.Error()
+				} else {
+					s.importOpen = false
+					s.importError = ""
+					s.status = "Preset applied"
+				}
+			}
+		})
+	})
+}
+func (s *State) previewDialogs(c *ui.Context) {
+	if s.pendingMenuAction != "" {
+		overlay.Toast(c, ui.Toast{Title: "Menu action", Description: s.pendingMenuAction})
+		s.pendingMenuAction = ""
 	}
 	overlay.Dialog(c, &s.Dialog, overlay.DialogProps{Title: "Edit profile", Description: "Make changes to your profile. Save when you are done."}, func() {
 		control.Field(c, control.FieldProps{Label: "Name"}, func() ui.Element { return control.Input(c, &s.Name, control.InputProps{}) })
@@ -102,223 +393,67 @@ func (s *State) View(c *ui.Context) {
 	overlay.Sheet(c, &s.Sheet, overlay.SheetProps{Title: "Settings", Description: "Your workspace preferences", Side: overlay.Right}, func() { control.Switch(c, &s.Notifications, control.SwitchProps{Label: "Notifications"}) })
 	overlay.Toaster(c)
 }
-func heading(c *ui.Context, title, description string) {
-	ui.Column(c).Gap(10).Children(func() { display.Typography(c, title, display.H1); display.Typography(c, description, display.Lead) })
-}
-func columns(c *ui.Context, builds ...func()) {
-	w, _ := c.Size()
-	root := ui.Row(c).FillWidth().Gap(20).AlignItems(ui.Start)
-	if w < 950 {
-		root.Column()
+
+func (s *State) inspector(c *ui.Context, anchor ui.Element, t *theme.Tokens) {
+	if s.Popovers == nil {
+		if anchor.Clicked() {
+			s.popupError(c, fmt.Errorf("this preview has no desktop window"))
+		}
+		return
 	}
-	root.Children(func() {
-		for _, build := range builds {
-			ui.Column(c).Basis(0).Grow(1).MinWidth(0).Gap(20).Children(build)
+	revision := s.designRevision
+	if t.Dark {
+		revision ^= 1 << 63
+	}
+	p := desktop.PopoverProps{Label: "Theme tokens", Placement: mygo.PlacementRightStart, Width: 360, Height: 420, FitContent: true, Revision: revision}
+	var err error
+	if s.Config.NativeMenus {
+		err = desktop.NativePopover(c, s.Popovers, "theme-inspector", anchor, &s.tokenOpen, p, func(child *ui.Context) { s.nativeInspectorContent(child, t) })
+	} else {
+		err = desktop.Popover(c, s.Popovers, "theme-inspector", anchor, &s.tokenOpen, p, func(child *ui.Context) { s.inspectorContent(child, t) })
+	}
+	if err != nil {
+		s.tokenOpen = false
+		s.popupError(c, err)
+	}
+}
+func (s *State) popupError(c *ui.Context, err error) {
+	overlay.Toast(c, ui.Toast{Title: "Could not open popup", Description: err.Error(), Type: "error"})
+}
+func (s *State) nativeInspectorContent(c *ui.Context, t *theme.Tokens) {
+	ui.Column(c).FillWidth().Gap(12).Children(func() {
+		ui.Text(c, "Theme tokens").FontSize(16).FontWeight(600)
+		for _, v := range []struct {
+			name  string
+			color ui.Color
+		}{{"Background", t.Background}, {"Foreground", t.Foreground}, {"Primary", t.Primary}, {"Muted", t.Muted}, {"Border", t.Border}, {"Chart 1", t.Chart1}} {
+			ui.Row(c).Gap(10).AlignItems(ui.Center).Children(func() {
+				ui.Box(c).Size(24, 24).Radius(5).Background(v.color)
+				ui.Text(c, v.name).Grow(1)
+				ui.Text(c, fmt.Sprintf("#%02x%02x%02x", v.color.R, v.color.G, v.color.B)).Font("monospace").FontSize(11)
+			})
+		}
+		if ui.Button(c, "Copy preset").Clicked() {
+			c.WriteClipboard(s.ExportPreset())
 		}
 	})
 }
-func (s *State) overview(c *ui.Context) {
-	heading(c, "Build something beautiful.", "Thoughtful components for your next native Go app.")
-	ui.Row(c).Gap(8).Children(func() {
-		display.Badge(c, "Native", display.BadgeSecondary)
-		display.Badge(c, "Composable", display.BadgeOutline)
-		display.Badge(c, "Themeable", display.BadgeOutline)
-	})
-	columns(c, func() {
-		display.Card(c, func() {
-			display.CardHeader(c, "Create an account", "Enter your email below to create your account.")
-			control.Button(c, "Continue with GitHub", control.ButtonProps{Variant: control.Outline}).FillWidth()
-			ui.Row(c).Gap(12).AlignItems(ui.Center).Children(func() {
-				display.Separator(c, false).Grow(1)
-				display.Typography(c, "OR CONTINUE WITH", display.Muted).FontSize(10)
-				display.Separator(c, false).Grow(1)
-			})
-			control.Field(c, control.FieldProps{Label: "Email"}, func() ui.Element { return control.Input(c, &s.Email, control.InputProps{Placeholder: "m@example.com"}) })
-			if control.Button(c, "Create account", control.ButtonProps{}).FillWidth().Clicked() {
-				overlay.Toast(c, ui.Toast{Title: "Welcome aboard", Description: "This demo keeps your data on this device."})
-			}
-		})
-		display.Card(c, func() {
-			display.CardHeader(c, "Your preferences", "Make yourself at home.")
-			control.Switch(c, &s.Notifications, control.SwitchProps{Label: "Push notifications"})
-			control.Checkbox(c, &s.Marketing, "Send me product updates", control.CheckboxProps{})
-		})
-	}, func() {
-		display.Card(c, func() {
-			display.CardHeader(c, "Activity", "Your projects are moving forward.")
-			display.Chart(c, display.ChartProps{Labels: []string{"Mon", "Tue", "Wed", "Thu", "Fri", "Sat"}, Series: []display.ChartSeries{{Name: "Builds", Values: []float64{32, 48, 36, 72, 56, 88}}}, Height: 170, Label: "Successful builds this week"})
-			ui.Row(c).Gap(8).Children(func() {
-				display.Badge(c, "+24.8%", display.BadgeSecondary)
-				display.Typography(c, "from last week", display.Muted)
-			})
-		})
-		display.Card(c, func() {
-			display.CardHeader(c, "Team members", "Invite your team to collaborate.")
-			for _, person := range []struct{ name, email, initial string }{{"Sofia Davis", "sofia@example.com", "SD"}, {"Jackson Lee", "jackson@example.com", "JL"}} {
-				display.Item(c, display.ItemProps{Title: person.name, Description: person.email, Leading: func() { display.Avatar(c, display.AvatarProps{Fallback: person.initial, Size: 36}) }, Trailing: func() { display.Badge(c, "Member", display.BadgeOutline) }})
-			}
-		})
-	})
-}
-func (s *State) controls(c *ui.Context) {
-	heading(c, "Forms & controls", "Keyboard-ready building blocks with controlled state.")
-	display.Card(c, func() {
-		display.CardHeader(c, "Buttons", "Six variants. Consistent sizing and focus treatment.")
-		ui.Row(c).Gap(8).Wrap().Children(func() {
-			for i, label := range []string{"Default", "Secondary", "Outline", "Ghost", "Destructive", "Link"} {
-				control.Button(c, label, control.ButtonProps{Variant: control.Variant(i)})
-			}
-			control.Button(c, "Disabled", control.ButtonProps{Disabled: true})
-		})
-	})
-	columns(c, func() {
-		display.Card(c, func() {
-			display.CardHeader(c, "Profile", "Labels, descriptions and inline validation.")
-			control.Field(c, control.FieldProps{Label: "Full name", Required: true}, func() ui.Element { return control.Input(c, &s.Name, control.InputProps{}) })
-			control.Field(c, control.FieldProps{Label: "Bio", Description: "Tell us a little about yourself."}, func() ui.Element {
-				return control.Textarea(c, &s.Bio, control.TextareaProps{Placeholder: "I build things with Go…"})
-			})
-			control.InputGroup(c, control.InputGroupProps{Prefix: "https://", Suffix: ".dev"}, func() ui.Element { return control.Input(c, &s.Query, control.InputProps{Placeholder: "your-name"}) })
-			control.InputOTP(c, &s.OTP, control.InputOTPProps{Length: 6, Label: "Verification code"})
-		})
-	}, func() {
-		display.Card(c, func() {
-			display.CardHeader(c, "Make a choice", "Select, search, toggle and adjust.")
-			control.Select(c, &s.Framework, control.SelectProps{Label: "Framework", Options: []control.Option{{Value: "go", Label: "Go / MyGo"}, {Value: "rust", Label: "Rust"}, {Value: "swift", Label: "Swift"}}})
-			control.RadioGroup(c, &s.Plan, control.RadioGroupProps{Label: "Plan", Options: []control.Option{{Value: "free", Label: "Free"}, {Value: "pro", Label: "Pro"}, {Value: "team", Label: "Team"}}})
-			control.Switch(c, &s.Notifications, control.SwitchProps{Label: "Notifications"})
-			control.Checkbox(c, &s.Checked, "Accept terms and conditions", control.CheckboxProps{})
-			control.Slider(c, &s.Slider, control.SliderProps{Min: 0, Max: 100, Step: 1, Label: "Volume"})
-			display.Typography(c, fmt.Sprintf("Volume: %.0f%%", s.Slider), display.Muted)
-			control.Toggle(c, &s.Bold, "Bold", control.ToggleProps{Outline: true})
-		})
-	})
-}
-func (s *State) displays(c *ui.Context) {
-	heading(c, "Data & display", "Readable information, useful feedback and considered details.")
-	columns(c, func() {
-		display.Card(c, func() {
-			display.CardHeader(c, "Calendar", "Browse months and choose a date.")
-			display.DatePicker(c, &s.Date, display.DatePickerProps{Label: "Project date"})
-			display.Calendar(c, &s.Date)
-		})
-		display.Card(c, func() {
-			display.CardHeader(c, "Loading states", "")
-			display.Progress(c, .65)
-			display.Skeleton(c, display.SkeletonProps{})
-			display.Skeleton(c, display.SkeletonProps{Width: 180})
-			display.Spinner(c)
-		})
-	}, func() {
-		display.Card(c, func() {
-			display.CardHeader(c, "Frequently asked", "Composable disclosure patterns.")
-			display.Accordion(c, display.AccordionProps{Single: true, Items: []display.AccordionItem{{Key: "native", Title: "Is this a native app?", Open: &s.Accordion, Content: func() {
-				display.Typography(c, "Yes. Every component is rendered by MyGo using Go, with native input and accessibility.", display.Paragraph)
-			}}}})
-			display.Collapsible(c, "More details", &s.Collapsible, func() { display.Typography(c, "Components use your application's own state.", display.Muted) })
-		})
-		display.Alert(c, display.AlertProps{Title: "Everything is up to date", Description: "Your workspace is ready for the next idea."})
-		display.CodeBlock(c, display.CodeBlockProps{Title: "main.go", Language: "go", Code: "func view(c *ui.Context) {\n    theme.Apply(c)\n    control.Button(c, \"Hello, Go\", control.ButtonProps{})\n}", LineNumbers: true, Height: 130})
-	})
-	display.Card(c, func() {
-		display.CardHeader(c, "Recent invoices", "Sortable columns and paginated rows.")
-		display.DataTable(c, &s.Table, display.DataTableProps[invoice]{Rows: invoices, Label: "Invoices", Key: func(i invoice) any { return i.ID }, Columns: []display.DataColumn[invoice]{{ID: "id", Title: "Invoice", Value: func(i invoice) string { return i.ID }}, {ID: "status", Title: "Status", Value: func(i invoice) string { return i.Status }}, {ID: "amount", Title: "Amount", Value: func(i invoice) string { return fmt.Sprintf("$%.2f", i.Amount) }, Compare: func(a, b invoice) int {
-			if a.Amount < b.Amount {
-				return -1
-			}
-			if a.Amount > b.Amount {
-				return 1
-			}
-			return 0
-		}}}})
-	})
-}
 
-type invoice struct {
-	ID, Status string
-	Amount     float64
-}
-
-var invoices = []invoice{{"INV001", "Paid", 250}, {"INV002", "Pending", 150}, {"INV003", "Paid", 350}, {"INV004", "Processing", 450}}
-
-func (s *State) overlays(c *ui.Context) {
-	heading(c, "Overlays", "Focused interactions, with native dismissal and focus restoration.")
-	display.Card(c, func() {
-		display.CardHeader(c, "Open something", "Try Escape, Tab, the arrow keys and an outside click.")
-		ui.Row(c).Gap(12).Wrap().Children(func() {
-			if control.Button(c, "Edit profile", control.ButtonProps{Variant: control.Outline}).Clicked() {
-				s.Dialog = true
-			}
-			if control.Button(c, "Open sheet", control.ButtonProps{Variant: control.Outline}).Clicked() {
-				s.Sheet = true
-			}
-			b := control.Button(c, "Popover", control.ButtonProps{Variant: control.Outline})
-			overlay.Popover(c, b, &s.Popover, overlay.PopoverProps{}, func() {
-				display.CardHeader(c, "Dimensions", "Set the dimensions for the layer.")
-				control.Input(c, &s.Name, control.InputProps{Label: "Layer name"})
+func (s *State) inspectorContent(c *ui.Context, t *theme.Tokens) {
+	theme.Scope(c, t).FillWidth().Padding(16).Gap(12).Background(t.Background).TextColor(t.Foreground).Font(s.Config.BodyFamily()).Children(func() {
+		s.cardHeader(c, "Theme tokens", "Your current preview colors.")
+		for _, v := range []struct {
+			name  string
+			color ui.Color
+		}{{"Background", t.Background}, {"Foreground", t.Foreground}, {"Primary", t.Primary}, {"Muted", t.Muted}, {"Border", t.Border}, {"Chart 1", t.Chart1}} {
+			ui.Row(c).Gap(10).AlignItems(ui.Center).Children(func() {
+				ui.Box(c).Size(24, 24).Radius(5).Background(v.color).Border(1, t.Border)
+				ui.Text(c, v.name).Grow(1).FontSize(12)
+				ui.Text(c, fmt.Sprintf("#%02x%02x%02x", v.color.R, v.color.G, v.color.B)).Font("monospace").FontSize(11).TextColor(t.MutedForeground)
 			})
-			b = control.Button(c, "Hover for a tip", control.ButtonProps{Variant: control.Outline})
-			overlay.Tooltip(c, b, "Small details make a difference.", overlay.TooltipProps{})
-			overlay.DropdownMenu(c, &s.Menu, overlay.MenuProps{Items: []overlay.MenuItem{{Key: "profile", Label: "Profile"}, {Key: "settings", Label: "Settings"}, {Separator: true}, {Key: "logout", Label: "Log out", Destructive: true}}}, func(b ui.Element) {
-				control.StyleButton(c, b, "Open menu", control.ButtonProps{Variant: control.Outline})
-			})
-			if control.Button(c, "Show toast", control.ButtonProps{}).Clicked() {
-				overlay.Toast(c, ui.Toast{Title: "Event created", Description: "Monday, November 9 at 9:00 AM"})
-			}
-		})
+		}
+		if control.Button(c, "Copy preset", control.ButtonProps{Variant: control.Outline, Size: control.Small}).FillWidth().Clicked() {
+			c.WriteClipboard(s.ExportPreset())
+		}
 	})
-	display.Card(c, func() {
-		display.CardHeader(c, "Command palette", "Search by name. Select with the keyboard.")
-		overlay.Command(c, &s.Query, overlay.CommandProps{Items: []overlay.CommandItem{{Value: "calendar", Label: "Calendar", Group: "Suggestions"}, {Value: "search", Label: "Search", Group: "Suggestions"}, {Value: "settings", Label: "Settings", Group: "Workspace"}}})
-	})
-}
-func (s *State) themes(c *ui.Context) {
-	heading(c, "Make it yours.", "Semantic colors, light and dark appearance, shared across every component.")
-	display.Card(c, func() {
-		display.CardHeader(c, "Appearance", "Switch at runtime or follow your desktop.")
-		ui.Row(c).Gap(8).Children(func() {
-			for _, mode := range []theme.Mode{theme.System, theme.LightMode, theme.DarkMode} {
-				if control.Button(c, string(mode), control.ButtonProps{Variant: control.Outline}).Clicked() {
-					s.Theme.Mode = mode
-				}
-			}
-		})
-		control.Switch(c, &s.Theme.ReduceMotion, control.SwitchProps{Label: "Reduce motion"})
-		ui.Row(c).Gap(8).Wrap().Children(func() {
-			for _, preset := range theme.Presets() {
-				tk := theme.Preset(preset, c.Theme().Dark)
-				b := control.Button(c, preset, control.ButtonProps{Variant: control.Outline}).Border(2, tk.Primary)
-				if b.Clicked() {
-					s.Theme.Preset = preset
-				}
-			}
-		})
-	})
-	for _, dark := range []bool{false, true} {
-		t := theme.Preset(s.Theme.Preset, dark)
-		theme.Scope(c, t).FillWidth().Padding(24).Gap(16).Radius(t.Radius).Background(t.Background).TextColor(t.Foreground).Border(1, t.Border).Children(func() {
-			label := "Light"
-			if dark {
-				label = "Dark"
-			}
-			display.Typography(c, label, display.H3)
-			ui.Row(c).Gap(8).Children(func() {
-				control.Button(c, "Primary", control.ButtonProps{})
-				control.Button(c, "Secondary", control.ButtonProps{Variant: control.Secondary})
-				control.Button(c, "Outline", control.ButtonProps{Variant: control.Outline})
-				control.Button(c, "Destructive", control.ButtonProps{Variant: control.Destructive})
-			})
-			ui.Row(c).Gap(12).Wrap().Children(func() {
-				for _, color := range []struct {
-					name  string
-					color ui.Color
-				}{{"background", t.Background}, {"foreground", t.Foreground}, {"primary", t.Primary}, {"secondary", t.Secondary}, {"muted", t.Muted}, {"accent", t.Accent}, {"destructive", t.Destructive}, {"border", t.Border}, {"ring", t.Ring}} {
-					ui.Column(c).Gap(6).Children(func() {
-						ui.Box(c).Size(68, 48).Radius(6).Background(color.color).Border(1, t.Border)
-						ui.Text(c, color.name).FontSize(10).TextColor(t.MutedForeground)
-					})
-				}
-			})
-		})
-	}
 }
