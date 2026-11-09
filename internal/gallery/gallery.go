@@ -41,6 +41,7 @@ type State struct {
 	DateRange                                                                      display.DateRange
 	Table                                                                          display.DataTableState
 	tablePreview                                                                   tablePreviewState
+	chartPreview                                                                   chartPreviewState
 	conversationPreview                                                            conversationPreviewState
 	ConversationComposition                                                        conversationCompositionState
 	Questionnaire                                                                  conversation.QuestionnaireState
@@ -93,7 +94,7 @@ type creatorPage struct {
 var pages = []creatorPage{
 	{Key: "overview", Label: "Cards"},
 	{Key: "controls", Label: "Forms & controls"},
-	{Key: "display", Label: "Data & display", Keywords: []string{"Table", "DataTable", "Calendar", "Avatar", "Card", "Chart"}},
+	{Key: "display", Label: "Data & display", Keywords: []string{"Table", "DataTable", "Calendar", "Avatar", "Card", "Chart", "BarChart", "LineChart", "AreaChart", "PieChart", "DonutChart", "RadarChart", "RadialChart"}},
 	{Key: "content", Label: "Content & feedback"},
 	{Key: "text-layout", Label: "Text & layout", Keywords: []string{"Typography", "Kbd", "Keyboard", "CodeBlock", "Code", "Spinner", "Skeleton", "ScrollArea", "AspectRatio"}},
 	{Key: "overlays", Label: "Overlays"},

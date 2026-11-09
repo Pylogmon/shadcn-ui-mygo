@@ -174,6 +174,7 @@ func (s *State) displays(c *ui.Context) {
 		}}}})
 	})
 	s.workspacePreview(c)
+	s.chartCompositionPreview(c)
 }
 
 type invoice struct {

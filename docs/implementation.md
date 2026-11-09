@@ -89,7 +89,8 @@
 | 5.BF | 会话阶段模块ZIP的独立消费者复验 | 已提交 `7b173dc`；`09a5666`制品在空缓存/无workspace/无replace条件下外部构建、跨进程主题恢复像素及Gallery明暗渲染通过 |
 | 5.BG | 横向Bar、Cartesian配置与原生坐标/检查修正 | 已提交 `0cdb9a6`；71项聚焦、隔离display/Gallery全包、交叉原生复核、明暗截图及vet通过；源自由组合与几何/路径动画范围继续保留 |
 | 5.BH | Chart默认Tooltip/Legend与网格样式对齐 | 已提交 `daaf2f7`；26项聚焦、579项隔离检查、独立原生复核及vet通过；保留窄Legend换行与真实原生字体行盒 |
-| 5.BI | 极坐标Chart局部主题的绘制快照 | 本阶段提交；30项正式回归、609项隔离检查、10项独立原生复核及vet通过；Draw不保留Context或应用回调 |
+| 5.BI | 极坐标Chart局部主题的绘制快照 | 已提交 `d397be3`；30项正式回归、609项隔离检查、10项独立原生复核及vet通过；Draw不保留Context或应用回调 |
+| 5.BJ | Gallery访问量图表与六家族原生组合 | 本阶段提交；新增16项集成、Gallery154项、全量1553项、交叉原生复核/明暗宽窄截图、vet、三平台构建及macOS实窗通过 |
 
 用户已明确允许原生平台适配：Popover、menu、下拉菜单可以使用 MyGo 的系统菜单与独立 Flyout，超出父窗口范围；无需逐像素照搬网页浮层。Gallery 以 [shadcn/create](https://ui.shadcn.com/create) 的配置与实时预览流程为参考。完整组件功能、主题、动画范围保持不变。
 

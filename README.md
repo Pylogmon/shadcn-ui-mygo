@@ -78,6 +78,7 @@ Text & layout 页集中展示 [Typography/Kbd](docs/typography.md)、[CodeBlock]
 回合锚定、流式跟随、历史位置保持与跳转见 [Message Scroller](docs/message-scroller.md)。
 严格逐步导航、原生选项/输入、草稿与受控校验组合见 [Questionnaire](docs/questionnaire.md)。
 横向柱形、分组/堆叠、原值检查与坐标轴配置见 [Chart](docs/chart.md)。
+Gallery 的 Data & display 页提供可切换方向、数据模式、坐标和图例的访问量图表，以及 Line、Area、Pie、Donut、Radar、Radial 六类预览。
 Messages & questions 页展示反应按钮、共享备注Sheet、五种附件状态与取消/重试/完成、文件预览和可编辑Trace；草稿、反应与展开状态跨页保留，临时弹层在离页时关闭。还可试用完整消息/标记组合、发送与停止流式回复、前插历史与跳回最新，以及问卷的校验、跳过、结果复查、编辑和重置。支持用Message、Marker、MessageScroller、Questionnaire等组件名搜索进入。
 Overlays页包含通知类型/位置、状态色与关闭按钮、堆叠、动作保持打开和上传完成更新的交互示例；通知与配置跨预览页保留。
 

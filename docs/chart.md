@@ -41,4 +41,6 @@ Stacked使用正负分开的堆叠，Normalized沿MyGo的StackNormalized契约�
 
 Selected是应用持有的分类索引，-1表示未检查；省略时使用组件局部状态。每个图表只有一个原生键盘停靠点，纵向用Left/Right、横向用Up/Down检查有效分类，Home/End到首尾，Escape退出检查。指针移动按对应分类维度选择；键盘操作不会被静止指针立即覆盖。无障碍Value包含分类、系列及格式化值。真实读屏与平台输入矩阵仍须验证。
 
+Gallery的Data & display页包含两张交互示例卡。Visitor explorer可切换横纵方向、单系列/分组/堆叠/绝对比例、正负变化和浏览器分类配色，单独显示坐标值、网格与Legend，并更新或恢复实际数据。比例坐标只改变轴格式，Tooltip仍显示原始计数。Chart style explorer可切换Line、堆叠Area、Pie、Donut、Radar和Radial；两个图表分别持有选择状态，离页返回保留应用配置。所有示例均直接调用公开Chart API。
+
 ChartContainer在网页源中负责上下文和样式，Recharts负责几何。此Go入口是原生高层图表 API；源中任意Recharts组合、Brush、Reference line、柱顶LabelList、自由绘图区margin及Bar几何/路径数据插值动画还未全部具备。当前横向轴、颜色与圆角配置不代表完整图表目录已验收。对应固定示例、文档、MIT许可及文件校验归档于`pkg/display/testdata/shadcn-chart`，完整差异见[parity.md](parity.md)。
