@@ -89,3 +89,17 @@ Carousel控制器与Combobox组合API提交`1d50ec226dd1c4246d1e4e73319b1bff614f
 标准四图与此前实际查看的`run-1157201957`对应图逐字节相同；Root查看新的外部明暗两图，
 其中实际显示分组跳转后的Project03/04。静态图及本次集成流程使用减少动态效果，
 不充当新的源动画验收；本轮没有发布SDK，也未包含在途物理运动/菜单预设/Chart改动或替代平台GUI/AT验收。
+
+2026-11-10，当前SDK提交`9674a812da1b206a2628459b4a39fd6a9e690755`以
+`v0.0.0-20261110042106-9674a812da1b`完成标准八步及第二外部模块六步。
+ZIP SHA-256为`668df036f11ad950fa497e4806bd6212a0c89e1f92e2654ef7c2df9de586a3eb`。
+外部模块的一个集中公开原生流程实际消费Field独立顺序／丰富label、Radio键盘、
+独立Combobox当前child编辑／typed选择、Menubar逐菜单宽度与child先行切换、显式Inter和Material SVG。
+两轮空模块／构建缓存、GOWORK关闭、依赖图无replace；1297份Git／ZIP／实际模块缓存文件逐字节一致，缓存已删除。
+
+最终收据为`build/consumer-verification/run-1920561925/current-module-distribution-receipt.json`，
+SHA-256为`35eea14c8be20ce07a3d260dc6772c4d525eb947aa826cb2662042d7fd711332`。
+Root核验14命令日志、全部Git／ZIP原文、消费者与图片哈希及实际依赖图／缓存清理；
+独审查看8PNG，Root实际查看恢复消费者、Gallery深色、外部表单浅色、可编辑child和Menubar深色5图。
+首次受限网络失败与两处消费者AX locator诊断独立保留，修正后正常require使用全新缓存完成，不计失败为通过。
+此记录仅覆盖9674a81，不包含后续NumberInput空值API或Input／Textarea候选，也不替代公共发布、OS窗口／AT／IME或三平台运行时验收。
