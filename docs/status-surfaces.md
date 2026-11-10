@@ -32,3 +32,7 @@ display.EmptyWith(c, display.EmptyProps{
 `EmptySlots.Header` 可替换整个媒体/标题/说明区域，其他槽位替换各自内容。Content支持原生输入、链接、按钮等组合；旧Action在Content之后执行。Empty默认不会自动宣布状态，可由应用在返回Element上明确选择Status角色。
 
 `EmptyMedia` 的Icon变体是40 DIP容器、24 DIP图标。简单图标默认装饰性；命名图标提供image角色；自定义媒体保留其原生可访问性，有Label时使用命名分组。明确 `Decorative` 后隐藏且禁止交互，避免出现无障碍树中不存在的键盘焦点。独立的Header/Title/Description/Media/Content helpers也可以组合。
+
+Gallery 的 Content & feedback 页提供[完整源组合](../examples/status-composition/README.md)：Alert 的20种通知配置涵盖纯标题/说明、多个真实内联链接、明暗 amber、destructive正文及独立动作；Empty 的13种配置涵盖头像/灰度组、404 InputGroup/Kbd搜索、通知刷新、云存储、帖子、Card内嵌和ar/he翻译。两个配置区使用独立模型，搜索草稿跨页保留；菜单跟随全局Flyout／Native设置。原始头像复用已离线提供的固定源素材。
+
+这些示例的创建、刷新、上传、联系与登录动作只记录本地意图，不连接后端。`Kbd` 是可视键帽；这里没有注册会抢走编辑器输入的全局斜杠快捷键。业务传输和路由由使用者接入。

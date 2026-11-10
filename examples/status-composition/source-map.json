@@ -1,0 +1,390 @@
+{
+  "repository": "https://github.com/shadcn-ui/ui",
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "files": [
+    {
+      "path": "apps/v4/examples/base/alert-action.tsx",
+      "gitBlob": "84445921768e9c62d7cd42f046a721d55470e8c2",
+      "sha256": "c96d0f04652f4f293ca085f579df4bd9233efa655210ff465351a847680bfb68",
+      "bytes": 561,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/alert-action.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/alert-basic.tsx",
+      "gitBlob": "2d09927f65cd12d48811c01b85feefc79fedff15",
+      "sha256": "8de17b44eb7c82bf56da568607dc5d4b1be38ab4fab890e58fccf5b00f57a072",
+      "bytes": 475,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/alert-basic.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/alert-colors.tsx",
+      "gitBlob": "6788aa0fc0cef413e0028db45a9312181fe661bc",
+      "sha256": "65411cd59a4da7fbe6acac0ff676fc96391983ba342781799d3466dd2a353d24",
+      "bytes": 610,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/alert-colors.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/alert-demo.tsx",
+      "gitBlob": "2b017d056af60ba71feac40c66f82af3ce1b9686",
+      "sha256": "d3822ecc439caf3b716e07a182c472adf4282c1c9517be50915e3b441376d633",
+      "bytes": 811,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/alert-demo.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/alert-destructive.tsx",
+      "gitBlob": "409e9340d6f77d9a0cf299303ac9ff6df7ce6913",
+      "sha256": "0b4cf8d50650036b7f6c402c109e7670a32221f1d8b2f11e3bf3d706c884a72b",
+      "bytes": 492,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/alert-destructive.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/alert-rtl.tsx",
+      "gitBlob": "25be8abb8253866b1e18656354b903fae6483e0b",
+      "sha256": "b6ada688e4d49eae0bc870cda4ee9e5093c0e30f1a60018f4132d8398fa53e63",
+      "bytes": 2410,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/alert-rtl.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/empty-avatar.tsx",
+      "gitBlob": "c4b0c20f695becf27f77f328488a9588c017b693",
+      "sha256": "8850590227c9643badc11cfde3c53fccdb55e91ed227f2095bfe626976bc58fd",
+      "bytes": 1000,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/empty-avatar.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/empty-avatar-group.tsx",
+      "gitBlob": "e21229024ce883d84bb22013999459c899918f44",
+      "sha256": "aa53df1f469e7a3df77d203449931918c5d50af5ca041b668c702d9fa226639a",
+      "bytes": 1601,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/empty-avatar-group.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/empty-background.tsx",
+      "gitBlob": "b36eef643fd3aeee4e7fa0e02edae6ad0baa52c5",
+      "sha256": "33cc2a4f7ad4f996f0bc6a340de6b67ef4593262cbc742d3c0b709f6eb7a3987",
+      "bytes": 888,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/empty-background.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/empty-demo.tsx",
+      "gitBlob": "91104392b467ba0bdf50d4520d1eac5ab3a51e2f",
+      "sha256": "d4bfa1bd766fa59cdd531b9e54f1603ef571b3dfbf566eaf408139d71e05d101",
+      "bytes": 1115,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/empty-demo.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/empty-input-group.tsx",
+      "gitBlob": "7c8a811def05b827a36c77701c17b201fac16dff",
+      "sha256": "680adef5117fb0e7c6b27aee036ffd7a718b64a5a407f50155470cfab580fae4",
+      "bytes": 1130,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/empty-input-group.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/empty-outline.tsx",
+      "gitBlob": "b363bd2c95d9aceced40df05b135a852db373118",
+      "sha256": "943f9294d74083e1ed9772287869cd29647f6b3f8dbebdcb642f8ba2a834e41e",
+      "bytes": 784,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/empty-outline.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/empty-rtl.tsx",
+      "gitBlob": "caff96b5cfc686761cbd8d4c6b65a68271573e15",
+      "sha256": "114e060da61d09300db2e5c283156b20d53d5c311ede163cc5ba1e9df6e7f3d5",
+      "bytes": 2353,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/empty-rtl.tsx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/examples/alert-example.tsx",
+      "gitBlob": "a13a58733ee02b0f0f93a41f666a738d9ca0e855",
+      "sha256": "2f13f1ad964a31981386a08d890acb94e329ad009d6e484b4ae4a8b6008463b2",
+      "bytes": 7538,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/examples/alert-example.tsx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/examples/empty-example.tsx",
+      "gitBlob": "6ad303e26c9c5f5044d7f11fff19e264d9c49213",
+      "sha256": "c40ecdb43cbc685ab147ff603953b508c57d2abd47b8cca44e886fbc5530dc36",
+      "bytes": 7725,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/examples/empty-example.tsx"
+    }
+  ],
+  "configurationCounts": {
+    "exampleFiles": 15,
+    "alert": {
+      "documentationFiles": 6,
+      "createSections": 4,
+      "recipes": 20
+    },
+    "empty": {
+      "documentationFiles": 7,
+      "createSections": 6,
+      "recipes": 13
+    },
+    "nativeRecipes": 33
+  },
+  "alertConfigurations": [
+    {
+      "recipe": "basic",
+      "source": "apps/v4/examples/base/alert-basic.tsx",
+      "section": "AlertBasic",
+      "materialDifference": "Check-circle icon, Account updated title and profile description."
+    },
+    {
+      "recipe": "color",
+      "source": "apps/v4/examples/base/alert-colors.tsx",
+      "section": "AlertColors",
+      "materialDifference": "Explicit amber light/dark border, background and all rich content colors."
+    },
+    {
+      "recipe": "enable",
+      "source": "apps/v4/examples/base/alert-action.tsx",
+      "section": "AlertActionExample",
+      "materialDifference": "Dark-mode announcement with independent Enable action."
+    },
+    {
+      "recipe": "docs-payment",
+      "source": "apps/v4/examples/base/alert-demo.tsx",
+      "section": "AlertDemo / payment",
+      "materialDifference": "Payment-success announcement with check-circle visual."
+    },
+    {
+      "recipe": "docs-feature",
+      "source": "apps/v4/examples/base/alert-demo.tsx",
+      "section": "AlertDemo / feature",
+      "materialDifference": "Feature announcement with information visual."
+    },
+    {
+      "recipe": "docs-failed",
+      "source": "apps/v4/examples/base/alert-destructive.tsx",
+      "section": "AlertDestructive",
+      "materialDifference": "Destructive payment-failure announcement."
+    },
+    {
+      "recipe": "rtl",
+      "source": "apps/v4/examples/base/alert-rtl.tsx",
+      "section": "AlertRtl",
+      "materialDifference": "Both payment and feature alerts with English/Arabic/Hebrew translations."
+    },
+    {
+      "recipe": "basic-title",
+      "source": "apps/v4/registry/bases/base/examples/alert-example.tsx",
+      "section": "Basic / title only",
+      "materialDifference": "Title only; no icon or description."
+    },
+    {
+      "recipe": "basic-both",
+      "source": "apps/v4/registry/bases/base/examples/alert-example.tsx",
+      "section": "Basic / title and description",
+      "materialDifference": "Title and description; no icon."
+    },
+    {
+      "recipe": "basic-description",
+      "source": "apps/v4/registry/bases/base/examples/alert-example.tsx",
+      "section": "Basic / description only",
+      "materialDifference": "Description only; no title or icon."
+    },
+    {
+      "recipe": "icon-title-link",
+      "source": "apps/v4/registry/bases/base/examples/alert-example.tsx",
+      "section": "With Icons / title link",
+      "materialDifference": "Warning-circle icon and a real inline native link in title."
+    },
+    {
+      "recipe": "icon-description-links",
+      "source": "apps/v4/registry/bases/base/examples/alert-example.tsx",
+      "section": "With Icons / description links",
+      "materialDifference": "No title; two separately focusable inline native links."
+    },
+    {
+      "recipe": "icon-both",
+      "source": "apps/v4/registry/bases/base/examples/alert-example.tsx",
+      "section": "With Icons / title and description",
+      "materialDifference": "Icon, title and description together."
+    },
+    {
+      "recipe": "long-title",
+      "source": "apps/v4/registry/bases/base/examples/alert-example.tsx",
+      "section": "With Icons / long title",
+      "materialDifference": "Long title wrapping without a description."
+    },
+    {
+      "recipe": "long-description",
+      "source": "apps/v4/registry/bases/base/examples/alert-example.tsx",
+      "section": "With Icons / long description",
+      "materialDifference": "Long description wrapping without a title."
+    },
+    {
+      "recipe": "long-both",
+      "source": "apps/v4/registry/bases/base/examples/alert-example.tsx",
+      "section": "With Icons / long title and description",
+      "materialDifference": "Long title and long description in the same alert."
+    },
+    {
+      "recipe": "session",
+      "source": "apps/v4/registry/bases/base/examples/alert-example.tsx",
+      "section": "Destructive / session expired",
+      "materialDifference": "Destructive icon/title/description."
+    },
+    {
+      "recipe": "payment-list",
+      "source": "apps/v4/registry/bases/base/examples/alert-example.tsx",
+      "section": "Destructive / payment information",
+      "materialDifference": "Native billing-information link and semantic bulleted checklist."
+    },
+    {
+      "recipe": "undo",
+      "source": "apps/v4/registry/bases/base/examples/alert-example.tsx",
+      "section": "With Actions / Undo",
+      "materialDifference": "Independent extra-small action button beside the title."
+    },
+    {
+      "recipe": "badge",
+      "source": "apps/v4/registry/bases/base/examples/alert-example.tsx",
+      "section": "With Actions / Badge",
+      "materialDifference": "Secondary badge action with a long description."
+    }
+  ],
+  "emptyConfigurations": [
+    {
+      "recipe": "projects",
+      "source": "apps/v4/examples/base/empty-demo.tsx",
+      "section": "EmptyDemo",
+      "materialDifference": "Folder-code icon, title-case project copy, two actions and trailing help link."
+    },
+    {
+      "recipe": "avatar",
+      "source": "apps/v4/examples/base/empty-avatar.tsx",
+      "section": "EmptyAvatar",
+      "materialDifference": "Actual 48DIP grayscale source portrait and Leave Message action."
+    },
+    {
+      "recipe": "team",
+      "source": "apps/v4/examples/base/empty-avatar-group.tsx",
+      "section": "EmptyAvatarGroup",
+      "materialDifference": "Three actual grayscale source portraits with overlapping 48DIP avatar geometry and Invite Members action."
+    },
+    {
+      "recipe": "notifications",
+      "source": "apps/v4/examples/base/empty-background.tsx",
+      "section": "EmptyMuted",
+      "materialDifference": "Muted 30% background, notification icon, bounded description and Refresh action."
+    },
+    {
+      "recipe": "cloud",
+      "source": "apps/v4/examples/base/empty-outline.tsx",
+      "section": "EmptyOutline",
+      "materialDifference": "Dashed border, cloud icon and Upload Files action."
+    },
+    {
+      "recipe": "search",
+      "source": "apps/v4/examples/base/empty-input-group.tsx",
+      "section": "EmptyInputGroup",
+      "materialDifference": "Real search editor, search icon, visual slash Kbd and native Contact support link."
+    },
+    {
+      "recipe": "rtl",
+      "source": "apps/v4/examples/base/empty-rtl.tsx",
+      "section": "EmptyRtl",
+      "materialDifference": "Translated project empty state and logical layout for Arabic/Hebrew/English."
+    },
+    {
+      "recipe": "create-projects",
+      "source": "apps/v4/registry/bases/base/examples/empty-example.tsx",
+      "section": "Basic",
+      "materialDifference": "No media; lower-case project copy and native create/help links."
+    },
+    {
+      "recipe": "no-results",
+      "source": "apps/v4/registry/bases/base/examples/empty-example.tsx",
+      "section": "With Muted Background",
+      "materialDifference": "Full muted background, Try again action and help link."
+    },
+    {
+      "recipe": "border-search",
+      "source": "apps/v4/registry/bases/base/examples/empty-example.tsx",
+      "section": "With Border",
+      "materialDifference": "Solid border; search InputGroup uses dashed-circle visual and slash Kbd."
+    },
+    {
+      "recipe": "posts",
+      "source": "apps/v4/registry/bases/base/examples/empty-example.tsx",
+      "section": "With Icon",
+      "materialDifference": "Solid border; folder media, inline create-post link and New Post button."
+    },
+    {
+      "recipe": "muted-search",
+      "source": "apps/v4/registry/bases/base/examples/empty-example.tsx",
+      "section": "With Muted Background Alt",
+      "materialDifference": "Muted 50% background with actual search editor and support link."
+    },
+    {
+      "recipe": "card-projects",
+      "source": "apps/v4/registry/bases/base/examples/empty-example.tsx",
+      "section": "In Card",
+      "materialDifference": "Project empty state with icon, inside an actual Card container."
+    }
+  ],
+  "reusedAssets": [
+    {
+      "name": "avatar-shadcn",
+      "url": "https://github.com/shadcn.png",
+      "finalUrl": "https://avatars.githubusercontent.com/u/124599?v=4",
+      "contentType": "image/jpeg",
+      "bytes": 31007,
+      "sha256": "513d06f542692036ff0bb17938f04b3efd60567ba2cae08049469d21f18e0524",
+      "path": "internal/gallery/card-assets/shadcn.jpg",
+      "captured": "2026-11-10",
+      "modified": false,
+      "reusedFrom": "examples/card-composition/source-map.json",
+      "transformation": "Runtime grayscale only; original embedded file remains unchanged.",
+      "usedBy": [
+        "empty:avatar",
+        "empty:team"
+      ]
+    },
+    {
+      "name": "avatar-maxleiter",
+      "url": "https://github.com/maxleiter.png",
+      "finalUrl": "https://avatars.githubusercontent.com/u/8675906?v=4",
+      "contentType": "image/png",
+      "bytes": 216590,
+      "sha256": "3a31d3d0c3bb2074929755298773d14e53048a8a85abbc0c944fb19fc65106bf",
+      "path": "internal/gallery/card-assets/maxleiter.png",
+      "captured": "2026-11-10",
+      "modified": false,
+      "reusedFrom": "examples/card-composition/source-map.json",
+      "transformation": "Runtime grayscale only; original embedded file remains unchanged.",
+      "usedBy": [
+        "empty:team"
+      ]
+    },
+    {
+      "name": "avatar-evilrabbit",
+      "url": "https://github.com/evilrabbit.png",
+      "finalUrl": "https://avatars.githubusercontent.com/u/6880091?v=4",
+      "contentType": "image/png",
+      "bytes": 10647,
+      "sha256": "8dcdb391f1f8f6610d31a9a3e06733fec308be75732571ccc6d5ce634c695382",
+      "path": "internal/gallery/card-assets/evilrabbit.png",
+      "captured": "2026-11-10",
+      "modified": false,
+      "reusedFrom": "examples/card-composition/source-map.json",
+      "transformation": "Runtime grayscale only; original embedded file remains unchanged.",
+      "usedBy": [
+        "empty:team"
+      ]
+    }
+  ],
+  "nativeAdaptations": [
+    "Use existing public AlertWith/EmptyWith and their current-child-context slots; no SDK state machine is added.",
+    "Recipe/language choices follow the Gallery Flyout/system-menu route. Native menus keep platform styling.",
+    "Material Symbols supply the configured native icon family, with fixed-size decorative icons omitted from the accessibility tree.",
+    "Source href=# examples use real native Link roles and locally handled preview actions rather than launching an invalid external fragment.",
+    "The source slash Kbd is a visual keycap; it does not silently install a global shortcut or steal editor input.",
+    "Buttons and links update local application preview state. No payment processing, account save, network upload, message delivery or notification fetch is performed.",
+    "Original source avatar bytes are reused from the committed Card assets and converted to grayscale in memory; no runtime image fetch or replacement portrait is used.",
+    "Native row/list and inline link semantics replace DOM tags; selection/query/recipe drafts remain application-owned across page changes."
+  ],
+  "verificationScope": "Mapping/source/blob and asset checks identify exact references. Native workflow and representative module PNGs are evidence only for exercised states; full platform, actual IME/screen-reader and complete visual matrices remain separate.",
+  "assetNotice": "../../internal/gallery/card-assets/README.md"
+}

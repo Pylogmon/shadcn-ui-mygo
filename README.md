@@ -73,6 +73,7 @@ Cards 页提供 [Card 源组合](examples/card-composition/README.md)：尺寸�
 同页的 [Payments 示例](examples/payments/README.md) 提供邮件过滤/排序、列显隐、当前页混合选择、分页及确认后的 ID 复制，状态跨页保留。
 
 Content & feedback 页展示 [Badge](docs/badge.md)、[Item](docs/item.md)、[Alert/Empty](docs/status-surfaces.md) 的组合示例，包含真实原生按钮/链接、独立主动作、通知操作和空状态表单。
+其中 [Alert／Empty 源组合](examples/status-composition/README.md) 提供20种通知与13种空状态配置，包含内联链接、明暗 amber 色、真实头像、404搜索和翻译RTL。
 
 Text & layout 页集中展示 [Typography/Kbd](docs/typography.md)、[CodeBlock](docs/code-block.md)、[Spinner/Skeleton](docs/loading.md) 与 [ScrollArea/AspectRatio](docs/scroll-area.md)。文章详情、确认后的复制反馈、加载暂停和滚动条样式切换均可交互；代码 Buffer、输入草稿与滚动位置跨页保留。通过 Search 输入组件名，或运行 `go run ./cmd/gallery -page text-layout` 可直接进入。
 
