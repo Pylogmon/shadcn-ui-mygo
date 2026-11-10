@@ -49,6 +49,10 @@ type QuestionnaireInputEvent struct {
 func (e *QuestionnaireInputEvent) PreventDefault() { e.prevented = true }
 
 type QuestionnaireInputProps struct {
+	// Key preserves this input's identity across reordering/insertion. Empty
+	// keys use declaration order; the first unnamed slot also uses Answer.Text.
+	// Explicit keys must be unique within the item and cannot contain NUL.
+	Key                                  string
 	Label, Placeholder                   string
 	Disabled, ReadOnly, Password, Search bool
 	Value                                *string
@@ -78,7 +82,12 @@ type QuestionnaireParts struct {
 	disabled        bool
 	inactive        bool
 	choiceHandlers  map[string]func(bool)
-	inputValidators map[string]func() string
+	inputValidators map[string][]questionnaireInputValidator
+}
+
+type questionnaireInputValidator struct {
+	key      string
+	validate func() string
 }
 
 // QuestionnaireItemParts is build scoped. Active lets custom compositions gate
@@ -96,6 +105,7 @@ type QuestionnaireItemParts struct {
 	id                string
 	controls          []ui.Element
 	errorCount        int
+	inputCount        int
 }
 type questionnaireSlot uint8
 
@@ -141,7 +151,7 @@ func QuestionnaireWith(c *ui.Context, state *QuestionnaireState, p Questionnaire
 		state.pendingName = ""
 		state.pendingInvalid = false
 	}
-	parts := QuestionnaireParts{Root: root, State: state.snapshot(p), c: c, model: state, props: p, disabled: p.Disabled, choiceHandlers: map[string]func(bool){}, inputValidators: map[string]func() string{}}
+	parts := QuestionnaireParts{Root: root, State: state.snapshot(p), c: c, model: state, props: p, disabled: p.Disabled, choiceHandlers: map[string]func(bool){}, inputValidators: map[string][]questionnaireInputValidator{}}
 	activeRuntime := state.runtime[parts.State.Item]
 	if !root.FocusWithin() && activeRuntime != nil {
 		activeRuntime.composing = false
@@ -260,8 +270,8 @@ func (p *QuestionnaireParts) Item(id string, build func(*QuestionnaireItemParts)
 	for _, old := range previous {
 		if !slices.Contains(r.order, old) {
 			if old.input {
-				a.Text = ""
-				questionnaireInputMode(&a, false)
+				questionnaireRemoveInput(&a, old.inputKey)
+				questionnaireRemoveInput(&r.defaults, old.inputKey)
 			} else {
 				a.Values = slices.DeleteFunc(a.Values, func(v string) bool { return v == old.value })
 			}
@@ -344,7 +354,7 @@ func (i *QuestionnaireItemParts) Choice(value string, options ...QuestionnaireCh
 		if !slices.Contains(i.runtime.defaults.Values, value) {
 			i.runtime.defaults.Values = append(i.runtime.defaults.Values, value)
 		}
-		if !controlState.initialized && !i.runtime.hadAnswer && (i.Question.Multiple || len(a.Values) == 0 && strings.TrimSpace(a.Text) == "") {
+		if !controlState.initialized && !i.runtime.hadAnswer && (i.Question.Multiple || len(a.Values) == 0 && !questionnaireInputSelected(i.Question, a)) {
 			model.sourceSelect(model.effectiveQuestion(i.Question, i.index), i.index, value)
 			a = model.Answers[i.id]
 		}
@@ -358,6 +368,7 @@ func (i *QuestionnaireItemParts) Choice(value string, options ...QuestionnaireCh
 				}
 			} else {
 				a.Values = []string{value}
+				questionnaireDeselectInputs(&a)
 				a.Mode = QuestionnaireChoiceAnswer
 			}
 			a.Skipped = false
@@ -417,6 +428,7 @@ func (i *QuestionnaireItemParts) Choice(value string, options ...QuestionnaireCh
 		}
 		if !i.Question.Multiple && selected {
 			a.Values = []string{value}
+			questionnaireDeselectInputs(&a)
 			a.Mode = QuestionnaireChoiceAnswer
 			a.Skipped = false
 			model.Answers[i.id] = a
@@ -520,37 +532,65 @@ func (i *QuestionnaireItemParts) Input(options ...QuestionnaireInputProps) ui.El
 	if p.Placeholder == "" {
 		p.Placeholder = i.Question.Placeholder
 	}
-	controlState := i.control("\x00input", true)
+	key := p.Key
+	if strings.ContainsRune(key, '\x00') {
+		panic("conversation: Questionnaire Input Key cannot contain NUL")
+	}
+	if key == "" {
+		i.inputCount++
+		if i.inputCount > 1 {
+			key = fmt.Sprintf("\x00input:%d", i.inputCount)
+		}
+	}
+	for _, previous := range i.runtime.order {
+		if previous.input && previous.inputKey == key {
+			panic("conversation: duplicate Questionnaire Input Key: " + p.Key)
+		}
+	}
+	controlState := i.control("\x00input"+key, true)
+	controlState.inputKey = key
 	controlState.disabled = controlState.disabled || p.Disabled
 	model := i.root.model
 	a := model.Answers[i.id]
-	i.runtime.defaults.Text = p.DefaultValue
-	if i.Question.DefaultAnswer.Text != "" && p.DefaultValue == "" {
-		i.runtime.defaults.Text = i.Question.DefaultAnswer.Text
+	if key != "" {
+		questionnaireManageInputs(i.Question, &a)
+		model.Answers[i.id] = a
+	}
+	defaultText := p.DefaultValue
+	if defaultText == "" {
+		defaultText, _ = questionnaireInputValue(i.Question, i.Question.DefaultAnswer, key)
+	}
+	if key == "" && i.runtime.defaults.Inputs == nil {
+		i.runtime.defaults.Text = defaultText
+	} else {
+		_, wasSelected := questionnaireInputValue(i.Question, i.runtime.defaults, key)
+		selected := strings.TrimSpace(defaultText) != "" && (i.Question.Multiple || wasSelected || len(i.runtime.defaults.Values) == 0 && !questionnaireInputSelected(i.Question, i.runtime.defaults))
+		if p.DefaultValue == "" {
+			for _, input := range i.Question.DefaultAnswer.Inputs {
+				if input.Key == key {
+					selected = input.Selected
+					break
+				}
+			}
+		}
+		questionnaireSetInput(i.Question, &i.runtime.defaults, key, defaultText, selected)
 	}
 	if !controlState.initialized && !i.runtime.hadAnswer && p.DefaultValue != "" {
-		if i.Question.Multiple || len(a.Values) == 0 && strings.TrimSpace(a.Text) == "" {
-			model.SetText(i.Question, i.index, p.DefaultValue)
-		} else {
-			a.Text = p.DefaultValue
-			model.Answers[i.id] = a
-		}
-		a = model.Answers[i.id]
+		selected := i.Question.Multiple || len(a.Values) == 0 && !questionnaireInputSelected(i.Question, a)
+		questionnaireSetInput(i.Question, &a, key, p.DefaultValue, selected)
+		model.Answers[i.id] = a
 	}
 	controlState.initialized = true
 	if p.Value != nil {
 		changed := !controlState.controlled || controlState.controlledText != *p.Value || controlState.resetVersion != model.resetVersion
-		a.Text = *p.Value
+		_, selected := questionnaireInputValue(i.Question, a, key)
 		if changed {
-			selected := strings.TrimSpace(a.Text) != ""
+			selected = strings.TrimSpace(*p.Value) != ""
 			if selected {
 				a.Skipped = false
-				if !i.Question.Multiple {
-					a.Values = nil
-				}
 			}
-			questionnaireInputMode(&a, selected)
 		}
+		questionnaireSetInput(i.Question, &a, key, *p.Value, selected)
 		model.Answers[i.id] = a
 	}
 
@@ -559,13 +599,20 @@ func (i *QuestionnaireItemParts) Input(options ...QuestionnaireInputProps) ui.El
 		controlState.controlledText = *p.Value
 	}
 	controlState.resetVersion = model.resetVersion
-	controlState.text = a.Text
-	controlState.selected = questionnaireInputSelected(i.Question, a)
+	controlState.text, controlState.selected = questionnaireInputValue(i.Question, a, key)
+	previousText := controlState.text
+	inputContext := i.c.Key(qInputSlot)
+	if key != "" {
+		inputContext = i.c.Key(struct {
+			Slot questionnaireSlot
+			Key  string
+		}{qInputSlot, key})
+	}
 	var e ui.Element
 	if p.Editor != nil {
-		e = p.Editor(i.c, &controlState.text)
+		e = p.Editor(inputContext, &controlState.text)
 	} else {
-		e = control.Input(i.c.Key(qInputSlot), &controlState.text, control.InputProps{Label: p.Label, Placeholder: p.Placeholder, Disabled: controlState.disabled || !i.Active, ReadOnly: p.ReadOnly, Password: p.Password, Search: p.Search, Invalid: i.root.invalid(i.Question, i.index)})
+		e = control.Input(inputContext, &controlState.text, control.InputProps{Label: p.Label, Placeholder: p.Placeholder, Disabled: controlState.disabled || !i.Active, ReadOnly: p.ReadOnly, Password: p.Password, Search: p.Search, Invalid: i.root.invalid(i.Question, i.index)})
 	}
 	questionnaireTransition(i.c, e)
 	if p.ReadOnly {
@@ -597,11 +644,11 @@ func (i *QuestionnaireItemParts) Input(options ...QuestionnaireInputProps) ui.El
 				p.OnChange(controlState.text)
 			}
 			if p.Value == nil {
-				model.SetText(i.Question, i.index, controlState.text)
+				model.setInputText(i.Question, i.index, key, controlState.text)
 			} else {
 				controlState.text = *p.Value
-				if controlState.text != a.Text {
-					model.SetText(i.Question, i.index, controlState.text)
+				if controlState.text != previousText {
+					model.setInputText(i.Question, i.index, key, controlState.text)
 				}
 			}
 
@@ -609,8 +656,7 @@ func (i *QuestionnaireItemParts) Input(options ...QuestionnaireInputProps) ui.El
 			if p.Value != nil {
 				controlState.text = *p.Value
 			} else {
-				a.Text = controlState.text
-				questionnaireInputMode(&a, controlState.selected)
+				questionnaireSetInput(i.Question, &a, key, controlState.text, controlState.selected)
 				model.Answers[i.id] = a
 			}
 		}
@@ -620,14 +666,15 @@ func (i *QuestionnaireItemParts) Input(options ...QuestionnaireInputProps) ui.El
 		e.KeyShortcuts(0, ui.KeyEnter)
 	}
 	a = model.Answers[i.id]
-	controlState.selected = questionnaireInputSelected(i.Question, a)
+	_, controlState.selected = questionnaireInputValue(i.Question, a, key)
 	if p.Validate != nil {
-		i.root.inputValidators[i.id] = func() string {
-			if controlState.selected && !controlState.disabled && strings.TrimSpace(controlState.text) != "" {
-				return p.Validate(controlState.text)
+		i.root.inputValidators[i.id] = append(i.root.inputValidators[i.id], questionnaireInputValidator{key: controlState.value, validate: func() string {
+			text, selected := questionnaireInputValue(i.Question, model.Answers[i.id], key)
+			if selected && !controlState.disabled && strings.TrimSpace(text) != "" {
+				return p.Validate(text)
 			}
 			return ""
-		}
+		}})
 	}
 	controlState.composing = e.Composing()
 	i.controls = append(i.controls, e)

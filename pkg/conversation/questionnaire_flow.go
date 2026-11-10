@@ -29,18 +29,25 @@ func (p *QuestionnaireParts) validate(index int) bool {
 	q := p.model.effectiveQuestion(p.props.Questions[index], index)
 	if r := p.model.runtime[questionID(q, index)]; r != nil {
 		r.attempted = true
+		r.invalidInputKey = ""
 	}
 	id := questionID(q, index)
 	message := questionnaireError(q, p.model.Status(q, index), p.model.Answers[id])
 	if message == "" {
-		if validate := p.inputValidators[id]; validate != nil {
-			message = validate()
+		for _, validate := range p.inputValidators[id] {
+			message = validate.validate()
+			if message != "" {
+				if r := p.model.runtime[id]; r != nil {
+					r.invalidInputKey = validate.key
+				}
+				break
+			}
 		}
 	}
 	if r := p.model.runtime[id]; r != nil && r.crossError != "" {
 		a := p.model.Answers[id]
 		old := r.crossAnswer
-		if !slices.Equal(a.Values, old.Values) || a.Text != old.Text || a.Skipped != old.Skipped || a.Mode != old.Mode {
+		if !questionnaireAnswersEqual(a, old) {
 			r.crossError = ""
 		} else if message == "" {
 			message = r.crossError
@@ -113,13 +120,14 @@ func (p *QuestionnaireParts) finish() {
 				if control.disabled {
 					continue
 				}
-				if control.input && strings.TrimSpace(a.Text) != "" {
+				if text, selected := questionnaireInputValue(q, a, control.inputKey); control.input && selected && strings.TrimSpace(text) != "" {
 					a.Values = nil
-					a.Mode = QuestionnaireInputAnswer
+					questionnaireSetInput(q, &a, control.inputKey, text, true)
 					break
 				}
 				if !control.input && slices.Contains(a.Values, control.value) {
 					a.Values = []string{control.value}
+					questionnaireDeselectInputs(&a)
 					a.Mode = QuestionnaireChoiceAnswer
 					break
 				}
@@ -134,7 +142,7 @@ func (p *QuestionnaireParts) finish() {
 			continue
 		}
 		a := state.Answers[id]
-		if !slices.Equal(r.reported.Values, a.Values) || r.reported.Text != a.Text || r.reported.Skipped != a.Skipped || r.reported.Mode != a.Mode {
+		if !questionnaireAnswersEqual(r.reported, a) {
 			for otherID, other := range state.runtime {
 				if other.crossError != "" {
 					other.crossError = ""
@@ -181,6 +189,7 @@ func (p *QuestionnaireParts) finish() {
 				}
 				a := state.Answers[questionID(q, state.Index)]
 				a.Values = nil
+				questionnaireDeselectInputs(&a)
 				a.Skipped = true
 				state.Answers[questionID(q, state.Index)] = a
 				delete(state.Errors, questionID(q, state.Index))
@@ -268,7 +277,7 @@ func (p *QuestionnaireParts) finish() {
 			}
 			p.c.Invalidate()
 		}
-		if !slices.Equal(r.reported.Values, a.Values) || r.reported.Text != a.Text || r.reported.Skipped != a.Skipped || r.reported.Mode != a.Mode {
+		if !questionnaireAnswersEqual(r.reported, a) {
 			r.reported = copyQuestionnaireAnswer(a)
 			if p.props.OnAnswerChange != nil {
 				p.props.OnAnswerChange(id, copyQuestionnaireAnswer(a))
@@ -289,16 +298,26 @@ func (p *QuestionnaireParts) finish() {
 			target := &r.item
 			if state.pendingInvalid {
 				var answer *questionnaireAnswerControl
-				for _, control := range r.order {
-					if control.disabled {
-						continue
+				if r.invalidInputKey != "" {
+					for _, control := range r.order {
+						if control.input && !control.disabled && control.value == r.invalidInputKey {
+							answer = control
+							break
+						}
 					}
-					if answer == nil {
-						answer = control
-					}
-					if control.input && control.selected {
-						answer = control
-						break
+				}
+				if answer == nil {
+					for _, control := range r.order {
+						if control.disabled {
+							continue
+						}
+						if answer == nil {
+							answer = control
+						}
+						if control.input && control.selected {
+							answer = control
+							break
+						}
 					}
 				}
 				if answer != nil {

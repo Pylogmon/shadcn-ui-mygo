@@ -25,12 +25,26 @@ type Question struct {
 	OnStatusChange               func(QuestionnaireItemStatus)
 }
 type Answer struct {
-	Values  []string
-	Text    string
+	Values []string
+	Text   string
+	// Inputs holds independent native input drafts once an item has more than
+	// the legacy unnamed slot, or uses an explicit input Key. Text remains the
+	// first unnamed slot's compatible value. Result includes successful inputs
+	// only; State.Answers also retains inactive drafts and their selection.
+	Inputs  []QuestionnaireInputValue
 	Skipped bool
 	// Mode records selection independently from the native text draft. Zero
 	// retains legacy inference for restored Answers that predate compound slots.
 	Mode QuestionnaireAnswerMode
+}
+
+// QuestionnaireInputValue identifies one input answer within a question.
+// Key is an explicit Input Key, empty for the first unnamed slot, or a reserved
+// NUL-prefixed identity for subsequent unnamed slots in declaration order.
+// Text need not be unique: successful controls submit their values separately.
+type QuestionnaireInputValue struct {
+	Key, Text string
+	Selected  bool
 }
 
 // QuestionnaireState is caller owned. Retain it for drafts across page changes;
@@ -231,7 +245,7 @@ func (s *QuestionnaireState) Result(questions []Question) map[string]Answer {
 		a := s.Answers[id]
 		// Legacy callers never registered compound controls, and zero Mode keeps
 		// their original ability to return fixed values plus freeform text.
-		if s.runtime[id] == nil && a.Mode == QuestionnaireAutomaticAnswer {
+		if s.runtime[id] == nil && a.Mode == QuestionnaireAutomaticAnswer && a.Inputs == nil {
 			a.Values = validValues(q, a)
 			if !q.Freeform {
 				a.Text = ""
@@ -241,6 +255,21 @@ func (s *QuestionnaireState) Result(questions []Question) map[string]Answer {
 		}
 		q = s.effectiveQuestion(q, i)
 		a.Values = s.successfulChoices(q, i, a)
+		if a.Skipped {
+			a.Values = nil
+		}
+		if a.Inputs != nil {
+			a.Inputs = s.successfulInputs(q, i, a)
+			a.Text = ""
+			for _, input := range a.Inputs {
+				if input.Key == "" {
+					a.Text = input.Text
+				}
+			}
+			questionnaireInputMode(&a, len(a.Inputs) > 0)
+			result[id] = a
+			continue
+		}
 		if a.Skipped {
 			a.Values = nil
 			a.Text = ""

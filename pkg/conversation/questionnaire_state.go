@@ -64,7 +64,7 @@ type questionnaireAction struct {
 }
 type questionnaireAnswerControl struct {
 	handle                                            ui.Handle
-	value, text                                       string
+	value, text, inputKey                             string
 	input, disabled, selected, composing, initialized bool
 	controlled                                        bool
 	controlledChecked                                 bool
@@ -76,22 +76,27 @@ type questionnaireRadioValue struct {
 	selected bool
 }
 type questionnaireRuntime struct {
-	item           ui.Handle
-	controls       map[string]*questionnaireAnswerControl
-	order          []*questionnaireAnswerControl
-	radio          questionnaireRadioValue
-	hadAnswer      bool
-	defaults       Answer
-	reported       Answer
-	reportedStatus QuestionnaireItemStatus
-	composing      bool
-	attempted      bool
-	multiple       bool
-	crossError     string
-	crossAnswer    Answer
+	item            ui.Handle
+	controls        map[string]*questionnaireAnswerControl
+	order           []*questionnaireAnswerControl
+	radio           questionnaireRadioValue
+	hadAnswer       bool
+	defaults        Answer
+	reported        Answer
+	reportedStatus  QuestionnaireItemStatus
+	composing       bool
+	attempted       bool
+	multiple        bool
+	crossError      string
+	crossAnswer     Answer
+	invalidInputKey string
 }
 
-func copyQuestionnaireAnswer(a Answer) Answer { a.Values = slices.Clone(a.Values); return a }
+func copyQuestionnaireAnswer(a Answer) Answer {
+	a.Values = slices.Clone(a.Values)
+	a.Inputs = slices.Clone(a.Inputs)
+	return a
+}
 func (s *QuestionnaireState) effectiveQuestion(q Question, index int) Question {
 	if r := s.runtime[questionID(q, index)]; r != nil {
 		q.Choices = slices.Clone(q.Choices)
@@ -122,7 +127,7 @@ func (s *QuestionnaireState) Status(q Question, index int) QuestionnaireItemStat
 	if a.Skipped {
 		return QuestionnaireSkipped
 	}
-	if len(s.successfulChoices(q, index, a)) > 0 || !s.inputDisabled(q, index) && q.Freeform && questionnaireInputSelected(q, a) {
+	if len(s.successfulChoices(q, index, a)) > 0 || s.hasSuccessfulInput(q, index, a) {
 		return QuestionnaireAnswered
 	}
 	return QuestionnaireUnanswered
@@ -131,18 +136,7 @@ func (s *QuestionnaireState) Status(q Question, index int) QuestionnaireItemStat
 // SetText selects an input answer (or deselects it when blank), preserving a
 // multiple item's fixed choices. It is the model equivalent of an accepted edit.
 func (s *QuestionnaireState) SetText(q Question, index int, text string) {
-	s.init()
-	id := questionID(q, index)
-	a := s.Answers[id]
-	a.Text = text
-	a.Skipped = false
-	if !q.Multiple {
-		a.Values = nil
-	}
-	questionnaireInputMode(&a, strings.TrimSpace(text) != "")
-	s.Answers[id] = a
-	delete(s.Errors, id)
-	s.Submitted = false
+	s.setInputText(q, index, "", text)
 }
 
 // JumpTo changes the local active item for resume or validator-directed editing.
@@ -179,6 +173,7 @@ func (s *QuestionnaireState) Reset(questions []Question) {
 	for _, r := range s.runtime {
 		r.attempted = false
 		r.crossError = ""
+		r.invalidInputKey = ""
 	}
 	previous := s.activeName
 	s.Index = 0
@@ -209,27 +204,38 @@ func (s *QuestionnaireState) FormValues(questions []Question) map[string][]strin
 			continue
 		}
 		var ordered []string
+		seenChoices := map[string]bool{}
 		if r := s.runtime[id]; r != nil && len(r.order) > 0 {
 			for _, control := range r.order {
 				if control.input {
-					if questionnaireInputSelected(s.effectiveQuestion(q, index), a) {
-						ordered = append(ordered, a.Text)
+					if text, selected := questionnaireInputValue(s.effectiveQuestion(q, index), a, control.inputKey); selected {
+						ordered = append(ordered, text)
 					}
 					continue
 				}
-				if slices.Contains(a.Values, control.value) && !slices.Contains(ordered, control.value) {
+				if slices.Contains(a.Values, control.value) && !seenChoices[control.value] {
 					ordered = append(ordered, control.value)
+					seenChoices[control.value] = true
 				}
 			}
 		} else {
 			for _, choice := range q.Choices {
-				if slices.Contains(a.Values, choice.Value) && !slices.Contains(ordered, choice.Value) {
+				if slices.Contains(a.Values, choice.Value) && !seenChoices[choice.Value] {
 					ordered = append(ordered, choice.Value)
+					seenChoices[choice.Value] = true
 				}
 			}
 		}
-		if (s.runtime[id] == nil || len(s.runtime[id].order) == 0) && questionnaireInputSelected(q, a) {
-			ordered = append(ordered, a.Text)
+		if s.runtime[id] == nil || len(s.runtime[id].order) == 0 {
+			if a.Inputs != nil {
+				for _, input := range a.Inputs {
+					if input.Selected {
+						ordered = append(ordered, input.Text)
+					}
+				}
+			} else if questionnaireInputSelected(q, a) {
+				ordered = append(ordered, a.Text)
+			}
 		}
 		if len(ordered) > 0 {
 			values[id] = ordered
@@ -271,7 +277,7 @@ func (s *QuestionnaireState) prepare(p QuestionnaireProps) {
 				a = copyQuestionnaireAnswer(q.DefaultAnswer)
 				s.Answers[id] = a
 			}
-			r = &questionnaireRuntime{controls: map[string]*questionnaireAnswerControl{}, hadAnswer: exists || len(q.DefaultAnswer.Values) > 0 || q.DefaultAnswer.Text != "", defaults: copyQuestionnaireAnswer(q.DefaultAnswer), reportedStatus: QuestionnaireUnanswered}
+			r = &questionnaireRuntime{controls: map[string]*questionnaireAnswerControl{}, hadAnswer: exists || len(q.DefaultAnswer.Values) > 0 || q.DefaultAnswer.Text != "" || len(q.DefaultAnswer.Inputs) > 0, defaults: copyQuestionnaireAnswer(q.DefaultAnswer), reportedStatus: QuestionnaireUnanswered}
 			s.runtime[id] = r
 		}
 		if r.multiple && !q.Multiple {
@@ -280,9 +286,11 @@ func (s *QuestionnaireState) prepare(p QuestionnaireProps) {
 				if control.selected && !control.disabled {
 					if control.input {
 						a.Values = nil
-						a.Mode = QuestionnaireInputAnswer
+						text, _ := questionnaireInputValue(q, a, control.inputKey)
+						questionnaireSetInput(q, &a, control.inputKey, text, true)
 					} else {
 						a.Values = []string{control.value}
+						questionnaireDeselectInputs(&a)
 						a.Mode = QuestionnaireChoiceAnswer
 					}
 					break
@@ -435,6 +443,9 @@ func questionnaireInputSelected(q Question, a Answer) bool {
 	if a.Skipped {
 		return false
 	}
+	if a.Inputs != nil {
+		return questionnaireAnyInputSelected(a)
+	}
 	switch a.Mode {
 	case QuestionnaireInputAnswer, QuestionnaireCombinedAnswer:
 		return true
@@ -462,6 +473,9 @@ func (s *QuestionnaireState) sourceSelect(q Question, index int, value string) {
 	input := q.Multiple && questionnaireInputSelected(q, a)
 	s.Select(q, index, value)
 	a = s.Answers[questionID(q, index)]
+	if !q.Multiple {
+		questionnaireDeselectInputs(&a)
+	}
 	questionnaireInputMode(&a, input)
 	s.Answers[questionID(q, index)] = a
 }
