@@ -16,6 +16,7 @@ func (s *State) textLayout(c *ui.Context) {
 	columns(c, func() { s.typographyPreview(c) }, func() { s.codePreview(c) })
 	s.loadingPreview(c)
 	s.scrollPreview(c)
+	s.componentPreview(c, "kbd", func() { s.kbdCompositions.view(c, s.Popovers, s.Config.NativeMenus) })
 }
 
 func (s *State) typographyPreview(c *ui.Context) {

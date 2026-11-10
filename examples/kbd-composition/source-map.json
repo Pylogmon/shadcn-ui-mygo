@@ -1,0 +1,173 @@
+{
+  "repository": "https://github.com/shadcn-ui/ui",
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "sourceManifestSHA256": "60cea4517fbce24938ff6992b1c58fc394d517c9908df2cc2ab30fae938d35b9",
+  "files": [
+    {
+      "path": "apps/v4/examples/base/kbd-button.tsx",
+      "gitBlob": "e2d331ee27d5c575deb8a35ce92abd9e41687daa",
+      "sha256": "7259b31490487dcee12c9fb4a948ecc4605280193931119f9835f69c06835fb4",
+      "bytes": 309,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/kbd-button.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/kbd-demo.tsx",
+      "gitBlob": "f02b4e08fcd7c5606c9948507b2fbca746c76d00",
+      "sha256": "6e36026ff5df098042132fe787d21babcfc68f1c378909743b20db85e3934643",
+      "bytes": 408,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/kbd-demo.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/kbd-group.tsx",
+      "gitBlob": "3aa9482f5f88e4fbae136e2bc8afe8a24e93841c",
+      "sha256": "11eacd72d8ee1bc6b37562fe1d88c72f848c3c4e247458db15db9ea3cd5ba404",
+      "bytes": 406,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/kbd-group.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/kbd-input-group.tsx",
+      "gitBlob": "9b88326003473ff7079cfca6884aeba1d3aad451",
+      "sha256": "a3c47c88ec8ae8d6dd0a0578636032fda35dac0283fd52c61a5a773241ccc60f",
+      "bytes": 613,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/kbd-input-group.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/kbd-rtl.tsx",
+      "gitBlob": "ae5a6ad803f88978553e9c16074582c8baffa7e8",
+      "sha256": "c5d435bc40f50e8ed5ebdc9d8270143567e410894fb6de0da91442d37f277962",
+      "bytes": 776,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/kbd-rtl.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/kbd-tooltip.tsx",
+      "gitBlob": "47490c04d0bd58f80e371c58d41761b8713d182d",
+      "sha256": "36c2fc92d22db31846d4df9e88d308e0f42cec92bcdd1f02965fdd902cb0b129",
+      "bytes": 1003,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/kbd-tooltip.tsx"
+    },
+    {
+      "path": "apps/v4/content/docs/components/base/kbd.mdx",
+      "gitBlob": "2db9db38b442c1511bdb344aff123e606a521c85",
+      "sha256": "366fa8fa3ea4c8c0c8f0cfc1824f033fb409a459c83787b3d5264369e61c9b9b",
+      "bytes": 2280,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/content/docs/components/base/kbd.mdx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/examples/kbd-example.tsx",
+      "gitBlob": "c6b813ad81e8c0cb0110991d4e7e319112e2b241",
+      "sha256": "3fbd8b8b3ad0f286205ff0a2796b9404922bb477e947820c1337135f2e588bba",
+      "bytes": 4294,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/examples/kbd-example.tsx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/ui/kbd.tsx",
+      "gitBlob": "1fc8d9c188183e3df985d9a1f454ca692186790f",
+      "sha256": "f04fe8ce9c10023fa4d9907030ec5e26a4c714e5377e6b3864cb03548bd0a56f",
+      "bytes": 556,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/ui/kbd.tsx"
+    },
+    {
+      "path": "apps/v4/registry/styles/style-vega.css",
+      "gitBlob": "9f03b3c6dc5a803db963a81743d47d5b5f8f9fe0",
+      "sha256": "10fa07bd61b429ae2c14c572ba9975f6e991d68a04f8fec7e354a062597e0d4e",
+      "bytes": 78221,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/styles/style-vega.css"
+    }
+  ],
+  "counts": {
+    "documentationPreviews": 6,
+    "createSections": 9,
+    "distinctGuideSnippets": 2,
+    "recipes": 17,
+    "originalFilesIncludingComponentAndStyle": 10
+  },
+  "configurations": [
+    {
+      "recipe": "demo",
+      "source": "apps/v4/examples/base/kbd-demo.tsx"
+    },
+    {
+      "recipe": "group",
+      "source": "apps/v4/examples/base/kbd-group.tsx"
+    },
+    {
+      "recipe": "button",
+      "source": "apps/v4/examples/base/kbd-button.tsx"
+    },
+    {
+      "recipe": "tooltip",
+      "source": "apps/v4/examples/base/kbd-tooltip.tsx"
+    },
+    {
+      "recipe": "input-group",
+      "source": "apps/v4/examples/base/kbd-input-group.tsx"
+    },
+    {
+      "recipe": "rtl",
+      "source": "apps/v4/examples/base/kbd-rtl.tsx"
+    },
+    {
+      "recipe": "create-basic",
+      "source": "apps/v4/registry/bases/base/examples/kbd-example.tsx",
+      "section": "KbdBasic"
+    },
+    {
+      "recipe": "create-modifiers",
+      "source": "apps/v4/registry/bases/base/examples/kbd-example.tsx",
+      "section": "KbdModifierKeys"
+    },
+    {
+      "recipe": "create-group",
+      "source": "apps/v4/registry/bases/base/examples/kbd-example.tsx",
+      "section": "KbdGroupExample"
+    },
+    {
+      "recipe": "create-arrows",
+      "source": "apps/v4/registry/bases/base/examples/kbd-example.tsx",
+      "section": "KbdArrowKeys"
+    },
+    {
+      "recipe": "create-icons",
+      "source": "apps/v4/registry/bases/base/examples/kbd-example.tsx",
+      "section": "KbdWithIcons"
+    },
+    {
+      "recipe": "create-icon-text",
+      "source": "apps/v4/registry/bases/base/examples/kbd-example.tsx",
+      "section": "KbdWithIconsAndText"
+    },
+    {
+      "recipe": "create-input",
+      "source": "apps/v4/registry/bases/base/examples/kbd-example.tsx",
+      "section": "KbdInInputGroup"
+    },
+    {
+      "recipe": "create-tooltip",
+      "source": "apps/v4/registry/bases/base/examples/kbd-example.tsx",
+      "section": "KbdInTooltip"
+    },
+    {
+      "recipe": "create-samp",
+      "source": "apps/v4/registry/bases/base/examples/kbd-example.tsx",
+      "section": "KbdWithSamp"
+    },
+    {
+      "recipe": "usage",
+      "source": "apps/v4/content/docs/components/base/kbd.mdx",
+      "section": "Usage: bare Ctrl"
+    },
+    {
+      "recipe": "usage-group",
+      "source": "apps/v4/content/docs/components/base/kbd.mdx",
+      "section": "API Reference: Ctrl/B group"
+    }
+  ],
+  "adaptation": {
+    "native": "Existing inert native keycaps; no installed shortcuts, extra keyboard targets or fake button/editor/tooltips. Literal modifiers remain source strings.",
+    "icons": "Existing on-demand outlined Material equivalents: MotionPhotosOn for static dashed-circle, ArrowBack/ArrowForward and Save. No spinner motion for source static icon.",
+    "tooltip": "Independent styled inverse or child platform-theme rich tooltip. Current child Context only, copied strings/keys. Injected screenshot canvas expanded to inspect actual content, not native FitContent proof.",
+    "width": "Unspecified native preview maximum560DIP; docs InputGroup320DIP. Native intrinsic font metrics retained.",
+    "action": "Only Accept local count; tooltip buttons have no added business handler; displayed shortcuts remain inert.",
+    "lifecycle": "App values/maps/counters only, no Context/Element/Scope/frame callbacks."
+  }
+}

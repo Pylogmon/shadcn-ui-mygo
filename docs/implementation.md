@@ -170,7 +170,9 @@
 | 5.EI | Gallery完整Select源组合与长列表定位 | 已提交 `86451b0`；22配置的完整同窗source slots、长panel／箭头／实时缩窗与禁用单层dim修复；隔离全量2378结果、vet与三平台构建通过；独立丰富Select Flyout仍待实施 |
 | 5.EJ | Gallery完整Tabs源组合与禁用透明度 | 已提交 `b55927d`；20配置的完整原文内容、两Root／vertical／icons／真实header控件与RTL，修复compound／legacy禁用重复dim；隔离全量2380结果、vet与三平台构建通过 |
 | 5.EK | 优先里程碑Input／Item专项复核 | 已提交 `7fdfcf9`；Input25／Item35配置的29原文与公开API复核、native Date／Time能力与Item真实link／独立actions／禁用／220DIP边界probe通过，无新增产品阻断；最终联合验证随里程碑收口 |
-| 5.EL | Gallery完整Dialog源组合 | 本阶段提交；12配置的完整原生Modal／profile／scroll／sticky／no-close与四面板Chat Settings；隔离Gallery／cmd共288结果、vet与macOS构建通过，复用原SDK |
+| 5.EL | Gallery完整Dialog源组合 | 已提交 `3337b90`；12配置的完整原生Modal／profile／scroll／sticky／no-close与四面板Chat Settings；隔离Gallery／cmd共288结果、vet与macOS构建通过，复用原SDK |
+
+| 5.EM | Gallery完整Kbd源组合 | 本阶段提交；17配置的静态键帽／真实父按钮／原生输入／独立Tooltip及RTL，复用既有SDK；隔离Gallery／cmd290结果、vet与macOS构建通过 |
 
 用户已明确允许原生平台适配：Popover、menu、下拉菜单可以使用 MyGo 的系统菜单与独立 Flyout，超出父窗口范围；无需逐像素照搬网页浮层。Gallery 以 [shadcn/create](https://ui.shadcn.com/create) 的配置与实时预览流程为参考。完整组件功能、主题、动画范围保持不变。
 

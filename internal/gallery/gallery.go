@@ -71,6 +71,7 @@ type State struct {
 	selectCompositions                                                             selectCompositionPreviewState
 	tabsCompositions                                                               tabsCompositionPreviewState
 	dialogCompositions                                                             dialogCompositionPreviewState
+	kbdCompositions                                                                kbdCompositionPreviewState
 	chartPreview                                                                   chartPreviewState
 	chartCatalogue                                                                 chartcatalog.State
 	comboboxCompound                                                               comboboxCompoundPreviewState

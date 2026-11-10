@@ -39,6 +39,7 @@ var componentSearchTargets = []struct {
 	{"navigation", "context-menu", []string{"ContextMenu"}},
 	{"navigation", "menubar", []string{"Menubar"}},
 	{"navigation", "tabs", []string{"Tabs"}},
+	{"text-layout", "kbd", []string{"Kbd", "Keyboard"}},
 }
 
 func componentSearchName(name string) string {

@@ -79,6 +79,7 @@ Content & feedback 页展示 [Badge](docs/badge.md)、[Item](docs/item.md)、[Al
 该页的 [Badge 源组合](examples/badge-composition/README.md) 提供14个配置，保留六变体、双侧图标、Spinner、真实原生链接、完整长文本横滚、自定义明暗颜色及翻译RTL。
 
 Text & layout 页集中展示 [Typography/Kbd](docs/typography.md)、[CodeBlock](docs/code-block.md)、[Spinner/Skeleton](docs/loading.md) 与 [ScrollArea/AspectRatio](docs/scroll-area.md)。文章详情、确认后的复制反馈、加载暂停和滚动条样式切换均可交互；代码 Buffer、输入草稿与滚动位置跨页保留。通过 Search 输入组件名，或运行 `go run ./cmd/gallery -page text-layout` 可直接进入。
+该页的 [Kbd 源组合](examples/kbd-composition/README.md) 提供17个配置，包含静态修饰键／图标、真实按钮和输入框、独立富Tooltip及翻译RTL；键帽本身不安装快捷键。
 
 响应式导航布局见 [Sidebar](docs/sidebar.md)；对话框焦点、固定页脚与抽屉吸附手势见 [Modal API](docs/modals.md)。
 命令面板的虚拟列表、过滤、快捷键与自定义内容见 [Command](docs/command.md)。
