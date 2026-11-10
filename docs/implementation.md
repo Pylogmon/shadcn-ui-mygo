@@ -150,7 +150,8 @@
 | 5.DO | Field独立组合与完整源表单 | 已提交 `19b4471`；顺序自由的真实目标关联、前置说明/丰富标签/整卡选择、Legend/Separator及Slider独立Invalid；Gallery映射13docs与Create10分区，旧便利布局保留；隔离全量2337结果、vet与三平台构建通过 |
 | 5.DP | Gallery完整Alert与Empty源组合 | 已提交 `74a4176`；20通知/13空状态、真实链接/搜索/离线头像、明暗颜色与RTL，独立本地动作与跨页草稿；复用已有SDK，Gallery250结果、vet及macOS构建通过 |
 | 5.DQ | Disclosure独立部件与完整源组合 | 已提交 `e0f2659`；任意布局Trigger/Content、当前帧主题载体、真实inner样式及Accordion StyleItem，修复新旧首次展开测量；17源配置与原生编辑/文件树/RTL；隔离全量2342结果、vet与三平台构建通过 |
-| 5.DR | Gallery完整Item源组合 | 本阶段提交；35配置的尺寸/变体/原始图像、真实主链接和独立动作、Header/Footer/分组及成员菜单，补充自绘菜单可配置行高；隔离全量2345结果、vet与三平台构建通过 |
+| 5.DR | Gallery完整Item源组合 | 已提交 `c562a6b`；35配置的尺寸/变体/原始图像、真实主链接和独立动作、Header/Footer/分组及成员菜单，补充自绘菜单可配置行高；隔离全量2345结果、vet与三平台构建通过 |
+| 5.DS | Gallery完整Popover与HoverCard源组合 | 本阶段提交；12配置的真实独立字段、Title/Description、align/6side、Dialog嵌套、10/100ms预览与RTL；复用已有桌面API，Gallery256结果、vet与macOS构建通过 |
 
 用户已明确允许原生平台适配：Popover、menu、下拉菜单可以使用 MyGo 的系统菜单与独立 Flyout，超出父窗口范围；无需逐像素照搬网页浮层。Gallery 以 [shadcn/create](https://ui.shadcn.com/create) 的配置与实时预览流程为参考。完整组件功能、主题、动画范围保持不变。
 

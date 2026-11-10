@@ -1,0 +1,240 @@
+{
+  "repository": "https://github.com/shadcn-ui/ui",
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "files": [
+    {
+      "path": "apps/v4/examples/base/popover-demo.tsx",
+      "gitBlob": "f3ffa443fa1f99c731317f81b5d78d7103ae0438",
+      "sha256": "1c4f7cd2f7f7cc24b83cb0100ca85d9c0352e24566701d57747ec244c2f4671d",
+      "bytes": 2014,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/popover-demo.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/popover-basic.tsx",
+      "gitBlob": "4eb1c519067ca55bc90e96019d67e4e791b63a0a",
+      "sha256": "913c729e375f84a43cd5b16e86d64935d66b22a3bbaf2e675c251010ad747059",
+      "bytes": 718,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/popover-basic.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/popover-form.tsx",
+      "gitBlob": "1fe565af47bf7ebf94fd3949bb24e79125cf7ade",
+      "sha256": "b644ab7839c11e709d9f415d82240b8a2611ff02c5099c0eb52149f50b2b9634",
+      "bytes": 1376,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/popover-form.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/popover-alignments.tsx",
+      "gitBlob": "fa0efb0ba62ce58087de715a0622a712ab16c701",
+      "sha256": "c8ab69b416c1ed2ec905b47b95f771bad1249c2d520f41f950b7759e22d92782",
+      "bytes": 1084,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/popover-alignments.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/popover-rtl.tsx",
+      "gitBlob": "6ae256e00fe939cc5229956bf0918d8ab3a20a07",
+      "sha256": "02d6680282d4dfe98cfc1209778f1ceb40fa3e33a38c20d5681e4cd4a093eafa",
+      "bytes": 2717,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/popover-rtl.tsx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/examples/popover-example.tsx",
+      "gitBlob": "23c027fd643a2095d39cc706fec4c281f69c64c0",
+      "sha256": "668dd4d2682d6940ed0d2619a1c181fed7c03937351ed3d994b16df9da79a0f4",
+      "bytes": 5801,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/examples/popover-example.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/hover-card-demo.tsx",
+      "gitBlob": "c4855baca4ddd838fd8128b26e404876881a2c95",
+      "sha256": "4912ae2cda22e25d40b922bf14a0c7eee3ca71906409b95e740a7ebef2558a7a",
+      "bytes": 833,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/hover-card-demo.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/hover-card-sides.tsx",
+      "gitBlob": "11c92e5868997f9ffb3691f4c87a18bf534f5198",
+      "sha256": "8e9cbaaf54f0a4e245049cff65bf470fc56ff3762e5f36df335ddcce30fe9e6d",
+      "bytes": 945,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/hover-card-sides.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/hover-card-rtl.tsx",
+      "gitBlob": "1b1426fd0f73a70a6635b960db8194bc9ab01afb",
+      "sha256": "6da668f60bb56706c3523a01be7c35a20678f7187529ce47f2597475b782692d",
+      "bytes": 3009,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/hover-card-rtl.tsx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/examples/hover-card-example.tsx",
+      "gitBlob": "5f037dedf61d73474659946251584f84e04aa1cc",
+      "sha256": "ef4dfa7cd7f58cac2224ec228717f531429074a77be19be0a6d0b605cb3ba19c",
+      "bytes": 2936,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/examples/hover-card-example.tsx"
+    }
+  ],
+  "configurations": [
+    {
+      "component": "Popover",
+      "recipe": "dimensions",
+      "source": [
+        "popover-demo.tsx"
+      ],
+      "features": [
+        "four actual editors",
+        "three-column rows",
+        "320DIP",
+        "default centered placement"
+      ]
+    },
+    {
+      "component": "Popover",
+      "recipe": "basic",
+      "source": [
+        "popover-basic.tsx",
+        "popover-example.tsx:PopoverBasic"
+      ],
+      "features": [
+        "visible title/description relationships",
+        "288DIP",
+        "start alignment"
+      ]
+    },
+    {
+      "component": "Popover",
+      "recipe": "form",
+      "source": [
+        "popover-form.tsx",
+        "popover-example.tsx:PopoverWithForm"
+      ],
+      "features": [
+        "two independent editors",
+        "256DIP",
+        "half-width labels",
+        "16DIP group gap"
+      ]
+    },
+    {
+      "component": "Popover",
+      "recipe": "alignments",
+      "source": [
+        "popover-alignments.tsx",
+        "popover-example.tsx:PopoverAlignments"
+      ],
+      "features": [
+        "start/center/end",
+        "160DIP",
+        "24DIP trigger gap"
+      ]
+    },
+    {
+      "component": "Popover",
+      "recipe": "sides",
+      "source": [
+        "popover-example.tsx:PopoverSides"
+      ],
+      "features": [
+        "six physical/logical sides",
+        "two trigger rows",
+        "160DIP"
+      ]
+    },
+    {
+      "component": "Popover",
+      "recipe": "dialog",
+      "source": [
+        "popover-example.tsx:PopoverInDialog"
+      ],
+      "features": [
+        "native parent Dialog",
+        "independent child Context",
+        "288DIP"
+      ]
+    },
+    {
+      "component": "Popover",
+      "recipe": "rtl",
+      "source": [
+        "popover-rtl.tsx"
+      ],
+      "features": [
+        "ar/he/en",
+        "four physical plus two logical triggers",
+        "288DIP"
+      ]
+    },
+    {
+      "component": "HoverCard",
+      "recipe": "profile",
+      "source": [
+        "hover-card-demo.tsx"
+      ],
+      "features": [
+        "Next.js text profile",
+        "256DIP",
+        "10ms open/100ms close",
+        "no avatar is rendered by original despite unused imports"
+      ]
+    },
+    {
+      "component": "HoverCard",
+      "recipe": "sides",
+      "source": [
+        "hover-card-sides.tsx"
+      ],
+      "features": [
+        "four physical sides",
+        "100ms open/close",
+        "4DIP content gap"
+      ]
+    },
+    {
+      "component": "HoverCard",
+      "recipe": "logical",
+      "source": [
+        "hover-card-example.tsx:HoverCardSides"
+      ],
+      "features": [
+        "six physical/logical sides",
+        "100ms open/close",
+        "Vega8DIP content gap"
+      ]
+    },
+    {
+      "component": "HoverCard",
+      "recipe": "dialog",
+      "source": [
+        "hover-card-example.tsx:HoverCardInDialog"
+      ],
+      "features": [
+        "actual parent Dialog",
+        "independent hover child",
+        "100ms open/close"
+      ]
+    },
+    {
+      "component": "HoverCard",
+      "recipe": "rtl",
+      "source": [
+        "hover-card-rtl.tsx"
+      ],
+      "features": [
+        "ar/he/en product and price",
+        "physical/logical trigger rows",
+        "10ms open/100ms close",
+        "256DIP"
+      ]
+    }
+  ],
+  "nativeAdaptations": [
+    "Explicit parent-bound Host; child views receive their own current Context.",
+    "NativePopover uses platform container/Theme and native TextInput; NativeHoverCard uses a plain inactive platform Flyout, not a system hover-card widget.",
+    "Logical side and align use current reading direction.",
+    "Each child creates its own visible heading/description and native LabelledBy/DescribedBy relationships; Host wrapper uses RoleNone.",
+    "Popovers keep independent application drafts; OS dismissal is delivered by the native window backend.",
+    "Existing keyboard-focus immediate HoverCard behavior is retained; source10/100ms delays apply to pointer opening."
+  ],
+  "assets": [],
+  "sourceExamples": 10,
+  "materialConfigurations": 12
+}

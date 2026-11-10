@@ -54,6 +54,7 @@ type State struct {
 	statusCompositions                                                             statusCompositionPreviewState
 	disclosureCompositions                                                         disclosureCompositionPreviewState
 	itemCompositions                                                               itemCompositionPreviewState
+	popupCompositions                                                              popupCompositionPreviewState
 	chartPreview                                                                   chartPreviewState
 	chartCatalogue                                                                 chartcatalog.State
 	comboboxCompound                                                               comboboxCompoundPreviewState

@@ -68,6 +68,8 @@ err := desktop.Popover(c, host, "settings", anchor, &open,
 
 Gallery 的日期、日期范围、Tooltip 和作者 HoverCard 已接入组件对，随 Menu style 配置切换。共享的层名称与订阅状态变化会更新子内容版本，避免父窗口已更新而子窗口仍显示旧值。小窗口对照示例同时展示两套 API。
 
+Overlays 页另提供 [Popover／HoverCard 源组合](../examples/popup-composition/README.md)：四维输入/两项表单、三对齐与六侧、Dialog内真实独立窗口、Next.js及产品预览。每个编辑器和Title/Description关系都由当前子Context构造，父模型只持草稿/打开值/Handle；Native保持子窗口平台主题。逻辑侧与start/end按实际Direction映射，源10/100ms预览延迟明确传入。无Parent Context/Element跨窗复用，切页与配置变化释放旧弹层。
+
 Navigation 页的 Menubar 和导航面板也随配置切换；普通模式支持同窗兄弟菜单及富内容，系统模式使用菜单栏触发器组和系统路由菜单。Forms 页新增范围/多拇指/竖向滑块，Data 页新增带禁用项的边框Accordion、保留笔记内容的Collapsible和可折叠/嵌套Resizable工作区。
 
 Navigation 页的 Project actions、File 和 Project workspace 右键菜单共享 Export 子菜单，可选择 Go source 或 Preset JSON；workspace 支持 Shift+F10。Menu style 同时切换这三处的 Flyout/系统菜单路由，选择结果在 Last action 与通知中显示可读名称。

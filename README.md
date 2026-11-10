@@ -91,6 +91,7 @@ Forms & controls页已接入框架搜索、国家分组/城市描述过滤、Off
 同页可切换 [ButtonGroup 的13种组合](examples/control-compounds/README.md)，Data页提供同模块的Avatar下拉菜单；组内编辑与菜单动作随全局Flyout／Native模式切换。
 该页还可配置Combobox定位/RTL/高亮，试用对象多选表单、Dialog内搜索、Grid及100项滚动窗口。
 通知的应用队列、六位置堆叠、loading更新、可阻止关闭的动作、原生滑动及完整自定义正文见 [Toast/Sonner](docs/toast.md)。
+Overlays 页的 [Popover／HoverCard 源组合](examples/popup-composition/README.md) 提供12个配置：独立窗口表单、对齐和逻辑侧、Dialog内弹层、延迟预览及翻译RTL。
 可组合的原生文字扫光、颜色与字体传递见 [Shimmer](docs/shimmer.md)。
 独立正文/标题字体、局部作用域和 styled Flyout 传递见 [字体角色](docs/font-roles.md)。
 可分发的字体文件、许可、按需/全量注册与固定来源见 [Create 字体包](pkg/fonts/README.md)。
