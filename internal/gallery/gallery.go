@@ -48,6 +48,7 @@ type State struct {
 	recipes                                                                        recipeCompositionState
 	typedInputs                                                                    typedInputPreviewState
 	inputGroups                                                                    inputGroupPreviewState
+	controlCompounds                                                               controlCompoundsPreviewState
 	chartPreview                                                                   chartPreviewState
 	chartCatalogue                                                                 chartcatalog.State
 	comboboxCompound                                                               comboboxCompoundPreviewState
@@ -108,8 +109,8 @@ type creatorPage struct {
 
 var pages = []creatorPage{
 	{Key: "overview", Label: "Cards"},
-	{Key: "controls", Label: "Forms & controls", Keywords: []string{"Combobox", "MultiCombobox", "Autocomplete", "RadioGroup", "Radio", "Field", "InputGroup", "NumberInput", "DateInput", "TimeInput", "FileInput", "DatePickerInput", "Booking", "Jalali", "Persian", "Slider", "Switch", "Checkbox", "Textarea", "InputOTP", "Select"}},
-	{Key: "display", Label: "Data & display", Keywords: []string{"Table", "DataTable", "Payments", "Payment", "Calendar", "Avatar", "Card", "Chart", "BarChart", "LineChart", "AreaChart", "PieChart", "DonutChart", "RadarChart", "RadialChart", "Carousel", "Slides", "Slideshow", "Progress", "Skeleton"}},
+	{Key: "controls", Label: "Forms & controls", Keywords: []string{"Combobox", "MultiCombobox", "Autocomplete", "ButtonGroup", "RadioGroup", "Radio", "Field", "InputGroup", "NumberInput", "DateInput", "TimeInput", "FileInput", "DatePickerInput", "Booking", "Jalali", "Persian", "Slider", "Switch", "Checkbox", "Textarea", "InputOTP", "Select"}},
+	{Key: "display", Label: "Data & display", Keywords: []string{"Table", "DataTable", "Payments", "Payment", "Calendar", "Avatar", "AvatarDropdown", "Card", "Chart", "BarChart", "LineChart", "AreaChart", "PieChart", "DonutChart", "RadarChart", "RadialChart", "Carousel", "Slides", "Slideshow", "Progress", "Skeleton"}},
 	{Key: "content", Label: "Content & feedback"},
 	{Key: "text-layout", Label: "Text & layout", Keywords: []string{"Typography", "Kbd", "Keyboard", "CodeBlock", "Code", "Spinner", "Skeleton", "ScrollArea", "AspectRatio"}},
 	{Key: "overlays", Label: "Overlays"},

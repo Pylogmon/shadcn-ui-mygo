@@ -1,0 +1,170 @@
+{
+  "repository": "https://github.com/shadcn-ui/ui",
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "files": [
+    {
+      "path": "apps/v4/examples/base/button-group-demo.tsx",
+      "gitBlob": "629ef0211464079b5ae5f874d7c2cf76703982e2",
+      "sha256": "432deb944856e33e73d9e880b7e81532f4ccc8a339f55b8891f38f1b3aa34abd",
+      "bytes": 3510,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/button-group-demo.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/button-group-dropdown.tsx",
+      "gitBlob": "824ba0c41fb7e5d871bbda02fffea7833763f42c",
+      "sha256": "89de8790c2686f662528dbb07029de586d56ba439ba5216a2430971aaf7a7617",
+      "bytes": 1973,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/button-group-dropdown.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/button-group-input-group.tsx",
+      "gitBlob": "ddf5dc0d75b0fec190ee880302ed8916a8f3752e",
+      "sha256": "e49b3a2facf6bedd4b0f9541d9ec2a379ee3f6f3fec1f64b20d1020a3aef1452",
+      "bytes": 1815,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/button-group-input-group.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/button-group-input.tsx",
+      "gitBlob": "d25a487d0c97fa354a2c72ff24aa1098b46cc015",
+      "sha256": "4545f4191d9fa07b86d7ad28cd150b68a1a39c875233251ad38976cca8d029a7",
+      "bytes": 446,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/button-group-input.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/button-group-nested.tsx",
+      "gitBlob": "39a8b122d70fb470b215dd21793257623b5bc4ee",
+      "sha256": "22839babf181b1771831b289e4743c64529df2db9751c5f6c69a65b4b9acc203",
+      "bytes": 1032,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/button-group-nested.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/button-group-orientation.tsx",
+      "gitBlob": "122ad78d53f76ff3c9ad817359aa42d7ef5e3ead",
+      "sha256": "7763f84b6693e4e3bcc25ff070031c911e2c12da0a138c17707eb7dd867079e2",
+      "bytes": 534,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/button-group-orientation.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/button-group-popover.tsx",
+      "gitBlob": "d4817ce941759123dfdcf89d576a2c8082818980",
+      "sha256": "0132c2ce16508e7cc7e3d3061f1b457bdd9f0fe6a4ce89d7c8dd198a971473d7",
+      "bytes": 1640,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/button-group-popover.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/button-group-rtl.tsx",
+      "gitBlob": "b625d976afdc44e08a2497d2bedc90efdd60ea6f",
+      "sha256": "f37349afc12a54f8ce0764b28f4cbb62f56a46c99ffbaf5ea0f1f925517936dc",
+      "bytes": 5493,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/button-group-rtl.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/button-group-select.tsx",
+      "gitBlob": "16a97925fac6bb1a88128aaed881fb62ea5ba7de",
+      "sha256": "96ae1d7e4353746a31014f19bcb6fff2b39bcbad49e71aa695398ede3e2d7deb",
+      "bytes": 1586,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/button-group-select.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/button-group-separator.tsx",
+      "gitBlob": "a4e37e6d48042c0245c40d3e97e438a2723effbd",
+      "sha256": "464d03834e71719cc2b6d1845a14646aae0a4ad62b793c43c24a731a893e35cf",
+      "bytes": 434,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/button-group-separator.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/button-group-size.tsx",
+      "gitBlob": "8289919450bc19e5d69643b796ce7a738850edde",
+      "sha256": "61676fd3513b8aa9a5784fc98455fcedc67925658993de9e73360244599411f3",
+      "bytes": 1306,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/button-group-size.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/button-group-split.tsx",
+      "gitBlob": "a9237d7644f8b0f5bd25a8d306bb3f9e21a72600",
+      "sha256": "0a04a8b314bfcfc773ad3e1becb0d123f531716ced7215fb94deb49885cc4c10",
+      "bytes": 459,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/button-group-split.tsx"
+    },
+    {
+      "path": "apps/v4/content/docs/components/base/button-group.mdx",
+      "gitBlob": "cf41b1c3316d47abc2e94a98217fc8967cced99a",
+      "sha256": "5a955ee44d95ea6e1d10a3c549f8f6fa13ce3da32714a7e375a5e85e3f23b97e",
+      "bytes": 5510,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/content/docs/components/base/button-group.mdx"
+    },
+    {
+      "path": "apps/v4/examples/base/avatar-dropdown.tsx",
+      "gitBlob": "034ffd46a17132ef2983a976d6493a88e7a1bc28",
+      "sha256": "23ad4bb4a84e895ac1efe13755fbd7cd746b09e7dd2fd7e7a2b9c3df46020643",
+      "bytes": 1198,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/avatar-dropdown.tsx"
+    }
+  ],
+  "configurations": [
+    {
+      "key": "demo",
+      "source": "apps/v4/examples/base/button-group-demo.tsx"
+    },
+    {
+      "key": "dropdown",
+      "source": "apps/v4/examples/base/button-group-dropdown.tsx"
+    },
+    {
+      "key": "input-group",
+      "source": "apps/v4/examples/base/button-group-input-group.tsx"
+    },
+    {
+      "key": "input",
+      "source": "apps/v4/examples/base/button-group-input.tsx"
+    },
+    {
+      "key": "nested",
+      "source": "apps/v4/examples/base/button-group-nested.tsx"
+    },
+    {
+      "key": "orientation",
+      "source": "apps/v4/examples/base/button-group-orientation.tsx"
+    },
+    {
+      "key": "popover",
+      "source": "apps/v4/examples/base/button-group-popover.tsx"
+    },
+    {
+      "key": "rtl",
+      "source": "apps/v4/examples/base/button-group-rtl.tsx"
+    },
+    {
+      "key": "select",
+      "source": "apps/v4/examples/base/button-group-select.tsx"
+    },
+    {
+      "key": "separator",
+      "source": "apps/v4/examples/base/button-group-separator.tsx"
+    },
+    {
+      "key": "size",
+      "source": "apps/v4/examples/base/button-group-size.tsx"
+    },
+    {
+      "key": "split",
+      "source": "apps/v4/examples/base/button-group-split.tsx"
+    },
+    {
+      "key": "text",
+      "source": "apps/v4/content/docs/components/base/button-group.mdx",
+      "lines": [
+        212,
+        242
+      ]
+    }
+  ],
+  "nativeAdaptation": [
+    "12 independent ButtonGroup source examples plus the inline ButtonGroupText example form 13 configurations. Avatar dropdown is a separate source composition.",
+    "Arrangements, values, translated RTL labels and nested radio-menu data follow the source. The kit uses its existing Vega styles and Material Symbols rather than importing Nova wrappers or Lucide/Tabler assets.",
+    "The existing local portrait replaces the source remote GitHub avatar; no network image load is added.",
+    "Menu/Select/Tooltip/Popover routes follow the Gallery native flag: styled independent Flyout or OS menu/platform-themed container as appropriate.",
+    "Application actions are local readouts, shared drafts, actual SDK clipboard acknowledgments and an amount preview. No account, recording, payment or Copilot service is connected.",
+    "Task popover keeps the source title/editor arrangement but describes local draft ownership instead of claiming a pull request will be created."
+  ]
+}

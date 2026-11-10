@@ -130,6 +130,7 @@ func (s *State) controls(c *ui.Context) {
 	s.recipeChoicesPreview(c)
 	s.typedInputs.view(c, s.Window)
 	s.inputGroups.view(c, s.Popovers, s.Config.NativeMenus)
+	s.controlCompounds.buttonGroups(c, s.Popovers, s.Config.NativeMenus)
 	s.sliderRangesPreview(c)
 	s.comboboxPreview(c)
 	s.comboboxCompoundPreview(c)
@@ -152,6 +153,7 @@ func (s *State) displays(c *ui.Context) {
 		})
 	}, func() {
 		s.avatarsPreview(c)
+		s.controlCompounds.avatar(c, s.Popovers, s.Config.NativeMenus)
 		display.Card(c, func() {
 			s.cardHeader(c, "Frequently asked", "Composable disclosure patterns.")
 			display.Accordion(c, display.AccordionProps{Single: true, Bordered: true, Items: []display.AccordionItem{{Key: "native", Title: "Is this a native app?", Open: &s.Accordion, Content: func() {

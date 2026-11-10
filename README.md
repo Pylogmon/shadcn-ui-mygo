@@ -82,6 +82,7 @@ Field 的多条错误、自定义原生正文与实际编辑器关联见 [Field 
 多项可见布局、独立轮播控件、吸附位置、应用控制器与原生编辑内容见[Carousel](docs/carousel.md)。
 Gallery的Data & display页可切换Carousel布局、间距、循环和项目顺序，编辑卡片备注，并试用垂直/RTL导航。
 Forms & controls页已接入框架搜索、国家分组/城市描述过滤、Office弹层搜索、多选技术标签与表单状态示例。
+同页可切换 [ButtonGroup 的13种组合](examples/control-compounds/README.md)，Data页提供同模块的Avatar下拉菜单；组内编辑与菜单动作随全局Flyout／Native模式切换。
 该页还可配置Combobox定位/RTL/高亮，试用对象多选表单、Dialog内搜索、Grid及100项滚动窗口。
 通知的应用队列、六位置堆叠、loading更新、可阻止关闭的动作、原生滑动及完整自定义正文见 [Toast/Sonner](docs/toast.md)。
 可组合的原生文字扫光、颜色与字体传递见 [Shimmer](docs/shimmer.md)。

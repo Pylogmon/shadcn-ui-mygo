@@ -143,7 +143,8 @@
 | 5.DH | Gallery命名字体选择与完整角色传递 | 已提交 `2f22d8b`；26族正文/标题选择、Inter/继承默认、旧预设/JSON/撤销重做和真实编辑选区；有界Flyout列表与既有浮层字体刷新；Gallery242结果、vet与macOS构建通过 |
 | 5.DI | Questionnaire同题独立原生输入集合 | 已提交 `e32e933`；自动/显式Key、独立草稿与成功值、同值控件提交、校验失败准确回焦及默认选择Reset；提供可运行原生组合示例；隔离全量2326结果、vet与三平台构建通过 |
 | 5.DJ | Persian示例原始Vazirmatn字体 | 已提交 `1ea4ca1`；显式按需资产/原许可、示例局部字体与原生日期选择，Create目录保持26族；隔离全量2327结果、vet与三平台构建通过 |
-| 5.DK | Combobox固定Unicode筛选与JS trim | 本阶段提交；固定UTF-16窗口、区域search/标点/零权重、原始query与选值策略；64官方Intl向量及同原生流程，隔离全量2329结果、vet与三平台构建通过 |
+| 5.DK | Combobox固定Unicode筛选与JS trim | 已提交 `cb13d72`；固定UTF-16窗口、区域search/标点/零权重、原始query与选值策略；64官方Intl向量及同原生流程，隔离全量2329结果、vet与三平台构建通过 |
+| 5.DL | Gallery完整ButtonGroup组合与Avatar菜单 | 本阶段提交；13配置的输入/选择/动作/独立task与原生双路菜单，窄RTL整页搜索/编辑/跨页保留；Gallery244结果、vet与macOS构建通过 |
 
 用户已明确允许原生平台适配：Popover、menu、下拉菜单可以使用 MyGo 的系统菜单与独立 Flyout，超出父窗口范围；无需逐像素照搬网页浮层。Gallery 以 [shadcn/create](https://ui.shadcn.com/create) 的配置与实时预览流程为参考。完整组件功能、主题、动画范围保持不变。
 
