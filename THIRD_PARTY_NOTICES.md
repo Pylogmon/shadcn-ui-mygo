@@ -20,6 +20,15 @@ Their provenance and image terms are documented in
 also included in macOS bundles as `licenses/card-example-images.txt`.
 The kit's MIT code license does not relicense these third-party images.
 
+Gallery Item compositions add the nine original image resources referenced by
+the fixed examples: three Unsplash model photos and six generated Vercel covers.
+The source's photographer credits, URLs, response types and original SHA-256
+values are recorded in `examples/item-composition/source-map.json` and
+`internal/gallery/item-assets/README.md`. The three profile images reuse the
+unchanged Card originals above. macOS bundles include the additional image
+provenance as `licenses/item-example-images.txt`; image rights remain with
+their original owners.
+
 The optional Create font collection uses the 26 families named by the fixed
 shadcn Create picker. Original Google Fonts assets are pinned to commit
 `5bb28733cec313b63fbd415b574b5ae35c8aa8b8`; original supplemental faces and

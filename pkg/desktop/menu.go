@@ -13,6 +13,10 @@ type MenuProps struct {
 	Items            []overlay.MenuItem
 	Label            string
 	Width, MaxHeight float32
+	// ItemHeight is the full height of each themed row, including ItemContent.
+	// Non-positive or non-finite values keep the standard 32 DIP row. NativeMenu
+	// uses the operating system's own metrics and has no custom row-height path.
+	ItemHeight       float32
 	Placement        mygo.Placement
 	Gap              int
 	Revision         uint64
@@ -20,6 +24,12 @@ type MenuProps struct {
 	ItemContent      func(*ui.Context, overlay.MenuItem)
 	OnChoose         func(string)
 	OnDismiss        func()
+}
+
+type menuItemLayoutKey struct{ key string }
+type menuItemLayout struct {
+	height   float32
+	revision uint64
 }
 
 // Menu opens a shadcn-styled, measured menu in its own native Flyout. The Host
@@ -88,8 +98,14 @@ func menu(c *ui.Context, h *Host, key string, anchor ui.Element, open *bool, sta
 		*open = false
 		return result, errors.New("desktop: menu dimensions must be finite")
 	}
+	itemHeight := menuItemHeight(p.ItemHeight)
+	layout := ui.Local(anchor, menuItemLayoutKey{key}, func() menuItemLayout { return menuItemLayout{height: itemHeight} })
+	if layout.height != itemHeight {
+		layout.height = itemHeight
+		layout.revision++
+	}
 	zero := float32(0)
-	props := PopoverProps{menuMotion: menuMotionPopup, menuContext: manual, Label: p.Label, Placement: p.Placement, Width: int(math.Ceil(float64(width))), Height: 200, Gap: p.Gap, FitContent: true, MaxHeight: int(math.Ceil(float64(maxHeight))), Plain: true, ManualTrigger: manual, Revision: p.Revision, ContentPadding: &zero, ContentRole: ui.RoleGroup,
+	props := PopoverProps{menuMotion: menuMotionPopup, menuContext: manual, Label: p.Label, Placement: p.Placement, Width: int(math.Ceil(float64(width))), Height: int(math.Ceil(float64(menuPanelHeight(p.Items, itemHeight, maxHeight)))), Gap: p.Gap, FitContent: true, MaxHeight: int(math.Ceil(float64(maxHeight))), Plain: true, ManualTrigger: manual, Revision: p.Revision + layout.revision, ContentPadding: &zero, ContentRole: ui.RoleGroup,
 		OnDismiss: func() {
 			state.wasOpen = false
 			if manual {
@@ -110,7 +126,7 @@ func menu(c *ui.Context, h *Host, key string, anchor ui.Element, open *bool, sta
 		}
 	}
 	err := Popover(c, h, key, anchor, open, props, func(child *ui.Context) {
-		MenuContent(child, state, p.Items, MenuContentProps{Label: p.Label, Width: width, MaxHeight: maxHeight, KeepOpenOnSelect: p.KeepOpenOnSelect, ItemContent: p.ItemContent,
+		MenuContent(child, state, p.Items, MenuContentProps{Label: p.Label, Width: width, MaxHeight: maxHeight, ItemHeight: itemHeight, KeepOpenOnSelect: p.KeepOpenOnSelect, ItemContent: p.ItemContent,
 			OnChoose: func(value string) {
 				chose = true
 				if p.OnChoose != nil {

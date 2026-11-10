@@ -1,0 +1,517 @@
+{
+  "repository": "https://github.com/shadcn-ui/ui",
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "files": [
+    {
+      "path": "apps/v4/examples/base/item-avatar.tsx",
+      "gitBlob": "7255ef2a62120cc3b0498d7d768a736323b2b964",
+      "sha256": "8e6958fd78c58ab81906897a5e4a56b3d573c2cf553130c1f434102ba4a396a9",
+      "bytes": 2353,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/item-avatar.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/item-demo.tsx",
+      "gitBlob": "00307289c6eb855205b76b9e3945f45241e770bf",
+      "sha256": "7b46012ea81012bdfa2c62fe9a33dfc44a04e8c178055de7e9305cc6f0cf2bbb",
+      "bytes": 1112,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/item-demo.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/item-dropdown.tsx",
+      "gitBlob": "9a3e0cd991843fc66086c1ff75ef78b911b8ad7b",
+      "sha256": "4da28f29593753b02fd01b1c864ec55bbff0a5619e2e8adf3e6d28f139a0676e",
+      "bytes": 1997,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/item-dropdown.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/item-group.tsx",
+      "gitBlob": "8988659679fe17c9634e83d792e0a30d6eb595a2",
+      "sha256": "0952d17ddfa557f57c082f7caac3c992eeda4d04fae3b1cd5ceaf4879e008d94",
+      "bytes": 1563,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/item-group.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/item-header.tsx",
+      "gitBlob": "3c23d0998aae63eb06a70eb23426b351ca0bee5d",
+      "sha256": "d115c7395dfeb55a2d12e66ce066a4bd58ad0531d723e88ad99a59607a372cbf",
+      "bytes": 1668,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/item-header.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/item-icon.tsx",
+      "gitBlob": "4f6690533966eb2b2a6157df19ddf4f48bc58d2c",
+      "sha256": "a166cd60fbaa558f256e5bb262ad77591bc8b45d4a97c242775b427f2fa67159",
+      "bytes": 810,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/item-icon.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/item-image.tsx",
+      "gitBlob": "4508946d36ebe8b19c2eb1b39996bf0ba56334ae",
+      "sha256": "e5ba06b854b90d85a0f34f0746c7717c432d262729f7a60466cfeaf85d618c75",
+      "bytes": 1693,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/item-image.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/item-link.tsx",
+      "gitBlob": "eb27545e61359a2b47b184fd367dff733557e9e0",
+      "sha256": "5bb514a64999373541ad188389de97c9a20bb303ec67913edb004a58d85b6bf4",
+      "bytes": 1100,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/item-link.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/item-rtl.tsx",
+      "gitBlob": "b99f2d8db98698894f9f7d06895ede6bcad68981",
+      "sha256": "1df98192f76a2262683d08f1852f97d98d17d867ddd475014157a5c89a5d51ca",
+      "bytes": 2066,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/item-rtl.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/item-size.tsx",
+      "gitBlob": "72e0db6c8cc37dc3eb1c9e0488e6bad1df68e0f1",
+      "sha256": "3a46c16f73c5b572259190ca7941bf43ee6bd873d133572e02732249696f1ff5",
+      "bytes": 1209,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/item-size.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/item-variant.tsx",
+      "gitBlob": "0a4d4c17a584c0a0d92a23326f170e6ddb0817b6",
+      "sha256": "650d17c2ceb94f4c93e73e4870996bc059df4094c40e85d04f1b1354623bc00a",
+      "bytes": 1233,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/item-variant.tsx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/examples/item-example.tsx",
+      "gitBlob": "5ae63ab73bfa86a1c654158b56c5d8ff8a4962b9",
+      "sha256": "d72b202993064cd9a69521596b424a1515815fdd0c3562d48a6b5f5def89d154",
+      "bytes": 60616,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/examples/item-example.tsx"
+    }
+  ],
+  "documentationExamples": [
+    {
+      "example": "item-avatar",
+      "sourceFunction": "ItemAvatar",
+      "source": "apps/v4/examples/base/item-avatar.tsx",
+      "recipe": "avatar",
+      "selectorLabel": "User and team avatars"
+    },
+    {
+      "example": "item-demo",
+      "sourceFunction": "ItemDemo",
+      "source": "apps/v4/examples/base/item-demo.tsx",
+      "recipe": "demo",
+      "selectorLabel": "Basic and verified items"
+    },
+    {
+      "example": "item-dropdown",
+      "sourceFunction": "ItemDropdown",
+      "source": "apps/v4/examples/base/item-dropdown.tsx",
+      "recipe": "dropdown",
+      "selectorLabel": "People dropdown"
+    },
+    {
+      "example": "item-group",
+      "sourceFunction": "ItemGroupExample",
+      "source": "apps/v4/examples/base/item-group.tsx",
+      "recipe": "group",
+      "selectorLabel": "People group"
+    },
+    {
+      "example": "item-header",
+      "sourceFunction": "ItemHeaderDemo",
+      "source": "apps/v4/examples/base/item-header.tsx",
+      "recipe": "header",
+      "selectorLabel": "Model image headers"
+    },
+    {
+      "example": "item-icon",
+      "sourceFunction": "ItemIcon",
+      "source": "apps/v4/examples/base/item-icon.tsx",
+      "recipe": "icon",
+      "selectorLabel": "Security icon"
+    },
+    {
+      "example": "item-image",
+      "sourceFunction": "ItemImage",
+      "source": "apps/v4/examples/base/item-image.tsx",
+      "recipe": "image",
+      "selectorLabel": "Music with cover images"
+    },
+    {
+      "example": "item-link",
+      "sourceFunction": "ItemLink",
+      "source": "apps/v4/examples/base/item-link.tsx",
+      "recipe": "link",
+      "selectorLabel": "Native item links"
+    },
+    {
+      "example": "item-rtl",
+      "sourceFunction": "ItemRtl",
+      "source": "apps/v4/examples/base/item-rtl.tsx",
+      "recipe": "rtl",
+      "selectorLabel": "Translated RTL items"
+    },
+    {
+      "example": "item-size",
+      "sourceFunction": "ItemSizeDemo",
+      "source": "apps/v4/examples/base/item-size.tsx",
+      "recipe": "size",
+      "selectorLabel": "Three item sizes"
+    },
+    {
+      "example": "item-variant",
+      "sourceFunction": "ItemVariant",
+      "source": "apps/v4/examples/base/item-variant.tsx",
+      "recipe": "variant",
+      "selectorLabel": "Three item variants"
+    }
+  ],
+  "createConfigurations": [
+    {
+      "sourceFunction": "DefaultVariantItems",
+      "sourceTitle": "Default",
+      "source": "apps/v4/registry/bases/base/examples/item-example.tsx",
+      "recipe": "create-default",
+      "selectorLabel": "Create: Default"
+    },
+    {
+      "sourceFunction": "OutlineVariantItems",
+      "sourceTitle": "Outline",
+      "source": "apps/v4/registry/bases/base/examples/item-example.tsx",
+      "recipe": "create-outline",
+      "selectorLabel": "Create: Outline"
+    },
+    {
+      "sourceFunction": "MutedVariantItems",
+      "sourceTitle": "Muted",
+      "source": "apps/v4/registry/bases/base/examples/item-example.tsx",
+      "recipe": "create-muted",
+      "selectorLabel": "Create: Muted"
+    },
+    {
+      "sourceFunction": "DefaultVariantItemsSmall",
+      "sourceTitle": "Small",
+      "source": "apps/v4/registry/bases/base/examples/item-example.tsx",
+      "recipe": "create-default-small",
+      "selectorLabel": "Create: Default small"
+    },
+    {
+      "sourceFunction": "OutlineVariantItemsSmall",
+      "sourceTitle": "Outline - Small",
+      "source": "apps/v4/registry/bases/base/examples/item-example.tsx",
+      "recipe": "create-outline-small",
+      "selectorLabel": "Create: Outline small"
+    },
+    {
+      "sourceFunction": "MutedVariantItemsSmall",
+      "sourceTitle": "Muted - Small",
+      "source": "apps/v4/registry/bases/base/examples/item-example.tsx",
+      "recipe": "create-muted-small",
+      "selectorLabel": "Create: Muted small"
+    },
+    {
+      "sourceFunction": "DefaultVariantItemsExtraSmall",
+      "sourceTitle": "Extra Small",
+      "source": "apps/v4/registry/bases/base/examples/item-example.tsx",
+      "recipe": "create-default-xs",
+      "selectorLabel": "Create: Default extra small"
+    },
+    {
+      "sourceFunction": "OutlineVariantItemsExtraSmall",
+      "sourceTitle": "Outline - Extra Small",
+      "source": "apps/v4/registry/bases/base/examples/item-example.tsx",
+      "recipe": "create-outline-xs",
+      "selectorLabel": "Create: Outline extra small"
+    },
+    {
+      "sourceFunction": "MutedVariantItemsExtraSmall",
+      "sourceTitle": "Muted - Extra Small",
+      "source": "apps/v4/registry/bases/base/examples/item-example.tsx",
+      "recipe": "create-muted-xs",
+      "selectorLabel": "Create: Muted extra small"
+    },
+    {
+      "sourceFunction": "DefaultLinkItems",
+      "sourceTitle": "asChild",
+      "source": "apps/v4/registry/bases/base/examples/item-example.tsx",
+      "recipe": "create-default-links",
+      "selectorLabel": "Create: Default links"
+    },
+    {
+      "sourceFunction": "OutlineLinkItems",
+      "sourceTitle": "Outline - asChild",
+      "source": "apps/v4/registry/bases/base/examples/item-example.tsx",
+      "recipe": "create-outline-links",
+      "selectorLabel": "Create: Outline links"
+    },
+    {
+      "sourceFunction": "MutedLinkItems",
+      "sourceTitle": "Muted - asChild",
+      "source": "apps/v4/registry/bases/base/examples/item-example.tsx",
+      "recipe": "create-muted-links",
+      "selectorLabel": "Create: Muted links"
+    },
+    {
+      "sourceFunction": "DefaultItemGroup",
+      "sourceTitle": "ItemGroup",
+      "source": "apps/v4/registry/bases/base/examples/item-example.tsx",
+      "recipe": "create-default-group",
+      "selectorLabel": "Create: Default group"
+    },
+    {
+      "sourceFunction": "OutlineItemGroup",
+      "sourceTitle": "Outline - ItemGroup",
+      "source": "apps/v4/registry/bases/base/examples/item-example.tsx",
+      "recipe": "create-outline-group",
+      "selectorLabel": "Create: Outline group"
+    },
+    {
+      "sourceFunction": "MutedItemGroup",
+      "sourceTitle": "Muted - ItemGroup",
+      "source": "apps/v4/registry/bases/base/examples/item-example.tsx",
+      "recipe": "create-muted-group",
+      "selectorLabel": "Create: Muted group"
+    },
+    {
+      "sourceFunction": "ItemSeparatorExample",
+      "sourceTitle": "ItemSeparator",
+      "source": "apps/v4/registry/bases/base/examples/item-example.tsx",
+      "recipe": "create-separator",
+      "selectorLabel": "Create: Separators"
+    },
+    {
+      "sourceFunction": "ItemHeaderExamples",
+      "sourceTitle": "ItemHeader",
+      "source": "apps/v4/registry/bases/base/examples/item-example.tsx",
+      "recipe": "create-header",
+      "selectorLabel": "Create: Headers"
+    },
+    {
+      "sourceFunction": "ItemFooterExamples",
+      "sourceTitle": "ItemFooter",
+      "source": "apps/v4/registry/bases/base/examples/item-example.tsx",
+      "recipe": "create-footer",
+      "selectorLabel": "Create: Footers"
+    },
+    {
+      "sourceFunction": "ItemHeaderAndFooterExamples",
+      "sourceTitle": "ItemHeader + ItemFooter",
+      "source": "apps/v4/registry/bases/base/examples/item-example.tsx",
+      "recipe": "create-both",
+      "selectorLabel": "Create: Headers and footers"
+    },
+    {
+      "sourceFunction": "DefaultVariantItemsWithImage",
+      "sourceTitle": "Default - ItemMedia image",
+      "source": "apps/v4/registry/bases/base/examples/item-example.tsx",
+      "recipe": "create-default-image",
+      "selectorLabel": "Create: Default images"
+    },
+    {
+      "sourceFunction": "OutlineVariantItemsWithImage",
+      "sourceTitle": "Outline - ItemMedia image",
+      "source": "apps/v4/registry/bases/base/examples/item-example.tsx",
+      "recipe": "create-outline-image",
+      "selectorLabel": "Create: Outline images"
+    },
+    {
+      "sourceFunction": "OutlineVariantItemsWithImageSmall",
+      "sourceTitle": "Outline - ItemMedia image - Small",
+      "source": "apps/v4/registry/bases/base/examples/item-example.tsx",
+      "recipe": "create-outline-image-small",
+      "selectorLabel": "Create: Outline images small"
+    },
+    {
+      "sourceFunction": "OutlineVariantItemsWithImageExtraSmall",
+      "sourceTitle": "Outline - ItemMedia image - Extra Small",
+      "source": "apps/v4/registry/bases/base/examples/item-example.tsx",
+      "recipe": "create-outline-image-xs",
+      "selectorLabel": "Create: Outline images extra small"
+    },
+    {
+      "sourceFunction": "MutedVariantItemsWithImage",
+      "sourceTitle": "Muted - ItemMedia image",
+      "source": "apps/v4/registry/bases/base/examples/item-example.tsx",
+      "recipe": "create-muted-image",
+      "selectorLabel": "Create: Muted images"
+    }
+  ],
+  "sourceConfigurationCount": 35,
+  "nativeSelector": "Item configuration",
+  "nativeMappings": "The 35-entry selector maps each of the11 docs examples and24 Create functions to its explicit recipe. Source placeholder href=\"#\" becomes an actual native Link with a local intent callback; distinct trailing controls retain independent actions. Rich dropdown items use the current child Context; Native uses system text menus.",
+  "assets": [
+    {
+      "name": "model-small",
+      "url": "https://images.unsplash.com/photo-1650804068570-7fb2e3dbf888?q=80&w=640&auto=format&fit=crop",
+      "finalUrl": "https://images.unsplash.com/photo-1650804068570-7fb2e3dbf888?q=80&w=640&auto=format&fit=crop",
+      "contentType": "image/jpeg",
+      "bytes": 139579,
+      "sha256": "b80998ae55c946ab3031a04123bb87a5527af7bd772666f36d76eabf8f55236e",
+      "path": "internal/gallery/item-assets/model-small.jpg",
+      "captured": "2026-11-10",
+      "modified": false,
+      "attribution": "Valeria Reverdo on Unsplash",
+      "source": "apps/v4/examples/base/item-header.tsx"
+    },
+    {
+      "name": "model-large",
+      "url": "https://images.unsplash.com/photo-1610280777472-54133d004c8c?q=80&w=640&auto=format&fit=crop",
+      "finalUrl": "https://images.unsplash.com/photo-1610280777472-54133d004c8c?q=80&w=640&auto=format&fit=crop",
+      "contentType": "image/jpeg",
+      "bytes": 91230,
+      "sha256": "2f6c2fdbdaf9307ff96866eac65bf58ef728b691366d9dee14311a1351c88aa5",
+      "path": "internal/gallery/item-assets/model-large.jpg",
+      "captured": "2026-11-10",
+      "modified": false,
+      "attribution": "Michael Oeser on Unsplash",
+      "source": "apps/v4/examples/base/item-header.tsx"
+    },
+    {
+      "name": "model-mini",
+      "url": "https://images.unsplash.com/photo-1602146057681-08560aee8cde?q=80&w=640&auto=format&fit=crop",
+      "finalUrl": "https://images.unsplash.com/photo-1602146057681-08560aee8cde?q=80&w=640&auto=format&fit=crop",
+      "contentType": "image/jpeg",
+      "bytes": 55862,
+      "sha256": "8c142f851eadf6acb7d8e6cfffd0c72224e9f8b75b0d58cc56ae89dd155a4e9f",
+      "path": "internal/gallery/item-assets/model-mini.jpg",
+      "captured": "2026-11-10",
+      "modified": false,
+      "attribution": "Cherry Laithang on Unsplash",
+      "source": "apps/v4/examples/base/item-header.tsx"
+    },
+    {
+      "name": "song-midnight",
+      "url": "https://avatar.vercel.sh/Midnight%20City%20Lights",
+      "finalUrl": "https://avatar.vercel.sh/Midnight%20City%20Lights",
+      "contentType": "image/png",
+      "bytes": 4573,
+      "sha256": "3a9ae66109a7a21663b1a17cd9a8e17119635cb00e52a2ea969a3f3df7cd4ae7",
+      "path": "internal/gallery/item-assets/song-midnight.png",
+      "captured": "2026-11-10",
+      "modified": false,
+      "source": "apps/v4/examples/base/item-image.tsx"
+    },
+    {
+      "name": "song-coffee",
+      "url": "https://avatar.vercel.sh/Coffee%20Shop%20Conversations",
+      "finalUrl": "https://avatar.vercel.sh/Coffee%20Shop%20Conversations",
+      "contentType": "image/png",
+      "bytes": 5359,
+      "sha256": "93daca54b984d1baf0dedeb3a6567c338877babf7fd940bb0e53b0b8abc772a3",
+      "path": "internal/gallery/item-assets/song-coffee.png",
+      "captured": "2026-11-10",
+      "modified": false,
+      "source": "apps/v4/examples/base/item-image.tsx"
+    },
+    {
+      "name": "song-rain",
+      "url": "https://avatar.vercel.sh/Digital%20Rain",
+      "finalUrl": "https://avatar.vercel.sh/Digital%20Rain",
+      "contentType": "image/png",
+      "bytes": 1732,
+      "sha256": "f57f942ed4e07450b4e82f6664b0571627a5633556730f672590eb6f5bdeaee4",
+      "path": "internal/gallery/item-assets/song-rain.png",
+      "captured": "2026-11-10",
+      "modified": false,
+      "source": "apps/v4/examples/base/item-image.tsx"
+    },
+    {
+      "name": "project",
+      "url": "https://avatar.vercel.sh/Project",
+      "finalUrl": "https://avatar.vercel.sh/Project",
+      "contentType": "image/png",
+      "bytes": 4823,
+      "sha256": "01e59765c5210fcec3b71aad059cea86f6912da9ee684cf3dfec58c1ec8bd89a",
+      "path": "internal/gallery/item-assets/project.png",
+      "captured": "2026-11-10",
+      "modified": false,
+      "source": "apps/v4/registry/bases/base/examples/item-example.tsx"
+    },
+    {
+      "name": "document",
+      "url": "https://avatar.vercel.sh/Document",
+      "finalUrl": "https://avatar.vercel.sh/Document",
+      "contentType": "image/png",
+      "bytes": 4910,
+      "sha256": "542c2110a779c7d15b1e2944178adf3fc831f53dba6b4013a42ac930a8258b7b",
+      "path": "internal/gallery/item-assets/document.png",
+      "captured": "2026-11-10",
+      "modified": false,
+      "source": "apps/v4/registry/bases/base/examples/item-example.tsx"
+    },
+    {
+      "name": "file",
+      "url": "https://avatar.vercel.sh/File",
+      "finalUrl": "https://avatar.vercel.sh/File",
+      "contentType": "image/png",
+      "bytes": 2854,
+      "sha256": "8cc1d3518854861926e5c9f3c12e2e64fb173c0bc2b4ff2e90aa29c7215f41ff",
+      "path": "internal/gallery/item-assets/file.png",
+      "captured": "2026-11-10",
+      "modified": false,
+      "source": "apps/v4/registry/bases/base/examples/item-example.tsx"
+    }
+  ],
+  "reusedAssets": [
+    {
+      "name": "avatar-shadcn",
+      "url": "https://github.com/shadcn.png",
+      "finalUrl": "https://avatars.githubusercontent.com/u/124599?v=4",
+      "contentType": "image/jpeg",
+      "bytes": 31007,
+      "sha256": "513d06f542692036ff0bb17938f04b3efd60567ba2cae08049469d21f18e0524",
+      "path": "internal/gallery/card-assets/shadcn.jpg",
+      "captured": "2026-11-10",
+      "modified": false,
+      "reusedFrom": "examples/card-composition/source-map.json",
+      "uses": [
+        "item-avatar",
+        "item-group",
+        "item-dropdown"
+      ]
+    },
+    {
+      "name": "avatar-maxleiter",
+      "url": "https://github.com/maxleiter.png",
+      "finalUrl": "https://avatars.githubusercontent.com/u/8675906?v=4",
+      "contentType": "image/png",
+      "bytes": 216590,
+      "sha256": "3a31d3d0c3bb2074929755298773d14e53048a8a85abbc0c944fb19fc65106bf",
+      "path": "internal/gallery/card-assets/maxleiter.png",
+      "captured": "2026-11-10",
+      "modified": false,
+      "reusedFrom": "examples/card-composition/source-map.json",
+      "uses": [
+        "item-avatar",
+        "item-group",
+        "item-dropdown"
+      ]
+    },
+    {
+      "name": "avatar-evilrabbit",
+      "url": "https://github.com/evilrabbit.png",
+      "finalUrl": "https://avatars.githubusercontent.com/u/6880091?v=4",
+      "contentType": "image/png",
+      "bytes": 10647,
+      "sha256": "8dcdb391f1f8f6610d31a9a3e06733fec308be75732571ccc6d5ce634c695382",
+      "path": "internal/gallery/card-assets/evilrabbit.png",
+      "captured": "2026-11-10",
+      "modified": false,
+      "reusedFrom": "examples/card-composition/source-map.json",
+      "uses": [
+        "item-avatar",
+        "item-group",
+        "item-dropdown"
+      ]
+    }
+  ],
+  "assetNotice": "../../internal/gallery/item-assets/README.md",
+  "nativeAdaptations": [
+    "Items use current-child-Context slots; persistent models contain application values and public menu/scroll handles, never frame Contexts, Elements or builders.",
+    "Item Primary uses the real native Link or Button region; independent Header, Actions and Footer remain sibling controls. Source fragment placeholders (#) report local intents instead of fake browser or filesystem operations.",
+    "Styled member dropdowns render native Item/avatar rows in an independent Flyout; Native routes preserve the operating-system text menu.",
+    "Image loading is offline from the exact source resources. Source grayscale is applied in application memory; original downloaded bytes remain unchanged.",
+    "Native list/list-item semantics and stable keys express the source ItemGroup structure."
+  ],
+  "acceptance": "Configuration and source bookkeeping does not prove every platform, scale, assistive technology or visual state. Formal native workflow and screenshots are recorded by the parent module owner."
+}

@@ -26,3 +26,9 @@ display.Item(c, display.ItemProps{
 `ItemGroup(c, ItemGroupProps{Items: …, Label: …})` 提供原生list/list-item语义。重排时给每个成员唯一稳定Key，可保留动作编辑器的草稿、caret与焦点。`Separators` 增加装饰分隔，`Gap` 指针可覆盖自动间距。
 
 `Content` / `Header` / `Actions` / `Footer` 接收当前子Context，独立compound helpers也可组合。标题单行、说明最多两行。过窄时主区域可收缩、动作换行；调用方明确指定的超宽固定控件使用有界原生横向滚动，保留所有操作入口。
+
+Gallery 的 Content & feedback 页提供[35个固定源配置](../examples/item-composition/README.md)，对应11个独立文档示例和 Create 的24个分区。通过 `Item configuration` 切换尺寸/变体、原生主链接与独立按钮、分组/分隔、Header/Footer、音乐时长栏、模型图片和翻译RTL。九张新原图离线嵌入，三个头像复用已有原始素材；灰度在应用图像预处理阶段完成。
+
+成员菜单的 Flyout 使用原生菜单项与丰富 Item/头像内容，Native 路由使用系统文字菜单；两者共享本地选择模型。示例动作只更新本地读数，不连接业务后台。搜索 Item 可定位本页，切页保留配置和最后动作。
+
+多行菜单内容可通过 `desktop.MenuProps.ItemHeight` / `MenuContentProps.ItemHeight` 声明行高；默认32 DIP。该值同时用于真实行、窗口预算、子菜单定位和键盘滚动，变更会刷新已打开的同一窗口。Item 成员示例使用60 DIP以容纳原始头像、两行文字及padding；系统菜单保持操作系统自己的行高。

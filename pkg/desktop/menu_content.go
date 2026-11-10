@@ -2,6 +2,7 @@ package desktop
 
 import (
 	"fmt"
+	"math"
 	"slices"
 	"strings"
 	"time"
@@ -35,8 +36,12 @@ type MenuState struct {
 func (s *MenuState) Reset() { *s = MenuState{focus: true} }
 
 type MenuContentProps struct {
-	Label                         string
-	Width, MaxHeight              float32
+	Label            string
+	Width, MaxHeight float32
+	// ItemHeight is the full row height in DIPs, including custom ItemContent.
+	// Positive finite values override the default 32; group labels/separators
+	// keep their own metrics. Match the height to the content's native layout.
+	ItemHeight                    float32
 	NoAutoFocus, KeepOpenOnSelect bool
 	OnChoose                      func(string)
 	OnClose                       func()
@@ -336,6 +341,8 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 	if maxHeight <= 0 {
 		maxHeight = 480
 	}
+	itemHeight := menuItemHeight(p.ItemHeight)
+	viewportHeight := menuViewportHeight(maxHeight)
 	label := p.Label
 	if label == "" {
 		label = "Menu"
@@ -409,7 +416,7 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 						geometry.content.W, geometry.content.H = bounds.W*c.Zoom(), bounds.H*c.Zoom()
 					} else {
 						geometry.content.W = width * c.Zoom()
-						geometry.content.H = (min(menuContentHeight(list), max(32, maxHeight-8)) + 10) * c.Zoom()
+						geometry.content.H = menuPanelHeight(list, itemHeight, maxHeight) * c.Zoom()
 						if rtl {
 							geometry.content.X += frame.geometry.content.W - geometry.content.W
 						}
@@ -430,7 +437,7 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 				attachment := subAttachment
 				content := presence.bounds
 				if content.W <= 0 {
-					content = ui.Rect{X: rootPanelBounds.X + float32(depth)*(width+4), Y: rootPanelBounds.Y, W: width, H: min(menuContentHeight(list), max(32, maxHeight-8)) + 10}
+					content = ui.Rect{X: rootPanelBounds.X + float32(depth)*(width+4), Y: rootPanelBounds.Y, W: width, H: menuPanelHeight(list, itemHeight, maxHeight)}
 					if rtl {
 						content.X = rootPanelBounds.X - float32(depth)*(width+4)
 					}
@@ -453,10 +460,10 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 				panel.Focus()
 			}
 			panel.Children(func() {
-				height := menuContentHeight(list)
+				height := menuContentHeight(list, itemHeight)
 				body := ui.Column(c).Width(width - 8)
-				if height > maxHeight-8 {
-					body = ui.Scroll(c).Width(width - 8).Height(max(32, maxHeight-8))
+				if height > viewportHeight {
+					body = ui.Scroll(c).Width(width - 8).Height(viewportHeight)
 				}
 				body.Children(func() {
 					group := ""
@@ -476,7 +483,7 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 						} else if item.Radio {
 							role = ui.RoleMenuItemRadio
 						}
-						row := ui.Row(c.Key(key)).FillWidth().Height(32).PaddingX(8).Gap(8).Radius(max(2, t.Radius-2)).AlignItems(ui.Center).Role(role).Label(item.Label).Disabled(item.Disabled).FontSize(14).TextColor(t.PopoverForeground)
+						row := ui.Row(c.Key(key)).FillWidth().Height(itemHeight).PaddingX(8).Gap(8).Radius(max(2, t.Radius-2)).AlignItems(ui.Center).Role(role).Label(item.Label).Disabled(item.Disabled).FontSize(14).TextColor(t.PopoverForeground)
 						if menu.Animated() {
 							motion.ApplyTransition(c, row)
 						}
@@ -580,7 +587,7 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 			for _, presence := range panels.panels {
 				if len(presence.path) == depth {
 					list := menuAtPath(items, presence.path, depth)
-					height = max(height, min(menuContentHeight(list), max(32, maxHeight-8))+10)
+					height = max(height, menuPanelHeight(list, itemHeight, maxHeight))
 				}
 			}
 			ui.Box(c.Key(menuDepthKey(depth))).Width(width).Height(height).Children(func() {
@@ -614,7 +621,21 @@ func listLabel(items []overlay.MenuItem, path []string, depth int) string {
 	}
 	return label
 }
-func menuContentHeight(items []overlay.MenuItem) float32 {
+func menuItemHeight(value float32) float32 {
+	if value <= 0 || math.IsNaN(float64(value)) || math.IsInf(float64(value), 0) {
+		return 32
+	}
+	return value
+}
+
+// A panel adds four DIP padding and a one DIP border on each vertical edge.
+func menuViewportHeight(maxHeight float32) float32 { return max(1, maxHeight-10) }
+
+func menuPanelHeight(items []overlay.MenuItem, itemHeight, maxHeight float32) float32 {
+	return min(menuContentHeight(items, itemHeight), menuViewportHeight(maxHeight)) + 10
+}
+
+func menuContentHeight(items []overlay.MenuItem, itemHeight float32) float32 {
 	height := float32(0)
 	group := ""
 	for _, item := range items {
@@ -626,7 +647,7 @@ func menuContentHeight(items []overlay.MenuItem) float32 {
 			group = item.Group
 			height += 28
 		}
-		height += 32
+		height += itemHeight
 	}
 	return height
 }
