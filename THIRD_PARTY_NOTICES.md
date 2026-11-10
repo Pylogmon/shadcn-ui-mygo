@@ -23,6 +23,12 @@ Applications can obtain the required unchanged notices through
 `Contents/Resources/licenses/fonts/<family>/`; it embeds no extra font binary
 outside the assets linked by Go. See [`pkg/fonts/README.md`](pkg/fonts/README.md).
 
+The Persian calendar example also includes the unchanged Vazirmatn variable
+font and its original OFL notice from that same Google Fonts commit. It is an
+explicit optional component font, outside the 26-family Create picker; its
+three original file blobs and source-example reference are recorded under
+`pkg/fonts/manifest.json`'s `extras`.
+
 The optional Material Symbols module includes Google's original static SVGs
 from `google/material-design-icons` commit
 `10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7`, under Apache-2.0.

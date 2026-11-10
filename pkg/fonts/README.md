@@ -36,6 +36,14 @@ does not register a font automatically. `Font.Register` is safe to repeat and
 retains its first result. The full catalogue links all assets; the individual
 functions are the on-demand path.
 
+The Persian calendar example additionally uses `fonts.Vazirmatn()`, matching
+the original `calendar-hijri.tsx` font wrapper. Register it explicitly and pass
+its `Family()` to `theme.FontScope`. It is a component-example font, so it does
+not change the fixed 26-entry `Catalog()` or `fonts/all` Create picker. The
+calendar component continues to inherit the application's font. Its original
+variable file, metadata and OFL notice are pinned under `manifest.json`'s
+`extras`; the same offline generator verifies and restores these files.
+
 The 47 original Google Fonts files remain unchanged. Native font matching
 selects their weight/style faces; the concentrated macOS native test checks
 actual 400/500/600/700/800 glyph differences where those weights exist. These

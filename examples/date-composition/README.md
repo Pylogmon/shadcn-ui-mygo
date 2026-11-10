@@ -8,7 +8,7 @@ choosing a day preserves the local clock.
 
 | Fixed source example | Native operation |
 | --- | --- |
-| `calendar-hijri.tsx` | Persian/Jalali model, faIR digits, RTL and month/year menus; toggle Gregorian without changing the selected date. |
+| `calendar-hijri.tsx` | Persian/Jalali model, original Vazirmatn font, faIR digits, RTL and month/year menus; toggle Gregorian without changing the selected date. |
 | `date-picker-input.tsx` | Edit an ISO or long English date, open with ArrowDown, browse and choose a day. |
 | `date-picker-natural-language.tsx` | Parse `tomorrow`, `next week`, `in N days`, or an exact date using the application's explicit callback. |
 

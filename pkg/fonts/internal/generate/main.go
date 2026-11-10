@@ -40,8 +40,10 @@ type family struct {
 type manifest struct {
 	Repository, Commit string
 	Families           []family
-	ShadcnDefinitions  source
-	ShadcnPicker       source
+	// Extras belong to fixed component examples, not the Create picker.
+	Extras            []family
+	ShadcnDefinitions source
+	ShadcnPicker      source
 }
 
 func main() {
@@ -61,7 +63,7 @@ func main() {
 		must(err)
 		verifyOriginal(s, data)
 	}
-	for _, f := range m.Families {
+	for _, f := range append(append([]family(nil), m.Families...), m.Extras...) {
 		for _, s := range append(append([]source(nil), f.Sources...), f.Documents...) {
 			data, err := os.ReadFile(s.Asset)
 			if err != nil && *cache != "" {
@@ -103,7 +105,7 @@ func main() {
 		generateFamily(f)
 	}
 	generateCatalogue(m.Families)
-	fmt.Printf("verified and generated %d font families\n", len(m.Families))
+	fmt.Printf("verified and generated %d Create families and %d component fonts\n", len(m.Families), len(m.Extras))
 }
 
 func verifyOriginal(s source, data []byte) {

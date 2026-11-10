@@ -1688,5 +1688,67 @@
     "sha256": "d0662ea27985fe6ab9326b9c071e6ff325e2a913a41c882086875481a49cadb2",
     "gitBlob": "a05f858bfc611b305de6688163e16fb36a383586",
     "bytes": 2009
-  }
+  },
+  "extras": [
+    {
+      "id": "vazirmatn",
+      "title": "Vazirmatn",
+      "kind": "sans",
+      "family": "Vazirmatn",
+      "weights": [
+        100,
+        200,
+        300,
+        400,
+        500,
+        600,
+        700,
+        800,
+        900
+      ],
+      "italic": false,
+      "sources": [
+        {
+          "path": "ofl/vazirmatn/Vazirmatn[wght].ttf",
+          "asset": "assets/vazirmatn/normal.ttf",
+          "gitBlob": "b02ceb054d5f1f9ac563e79248ce1bf8e35d60ca",
+          "sha256": "696249a2c74b39ffdef55de4df2809c5b639d3ff80d618d8160a095d2fd49dca",
+          "bytes": 241328
+        }
+      ],
+      "documents": [
+        {
+          "path": "ofl/vazirmatn/METADATA.pb",
+          "asset": "assets/vazirmatn/METADATA.pb",
+          "gitBlob": "8ba5d77e472eb58154b3996a1921f5831f6aca4f",
+          "sha256": "4dcbe0c29d4e0c2848cb291c53ba458891423044ff75454aee7ee1c3a6bec497",
+          "bytes": 854,
+          "license": false
+        },
+        {
+          "path": "ofl/vazirmatn/OFL.txt",
+          "asset": "assets/vazirmatn/OFL.txt",
+          "gitBlob": "be66b3824e9772e75141e631695c5256f105fb57",
+          "sha256": "17e355067c8284f47743a1ee3b1ef7ff684ff0601eda357f9353b10b3016ab31",
+          "bytes": 4391,
+          "license": true
+        }
+      ],
+      "reference": {
+        "repository": "https://github.com/shadcn-ui/ui",
+        "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+        "path": "apps/v4/examples/base/calendar-hijri.tsx",
+        "lines": [
+          4,
+          19,
+          22
+        ],
+        "contract": "Vazirmatn Arabic-script font wrapper around the Persian DayPicker; not part of the 26-family Create picker",
+        "gitBlob": "44ef99307f2317ce8aa68043b77e8fca6c8b2b33",
+        "sha256": "e715a8b0003b1a5ffa924c96e0c1aa9e635ce5cb4bd0a7414074389496943a05",
+        "bytes": 8395,
+        "archive": "../display/testdata/shadcn-calendar/shadcn/examples/calendar-hijri.tsx"
+      }
+    }
+  ]
 }

@@ -14,6 +14,7 @@ import (
 	"github.com/egoist/mygo/ui"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/control"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/display"
+	"github.com/pylogmon/shadcn-ui-mygo/pkg/fonts"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/theme"
 )
 
@@ -28,6 +29,9 @@ type appState struct {
 }
 
 func newState() *appState {
+	if err := fonts.Vazirmatn().Register(); err != nil {
+		panic(err)
+	}
 	loc, err := time.LoadLocation("Asia/Tehran")
 	if err != nil {
 		panic(err)
@@ -111,7 +115,13 @@ func (s *appState) view(c *ui.Context) {
 							props.StartMonth = time.Date(2020, 1, 1, 0, 0, 0, 0, s.location)
 							props.EndMonth = time.Date(2030, 12, 1, 0, 0, 0, 0, s.location)
 						}
-						display.CalendarWith(c, &s.selected, props)
+						roles := theme.FontsOf(c)
+						if s.system == "persian" {
+							roles.Body, roles.Heading = fonts.Vazirmatn().Family(), theme.FontInherit
+						}
+						theme.FontScope(c, roles).Column().Shrink(0).Children(func() {
+							display.CalendarWith(c, &s.selected, props)
+						})
 						ui.Column(c).Gap(10).MaxWidth(440).Children(func() {
 							ui.Text(c, "Selected date").FontWeight(500)
 							ui.Text(c, s.describe(s.selected)).Role(ui.RoleStatus)

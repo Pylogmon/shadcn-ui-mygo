@@ -1,6 +1,7 @@
 // Package fonts provides the 26 font families offered by the fixed shadcn
-// Create source. Calling a family function links only that family's assets;
-// registration is explicit. Package fonts/all is the separate full catalogue.
+// Create source, plus optional fonts used by individual component examples.
+// Calling a family function links only that family's assets; registration is
+// explicit. Package fonts/all is the separate full Create catalogue.
 package fonts
 
 import (

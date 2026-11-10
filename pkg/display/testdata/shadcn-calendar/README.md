@@ -17,8 +17,10 @@ the calendar's shared path.
 
 The source Persian wrapper defaults to `faIR`, RTL, Saturday-first weeks and
 Eastern Arabic-Indic digits. The native model uses those defaults and lets the
-caller override direction and the first weekday. Native font fallback and
-accessibility state replace the web font and DOM-specific presentation.
+caller override direction and the first weekday. The runnable application
+registers the original Vazirmatn family explicitly through `pkg/fonts` and
+scopes it to the Persian calendar, matching the web example's wrapper. The
+component itself keeps application font inheritance and native accessibility.
 
 The two editable-date recipes keep text, selected date, displayed month and
 open state in the application. Their parser is application code (`Date` or
