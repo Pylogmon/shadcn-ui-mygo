@@ -216,7 +216,7 @@ func (f *comboFrame) choose(key string) {
 	if !found {
 		return
 	}
-	filtered := f.s.filtering && strings.TrimSpace(*f.query) != ""
+	filtered := f.s.filtering && comboTrimQuery(*f.query) != ""
 	if !f.multiple || filtered && !f.p.PopupInput {
 		f.s.captureClose(f.s.filterQuery(*f.query))
 	}
@@ -270,7 +270,7 @@ func (f *comboFrame) syncItems() {
 	}
 	if s.previousFilterQuery != query {
 		s.hasActive = false
-		if s.filtering && f.p.AutoHighlight && strings.TrimSpace(query) != "" {
+		if s.filtering && f.p.AutoHighlight && comboTrimQuery(query) != "" {
 			s.edge(false)
 		}
 	}
@@ -289,7 +289,7 @@ func (f *comboFrame) syncItems() {
 	if s.open && !s.wasOpen && !s.filtering && !s.hasActive {
 		s.highlightSelected()
 	}
-	if (f.always && s.open || s.filtering && f.p.AutoHighlight && strings.TrimSpace(query) != "") && !s.hasActive {
+	if (f.always && s.open || s.filtering && f.p.AutoHighlight && comboTrimQuery(query) != "") && !s.hasActive {
 		s.edge(false)
 	}
 }

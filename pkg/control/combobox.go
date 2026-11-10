@@ -7,8 +7,6 @@ import (
 	"unicode"
 
 	"github.com/egoist/mygo/ui"
-	"golang.org/x/text/language"
-	"golang.org/x/text/search"
 )
 
 // ComboboxValue distinguishes a selected empty string from no selection.
@@ -34,7 +32,8 @@ type ComboboxWithProps struct {
 	Size                                                      Size
 	MaxSelected                                               int
 	MaxHeight                                                 float32
-	// Locale controls case/diacritic/width-insensitive label matching. A custom
+	// Locale controls source search collation, including case, diacritics,
+	// width and ignored punctuation within fixed UTF-16 query windows. A custom
 	// Filter receives the unmodified query and can search additional metadata.
 	Locale         string
 	Filter         func(Option, string) bool
@@ -536,12 +535,12 @@ func comboLabel(options []Option, value string) string {
 func comboEntries(p ComboboxWithProps, q string, filtering bool, selected []string) []comboEntry {
 	out := make([]comboEntry, 0, len(p.Options))
 	seen := map[string]bool{}
-	var pattern *search.Pattern
+	var filter comboLabelFilter
 	if p.Filter == nil {
-		q = strings.TrimSpace(q)
+		q = comboTrimQuery(q)
 	}
 	if filtering && q != "" && p.Filter == nil {
-		pattern = search.New(language.Make(p.Locale), search.Loose).CompileString(q)
+		filter = newComboLabelFilter(q, p.Locale)
 	}
 	for _, o := range p.Options {
 		if o.Separator {
@@ -557,7 +556,7 @@ func comboEntries(p ComboboxWithProps, q string, filtering bool, selected []stri
 				if !p.Filter(o, q) {
 					continue
 				}
-			} else if start, _ := pattern.IndexString(optionLabel(o)); start < 0 {
+			} else if !filter.contains(optionLabel(o)) {
 				continue
 			}
 		}

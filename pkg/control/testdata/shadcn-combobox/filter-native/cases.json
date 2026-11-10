@@ -1,0 +1,402 @@
+{
+  "source": "pkg/control/testdata/shadcn-combobox/npm/base-ui-react/internals/filter.js",
+  "sourceSHA256": "9ceec87c901f0087dacce036a6f98b01123c4afd572035301c329efaf108434c",
+  "ariaSource": "pkg/control/testdata/shadcn-combobox/npm/base-ui-react/combobox/root/AriaCombobox.js",
+  "ariaSHA256": "95197e564cef446ff25871b7b24ebeb18d3b4f38d83e93c8916fe7e2364a6962",
+  "options": {
+    "usage": "search",
+    "sensitivity": "base",
+    "ignorePunctuation": true
+  },
+  "labelAdapter": "String identity for plain labels; locale stub is cache-key-only",
+  "node": "v26.12.0",
+  "icu": "78.3",
+  "unicode": "17.0",
+  "cldr": "48.0",
+  "cases": [
+    {
+      "locale": "en",
+      "label": "Café",
+      "query": "cafe",
+      "contains": true
+    },
+    {
+      "locale": "en",
+      "label": "Café",
+      "query": "café",
+      "contains": true
+    },
+    {
+      "locale": "en",
+      "label": "café",
+      "query": "café",
+      "contains": false
+    },
+    {
+      "locale": "en",
+      "label": "é",
+      "query": "é",
+      "contains": false
+    },
+    {
+      "locale": "en",
+      "label": "é",
+      "query": "é",
+      "contains": true
+    },
+    {
+      "locale": "en",
+      "label": "Ｓｗｉｆｔ",
+      "query": "swift",
+      "contains": true
+    },
+    {
+      "locale": "de",
+      "label": "ä",
+      "query": "a",
+      "contains": false
+    },
+    {
+      "locale": "de",
+      "label": "ä",
+      "query": "ae",
+      "contains": false
+    },
+    {
+      "locale": "de",
+      "label": "a",
+      "query": "ä",
+      "contains": false
+    },
+    {
+      "locale": "de",
+      "label": "oe",
+      "query": "ö",
+      "contains": false
+    },
+    {
+      "locale": "fr",
+      "label": "œ",
+      "query": "oe",
+      "contains": false
+    },
+    {
+      "locale": "fr",
+      "label": "é",
+      "query": "e",
+      "contains": true
+    },
+    {
+      "locale": "ru",
+      "label": "Ёлка",
+      "query": "елка",
+      "contains": true
+    },
+    {
+      "locale": "fa",
+      "label": "ک",
+      "query": "ك",
+      "contains": false
+    },
+    {
+      "locale": "ar",
+      "label": "ك",
+      "query": "ک",
+      "contains": false
+    },
+    {
+      "locale": "hi",
+      "label": "क़",
+      "query": "क",
+      "contains": true
+    },
+    {
+      "locale": "de",
+      "label": "Straße",
+      "query": "strasse",
+      "contains": false
+    },
+    {
+      "locale": "de",
+      "label": "weiß",
+      "query": "weiss",
+      "contains": false
+    },
+    {
+      "locale": "de",
+      "label": "SS",
+      "query": "ß",
+      "contains": false
+    },
+    {
+      "locale": "en",
+      "label": "ﬀ",
+      "query": "ff",
+      "contains": false
+    },
+    {
+      "locale": "en",
+      "label": "co-op",
+      "query": "coop!",
+      "contains": true
+    },
+    {
+      "locale": "en",
+      "label": "co-op",
+      "query": "coop",
+      "contains": false
+    },
+    {
+      "locale": "en",
+      "label": "coop",
+      "query": "co-op",
+      "contains": false
+    },
+    {
+      "locale": "en",
+      "label": "foo_bar",
+      "query": "foobar!",
+      "contains": true
+    },
+    {
+      "locale": "en",
+      "label": "co op",
+      "query": "coop!",
+      "contains": true
+    },
+    {
+      "locale": "en",
+      "label": "a+b",
+      "query": "ab!",
+      "contains": false
+    },
+    {
+      "locale": "en",
+      "label": "$ab",
+      "query": "!ab",
+      "contains": false
+    },
+    {
+      "locale": "en",
+      "label": "a—b",
+      "query": "ab!",
+      "contains": true
+    },
+    {
+      "locale": "en",
+      "label": "a\tb",
+      "query": "ab!",
+      "contains": true
+    },
+    {
+      "locale": "tr",
+      "label": "Isparta",
+      "query": "ısparta",
+      "contains": true
+    },
+    {
+      "locale": "tr",
+      "label": "İzmir",
+      "query": "izmir",
+      "contains": true
+    },
+    {
+      "locale": "tr",
+      "label": "Isparta",
+      "query": "isparta",
+      "contains": false
+    },
+    {
+      "locale": "az",
+      "label": "İlham",
+      "query": "ilham",
+      "contains": true
+    },
+    {
+      "locale": "sv",
+      "label": "Örebro",
+      "query": "orebro",
+      "contains": false
+    },
+    {
+      "locale": "en",
+      "label": "Örebro",
+      "query": "orebro",
+      "contains": true
+    },
+    {
+      "locale": "ja",
+      "label": "カタカナ",
+      "query": "かたかな",
+      "contains": true
+    },
+    {
+      "locale": "ja",
+      "label": "ガ",
+      "query": "カ",
+      "contains": true
+    },
+    {
+      "locale": "ja",
+      "label": "ｶﾀｶﾅ",
+      "query": "カタカナ",
+      "contains": true
+    },
+    {
+      "locale": "ja",
+      "label": "ｶﾞ",
+      "query": "ガ",
+      "contains": true
+    },
+    {
+      "locale": "ja",
+      "label": "ガ",
+      "query": "ｶﾞ",
+      "contains": false
+    },
+    {
+      "locale": "ko",
+      "label": "한글",
+      "query": "한글",
+      "contains": true
+    },
+    {
+      "locale": "en",
+      "label": "😀",
+      "query": "�",
+      "contains": false
+    },
+    {
+      "locale": "en",
+      "label": "�",
+      "query": "�",
+      "contains": true
+    },
+    {
+      "locale": "en",
+      "label": "x😀y",
+      "query": "😀",
+      "contains": true
+    },
+    {
+      "locale": "en",
+      "label": "a‍b",
+      "query": "ab!",
+      "contains": true
+    },
+    {
+      "locale": "el",
+      "label": "ΟΣ",
+      "query": "ος",
+      "contains": true
+    },
+    {
+      "locale": "vi",
+      "label": "Hòa",
+      "query": "hoa",
+      "contains": true
+    },
+    {
+      "locale": "da",
+      "label": "Århus",
+      "query": "aarhus",
+      "contains": false
+    },
+    {
+      "locale": "en",
+      "label": "Strassek",
+      "query": "strasse",
+      "contains": true
+    },
+    {
+      "locale": "en",
+      "label": "Go",
+      "query": "﻿Go﻿",
+      "contains": true
+    },
+    {
+      "locale": "en",
+      "label": "",
+      "query": "﻿",
+      "contains": true
+    },
+    {
+      "locale": "en",
+      "label": "Go",
+      "query": "Go",
+      "contains": false
+    },
+    {
+      "locale": "en",
+      "label": "...",
+      "query": "---",
+      "contains": true
+    },
+    {
+      "locale": "en",
+      "label": "-",
+      "query": "‍",
+      "contains": true
+    },
+    {
+      "locale": "en",
+      "label": "-",
+      "query": "́",
+      "contains": true
+    },
+    {
+      "locale": "en",
+      "label": "‍",
+      "query": "-",
+      "contains": true
+    },
+    {
+      "locale": "en",
+      "label": "---",
+      "query": "‍‍‍",
+      "contains": true
+    },
+    {
+      "locale": "en",
+      "label": "$",
+      "query": "-",
+      "contains": false
+    },
+    {
+      "locale": "en",
+      "label": "--",
+      "query": "́a",
+      "contains": false
+    },
+    {
+      "locale": "en",
+      "label": "😀",
+      "query": "--",
+      "contains": false
+    },
+    {
+      "locale": "en",
+      "label": "",
+      "query": "",
+      "contains": true
+    },
+    {
+      "locale": "en",
+      "label": "abc",
+      "query": "",
+      "contains": true
+    },
+    {
+      "locale": "en",
+      "label": "",
+      "query": "a",
+      "contains": false
+    },
+    {
+      "locale": "en",
+      "label": "a-b",
+      "query": "---",
+      "contains": false
+    }
+  ]
+}

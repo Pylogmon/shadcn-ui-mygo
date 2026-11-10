@@ -67,8 +67,9 @@ Up/Down打开选项。可打印字符（含数字、标点和Shift字符）把�
 `Option.Group`和`Separator`提供命名原生分组/分隔语义；列表标记选中状态，
 多选列表提供原生Multiselectable，活动建议通过ActiveDescendant关联到编辑器。
 `ItemContent`和`TriggerContent`可定制视觉，仍需明确的Option.Label。
-默认trim查询后按标签做大小写/重音/字宽宽松匹配，`Locale`指定区域；
+默认按JavaScript trim规则处理查询，按标签进行区域search比较，`Locale`指定区域；
 自定义`Filter(option,query)`仍接收原始query，可搜索描述等元数据。
+匹配遵循固定Base源：先截取与查询相同UTF-16长度的窗口，再忽略大小写/重音/字宽和标点、空白作完整比较。因此不会把`ß`与更长的`ss`，或长度不同的组合字符窗口，当作可变长子串命中。符号如`+`和`$`保留；只含可忽略字符的双方仍可相等，半个surrogate不会被替换为U+FFFD误命中。
 过滤后空组及首尾/连续分隔线被归一化。独立Group/Collection结构见下文组合API。
 应用更新Options即可替换建议；请求调度、加载与数据竞争处理由应用负责。
 
@@ -156,7 +157,7 @@ With入口使用100ms CSS `ease`淡入淡出和95%缩放，进入时按实际布
 减少动态效果或窗口隐藏时立即收敛。内部搜索组默认32DIP，文本缩放时可增高。
 
 Content定位、独立槽位、anchor宽度分支、空态/List结构、可取消状态回调、Always、Grid和
-调用方持有的虚拟窗口已提供。可选translucent预设、完整locale/Unicode路径仍需补齐与验收。
+调用方持有的虚拟窗口和translucent菜单预设已提供。默认筛选的UTF-16窗口/JavaScript trim及64个官方Intl对照已验证；Go搜索表基于旧CLDR，不能据此声明所有新Unicode字符和区域都与任意浏览器ICU版本一致。对照与边界见[筛选来源](../pkg/control/testdata/shadcn-combobox/filter-native/README.md)。
 独立越窗编辑式Combobox、平台IME候选窗、真实读屏及完整视觉矩阵仍需验收；
 这些范围不因原生Tester和三平台编译通过而视为完成。
 
