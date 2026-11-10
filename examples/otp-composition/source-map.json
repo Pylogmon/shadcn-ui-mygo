@@ -1,0 +1,207 @@
+{
+  "repository": "https://github.com/shadcn-ui/ui",
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "sourceManifestSHA256": "60cea4517fbce24938ff6992b1c58fc394d517c9908df2cc2ab30fae938d35b9",
+  "files": [
+    {
+      "path": "apps/v4/examples/base/input-otp-alphanumeric.tsx",
+      "gitBlob": "97209477683803ad2b5cbaae5a3bc9e1f0704e06",
+      "sha256": "5f16efa15a038550bafe61ec6211b8473e3f654371b56c760bcfad9514687cd9",
+      "bytes": 659,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/input-otp-alphanumeric.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/input-otp-controlled.tsx",
+      "gitBlob": "a2fe96a7064d9105aa324ad7f277aff7cf7bc4b2",
+      "sha256": "5ea554f9448b5eff972a42f94bc69bda5bd84fb5fd9437f3bedcdafc43ed3762",
+      "bytes": 889,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/input-otp-controlled.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/input-otp-demo.tsx",
+      "gitBlob": "eefe92ce495438587d9709f733e1b940d2685b0d",
+      "sha256": "60282187c19216a2961d6d6b0a7efa36f378ec7b9cbef15fd42cbc268390b041",
+      "bytes": 468,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/input-otp-demo.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/input-otp-disabled.tsx",
+      "gitBlob": "b345a0e031f7518b7645c7299d8ae3a1d242999a",
+      "sha256": "db6f70c9fa05a11a0e8158673a6ed448eb085562786ca4cbee037699a56aead9",
+      "bytes": 646,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/input-otp-disabled.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/input-otp-form.tsx",
+      "gitBlob": "e5c993a7f1c8cce226fcd424a870ea8bfbd4ce89",
+      "sha256": "b9d5ae044ff050c01e15738abf0ccea64497de7234a59094ea4c18e63f7e06a6",
+      "bytes": 2545,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/input-otp-form.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/input-otp-four-digits.tsx",
+      "gitBlob": "52efb06956a6f968838503c0777bc726b64f3525",
+      "sha256": "5c98ef9d7d68ab5263aa5f3c63c91d0886503091e51649825c865e557cfd1400",
+      "bytes": 473,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/input-otp-four-digits.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/input-otp-invalid.tsx",
+      "gitBlob": "47a1be3cba7ab49793fa2e6081cadf644d8ce7a4",
+      "sha256": "1b34272f970da77a2f42471f8bf565819c69cb3addaa310f3fa9c4439307c951",
+      "bytes": 828,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/input-otp-invalid.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/input-otp-pattern.tsx",
+      "gitBlob": "1a5da48c40c067e7f40568674d45840880caac30",
+      "sha256": "3c038701d078d12bcc043507a7e422dc1f2e5cc74b2867c7ef2ae61ceec271e0",
+      "bytes": 749,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/input-otp-pattern.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/input-otp-rtl.tsx",
+      "gitBlob": "368139b180c53e754f00184e4336567175bf69a5",
+      "sha256": "7620c619cd9693b308713f7fc735417ed0b22020b9db74dbb0eea60cf099c9c7",
+      "bytes": 1275,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/input-otp-rtl.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/input-otp-separator.tsx",
+      "gitBlob": "8d03506f757db49f9a29a4bb2fb29bc7ef71956e",
+      "sha256": "03abe532e33a1b99bc3d0cb62b4d63d0762c830521d164b07c6ff00cafc56774",
+      "bytes": 630,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/input-otp-separator.tsx"
+    },
+    {
+      "path": "apps/v4/content/docs/components/base/input-otp.mdx",
+      "gitBlob": "a0663f3e3adb04a731f01660606e9ee22cf2a43a",
+      "sha256": "bc3af0765b342e0f40c0ae3aa01bf26effb9a626749b57cd0f1752bd9961fd2b",
+      "bytes": 3640,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/content/docs/components/base/input-otp.mdx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/examples/input-otp-example.tsx",
+      "gitBlob": "789c7f1ffcfae08d6c743961f510f3fdd205d2f6",
+      "sha256": "2bd8a52b61fcb99cfa7337489b11279bf72ec4543bf84ab8c47e797920572e20",
+      "bytes": 9703,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/examples/input-otp-example.tsx"
+    }
+  ],
+  "counts": {
+    "documentationExamples": 10,
+    "createSections": 8,
+    "recipes": 18,
+    "originalFilesIncludingGuide": 12
+  },
+  "configurations": [
+    {
+      "recipe": "demo",
+      "source": "apps/v4/examples/base/input-otp-demo.tsx",
+      "retained": "Six populated contiguous slots; default123456"
+    },
+    {
+      "recipe": "pattern",
+      "source": "apps/v4/examples/base/input-otp-pattern.tsx",
+      "retained": "Digits Only field; anchored ASCII digit pattern and216DIP fit width"
+    },
+    {
+      "recipe": "separator",
+      "source": "apps/v4/examples/base/input-otp-separator.tsx",
+      "retained": "Three pairs separated; initiallyempty"
+    },
+    {
+      "recipe": "disabled",
+      "source": "apps/v4/examples/base/input-otp-disabled.tsx",
+      "retained": "Native disabled six populated slots in two groups"
+    },
+    {
+      "recipe": "controlled",
+      "source": "apps/v4/examples/base/input-otp-controlled.tsx",
+      "retained": "Independent native value and exact empty/populated readout"
+    },
+    {
+      "recipe": "invalid",
+      "source": "apps/v4/examples/base/input-otp-invalid.tsx",
+      "retained": "000000 in three pairs; invalid slots with editable native editor"
+    },
+    {
+      "recipe": "four",
+      "source": "apps/v4/examples/base/input-otp-four-digits.tsx",
+      "retained": "Four contiguous slots; anchored ASCII digit pattern"
+    },
+    {
+      "recipe": "alphanumeric",
+      "source": "apps/v4/examples/base/input-otp-alphanumeric.tsx",
+      "retained": "Empty3+3; anchored ASCII letters/numbers pattern"
+    },
+    {
+      "recipe": "form",
+      "source": "apps/v4/examples/base/input-otp-form.tsx",
+      "retained": "Docs card,44x48 slots, mx2 separator, required description, real links/buttons"
+    },
+    {
+      "recipe": "rtl",
+      "source": "apps/v4/examples/base/input-otp-rtl.tsx",
+      "retained": "Source English/Arabic/Hebrew, Arabic default, populated six slots"
+    },
+    {
+      "recipe": "create-form",
+      "source": "apps/v4/registry/bases/base/examples/input-otp-example.tsx",
+      "retained": "Vega48x64 slots, required description, card content/form boundary and8DIP footer",
+      "section": "InputOTPForm"
+    },
+    {
+      "recipe": "create-simple",
+      "source": "apps/v4/registry/bases/base/examples/input-otp-example.tsx",
+      "retained": "Simple field; empty3+3",
+      "section": "InputOTPSimple"
+    },
+    {
+      "recipe": "create-pattern",
+      "source": "apps/v4/registry/bases/base/examples/input-otp-example.tsx",
+      "retained": "Digits Only field; empty contiguous six",
+      "section": "InputOTPPattern"
+    },
+    {
+      "recipe": "create-separator",
+      "source": "apps/v4/registry/bases/base/examples/input-otp-example.tsx",
+      "retained": "With Separator field; populated123456 three pairs",
+      "section": "InputOTPWithSeparator"
+    },
+    {
+      "recipe": "create-alphanumeric",
+      "source": "apps/v4/registry/bases/base/examples/input-otp-example.tsx",
+      "retained": "Alphanumeric label and preceding description; empty3+3 ASCII pattern",
+      "section": "InputOTPAlphanumeric"
+    },
+    {
+      "recipe": "create-disabled",
+      "source": "apps/v4/registry/bases/base/examples/input-otp-example.tsx",
+      "retained": "Disabled label stays enabled; native code disabled/populated3+3",
+      "section": "InputOTPDisabled"
+    },
+    {
+      "recipe": "create-four",
+      "source": "apps/v4/registry/bases/base/examples/input-otp-example.tsx",
+      "retained": "4 Digits label and preceding description; empty four ASCII digits",
+      "section": "InputOTPFourDigits"
+    },
+    {
+      "recipe": "create-invalid",
+      "source": "apps/v4/registry/bases/base/examples/input-otp-example.tsx",
+      "retained": "Invalid State label+preceding description,000000 three pairs and explicit FieldError",
+      "section": "InputOTPInvalid"
+    }
+  ],
+  "adaptation": {
+    "nativeEditor": "One real public InputOTP editor owns text, selection, paste, native undo and IME. Slots/separators remain inert. Native indexes use runes rather than browser UTF-16 units.",
+    "patterns": "Input-otp patterns gate the complete candidate; DigitsOnly and legacy Unicode Alphanumeric scrubbing presets are deliberately not substituted. Empty values are permitted.",
+    "dimensions": "Default Vega slots36x36. Explicit docs Form slots44x48 and separator margin8+existing gap8 produce48DIP between groups. Create Form uses its explicit Vega48x64. Source max-w-md card is448DIP. All fixed slots remain unchanged in narrow form cards and an actual native horizontal viewport keeps overflow reachable. Unspecified Create wrapper width uses320DIP preview maximum.",
+    "form": "Neither source supplies a validation/transport handler. Actual Verify captures a local application snapshot, Resend and links record local intent; no extra length restriction or Enter handler is invented. Required input is described by the real native Field target without adding a visible star absent from source.",
+    "links": "Original href=# uses real native links inside a public local Router; Enter/pointer activate, Space does not. The SDK keeps path/query and drops fragment; no HTML anchor scroll or OS URL is claimed.",
+    "appearance": "InputOTP public Invalid also marks the real native editor; original aria-invalid slots keep their invalid visuals. Create Invalid label remains normal foreground and explicit source FieldError describes the editor.",
+    "scope": "Only app strings, integer selections/counters and snapshots persist; no Context/Element/FieldScope/callback is retained. Menus follow Gallery Flyout/Native setting. No icon font, font asset or dependency introduced.",
+    "verification": "One public native input workflow and four software PNGs. Real IME per-slot candidate placement, native AT/window/platform/font/visual matrices remain separate; existing empty-clipboard paste-transform undo SDK limitation is not expanded or claimed."
+  }
+}

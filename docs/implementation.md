@@ -164,7 +164,8 @@
 | 5.EC | 当前SDK独立模块消费者复验 | 已提交 `1c13ac8`；精确9674a81模块ZIP的标准8命令＋外部6命令／1个公开原生集成流程通过，1297份Git／ZIP／实际缓存原文吻合；不包含后续在途Input／Textarea |
 | 5.ED | Gallery完整Textarea源组合 | 已提交 `f7228ab`；11配置的原生多行编辑／说明顺序／4与6行、禁用／错误／RTL及本地发送草稿；隔离Gallery／cmd共275结果、vet及macOS构建通过 |
 | 5.EE | Gallery完整Input源组合与可选数值 | 已提交 `bf3ab71`；25配置的真实输入／字段／分组／表单与类型化输入，NumberInput独立空值／0及同步回调重定向；隔离全量2371结果、vet与三平台构建通过 |
-| 5.EF | Gallery组件搜索直接定位 | 本阶段提交；20个已登记源组合目标，当前帧post-layout单次定位，同页重新搜索／后续手动滚动和原生编辑保持；隔离Gallery／cmd共278结果、vet及macOS构建通过 |
+| 5.EF | Gallery组件搜索直接定位 | 已提交 `07b7b29`；20个已登记源组合目标，当前帧post-layout单次定位，同页重新搜索／后续手动滚动和原生编辑保持；隔离Gallery／cmd共278结果、vet及macOS构建通过 |
+| 5.EG | Gallery完整Input OTP源组合 | 本阶段提交；18配置的真实原生code editor／ASCII模式／两尺寸form／links和RTL，保留源无handler边界；隔离Gallery／cmd共280结果、vet及macOS构建通过 |
 
 用户已明确允许原生平台适配：Popover、menu、下拉菜单可以使用 MyGo 的系统菜单与独立 Flyout，超出父窗口范围；无需逐像素照搬网页浮层。Gallery 以 [shadcn/create](https://ui.shadcn.com/create) 的配置与实时预览流程为参考。完整组件功能、主题、动画范围保持不变。
 

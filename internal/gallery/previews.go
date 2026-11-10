@@ -135,6 +135,7 @@ func (s *State) controls(c *ui.Context) {
 	s.componentPreview(c, "radio", func() { s.radioCompositions.view(c, s.Popovers, s.Config.NativeMenus) })
 	s.componentPreview(c, "textarea", func() { s.textareaCompositions.view(c, s.Popovers, s.Config.NativeMenus) })
 	s.componentPreview(c, "input", func() { s.inputCompositions.view(c, s.Window, s.Popovers, s.Config.NativeMenus) })
+	s.componentPreview(c, "input-otp", func() { s.otpCompositions.view(c, s.Popovers, s.Config.NativeMenus) })
 	s.typedInputs.view(c, s.Window)
 	s.componentPreview(c, "field", func() { s.fieldCompositions.view(c, s.Popovers, s.Config.NativeMenus) })
 	s.componentPreview(c, "input-group", func() { s.inputGroups.view(c, s.Popovers, s.Config.NativeMenus) })

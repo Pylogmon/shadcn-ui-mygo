@@ -21,6 +21,7 @@ var componentSearchTargets = []struct {
 	{"controls", "radio", []string{"Radio", "RadioGroup"}},
 	{"controls", "textarea", []string{"Textarea"}},
 	{"controls", "input", []string{"Input"}},
+	{"controls", "input-otp", []string{"InputOTP"}},
 	{"controls", "field", []string{"Field", "FieldComposition", "FieldSet", "FieldGroup"}},
 	{"controls", "input-group", []string{"InputGroup"}},
 	{"controls", "button-group", []string{"ButtonGroup"}},
