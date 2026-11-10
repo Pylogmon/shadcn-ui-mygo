@@ -1,0 +1,185 @@
+{
+  "repository": "https://github.com/shadcn-ui/ui",
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "sourceManifestSHA256": "60cea4517fbce24938ff6992b1c58fc394d517c9908df2cc2ab30fae938d35b9",
+  "files": [
+    {
+      "path": "apps/v4/content/docs/components/base/tabs.mdx",
+      "gitBlob": "b9842842cfa4bccb6ab1649c7c3fa1fefaeecec0",
+      "sha256": "dfdad7346332d0dfc9c21cba8325c32833560ec105b04cec89102af79eacd3b9",
+      "bytes": 2406,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/content/docs/components/base/tabs.mdx"
+    },
+    {
+      "path": "apps/v4/examples/base/tabs-demo.tsx",
+      "gitBlob": "db6b8461a64e79966a6cfddb736540d48af3df3e",
+      "sha256": "c18cc0202d363aaf330092d660f87685517dd430fdacb8b8db4c4a369a8b54df",
+      "bytes": 2661,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/tabs-demo.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/tabs-disabled.tsx",
+      "gitBlob": "0b0574547705d5efbc8a782ff7faa95e383da103",
+      "sha256": "127b4b6a2c5d778fd0b103ae7f47e59ed49126f8b56d939a3280e58fb3aee5c7",
+      "bytes": 345,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/tabs-disabled.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/tabs-icons.tsx",
+      "gitBlob": "3f2ba34caaae150329362e2460d183720c894c59",
+      "sha256": "42366fce32443934aa6039aead4c87b0745be23234631f403ca8e4fe4e4b29b7",
+      "bytes": 461,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/tabs-icons.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/tabs-line.tsx",
+      "gitBlob": "5cb967f2bf23a4e74279908aac492cdc41d5bd37",
+      "sha256": "e92af625ab9f399fb34dedcd382fd9ca4be8105d0c036f7bfee5af2e8840896d",
+      "bytes": 400,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/tabs-line.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/tabs-rtl.tsx",
+      "gitBlob": "13a6c708e94f38fd1afbe75793ffb88e8d6944a7",
+      "sha256": "6a594ff1ad1cd1640d60420443ffd08bb2c70022b907f15fae3df4161e892a52",
+      "bytes": 6361,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/tabs-rtl.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/tabs-vertical.tsx",
+      "gitBlob": "28ffa1699cbe1f206aa14bda2c0fdadd49a5deeb",
+      "sha256": "127f4af062695fecd0af209af63353cb1347c81436630ba983b0735be999a854",
+      "bytes": 419,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/tabs-vertical.tsx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/examples/tabs-example.tsx",
+      "gitBlob": "f222f266381fed0cd2f654abb5f8e08aaf939267",
+      "sha256": "8df264574f17761f00573bca98bf77823506fe60abfb887a2a9f8ee6ea8c8eaa",
+      "bytes": 12128,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/examples/tabs-example.tsx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/ui/tabs.tsx",
+      "gitBlob": "2b39bbfe73883fcb8a6630e0d6af953ed0b08f49",
+      "sha256": "1eda25325a7aae9184224247d837b94f98f162d4f697740cc2b1bd53bd35cec6",
+      "bytes": 3195,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/ui/tabs.tsx"
+    }
+  ],
+  "counts": {
+    "documentationPreviews": 6,
+    "guideUsage": 1,
+    "createSections": 13,
+    "recipes": 20,
+    "originalExampleGuideFiles": 8,
+    "styleReferenceFiles": 1
+  },
+  "configurations": [
+    {
+      "recipe": "demo",
+      "source": "apps/v4/examples/base/tabs-demo.tsx"
+    },
+    {
+      "recipe": "line",
+      "source": "apps/v4/examples/base/tabs-line.tsx"
+    },
+    {
+      "recipe": "vertical",
+      "source": "apps/v4/examples/base/tabs-vertical.tsx"
+    },
+    {
+      "recipe": "disabled",
+      "source": "apps/v4/examples/base/tabs-disabled.tsx"
+    },
+    {
+      "recipe": "icons",
+      "source": "apps/v4/examples/base/tabs-icons.tsx"
+    },
+    {
+      "recipe": "rtl",
+      "source": "apps/v4/examples/base/tabs-rtl.tsx"
+    },
+    {
+      "recipe": "usage",
+      "source": "apps/v4/content/docs/components/base/tabs.mdx",
+      "section": "Usage"
+    },
+    {
+      "recipe": "create-basic",
+      "source": "apps/v4/registry/bases/base/examples/tabs-example.tsx",
+      "section": "TabsBasic"
+    },
+    {
+      "recipe": "create-line",
+      "source": "apps/v4/registry/bases/base/examples/tabs-example.tsx",
+      "section": "TabsLine"
+    },
+    {
+      "recipe": "create-comparison",
+      "source": "apps/v4/registry/bases/base/examples/tabs-example.tsx",
+      "section": "TabsVariantsComparison"
+    },
+    {
+      "recipe": "create-disabled",
+      "source": "apps/v4/registry/bases/base/examples/tabs-example.tsx",
+      "section": "TabsDisabled"
+    },
+    {
+      "recipe": "create-icons",
+      "source": "apps/v4/registry/bases/base/examples/tabs-example.tsx",
+      "section": "TabsWithIcons"
+    },
+    {
+      "recipe": "create-icon-only",
+      "source": "apps/v4/registry/bases/base/examples/tabs-example.tsx",
+      "section": "TabsIconOnly"
+    },
+    {
+      "recipe": "create-multiple",
+      "source": "apps/v4/registry/bases/base/examples/tabs-example.tsx",
+      "section": "TabsMultiple"
+    },
+    {
+      "recipe": "create-content",
+      "source": "apps/v4/registry/bases/base/examples/tabs-example.tsx",
+      "section": "TabsWithContent"
+    },
+    {
+      "recipe": "create-line-content",
+      "source": "apps/v4/registry/bases/base/examples/tabs-example.tsx",
+      "section": "TabsLineWithContent"
+    },
+    {
+      "recipe": "create-line-disabled",
+      "source": "apps/v4/registry/bases/base/examples/tabs-example.tsx",
+      "section": "TabsLineDisabled"
+    },
+    {
+      "recipe": "create-dropdown",
+      "source": "apps/v4/registry/bases/base/examples/tabs-example.tsx",
+      "section": "TabsWithDropdown"
+    },
+    {
+      "recipe": "create-vertical",
+      "source": "apps/v4/registry/bases/base/examples/tabs-example.tsx",
+      "section": "TabsVertical"
+    },
+    {
+      "recipe": "create-input",
+      "source": "apps/v4/registry/bases/base/examples/tabs-example.tsx",
+      "section": "TabsWithInputAndButton"
+    }
+  ],
+  "adaptation": {
+    "nativeTabs": "Real navigation.TabsRoot/List/Trigger/Content with automatic single selection, axis-only navigation, RTL, disabled skipping, active native region and current-build scopes. TabsMultiple remains single selection. Inactive builders unmount; application selection/query data survive.",
+    "widths": "Docs dashboard/guide400DIP; translated docs384DIP; Create input512DIP maximum. Unspecified Create widths use400DIP native preview maximum. The two variant roots stay in a nonwrapping16DIP row with a bounded horizontal viewport. Source header rows retain a400/512DIP native minimum in a bounded horizontal viewport so the real input176DIP and opposite-edge controls remain reachable in narrow windows.",
+    "layout": "Create body panels retain Vega24DIP padding and rounded-lg border, including the longer vertical Password/Notifications strings. Dashboard Cards retain all four original titles/descriptions/bodies in English/Arabic/Hebrew. Guide Usage has distinct plain text. Source input declares Reports content without a Reports trigger and that declaration is retained.",
+    "sourceActions": "Only source Create input has an editable header. No extra panel notes/form fields are introduced. Action captures a local query/tab snapshot, without transport or an added Enter handler. More options uses real Settings/Export/Archive commands and only records local intent.",
+    "menus": "Configuration/language and the source More menu follow Flyout/Native. Flyout is independent styled content; Native is an OS menu. Unspecified source dropdown content width uses192DIP fallback.",
+    "icons": "Existing on-demand Material SVG equivalents; icon-only source triggers gain Home/Search/Settings native accessible names without displaying labels. No new font, icon font, image asset or dependency.",
+    "disabled": "The fixed source requires one opacity50 layer. Compound and legacy native Tabs now disable automatic dim only when already applying explicit .5. Ancestor-disabled paths keep native dim and reject real input. Existing concentrated SDK flow covers enabled255/explicit128/ancestor128 for both APIs.",
+    "lifetime": "Only strings/maps/counters and public desktop.MenuState persist. Current Context/Element/Scope/content callbacks are not retained by the application model.",
+    "scope": "One public native-input flow and4 software PNGs. Real OS menu tracking, IME, AT, font metrics, scale/multi-display and full platform/visual matrix remain separate."
+  }
+}

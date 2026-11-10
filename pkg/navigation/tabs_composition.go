@@ -182,7 +182,7 @@ func TabsTrigger(c *ui.Context, value string, p TabsTriggerProps) ui.Element {
 			b.userChanged = true
 		}
 	} else {
-		tab.Opacity(.5)
+		tab.DimDisabled(false).Opacity(.5)
 	}
 	tab.Children(func() {
 		if value == *b.value {

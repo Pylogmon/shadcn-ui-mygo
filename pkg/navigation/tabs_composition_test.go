@@ -1,6 +1,7 @@
 package navigation_test
 
 import (
+	"image/color"
 	"slices"
 	"testing"
 	"time"
@@ -129,6 +130,57 @@ func TestTabsCompositionManualDisabledOrientationAndRTL(t *testing.T) {
 	r.Click("Disabled")
 	if value != "b" {
 		t.Fatal("disabled trigger activated")
+	}
+
+	// Compound and legacy tabs apply source half-opacity exactly once, while
+	// inherited disabled still blocks real input and uses the native dim.
+	glyph := ui.MustParseSVG([]byte(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill="currentColor" d="M0 0h16v16H0z"/></svg>`))
+	for _, legacy := range []bool{false, true} {
+		explicit, inherited := false, false
+		selected, index := "enabled", 0
+		pixels := ui.NewTester(func(c *ui.Context) {
+			tokens := theme.Preset("blue", false)
+			tokens.Background, tokens.Muted = ui.RGB(0, 0, 0), ui.RGB(0, 0, 0)
+			tokens.Foreground, tokens.MutedForeground = ui.RGB(255, 255, 255), ui.RGB(255, 255, 255)
+			theme.Scope(c, tokens).Fill().Padding(20).Background(tokens.Background).Children(func() {
+				ui.Column(c).Disabled(inherited).Children(func() {
+					if legacy {
+						nav.Tabs(c, &index, nav.TabsProps{Items: []nav.TabItem{{Label: "Enabled", Icon: glyph}, {Label: "Pixel disabled", Icon: glyph, Disabled: explicit}}}, nil)
+					} else {
+						nav.TabsRoot(c, &selected, nav.TabsRootProps{}, func(c *ui.Context) {
+							nav.TabsList(c, nav.TabsListProps{}, func(c *ui.Context) {
+								nav.TabsTrigger(c, "enabled", nav.TabsTriggerProps{Label: "Enabled", Icon: glyph})
+								nav.TabsTrigger(c, "disabled", nav.TabsTriggerProps{Label: "Pixel disabled", Icon: glyph, Disabled: explicit})
+							})
+						})
+					}
+				})
+			})
+		}, 420, 100)
+		check := func(want uint8) {
+			t.Helper()
+			a := tabsAccess(t, pixels, ui.RoleTab, "Pixel disabled")
+			p := color.NRGBAModel.Convert(pixels.Image().At(int(a.Bounds.X+20), int(a.Bounds.Y+a.Bounds.H/2))).(color.NRGBA)
+			if p.R != want || p.G != want || p.B != want || p.A != 255 {
+				t.Fatalf("legacy=%v explicit=%v inherited=%v pixel=%v want=%d", legacy, explicit, inherited, p, want)
+			}
+		}
+		check(255)
+		explicit = true
+		pixels.Frame()
+		check(128)
+		explicit, inherited = false, true
+		pixels.Frame()
+		check(128)
+		a := tabsAccess(t, pixels, ui.RoleTab, "Pixel disabled")
+		if !a.Disabled {
+			t.Fatal("ancestor disabled failed to reach the actual tab")
+		}
+		pixels.ClickAt(a.Bounds.X+a.Bounds.W/2, a.Bounds.Y+a.Bounds.H/2)
+		pixels.Key(0, ui.KeyEnter)
+		if selected != "enabled" || index != 0 {
+			t.Fatal("ancestor disabled tab accepted input")
+		}
 	}
 }
 func TestTabsCompositionNestedSiblingScopesAndPanelBeforeList(t *testing.T) {

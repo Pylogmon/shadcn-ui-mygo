@@ -118,6 +118,7 @@ func (s *State) navigationPreview(c *ui.Context) {
 		}).Label("Project menu preview")
 	})
 	s.routePanelsPreview(c)
+	s.componentPreview(c, "tabs", func() { s.tabsCompositions.view(c, s.Popovers, s.Config.NativeMenus) })
 	s.componentPreview(c, "context-menu", func() { s.contextMenuCompositions.view(c, s.Popovers, s.Config.NativeMenus) })
 	s.componentPreview(c, "menubar", func() { s.menubarCompositions.view(c, s.Popovers, s.Config.NativeMenus) })
 	s.sidebarPreview(c)

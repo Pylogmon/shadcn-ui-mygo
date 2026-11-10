@@ -167,7 +167,8 @@
 | 5.EF | Gallery组件搜索直接定位 | 已提交 `07b7b29`；20个已登记源组合目标，当前帧post-layout单次定位，同页重新搜索／后续手动滚动和原生编辑保持；隔离Gallery／cmd共278结果、vet及macOS构建通过 |
 | 5.EG | Gallery完整Input OTP源组合 | 已提交 `0fae4bc`；18配置的真实原生code editor／ASCII模式／两尺寸form／links和RTL，保留源无handler边界；隔离Gallery／cmd共280结果、vet及macOS构建通过 |
 | 5.EH | Gallery完整Slider源组合与禁用透明度 | 已提交 `27ada24`；13配置单／双／多thumb、垂直与受控温度，修正显式disabled重复dim；隔离全量2376结果、vet与三平台构建通过 |
-| 5.EI | Gallery完整Select源组合与长列表定位 | 本阶段提交；22配置的完整同窗source slots、长panel／箭头／实时缩窗与禁用单层dim修复；隔离全量2378结果、vet与三平台构建通过；独立丰富Select Flyout仍待实施 |
+| 5.EI | Gallery完整Select源组合与长列表定位 | 已提交 `86451b0`；22配置的完整同窗source slots、长panel／箭头／实时缩窗与禁用单层dim修复；隔离全量2378结果、vet与三平台构建通过；独立丰富Select Flyout仍待实施 |
+| 5.EJ | Gallery完整Tabs源组合与禁用透明度 | 本阶段提交；20配置的完整原文内容、两Root／vertical／icons／真实header控件与RTL，修复compound／legacy禁用重复dim；隔离全量2380结果、vet与三平台构建通过 |
 
 用户已明确允许原生平台适配：Popover、menu、下拉菜单可以使用 MyGo 的系统菜单与独立 Flyout，超出父窗口范围；无需逐像素照搬网页浮层。Gallery 以 [shadcn/create](https://ui.shadcn.com/create) 的配置与实时预览流程为参考。完整组件功能、主题、动画范围保持不变。
 

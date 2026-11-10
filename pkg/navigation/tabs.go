@@ -108,7 +108,7 @@ func Tabs(c *ui.Context, selected *int, p TabsProps, panel func(int)) ui.Element
 					*selected = focus
 				}
 				if item.Disabled {
-					tab.Opacity(.5)
+					tab.DimDisabled(false).Opacity(.5)
 				}
 				tab.Children(func() {
 					if i == *selected {
