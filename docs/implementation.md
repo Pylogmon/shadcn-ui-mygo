@@ -159,7 +159,8 @@
 | 5.DX | Gallery完整Badge源组合 | 已提交 `324572b`；14配置的六变体／双侧图标／加载／真实链接、完整长文本横滚、显式明暗颜色与RTL；隔离Gallery／cmd共265结果、vet及macOS构建通过 |
 | 5.DY | Gallery完整Button源组合与样式修正 | 已提交 `9d07b9b`；20配置与五个4×6矩阵、真实Link／图标标记／RTL，修正单层禁用透明度、小尺寸gap／圆角与逻辑起点内距；隔离全量2360结果、vet与三平台构建通过 |
 | 5.DZ | Gallery完整Switch源组合与FieldGroup间距 | 已提交 `b17957e`；12配置的真实原生toggle、两尺寸／描述与前置说明、整卡／禁用／错误及翻译RTL，校正FieldGroup源默认28DIP；隔离全量2362结果、vet与三平台构建通过 |
-| 5.EA | Gallery完整Checkbox源组合 | 本阶段提交；15配置的不同默认／真实label与整卡、组／错误／禁用、布尔header表格及横向输入和RTL；隔离Gallery／cmd共271结果、vet及macOS构建通过 |
+| 5.EA | Gallery完整Checkbox源组合 | 已提交 `5638652`；15配置的不同默认／真实label与整卡、组／错误／禁用、布尔header表格及横向输入和RTL；隔离Gallery／cmd共271结果、vet及macOS构建通过 |
+| 5.EB | Gallery完整RadioGroup源组合 | 本阶段提交；13配置的原生互斥／整卡、价格／Fieldset／Legend与两列grid、单项／整组禁用／错误及RTL；隔离Gallery／cmd共273结果、vet及macOS构建通过 |
 
 用户已明确允许原生平台适配：Popover、menu、下拉菜单可以使用 MyGo 的系统菜单与独立 Flyout，超出父窗口范围；无需逐像素照搬网页浮层。Gallery 以 [shadcn/create](https://ui.shadcn.com/create) 的配置与实时预览流程为参考。完整组件功能、主题、动画范围保持不变。
 

@@ -1,0 +1,156 @@
+{
+  "repository": "https://github.com/shadcn-ui/ui",
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "sourceManifestSHA256": "60cea4517fbce24938ff6992b1c58fc394d517c9908df2cc2ab30fae938d35b9",
+  "documentationExamples": 7,
+  "createSections": 6,
+  "recipes": 13,
+  "files": [
+    {
+      "path": "apps/v4/content/docs/components/base/radio-group.mdx",
+      "gitBlob": "d2037468f5e2dfc01bef361d777bfbf9fbe24247",
+      "sha256": "2b12455a2651e0fadcbed1ecf01e18dc1f80c3d8c4ab03bc559b2a4d9e23b187",
+      "bytes": 2904,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/content/docs/components/base/radio-group.mdx"
+    },
+    {
+      "path": "apps/v4/examples/base/radio-group-choice-card.tsx",
+      "gitBlob": "468cf730dc2f610bd29d8c2ac2527c14dffd6e45",
+      "sha256": "c9c4054e7e74f5fd85c4c53b36506dfd613e818f618b940ea4ef9086dab17ca5",
+      "bytes": 1447,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/radio-group-choice-card.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/radio-group-demo.tsx",
+      "gitBlob": "9c68afe3a7e673b9b9f0ce9c96c4a42f9505d39f",
+      "sha256": "da4db59ebf87d6be6c3dfb4a116966e4d3c7b3dc130c86491b0a23f4adb7bfc4",
+      "bytes": 740,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/radio-group-demo.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/radio-group-description.tsx",
+      "gitBlob": "f226026ba79ca124ba63a5e1fd27eb1d2b8ed7a6",
+      "sha256": "4eb49612c423dd2b1d3d84cf779019eca702e2e7984161838ba52cd7101f393f",
+      "bytes": 1276,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/radio-group-description.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/radio-group-disabled.tsx",
+      "gitBlob": "2cebb9027151baa39621b924eb21d204f87ba30c",
+      "sha256": "08991a4264dc9cd429b5156c76a795c6089be8e104e062642edaed8154fde247",
+      "bytes": 959,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/radio-group-disabled.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/radio-group-fieldset.tsx",
+      "gitBlob": "80b52ff56c3864101ed714e00523a3d4e719ac12",
+      "sha256": "aae918fde8a30009fd3e2229cc1286250adaf6e53fb1a0736054fe3e3840dc84",
+      "bytes": 1295,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/radio-group-fieldset.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/radio-group-invalid.tsx",
+      "gitBlob": "c1d9603316298e86e40eae80372a6afa16c06b04",
+      "sha256": "61729f20d4e5da38a25840bd248daf5cb2cd2e07d9494c469025e5039236840a",
+      "bytes": 1336,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/radio-group-invalid.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/radio-group-rtl.tsx",
+      "gitBlob": "57935ba5f37313f8b4dd231487b7adfe9f1b9f53",
+      "sha256": "83bfc2f82b665ec1150aca1b30fd9fba0dc68bad545308e9b41767687f8a7748",
+      "bytes": 2759,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/radio-group-rtl.tsx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/examples/radio-group-example.tsx",
+      "gitBlob": "c0d11c9591a370891c657f4ae7aebf0d0cdf224e",
+      "sha256": "abb4e0ca3f42884001666c790aa061c31f6e1ae01c1451d80ed8c6f699f55ea0",
+      "bytes": 7072,
+      "origin": "/private/tmp/shadcn-reference-ui/apps/v4/registry/bases/base/examples/radio-group-example.tsx"
+    }
+  ],
+  "configurations": [
+    {
+      "recipe": "demo",
+      "source": "apps/v4/examples/base/radio-group-demo.tsx"
+    },
+    {
+      "recipe": "description",
+      "source": "apps/v4/examples/base/radio-group-description.tsx"
+    },
+    {
+      "recipe": "choice-card",
+      "source": "apps/v4/examples/base/radio-group-choice-card.tsx"
+    },
+    {
+      "recipe": "fieldset",
+      "source": "apps/v4/examples/base/radio-group-fieldset.tsx"
+    },
+    {
+      "recipe": "disabled",
+      "source": "apps/v4/examples/base/radio-group-disabled.tsx"
+    },
+    {
+      "recipe": "invalid",
+      "source": "apps/v4/examples/base/radio-group-invalid.tsx"
+    },
+    {
+      "recipe": "rtl",
+      "source": "apps/v4/examples/base/radio-group-rtl.tsx"
+    },
+    {
+      "recipe": "create-basic",
+      "source": "apps/v4/registry/bases/base/examples/radio-group-example.tsx",
+      "section": "RadioGroupBasic"
+    },
+    {
+      "recipe": "create-descriptions",
+      "source": "apps/v4/registry/bases/base/examples/radio-group-example.tsx",
+      "section": "RadioGroupWithDescriptions"
+    },
+    {
+      "recipe": "create-fieldset",
+      "source": "apps/v4/registry/bases/base/examples/radio-group-example.tsx",
+      "section": "RadioGroupWithFieldSet"
+    },
+    {
+      "recipe": "create-grid",
+      "source": "apps/v4/registry/bases/base/examples/radio-group-example.tsx",
+      "section": "RadioGroupGrid"
+    },
+    {
+      "recipe": "create-disabled",
+      "source": "apps/v4/registry/bases/base/examples/radio-group-example.tsx",
+      "section": "RadioGroupDisabled"
+    },
+    {
+      "recipe": "create-invalid",
+      "source": "apps/v4/registry/bases/base/examples/radio-group-example.tsx",
+      "section": "RadioGroupInvalid"
+    }
+  ],
+  "materialDifferences": [
+    "Docs Demo uses medium labels; Create Basic uses normal labels.",
+    "Docs spacing descriptions and exact English/Arabic/Hebrew translations remain separate from plan cards.",
+    "Docs plan descriptions include final periods; Create plan descriptions do not.",
+    "Docs Subscription Plan has monthly/yearly/lifetime prices and a label-size legend; Create FieldSet has High/Medium/Low battery options and a default-size legend.",
+    "Docs Disabled disables only the first option, with Option 2 selected; Create Disabled disables all three options.",
+    "Docs Invalid has max-width320 and a14DIP label legend; Create Invalid uses the default16DIP legend and the native bounded preview.",
+    "Create Grid has two columns, Small/Medium/Large/X-Large, and Medium selected by default."
+  ],
+  "adaptation": {
+    "input": "Real native RadioBase controls from control.RadioWith belong to one public MyGo RadioGroup; FieldWith/Scope registers labels/descriptions and whole choice-card hit regions. No second Button or radio target is introduced.",
+    "state": "Each recipe has an independent application-owned selected string. Choice changes produce local readouts only; there are no subscription/payment/filesystem/network effects.",
+    "layout": "Source explicit max-width320/384 caps are retained. Other samples use a384DIP maximum native preview in place of CSS intrinsic width; text can wrap with native font metrics. Grid remains two columns.",
+    "navigation": "Native four-arrow navigation is preserved, with logical horizontal mirroring in RTL. Existing public controls supply native pointer/Space and disabled/invalid semantics.",
+    "theme": "All content uses current theme tokens and font scope. The global Native/Flyout option changes source configuration selectors; radio content uses the same native base controls in both routes.",
+    "assets": "No images, fonts, icon fonts or new runtime dependencies are introduced.",
+    "lifecycle": "Persistent state contains only application values and maps; Field scopes, Elements, Contexts and callbacks are current-build only."
+  },
+  "verification": {
+    "workflow": "TestRadioCompositionsSourceWorkflow",
+    "snapshotsEnvironment": "GALLERY_RADIO_COMPOSITION_SNAPSHOT_DIR",
+    "scope": "Public MyGo Tester and injected popup backend; software screenshots are not real OS, assistive-technology, IME or complete platform/visual acceptance."
+  }
+}

@@ -50,3 +50,5 @@ Gallery Forms 页的[Switch源组合](../examples/switch-composition/README.md)�
 `control.FieldGroup` 默认间距为固定Vega的28DIP；源checkbox-group的12DIP和嵌套group的16DIP可以在返回Element上用Gap显式组合。
 
 [Checkbox源组合](../examples/checkbox-composition/README.md)映射8份文档和7个Create分区，共15个配置；原label、不同默认、组／整卡、错误／禁用、译文和四行表格独立保存。源Table的header只在全部行选中时checked，部分选择保持普通未勾选；原Workspace access示例另演示受控Mixed，不把该扩展替代源表格合同。
+
+[RadioGroup源组合](../examples/radio-composition/README.md)映射7份文档与6个Create分区，共13个配置，保留不同标点／描述／默认、14与16DIP Legend、订阅价格、两列grid和单项／整组禁用差异。每组使用真实原生RadioGroup和独立值，整卡／Label／箭头键选中即互斥；内容自然宽的源CSS在当前原生示例中使用384DIP上界。

@@ -522,3 +522,8 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 - 固定8docs＋7Create共15recipes、10原文，作者／独立交叉审查／Root各核SHA／Git blob／固定tree。原文不同默认／disabled／invalid、label与整卡一次、fieldset／group／description、原Source4人表格与Hebrew保留。两个Table header严格boolean allSelected，partial时Checked=false且Mixed=false；docs与Create草稿分开，未以native混合扩展改写源合同。实际360窄表格横滚后仍能操作行checkbox；完整文本与邮件可达。
 - Vega局部FieldGroup28／checkbox-group12、含Content checkbox起点1DIP、CreateTitle disabled标题与输入各半透明而description／边界保持正常都按源组合。Root实际500宽RTL State.View搜索Checkbox，在源Card内选首个同名terms输入，保留第二项原checked默认、仅记一次变更；经Badge返回后source值保留，旧terms／read-write数据不变，原All permissions仍暴露Mixed。
 - 只读交叉源审查无阻断，Root逐张查看demo／disabledTitle／完整Table／Hebrew4最终图，Root隔离同流程PNG与作者SHA全部吻合。模型仅值与ScrollState，不持Context／Element／过期Scope。软件Tester／注入Backend不计完整实机／AT／IME／字体／多显示器或Windows／Linux运行时验收。无新增字体、图像、依赖或SDK缓存修改。
+
+- RadioGroup源组合阶段：Root fresh实际5638652仅11冻结文件（4作者＋7接线／公共文档），复用已提交SDK。Gallery／cmd共273 pass结果、对应vet和macOS bundle通过，收据`/private/tmp/radio-composition-root-final-kpr6lt7u/artifacts/verification-receipt.json`。11文件哈希前后相同，验证后只补实施结果与本记录，未重复旧SDK／外部消费者矩阵。
+- 固定7docs＋6Create共13recipes、9原文，经作者／独立交叉审查／Root核SHA／Git blob／固定tree。默认Comfortable、描述与句号差异、plan整卡、subscription真实价格、Fieldset14／16DIP Legend、battery、两列grid、docs单项disabled与Create整组disabled、Invalid仍可选及完整译文均保留。原集中flow在额外Frame前检查每次唯一checked；真实整卡edge／Label／说明关联与Space／arrows／RTL，独立draft跨recipe／style／hide保留。未显式自然CSS宽度使用384DIP原生上界的边界已记录。
+- Root实际500宽RTL State.View搜索RadioGroup，在源Card内Compact实际点击并计一次，上箭头回Comfortable再计一次；经Badge页返回仍为checked且旧Plan保持pro。只读交叉源／生命周期审查无阻断，模型仅bool／字符串／map／counter，不持Context／Element／FieldScope或回调；Root逐张查看plan／subscription／grid／Hebrew4图，Root隔离同流程PNG与作者最终SHA吻合。
+- 软件Tester／注入Backend不计完整实机／AT／IME／所有字体／多显示器或Windows／Linux运行时验收。此阶段未新增字体、图像、依赖或修改SDK缓存。
