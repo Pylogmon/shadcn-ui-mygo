@@ -17,4 +17,4 @@ CardTitle、Dialog/AlertDialog/Drawer/Sheet 标题、EmptyTitle（含自定义�
 
 styled Flyout 复制正文和标题角色；Native 组件保留平台主题。MyGo 没有公开的祖先计算字体查询，因此需要越窗传递字体时应使用 `Theme.Font`、`Controller.Fonts` 或 `FontScope`。
 
-本模块接受实际字体族名。Create 的 26 族离线资产由独立的 [字体包](../pkg/fonts/README.md) 提供；先调用所需字体的 `Register()`，再把 `Family()` 放入角色配置。按需函数和全量目录分别可用，资产带原始许可和固定来源，注册不依赖系统安装。Gallery 的目录接线独立实施；角色原文见 [来源记录](../pkg/theme/testdata/shadcn-font-roles/README.md)。
+本模块接受实际字体族名。Create 的 26 族离线资产由独立的 [字体包](../pkg/fonts/README.md) 提供；先调用所需字体的 `Register()`，再把 `Family()` 放入角色配置。按需函数和全量目录分别可用，资产带原始许可和固定来源，注册不依赖系统安装。[Gallery 字体选择](../examples/font-gallery/README.md) 默认 Inter/继承，支持 26 族与旧预设；角色原文见 [来源记录](../pkg/theme/testdata/shadcn-font-roles/README.md)。

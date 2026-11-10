@@ -14,7 +14,7 @@ var contentExternal = ui.MustParseSVG([]byte(`<svg xmlns="http://www.w3.org/2000
 
 func (s *State) contentHeader(title, description string) func(*ui.Context) {
 	return func(c *ui.Context) {
-		display.CardTitle(c, title, display.CardSmall).Font(s.Config.HeadingFamily())
+		display.CardTitle(c, title, display.CardSmall)
 		display.CardDescription(c, description)
 	}
 }

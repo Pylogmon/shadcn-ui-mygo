@@ -38,7 +38,9 @@ func TestCreatorPresetComposesIndependentThemesAndFonts(t *testing.T) {
 func TestCreatorImportValidatesBeforeChangingState(t *testing.T) {
 	s := New()
 	before := s.Config
-	invalid := []string{`{}`, strings.Replace(before.JSON(), `"version": 1`, `"version": 2`, 1), strings.Replace(before.JSON(), `"base": "neutral"`, `"base": "unknown"`, 1), strings.Replace(before.JSON(), `"radius": 10`, `"radius": -1`, 1), strings.Replace(before.JSON(), `"bodyFont": "system"`, `"bodyFont": "unavailable-web-font"`, 1), strings.Replace(before.JSON(), `"version": 1`, `"extra": true, "version": 1`, 1), before.JSON() + before.JSON(), strings.Repeat("x", 16385)}
+	invalidFont := before
+	invalidFont.BodyFont = "unavailable-web-font"
+	invalid := []string{`{}`, strings.Replace(before.JSON(), `"version": 1`, `"version": 2`, 1), strings.Replace(before.JSON(), `"base": "neutral"`, `"base": "unknown"`, 1), strings.Replace(before.JSON(), `"radius": 10`, `"radius": -1`, 1), invalidFont.JSON(), strings.Replace(before.JSON(), `"version": 1`, `"extra": true, "version": 1`, 1), before.JSON() + before.JSON(), strings.Repeat("x", 16385)}
 	for _, source := range invalid {
 		if err := s.ImportPreset(source); err == nil {
 			t.Fatalf("accepted invalid preset %q", source)

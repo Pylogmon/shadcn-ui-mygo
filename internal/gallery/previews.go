@@ -14,8 +14,8 @@ import (
 
 func (s *State) heading(c *ui.Context, title, description string) {
 	ui.Column(c).Gap(10).Children(func() {
-		display.Typography(c, title, display.H1).Font(s.Config.HeadingFamily()).FontSize(26)
-		display.Typography(c, description, display.Muted).Font(s.Config.BodyFamily())
+		theme.StyleHeading(c, display.Typography(c, title, display.H1).FontSize(26))
+		display.Typography(c, description, display.Muted)
 	})
 }
 func columns(c *ui.Context, builds ...func()) {
@@ -241,7 +241,7 @@ func (s *State) themes(c *ui.Context) {
 			if dark {
 				label = "Dark"
 			}
-			ui.Text(c, label).Font(s.Config.HeadingFamily()).FontSize(20).FontWeight(600)
+			theme.StyleHeading(c, ui.Text(c, label).FontSize(20).FontWeight(600))
 			ui.Row(c).Gap(8).Wrap().Children(func() {
 				control.Button(c, "Primary", control.ButtonProps{})
 				control.Button(c, "Secondary", control.ButtonProps{Variant: control.Secondary})

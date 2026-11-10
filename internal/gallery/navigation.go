@@ -80,9 +80,9 @@ func (s *State) projectMenuActionPreview(c *ui.Context) {
 func (s *State) cardHeader(c *ui.Context, title, description string) ui.Element {
 	t := theme.TokensOf(c)
 	return ui.Column(c).Gap(6).Children(func() {
-		ui.Text(c, title).Font(s.Config.HeadingFamily()).FontSize(18).FontWeight(600)
+		theme.StyleHeading(c, ui.Text(c, title).FontSize(18).FontWeight(600))
 		if description != "" {
-			ui.Text(c, description).Font(s.Config.BodyFamily()).FontSize(14).TextColor(t.MutedForeground)
+			ui.Text(c, description).FontSize(14).TextColor(t.MutedForeground)
 		}
 	})
 }

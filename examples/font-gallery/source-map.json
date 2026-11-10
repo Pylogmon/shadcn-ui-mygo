@@ -1,0 +1,33 @@
+{
+  "repository": "https://github.com/shadcn-ui/ui",
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "reusedSourceManifest": "../../pkg/theme/testdata/shadcn-font-roles/manifest.json",
+  "contracts": [
+    {
+      "path": "apps/v4/app/(app)/(create)/lib/fonts.ts",
+      "lines": [36, 63, 67, 71],
+      "native": "The 26 fixed IDs appear as registered native family choices for body and heading; heading adds inherit."
+    },
+    {
+      "path": "apps/v4/registry/config.ts",
+      "lines": [418, 428, 600, 610],
+      "native": "The default Vega font pairing is Inter/inherit; Noto Sans and Playfair Display are independently selectable as used by Sera. No extra component-style preset is implied."
+    },
+    {
+      "path": "apps/v4/app/(app)/(create)/lib/search-params.ts",
+      "lines": [113, 119],
+      "native": "Equal named catalogue body/heading choices persist as inherit so future body changes propagate. Legacy native categories remain explicit."
+    },
+    {
+      "path": "apps/v4/app/(app)/(create)/components/font-picker.tsx",
+      "lines": [67, 71, 142, 149],
+      "native": "Independent labeled body and heading controls use bounded styled Flyout or system-menu choices; legacy native-category IDs remain importable."
+    }
+  ],
+  "nativeAdaptations": [
+    "Version 1 bodyFont/headingFont JSON keys remain the established native preset format.",
+    "system/serif/mono and legacy same preserve existing native presets; canonical same becomes inherit.",
+    "Registration precedes accepted design/history changes. Native surfaces retain platform fonts.",
+    "The Gallery links the full catalogue, while registering only selected families."
+  ]
+}

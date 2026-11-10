@@ -10,11 +10,13 @@ import (
 	"strings"
 
 	"github.com/egoist/mygo/ui"
+	"github.com/pylogmon/shadcn-ui-mygo/pkg/fonts"
+	fontcatalog "github.com/pylogmon/shadcn-ui-mygo/pkg/fonts/all"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/theme"
 )
 
-// Preset is the portable design state of the creator. Fonts name actual native
-// font families/categories; it deliberately has no unimplemented style/icon API.
+// Preset is the portable design state of the creator. Font choices are stable
+// bundled catalogue IDs or native categories, resolved to registered families.
 type Preset struct {
 	Version      int              `json:"version"`
 	Base         string           `json:"base"`
@@ -31,12 +33,13 @@ type Preset struct {
 }
 
 var baseColors = []string{"neutral", "stone", "zinc", "mauve", "olive", "mist", "taupe"}
-var bodyFonts = []string{"system", "serif", "mono"}
-var headingFonts = []string{"same", "system", "serif", "mono"}
+var galleryFonts = fonts.Catalog()
+var bodyFonts = fontChoices(false)
+var headingFonts = fontChoices(true)
 var radiusValues = []float32{0, 4, 6, 8, 10, 12, 16, 24}
 
 func DefaultPreset() Preset {
-	return Preset{Version: 1, Base: "neutral", Accent: "neutral", Chart: "neutral", Radius: 10, BodyFont: "system", HeadingFont: "same", Appearance: theme.System, NativeMenus: false, MenuColor: theme.MenuDefault, MenuAccent: theme.MenuSubtle}
+	return Preset{Version: 1, Base: "neutral", Accent: "neutral", Chart: "neutral", Radius: 10, BodyFont: "inter", HeadingFont: theme.FontInherit, Appearance: theme.System, NativeMenus: false, MenuColor: theme.MenuDefault, MenuAccent: theme.MenuSubtle}
 }
 func (p Preset) Validate() error {
 	if err := (theme.MenuOptions{Color: p.MenuColor, Accent: p.MenuAccent}).Validate(); err != nil {
@@ -54,7 +57,7 @@ func (p Preset) Validate() error {
 	if !slices.Contains(theme.Presets(), p.Chart) {
 		return fmt.Errorf("unknown chart theme %q", p.Chart)
 	}
-	if !slices.Contains(bodyFonts, p.BodyFont) || !slices.Contains(headingFonts, p.HeadingFont) {
+	if !slices.Contains(bodyFonts, p.BodyFont) || p.HeadingFont != "same" && !slices.Contains(headingFonts, p.HeadingFont) {
 		return fmt.Errorf("unsupported native font choice")
 	}
 	if p.Radius < 0 || p.Radius > 32 || math.IsNaN(float64(p.Radius)) || math.IsInf(float64(p.Radius), 0) {
@@ -127,12 +130,17 @@ func nativeFont(name string) string {
 	case "serif":
 		return "Georgia, Times New Roman, Liberation Serif, DejaVu Serif"
 	}
+	for _, font := range galleryFonts {
+		if font.ID == name {
+			return font.Family
+		}
+	}
 	return ""
 }
 func (p Preset) BodyFamily() string { return nativeFont(p.BodyFont) }
 func (p Preset) HeadingFamily() string {
 	font := p.HeadingFont
-	if font == "same" {
+	if font == "same" || font == theme.FontInherit {
 		font = p.BodyFont
 	}
 	return nativeFont(font)
@@ -143,6 +151,9 @@ func (s *State) ApplyPreset(p Preset) error {
 		return err
 	}
 	p = p.Normalized()
+	if err := p.registerFonts(); err != nil {
+		return err
+	}
 	if p == s.Config {
 		return nil
 	}
@@ -194,7 +205,11 @@ func (s *State) Redo() bool {
 	s.setPreset(p)
 	return true
 }
-func (s *State) Reset() { _ = s.ApplyPreset(DefaultPreset()) }
+func (s *State) Reset() {
+	if err := s.ApplyPreset(DefaultPreset()); err != nil {
+		s.status = err.Error()
+	}
+}
 func (s *State) Randomize(seed uint64) {
 	r := rand.New(rand.NewPCG(seed, seed^0x9e3779b97f4a7c15))
 	next := s.Config
@@ -211,7 +226,9 @@ func (s *State) Randomize(seed uint64) {
 	if r.IntN(2) == 1 {
 		next.MenuAccent = theme.MenuBold
 	}
-	_ = s.ApplyPreset(next)
+	if err := s.ApplyPreset(next); err != nil {
+		s.status = err.Error()
+	}
 }
 
 func chromeTokens() *theme.Tokens {
@@ -231,7 +248,82 @@ func chromeTokens() *theme.Tokens {
 func (p Preset) Normalized() Preset {
 	m := (theme.MenuOptions{Color: p.MenuColor, Accent: p.MenuAccent}).Normalized()
 	p.MenuColor, p.MenuAccent = m.Color, m.Accent
+	if p.HeadingFont == "same" {
+		p.HeadingFont = theme.FontInherit
+	} else if p.HeadingFont == p.BodyFont {
+		// Only the source's named catalogue uses equal => inherit. Native
+		// categories are older explicit choices: system headings must stay
+		// system when the body is later changed to a bundled family.
+		for _, font := range galleryFonts {
+			if font.ID == p.BodyFont {
+				p.HeadingFont = theme.FontInherit
+				break
+			}
+		}
+	}
 	return p
+}
+
+func fontChoices(headings bool) []string {
+	choices := make([]string, 0, len(galleryFonts)+4)
+	if headings {
+		choices = append(choices, theme.FontInherit)
+	}
+	for _, font := range galleryFonts {
+		choices = append(choices, font.ID)
+	}
+	// Existing exported Version 1 presets keep their native category choices.
+	return append(choices, "system", "serif", "mono")
+}
+
+func (p Preset) FontRoles() theme.FontRoles {
+	heading := p.Normalized().HeadingFont
+	if heading != theme.FontInherit {
+		if heading == theme.FontSystem {
+			heading = theme.FontSystem
+		} else {
+			heading = nativeFont(heading)
+		}
+	}
+	return theme.FontRoles{Body: p.BodyFamily(), Heading: heading}.Normalized()
+}
+
+func (p Preset) registerFonts() error {
+	for _, id := range []string{p.BodyFont, p.Normalized().HeadingFont} {
+		switch id {
+		case "system", "serif", "mono", theme.FontInherit:
+			continue
+		}
+		font, found := fontcatalog.Lookup(id)
+		if !found {
+			return fmt.Errorf("unknown preview font %q", id)
+		}
+		if err := font.Register(); err != nil {
+			return fmt.Errorf("could not load %s: %w", font.Info().Name, err)
+		}
+	}
+	return nil
+}
+
+func (s *State) previewFonts() theme.FontRoles {
+	if err := s.Config.registerFonts(); err != nil {
+		s.fontError = "The selected font could not be loaded. Using system fonts."
+		return theme.FontRoles{}.Normalized()
+	}
+	s.fontError = ""
+	return s.Config.FontRoles()
+}
+
+func (s *State) setFont(heading bool, id string) {
+	p := s.Config
+	if heading {
+		p.HeadingFont = id
+	} else {
+		p.BodyFont = id
+	}
+	if err := s.ApplyPreset(p); err != nil {
+		s.status = err.Error()
+	}
 }
 func (p Preset) MenuOptions() theme.MenuOptions {
 	dark := p

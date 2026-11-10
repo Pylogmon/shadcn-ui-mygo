@@ -68,6 +68,7 @@ type State struct {
 	designRevision                                                                 uint64
 	importOpen, tokenOpen                                                          bool
 	importText, importError, status                                                string
+	fontError                                                                      string
 	nativeMenuOpen                                                                 bool
 	lineTab, manualTab                                                             int
 	navRoute                                                                       string
@@ -155,7 +156,9 @@ func (s *State) View(c *ui.Context) {
 		}
 		body.Children(func() {
 			s.customizer(c, compact, preview)
-			s.preview(c, preview)
+			theme.FontScope(c, s.previewFonts()).Grow(1).MinHeight(0).MinWidth(0).Children(func() {
+				s.preview(c, preview)
+			})
 		})
 		s.creatorDialogs(c)
 	})
@@ -215,8 +218,8 @@ func (s *State) customizer(c *ui.Context, compact bool, preview *theme.Tokens) {
 				s.choice(c, "Theme", s.Config.Accent, theme.Presets(), func(v string) { p := s.Config; p.Accent = v; _ = s.ApplyPreset(p) })
 				s.choice(c, "Chart color", s.Config.Chart, theme.Presets(), func(v string) { p := s.Config; p.Chart = v; _ = s.ApplyPreset(p) })
 				display.Separator(c, false)
-				s.choice(c, "Heading", s.Config.HeadingFont, headingFonts, func(v string) { p := s.Config; p.HeadingFont = v; _ = s.ApplyPreset(p) })
-				s.choice(c, "Font", s.Config.BodyFont, bodyFonts, func(v string) { p := s.Config; p.BodyFont = v; _ = s.ApplyPreset(p) })
+				s.choice(c, "Heading", s.Config.HeadingFont, headingFonts, func(v string) { s.setFont(true, v) })
+				s.choice(c, "Font", s.Config.BodyFont, bodyFonts, func(v string) { s.setFont(false, v) })
 				display.Separator(c, false)
 				radii := make([]string, len(radiusValues))
 				for i, r := range radiusValues {
@@ -301,10 +304,17 @@ func choiceLabel(value string) string {
 		return "Inverted translucent"
 	case "same":
 		return "Same as body"
+	case theme.FontInherit:
+		return "Inherit"
 	case "serif":
 		return "Serif"
 	case "mono":
 		return "Monospace"
+	}
+	for _, font := range galleryFonts {
+		if value == font.ID {
+			return font.Name
+		}
 	}
 	if len(value) > 0 {
 		return strings.ToUpper(value[:1]) + value[1:]
@@ -363,9 +373,10 @@ func (s *State) choiceSwitch(c *ui.Context, label string, value bool, changed fu
 }
 
 func (s *State) preview(c *ui.Context, t *theme.Tokens) {
-	native := t.MenuTheme(s.Config.MenuOptions())
-	native.Font = s.Config.BodyFamily()
-	ui.Themed(c, native).Grow(1).MinHeight(0).MinWidth(0).Radius(14).Border(1, t.Border).Clip().Background(t.Background).TextColor(t.Foreground).Font(s.Config.BodyFamily()).Children(func() {
+	theme.MenuScope(c, t, s.Config.MenuOptions()).Grow(1).MinHeight(0).MinWidth(0).Radius(14).Border(1, t.Border).Clip().Background(t.Background).TextColor(t.Foreground).Children(func() {
+		if s.fontError != "" {
+			ui.Text(c, s.fontError).Role(ui.RoleAlert).TextColor(t.Destructive).Padding(12)
+		}
 		var parts ui.TabsParts
 		triggers := make([]ui.Element, len(pages))
 		ui.Row(c).Height(48).FillWidth().InsetShadow(0, -1, 0, 0, t.Border).Background(t.Card).Children(func() {
@@ -526,22 +537,22 @@ func (s *State) nativeInspectorContent(c *ui.Context, t *theme.Tokens) {
 }
 
 func (s *State) inspectorContent(c *ui.Context, t *theme.Tokens) {
-	native := t.MenuTheme(s.Config.MenuOptions())
-	native.Font = s.Config.BodyFamily()
-	ui.Themed(c, native).FillWidth().Padding(16).Gap(12).Background(t.Background).TextColor(t.Foreground).Font(s.Config.BodyFamily()).Children(func() {
-		s.cardHeader(c, "Theme tokens", "Your current preview colors.")
-		for _, v := range []struct {
-			name  string
-			color ui.Color
-		}{{"Background", t.Background}, {"Foreground", t.Foreground}, {"Primary", t.Primary}, {"Muted", t.Muted}, {"Border", t.Border}, {"Chart 1", t.Chart1}} {
-			ui.Row(c).Gap(10).AlignItems(ui.Center).Children(func() {
-				ui.Box(c).Size(24, 24).Radius(5).Background(v.color).Border(1, t.Border)
-				ui.Text(c, v.name).Grow(1).FontSize(12)
-				ui.Text(c, fmt.Sprintf("#%02x%02x%02x", v.color.R, v.color.G, v.color.B)).Font("monospace").FontSize(11).TextColor(t.MutedForeground)
-			})
-		}
-		if control.Button(c, "Copy preset", control.ButtonProps{Variant: control.Outline, Size: control.Small}).FillWidth().Clicked() {
-			c.WriteClipboard(s.ExportPreset())
-		}
+	theme.FontScope(c, s.previewFonts()).FillWidth().Children(func() {
+		theme.MenuScope(c, t, s.Config.MenuOptions()).FillWidth().Padding(16).Gap(12).Background(t.Background).TextColor(t.Foreground).Children(func() {
+			s.cardHeader(c, "Theme tokens", "Your current preview colors.")
+			for _, v := range []struct {
+				name  string
+				color ui.Color
+			}{{"Background", t.Background}, {"Foreground", t.Foreground}, {"Primary", t.Primary}, {"Muted", t.Muted}, {"Border", t.Border}, {"Chart 1", t.Chart1}} {
+				ui.Row(c).Gap(10).AlignItems(ui.Center).Children(func() {
+					ui.Box(c).Size(24, 24).Radius(5).Background(v.color).Border(1, t.Border)
+					ui.Text(c, v.name).Grow(1).FontSize(12)
+					ui.Text(c, fmt.Sprintf("#%02x%02x%02x", v.color.R, v.color.G, v.color.B)).Font("monospace").FontSize(11).TextColor(t.MutedForeground)
+				})
+			}
+			if control.Button(c, "Copy preset", control.ButtonProps{Variant: control.Outline, Size: control.Small}).FillWidth().Clicked() {
+				c.WriteClipboard(s.ExportPreset())
+			}
+		})
 	})
 }
