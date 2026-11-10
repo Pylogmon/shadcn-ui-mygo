@@ -2,11 +2,13 @@ package control
 
 import (
 	"fmt"
+	"image/color"
 	"math"
 	"slices"
 	"testing"
 
 	"github.com/egoist/mygo/ui"
+	"github.com/pylogmon/shadcn-ui-mygo/pkg/theme"
 )
 
 func sliderAccess(t *testing.T, tt *ui.Tester, label string) ui.AccessInfo {
@@ -181,6 +183,49 @@ func TestSliderConstraintsNormalizationAndDisabled(t *testing.T) {
 	tt.Frame()
 	if group, _ := tt.AccessByRole(ui.RoleGroup, "Values"); !group.Invalid || !group.Disabled {
 		t.Fatalf("impossible minimum gap not reported: %+v", group)
+	}
+
+	// The source disabled treatment is one half-opacity layer for both track
+	// and thumb. Native Disabled still blocks input, including inheritance.
+	level, explicit, inherited := 50., false, false
+	imageTester := ui.NewTester(func(c *ui.Context) {
+		tokens := theme.Preset("blue", false)
+		tokens.Background, tokens.Primary, tokens.Muted = ui.RGB(0, 0, 0), ui.RGB(255, 255, 255), ui.RGB(0, 0, 0)
+		theme.Scope(c, tokens).Fill().Padding(20).Background(tokens.Background).Children(func() {
+			ui.Column(c).Disabled(inherited).Children(func() {
+				Slider(c, &level, SliderProps{Label: "Disabled pixels", Step: 1, Disabled: explicit}).Width(240)
+			})
+		})
+	}, 280, 80)
+	pixels := func(want uint8) {
+		t.Helper()
+		group, ok := imageTester.AccessByRole(ui.RoleGroup, "Disabled pixels")
+		if !ok {
+			t.Fatal("missing actual source slider pixel group")
+		}
+		image := imageTester.Image()
+		for name, x := range map[string]float32{"track": group.Bounds.X + 40, "thumb": group.Bounds.X + 120} {
+			p := color.NRGBAModel.Convert(image.At(int(x), int(group.Bounds.Y+group.Bounds.H/2))).(color.NRGBA)
+			if p.R != want || p.G != want || p.B != want || p.A != 255 {
+				t.Fatalf("%s explicit=%v inherited=%v pixel=%v want=%d", name, explicit, inherited, p, want)
+			}
+		}
+	}
+	pixels(255)
+	explicit = true
+	imageTester.Frame()
+	pixels(128)
+	explicit, inherited = false, true
+	imageTester.Frame()
+	pixels(128)
+	thumb := sliderAccess(t, imageTester, "Disabled pixels")
+	if !thumb.Disabled {
+		t.Fatal("the ancestor disabled state did not reach the native thumb")
+	}
+	imageTester.ClickAt(thumb.Bounds.X+8, thumb.Bounds.Y+8)
+	imageTester.Key(0, ui.KeyRight)
+	if level != 50 {
+		t.Fatal("an ancestor disabled slider accepted pointer or keyboard input")
 	}
 }
 

@@ -119,7 +119,7 @@ func slider(c *ui.Context, binding sliderBinding, p SliderProps) ui.Element {
 		root.Height(20).FillWidth().Orientation(ui.Horizontal)
 	}
 	if disabled {
-		root.Opacity(.5).Cursor(ui.CursorNotAllowed)
+		root.DimDisabled(false).Opacity(.5).Cursor(ui.CursorNotAllowed)
 	}
 	st := ui.Local(root, "shadcn.slider", func() sliderState { return sliderState{dragging: -1} })
 	if st.changed {
@@ -195,7 +195,7 @@ func slider(c *ui.Context, binding sliderBinding, p SliderProps) ui.Element {
 			}
 			thumb := motion.ApplyTransition(c, ui.Box(c).Key(key).Absolute().Size(16, 16).Focusable().
 				Role(ui.RoleSlider).Label(sliderThumbLabel(p, i, len(values))).
-				Disabled(disabled).Invalid(invalid).FocusRing(false).
+				Disabled(disabled).DimDisabled(false).Invalid(invalid).FocusRing(false).
 				Cursor(ui.CursorPointer).Radius(8).Border(1, t.Primary).
 				Background(ui.RGB(255, 255, 255)).Shadow(0, 1, 2, 0, ui.RGBA(0, 0, 0, .05)))
 			if thumb.Focused() && !st.focus {

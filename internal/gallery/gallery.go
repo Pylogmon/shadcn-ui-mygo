@@ -67,6 +67,7 @@ type State struct {
 	textareaCompositions                                                           textareaCompositionPreviewState
 	inputCompositions                                                              inputCompositionPreviewState
 	otpCompositions                                                                otpCompositionPreviewState
+	sliderCompositions                                                             sliderCompositionPreviewState
 	chartPreview                                                                   chartPreviewState
 	chartCatalogue                                                                 chartcatalog.State
 	comboboxCompound                                                               comboboxCompoundPreviewState

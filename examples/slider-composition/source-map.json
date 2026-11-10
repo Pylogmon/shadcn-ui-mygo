@@ -1,0 +1,168 @@
+{
+  "repository": "https://github.com/shadcn-ui/ui",
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "sourceManifestSHA256": "60cea4517fbce24938ff6992b1c58fc394d517c9908df2cc2ab30fae938d35b9",
+  "files": [
+    {
+      "path": "apps/v4/content/docs/components/base/slider.mdx",
+      "gitBlob": "bb772337115abd51562fa3fe7320a0ae7ff4ff65",
+      "sha256": "89c1821040576ca8b6156076f7a911c8e7844be8611894babb2fe35f7d627eea",
+      "bytes": 2003,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/content/docs/components/base/slider.mdx"
+    },
+    {
+      "path": "apps/v4/examples/base/slider-controlled.tsx",
+      "gitBlob": "d1b7e29861a891e597f484db5d7a44328ac24b9a",
+      "sha256": "5147f33d8728822adb66224a25125c66147c2d58bf357b56fc13b59edca4b70d",
+      "bytes": 775,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/slider-controlled.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/slider-demo.tsx",
+      "gitBlob": "1cfa2778538ed60a4b45e36310149c809a8f78bc",
+      "sha256": "f5b3e618f4757e12241c2b8780c586c8fcf742cbff1c271460030800c800a79b",
+      "bytes": 221,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/slider-demo.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/slider-disabled.tsx",
+      "gitBlob": "d107f9619ee51452e7e7271a5ca40249e853ca92",
+      "sha256": "743d4a0c0ffe901485ae53ec266b6fe9a6f3a11100b387fee5843197622ab187",
+      "bytes": 240,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/slider-disabled.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/slider-multiple.tsx",
+      "gitBlob": "7bbc8f94da9796c4546b48683a5dcb3fe70c1163",
+      "sha256": "36856a7f73be1ea7bf82b0d72327fd6752d078a297589691a7d0d662b5bea9a5",
+      "bytes": 234,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/slider-multiple.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/slider-range.tsx",
+      "gitBlob": "6210e49789a7069e736ff646eb2225cdfc5f18f7",
+      "sha256": "6bb414d91f45efb4dd15891802a6e80c4220e82aab6aea9a07e44b4899d6d7c6",
+      "bytes": 226,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/slider-range.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/slider-rtl.tsx",
+      "gitBlob": "dd6f147315546839268af08f3bfecee365be77ec",
+      "sha256": "305f08ad2670f51e6cb6ea1c68f42085583d2e75f13b0ae1903786fa3ce3db68",
+      "bytes": 603,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/slider-rtl.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/slider-vertical.tsx",
+      "gitBlob": "7efd57c6364af7bdc57b9dd34fed23cc198b4104",
+      "sha256": "f3e79d7683bf6a7a4ec444855aba3fa0d538a88b7adb93c95bc146d2c6efc7e0",
+      "bytes": 487,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/slider-vertical.tsx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/examples/slider-example.tsx",
+      "gitBlob": "cefed17d90b0a924d73bea480e99c15b0c08f2d0",
+      "sha256": "231f663761e7c5ea9e067978bef9d581af858956bffaafae35f6ace0f2943db4",
+      "bytes": 2246,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/examples/slider-example.tsx"
+    }
+  ],
+  "counts": {
+    "documentationExamples": 7,
+    "createSections": 6,
+    "recipes": 13,
+    "originalFilesIncludingGuide": 9
+  },
+  "configurations": [
+    {
+      "recipe": "demo",
+      "source": "apps/v4/examples/base/slider-demo.tsx"
+    },
+    {
+      "recipe": "range",
+      "source": "apps/v4/examples/base/slider-range.tsx"
+    },
+    {
+      "recipe": "multiple",
+      "source": "apps/v4/examples/base/slider-multiple.tsx"
+    },
+    {
+      "recipe": "vertical",
+      "source": "apps/v4/examples/base/slider-vertical.tsx"
+    },
+    {
+      "recipe": "controlled",
+      "source": "apps/v4/examples/base/slider-controlled.tsx"
+    },
+    {
+      "recipe": "disabled",
+      "source": "apps/v4/examples/base/slider-disabled.tsx"
+    },
+    {
+      "recipe": "rtl",
+      "source": "apps/v4/examples/base/slider-rtl.tsx"
+    },
+    {
+      "recipe": "create-basic",
+      "source": "apps/v4/registry/bases/base/examples/slider-example.tsx",
+      "section": "SliderBasic"
+    },
+    {
+      "recipe": "create-range",
+      "source": "apps/v4/registry/bases/base/examples/slider-example.tsx",
+      "section": "SliderRange"
+    },
+    {
+      "recipe": "create-multiple",
+      "source": "apps/v4/registry/bases/base/examples/slider-example.tsx",
+      "section": "SliderMultiple"
+    },
+    {
+      "recipe": "create-vertical",
+      "source": "apps/v4/registry/bases/base/examples/slider-example.tsx",
+      "section": "SliderVertical"
+    },
+    {
+      "recipe": "create-controlled",
+      "source": "apps/v4/registry/bases/base/examples/slider-example.tsx",
+      "section": "SliderControlled"
+    },
+    {
+      "recipe": "create-disabled",
+      "source": "apps/v4/registry/bases/base/examples/slider-example.tsx",
+      "section": "SliderDisabled"
+    }
+  ],
+  "adaptation": {
+    "nativeInput": "Existing public control.Slider, RangeSlider and SliderValues. Actual RoleSlider thumbs own native focus, keyboard, pointer capture and AX ranges. No fake visual-only controls.",
+    "defaults": "Docs demo/RTL75, Create Basic50, disabled50; range25/50 step5; multiple10/20/70 step10; vertical pair50/25 max100 step1; controlled0.3/0.7 min0 max1 step0.1. All recipe drafts independent.",
+    "sourceLayout": "Docs max-w-xs320DIP. Create unspecified width fills the native card. Vertical pair h-40=160DIP and gap-6=24DIP, centered docs row; Create keeps intrinsic centered pair. Controlled gap-3=12DIP and label/readout gap-2=8DIP.",
+    "label": "Bare source sliders have no supplied visible label. Native-only accessible Slider/Vertical slider 1/Vertical slider 2 names are added; controlled retains the visible Temperature label and grouped native LabelledBy.",
+    "readout": "Source joined decimal readout updates from the application values. Native binary fractional step noise is rounded to the declared tenth for display only; stored numeric values remain unchanged.",
+    "rtl": "Source translations have empty value dictionaries; the language selector changes direction without inventing translated visible labels. Arabic default, Hebrew and English retain native horizontal geometry; vertical stays bottom-to-top.",
+    "localBehavior": "Only numeric draft changes and diagnostic counters. No invented submit/save/network behavior or action status for source examples without handlers.",
+    "lifecycle": "Application only stores values, strings, booleans and counts; no Context, Element, FieldScope or frame callback. Configuration/language selector uses Gallery Flyout or OS menu mode.",
+    "verification": "One public native-input flow and four representative software PNGs. Injected selector Backend does not establish real OS tracking, assistive technology, IME, fonts or complete platform/visual matrices.",
+    "disabledStyle": "The source Control supplies the single data-disabled opacity-50 layer. BaseUI visible Thumb is a div; its disabled:opacity-50 pseudo-class does not match, while its hidden input is disabled. Native explicit Disabled root uses one half-opacity layer and native thumbs disable input without another dim. Ancestor-only disabled remains one inherited layer."
+  },
+  "styleReferences": [
+    {
+      "path": "apps/v4/registry/bases/base/ui/slider.tsx",
+      "gitBlob": "2e55a9a0fc07b66fc86ce1df33c86c2501939088",
+      "sha256": "0255828e9c4477580d1428ae633f322434d2d652939272720d6980736465d712",
+      "bytes": 1577,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/ui/slider.tsx"
+    }
+  ],
+  "behaviorReferences": [
+    {
+      "package": "@base-ui/react",
+      "version": "1.6.0",
+      "path": "slider/thumb/SliderThumb.js",
+      "sha256": "f4bfd5d85d7f268d3f7eaefa245452ca4ec11247ec330871cb98cab008d18bc6",
+      "bytes": 15685,
+      "origin": "https://unpkg.com/@base-ui/react@1.6.0/slider/thumb/SliderThumb.js",
+      "verified": "The className-bearing visible thumb is a div. The disabled property is passed to its hidden native range input; disabled:opacity-50 does not match the visible div."
+    }
+  ]
+}

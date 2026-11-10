@@ -22,6 +22,7 @@ var componentSearchTargets = []struct {
 	{"controls", "textarea", []string{"Textarea"}},
 	{"controls", "input", []string{"Input"}},
 	{"controls", "input-otp", []string{"InputOTP"}},
+	{"controls", "slider", []string{"Slider"}},
 	{"controls", "field", []string{"Field", "FieldComposition", "FieldSet", "FieldGroup"}},
 	{"controls", "input-group", []string{"InputGroup"}},
 	{"controls", "button-group", []string{"ButtonGroup"}},
