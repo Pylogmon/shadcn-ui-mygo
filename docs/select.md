@@ -22,8 +22,14 @@ Root 不添加视觉布局，Scope 只在当前构建回调中有效。手写 Co
 
 默认 Content 把选中项的实际文字对齐到触发器值，并提供原生有界滚动、选中项 reveal 和 hover 滚动箭头；此配置依源包装器关闭动画。`AlignItemWithTrigger` 显式为 false 时使用普通六侧、RTL、alignment/offset 定位和既有100ms保留退出动画。透明菜单使用已提交的真实场景材质和即时切换配置。MaxHeight、Width、Anchor 与 Style 提供当前内容配置。
 
+逐项对齐使用实际窗口内的拟合位置，长列表展开保持窗口边距。键盘打开／切换活动项时，定位会避开覆盖在列表上的上下滚动箭头；End／Home目标可用真实指针点击。该定位请求只执行到目标可见，随后用户可自由滚动，不持续锁定活动项。
+
+弹层打开期间缩小／恢复窗口或修改MaxHeight，会重新限制已测量的宽高和位置，并重新露出当前活动项一次。显式禁用的Trigger仅应用单层50%透明度；继承禁用仍由原生祖先负责绘制和输入阻止。
+
 新 Root 保留 source 的无循环键盘导航及可聚焦的 aria-disabled 项（不可提交）；旧 Select 便捷入口保留跳过 disabled 的行为。触发器使用原生 ComboBox / PopupListBox 语义，消费测试或自动化应按新角色定位。便捷 Select / MultiSelect 允许每次构建重建临时绑定，挂载身份沿用原生位置/调用方 key；显式 Root 的状态地址仍需稳定。
 
 `NativeSelect` 继续使用 OS 单选菜单及系统绘制和定位，不接入任意 ItemContent 或多选状态。新组合接口是同窗控件，独立窗口适配器继续使用 desktop API。指针操作采用原生按钮完整 click；未重造 DOM mousedown 打开后的拖曳释放选择机制。真实触摸、IME候选窗口、跨显示器与辅助技术仍需平台验收。
 
 运行 `go run ./examples/select-composition` 或 `make selects-app`，三个操作区覆盖22份固定源例的实际配置及提交、Dialog、NativeSelect 流程。来源映射与边界见 [示例](../examples/select-composition/README.md)。
+
+Gallery另有逐项映射的22个源配置。源列表使用当前窗口中的完整组合API；配置／语言菜单随Gallery Flyout／Native切换。`desktop.Select`目前仍是单字符串菜单适配器，不提供富多选或逐项对齐的跨窗槽位，这一缺口未计为完成。

@@ -98,6 +98,7 @@ Forms 页的 [Button 源组合](examples/button-composition/README.md) 提供20�
 同页的 [Input 源组合](examples/input-composition/README.md) 提供25个配置，包含密码、字段／表单、分组与选择器、原生数值／日期／时间／文件输入；数字空值与0独立，表单动作保存在应用内存。
 同页的 [Input OTP 源组合](examples/otp-composition/README.md) 提供18个配置，保留不同默认值、ASCII模式、原生编辑／选区／粘贴／撤销、两种尺寸的验证表单与本地动作。
 同页的 [Slider 源组合](examples/slider-composition/README.md) 提供13个配置，包含单值、范围、多拇指、垂直双滑块、受控温度读数、禁用与RTL，均操作实际原生thumb。
+同页的 [Select 源组合](examples/select-composition/README.md) 提供22个配置，保留分组／时区、100项、多选、富计划内容、逐项对齐、六侧与Dialog；源列表使用完整同窗Select，配置菜单随Flyout／Native设置切换。
 
 Gallery 搜索已登记的源组合名称（例如 Input、Switch、Empty、HoverCard、Menubar）后，会直接滚动到该组件的配置区；同页搜索也能重新定位。定位只执行一次，随后可正常滚动和编辑，跨页草稿保留。其他关键词继续用于查找所属页面。
 该页还可配置Combobox定位/RTL/高亮，试用对象多选表单、Dialog内搜索、Grid及100项滚动窗口。

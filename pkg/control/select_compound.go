@@ -119,29 +119,31 @@ type selectItemGeometry struct {
 	box, text ui.Rect
 }
 type selectRuntime struct {
-	initialized, closed, open, enabled, multiple     bool
-	legacySkipDisabled, touch, pointerActive         bool
-	active                                           string
-	hasActive                                        bool
-	options                                          []Option
-	selected                                         []string
-	intents                                          []selectIntent
-	trigger                                          ui.Handle
-	moveFocus, reveal, opening                       bool
-	openDirection                                    int
-	typeahead                                        string
-	typeaheadStart, typeaheadMatch                   int
-	typeaheadAt                                      time.Time
-	composing                                        bool
-	scroll                                           ui.ScrollState
-	motion                                           comboMotion
-	geometry                                         []selectItemGeometry
-	panelBox, valueBox, triggerBox                   ui.Rect
-	contentHeight                                    float32
-	alignX, alignY, alignHeight                      float32
-	aligned, measured, alignedScroll, alignTopPinned bool
-	arrowDirection                                   int
-	arrowAt                                          time.Time
+	initialized, closed, open, enabled, multiple       bool
+	legacySkipDisabled, touch, pointerActive           bool
+	active                                             string
+	hasActive                                          bool
+	options                                            []Option
+	selected                                           []string
+	intents                                            []selectIntent
+	trigger                                            ui.Handle
+	moveFocus, reveal, opening                         bool
+	openDirection                                      int
+	typeahead                                          string
+	typeaheadStart, typeaheadMatch                     int
+	typeaheadAt                                        time.Time
+	composing                                          bool
+	scroll                                             ui.ScrollState
+	motion                                             comboMotion
+	geometry                                           []selectItemGeometry
+	panelBox, valueBox, triggerBox                     ui.Rect
+	contentHeight                                      float32
+	alignX, alignY, alignHeight                        float32
+	alignPreferredX                                    float32
+	alignWindowW, alignWindowH, alignWidth, alignLimit float32
+	aligned, measured, alignedScroll, alignTopPinned   bool
+	arrowDirection                                     int
+	arrowAt                                            time.Time
 }
 
 func (s *selectRuntime) Close() error { *s = selectRuntime{closed: true}; return nil }
@@ -561,7 +563,7 @@ func (b *SelectScope) Trigger(c *ui.Context, p SelectTriggerProps, children func
 	disabled := p.Disabled || f.p.Disabled
 	tr.Role(ui.RoleComboBox).HasPopup(ui.PopupListBox).Expanded(f.s.open).ReadOnly(f.p.ReadOnly).Disabled(disabled).Invalid(invalid).HandleInput(f.s.input).Bind(&f.s.trigger).FocusRing(false).Cursor(ui.CursorPointer)
 	if disabled {
-		tr.Opacity(.5).Cursor(ui.CursorNotAllowed)
+		tr.DimDisabled(false).Opacity(.5).Cursor(ui.CursorNotAllowed)
 	}
 	if p.Label != "" {
 		tr.Label(p.Label)
@@ -673,6 +675,26 @@ func (b *SelectScope) Content(c *ui.Context, p SelectContentProps, children func
 		if p.MaxHeight > 0 {
 			maxHeight = min(maxHeight, p.MaxHeight)
 		}
+		if f.itemAligned && f.s.open {
+			s := f.s
+			resized := s.alignWindowW != w || s.alignWindowH != h || s.alignWidth != width || s.alignLimit != maxHeight
+			if s.measured && s.aligned {
+				if resized {
+					// A measured pose is bounded by the current window, not the
+					// window in which it opened. Re-reveal once after reflow so
+					// active rows remain reachable without taking over user scroll.
+					if s.alignWindowH != h || s.alignLimit != maxHeight {
+						s.alignHeight = max(float32(1), min(s.contentHeight, maxHeight))
+					}
+					s.reveal = true
+					c.Invalidate()
+				}
+				s.alignHeight = max(float32(1), min(s.alignHeight, maxHeight))
+				s.alignX = max(float32(5), min(w-width-5, s.alignPreferredX))
+				s.alignY = max(float32(10), min(h-s.alignHeight-10, s.alignY))
+			}
+			s.alignWindowW, s.alignWindowH, s.alignWidth, s.alignLimit = w, h, width, maxHeight
+		}
 		panel.Width(width).MaxWidth(max(float32(1), w-10)).MaxHeight(maxHeight)
 		if f.hidden {
 			panel.Absolute().Left(-10000).Top(-10000).Opacity(0).IgnoreInput(true).AccessHidden(true)
@@ -711,9 +733,13 @@ func (b *SelectScope) Content(c *ui.Context, p SelectContentProps, children func
 				panel.Top(p.AlignOffset)
 			}
 			if f.itemAligned && f.s.measured && f.s.aligned {
-				// Public AttachTo retains the popup's tab/focus scope; an absolute
-				// offset from its top-start attachment gives the measured pose.
-				panel.AttachTo(anchor, ui.AnchorTopLeft, ui.AnchorTopLeft).Margin(0).Left(f.s.alignX - anchor.LayoutBounds().X).Top(f.s.alignY - anchor.LayoutBounds().Y).Height(f.s.alignHeight).MaxHeight(f.s.alignHeight)
+				// AttachTo retains native popover focus/Tab ownership. Its Top/Left
+				// offsets apply after edge fitting, so compensate for the fitted
+				// top-left origin rather than subtracting the raw anchor position.
+				a := anchor.LayoutBounds()
+				x := selectTopLeftAttachmentBase(a.X, a.W, width, w, 5)
+				y := selectTopLeftAttachmentBase(a.Y, a.H, f.s.alignHeight, h, 5)
+				panel.AttachTo(anchor, ui.AnchorTopLeft, ui.AnchorTopLeft).Margin(0).Left(f.s.alignX - x).Top(f.s.alignY - y).Height(f.s.alignHeight).MaxHeight(f.s.alignHeight)
 			}
 		}
 		if p.Style != nil {
@@ -750,6 +776,19 @@ func (b *SelectScope) Content(c *ui.Context, p SelectContentProps, children func
 		f.observeGeometry(c, anchor)
 	}
 	return f.panel
+}
+
+// The public top-left attachment can fit on either end of its anchor, then
+// move into the window. Account for that base before applying an exact pose.
+func selectTopLeftAttachmentBase(start, anchorSize, panelSize, limit, edge float32) float32 {
+	overflow := func(at float32) float32 {
+		return max(float32(0), edge-at) + max(float32(0), at+panelSize-limit+edge)
+	}
+	at := start
+	if other := start + anchorSize - panelSize; overflow(other) < overflow(at) {
+		at = other
+	}
+	return max(edge, min(at, limit-edge-panelSize))
 }
 
 func (b *SelectScope) List(c *ui.Context, p SelectListProps, children func()) ui.Element {
@@ -973,6 +1012,7 @@ func (f *selectFrame) observeGeometry(c *ui.Context, anchor ui.Element) {
 	items := slices.Clone(f.items)
 	s, scroll := f.s, f.scroll
 	itemAligned, maxHeight := f.itemAligned, f.content.MaxHeight
+	reveal := s.reveal
 	panel.Draw(func(_ *ui.Painter, _ ui.Rect) {
 		s.panelBox, s.triggerBox = panel.LayoutBounds(), anchor.LayoutBounds()
 		if value.Valid() {
@@ -989,6 +1029,36 @@ func (f *selectFrame) observeGeometry(c *ui.Context, anchor ui.Element) {
 		}
 		if list.Valid() {
 			s.contentHeight = scroll.MaxY + list.LayoutBounds().H + 2
+		}
+		// Native ScrollIntoView sees the scroll viewport, but not the two
+		// overlaid arrow gutters. Correct only a requested keyboard/open reveal;
+		// ordinary wheel/arrow scrolling must remain free to leave active behind.
+		if reveal && s.open && s.hasActive && list.Valid() {
+			viewport := list.LayoutBounds()
+			top, bottom := viewport.Y, viewport.Y+viewport.H
+			if scroll.Y > 0 {
+				top += 24
+			}
+			if scroll.Y < scroll.MaxY {
+				bottom -= 24
+			}
+			for _, item := range s.geometry {
+				if item.value != s.active {
+					continue
+				}
+				y := scroll.Y
+				if item.box.Y < top {
+					y -= top - item.box.Y
+				} else if item.box.Y+item.box.H > bottom {
+					y += item.box.Y + item.box.H - bottom
+				}
+				y = max(float32(0), min(scroll.MaxY, y))
+				if y-scroll.Y > .5 || scroll.Y-y > .5 {
+					scroll.Y, s.reveal = y, true
+					c.Invalidate()
+				}
+				break
+			}
 		}
 		if !itemAligned || !s.open {
 			return
@@ -1011,6 +1081,11 @@ func (f *selectFrame) observeGeometry(c *ui.Context, anchor ui.Element) {
 				delta = max(float32(0), s.contentHeight-s.alignHeight-scroll.Y)
 			}
 			growth := min(remaining, delta)
+			if s.alignTopPinned {
+				growth = min(growth, max(float32(0), h-10-s.alignY-s.alignHeight))
+			} else {
+				growth = min(growth, max(float32(0), s.alignY-10))
+			}
 			if growth > .5 {
 				s.alignHeight += growth
 				if !s.alignTopPinned {
@@ -1050,6 +1125,7 @@ func (f *selectFrame) observeGeometry(c *ui.Context, anchor ui.Element) {
 				x = p.X + s.valueBox.X - text.X
 			}
 		}
+		s.alignPreferredX = x
 		s.alignX = max(float32(5), min(w-p.W-5, x))
 		// The selected item's measured text center, rather than a fixed row
 		// estimate, stays over the value. Bounded overflow uses the native scroll.

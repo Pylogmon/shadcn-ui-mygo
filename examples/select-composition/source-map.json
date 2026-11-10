@@ -1,0 +1,223 @@
+{
+  "repository": "https://github.com/shadcn-ui/ui",
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "sourceManifestSHA256": "60cea4517fbce24938ff6992b1c58fc394d517c9908df2cc2ab30fae938d35b9",
+  "files": [
+    {
+      "path": "apps/v4/examples/base/select-align-item.tsx",
+      "gitBlob": "1b57cee69c5503d449f09e4b2d3476401630f313",
+      "sha256": "15fe8e38434095cfde0422d563ba27d739000e6f67b7ebe6ba8c0739fa1c4b17",
+      "bytes": 1816,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/select-align-item.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/select-demo.tsx",
+      "gitBlob": "dfada41ea4ede3925e976931e4966ecbeb3e78d2",
+      "sha256": "cc8c7490bf2ce6579bda00d18793e96053dc23e1b8cd393a005068b87a8dc8db",
+      "bytes": 905,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/select-demo.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/select-disabled.tsx",
+      "gitBlob": "bd0d0e0bad64d59b378c83888d1372d4125539b6",
+      "sha256": "c1d45a73f9fc557488d8a0afe2bb0e223e27eafd343eae914bd9e6c7ef302b3a",
+      "bytes": 970,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/select-disabled.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/select-groups.tsx",
+      "gitBlob": "7d9b5aadee0ba8a5f40fc34e9a8b94fcb908063c",
+      "sha256": "235c78c123cd35d3ec435db4db9d67004e3e72b9327ffde14d88cccefe447ecf",
+      "bytes": 1361,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/select-groups.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/select-invalid.tsx",
+      "gitBlob": "0488de66cb6a6ee92feebfb2167392dec023f51a",
+      "sha256": "122c65b56c8d31749dd7b3c009d8b10fb571163d6e9ec6dc33fc89a59a37912e",
+      "bytes": 1009,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/select-invalid.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/select-rtl.tsx",
+      "gitBlob": "0f3041fe446f09550239e2a279ee6d82bb5f3d13",
+      "sha256": "9f077d193a7acbb1bc47309c5c1cde1877c72e5380c604c30937a34fed282e27",
+      "bytes": 3046,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/select-rtl.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/select-scrollable.tsx",
+      "gitBlob": "2cd12fcf0a58158c0572ff902af3d5a38598e9f5",
+      "sha256": "1f65a9aabcf3863737b528069facc7518c1d5e429f833b501d03370c03903f75",
+      "bytes": 3400,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/select-scrollable.tsx"
+    },
+    {
+      "path": "apps/v4/content/docs/components/base/select.mdx",
+      "gitBlob": "a62f816c3a8a6b8f7b086995e518cb8de8cb981c",
+      "sha256": "6dfdca0d48c9f77190d5dd7d968abfae8c3d85b751f042503c8d56b4a8b9f7e9",
+      "bytes": 3510,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/content/docs/components/base/select.mdx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/examples/select-example.tsx",
+      "gitBlob": "efb5741f2eee4cf2f78cc1558017c42587735663",
+      "sha256": "5571f7345411108bbaa1030ef502914b3e1e2cba3136ffac9ffaac73b8f967a7",
+      "bytes": 19753,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/examples/select-example.tsx"
+    }
+  ],
+  "counts": {
+    "docsExamples": 7,
+    "createSections": 15,
+    "recipes": 22,
+    "originalFilesIncludingGuide": 9
+  },
+  "configurations": [
+    {
+      "recipe": "demo",
+      "source": "apps/v4/examples/base/select-demo.tsx",
+      "section": "select-demo",
+      "retained": "192-DIP trigger, Fruits label, rendered nullable item"
+    },
+    {
+      "recipe": "align",
+      "source": "apps/v4/examples/base/select-align-item.tsx",
+      "section": "select-align-item",
+      "retained": "320-DIP FieldGroup gap28, real Align Item switch, true and Banana defaults"
+    },
+    {
+      "recipe": "groups",
+      "source": "apps/v4/examples/base/select-groups.tsx",
+      "section": "select-groups",
+      "retained": "192-DIP,3 fruits/3 vegetables, group labels/separator; null is placeholder only"
+    },
+    {
+      "recipe": "scrollable",
+      "source": "apps/v4/examples/base/select-scrollable.tsx",
+      "section": "select-scrollable",
+      "retained": "256-DIP trigger,27 timezones in5 exact groups, no added group separators"
+    },
+    {
+      "recipe": "disabled",
+      "source": "apps/v4/examples/base/select-disabled.tsx",
+      "section": "select-disabled",
+      "retained": "disabled192-DIP trigger and disabled Grapes metadata"
+    },
+    {
+      "recipe": "invalid",
+      "source": "apps/v4/examples/base/select-invalid.tsx",
+      "section": "select-invalid",
+      "retained": "192-DIP invalid Fruit Field and exact error, three fruits plus nullable item"
+    },
+    {
+      "recipe": "rtl",
+      "source": "apps/v4/examples/base/select-rtl.tsx",
+      "section": "select-rtl",
+      "retained": "128-DIP,5 fruits/3 vegetables and verbatim Arabic/Hebrew/English"
+    },
+    {
+      "recipe": "create-basic",
+      "source": "apps/v4/registry/bases/base/examples/select-example.tsx",
+      "section": "SelectBasic",
+      "retained": "all five fruits and rendered nullable item"
+    },
+    {
+      "recipe": "create-sides",
+      "source": "apps/v4/registry/bases/base/examples/select-example.tsx",
+      "section": "SelectSides",
+      "retained": "six independent112-DIP triggers, logical/physical sides, explicit unaligned"
+    },
+    {
+      "recipe": "create-icons",
+      "source": "apps/v4/registry/bases/base/examples/select-example.tsx",
+      "section": "SelectWithIcons",
+      "retained": "two independent sizes with Chart Type/Line/Bar/Pie icon content"
+    },
+    {
+      "recipe": "create-groups",
+      "source": "apps/v4/registry/bases/base/examples/select-example.tsx",
+      "section": "SelectWithGroups",
+      "retained": "three fruits/three vegetables, exact labels and separator"
+    },
+    {
+      "recipe": "create-large",
+      "source": "apps/v4/registry/bases/base/examples/select-example.tsx",
+      "section": "SelectLargeList",
+      "retained": "nullable item and all100 Item0..99 identities/labels"
+    },
+    {
+      "recipe": "create-multiple",
+      "source": "apps/v4/registry/bases/base/examples/select-example.tsx",
+      "section": "SelectMultiple",
+      "retained": "seven fruits, empty array default,288-DIP trigger and original count renderer"
+    },
+    {
+      "recipe": "create-sizes",
+      "source": "apps/v4/registry/bases/base/examples/select-example.tsx",
+      "section": "SelectSizes",
+      "retained": "small/default independent source selects, nullable+three fruits"
+    },
+    {
+      "recipe": "create-plan",
+      "source": "apps/v4/registry/bases/base/examples/select-example.tsx",
+      "section": "SelectPlan",
+      "retained": "Starter object default via stable identity,288-DIP autoheight, three exact descriptions"
+    },
+    {
+      "recipe": "create-button",
+      "source": "apps/v4/registry/bases/base/examples/select-example.tsx",
+      "section": "SelectWithButton",
+      "retained": "two sizes with independent adjacent real Submit buttons"
+    },
+    {
+      "recipe": "create-aligned",
+      "source": "apps/v4/registry/bases/base/examples/select-example.tsx",
+      "section": "SelectItemAligned",
+      "retained": "true alignment, disabled Grapes, initially unselected"
+    },
+    {
+      "recipe": "create-field",
+      "source": "apps/v4/registry/bases/base/examples/select-example.tsx",
+      "section": "SelectWithField",
+      "retained": "Favorite Fruit label, following exact description"
+    },
+    {
+      "recipe": "create-invalid",
+      "source": "apps/v4/registry/bases/base/examples/select-example.tsx",
+      "section": "SelectInvalid",
+      "retained": "two distinct invalid layouts, exact field error"
+    },
+    {
+      "recipe": "create-inline",
+      "source": "apps/v4/registry/bases/base/examples/select-example.tsx",
+      "section": "SelectInline",
+      "retained": "ordinary real text editor,140-DIP Filter and140-DIP OS Sort by menu"
+    },
+    {
+      "recipe": "create-disabled",
+      "source": "apps/v4/registry/bases/base/examples/select-example.tsx",
+      "section": "SelectDisabled",
+      "retained": "disabled root and Grapes"
+    },
+    {
+      "recipe": "create-dialog",
+      "source": "apps/v4/registry/bases/base/examples/select-example.tsx",
+      "section": "SelectInDialog",
+      "retained": "real Open Dialog button, exact title/description, contained native listbox"
+    }
+  ],
+  "adaptation": {
+    "scope": "Source listboxes use complete public control.SelectRoot current-window slots. Configuration/language selectors alone follow Gallery Flyout/Native. No cross-window scope/Element capture.",
+    "desktopGap": "The current public desktop.Select single-string facade does not implement complete item-aligned/multiple source slots. This stage retains full source behavior in the existing current-window control, not an independent Flyout/OS claim. Rich independent Select is a separate SDK adaptation gate.",
+    "nativeInline": "The source Inline NativeSelect is always the real OS single-select menu. OS rendering/placement are native. Separate native-select-example.tsx is not counted as a Select recipe.",
+    "sourceNull": "A reserved private string identity maps source nullable rendered items to invalid selection. Grouped/scrollable source placeholders are not rendered items and remain trigger placeholders only.",
+    "sourceObjects": "Plan objects stay in application-owned static descriptors and use name identities with exact rich item/value visuals.",
+    "width": "Explicit192/256/320/128/112/140/288DIP widths are retained. Unspecified CSS natural widths use a384DIP native available-card cap; sides/inline use560DIP available cap. Narrow inline fixed controls retain an accessible horizontal viewport with32DIP minimum editable space.",
+    "localActions": "Source Submit buttons have no transport handler. Native clicks only record a local snapshot/count; no added Enter/form/network submission.",
+    "icons": "Existing on-demand Material Symbols SVG equivalents replace source icon-family placeholders; no icon font or new asset.",
+    "state": "Only strings/counters/maps/public SelectState persist. Context/Element/SelectScope/FieldScope/callbacks remain current-build only.",
+    "verification": "One concentrated public native-input flow and4 software PNGs. No OS popup/tracking, real IME/AT, multi-display or full platform/font/visual acceptance claim.",
+    "itemAlignedRepair": "Source timezone native flow first exposed negative fitted top and last-row pointer blocked by overlaid arrow. Public fitted attachment geometry and one-shot arrow-aware reveal fix exact panel/window bounds without a fake MaxHeight; the existing SDK long-list flow covers End/Home pointer/focus and free wheel scrolling."
+  }
+}

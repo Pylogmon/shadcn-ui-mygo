@@ -2,6 +2,7 @@ package control
 
 import (
 	"fmt"
+	"image/color"
 	"math"
 	"slices"
 	"testing"
@@ -322,6 +323,55 @@ func TestSelectSourceClosedTypeaheadDisabledAndComposition(t *testing.T) {
 	if state.Value.Value != "n" || state.Open {
 		t.Fatalf("source non-loop end %+v", state)
 	}
+
+	// A custom native trigger keeps one half-opacity disabled layer, while
+	// both explicit and ancestor disablement still reject real native input.
+	var pixelState SelectState
+	explicit, inherited := false, false
+	pixelTester := ui.NewTester(func(c *ui.Context) {
+		tokens := theme.Preset("blue", false)
+		theme.Scope(c, tokens).Fill().Padding(20).Background(ui.RGB(0, 0, 0)).Children(func() {
+			ui.Column(c).Disabled(inherited).Children(func() {
+				SelectRoot(c, &pixelState, SelectRootProps{Options: selectSourceOptions(2), Disabled: explicit}, func(b *SelectScope) {
+					b.Trigger(c, SelectTriggerProps{Label: "Disabled pixels", Render: func(current *ui.Context) ui.Element {
+						return ui.ButtonBase(current).Size(180, 36).Background(ui.RGB(255, 255, 255)).Border(0, ui.Transparent).FocusRing(false)
+					}}, nil)
+					b.Content(c, SelectContentProps{}, func() {
+						b.List(c, SelectListProps{}, func() { b.Group(c, "", func() { b.Collection(c, nil) }) })
+					})
+				})
+			})
+		})
+	}, 220, 100)
+	assertPixels := func(want uint8) {
+		t.Helper()
+		a, ok := pixelTester.AccessByRole(ui.RoleComboBox, "Disabled pixels")
+		if !ok {
+			t.Fatal("missing actual native select trigger for disabled pixels")
+		}
+		p := color.NRGBAModel.Convert(pixelTester.Image().At(int(a.Bounds.X+10), int(a.Bounds.Y+10))).(color.NRGBA)
+		if p.R != want || p.G != want || p.B != want || p.A != 255 {
+			t.Fatalf("explicit=%v inherited=%v pixel=%v want=%d", explicit, inherited, p, want)
+		}
+		if want == 128 {
+			if !a.Disabled {
+				t.Fatal("disabled trigger lost its native disabled state")
+			}
+			pixelTester.ClickAt(a.Bounds.X+8, a.Bounds.Y+a.Bounds.H/2)
+			pixelTester.Key(0, ui.KeyDown)
+			pixelTester.Frame()
+			if pixelState.Open || pixelState.Value.Valid {
+				t.Fatal("disabled native trigger accepted pointer or keyboard input")
+			}
+		}
+	}
+	assertPixels(255)
+	explicit = true
+	pixelTester.Frame()
+	assertPixels(128)
+	explicit, inherited = false, true
+	pixelTester.Frame()
+	assertPixels(128)
 }
 
 func TestSelectSourceControlledCancellationTabAndMount(t *testing.T) {
@@ -526,13 +576,14 @@ func TestSelectSourceAlignedLongListExpandsAndPreservesNativeReveal(t *testing.T
 	state := SelectState{Value: SelectSelection{"0", true}, Open: true}
 	var runtime *selectRuntime
 	var scroll ui.ScrollState
+	var contentMaxHeight float32
 	r := ui.NewTester(func(c *ui.Context) {
 		theme.Apply(c)
 		ui.Box(c).Absolute().Left(160).Top(200).Children(func() {
 			SelectRoot(c, &state, SelectRootProps{Options: selectSourceOptions(100)}, func(b *SelectScope) {
 				runtime = b.f.s
 				b.Trigger(c, SelectTriggerProps{Label: "Long aligned"}, nil).Width(180)
-				b.Content(c, SelectContentProps{}, func() {
+				b.Content(c, SelectContentProps{MaxHeight: contentMaxHeight}, func() {
 					b.List(c, SelectListProps{Scroll: &scroll}, func() { b.Group(c, "", func() { b.Collection(c, nil) }) })
 					b.ScrollUpButton(c)
 					b.ScrollDownButton(c)
@@ -554,10 +605,83 @@ func TestSelectSourceAlignedLongListExpandsAndPreservesNativeReveal(t *testing.T
 	if last.Offscreen || scroll.Y <= 0 || runtime.alignHeight <= initial+20 || runtime.alignHeight > 580.5 {
 		t.Fatalf("native reveal/expansion: last%+v scroll%v initial%v final%v", last.Bounds, scroll.Y, initial, runtime.alignHeight)
 	}
-	r.Key(0, ui.KeyEnter)
+	if p := runtime.panelBox; p.Y < 9.5 || p.Y+p.H > 590.5 || last.Bounds.Y < p.Y || last.Bounds.Y+last.Bounds.H > p.Y+p.H || scroll.Y < scroll.MaxY && last.Bounds.Y+last.Bounds.H > p.Y+p.H-24 {
+		t.Fatalf("End left the aligned last row outside fitted panel/arrow gutters: item%+v panel%+v scroll%+v", last.Bounds, p, scroll)
+	}
+	// An active item may leave the viewport during ordinary user scrolling.
+	// Extra frames must not turn the one-shot reveal into a scroll lock.
+	before := scroll.Y
+	p := runtime.panelBox
+	r.Scroll(p.X+p.W/2, p.Y+p.H/2, 0, -120)
+	r.Frame()
+	scrolled := scroll.Y
+	r.Frame()
+	if scrolled >= before || scroll.Y != scrolled {
+		t.Fatalf("active reveal absorbed manual scrolling: before%v user%v final%v", before, scrolled, scroll.Y)
+	}
+	r.Key(0, ui.KeyEnd)
+	r.Frame()
+	r.Frame()
+	// A live resize must replace the old measured cap and reveal only once.
+	// The fixed trigger extends beyond this narrow window, so the popup must
+	// also clamp its independent horizontal bounds before a real row click.
+	r.SetSize(300, 360)
+	r.Frame()
+	r.Frame()
+	last = selectSourceOption(t, r, "Item 99")
+	if p := runtime.panelBox; p.X < 4.5 || p.X+p.W > 295.5 || p.Y < 9.5 || p.Y+p.H > 350.5 || last.Offscreen || last.Bounds.Y < p.Y || last.Bounds.Y+last.Bounds.H > p.Y+p.H {
+		t.Fatalf("live narrow/short resize retained an old popup pose: item%+v panel%+v scroll%+v", last.Bounds, p, scroll)
+	}
+	shrunkHeight := runtime.panelBox.H
+	p = runtime.panelBox
+	before = scroll.Y
+	r.Scroll(p.X+p.W/2, p.Y+p.H/2, 0, -90)
+	r.Frame()
+	scrolled = scroll.Y
+	r.Frame()
+	if scrolled >= before || scroll.Y != scrolled {
+		t.Fatalf("resize reveal absorbed later user scrolling: before%v user%v final%v", before, scrolled, scroll.Y)
+	}
+	r.Key(0, ui.KeyEnd)
+	r.Frame()
+	r.Frame()
+	last = selectSourceOption(t, r, "Item 99")
+	r.ClickAt(last.Bounds.X+last.Bounds.W/2, last.Bounds.Y+last.Bounds.H/2)
 	r.Frame()
 	if state.Value.Value != "99" || state.Open {
-		t.Fatalf("aligned long-list choice %+v", state)
+		t.Fatalf("aligned long-list pointer choice %+v", state)
+	}
+	selectSourceOpen(t, r, "Long aligned")
+	r.SetSize(600, 600)
+	r.Frame()
+	r.Frame()
+	if p := runtime.panelBox; p.H <= shrunkHeight+100 || p.X < 4.5 || p.X+p.W > 595.5 || p.Y < 9.5 || p.Y+p.H > 590.5 {
+		t.Fatalf("restoring window size did not recover a bounded expanded popup: %+v", p)
+	}
+	contentMaxHeight = 220
+	r.Frame()
+	r.Frame()
+	last = selectSourceOption(t, r, "Item 99")
+	if p := runtime.panelBox; p.H > 220.5 || last.Offscreen || last.Bounds.Y < p.Y || last.Bounds.Y+last.Bounds.H > p.Y+p.H {
+		t.Fatalf("current Content.MaxHeight did not replace the measured cap: item%+v panel%+v", last.Bounds, p)
+	}
+	contentMaxHeight = 0
+	r.Frame()
+	r.Frame()
+	if p := runtime.panelBox; p.H <= 320 || p.Y < 9.5 || p.Y+p.H > 590.5 {
+		t.Fatalf("removing the current content cap did not recover bounded height: %+v", p)
+	}
+	r.Key(0, ui.KeyHome)
+	r.Frame()
+	r.Frame()
+	first = selectSourceOption(t, r, "Item 00")
+	if p := runtime.panelBox; p.Y < 9.5 || p.Y+p.H > 590.5 || first.Bounds.Y < p.Y || scroll.Y > 0 && first.Bounds.Y < p.Y+24 {
+		t.Fatalf("Home left the first row under an arrow or outside the window: item%+v panel%+v scroll%+v", first.Bounds, p, scroll)
+	}
+	r.ClickAt(first.Bounds.X+first.Bounds.W/2, first.Bounds.Y+first.Bounds.H/2)
+	r.Frame()
+	if state.Value.Value != "0" || state.Open || !r.Focused("Long aligned") {
+		t.Fatalf("aligned first-row pointer/focus return %+v", state)
 	}
 }
 
