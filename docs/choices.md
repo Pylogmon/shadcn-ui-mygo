@@ -14,6 +14,8 @@ control.CheckboxState(c, &state, "Select all", control.CheckboxProps{
 
 Switch 默认轨道 32×18.4 DIP、拇指 16 DIP；`Size: control.Small` 为 24×14、拇指 12。RTL 使用镜像轨迹；在动画进行中改值、切方向或开启减少动态效果不会留下旧位置或持续重绘。Label/Description 保留在原生 Switch 上。
 
+`SwitchProps.AlignSelf` 配置控件在父容器交叉轴上的对齐，默认 `ui.Start`；例如 `control.Switch(c, &enabled, control.SwitchProps{AlignSelf: ui.Center})` 可在横向行中垂直居中。支持 `ui.End` / `ui.Stretch` 等 MyGo 对齐值，返回元素仍可继续链式调整。
+
 ```go
 control.RadioGroup(c, &plan, control.RadioGroupProps{
     Label: "Plan", Orientation: ui.Vertical, NoLoop: true,

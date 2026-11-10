@@ -16,9 +16,11 @@ type DialogProps struct {
 	PreventOutsideDismiss, PreventEscapeDismiss bool
 	// InitialFocus and ReturnFocus identify real controls, never frame Elements.
 	InitialFocus, ReturnFocus *ui.Handle
-	// ContentPadding/Gap accept explicit zero; nil uses 24 DIPs.
+	// ContentPadding/Gap accept explicit zero; nil uses 24 DIPs. Padding
+	// insets the content, header and footer, not the scroll viewport.
 	ContentPadding, ContentGap *float32
-	// NoScroll lets content with its own bounded list manage scrolling.
+	// NoScroll lets content manage scrolling. With Height, the body fills the
+	// space between the header and footer so child lists need no manual height.
 	NoScroll bool
 	Footer   func()
 	// OnOpenChange reports close requests made by this component. Changing the
@@ -154,32 +156,58 @@ func Dialog(c *ui.Context, open *bool, p DialogProps, content func()) ui.Element
 	maxHeight = min(limit, maxHeight)
 	width, validWidth := modalDimension(p.Width, 448)
 	height, validHeight := modalDimension(p.Height, 0)
+	padding := modalSpace(p.ContentPadding, 24)
 	return present(c, open, modalOptions{preventOutside: p.PreventOutsideDismiss, preventEscape: p.PreventEscapeDismiss, duration: 100 * time.Millisecond, initialFocus: p.InitialFocus, returnFocus: p.ReturnFocus, onOpenChange: p.OnOpenChange}, func(back, panel ui.Element, progress float32) {
 		back.Padding(16).Background(ui.RGBA(0, 0, 0, .1*progress))
-		panel.Column().Gap(modalSpace(p.ContentGap, 24)).Padding(modalSpace(p.ContentPadding, 24)).Width(width).MaxWidthPercent(100).MaxHeight(maxHeight).MinHeight(0).
+		panel.Column().Gap(modalSpace(p.ContentGap, 24)).Padding(0).Width(width).MaxWidthPercent(100).MaxHeight(maxHeight).MinHeight(0).
 			Radius(t.RadiusXL()).Border(1, t.Foreground.Alpha(.1)).Background(t.Popover).TextColor(t.PopoverForeground).FontSize(14).
 			Label(p.Title).Description(p.Description).Opacity(progress).Scale(.95+.05*progress, .95+.05*progress).
 			Invalid(!validMax || !validWidth || !validHeight).Shadow(0, 12, 40, 0, ui.RGBA(0, 0, 0, .18))
 		if height > 0 {
 			panel.Height(min(height, maxHeight))
 		}
+		if p.HideHeader && content == nil && p.Footer == nil {
+			panel.Padding(padding)
+		}
 		panel.Children(func() {
 			if !p.HideHeader {
-				dialogHeader(c, p.Title, p.Description)
+				bottom := float32(0)
+				if content == nil && p.Footer == nil {
+					bottom = padding
+				}
+				dialogHeader(c, p.Title, p.Description).Padding(padding, padding, bottom, padding)
 			}
 			if content != nil {
+				top, bottom := float32(0), float32(0)
+				if p.HideHeader {
+					top = padding
+				}
+				if p.Footer == nil {
+					bottom = padding
+				}
+				var body ui.Element
 				if p.NoScroll {
-					ui.Column(c).FillWidth().MinHeight(0).Gap(12).Children(content)
+					body = ui.Column(c).Padding(top, padding, bottom, padding).Gap(12)
 				} else {
-					body := ui.Scroll(c).FillWidth().MinHeight(0).Shrink(1).MaxHeight(maxHeight).Label("Dialog content")
-					if height > 0 {
-						body.Grow(1)
-					}
-					body.Children(func() { ui.Column(c).FillWidth().Shrink(0).Gap(12).Children(content) })
+					body = ui.Scroll(c).MaxHeight(maxHeight).Label("Dialog content")
+				}
+				// Grow retains intrinsic sizing in an auto-height panel and also
+				// fills a height applied by the caller to the returned panel.
+				body.FillWidth().MinWidth(0).MinHeight(0).Shrink(1).Grow(1)
+				if p.NoScroll {
+					body.Children(content)
+				} else {
+					body.Children(func() {
+						ui.Column(c).FillWidth().MinWidth(0).Shrink(0).Padding(top, padding, bottom, padding).Gap(12).Children(content)
+					})
 				}
 			}
 			if p.Footer != nil {
-				modalFooter(c, p.Footer)
+				top := float32(0)
+				if p.HideHeader && content == nil {
+					top = padding
+				}
+				modalFooter(c, p.Footer).Padding(top, padding, padding, padding)
 			}
 			if !p.HideClose {
 				modalClose(c, open, "Close dialog", 16)

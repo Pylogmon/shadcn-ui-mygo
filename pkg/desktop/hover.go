@@ -22,8 +22,11 @@ type TooltipProps struct {
 	Gap, MaxWidth         int
 	OpenDelay, CloseDelay time.Duration
 	Disabled              bool
-	Revision              uint64
-	OnOpenChange          func(bool)
+	// HoverOnly ignores focus when opening or retaining the visual tooltip.
+	// The trigger keeps its accessible description and normal keyboard focus.
+	HoverOnly    bool
+	Revision     uint64
+	OnOpenChange func(bool)
 }
 
 // HoverCardProps configures an interactive preview in an independent window.
@@ -214,14 +217,15 @@ func tooltip(c *ui.Context, h *Host, key string, anchor ui.Element, text string,
 		s.text, s.lastRevision = text, p.Revision
 		s.renderRevision++
 	}
-	anchorHot := anchor.Hovered() || anchor.FocusWithin()
+	focus := !p.HoverOnly && anchor.FocusWithin()
+	anchorHot := anchor.Hovered() || focus
 	if p.Disabled || text == "" {
 		s.cancel()
 	} else {
 		if (s.open || !s.enteredAt.IsZero()) && c.Shortcut(0, ui.KeyEscape) || anchor.Clicked() {
 			s.dismiss()
 		}
-		advanceHover(c, s, anchorHot, anchor.FocusWithin(), max(0, p.OpenDelay), max(0, p.CloseDelay), false, hoverApplicationState{})
+		advanceHover(c, s, anchorHot, focus, max(0, p.OpenDelay), max(0, p.CloseDelay), false, hoverApplicationState{})
 	}
 	if h == nil {
 		if s.open {

@@ -161,6 +161,8 @@ func choiceIndicatorStyle(c *ui.Context, control, visual ui.Element, checked, in
 type SwitchProps struct {
 	Label, Description string
 	Disabled, Invalid  bool
+	// AlignSelf positions the control across its parent's axis; zero is Start.
+	AlignSelf ui.Align
 	// Small maps to the source's 24×14-DIP switch; other sizes use 32×18.4.
 	Size            Size
 	Content         func(*ui.Context)
@@ -172,6 +174,7 @@ func Switch(c *ui.Context, on *bool, p SwitchProps) ui.Element {
 	t := theme.TokensOf(c)
 	root := ui.SwitchBase(c, on)
 	rich := choiceControl(root, p.Label, p.Description, p.Disabled, p.Invalid, p.Content != nil)
+	root.AlignSelf(p.AlignSelf)
 	width, height, diameter := float32(32), float32(18.4), float32(16)
 	if p.Size == Small {
 		width, height, diameter = 24, 14, 12

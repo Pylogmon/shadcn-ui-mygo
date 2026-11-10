@@ -2,7 +2,9 @@
 
 这些组件默认是当前窗口中的原生模态区域，使用 MyGo 的焦点作用域、键盘输入和可访问性；Drawer可选择NonModal。跨窗口菜单/Popover 的组件对见 [native-adaptation.md](native-adaptation.md)。
 
-`Dialog` 支持 `Height` / `MaxHeight`、固定页脚、可滚动正文、独立禁止外部点击/Escape关闭和 `OnOpenChange`。只改变调用方的 `open` 值不会被当作用户关闭事件。`NoScroll` 供已自行约束高度的虚拟列表等使用。
+`Dialog` 支持 `Height` / `MaxHeight`、固定页脚、可滚动正文、独立禁止外部点击/Escape关闭和 `OnOpenChange`。只改变调用方的 `open` 值不会被当作用户关闭事件。设置 `Height` 时，普通正文和 `NoScroll` 正文都会填满标题与页脚之间的剩余空间；`NoScroll` 适合虚拟列表、编辑器等自行管理滚动的内容，子组件可直接用 `Fill()` / `Grow(1)`，无需手算正文高度。只设置 `MaxHeight` 时仍按内容自然高度布局。
+
+`ContentPadding` 控制标题、正文内容和页脚的留白，`ContentGap` 控制各区域之间的间距；两者默认为 24 DIP，指针可显式设为 0。正文滚动视口延伸到面板的左右内边缘，留白加在视口内的内容上，因此内容保留内边距，滚动条贴近弹窗边缘。
 
 ```go
 var open bool

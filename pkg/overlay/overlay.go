@@ -81,20 +81,36 @@ func InWindowPopover(c *ui.Context, anchor ui.Element, open *bool, p PopoverProp
 	})
 }
 
-type TooltipProps struct{ Placement Placement }
+type TooltipProps struct {
+	Placement Placement
+	// HoverOnly prevents focus alone from showing or retaining the tooltip.
+	// The trigger keeps its accessible description and normal keyboard focus.
+	HoverOnly bool
+}
 
-// InWindowTooltip also describes the trigger to assistive technology, and opens on focus.
+// InWindowTooltip also describes the trigger to assistive technology, and
+// opens on focus unless HoverOnly is set.
 func InWindowTooltip(c *ui.Context, anchor ui.Element, text string, p TooltipProps) ui.Element {
 	if text == "" {
 		return ui.Element{}
 	}
 	anchor.Description(text)
+	hovered := anchor.Hovered()
 	t := theme.TokensOf(c)
-	return ui.TooltipBase(c, anchor, func(panel ui.Element) {
+	var tip ui.Element
+	ui.TooltipBase(c, anchor, func(panel ui.Element) {
+		// Keep native tooltip registration and timers alive even while focus
+		// alone is ignored. The inactive visual has no input or AX surface.
+		if p.HoverOnly && !hovered {
+			panel.Size(0, 0).AccessHidden(true)
+			return
+		}
+		tip = panel
 		attach(panel, anchor, p.Placement, 6)
 		panel.Padding(6, 12).Radius(t.Radius).MaxWidth(320).Background(t.Primary).
 			TextColor(t.PrimaryForeground).FontSize(12).Transition(motion.Popup(c)).Children(func() { ui.Text(c, text) })
 	})
+	return tip
 }
 
 type HoverCardProps struct {

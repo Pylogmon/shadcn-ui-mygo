@@ -24,6 +24,7 @@ control.ColorPicker(c, &accent, control.ColorPickerProps{
 | `Shape: ColorSwatchCircle` | 圆形 |
 | `SwatchSize` | 色块边长，默认 48 DIP；自定义色块与预设一致，选中／焦点／错误外圈的间隔和线宽随尺寸同比缩放 |
 | `Spacing` | 色块间距指针，默认 24 DIP，可显式设为 0 |
+| `AlignSelf` | 整个控件在父容器交叉轴上的对齐，默认 `ui.Start`，可设 `ui.Center`、`ui.End` 或 `ui.Stretch` |
 | `Colors` | `nil` 使用默认八色；空切片不显示预设 |
 | `Disabled` / `ColorOption.Disabled` | 禁用整个组件／单个预设；同时继承祖先禁用状态 |
 | `Invalid` | 错误外圈；也读取所在 Field 的校验状态 |

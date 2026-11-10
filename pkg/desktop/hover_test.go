@@ -200,6 +200,93 @@ func TestTooltipKeyboardEscapeSuppressionAndInactiveWindow(t *testing.T) {
 	}
 }
 
+func TestTooltipHoverOnlyIgnoresFocusAndRearmsOnPointerReentry(t *testing.T) {
+	for _, native := range []bool{false, true} {
+		for _, rich := range []bool{false, true} {
+			t.Run(fmt.Sprintf("native=%v/rich=%v", native, rich), func(t *testing.T) {
+				b := &fakeBackend{}
+				h := NewHostWithBackend(b)
+				hoverOnly := true
+				parent := ui.NewTester(func(c *ui.Context) {
+					theme.Apply(c)
+					h.BeginFrame()
+					defer h.EndFrame()
+					ui.Column(c).Padding(20).Children(func() {
+						anchor := control.Button(c, "Trigger", control.ButtonProps{})
+						p := TooltipProps{HoverOnly: hoverOnly, Description: "Helpful hint", OpenDelay: 200 * time.Millisecond, CloseDelay: 100 * time.Millisecond}
+						content := func(child *ui.Context) { ui.Text(child, "Helpful hint") }
+						var err error
+						switch {
+						case native && rich:
+							err = NativeTooltipWith(c, h, "tip", anchor, p, content)
+						case native:
+							err = NativeTooltip(c, h, "tip", anchor, "Helpful hint", p)
+						case rich:
+							err = TooltipWith(c, h, "tip", anchor, p, content)
+						default:
+							err = Tooltip(c, h, "tip", anchor, "Helpful hint", p)
+						}
+						if err != nil {
+							t.Fatal(err)
+						}
+					})
+				}, 420, 220)
+				parent.Key(0, ui.KeyTab)
+				parent.Advance(time.Second)
+				trigger, ok := parent.AccessByRole(ui.RoleButton, "Trigger")
+				if !ok || !trigger.Focused || trigger.Description != "Helpful hint" || len(b.surfaces) != 0 {
+					t.Fatalf("hover-only tooltip changed focus/description or opened on focus: %+v surfaces=%d", trigger, len(b.surfaces))
+				}
+				moveOver(t, parent, "Trigger")
+				parent.Advance(199 * time.Millisecond)
+				if h.IsOpen("tip") {
+					t.Fatal("retained focus bypassed the hover delay")
+				}
+				parent.Advance(time.Millisecond)
+				if !h.IsOpen("tip") {
+					t.Fatal("hover did not open the focused trigger's tooltip")
+				}
+				parent.Move(400, 200)
+				parent.Advance(99 * time.Millisecond)
+				if !h.IsOpen("tip") {
+					t.Fatal("tooltip closed before the close delay")
+				}
+				parent.Advance(20 * time.Millisecond)
+				if h.IsOpen("tip") || !parent.Focused("Trigger") {
+					t.Fatal("focus retained the tooltip after the pointer left")
+				}
+				moveOver(t, parent, "Trigger")
+				parent.Advance(200 * time.Millisecond)
+				parent.Key(0, ui.KeyEscape)
+				parent.Advance(time.Second)
+				if h.IsOpen("tip") {
+					t.Fatal("Escape did not suppress a hovered tooltip")
+				}
+				parent.Move(400, 200)
+				moveOver(t, parent, "Trigger")
+				parent.Advance(200 * time.Millisecond)
+				if !h.IsOpen("tip") || !parent.Focused("Trigger") {
+					t.Fatal("pointer re-entry did not rearm while keyboard focus stayed put")
+				}
+				parent.Move(400, 200)
+				parent.Advance(120 * time.Millisecond)
+				// Props can restore the default focus behavior on the same trigger.
+				hoverOnly = false
+				parent.Frame()
+				if !h.IsOpen("tip") || !parent.Focused("Trigger") {
+					t.Fatal("default focus opening was not restored")
+				}
+				hoverOnly = true
+				parent.Frame()
+				parent.Advance(120 * time.Millisecond)
+				if h.IsOpen("tip") {
+					t.Fatal("enabling HoverOnly retained a focus-only tooltip")
+				}
+			})
+		}
+	}
+}
+
 func TestTooltipStylePairUsesIndependentPlatformTheme(t *testing.T) {
 	for _, native := range []bool{false, true} {
 		t.Run(map[bool]string{false: "shadcn", true: "platform"}[native], func(t *testing.T) {

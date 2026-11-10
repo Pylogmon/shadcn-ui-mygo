@@ -25,6 +25,8 @@ type ColorOption struct {
 
 type ColorPickerProps struct {
 	Label, Description string
+	// AlignSelf positions the control across its parent's axis; zero is Start.
+	AlignSelf ui.Align
 	// Nil uses DefaultColorOptions; an empty slice shows no presets.
 	Colors []ColorOption
 	// Custom adds an equally sized rainbow well before the presets. It opens
@@ -99,7 +101,7 @@ func ColorPicker(c *ui.Context, value *ui.Color, p ColorPickerProps) ui.Element 
 	if label == "" {
 		label = "Color"
 	}
-	root := ui.Row(c).AlignSelf(ui.Start).MinWidth(0).MaxWidthPercent(100).Gap(spacing).
+	root := ui.Row(c).AlignSelf(p.AlignSelf).MinWidth(0).MaxWidthPercent(100).Gap(spacing).
 		AlignItems(ui.Start).Role(ui.RoleGroup).Label(label).Description(p.Description).
 		Disabled(p.Disabled).DimDisabled(false).Invalid(p.Invalid)
 	open := ui.Local(root, "color-picker-open", func() bool { return false })
