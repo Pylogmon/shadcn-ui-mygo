@@ -56,6 +56,7 @@ type State struct {
 	itemCompositions                                                               itemCompositionPreviewState
 	popupCompositions                                                              popupCompositionPreviewState
 	dropdownCompositions                                                           dropdownCompositionPreviewState
+	contextMenuCompositions                                                        contextMenuCompositionPreviewState
 	chartPreview                                                                   chartPreviewState
 	chartCatalogue                                                                 chartcatalog.State
 	comboboxCompound                                                               comboboxCompoundPreviewState
@@ -122,7 +123,7 @@ var pages = []creatorPage{
 	{Key: "text-layout", Label: "Text & layout", Keywords: []string{"Typography", "Kbd", "Keyboard", "CodeBlock", "Code", "Spinner", "Skeleton", "ScrollArea", "AspectRatio"}},
 	{Key: "overlays", Label: "Overlays", Keywords: []string{"AlertDialog", "Dialog", "Sheet", "Popover", "Tooltip", "HoverCard", "DropdownMenu", "Toast", "Sonner", "Command"}},
 	{Key: "conversation", Label: "Messages & questions", Keywords: []string{"Bubble", "Attachment", "Trace", "Message", "Marker", "MessageScroller", "Questionnaire", "Questionnaire workflows", "Migration", "Conditional"}},
-	{Key: "navigation", Label: "Navigation"},
+	{Key: "navigation", Label: "Navigation", Keywords: []string{"ContextMenu"}},
 	{Key: "themes", Label: "Colors & themes"},
 }
 

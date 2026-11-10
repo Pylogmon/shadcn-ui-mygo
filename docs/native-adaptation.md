@@ -78,6 +78,8 @@ Navigation 页的 Menubar 和导航面板也随配置切换；普通模式支持
 
 Navigation 页的 Project actions、File 和 Project workspace 右键菜单共享 Export 子菜单，可选择 Go source 或 Preset JSON；workspace 支持 Shift+F10。Menu style 同时切换这三处的 Flyout/系统菜单路由，选择结果在 Last action 与通知中显示可读名称。
 
+同页另提供 [Context Menu 源组合](../examples/context-menu-composition/README.md) 的22个配置，保留11份文档与11个Create分区的不同内容。右键、Context菜单键和Shift+F10操作真实目标；独立草稿保存复选与People／Theme多组单选。系统路线使用公开SVG模板图标，Flyout保留逻辑缩进、子菜单、六侧、Dialog及译文。源Demo／RTL的176DIP子菜单采用当前公共API的192DIP宽度；实际跨显示器放置与原生菜单跟踪仍需平台验收。
+
 ## 窗口内与迁移
 
 `pkg/overlay` 保留 `InWindowDropdownMenu`、`InWindowContextMenu`、`InWindowMenubar`、`InWindowPopover`、`InWindowTooltip`、`InWindowHoverCard`，专门用于明确需要父窗口内表面的场景。第一版同名简写已标记 Deprecated。没有 Host 时，桌面组件可以绘制关闭状态的触发器，但尝试打开会报错，不会静默退回窗口内浮层。

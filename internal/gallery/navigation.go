@@ -118,6 +118,7 @@ func (s *State) navigationPreview(c *ui.Context) {
 		}).Label("Project menu preview")
 	})
 	s.routePanelsPreview(c)
+	s.contextMenuCompositions.view(c, s.Popovers, s.Config.NativeMenus)
 	s.sidebarPreview(c)
 	s.paginationPreview(c)
 }

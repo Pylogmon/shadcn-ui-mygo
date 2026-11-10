@@ -1,0 +1,333 @@
+{
+  "repository": "https://github.com/shadcn-ui/ui",
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "archiveManifestSHA256": "64b1a9b41837d69905a23a695f241924e3d329191e6412f57b88ec8a081a9151",
+  "counts": {
+    "docsExamples": 11,
+    "createSections": 11,
+    "guides": 1,
+    "sourceFiles": 13,
+    "configurations": 22
+  },
+  "files": [
+    {
+      "path": "apps/v4/content/docs/components/base/context-menu.mdx",
+      "gitBlob": "3acdbfa515a412a7a81e73ab2de49805c8ade305",
+      "sha256": "15ad5959bcb215afe5de3fd7d667a3cb9a8869accf7493565f4060b06c820156",
+      "bytes": 4524,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/content/docs/components/base/context-menu.mdx"
+    },
+    {
+      "path": "apps/v4/examples/base/context-menu-basic.tsx",
+      "gitBlob": "bd0ba4b589db2cb1ca45823e554fa4afade5d298",
+      "sha256": "de31f299a35bf6e4d52dc9678436867509202795dcaf11efcf514fcf69315209",
+      "bytes": 893,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/context-menu-basic.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/context-menu-checkboxes.tsx",
+      "gitBlob": "5f6a84911a6dcfcfbddf0a1c6935d5c41d5f0ea5",
+      "sha256": "04c68bf3f24097877d65ffb3e36da7f10d737016f1e9321522952f7eefb0400f",
+      "bytes": 1058,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/context-menu-checkboxes.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/context-menu-demo.tsx",
+      "gitBlob": "170b4c5dcff2951d2ad0465f491759432936c724",
+      "sha256": "cd7a5a9c5e0757cbd8e8d4d98b6085c4f32656b1125c416b53d4650f1ab02419",
+      "bytes": 2905,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/context-menu-demo.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/context-menu-destructive.tsx",
+      "gitBlob": "a2461aa85d4baeb6f6244f75e22a725a6a8f011f",
+      "sha256": "d49426cb6dcf5b49946a6569ee84b573c28e6a756620ff1f303e5faa1650646c",
+      "bytes": 1251,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/context-menu-destructive.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/context-menu-groups.tsx",
+      "gitBlob": "8628c9478143b823d2bdae85c75ec5c403ba6abf",
+      "sha256": "93099773b4ec86edde7ea347969b23ed3c1bec8bd3832196ce52c30c336ab0c2",
+      "bytes": 2406,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/context-menu-groups.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/context-menu-icons.tsx",
+      "gitBlob": "b03d187469fd76244637287249d7aaeb7e568ec8",
+      "sha256": "1603db6afc4416d78ca8204160b94062a4cfc41d37a7276465e482dcf9c09f3b",
+      "bytes": 1371,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/context-menu-icons.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/context-menu-radio.tsx",
+      "gitBlob": "eb8e1ab9a767ba1a9c94c7fd2169356fa8309ff4",
+      "sha256": "ade0086d93efbd84b910cce5da581b4e945e760e5bce0df3000b2c8cb72259c7",
+      "bytes": 1785,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/context-menu-radio.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/context-menu-rtl.tsx",
+      "gitBlob": "71bdcb36f2553d1c0cd0570bfd33785d5179679d",
+      "sha256": "3b27b3f7761764af749b91b27f65015f5372edc1a28b4f0b92956d8f4a78be7b",
+      "bytes": 6173,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/context-menu-rtl.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/context-menu-shortcuts.tsx",
+      "gitBlob": "5138c4fa9a575a665de71166c27e58319759fec5",
+      "sha256": "b68dbcfac63eb2a15fd66ccd9c28cabd25c093deb3ca152ffb60e22b99d8fbcd",
+      "bytes": 1561,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/context-menu-shortcuts.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/context-menu-sides.tsx",
+      "gitBlob": "504bcf0d3a357b0105d8cf9e0a6de1f8715caf65",
+      "sha256": "ea7dfbcc23a3e0ae64b85e4bdcefe29c1fdefb589a5ff8b446f3d9eb9fcf0f7c",
+      "bytes": 3196,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/context-menu-sides.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/context-menu-submenu.tsx",
+      "gitBlob": "2c489d42560fec944ea3bb786fed1b99ac717205",
+      "sha256": "e8ffe489c2ab9cfb90e87f28dfaeeb676bddcf768cfad70fb51a219fb57fca74",
+      "bytes": 1901,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/context-menu-submenu.tsx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/examples/context-menu-example.tsx",
+      "gitBlob": "fc8619f04c2e2f1956470d1de73689bab69e1b9f",
+      "sha256": "6af7465c3be63adcfe2dd9038f695f7a063502bcca61b97a2d4739bd24bb72a0",
+      "bytes": 20005,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/examples/context-menu-example.tsx"
+    }
+  ],
+  "configurations": [
+    {
+      "recipe": "basic",
+      "source": [
+        "apps/v4/examples/base/context-menu-basic.tsx"
+      ],
+      "features": [
+        "Back, disabled Forward, Reload"
+      ]
+    },
+    {
+      "recipe": "checkboxes",
+      "source": [
+        "apps/v4/examples/base/context-menu-checkboxes.tsx"
+      ],
+      "features": [
+        "Bookmarks Bar=true, Full URLs=false, Developer Tools=true; independent mutable booleans"
+      ]
+    },
+    {
+      "recipe": "demo",
+      "source": [
+        "apps/v4/examples/base/context-menu-demo.tsx"
+      ],
+      "features": [
+        "Navigation shortcuts; nested More Tools/Delete; Bookmarks=true, Full URLs=false, People=pedro; 192-DIP panel"
+      ]
+    },
+    {
+      "recipe": "destructive",
+      "source": [
+        "apps/v4/examples/base/context-menu-destructive.tsx"
+      ],
+      "features": [
+        "Docs Edit/Share/Delete; Create additionally preserves Archive"
+      ]
+    },
+    {
+      "recipe": "groups",
+      "source": [
+        "apps/v4/examples/base/context-menu-groups.tsx"
+      ],
+      "features": [
+        "File/Edit captions; four groups with separators; all source shortcut text; destructive Delete"
+      ]
+    },
+    {
+      "recipe": "icons",
+      "source": [
+        "apps/v4/examples/base/context-menu-icons.tsx"
+      ],
+      "features": [
+        "Copy, Cut, Paste and destructive Delete with distinct Material Symbols SVGs"
+      ]
+    },
+    {
+      "recipe": "radio",
+      "source": [
+        "apps/v4/examples/base/context-menu-radio.tsx"
+      ],
+      "features": [
+        "People=pedro and Theme=light are independent radio groups"
+      ]
+    },
+    {
+      "recipe": "rtl",
+      "source": [
+        "apps/v4/examples/base/context-menu-rtl.tsx"
+      ],
+      "features": [
+        "English/Arabic/Hebrew exact strings; Arabic default; Navigation icon submenu; disabled Forward; People selection"
+      ]
+    },
+    {
+      "recipe": "shortcuts",
+      "source": [
+        "apps/v4/examples/base/context-menu-shortcuts.tsx"
+      ],
+      "features": [
+        "Navigation ⌘[/⌘]/⌘R; Save ⌘S and Save As... ⇧⌘S; Forward disabled"
+      ]
+    },
+    {
+      "recipe": "sides",
+      "source": [
+        "apps/v4/examples/base/context-menu-sides.tsx"
+      ],
+      "features": [
+        "Docs top/right/bottom/left target grid; Forward enabled; requested point placement"
+      ]
+    },
+    {
+      "recipe": "submenu",
+      "source": [
+        "apps/v4/examples/base/context-menu-submenu.tsx"
+      ],
+      "features": [
+        "Copy ⌘C, Cut ⌘X; five More Tools actions separated into groups"
+      ]
+    },
+    {
+      "recipe": "create-basic",
+      "source": [
+        "apps/v4/registry/bases/base/examples/context-menu-example.tsx:ContextMenuBasic"
+      ],
+      "features": [
+        "Back, disabled Forward, Reload",
+        "Create solid-border, radius-8, 4:1 trigger; independent configuration draft"
+      ]
+    },
+    {
+      "recipe": "create-icons",
+      "source": [
+        "apps/v4/registry/bases/base/examples/context-menu-example.tsx:ContextMenuWithIcons"
+      ],
+      "features": [
+        "Copy, Cut, Paste and destructive Delete with distinct Material Symbols SVGs",
+        "Create solid-border, radius-8, 4:1 trigger; independent configuration draft"
+      ]
+    },
+    {
+      "recipe": "create-sides",
+      "source": [
+        "apps/v4/registry/bases/base/examples/context-menu-example.tsx:ContextMenuWithSides"
+      ],
+      "features": [
+        "Six inline-start/left/top/bottom/right/inline-end targets; current direction resolves logical side; Forward enabled",
+        "Create solid-border, radius-8, 4:1 trigger; independent configuration draft"
+      ]
+    },
+    {
+      "recipe": "create-shortcuts",
+      "source": [
+        "apps/v4/registry/bases/base/examples/context-menu-example.tsx:ContextMenuWithShortcuts"
+      ],
+      "features": [
+        "Navigation ⌘[/⌘]/⌘R; Save ⌘S and Save As... ⇧⌘S; Forward disabled",
+        "Create solid-border, radius-8, 4:1 trigger; independent configuration draft"
+      ]
+    },
+    {
+      "recipe": "create-submenu",
+      "source": [
+        "apps/v4/registry/bases/base/examples/context-menu-example.tsx:ContextMenuWithSubmenu"
+      ],
+      "features": [
+        "Copy ⌘C, Cut ⌘X; five More Tools actions separated into groups",
+        "Create solid-border, radius-8, 4:1 trigger; independent configuration draft"
+      ]
+    },
+    {
+      "recipe": "create-groups",
+      "source": [
+        "apps/v4/registry/bases/base/examples/context-menu-example.tsx:ContextMenuWithGroups"
+      ],
+      "features": [
+        "File/Edit captions; four groups with separators; all source shortcut text; destructive Delete",
+        "Create solid-border, radius-8, 4:1 trigger; independent configuration draft"
+      ]
+    },
+    {
+      "recipe": "create-checkboxes",
+      "source": [
+        "apps/v4/registry/bases/base/examples/context-menu-example.tsx:ContextMenuWithCheckboxes"
+      ],
+      "features": [
+        "Bookmarks Bar=true, Full URLs=false, Developer Tools=true; independent mutable booleans",
+        "Create solid-border, radius-8, 4:1 trigger; independent configuration draft"
+      ]
+    },
+    {
+      "recipe": "create-radio",
+      "source": [
+        "apps/v4/registry/bases/base/examples/context-menu-example.tsx:ContextMenuWithRadio"
+      ],
+      "features": [
+        "People=pedro and Theme=light are independent radio groups",
+        "Create solid-border, radius-8, 4:1 trigger; independent configuration draft"
+      ]
+    },
+    {
+      "recipe": "create-destructive",
+      "source": [
+        "apps/v4/registry/bases/base/examples/context-menu-example.tsx:ContextMenuWithDestructive"
+      ],
+      "features": [
+        "Docs Edit/Share/Delete; Create additionally preserves Archive",
+        "Create solid-border, radius-8, 4:1 trigger; independent configuration draft"
+      ]
+    },
+    {
+      "recipe": "create-dialog",
+      "source": [
+        "apps/v4/registry/bases/base/examples/context-menu-example.tsx:ContextMenuInDialog"
+      ],
+      "features": [
+        "Open Dialog; Context Menu Example heading and original description; real parent Dialog; Copy/Cut/Paste; More Options; Delete",
+        "Create solid-border, radius-8, 4:1 trigger; independent configuration draft"
+      ]
+    },
+    {
+      "recipe": "create-inset",
+      "source": [
+        "apps/v4/registry/bases/base/examples/context-menu-example.tsx:ContextMenuWithInset"
+      ],
+      "features": [
+        "176-DIP panel; Actions and inset Appearance/Theme captions; Paste, checkbox, radio and More Options inset; Bookmarks=true, URLs=false, Theme=system",
+        "Create solid-border, radius-8, 4:1 trigger; independent configuration draft"
+      ]
+    }
+  ],
+  "adaptations": [
+    "Desktop fine-pointer trigger strings are shown; all source long-press strings are retained in target accessibility descriptions and the RTL translation model. No touch long-press recognizer is added.",
+    "Docs triggers preserve dashed radius-12 16:9 max-width-320 geometry; Create triggers preserve solid radius-8 4:1 geometry, with responsive side grid.",
+    "Material Symbols outline SVGs replace equivalent source icon placeholders; Native route uses shared template native menu images through NewMenuIconSVG. No icon font or network asset.",
+    "Flyout uses desktop.ContextMenu in an independent child window; Native uses desktop.NativeContextMenu and keeps OS styling and placement. NativeOS ignores requested CSS width/inset/side.",
+    "Shortcut strings are visible hints, not host-application keyboard commands. All leaves update local application values/status; no file, clipboard, browser or deletion side effect.",
+    "Source defaults and disabled states survive; controlled static demo check/radio examples receive local editable state for interactive Gallery use.",
+    "Inset and GroupInset map source logical-start padding; checkbox/radio reserve logical end for system/style appropriate checks.",
+    "Source styled checkbox/radio default closeOnClick=false is preserved; action defaults close. NativeOS tracking follows system behavior. The headless submenu canvas is enlarged explicitly because the injected Backend does not run the native FitContent sizing loop.",
+    "Current public MenuProps supplies one width to all panels: docs Demo/RTL 176-DIP source subpanels use 192 DIPs with their 192-DIP root. All original labels/actions and source submenus remain distinct."
+  ],
+  "verification": {
+    "sourceIntegrity": "All 13 original bytes verified by length, SHA-256, Git blob digest, and pinned existing ls-tree objects with GIT_NO_LAZY_FETCH=1.",
+    "workflow": "TestContextMenuCompositionsSourceWorkflow",
+    "snapshotEnvironment": "GALLERY_CONTEXT_MENU_COMPOSITION_SNAPSHOT_DIR",
+    "evidenceLimit": "Public injected Backend/Tester with real native UI events and independent Contexts; no real OS tracking-loop or platform matrix claim."
+  }
+}
