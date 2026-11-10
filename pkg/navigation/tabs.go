@@ -124,9 +124,12 @@ func Tabs(c *ui.Context, selected *int, p TabsProps, panel func(int)) ui.Element
 							} else {
 								indicator.Left(0).Right(0).Bottom(0).Height(2)
 							}
-							indicator.Background(t.Primary)
+							indicator.Background(t.Foreground)
 						} else {
 							indicator.Top(0).Bottom(0).Left(0).Right(0).Radius(t.RadiusMD()).Background(t.Background).Shadow(0, 1, 2, 0, ui.RGBA(0, 0, 0, .06))
+							if t.Dark {
+								indicator.Background(t.Input.Alpha(.3)).Border(1, t.Input)
+							}
 						}
 						tab.TextColor(t.Foreground)
 					}
