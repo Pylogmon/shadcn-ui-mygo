@@ -2,6 +2,15 @@
 
 InputOTP 使用一个真实原生编辑器提供选择、键盘、剪贴板和 IME，再在外层绘制非交互槽位。返回值与可选 Handle 都指向该编辑器，可继续用于 Field、标签、焦点和原生编辑器 API。
 
+`InputOTPProps.AlignSelf` 设置实际参与父布局的外层容器，零值保留 `ui.Start`。横排中的垂直居中、纵排中的水平居中都使用 `ui.Center`，不会改变槽位的自然宽度。返回值是绝对定位的内部编辑器，在它上面追加 `.AlignSelf(...)` 不能移动外层容器。
+
+```go
+ui.Row(c).AlignItems(ui.Center).Gap(12).Children(func() {
+    ui.Text(c, "Verification code\nEnter the code from your email.")
+    control.InputOTP(c, &code, control.InputOTPProps{AlignSelf: ui.Center})
+})
+```
+
 ```go
 control.Field(c, control.FieldProps{
     Label: "Verification code", Description: "Enter your six-digit code.",

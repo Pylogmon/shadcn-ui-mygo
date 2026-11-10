@@ -15,8 +15,10 @@ type TabsRootProps struct {
 	OnValueChange            func(string)
 }
 type TabsListProps struct {
-	Label   string
-	Variant TabsVariant
+	// AlignSelf positions the list in its immediate parent; zero is Start.
+	AlignSelf ui.Align
+	Label     string
+	Variant   TabsVariant
 }
 type TabsTriggerProps struct {
 	Key, Label          string
@@ -115,7 +117,7 @@ func TabsList(c *ui.Context, p TabsListProps, children func(*ui.Context)) ui.Ele
 	if label == "" {
 		label = b.props.Label
 	}
-	list := ui.Row(c).Shrink(0).Padding(3).Gap(2).Radius(t.Radius).Background(t.Muted).TextColor(t.MutedForeground).Role(ui.RoleTabList).Label(label).Orientation(orientation).FocusGroup(orientation).AlignSelf(ui.Start)
+	list := ui.Row(c).Shrink(0).Padding(3).Gap(2).Radius(t.Radius).Background(t.Muted).TextColor(t.MutedForeground).Role(ui.RoleTabList).Label(label).Orientation(orientation).FocusGroup(orientation).AlignSelf(p.AlignSelf)
 	if b.props.Vertical {
 		list.Column().AlignItems(ui.Stretch)
 	}

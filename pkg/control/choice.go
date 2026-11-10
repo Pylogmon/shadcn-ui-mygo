@@ -30,6 +30,8 @@ type choiceOptionKey struct {
 type switchDirectionKey struct{}
 
 type CheckboxProps struct {
+	// AlignSelf positions the control across its parent's axis; zero is Start.
+	AlignSelf                        ui.Align
 	Disabled, Indeterminate, Invalid bool
 	Description                      string
 	// Content replaces the visual label/description. It is non-interactive;
@@ -70,7 +72,7 @@ func Checkbox(c *ui.Context, checked *bool, label string, p CheckboxProps) ui.El
 func CheckboxState(c *ui.Context, state *ui.CheckState, label string, p CheckboxProps) ui.Element {
 	p.Invalid = fieldInputInvalid(c, p.Invalid)
 	root := ui.CheckboxStateBase(c, state)
-	rich := choiceControl(root, label, p.Description, p.Disabled, p.Invalid, p.Content != nil)
+	rich := choiceControl(root, p.AlignSelf, label, p.Description, p.Disabled, p.Invalid, p.Content != nil)
 	t := theme.TokensOf(c)
 	root.Children(func() {
 		visual := ui.Box(c.Key(choiceIndicator)).Size(16, 16).Shrink(0).Radius(4).Center().IgnoreInput(true).AccessHidden(true).Disabled(true).DimDisabled(false)
@@ -101,8 +103,8 @@ func CheckboxState(c *ui.Context, state *ui.CheckState, label string, p Checkbox
 
 // choiceControl keeps the native control as the only keyboard/AX target. The
 // visual children can be rich labels without creating nested native controls.
-func choiceControl(root ui.Element, label, description string, disabled, invalid, custom bool) bool {
-	root.AlignSelf(ui.Start).MinWidth(0).MaxWidthPercent(100).Gap(8).AlignItems(ui.Center).
+func choiceControl(root ui.Element, alignSelf ui.Align, label, description string, disabled, invalid, custom bool) bool {
+	root.AlignSelf(alignSelf).MinWidth(0).MaxWidthPercent(100).Gap(8).AlignItems(ui.Center).
 		Label(label).Description(description).Disabled(disabled).DimDisabled(false).Invalid(invalid).
 		FocusRing(false).Cursor(ui.CursorPointer).FontSize(14).LineHeight(1.375)
 	rich := description != "" || custom
@@ -173,8 +175,7 @@ func Switch(c *ui.Context, on *bool, p SwitchProps) ui.Element {
 	p.Invalid = fieldInputInvalid(c, p.Invalid)
 	t := theme.TokensOf(c)
 	root := ui.SwitchBase(c, on)
-	rich := choiceControl(root, p.Label, p.Description, p.Disabled, p.Invalid, p.Content != nil)
-	root.AlignSelf(p.AlignSelf)
+	rich := choiceControl(root, p.AlignSelf, p.Label, p.Description, p.Disabled, p.Invalid, p.Content != nil)
 	width, height, diameter := float32(32), float32(18.4), float32(16)
 	if p.Size == Small {
 		width, height, diameter = 24, 14, 12
@@ -308,6 +309,8 @@ func RadioGroup(c *ui.Context, selected *string, p RadioGroupProps) ui.Element {
 }
 
 type RadioProps struct {
+	// AlignSelf positions the control across its parent's axis; zero is Start.
+	AlignSelf         ui.Align
 	Description       string
 	Disabled, Invalid bool
 	Content           func(*ui.Context)
@@ -320,7 +323,7 @@ func RadioWith(c *ui.Context, selected *string, value, label string, p RadioProp
 	p.Invalid = fieldInputInvalid(c, p.Invalid)
 	t := theme.TokensOf(c)
 	root := ui.RadioBase(c, selected, value)
-	rich := choiceControl(root, label, p.Description, p.Disabled, p.Invalid, p.Content != nil)
+	rich := choiceControl(root, p.AlignSelf, label, p.Description, p.Disabled, p.Invalid, p.Content != nil)
 	root.Children(func() {
 		visual := ui.Box(c.Key(choiceIndicator)).Size(16, 16).Shrink(0).Radius(8).Center().IgnoreInput(true).AccessHidden(true).Disabled(true).DimDisabled(false)
 		if rich {
@@ -338,6 +341,8 @@ func RadioWith(c *ui.Context, selected *string, value, label string, p RadioProp
 }
 
 type ToggleProps struct {
+	// AlignSelf positions the control across its parent's axis; zero is Start.
+	AlignSelf                  ui.Align
 	Size                       Size
 	Outline, Disabled, Invalid bool
 	Label, Description         string
@@ -355,7 +360,7 @@ func Toggle(c *ui.Context, on *bool, label string, p ToggleProps) ui.Element {
 	if p.Label != "" {
 		name = p.Label
 	}
-	root.AlignSelf(ui.Start).MinWidth(height).Height(height).PaddingX(padding).Gap(4).Radius(t.RadiusMD()).AlignItems(ui.Center).Justify(ui.Center).
+	root.AlignSelf(p.AlignSelf).MinWidth(height).Height(height).PaddingX(padding).Gap(4).Radius(t.RadiusMD()).AlignItems(ui.Center).Justify(ui.Center).
 		FontSize(14).FontWeight(500).Label(name).Description(p.Description).TextColor(t.Foreground).Background(ui.Transparent).Border(0, ui.Transparent).
 		Disabled(p.Disabled).DimDisabled(false).Invalid(p.Invalid).FocusRing(false).Cursor(ui.CursorPointer)
 	motion.ApplyTransition(c, root)
@@ -416,6 +421,8 @@ func Toggle(c *ui.Context, on *bool, label string, p ToggleProps) ui.Element {
 }
 
 type ToggleGroupProps struct {
+	// AlignSelf positions the group across its parent's axis; zero is Start.
+	AlignSelf                   ui.Align
 	Label                       string
 	Items                       []Option
 	Multiple, Outline, Disabled bool
@@ -437,7 +444,7 @@ func ToggleGroup(c *ui.Context, selected *[]string, p ToggleGroupProps) ui.Eleme
 	if p.Spacing != nil && *p.Spacing >= 0 && !math.IsNaN(float64(*p.Spacing)) && !math.IsInf(float64(*p.Spacing), 0) {
 		gap = *p.Spacing
 	}
-	root := ui.Row(c).Gap(gap).AlignSelf(ui.Start).FocusGroup(axis).Orientation(axis).Role(ui.RoleGroup).Label(p.Label).Disabled(p.Disabled).Invalid(p.Invalid)
+	root := ui.Row(c).Gap(gap).AlignSelf(p.AlignSelf).FocusGroup(axis).Orientation(axis).Role(ui.RoleGroup).Label(p.Label).Disabled(p.Disabled).Invalid(p.Invalid)
 	if p.Vertical {
 		root.Column().AlignItems(ui.Stretch)
 	}

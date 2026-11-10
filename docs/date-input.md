@@ -2,6 +2,8 @@
 
 `pkg/display` 的 Calendar 和日期输入都使用真实的 `time.Time`。历法决定民用年月日的划分与显示；解析规则由应用提供。可运行示例见 [date-composition](../examples/date-composition/README.md)，运行 `go run ./examples/date-composition` 或 `make dates-app`（`build/Shadcn Dates.app`）。
 
+`CalendarWith`、`CalendarMultiple` 与 `CalendarRange` 共用 `CalendarProps.AlignSelf`，作用于整个日历的外层容器，零值保留 `ui.Start`。设置 `ui.Center` 可在横排中垂直居中、纵排中水平居中，并保留自然宽度；普通 `Calendar` 的默认布局保持不变，返回元素仍可链式配置对齐。
+
 ## CalendarSystem 与 PersianDate
 
 `CalendarProps.System` 默认为 `CalendarGregorian`。`CalendarPersian` 对应固定 shadcn 示例 `calendar-hijri.tsx` 实际导入的 `react-day-picker/persian`：它使用 Persian/Jalali 太阳历。该文件名不表示伊斯兰阴历。

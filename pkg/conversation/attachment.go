@@ -37,6 +37,8 @@ const (
 )
 
 type AttachmentProps struct {
+	// AlignSelf positions the whole attachment across its parent's axis; zero is Start.
+	AlignSelf       ui.Align
 	Name, MediaType string
 	SizeBytes       int64
 	// ID supplies stable identity when attachments move within a group.
@@ -132,7 +134,7 @@ func AttachmentWith(c *ui.Context, p AttachmentProps, build func(*AttachmentPart
 	if p.Size == AttachmentExtraSmall {
 		radius = t.RadiusLG()
 	}
-	root := ui.Row(c).MinWidth(0).MaxWidthPercent(100).Shrink(0).AlignSelf(ui.Start).Wrap().Gap(gap).
+	root := ui.Row(c).MinWidth(0).MaxWidthPercent(100).Shrink(0).AlignSelf(p.AlignSelf).Wrap().Gap(gap).
 		Radius(radius).Border(1, t.Border).Background(t.Card).TextColor(t.CardForeground).
 		FontSize(font).Role(ui.RoleGroup).Label(p.Name).Disabled(p.Disabled).DimDisabled(false).
 		Invalid(!valid).FocusRing(false).SnapAlignX(ui.Start).

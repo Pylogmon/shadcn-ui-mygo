@@ -13,6 +13,8 @@ conversation.Attachment(c, conversation.AttachmentProps{
 
 状态为Idle、Uploading、Processing、Error、Done；空值和旧ready值兼容Done。Progress是0到1的显示值。三种Size与水平/竖直Orientation可组合；Image使用真实原生图片、Cover裁剪和ImageAlt。HideMedia可做纯内容组合。上传/处理标题使用共享Shimmer，桌面减少动画下显示静态文字。
 
+`AttachmentProps.AlignSelf` 对 `Attachment` 与 `AttachmentWith` 的外层 Root 生效，零值保留 `ui.Start`；`ui.Center` 在横排中垂直居中、纵排中水平居中。Center/End 不改变附件自然宽度，竖向附件继续保留固定宽度；也可在返回元素或 `Parts.Root` 上链式设置对齐。
+
 OnOpen保留旧的独立Open动作；OpenLabel可重命名。需要整卡触发时，在AttachmentWith中调用Parts.Trigger，子按钮和编辑器仍保留自己的输入、选区、键盘及辅助技术目标。取消、重试、下载和移除都是显式回调；本库不启动上传服务或网络传输。
 
 ```go

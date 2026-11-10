@@ -8,6 +8,8 @@ import (
 )
 
 type KbdProps struct {
+	// AlignSelf positions the keycap across its parent's axis; zero is Start.
+	AlignSelf          ui.Align
 	Label, Description string
 	Icon, EndIcon      *ui.SVG
 	// Content replaces the key's non-interactive visuals. Give Label for
@@ -15,6 +17,11 @@ type KbdProps struct {
 	Content func(*ui.Context)
 	// InTooltip uses the source's inverse-tooltip keycap colors.
 	InTooltip bool
+}
+
+type KbdGroupProps struct {
+	// AlignSelf positions the whole group across its parent's axis; zero is Start.
+	AlignSelf ui.Align
 }
 
 type kbdPart uint8
@@ -48,7 +55,7 @@ func KbdWith(c *ui.Context, key string, p KbdProps) ui.Element {
 	if family == "" {
 		family = "system-ui"
 	}
-	root := ui.Row(c).AlignSelf(ui.Start).Shrink(0).Height(20).MinWidth(20).PaddingX(4).Gap(4).
+	root := ui.Row(c).AlignSelf(p.AlignSelf).Shrink(0).Height(20).MinWidth(20).PaddingX(4).Gap(4).
 		AlignItems(ui.Center).Justify(ui.Center).Radius(t.RadiusSM()).Background(background).TextColor(foreground).
 		Font(family).FontSize(12).FontWeight(500).LineHeight(4.0 / 3.0).Role(ui.RoleText).Label(label).Description(p.Description).
 		IgnoreInput(true).FocusRing(false)
@@ -76,7 +83,12 @@ func KbdWith(c *ui.Context, key string, p KbdProps) ui.Element {
 }
 
 func KbdGroup(c *ui.Context, content func(*ui.Context)) ui.Element {
-	return ui.Row(c).AlignSelf(ui.Start).Gap(4).AlignItems(ui.Center).Role(ui.RoleNone).Children(func() {
+	return KbdGroupWith(c, KbdGroupProps{}, content)
+}
+
+// KbdGroupWith configures the outer row independently of its inert keycaps.
+func KbdGroupWith(c *ui.Context, p KbdGroupProps, content func(*ui.Context)) ui.Element {
+	return ui.Row(c).AlignSelf(p.AlignSelf).Gap(4).AlignItems(ui.Center).Role(ui.RoleNone).Children(func() {
 		if content != nil {
 			content(c)
 		}
@@ -86,7 +98,12 @@ func KbdGroup(c *ui.Context, content func(*ui.Context)) ui.Element {
 // KbdShortcut formats physical modifiers for this native desktop. ui.Cmd is
 // already Command on macOS and Control elsewhere; key is the visible key name.
 func KbdShortcut(c *ui.Context, modifiers ui.Modifiers, key string) ui.Element {
-	return KbdGroup(c, func(child *ui.Context) {
+	return KbdShortcutWith(c, modifiers, key, KbdGroupProps{})
+}
+
+// KbdShortcutWith adds outer alignment to the platform-formatted shortcut.
+func KbdShortcutWith(c *ui.Context, modifiers ui.Modifiers, key string, p KbdGroupProps) ui.Element {
+	return KbdGroupWith(c, p, func(child *ui.Context) {
 		for _, modifier := range kbdModifiers(modifiers, runtime.GOOS) {
 			Kbd(child, modifier)
 		}

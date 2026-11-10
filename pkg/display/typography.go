@@ -24,6 +24,11 @@ const (
 	InlineCode
 )
 
+type TypographyProps struct {
+	// AlignSelf positions the text block across its parent's axis; zero is Start.
+	AlignSelf ui.Align
+}
+
 type typographyFlowKey struct{}
 type typographyFlow struct {
 	count     int
@@ -133,9 +138,18 @@ func typographyAppearance(c *ui.Context, e ui.Element, style TextStyle) ui.Eleme
 
 func Typography(c *ui.Context, text string, style TextStyle) ui.Element {
 	if style == InlineCode {
-		return typographyAppearance(c, ui.RichText(c, TypographyCodeSpan(c, text)), style).AlignSelf(ui.Start)
+		return TypographyWith(c, text, style, TypographyProps{})
 	}
 	return typographyAppearance(c, ui.Text(c, text), style)
+}
+
+// TypographyWith adds explicit outer alignment, including content-sized
+// InlineCode. Typography keeps its existing default layout for every style.
+func TypographyWith(c *ui.Context, text string, style TextStyle, p TypographyProps) ui.Element {
+	if style == InlineCode {
+		return typographyAppearance(c, ui.RichText(c, TypographyCodeSpan(c, text)), style).AlignSelf(p.AlignSelf)
+	}
+	return typographyAppearance(c, ui.Text(c, text), style).AlignSelf(p.AlignSelf)
 }
 
 // TypographyRich wraps native inline Text/Link/RichText children as one
@@ -163,7 +177,11 @@ func TypographyCodeSpan(c *ui.Context, text string) ui.Span {
 }
 
 func TypographyCode(c *ui.Context, text string) ui.Element {
-	return ui.RichText(c, TypographyCodeSpan(c, text)).AlignSelf(ui.Start).MinWidth(0).FontSize(14).LineHeight(1.5)
+	return TypographyCodeWith(c, text, TypographyProps{})
+}
+
+func TypographyCodeWith(c *ui.Context, text string, p TypographyProps) ui.Element {
+	return ui.RichText(c, TypographyCodeSpan(c, text)).AlignSelf(p.AlignSelf).MinWidth(0).FontSize(14).LineHeight(1.5)
 }
 
 func TypographyLink(c *ui.Context, text, url string) ui.Element {

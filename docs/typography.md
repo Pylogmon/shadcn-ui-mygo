@@ -19,6 +19,8 @@ display.TypographyProse(c, func(child *ui.Context) {
 
 TypographyRich 的回调只构建原生 inline Text/Link/RichText；布局控件应放在外面。TypographyCodeSpan 有真正参与行内布局的背景与 padding。Selectable 是返回 Element 的原生能力；链接仍保留实际 URL/Router 和 Enter 激活。
 
+独立代码块的外层对齐可用 `TypographyWith(c, text, display.InlineCode, display.TypographyProps{AlignSelf: ui.Center})` 或 `TypographyCodeWith(c, text, display.TypographyProps{AlignSelf: ui.Center})` 设置。新入口的 AlignSelf 零值为 `ui.Start`；原 `Typography` 各样式与 `TypographyCode` 的默认布局保持兼容。
+
 TypographyList 接受带稳定 Key 的 Text 或 Content，支持无序与有序原生 list/listitem、逻辑侧标记与动态重排。TypographyTable 是静态语义表格，包含 column header、row、cell、交替背景和可选 MinWidth 横向 viewport。列为等宽；它不实现完整 HTML intrinsic/colspan 算法。需要大数据虚拟化、排序和选择时使用独立 Table/DataTable 模块。
 
 Prose 只管理本模块 helper 的流式间距。任意原始 UI sibling、嵌套业务组件的外边距由应用安排；不存在隐含的全局 CSS。
@@ -32,6 +34,8 @@ display.KbdGroup(c, func(child *ui.Context) {
 ```
 
 Kbd 为 20 DIP 高、20 DIP 最小宽的非交互键帽，无默认边框。分组间距 4 DIP，可放图标或非交互 Content；Label/Description 命名其真实原生文字目标。键帽不注册快捷键，也不增加 Tab 停靠点，不阻挡外围原生按钮的点击。
+
+`KbdProps.AlignSelf` 对齐整个键帽；`KbdGroupWith(c, display.KbdGroupProps{AlignSelf: ui.Center}, content)` 和 `KbdShortcutWith(c, modifiers, key, display.KbdGroupProps{AlignSelf: ui.Center})` 对齐整个分组。零值与原有便捷入口均保留 `ui.Start`；Center/End 保持自然宽度，返回元素仍可链式覆盖对齐。
 
 快捷键按实际平台显示修饰符。InTooltip 采用固定源的逆色样式。字体使用当前 native Theme.Font 的正文字体，避免继承局部 monospace；返回 Element 的 Font 仍可显式覆盖。应用选择字体时应同时设置其原生 scoped Theme.Font，而非仅修改一个父 Element。
 

@@ -14,6 +14,9 @@ import (
 )
 
 type InputOTPProps struct {
+	// AlignSelf positions the outer slot container across its parent's axis;
+	// zero is Start. The returned Element and Handle still target the editor.
+	AlignSelf ui.Align
 	// Length is the native rune-slot count, default six. Counts above 4096
 	// expose Invalid and use a finite single-group fallback.
 	Length             int
@@ -219,7 +222,8 @@ func (s *otpState) pointer(ev ui.InputEvent) bool {
 
 // InputOTP keeps one actual MyGo editor for native text services, selection,
 // clipboard and undo, and paints inert slots over it. It returns that editor;
-// Handle can also bind it for explicit focus and label association.
+// Handle can also bind it for explicit focus and label association. Use
+// InputOTPProps.AlignSelf to align the outer container in its parent layout.
 func InputOTP(c *ui.Context, value *string, p InputOTPProps) ui.Element {
 	if value == nil {
 		panic("control.InputOTP: value must not be nil")
@@ -260,7 +264,7 @@ func InputOTP(c *ui.Context, value *string, p InputOTPProps) ui.Element {
 		width64 = float64(n)*float64(slotWidth) + float64(len(groups)-1)*between64
 	}
 	width, between := float32(width64), float32(between64)
-	root := ui.Box(c).Size(width, slotHeight).Shrink(0).AlignSelf(ui.Start).Disabled(p.Disabled).DimDisabled(false)
+	root := ui.Box(c).Size(width, slotHeight).Shrink(0).AlignSelf(p.AlignSelf).Disabled(p.Disabled).DimDisabled(false)
 	if p.Disabled {
 		root.Opacity(.5)
 	}

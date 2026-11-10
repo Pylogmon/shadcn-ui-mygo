@@ -37,6 +37,8 @@ type CalendarDay struct {
 }
 type CalendarProps struct {
 	Label string
+	// AlignSelf positions the whole calendar across its parent's axis; zero is Start.
+	AlignSelf ui.Align
 	// System defaults to Gregorian. Persian uses the fixed Jalali month model,
 	// Farsi names, Eastern Arabic-Indic digits and Saturday-first weeks.
 	System CalendarSystem
@@ -288,7 +290,7 @@ func calendarView(c *ui.Context, p CalendarProps, selected time.Time, signature 
 		}
 		return month
 	}
-	root := ui.Column(c).AlignSelf(ui.Start).Gap(12).Padding(12).Radius(t.Radius).Border(1, t.Border).Background(t.Background).TextColor(t.Foreground).Role(ui.RoleGroup)
+	root := ui.Column(c).AlignSelf(p.AlignSelf).Gap(12).Padding(12).Radius(t.Radius).Border(1, t.Border).Background(t.Background).TextColor(t.Foreground).Role(ui.RoleGroup)
 	label := p.Label
 	if label == "" {
 		label = "Calendar"

@@ -22,6 +22,89 @@ func TestOTPUsesVegaSlotSize(t *testing.T) {
 	}
 }
 
+func TestOTPOuterAlignmentPreservesNativeEditor(t *testing.T) {
+	value, align, column := "1234", ui.Center, false
+	var handle ui.Handle
+	var editorID, handleID uint64
+	var anchor, caret int
+	var submitted string
+	changed, changes, completed := false, 0, 0
+	r := ui.NewTester(func(c *ui.Context) {
+		theme.Apply(c)
+		parent := ui.Row(c).Size(500, 200).Gap(12).AlignItems(ui.Center).Label("OTP parent")
+		if column {
+			parent.Column()
+		}
+		parent.Children(func() {
+			ui.Text(c, "Verification\ncode instructions\nwith several lines").Width(180)
+			input := InputOTP(c, &value, InputOTPProps{
+				AlignSelf: align, Groups: []int{3, 3}, Handle: &handle, Label: "Aligned code",
+				OnChange: func(string) { changes++ }, OnComplete: func(string) { completed++ },
+				SlotContent: func(c *ui.Context, p InputOTPSlotProps) {
+					InputOTPSlot(c, p).Label(fmt.Sprintf("Aligned slot %d", p.Index))
+				},
+			})
+			editorID, handleID = input.ID(), c.Resolve(handle).ID()
+			anchor, caret = input.TextAnchorCaret()
+			changed = changed || input.Changed()
+			input.OnSubmit(func() { submitted = value })
+		})
+	}, 600, 300)
+	checkLayout := func() {
+		t.Helper()
+		field, ok := r.AccessByRole(ui.RoleTextField, "Aligned code")
+		parent, parentOK := r.Find("OTP parent")
+		first, firstOK := r.Find("Aligned slot 0")
+		last, lastOK := r.Find("Aligned slot 5")
+		if !ok || !parentOK || !firstOK || !lastOK {
+			t.Fatal("aligned OTP lost its editor or slot layout")
+		}
+		position, origin, available, size := field.Bounds.Y, parent.Y, parent.H, field.Bounds.H
+		if column {
+			position, origin, available, size = field.Bounds.X, parent.X, parent.W, field.Bounds.W
+		}
+		offset := float32(0)
+		if align == ui.Center {
+			offset = (available - size) / 2
+		} else if align == ui.End {
+			offset = available - size
+		}
+		if math.Abs(float64(position-origin-offset)) > .1 || first.X != field.Bounds.X || first.Y != field.Bounds.Y || last.X+last.W != field.Bounds.X+field.Bounds.W {
+			t.Fatalf("editor and visual slots did not move together: editor=%+v first=%+v last=%+v parent=%+v", field.Bounds, first, last, parent)
+		}
+		if editorID == 0 || editorID != handleID {
+			t.Fatalf("return value and Handle must identify the native editor: %d != %d", editorID, handleID)
+		}
+	}
+	checkLayout()
+	initialID := editorID
+	handle.Focus()
+	r.Frame()
+	second, _ := r.Find("Aligned slot 1")
+	r.ClickAt(second.X+second.W/2, second.Y+second.H/2)
+	for _, next := range []struct {
+		column bool
+		align  ui.Align
+	}{{false, ui.End}, {false, ui.Start}, {true, ui.Center}, {true, ui.End}} {
+		column, align = next.column, next.align
+		r.Frame()
+		checkLayout()
+		if !r.Focused("Aligned code") || editorID != initialID || anchor != 1 || caret != 2 {
+			t.Fatalf("alignment remounted the editor or lost focus/selection: id=%d focus=%v selection=%d..%d", editorID, r.Focused("Aligned code"), anchor, caret)
+		}
+	}
+	r.Type("X")
+	if value != "1X34" || !changed || changes != 1 || completed != 0 {
+		t.Fatalf("aligned editor lost native overwrite/change: value=%q changed=%v changes=%d complete=%d", value, changed, changes, completed)
+	}
+	r.Key(0, ui.KeyEnd)
+	r.Type("56")
+	r.Key(0, ui.KeyEnter)
+	if value != "1X3456" || changes != 2 || completed != 1 || submitted != value {
+		t.Fatalf("aligned editor lost completion or returned-element submit: value=%q changes=%d complete=%d submit=%q", value, changes, completed, submitted)
+	}
+}
+
 func TestOTPDefaultAcceptsAlphanumericWithoutAnExplicitPattern(t *testing.T) {
 	value := ""
 	r := tester(func(c *ui.Context) { InputOTP(c, &value, InputOTPProps{Length: 4}) })

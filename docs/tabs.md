@@ -6,8 +6,8 @@
 // selected 和 query 由应用持有，显式初始化 selected = "overview"。
 navigation.TabsRoot(c, &selected, navigation.TabsRootProps{Label: "Workspace"},
     func(c *ui.Context) {
-        ui.Row(c).Gap(12).Children(func() {
-            navigation.TabsList(c, navigation.TabsListProps{}, func(c *ui.Context) {
+        ui.Row(c).Gap(12).AlignItems(ui.Center).Children(func() {
+            navigation.TabsList(c, navigation.TabsListProps{AlignSelf: ui.Center}, func(c *ui.Context) {
                 navigation.TabsTrigger(c, "overview", navigation.TabsTriggerProps{Label: "Overview"})
                 navigation.TabsTrigger(c, "analytics", navigation.TabsTriggerProps{Label: "Analytics"})
             })
@@ -23,6 +23,8 @@ navigation.TabsRoot(c, &selected, navigation.TabsRootProps{Label: "Workspace"},
 ```
 
 Root 使用应用的 `*string`，空值不选中任何项；不匹配 trigger 的值也能显示对应 Content。Root 显式设置 `Vertical`、`Manual`、`NoLoop` 和 `OnValueChange`。List 支持 default/line 两种样式。Trigger 的 `HideLabel` 隐藏视觉文字并保留有用的原生 Label，`Content` 可以替换图标和文字。
+
+`TabsListProps.AlignSelf` 对实际参与当前父布局的列表容器生效，零值保留 `ui.Start`。`ui.Center` 可用于横排 header 的垂直居中或纵排的水平居中，Center/End 保留列表自然宽度；返回列表仍可链式覆盖对齐。
 
 所有槽位必须在 Root 当前构建回调中调用，不能替换返回根元素的 Children 后继续调用槽位。槽位返回实际原生 Element，可在当前帧设置样式或绑定 Handle；同步 scope 支持兄弟与嵌套 Root，不跨帧保存 Context、Element 或应用内容回调。
 

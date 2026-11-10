@@ -18,6 +18,8 @@ const (
 )
 
 type BadgeProps struct {
+	// AlignSelf positions the whole badge across its parent's axis; zero is Start.
+	AlignSelf          ui.Align
 	Variant            BadgeVariant
 	Label, Description string
 	Icon, EndIcon      *ui.SVG
@@ -74,7 +76,7 @@ func BadgeWith(c *ui.Context, text string, p BadgeProps) ui.Element {
 		}
 	}
 	disabled := p.Disabled || p.Busy && interactive
-	motion.ApplyTransition(c, root.AlignSelf(ui.Start).Shrink(0).Height(20).Radius(999).Gap(4).Padding(2, 8).Clip().
+	motion.ApplyTransition(c, root.AlignSelf(p.AlignSelf).Shrink(0).Height(20).Radius(999).Gap(4).Padding(2, 8).Clip().
 		AlignItems(ui.Center).Justify(ui.Center).FontSize(12).LineHeight(4.0/3.0).FontWeight(500).Label(label).Description(p.Description).
 		Disabled(disabled).DimDisabled(false).Busy(p.Busy).Invalid(p.Invalid).FocusRing(false))
 	start, end := p.Icon != nil || p.Leading != nil, p.EndIcon != nil || p.Trailing != nil
