@@ -1,6 +1,7 @@
 package control
 
 import (
+	"image/color"
 	"math"
 	"slices"
 	"testing"
@@ -201,6 +202,98 @@ func TestFieldSetAndStandaloneLabel(t *testing.T) {
 	click(t, tt, "Send updates")
 	if !checked {
 		t.Fatal("standalone label did not toggle checkbox")
+	}
+
+	peerDisabled, ancestorDisabled, peerChecked := false, false, false
+	draft, changes, toggles := "draft", 0, 0
+	var selection [2]int
+	var selectedCaptions []ui.SelectedText
+	r := ui.NewTester(func(c *ui.Context) {
+		theme.Apply(c)
+		paragraphs := ui.Box(c).Fill().Background(ui.RGB(0, 0, 0)).Selectable().Children(func() {
+			ui.Column(c).Fill().Padding(20).Gap(8).LineHeight(2).Disabled(ancestorDisabled).Children(func() {
+				Label(c, "Source line height").Label("Source line height")
+				ui.Text(c, "Reference line height").FontSize(14).FontWeight(500).LineHeight(1).Label("Reference line height")
+				e := Checkbox(c, &peerChecked, "", CheckboxProps{Disabled: peerDisabled, OnCheckedChange: func(bool) { toggles++ }})
+				LabelFor(c, "Peer caption", e).Background(ui.RGB(255, 255, 255))
+				input := Input(c, &draft, InputProps{OnChange: func(string) { changes++ }})
+				selection[0], selection[1] = input.TextSelection()
+				LabelFor(c, "Editor caption", input).Background(ui.RGB(255, 255, 255))
+			})
+		})
+		selectedCaptions = paragraphs.SelectedTexts()
+	}, 400, 280)
+	text := func(name string) ui.AccessInfo {
+		t.Helper()
+		a, ok := r.AccessByRole(ui.RoleText, name)
+		if !ok {
+			t.Fatalf("missing actual source Label %q", name)
+		}
+		return a
+	}
+	if text("Source line height").Bounds.H != text("Reference line height").Bounds.H {
+		t.Fatal("plain Label inherited the parent's double line-height instead of source leading-none")
+	}
+	captionPixel := func(want uint8) {
+		t.Helper()
+		a := text("Peer caption")
+		p := color.NRGBAModel.Convert(r.Image().At(int(a.Bounds.X+a.Bounds.W-4), int(a.Bounds.Y+a.Bounds.H/2))).(color.NRGBA)
+		if p.R != want || p.G != want || p.B != want || p.A != 255 {
+			t.Fatalf("peer=%v ancestor=%v caption pixel=%v want=%d", peerDisabled, ancestorDisabled, p, want)
+		}
+	}
+	clickText := func(name string) {
+		t.Helper()
+		a := text(name)
+		r.ClickAt(a.Bounds.X+a.Bounds.W/2, a.Bounds.Y+a.Bounds.H/2)
+		r.Frame()
+	}
+	captionPixel(255)
+	clickText("Editor caption")
+	if !r.Focused("Editor caption") {
+		t.Fatal("standalone Label failed to focus the real native editor")
+	}
+	r.Key(ui.Cmd, ui.KeyA)
+	r.Type("native draft")
+	r.Key(ui.Cmd, ui.KeyA)
+	r.Frame()
+	before := changes
+	clickText("Editor caption")
+	if draft != "native draft" || changes != before || changes == 0 || selection != [2]int{0, len(draft)} || !r.Focused("Editor caption") {
+		t.Fatal("Label focus replaced the editor, changed its value, or lost its native selection")
+	}
+	clickText("Peer caption")
+	if !peerChecked || toggles != 1 {
+		t.Fatal("plain peer Label failed one actual native checkbox activation")
+	}
+	peerChecked, peerDisabled = false, true
+	r.Frame()
+	captionPixel(128)
+	clickText("Peer caption")
+	r.Key(0, ui.KeySpace)
+	if peerChecked || toggles != 1 {
+		t.Fatal("disabled peer Label activated its native checkbox")
+	}
+	peerDisabled, ancestorDisabled = false, true
+	r.Frame()
+	captionPixel(128)
+	clickText("Peer caption")
+	r.Key(0, ui.KeySpace)
+	if peerChecked || toggles != 1 {
+		t.Fatal("ancestor-disabled Label activated its native checkbox")
+	}
+	ancestorDisabled = false
+	r.Frame()
+	captionPixel(255)
+	clickText("Peer caption")
+	if !peerChecked || toggles != 2 {
+		t.Fatal("removing disablement failed to restore the original Label association")
+	}
+	clickText("Reference line height")
+	r.Key(ui.Cmd, ui.KeyA)
+	r.Frame()
+	if len(selectedCaptions) != 1 || selectedCaptions[0].Text != "Reference line height" {
+		t.Fatalf("source select-none Label joined ancestor text selection: %+v", selectedCaptions)
 	}
 }
 

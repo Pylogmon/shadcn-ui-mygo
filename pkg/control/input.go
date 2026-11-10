@@ -8,7 +8,7 @@ import (
 )
 
 func Label(c *ui.Context, text string) ui.Element {
-	return ui.Text(c, text).FontSize(14).FontWeight(500).TextColor(theme.TokensOf(c).Foreground)
+	return ui.Text(c, text).FontSize(14).FontWeight(500).LineHeight(1).TextColor(theme.TokensOf(c).Foreground).Unselectable()
 }
 
 type FieldProps struct {
@@ -93,7 +93,16 @@ func FieldSet(c *ui.Context, p FieldSetProps, content func()) ui.Element {
 // label activation focuses text fields and toggles checkboxes/radios/switches.
 func LabelFor(c *ui.Context, text string, editor ui.Element) ui.Element {
 	label := Label(c, text)
-	fieldTarget(c, editor).Label(text).LabelledBy(label)
+	target := fieldTarget(c, editor)
+	if target.IsDisabled() {
+		label.Cursor(ui.CursorNotAllowed)
+		// A normally disabled ancestor already supplies the native dim layer.
+		// A disabled peer needs the source label treatment independently.
+		if !label.IsDisabled() {
+			label.Opacity(.5)
+		}
+	}
+	target.Label(text).LabelledBy(label)
 	return label
 }
 

@@ -1,0 +1,117 @@
+{
+  "repository": "https://github.com/shadcn-ui/ui",
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "sourceManifestSHA256": "60cea4517fbce24938ff6992b1c58fc394d517c9908df2cc2ab30fae938d35b9",
+  "files": [
+    {
+      "path": "apps/v4/examples/base/label-demo.tsx",
+      "gitBlob": "08977dd65f093d3cdf7b70641f97a67e90b21238",
+      "sha256": "10b1d4ad4e9af1f8f16905dc4f2e50ecf87b0da1829fe9225e16025f334c8c37",
+      "bytes": 305,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/label-demo.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/label-rtl.tsx",
+      "gitBlob": "8d5cdf0240353dde792ae59357cc6c4ad5007a70",
+      "sha256": "785cc6f2e3c656351c69de088a05b2d63e2cda700d519d1cfc32f89793f81a99",
+      "bytes": 869,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/label-rtl.tsx"
+    },
+    {
+      "path": "apps/v4/content/docs/components/base/label.mdx",
+      "gitBlob": "dbedab2f38b9f284ff753016385a942b7d31e8f3",
+      "sha256": "7e84849ed5c8f4101e12b79de7567c07c77871f7c59f173b4ea471b3b35d04f0",
+      "bytes": 1939,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/content/docs/components/base/label.mdx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/examples/label-example.tsx",
+      "gitBlob": "18fc4b86e9806b72d2e8e5a9788d146448c48422",
+      "sha256": "c20d97df902332467e5f76f76b7b752a6e0504d744f874101146851d1867e649",
+      "bytes": 1642,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/examples/label-example.tsx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/ui/label.tsx",
+      "gitBlob": "3b0886ba1826c80e7c6e0c22b699a43cb6df5bc9",
+      "sha256": "d11f6ddea1304473d829329f36238c164dbee9fe04c038fd169d70d352b75704",
+      "bytes": 415,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/ui/label.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/field-demo.tsx",
+      "gitBlob": "448cb67b81eae4ca99055e8c3bcce0ff5f92ec0f",
+      "sha256": "4ac44250626b200412bd8d7f933bfb9ad227b97e6f5c8e73164c0a6b792dc7cf",
+      "bytes": 5663,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/field-demo.tsx"
+    },
+    {
+      "path": "apps/v4/registry/styles/style-vega.css",
+      "gitBlob": "9f03b3c6dc5a803db963a81743d47d5b5f8f9fe0",
+      "sha256": "10fa07bd61b429ae2c14c572ba9975f6e991d68a04f8fec7e354a062597e0d4e",
+      "bytes": 78221,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/styles/style-vega.css"
+    }
+  ],
+  "counts": {
+    "documentationPreviews": 2,
+    "relatedFieldPreview": 1,
+    "distinctGuideSnippets": 2,
+    "createSections": 4,
+    "recipes": 9,
+    "originalFilesIncludingRelatedComponentAndStyle": 7
+  },
+  "configurations": [
+    {
+      "recipe": "demo",
+      "source": "apps/v4/examples/base/label-demo.tsx"
+    },
+    {
+      "recipe": "rtl",
+      "source": "apps/v4/examples/base/label-rtl.tsx"
+    },
+    {
+      "recipe": "usage",
+      "source": "apps/v4/content/docs/components/base/label.mdx",
+      "section": "Usage"
+    },
+    {
+      "recipe": "field-usage",
+      "source": "apps/v4/content/docs/components/base/label.mdx",
+      "section": "Label in Field snippet"
+    },
+    {
+      "recipe": "field-example",
+      "source": "apps/v4/examples/base/field-demo.tsx",
+      "section": "Referenced ComponentPreview"
+    },
+    {
+      "recipe": "create-checkbox",
+      "source": "apps/v4/registry/bases/base/examples/label-example.tsx",
+      "section": "LabelWithCheckbox"
+    },
+    {
+      "recipe": "create-input",
+      "source": "apps/v4/registry/bases/base/examples/label-example.tsx",
+      "section": "LabelWithInput"
+    },
+    {
+      "recipe": "create-disabled",
+      "source": "apps/v4/registry/bases/base/examples/label-example.tsx",
+      "section": "LabelDisabled"
+    },
+    {
+      "recipe": "create-textarea",
+      "source": "apps/v4/registry/bases/base/examples/label-example.tsx",
+      "section": "LabelWithTextarea"
+    }
+  ],
+  "adaptation": {
+    "native": "Plain control.Label/LabelFor or before-target Label with actual editor.LabelledBy. Related Field demo uses public current FieldScope parts. No fake input/AX/focus targets.",
+    "styles": "Label leading-none and select-none use public native LineHeight(1)/Unselectable. Native font metrics impose an intrinsic line floor. Disabled peer gets one half-opacity; normal inherited native disabled is not multiplied. Modern FieldLabel unchanged.",
+    "disabledField": "Create keeps Field layout while actual Input owns Disabled; plain caption receives source half opacity. Custom dim-suppressed containers own visuals; FieldLabel is the disabled Field part.",
+    "form": "Full related payment example. Empty native strings represent source nullable month/year; required nonempty validation only, no invented16digit validator. Local snapshot/Cancel intent only, no extra Enter handler or payment/security backend.",
+    "width": "Related Field explicit448DIP maximum; unspecified Create384DIP native cap; actual3column grid retained.",
+    "lifecycle": "Only strings/bools/maps/counters/selection integers. No Context/Element/Scope/frame callbacks."
+  }
+}

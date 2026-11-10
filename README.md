@@ -97,6 +97,7 @@ Forms 页的 [Button 源组合](examples/button-composition/README.md) 提供20�
 同页的 [RadioGroup 源组合](examples/radio-composition/README.md) 提供13个配置，包含原生键盘互斥、整卡计划、价格／Fieldset、两列网格、单项／整组禁用、错误与翻译RTL。
 同页的 [Textarea 源组合](examples/textarea-composition/README.md) 提供11个配置，保留原生多行编辑、说明前后顺序、固定行数、禁用／错误、真实发送按钮与独立本地草稿。
 同页的 [Input 源组合](examples/input-composition/README.md) 提供25个配置，包含密码、字段／表单、分组与选择器、原生数值／日期／时间／文件输入；数字空值与0独立，表单动作保存在应用内存。
+同页的 [Label 源组合](examples/label-composition/README.md) 提供9个配置，包含独立标签、真实Checkbox／Input／Textarea关联、禁用与RTL，以及完整关联Field付款表单。
 同页的 [Input OTP 源组合](examples/otp-composition/README.md) 提供18个配置，保留不同默认值、ASCII模式、原生编辑／选区／粘贴／撤销、两种尺寸的验证表单与本地动作。
 同页的 [Slider 源组合](examples/slider-composition/README.md) 提供13个配置，包含单值、范围、多拇指、垂直双滑块、受控温度读数、禁用与RTL，均操作实际原生thumb。
 同页的 [Select 源组合](examples/select-composition/README.md) 提供22个配置，保留分组／时区、100项、多选、富计划内容、逐项对齐、六侧与Dialog；源列表使用完整同窗Select，配置菜单随Flyout／Native设置切换。
