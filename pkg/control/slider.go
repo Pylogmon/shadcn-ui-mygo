@@ -281,6 +281,9 @@ func slider(c *ui.Context, binding sliderBinding, p SliderProps) ui.Element {
 		}
 		if p.Vertical {
 			y0, y1 := r.Y+8+(1-f1)*max(float32(0), r.H-16), r.Y+8+(1-f0)*max(float32(0), r.H-16)
+			if len(values) == 1 {
+				y1 = r.Y + r.H
+			}
 			pt.Fill(ui.Rect{X: r.X + r.W/2 - 3, Y: r.Y, W: 6, H: r.H}, t.Muted, 3)
 			pt.Fill(ui.Rect{X: r.X + r.W/2 - 3, Y: y0, W: 6, H: y1 - y0}, t.Primary, 3)
 		} else {
@@ -288,6 +291,15 @@ func slider(c *ui.Context, binding sliderBinding, p SliderProps) ui.Element {
 				f0, f1 = 1-f1, 1-f0
 			}
 			x0, x1 := r.X+8+f0*max(float32(0), r.W-16), r.X+8+f1*max(float32(0), r.W-16)
+			// A single-value fill starts at the track edge, not the inset
+			// thumb center used for the endpoints of a multi-thumb range.
+			if len(values) == 1 {
+				if rtl {
+					x1 = r.X + r.W
+				} else {
+					x0 = r.X
+				}
+			}
 			pt.Fill(ui.Rect{X: r.X, Y: r.Y + r.H/2 - 3, W: r.W, H: 6}, t.Muted, 3)
 			pt.Fill(ui.Rect{X: x0, Y: r.Y + r.H/2 - 3, W: x1 - x0, H: 6}, t.Primary, 3)
 		}
