@@ -1,0 +1,139 @@
+{
+  "repository": "https://github.com/shadcn-ui/ui",
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "sourceManifestSHA256": "60cea4517fbce24938ff6992b1c58fc394d517c9908df2cc2ab30fae938d35b9",
+  "counts": {
+    "documentationExamples": 7,
+    "createSections": 5,
+    "recipes": 12,
+    "originalFilesIncludingGuide": 9
+  },
+  "files": [
+    {
+      "path": "apps/v4/content/docs/components/base/switch.mdx",
+      "gitBlob": "664d567143333b64fb8d8fec8d806b4280785ed1",
+      "sha256": "0c27f1b62185621184eac1e7471b78d956fba70ad95c5b4a9aba5224a9e8e429",
+      "bytes": 2205,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/content/docs/components/base/switch.mdx"
+    },
+    {
+      "path": "apps/v4/examples/base/switch-choice-card.tsx",
+      "gitBlob": "80cd529bdfffa4310ba7634d1917a27178fae083",
+      "sha256": "8bd11c116e5dedbeee228cae4e1073ba93dc94b87cee5460dac8630d783da512",
+      "bytes": 1172,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/switch-choice-card.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/switch-demo.tsx",
+      "gitBlob": "fd8470c83ed6d1895c336588ceb620036f846762",
+      "sha256": "1419e97d68f8f630b55c97b7d64dd0ed8adeac30342613af6a87d5404769636d",
+      "bytes": 311,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/switch-demo.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/switch-description.tsx",
+      "gitBlob": "9205fce1bdf26a7cd9f4f36a82214e816ee7346b",
+      "sha256": "a22d130f7f9531013e9863603338c91fd6db8620beade8c5f1a0465af76070b5",
+      "bytes": 606,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/switch-description.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/switch-disabled.tsx",
+      "gitBlob": "2b6141da781eee54a3cb33e9fb8e19ab625a03b4",
+      "sha256": "68c945a8d01036e9c350f56cd055ef7a3070ca1bcec57a62a4001ca6ab9a2958",
+      "bytes": 386,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/switch-disabled.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/switch-invalid.tsx",
+      "gitBlob": "1f38ad7a3fc5d5110779b8b15c3944061550188e",
+      "sha256": "38b83267e27fe3d24567d4f6898664b4a699569eb09d8d645e55af5c0d1dcba0",
+      "bytes": 609,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/switch-invalid.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/switch-rtl.tsx",
+      "gitBlob": "04e94b9d08d1244ccf846e052e287e05e475994f",
+      "sha256": "10f55aef7de3afb120acd6f7578880783a1de349fd98b06376c5c12f95eed8f4",
+      "bytes": 1472,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/switch-rtl.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/switch-sizes.tsx",
+      "gitBlob": "bc5b335f872dcbc9e5987773350094568ce842f3",
+      "sha256": "d8aa2e064b5c6f2daca9787b7e9b62a7d7504c9a41fd466e04995cb46f03f268",
+      "bytes": 599,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/switch-sizes.tsx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/examples/switch-example.tsx",
+      "gitBlob": "a4b68630a6179d9538aebbafbde32dfbded77872",
+      "sha256": "ccff0a0d4b1b1bb1e91471f53e421e0831bd578dbe41844eb9f4da5cc77bb2f1",
+      "bytes": 2721,
+      "origin": "/private/tmp/shadcn-reference-ui/apps/v4/registry/bases/base/examples/switch-example.tsx"
+    }
+  ],
+  "configurations": [
+    {
+      "recipe": "demo",
+      "source": "apps/v4/examples/base/switch-demo.tsx"
+    },
+    {
+      "recipe": "description",
+      "source": "apps/v4/examples/base/switch-description.tsx"
+    },
+    {
+      "recipe": "choice-card",
+      "source": "apps/v4/examples/base/switch-choice-card.tsx"
+    },
+    {
+      "recipe": "disabled",
+      "source": "apps/v4/examples/base/switch-disabled.tsx"
+    },
+    {
+      "recipe": "invalid",
+      "source": "apps/v4/examples/base/switch-invalid.tsx"
+    },
+    {
+      "recipe": "sizes",
+      "source": "apps/v4/examples/base/switch-sizes.tsx"
+    },
+    {
+      "recipe": "rtl",
+      "source": "apps/v4/examples/base/switch-rtl.tsx"
+    },
+    {
+      "recipe": "create-basic",
+      "source": "apps/v4/registry/bases/base/examples/switch-example.tsx",
+      "section": "SwitchBasic"
+    },
+    {
+      "recipe": "create-description",
+      "source": "apps/v4/registry/bases/base/examples/switch-example.tsx",
+      "section": "SwitchWithDescription"
+    },
+    {
+      "recipe": "create-label",
+      "source": "apps/v4/registry/bases/base/examples/switch-example.tsx",
+      "section": "SwitchWithLabel"
+    },
+    {
+      "recipe": "create-disabled",
+      "source": "apps/v4/registry/bases/base/examples/switch-example.tsx",
+      "section": "SwitchDisabled"
+    },
+    {
+      "recipe": "create-sizes",
+      "source": "apps/v4/registry/bases/base/examples/switch-example.tsx",
+      "section": "SwitchSizes"
+    }
+  ],
+  "adaptations": {
+    "components": "Existing control.Switch, FieldWith/FieldScope and native label-target association. Whole choice cards label the single native Switch; no duplicate button target or manual toggle callback.",
+    "styles": "Pinned kit Vega track sizes: Small24x14 DIPs, default32x18.4. Source horizontal Field gap12 vs plain label gap8, docs FieldGroup gap28 vs Create gap48, max-sm384 and docs Sizes160 are retained. Native font line boxes can differ from CSS. Plain Label rows explicitly use leading-none (native LineHeight1) and font-medium500; Field labels retain Field typography.",
+    "state": "Each source configuration has independent application booleans and original defaults; RTL languages share their one source value. Pointer/Space reports one current callback per native activation; disabled remains native. Local status records intent only.",
+    "menus": "Configuration/language selectors follow the global Flyout vs Native menu backend; switch itself remains a themed native SwitchBase in both routes.",
+    "scope": "Only values and public state persist; no frame Context, Element or FieldScope is retained. No new fonts, icon fonts, assets or dependencies.",
+    "acceptance": "Public Tester/software PNG and injected selector backend are not real OS/AT/IME/font/platform acceptance."
+  }
+}

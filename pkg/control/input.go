@@ -47,7 +47,7 @@ type fieldGroupLayout struct {
 // fields. A changed layout requests one correction frame; stable groups do not
 // schedule an idle render loop.
 func FieldGroup(c *ui.Context, content func()) ui.Element {
-	root := ui.Column(c).FillWidth().Gap(24)
+	root := ui.Column(c).FillWidth().Gap(28)
 	s := ui.Local(c.Root(), "shadcn.control.field-group", func() fieldGroupLayout { return fieldGroupLayout{} })
 	previous := *s
 	measured := ui.Local(root, "responsive-width", func() float32 { return 0 })

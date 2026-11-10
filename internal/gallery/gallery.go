@@ -60,6 +60,7 @@ type State struct {
 	menubarCompositions                                                            menubarCompositionPreviewState
 	badgeCompositions                                                              badgeCompositionPreviewState
 	buttonCompositions                                                             buttonCompositionPreviewState
+	switchCompositions                                                             switchCompositionPreviewState
 	chartPreview                                                                   chartPreviewState
 	chartCatalogue                                                                 chartcatalog.State
 	comboboxCompound                                                               comboboxCompoundPreviewState

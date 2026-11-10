@@ -44,3 +44,7 @@ Select的窗口内、独立Flyout和系统菜单入口使用同一个16×16DIP S
 可搜索单选/多选、清除、分组、自定义建议、共框标签与弹层内部搜索见[Combobox](combobox.md)。With入口区分选值和搜索文本；旧自由文本入口继续兼容。
 
 39 项针对性检查覆盖原生状态、键鼠、RTL、尺寸/变体明暗像素、焦点、无效/禁用、稳定身份、同事件回调和动态减少动画。完整平台、屏幕阅读器和示例视觉矩阵仍需验收；固定上游基线见 [upstream.md](upstream.md)。
+
+Gallery Forms 页的[Switch源组合](../examples/switch-composition/README.md)提供7份文档与5个Create分区的12个配置，保持各自默认、label／description、尺寸、禁用／错误与整卡布局。FieldLabel／整卡关联实际原生Switch，按键和指针更新独立的应用草稿；配置与页面切换后仍保留。
+
+`control.FieldGroup` 默认间距为固定Vega的28DIP；源checkbox-group的12DIP和嵌套group的16DIP可以在返回Element上用Gap显式组合。
