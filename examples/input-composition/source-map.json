@@ -1,0 +1,262 @@
+{
+  "repository": "https://github.com/shadcn-ui/ui",
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "sourceManifestSHA256": "60cea4517fbce24938ff6992b1c58fc394d517c9908df2cc2ab30fae938d35b9",
+  "counts": {
+    "docs": 15,
+    "createSections": 10,
+    "recipes": 25,
+    "originals": 17
+  },
+  "files": [
+    {
+      "path": "apps/v4/content/docs/components/base/input.mdx",
+      "git_blob": "70d848ba2f1cc14ddd7d4c235c3be2f362b4fb05",
+      "sha256": "39c7395ca281c3fc7029159b65b9a08747dc8fca92495ae935a49d5a11cc1225",
+      "bytes": 3766,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/content/docs/components/base/input.mdx"
+    },
+    {
+      "path": "apps/v4/examples/base/input-badge.tsx",
+      "git_blob": "a2bccbd575031134ec3d8bd56b5953cb9d28d1bb",
+      "sha256": "2629e2047165fbe07f568c548429b598250f1047d450f0dfe6f0e7eef29884b9",
+      "bytes": 536,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/input-badge.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/input-basic.tsx",
+      "git_blob": "4cac4b5ee609fccdc4656c0c56adda7657349480",
+      "sha256": "6a77ec6e5b8a6f21a7fdaa5f0e341422dc6d2bda493a0345d542c922ba71451f",
+      "bytes": 130,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/input-basic.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/input-button-group.tsx",
+      "git_blob": "fd9539b95743985e54f91bfe1e4252b4ac723b8c",
+      "sha256": "f842ecd17663a70fd5b33512f1aa001cfc26c8f3730e41a7385ef86819a5d21e",
+      "bytes": 547,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/input-button-group.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/input-demo.tsx",
+      "git_blob": "a1ffac47eb0a097a6abc20de3e651e086b05e666",
+      "sha256": "b5aa22ce583b4cb4f78dda93f907fa9ad7823dd8db3edbc80769cf8581d0913f",
+      "bytes": 465,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/input-demo.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/input-disabled.tsx",
+      "git_blob": "8bb78b63899a978872644920522fb225ef5c9223",
+      "sha256": "b9f19e42b5057ee571d33bc9e129e89795f958781a158dbc6f6ca512b1974379",
+      "bytes": 497,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/input-disabled.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/input-field.tsx",
+      "git_blob": "82f7d6d0c4b797ea60bc6221818a4dd5768d2b69",
+      "sha256": "0fdfae08d6640c432cdbb9dc6317e7362f4370b6a1ec3ba3fa9bfdc0e4485673",
+      "bytes": 506,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/input-field.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/input-fieldgroup.tsx",
+      "git_blob": "98701317b639bfcb6b8e9c12b65fee7cd904e36a",
+      "sha256": "954a4c79f88150be38f205358eae4765d5dd87f76137468fc13662589b46a2ed",
+      "bytes": 960,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/input-fieldgroup.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/input-file.tsx",
+      "git_blob": "9ceceb673a118fe0b9541f78588db22c01da940e",
+      "sha256": "89bb4ee1f39b27ec4419822ed6c3bf7dbc6e283d711553d90cf204a5d2b850fa",
+      "bytes": 383,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/input-file.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/input-form.tsx",
+      "git_blob": "bbba3aa80c951628f5d8cb0d5607e91243a49702",
+      "sha256": "12b07dbd02b5a2c8afc2cfce4a0357b2be0efc556232b1d4c617c50d802909a3",
+      "bytes": 2414,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/input-form.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/input-grid.tsx",
+      "git_blob": "a1cbc498e1758a95ce64d627e1fd6e98cced4c50",
+      "sha256": "acff97ef04ee16139fb1be832c9bb8362e8117a68e2bdd539a0dad0cbdabff10",
+      "bytes": 541,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/input-grid.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/input-inline.tsx",
+      "git_blob": "320ca5073844024cdcb362074458664fbc40f1cd",
+      "sha256": "0cd3ae2bc590e53a9dd1297ee115747a0287d6c61ded8bb8cbc9cf39fb836359",
+      "bytes": 342,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/input-inline.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/input-input-group.tsx",
+      "git_blob": "818532192c02173d6d31ede5ea6f0e0fb555689f",
+      "sha256": "f5f4a6ad38c79b48b77775e046c67bd26251a92d21d1badde73c799c554b816c",
+      "bytes": 689,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/input-input-group.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/input-invalid.tsx",
+      "git_blob": "5a9cc8569163f86e6caac3dafd222021d73e4c70",
+      "sha256": "b94045af4b7dd838e3cec7f95f959f9971b1eeafae01ddd822d4d5c0b5335ee3",
+      "bytes": 465,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/input-invalid.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/input-required.tsx",
+      "git_blob": "e6cd5d35cd64485791a09801bd65f1e9493d23ca",
+      "sha256": "cda60233dd5c1b376b4cff37b81a6c1e884ef589fd077b89f1afb0f8dd36c98a",
+      "bytes": 535,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/input-required.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/input-rtl.tsx",
+      "git_blob": "6583f50ad2968ebf9bc44d5221b056b18e79f60a",
+      "sha256": "2ae25ce9ea069cbae5e9a6e0bb533a212df5f1fa92b7c3b43aadcbe6895be41c",
+      "bytes": 1294,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/input-rtl.tsx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/examples/input-example.tsx",
+      "git_blob": "8bc098cf53465fffd7e43bf919c869dfd66a31e3",
+      "sha256": "f77f44d96b1f4e268191fff736a2daa7884bd3d04ffb63fa6f9dbb821da3cdd2",
+      "bytes": 7374,
+      "origin": "/private/tmp/shadcn-reference-ui/apps/v4/registry/bases/base/examples/input-example.tsx",
+      "url": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/examples/input-example.tsx"
+    }
+  ],
+  "configurations": [
+    {
+      "recipe": "demo",
+      "source": "apps/v4/examples/base/input-demo.tsx"
+    },
+    {
+      "recipe": "basic",
+      "source": "apps/v4/examples/base/input-basic.tsx"
+    },
+    {
+      "recipe": "field",
+      "source": "apps/v4/examples/base/input-field.tsx"
+    },
+    {
+      "recipe": "fieldgroup",
+      "source": "apps/v4/examples/base/input-fieldgroup.tsx"
+    },
+    {
+      "recipe": "disabled",
+      "source": "apps/v4/examples/base/input-disabled.tsx"
+    },
+    {
+      "recipe": "invalid",
+      "source": "apps/v4/examples/base/input-invalid.tsx"
+    },
+    {
+      "recipe": "file",
+      "source": "apps/v4/examples/base/input-file.tsx"
+    },
+    {
+      "recipe": "inline",
+      "source": "apps/v4/examples/base/input-inline.tsx"
+    },
+    {
+      "recipe": "grid",
+      "source": "apps/v4/examples/base/input-grid.tsx"
+    },
+    {
+      "recipe": "required",
+      "source": "apps/v4/examples/base/input-required.tsx"
+    },
+    {
+      "recipe": "badge",
+      "source": "apps/v4/examples/base/input-badge.tsx"
+    },
+    {
+      "recipe": "input-group",
+      "source": "apps/v4/examples/base/input-input-group.tsx"
+    },
+    {
+      "recipe": "button-group",
+      "source": "apps/v4/examples/base/input-button-group.tsx"
+    },
+    {
+      "recipe": "form",
+      "source": "apps/v4/examples/base/input-form.tsx"
+    },
+    {
+      "recipe": "rtl",
+      "source": "apps/v4/examples/base/input-rtl.tsx"
+    },
+    {
+      "recipe": "create-basic",
+      "source": "apps/v4/registry/bases/base/examples/input-example.tsx",
+      "section": "InputBasic"
+    },
+    {
+      "recipe": "create-invalid",
+      "source": "apps/v4/registry/bases/base/examples/input-example.tsx",
+      "section": "InputInvalid"
+    },
+    {
+      "recipe": "create-label",
+      "source": "apps/v4/registry/bases/base/examples/input-example.tsx",
+      "section": "InputWithLabel"
+    },
+    {
+      "recipe": "create-description",
+      "source": "apps/v4/registry/bases/base/examples/input-example.tsx",
+      "section": "InputWithDescription"
+    },
+    {
+      "recipe": "create-disabled",
+      "source": "apps/v4/registry/bases/base/examples/input-example.tsx",
+      "section": "InputDisabled"
+    },
+    {
+      "recipe": "create-types",
+      "source": "apps/v4/registry/bases/base/examples/input-example.tsx",
+      "section": "InputTypes"
+    },
+    {
+      "recipe": "create-select",
+      "source": "apps/v4/registry/bases/base/examples/input-example.tsx",
+      "section": "InputWithSelect"
+    },
+    {
+      "recipe": "create-button",
+      "source": "apps/v4/registry/bases/base/examples/input-example.tsx",
+      "section": "InputWithButton"
+    },
+    {
+      "recipe": "create-native-select",
+      "source": "apps/v4/registry/bases/base/examples/input-example.tsx",
+      "section": "InputWithNativeSelect"
+    },
+    {
+      "recipe": "create-form",
+      "source": "apps/v4/registry/bases/base/examples/input-example.tsx",
+      "section": "InputForm"
+    }
+  ],
+  "adaptations": {
+    "state": "Independent native editor drafts and local form snapshots; no Context/Element/FieldScope retained.",
+    "number": "Real typed NumberInput uses controlled Empty presence, preserving original initial placeholder123.",
+    "dateTime": "Real native DateInput starts local today and TimeInput midnight: public SDK has no HTML-like unset state; source empty-state parity remains.",
+    "file": "Real public asynchronous picker; test service receives dialog values only and is explicitly injected.",
+    "textTypes": "Email/tel/url use native text with source names/placeholders, no browser purpose/autofill/constraint bubbles.",
+    "search": "Button Group remains ordinary text as declared by the source. Only explicit type=search inputs use native search semantics; buttons record local snapshots, with no added Enter submission handler.",
+    "forms": "Local submit snapshot; docs Contact Form Name required, Create Name optional; optional ASCII-email shape uses WHATWG definition and submit-time ASCII whitespace trimming, no IDNA/live sanitization. Reset/Cancel local only.",
+    "sourceCopy": "API encryption/privacy text is unchanged illustrative sample copy; values and snapshots stay in application memory, with no encrypted storage, upload backend or security service.",
+    "select": "Styled/system pair for source Select; explicit Native Select remains system route; currency trigger128DIP and two-column grids preserved.",
+    "icons": "On-demand Material Symbols equivalent for Info icon; no new font/assets.",
+    "widths": "Docs320DIP max wrappers; grid/contact/Create384DIP native upper bound for source natural-width/Example wrapper; current native font metrics may differ."
+  },
+  "validationSources": {
+    "emailASCIIProduction": "https://html.spec.whatwg.org/multipage/input.html#email-state-(type=email)",
+    "scope": "Local native form adaptation, not a browser constraint validation engine."
+  }
+}

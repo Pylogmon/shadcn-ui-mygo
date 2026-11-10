@@ -31,14 +31,22 @@ type NumberInputProps struct {
 	Disabled, Invalid, ReadOnly, AutoFocus bool
 	Handle                                 *ui.Handle
 	Min, Max                               *float64
+	// Empty optionally controls whether the field has a numeric value. While
+	// true, the native editor starts empty and the numeric storage is retained.
+	// Nil preserves the required-value behavior of the original API.
+	Empty *bool
+	// OnEmptyChange can synchronously redirect Empty and numeric storage.
+	// Rejecting presence retains the old storage unless the callback replaces it.
+	OnEmptyChange func(bool)
 	// Zero uses one. Step governs Up/Down, not HTML step-mismatch validation.
 	Step               float64
 	OnChange, OnSubmit func(float64)
 }
 type numberInputState struct {
-	draft    string
-	previous float64
-	focused  bool
+	draft         string
+	previous      float64
+	previousEmpty bool
+	focused       bool
 }
 type numberInputEditorKey struct{}
 
@@ -73,13 +81,23 @@ func NumberInput(c *ui.Context, value *float64, p NumberInputProps) ui.Element {
 		panic("control: NumberInput requires numeric state")
 	}
 	root := ui.Box(c).FillWidth().MinWidth(0)
-	s := ui.Local(root, "number-draft", func() numberInputState { return numberInputState{draft: formatInputNumber(*value), previous: *value} })
-	if *value != s.previous {
-		s.draft = formatInputNumber(*value)
+	isEmpty := func() bool { return p.Empty != nil && *p.Empty }
+	modelText := func() string {
+		if isEmpty() {
+			return ""
+		}
+		return formatInputNumber(*value)
+	}
+	s := ui.Local(root, "number-draft", func() numberInputState {
+		return numberInputState{draft: modelText(), previous: *value, previousEmpty: isEmpty()}
+	})
+	if isEmpty() != s.previousEmpty || !isEmpty() && *value != s.previous {
+		s.draft = modelText()
 		s.previous = *value
+		s.previousEmpty = isEmpty()
 	}
 	lo, hi, step, configurationValid := numberLimits(p)
-	before := *value
+	before, beforeEmpty := *value, isEmpty()
 	services := c.Services()
 	root.Children(func() {
 		editor := ui.TextInputBase(c.Key(numberInputEditorKey{}), &s.draft)
@@ -87,21 +105,45 @@ func NumberInput(c *ui.Context, value *float64, p NumberInputProps) ui.Element {
 		// draft/selection state when several controls share the same numeric model.
 		changed := editor.Changed()
 		composing := editor.Composing()
-		commit := func(n float64) {
-			if n == *value {
+		remember := func() { s.previous, s.previousEmpty = *value, isEmpty() }
+		setEmpty := func(empty bool) {
+			if p.Empty == nil || *p.Empty == empty {
 				return
 			}
+			*p.Empty = empty
+			if p.OnEmptyChange != nil {
+				p.OnEmptyChange(empty)
+			}
+		}
+		commit := func(n float64) {
+			wasEmpty := isEmpty()
+			if n == *value && !wasEmpty {
+				return
+			}
+			previousValue := *value
 			*value = n
-			if p.OnChange != nil {
+			setEmpty(false)
+			// A presence callback can reject this commit or replace its numeric
+			// storage. Roll back only our candidate, preserving a callback's value.
+			if isEmpty() && *value == n {
+				*value = previousValue
+			}
+			if !isEmpty() && p.OnChange != nil {
 				p.OnChange(n)
 			}
-			if *value != n {
-				s.draft = formatInputNumber(*value)
+			if isEmpty() || *value != n {
+				s.draft = modelText()
 			}
-			s.previous = *value
+			remember()
 		}
 		if changed && !composing && configurationValid && !p.Disabled && !p.ReadOnly {
-			if n, ok := parseInputNumber(s.draft, lo, hi); ok {
+			if p.Empty != nil && strings.TrimSpace(s.draft) == "" {
+				setEmpty(true)
+				if !isEmpty() {
+					s.draft = modelText()
+				}
+				remember()
+			} else if n, ok := parseInputNumber(s.draft, lo, hi); ok {
 				commit(n)
 			}
 		}
@@ -113,45 +155,49 @@ func NumberInput(c *ui.Context, value *float64, p NumberInputProps) ui.Element {
 				delta = -step
 			}
 			if delta != 0 {
-				n := math.Max(lo, math.Min(hi, *value+delta))
+				base := *value
+				if isEmpty() {
+					base = 0
+				}
+				n := math.Max(lo, math.Min(hi, base+delta))
 				if finiteNumber(n) {
 					commit(n)
-					s.draft = formatInputNumber(*value)
+					s.draft = modelText()
 					c.Invalidate()
 				}
 			}
 		}
 		focused := editor.Focused()
 		if s.focused && !focused && !composing {
-			s.draft = formatInputNumber(*value)
+			s.draft = modelText()
 			c.Invalidate()
 		}
 		s.focused = focused
 		_, draftValid := parseInputNumber(s.draft, lo, hi)
-		invalid := p.Invalid || !configurationValid || !finiteNumber(*value) || (!composing && strings.TrimSpace(s.draft) != "" && !draftValid)
+		invalid := p.Invalid || !configurationValid || (!isEmpty() && !finiteNumber(*value)) || (!composing && strings.TrimSpace(s.draft) != "" && !draftValid)
 		common := InputProps{Label: p.Label, Placeholder: p.Placeholder, Description: p.Description, Size: p.Size, Disabled: p.Disabled, Invalid: invalid, ReadOnly: p.ReadOnly || !configurationValid, AutoFocus: p.AutoFocus, Handle: p.Handle}
 		common.OnSubmit = func(string) {
 			n, ok := parseInputNumber(s.draft, lo, hi)
 			if ok && configurationValid && !p.Disabled && !p.ReadOnly {
 				commit(n)
-				s.draft = formatInputNumber(*value)
-				if p.OnSubmit != nil {
+				s.draft = modelText()
+				if !isEmpty() && p.OnSubmit != nil {
 					p.OnSubmit(*value)
 				}
 			} else {
-				s.draft = formatInputNumber(*value)
+				s.draft = modelText()
 			}
 			services.Invalidate()
 		}
 		StyleInput(c, editor, common)
 		configureTextInput(c, editor, &s.draft, common)
-		if p.Min != nil && p.Max != nil && configurationValid {
+		if p.Min != nil && p.Max != nil && configurationValid && !isEmpty() {
 			editor.Range(lo, hi, *value).Step(step)
 		}
 		handle := ui.Local(root, "shadcn.control.editor-target", func() ui.Handle { return ui.Handle{} })
 		editor.Bind(handle)
 	})
-	if *value != before && !(math.IsNaN(*value) && math.IsNaN(before)) {
+	if isEmpty() != beforeEmpty || *value != before && !(math.IsNaN(*value) && math.IsNaN(before)) {
 		root.SetChanged()
 	}
 	return root

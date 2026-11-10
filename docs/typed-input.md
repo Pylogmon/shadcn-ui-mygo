@@ -24,6 +24,10 @@ control.Field(c, control.FieldProps{
 
 `NumberInputProps.Handle` 指向实际文本编辑器，返回的 Element 是布局根。Field、LabelFor、InputGroup 把标签、描述、错误和 addon 焦点关联到同一实际编辑器；同时提供上下界时，Range/Step 元数据也位于该编辑器。它保留原生文本选择、IME 和撤销，角色仍为文本字段，不模拟浏览器 spinbutton 的两侧按钮或验证气泡。
 
+需要可选数值时，传入应用持有的 `Empty *bool`。`true` 显示真实空编辑器与 Placeholder；清空只改变 Empty 并保留最后数值，输入0则得到存在的0。未提供 Empty 时保留原来的必有值行为。`OnEmptyChange` 只通知用户引起的存在状态转换，应用外部同步不会触发；`OnChange` 只通知有效数值提交。从空变为数值会分别通知 `OnEmptyChange(false)` 与 `OnChange(value)`，应用若统计编辑次数，应分别处理存在与数值通道。空值Enter不提交，Up／Down从0开始再加减Step并遵守边界。空值不暴露有值的Range元数据。
+
+两个回调均可同步重定向模型。`OnEmptyChange(false)` 若恢复Empty=true，将保留旧数值；回调主动写入的新数值优先保留。失焦／无效提交恢复当前空值或有效模型，不将空值伪造为0。原生选择、IME候选提交和撤销仍由同一编辑器处理。
+
 ```go
 control.DateInput(c, &app.date, control.DateInputProps{Label: "Date"})
 control.TimeInput(c, &app.time, control.TimeInputProps{Label: "Time"})
