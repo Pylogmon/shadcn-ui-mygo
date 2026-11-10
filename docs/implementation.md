@@ -144,13 +144,14 @@
 | 5.DI | Questionnaire同题独立原生输入集合 | 已提交 `e32e933`；自动/显式Key、独立草稿与成功值、同值控件提交、校验失败准确回焦及默认选择Reset；提供可运行原生组合示例；隔离全量2326结果、vet与三平台构建通过 |
 | 5.DJ | Persian示例原始Vazirmatn字体 | 已提交 `1ea4ca1`；显式按需资产/原许可、示例局部字体与原生日期选择，Create目录保持26族；隔离全量2327结果、vet与三平台构建通过 |
 | 5.DK | Combobox固定Unicode筛选与JS trim | 已提交 `cb13d72`；固定UTF-16窗口、区域search/标点/零权重、原始query与选值策略；64官方Intl向量及同原生流程，隔离全量2329结果、vet与三平台构建通过 |
-| 5.DL | Gallery完整ButtonGroup组合与Avatar菜单 | 本阶段提交；13配置的输入/选择/动作/独立task与原生双路菜单，窄RTL整页搜索/编辑/跨页保留；Gallery244结果、vet与macOS构建通过 |
+| 5.DL | Gallery完整ButtonGroup组合与Avatar菜单 | 已提交 `151577a`；13配置的输入/选择/动作/独立task与原生双路菜单，窄RTL整页搜索/编辑/跨页保留；Gallery244结果、vet与macOS构建通过 |
+| 5.DM | 独立可编辑Combobox组件对 | 本阶段提交；当前窗口provider、typed单/多选、真实搜索编辑器与即时Filter，取消外点保留同一编辑器；Host统一退出/清理、平台主题版本及可运行小窗口示例；隔离全量2332结果、vet与两应用三平台构建通过 |
 
 用户已明确允许原生平台适配：Popover、menu、下拉菜单可以使用 MyGo 的系统菜单与独立 Flyout，超出父窗口范围；无需逐像素照搬网页浮层。Gallery 以 [shadcn/create](https://ui.shadcn.com/create) 的配置与实时预览流程为参考。完整组件功能、主题、动画范围保持不变。
 
 ## 下一轮的明确缺口
 
-- Combobox九类Base交互差距及原生组合API已在5.CI/5.CL交付：Content定位/anchor宽度、Empty/List、可取消状态事件/Always/Grid/虚拟窗口及12+20例配置完成。菜单可选translucent preset已在5.CO交付；独立越窗编辑弹层、完整locale/Unicode及平台IME/AT继续验收。
+- Combobox九类Base交互差距及原生组合API已在5.CI/5.CL交付：Content定位/anchor宽度、Empty/List、可取消状态事件/Always/Grid/虚拟窗口及12+20例配置完成。菜单可选translucent preset已在5.CO交付；独立越窗普通搜索集合由desktop组件对提供，任意跨窗槽位/Grid/虚拟窗口、完整locale/Unicode及平台IME/AT继续验收。
 - macOS实窗无active Enter复验：本轮自动化出现旧bundle/AX目标失效及首次Return仍留列表的观测。补充12项公开settled输入检查全绿；Tester无公开batch接口，无帧输入时序仍未证实。先辨明实际进程、IME与事件时序，再依据实证修正。
 - Carousel多项布局、controller/options/events及源物理/数值选项/背景拖动已在5.CG/5.CK/5.CN完成；Autoplay/插件与源Gallery配置已在5.CQ交付。从任意子控件起拖并抑制其click、完整多触点信息仍缺MyGo公开能力；保持原生子控件正常输入，未计完整源gesture闭环。按parity表补齐Chart高级配置及所有组件例子；Windows/Linux实际窗口、真实AT/IME、多显示器/缩放和完整视觉矩阵仍是最终验收要求。
 - Chart按[固定源需求清单](chart-source-coverage.json)实施三个完整模块：Cartesian30例的margin/曲线/渐变/标记/LabelList与既有动画已在5.CP交付；Polar31例的角度/半径/网格/扇区/中心内容已在5.CU交付；Tooltip9例及交互、docs/RTL/Create与Gallery目录整合在5.CX交付。Brush、ReferenceLine和额外显式动画参数未在132份固定原文中使用，列为Recharts扩展能力，不以其替代真正缺失的源例功能。该清单记录`1d50ec2`时的静态差距，不能当通过计数。

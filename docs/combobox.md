@@ -158,7 +158,7 @@ With入口使用100ms CSS `ease`淡入淡出和95%缩放，进入时按实际布
 
 Content定位、独立槽位、anchor宽度分支、空态/List结构、可取消状态回调、Always、Grid和
 调用方持有的虚拟窗口和translucent菜单预设已提供。默认筛选的UTF-16窗口/JavaScript trim及64个官方Intl对照已验证；Go搜索表基于旧CLDR，不能据此声明所有新Unicode字符和区域都与任意浏览器ICU版本一致。对照与边界见[筛选来源](../pkg/control/testdata/shadcn-combobox/filter-native/README.md)。
-独立越窗编辑式Combobox、平台IME候选窗、真实读屏及完整视觉矩阵仍需验收；
+独立越窗编辑器可使用 [`desktop.Combobox[T]` / `NativeCombobox[T]`](combobox-hosted.md)，复用 typed 状态与当前窗口 provider，支持真实搜索、单选/多选及可取消关闭；可运行[独立示例](../examples/desktop-combobox/README.md)。这个入口使用普通 Collection，任意槽位、Grid 和虚拟窗口仍由现有 Root 显式组合。平台IME候选窗、真实读屏及完整视觉矩阵仍需验收；
 这些范围不因原生Tester和三平台编译通过而视为完成。
 
 Gallery的Forms & controls页提供可清除框架、国家/城市描述过滤、Office内部搜索、技术多选及

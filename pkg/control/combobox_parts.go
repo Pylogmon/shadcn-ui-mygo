@@ -25,6 +25,7 @@ type comboItemFrame struct {
 }
 
 type comboFrame struct {
+	hosted                                                                               comboHostedFrame
 	c                                                                                    *ui.Context
 	s                                                                                    *comboRuntime
 	p                                                                                    ComboboxWithProps
@@ -343,6 +344,9 @@ func (f *comboFrame) input(c *ui.Context, p ComboboxInputProps) ComboboxInputPar
 	f.check()
 	f.prepare()
 	f.p.Size = p.Size
+	if f.hosted.native {
+		return f.nativeHostedInput(c, p)
+	}
 	t := theme.TokensOf(c)
 	f.labelText = p.Label
 	if f.labelText == "" {
@@ -449,18 +453,26 @@ func (f *comboFrame) editor(c *ui.Context, p ComboboxInputProps, inPopup, chips 
 	if placeholder == "" && inPopup {
 		placeholder = "Search…"
 	}
-	input := styleInput(c, ui.TextInputBase(c.Key("combobox-editor"), f.query), InputProps{Label: label, Placeholder: placeholder, Disabled: f.p.Disabled, ReadOnly: f.p.ReadOnly, Invalid: p.Invalid, Size: p.Size}).Bind(&f.s.input).Role(ui.RoleComboBox).HasPopup(ui.PopupListBox).AutoComplete(ui.AutoCompleteList).Expanded(f.s.open).Grow(1).MinWidth(0).Border(0, ui.Transparent).Radius(0).Background(ui.Transparent).FocusRing(false).NoShadow().Padding(0).HandleInput(f.s.inputEvent).ObserveInput(f.s.observe)
-	height, _ := metrics(p.Size)
-	height = max(height, inputFont(c, p.Size)*inputLineHeight(p.Size)*comboTextScale(c)+2)
-	input.Height(height - 2)
-	if !chips && !inPopup {
-		input.Padding(4, 6, 4, 10)
+	var input ui.Element
+	if f.hosted.native {
+		input = ui.TextInput(c.Key("combobox-editor"), f.query).Label(label).Placeholder(placeholder).Disabled(f.p.Disabled).ReadOnly(f.p.ReadOnly).Invalid(p.Invalid)
+	} else {
+		input = styleInput(c, ui.TextInputBase(c.Key("combobox-editor"), f.query), InputProps{Label: label, Placeholder: placeholder, Disabled: f.p.Disabled, ReadOnly: f.p.ReadOnly, Invalid: p.Invalid, Size: p.Size}).Border(0, ui.Transparent).Radius(0).Background(ui.Transparent).FocusRing(false).NoShadow().Padding(0)
 	}
-	if inPopup {
-		input.Height(max(float32(30), 20*comboTextScale(c)+10)).Padding(4, 8).FontSize(14).LineHeight(20.0 / 14)
-	}
-	if chips {
-		input.MinWidth(64).Height(max(float32(20), 20*comboTextScale(c))).FontSize(14).LineHeight(20.0 / 14)
+	input.Bind(&f.s.input).Role(ui.RoleComboBox).HasPopup(ui.PopupListBox).AutoComplete(ui.AutoCompleteList).Expanded(f.s.open).Grow(1).MinWidth(0).HandleInput(f.s.inputEvent).ObserveInput(f.s.observe)
+	if !f.hosted.native {
+		height, _ := metrics(p.Size)
+		height = max(height, inputFont(c, p.Size)*inputLineHeight(p.Size)*comboTextScale(c)+2)
+		input.Height(height - 2)
+		if !chips && !inPopup {
+			input.Padding(4, 6, 4, 10)
+		}
+		if inPopup {
+			input.Height(max(float32(30), 20*comboTextScale(c)+10)).Padding(4, 8).FontSize(14).LineHeight(20.0 / 14)
+		}
+		if chips {
+			input.MinWidth(64).Height(max(float32(20), 20*comboTextScale(c))).FontSize(14).LineHeight(20.0 / 14)
+		}
 	}
 	f.editorElement = input
 	f.s.enabled = f.s.enabled && !input.IsDisabled() && !f.p.ReadOnly
@@ -671,6 +683,9 @@ func (f *comboFrame) empty(c *ui.Context, text string) ui.Element {
 		}
 	}
 	status := ui.Row(c.Key("combobox-empty")).FillWidth().Role(ui.RoleStatus).Justify(ui.Center).TextAlign(ui.Center).FontSize(14).TextColor(theme.TokensOf(c).MutedForeground)
+	if f.hosted.native {
+		status.FontSize(c.Theme().FontSize).TextColor(c.Theme().TextMuted)
+	}
 	if f.manual {
 		// Manual items register later in this build. Populate this owned status
 		// once from the final collection, before native layout/AX are submitted.
@@ -685,6 +700,9 @@ func (f *comboFrame) empty(c *ui.Context, text string) ui.Element {
 	return status
 }
 func (f *comboFrame) groupTitle(c *ui.Context, label string) ui.Element {
+	if f.hosted.native {
+		return ui.Text(c, label).Padding(c.Theme().Space(1.5), c.Theme().Space(2.5)).FontSize(c.Theme().FontSize).TextColor(c.Theme().TextMuted)
+	}
 	return ui.Text(c, label).Padding(6, 8).FontSize(12).TextColor(theme.TokensOf(c).MutedForeground)
 }
 func (f *comboFrame) separator(c *ui.Context) ui.Element {
@@ -717,6 +735,18 @@ func (f *comboFrame) list(c *ui.Context, p ComboboxListProps, children func()) u
 		maxHeight = max(float32(0), min(maxHeight, available.H-36))
 		if f.contentHeight > 0 {
 			maxHeight = max(float32(1), min(maxHeight, f.contentHeight-36))
+		}
+	}
+	if f.hosted.native {
+		list.Scrollbars(true).Padding(c.Theme().Space(1))
+		// Native text metrics can exceed the source's 36DIP input allowance.
+		// Keep the scroll viewport inside the independent window at large fonts.
+		inputHeight := f.inputRoot.LayoutBounds().H
+		if inputHeight <= 0 {
+			inputHeight = c.Theme().FontSize*1.4 + c.Theme().Space(3) + 2
+		}
+		if f.contentHeight > 0 {
+			maxHeight = min(maxHeight, max(float32(1), f.contentHeight-inputHeight-2*c.Theme().Space(1)))
 		}
 	}
 	list.MaxHeight(maxHeight)
@@ -807,7 +837,16 @@ func (f *comboFrame) item(c *ui.Context, key string, p ComboboxItemProps, childr
 			f.s.reveal = false
 		}
 	}
-	if entry.option.Disabled {
+	if f.hosted.native {
+		native := c.Theme()
+		option.Padding(native.Space(1.5), native.Space(2.5)).PaddingEnd(native.Space(7)).MinHeight(native.FontSize + native.Space(3)).Radius(native.Radius).FontSize(native.FontSize).DimDisabled(true)
+		if active {
+			option.Background(native.Accent).TextColor(native.AccentText)
+		} else if option.Hovered() {
+			option.Background(native.SurfaceHover).TextColor(native.Text)
+		}
+	}
+	if entry.option.Disabled && !f.hosted.native {
 		option.Opacity(.5)
 	}
 	option.Children(func() {
@@ -1031,11 +1070,13 @@ func (f *comboFrame) finish() {
 		f.manualEmpty, f.manualItems = nil, nil
 	}()
 	f.reconcileManual()
-	if f.primary.Valid() && f.primary.FocusLeft() && !comboFocusWithin(f.inputRoot) && !comboFocusWithin(f.triggerRoot) && !comboFocusWithin(f.chipsRoot) && !comboFocusWithin(f.panel) {
+	if !f.hosted.detached && f.primary.Valid() && f.primary.FocusLeft() && !comboFocusWithin(f.inputRoot) && !comboFocusWithin(f.triggerRoot) && !comboFocusWithin(f.chipsRoot) && !comboFocusWithin(f.panel) {
 		f.s.open, f.s.composing = false, false
 		f.s.typeahead, f.s.typeaheadText = "", ""
 	}
-	f.presence()
+	if !f.hosted.detached {
+		f.presence()
+	}
 	if f.s.wasOpen != f.s.open && !f.externalOpen && f.p.OnOpenChange != nil {
 		f.p.OnOpenChange(f.s.open)
 	}
@@ -1075,7 +1116,7 @@ func (f *comboFrame) finish() {
 	if !f.virtualized || f.slotDisabled != nil {
 		f.s.slotDisabled = f.slotDisabled
 	}
-	if f.completed != nil && f.s.motion.sample(f.c.Now()) == f.s.motion.to && (!f.s.completeInitialized || f.s.completeOpen != f.s.open) {
+	if f.completed != nil && f.completionReady() && (!f.s.completeInitialized || f.s.completeOpen != f.s.open) {
 		f.s.completeOpen, f.s.completeInitialized = f.s.open, true
 		f.completed(f.s.open)
 	}

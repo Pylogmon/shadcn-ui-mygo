@@ -14,6 +14,7 @@
 | `Menubar` | `NativeMenubar` | 同一 Flyout 的兄弟菜单切换与系统弹出菜单触发器组 |
 | `Popover` | `NativePopover` | 自绘主题与平台原生 Popover 外观 |
 | `Select` | `NativeSelect` | 独立 Flyout 选项与系统菜单选择 |
+| `Combobox[T]` | `NativeCombobox[T]` | 独立可编辑 Flyout，统一主题与平台主题 |
 | `DatePicker` | `NativeDatePicker` | 独立日期/时间窗口与平台样式容器 |
 | `DateRangePicker` | `NativeDateRangePicker` | 隔离未完成范围、完整范围提交 |
 | `Tooltip` | `NativeTooltip` | 鼠标穿透、不抢焦点的独立提示窗口 |
@@ -23,6 +24,8 @@
 `NativeMenu` 家族和 `NativeSelect` 强制走 `ui.SystemMenus`，并在同一帧恢复调用方的菜单策略；不会因为预览设置而偷偷改成自绘菜单。`NativePopover` 在 macOS 使用 NSPopover 材质/箭头与平台主题；其他平台使用 MyGo 的原生 Flyout 和该窗口的平台默认主题，不声称存在对应的操作系统通用 Popover 控件。
 
 `Select` 与 `NativeSelect` 的关闭触发器都采用主题绘制，共享固定16DIP的SVG下箭头；系统负责后者展开后的菜单。箭头不继承文字字号/行高，禁止压缩并垂直居中，隐藏于无障碍树且不拦截触发器点击。
+
+`Combobox` 组件对把真实搜索编辑器和 typed 单选/多选集合放入子窗口，通过当前窗口的显式 provider 共享应用模型。`NativeCombobox` 使用 plain Flyout、子窗口自己的平台主题和基础控件；MyGo 没有公开系统可编辑 ComboBox。标准后端外点关闭可被当前处理器取消并保留同一编辑器，Tab 可用公开 Handle 指定父窗口相邻目标；API 与后端边界见[独立窗口 Combobox](combobox-hosted.md)。
 
 自绘 Menu 的内容实际位于 Flyout 子窗口，使用 shadcn 颜色、字体、圆角与状态反馈。子菜单以可测量的相邻面板呈现，可使用键盘、typeahead、禁用项、复选/单选和长菜单滚动；原生窗口负责显示器工作区约束。它没有用父窗口内的绝对定位覆盖层冒充越窗实现。
 

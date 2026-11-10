@@ -60,6 +60,12 @@ case "${1:-gallery}" in
         identifier='dev.pylogmon.shadcn-selects'
         app_name='Shadcn Selects'
         ;;
+    desktop-combobox)
+        bundle='build/Shadcn Comboboxes.app'
+        package='./examples/desktop-combobox'
+        identifier='dev.pylogmon.shadcn-comboboxes'
+        app_name='Shadcn Comboboxes'
+        ;;
     typed-input)
         bundle='build/Shadcn Inputs.app'
         package='./examples/typed-input'
@@ -78,7 +84,7 @@ case "${1:-gallery}" in
         identifier='dev.pylogmon.shadcn-symbols'
         app_name='Shadcn Symbols'
         ;;
-    *) echo 'Expected gallery, native-popups, chart-composition, chart-cartesian, chart-polar, chart-catalog, tooltip-composition, tabs-composition, select-composition, typed-input, date-composition or material-icons.' >&2; exit 1 ;;
+    *) echo 'Expected gallery, native-popups, chart-composition, chart-cartesian, chart-polar, chart-catalog, tooltip-composition, tabs-composition, select-composition, desktop-combobox, typed-input, date-composition or material-icons.' >&2; exit 1 ;;
 esac
 mkdir -p "$bundle/Contents/MacOS"
 mkdir -p "$bundle/Contents/Resources/licenses"
