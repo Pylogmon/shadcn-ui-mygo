@@ -108,7 +108,7 @@ Gallery 搜索已登记的源组合名称（例如 Input、Switch、Empty、Hove
 Overlays 页的 [Popover／HoverCard 源组合](examples/popup-composition/README.md) 提供12个配置：独立窗口表单、对齐和逻辑侧、Dialog内弹层、延迟预览及翻译RTL。
 同页的 [Dialog 源组合](examples/dialog-composition/README.md) 提供12个配置，包含真实Profile编辑、两种无关闭按钮契约、固定页脚／完整滚动内容，以及四面板Chat Settings、菜单、Tooltip和Kbd。
 同页的 [Dropdown Menu 源组合](examples/dropdown-composition/README.md) 提供27个配置：嵌套动作、带图标的勾选／单选、独立组与行缩进、头像、六侧、Dialog及翻译RTL，随全局 Flyout／Native 模式切换。
-Navigation 页的 [Context Menu 源组合](examples/context-menu-composition/README.md) 提供22个配置，可通过右键／菜单键操作，包含分组状态、子菜单、六侧、Dialog、独立缩进与翻译RTL。
+Navigation 页的 [Context Menu 源组合](examples/context-menu-composition/README.md) 提供22个配置，可通过右键／菜单键操作，包含分组状态、逐项宽度的子菜单、六侧、Dialog、独立缩进与翻译RTL。
 同页的 [Menubar 源组合](examples/menubar-composition/README.md) 用15个配置保留6份文档与12个Create分区：完整File／Edit／View／Profiles、格式／插入动作、独立状态与双路菜单。
 可组合的原生文字扫光、颜色与字体传递见 [Shimmer](docs/shimmer.md)。
 独立正文/标题字体、局部作用域和 styled Flyout 传递见 [字体角色](docs/font-roles.md)。

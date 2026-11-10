@@ -330,9 +330,9 @@ func (p *contextMenuCompositionPreviewState) items() []overlay.MenuItem {
 		}
 		if kind == "rtl" {
 			items[0].Icon, items[1].Icon, items[2].Icon = outlined.ArrowBack(), outlined.ArrowForward(), outlined.Refresh()
-			items = []overlay.MenuItem{{Key: "navigation", Label: w["navigation"], Children: items}}
+			items = []overlay.MenuItem{{Key: "navigation", Label: w["navigation"], SubmenuWidth: 176, Children: items}}
 		}
-		items = append(items, overlay.MenuItem{Key: "more-tools", Label: w["moreTools"], Children: contextMenuTools(w, true)}, contextMenuSeparator(),
+		items = append(items, overlay.MenuItem{Key: "more-tools", Label: w["moreTools"], SubmenuWidth: 176, Children: contextMenuTools(w, true)}, contextMenuSeparator(),
 			overlay.MenuItem{Key: "bookmarks", Label: w["showBookmarks"], Checked: &d.bookmarks}, overlay.MenuItem{Key: "urls", Label: w["showFullUrls"], Checked: &d.urls}, contextMenuSeparator())
 		return append(items, person(w["people"])...)
 	case "submenu":

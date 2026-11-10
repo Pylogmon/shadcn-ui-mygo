@@ -2,6 +2,8 @@ package desktop
 
 import (
 	"errors"
+	"fmt"
+	"hash/fnv"
 	"math"
 
 	"github.com/egoist/mygo"
@@ -29,6 +31,7 @@ type MenuProps struct {
 type menuItemLayoutKey struct{ key string }
 type menuItemLayout struct {
 	height   float32
+	stamp    uint64
 	revision uint64
 }
 
@@ -51,6 +54,13 @@ func menu(c *ui.Context, h *Host, key string, anchor ui.Element, open *bool, sta
 	}
 	result := state.Chosen
 	state.Chosen = ""
+	if !menuDimensionsFinite(p.Width, p.MaxHeight, p.Items) {
+		*open, state.wasOpen = false, false
+		if h != nil {
+			h.Close(key)
+		}
+		return result, errors.New("desktop: menu dimensions must be finite")
+	}
 	if !manual {
 		anchor.Bind(&state.contextFocus)
 	}
@@ -94,14 +104,12 @@ func menu(c *ui.Context, h *Host, key string, anchor ui.Element, open *bool, sta
 	if maxHeight <= 0 {
 		maxHeight = 480
 	}
-	if math.IsNaN(float64(width)) || math.IsInf(float64(width), 0) || math.IsNaN(float64(maxHeight)) || math.IsInf(float64(maxHeight), 0) {
-		*open = false
-		return result, errors.New("desktop: menu dimensions must be finite")
-	}
 	itemHeight := menuItemHeight(p.ItemHeight)
-	layout := ui.Local(anchor, menuItemLayoutKey{key}, func() menuItemLayout { return menuItemLayout{height: itemHeight} })
-	if layout.height != itemHeight {
+	stamp := menuItemsStamp(p.Items)
+	layout := ui.Local(anchor, menuItemLayoutKey{key}, func() menuItemLayout { return menuItemLayout{height: itemHeight, stamp: stamp} })
+	if layout.height != itemHeight || layout.stamp != stamp {
 		layout.height = itemHeight
+		layout.stamp = stamp
 		layout.revision++
 	}
 	zero := float32(0)
@@ -126,6 +134,12 @@ func menu(c *ui.Context, h *Host, key string, anchor ui.Element, open *bool, sta
 		}
 	}
 	err := Popover(c, h, key, anchor, open, props, func(child *ui.Context) {
+		// An independently scheduled child may render changed item data before
+		// the parent can report its normal dimensions error.
+		if !menuDimensionsFinite(width, maxHeight, p.Items) {
+			closeMenu()
+			return
+		}
 		MenuContent(child, state, p.Items, MenuContentProps{Label: p.Label, Width: width, MaxHeight: maxHeight, ItemHeight: itemHeight, KeepOpenOnSelect: p.KeepOpenOnSelect, ItemContent: p.ItemContent,
 			OnChoose: func(value string) {
 				chose = true
@@ -140,6 +154,43 @@ func menu(c *ui.Context, h *Host, key string, anchor ui.Element, open *bool, sta
 		state.wasOpen = false
 	}
 	return result, err
+}
+
+func menuDimensionsFinite(width, height float32, items []overlay.MenuItem) bool {
+	if math.IsNaN(float64(width)) || math.IsInf(float64(width), 0) || math.IsNaN(float64(height)) || math.IsInf(float64(height), 0) {
+		return false
+	}
+	for _, item := range items {
+		if !menuDimensionsFinite(item.SubmenuWidth, 0, item.Children) {
+			return false
+		}
+	}
+	return true
+}
+
+// Only item data participates in automatic refresh. Custom content and callback
+// changes continue to use the caller's explicit Revision contract.
+func menuItemsStamp(items []overlay.MenuItem) uint64 {
+	hash := fnv.New64a()
+	var visit func([]overlay.MenuItem)
+	visit = func(items []overlay.MenuItem) {
+		fmt.Fprint(hash, "[")
+		for _, item := range items {
+			closeOnSelect, checked := "default", "none"
+			if item.CloseOnSelect != nil {
+				closeOnSelect = fmt.Sprint(*item.CloseOnSelect)
+			}
+			if item.Checked != nil {
+				checked = fmt.Sprint(*item.Checked)
+			}
+			fmt.Fprintf(hash, "%q/%q/%q/%q/%t/%t/%t/%t/%t/%t/%t/%s/%s/%p/%g;", item.Key, item.Label, item.Shortcut, item.Group,
+				item.Disabled, item.Destructive, item.Separator, item.Radio, item.Selected, item.Inset, item.GroupInset, checked, closeOnSelect, item.Icon, item.SubmenuWidth)
+			visit(item.Children)
+		}
+		fmt.Fprint(hash, "]")
+	}
+	visit(items)
+	return hash.Sum64()
 }
 
 // ContextMenu opens the themed Flyout at the secondary-click position, or

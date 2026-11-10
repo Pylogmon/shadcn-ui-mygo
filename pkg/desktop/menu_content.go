@@ -338,6 +338,9 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 	if state == nil {
 		panic("desktop: MenuContent requires caller-owned MenuState")
 	}
+	if !menuDimensionsFinite(p.Width, p.MaxHeight, items) {
+		panic("desktop: menu dimensions must be finite")
+	}
 	menu := theme.MenuOf(c)
 	t := &menu.Tokens
 	levels := menuLevels(state, items)
@@ -398,6 +401,18 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 	}
 	clear(panels.panels[len(kept):])
 	panels.panels = kept
+	// Retiring siblings overlap in one column. Reserve their maximum envelope,
+	// while every live panel retains its current owner's actual width.
+	depthWidths := make([]float32, maxDepth+1)
+	depthWidths[0] = width
+	for _, presence := range panels.panels {
+		panelWidth := menuPathWidth(items, presence.path, width)
+		if !presence.live {
+			panelWidth = max(panelWidth, presence.bounds.W)
+		}
+		depth := len(presence.path)
+		depthWidths[depth] = max(depthWidths[depth], panelWidth)
+	}
 	root.Children(func() {
 		rootPanelBounds := ui.Rect{}
 		renderPanel := func(depth int, list []overlay.MenuItem, path []string, presence *menuPanelPresence, live bool, highlight string) {
@@ -405,7 +420,8 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 			if depth > 0 {
 				panelLabel = listLabel(items, path, depth)
 			}
-			panel := ui.Column(c.Key(menuPanelKey(menuPathKey(path)))).Width(width).Padding(4).Radius(t.RadiusMD()).Background(t.Popover).TextColor(t.PopoverForeground).Border(1, t.Border).Role(ui.RoleMenu).Label(panelLabel).InputMethod(live).TabStop(live && depth == state.ActiveDepth)
+			panelWidth := menuPathWidth(items, path, width)
+			panel := ui.Column(c.Key(menuPanelKey(menuPathKey(path)))).Width(panelWidth).Padding(4).Radius(t.RadiusMD()).Background(t.Popover).TextColor(t.PopoverForeground).Border(1, t.Border).Role(ui.RoleMenu).Label(panelLabel).InputMethod(live).TabStop(live && depth == state.ActiveDepth)
 			menu.Surface(c, panel)
 			if live {
 				panel.Focusable()
@@ -441,20 +457,38 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 				rootPanelBounds = panel.LayoutBounds()
 			}
 			if presence != nil {
-				panel.Absolute().Left(0).Top(0)
+				// A retiring wider ancestor may reserve more space than this path
+				// needs. Correct that space along logical start, including RTL.
+				offset := float32(0)
+				for level := 0; level < depth; level++ {
+					offset += menuPathWidth(items, path[:level], width) - depthWidths[level]
+				}
+				panel.Absolute().Start(offset).Top(0)
 				attachment := subAttachment
 				content := presence.bounds
 				if content.W <= 0 {
-					content = ui.Rect{X: rootPanelBounds.X + float32(depth)*(width+4), Y: rootPanelBounds.Y, W: width, H: menuPanelHeight(list, itemHeight, maxHeight)}
+					content = ui.Rect{X: rootPanelBounds.X, Y: rootPanelBounds.Y, W: panelWidth, H: menuPanelHeight(list, itemHeight, maxHeight)}
 					if rtl {
-						content.X = rootPanelBounds.X - float32(depth)*(width+4)
+						for level := 1; level <= depth; level++ {
+							content.X -= menuPathWidth(items, path[:level], width) + 4
+						}
+					} else {
+						for level := 0; level < depth; level++ {
+							content.X += menuPathWidth(items, path[:level], width) + 4
+						}
 					}
 				}
+				content.W = panelWidth
 				if anchor, ok := panels.anchors[menuPathKey(path)]; ok {
 					attachment = menuAttachmentForSide(anchor, content, subAttachment.side, 5)
 				}
 				menuApplyPose(panel, presence.pose, attachment)
 				if bounds := panel.LayoutBounds(); bounds.W > 0 && bounds.H > 0 {
+					if !presence.live {
+						// Keep the full retiring envelope even if its owner is
+						// resized again before the exit animation completes.
+						bounds.W = max(bounds.W, presence.bounds.W)
+					}
 					presence.bounds = bounds
 				}
 			}
@@ -469,9 +503,9 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 			}
 			panel.Children(func() {
 				height := menuContentHeight(list, itemHeight)
-				body := ui.Column(c).Width(width - 8)
+				body := ui.Column(c).Width(max(0, panelWidth-8))
 				if height > viewportHeight {
-					body = ui.Scroll(c).Width(width - 8).Height(viewportHeight)
+					body = ui.Scroll(c).Width(max(0, panelWidth-8)).Height(viewportHeight)
 				}
 				body.Children(func() {
 					group := ""
@@ -539,7 +573,7 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 							}
 						}
 						if item.Disabled {
-							row.Opacity(.5).Cursor(ui.CursorNotAllowed)
+							row.DimDisabled(false).Opacity(.5).Cursor(ui.CursorNotAllowed)
 						}
 						row.Children(func() {
 							if item.Icon != nil {
@@ -601,7 +635,7 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 					height = max(height, menuPanelHeight(list, itemHeight, maxHeight))
 				}
 			}
-			ui.Box(c.Key(menuDepthKey(depth))).Width(width).Height(height).Children(func() {
+			ui.Box(c.Key(menuDepthKey(depth))).Width(depthWidths[depth]).Height(height).Children(func() {
 				for _, presence := range panels.panels {
 					if len(presence.path) == depth {
 						// Same-depth replacements overlap while the old panel leaves;
@@ -619,6 +653,25 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 		}
 	}
 	return root
+}
+
+// Each owner inherits the original shared width, rather than the nearest
+// ancestor override. Resolve current data on every independent child build.
+func menuPathWidth(items []overlay.MenuItem, path []string, fallback float32) float32 {
+	width := fallback
+	for _, key := range path {
+		index := menuItemIndex(items, key)
+		if index < 0 {
+			break
+		}
+		item := items[index]
+		width = fallback
+		if item.SubmenuWidth > 0 {
+			width = item.SubmenuWidth
+		}
+		items = item.Children
+	}
+	return width
 }
 func listLabel(items []overlay.MenuItem, path []string, depth int) string {
 	label := "Submenu"

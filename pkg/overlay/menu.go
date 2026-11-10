@@ -30,6 +30,10 @@ type MenuItem struct {
 	Radio         bool
 	Selected      bool
 	Children      []MenuItem
+	// SubmenuWidth sets the styled Children panel width in DIP. Positive values
+	// override MenuProps.Width; nonpositive values retain that shared fallback.
+	// Values must be finite. Native system menus ignore this visual setting.
+	SubmenuWidth float32
 }
 
 type MenuProps struct {
@@ -51,6 +55,7 @@ func menuPanel(c *ui.Context, panel ui.Element, width float32) {
 // InWindowDropdownMenu opens on pointer press or Enter, Space, Up and Down. The menu
 // supports typeahead, disabled-item skipping, nested arrows and Escape.
 func InWindowDropdownMenu(c *ui.Context, open *bool, p MenuProps, trigger func(ui.Element)) string {
+	validateMenuWidths(p)
 	m := ui.MenuBase(c, open)
 	if trigger != nil {
 		trigger(m.Trigger)
@@ -70,6 +75,7 @@ func InWindowDropdownMenu(c *ui.Context, open *bool, p MenuProps, trigger func(u
 
 // InWindowContextMenu opens on secondary click, Control-click on macOS, or Shift+F10.
 func InWindowContextMenu(c *ui.Context, target ui.Element, p MenuProps) string {
+	validateMenuWidths(p)
 	open := ui.Local(target, "shadcn.context-menu", func() bool { return false })
 	m := ui.ContextMenuBase(c, target, open)
 	chosen := ""
@@ -136,7 +142,7 @@ func menuItems(c *ui.Context, m ui.MenuParts, items []MenuItem, width float32, c
 			}
 		}
 		if it.Disabled {
-			row.Opacity(0.5)
+			row.DimDisabled(false).Opacity(0.5)
 		}
 		row.Children(func() {
 			if it.Icon != nil {
@@ -163,7 +169,14 @@ func menuItems(c *ui.Context, m ui.MenuParts, items []MenuItem, width float32, c
 		})
 		if len(it.Children) > 0 {
 			m.Submenu(row, func(panel ui.Element) {
-				menuPanel(c, panel, width)
+				panelWidth := width
+				if it.SubmenuWidth > 0 {
+					panelWidth = it.SubmenuWidth
+				}
+				menuPanel(c, panel, panelWidth)
+				if it.SubmenuWidth > 0 {
+					panel.Width(panelWidth)
+				}
 				panel.Children(func() {
 					profile := theme.MenuOf(c).ForScene()
 					ui.Themed(c, profile.Theme()).FillWidth().Children(func() { menuItems(c, m, it.Children, width, chosen) })
@@ -176,6 +189,21 @@ func menuItems(c *ui.Context, m ui.MenuParts, items []MenuItem, width float32, c
 			}
 			*chosen = it.Key
 		}
+	}
+}
+
+func validateMenuWidths(p MenuProps) {
+	var finiteItems func([]MenuItem) bool
+	finiteItems = func(items []MenuItem) bool {
+		for _, item := range items {
+			if math.IsNaN(float64(item.SubmenuWidth)) || math.IsInf(float64(item.SubmenuWidth), 0) || !finiteItems(item.Children) {
+				return false
+			}
+		}
+		return true
+	}
+	if math.IsNaN(float64(p.Width)) || math.IsInf(float64(p.Width), 0) || !finiteItems(p.Items) {
+		panic("overlay: styled menu dimensions must be finite")
 	}
 }
 

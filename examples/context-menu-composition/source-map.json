@@ -322,7 +322,7 @@
     "Source defaults and disabled states survive; controlled static demo check/radio examples receive local editable state for interactive Gallery use.",
     "Inset and GroupInset map source logical-start padding; checkbox/radio reserve logical end for system/style appropriate checks.",
     "Source styled checkbox/radio default closeOnClick=false is preserved; action defaults close. NativeOS tracking follows system behavior. The headless submenu canvas is enlarged explicitly because the injected Backend does not run the native FitContent sizing loop.",
-    "Current public MenuProps supplies one width to all panels: docs Demo/RTL 176-DIP source subpanels use 192 DIPs with their 192-DIP root. All original labels/actions and source submenus remain distinct."
+    "MenuItem.SubmenuWidth preserves the docs Demo/RTL w-44 subpanels at 176 DIPs beneath the 192-DIP root; unspecified panels inherit the shared MenuProps.Width, with a 4-DIP adjacent gap in either reading direction. Native OS menus ignore visual widths."
   ],
   "verification": {
     "sourceIntegrity": "All 13 original bytes verified by length, SHA-256, Git blob digest, and pinned existing ls-tree objects with GIT_NO_LAZY_FETCH=1.",

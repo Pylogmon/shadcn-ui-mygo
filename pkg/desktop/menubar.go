@@ -255,7 +255,7 @@ func Menubar(c *ui.Context, h *Host, key string, s *MenubarState, p MenubarProps
 	maxHeight := p.MaxHeight
 	finite := !math.IsNaN(float64(p.Width)) && !math.IsInf(float64(p.Width), 0) && !math.IsNaN(float64(maxHeight)) && !math.IsInf(float64(maxHeight), 0)
 	for _, candidate := range p.Items {
-		finite = finite && !math.IsNaN(float64(candidate.Width)) && !math.IsInf(float64(candidate.Width), 0)
+		finite = finite && menuDimensionsFinite(candidate.Width, 0, candidate.Items)
 	}
 	if !finite {
 		s.Open, s.wasOpen = false, false
@@ -310,7 +310,7 @@ func Menubar(c *ui.Context, h *Host, key string, s *MenubarState, p MenubarProps
 		// Application data can change between independently scheduled windows.
 		// Do not feed a non-finite width into child layout while the parent is
 		// waiting to report the normal dimensions error on its next build.
-		if math.IsNaN(float64(currentItem.Width)) || math.IsInf(float64(currentItem.Width), 0) {
+		if !menuDimensionsFinite(currentItem.Width, 0, currentItem.Items) {
 			closeMenu(true)
 			return
 		}
@@ -415,8 +415,8 @@ func menubarStamp(items []overlay.MenubarItem, revision uint64) uint64 {
 			if item.Checked != nil {
 				checked = fmt.Sprint(*item.Checked)
 			}
-			fmt.Fprintf(hash, "%q/%q/%q/%q/%t/%t/%t/%t/%t/%t/%t/%s/%s/%p;", item.Key, item.Label, item.Shortcut, item.Group,
-				item.Disabled, item.Destructive, item.Separator, item.Radio, item.Selected, item.Inset, item.GroupInset, checked, closeOnSelect, item.Icon)
+			fmt.Fprintf(hash, "%q/%q/%q/%q/%t/%t/%t/%t/%t/%t/%t/%s/%s/%p/%g;", item.Key, item.Label, item.Shortcut, item.Group,
+				item.Disabled, item.Destructive, item.Separator, item.Radio, item.Selected, item.Inset, item.GroupInset, checked, closeOnSelect, item.Icon, item.SubmenuWidth)
 			visit(item.Children)
 		}
 		fmt.Fprint(hash, "]")

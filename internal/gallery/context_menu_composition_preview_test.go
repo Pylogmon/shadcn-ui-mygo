@@ -286,6 +286,24 @@ func TestContextMenuCompositionsSourceWorkflow(t *testing.T) {
 		s.tester.Key(0, ui.KeyEscape)
 		r.Frame()
 	}
+	r.SetDirection(ui.LeftToRight)
+	choose("Context menu configuration", "Browser context menu")
+	open("Context menu target")
+	s = latest()
+	if err := s.tester.Click("More Tools"); err != nil {
+		t.Fatal(err)
+	}
+	s.tester.SetSize(376, max(s.spec.Height, 240))
+	s.tester.Frame()
+	demoRoot, _ := s.tester.AccessByRole(ui.RoleMenu, "Context menu")
+	demoChild, _ := s.tester.AccessByRole(ui.RoleMenu, "More Tools")
+	if demoRoot.Bounds.W != 192 || demoChild.Bounds.W != 176 || demoChild.Bounds.X-demoRoot.Bounds.X-demoRoot.Bounds.W != 4 {
+		t.Fatalf("source Demo root192/sub176/gap4: root=%v child=%v", demoRoot.Bounds, demoChild.Bounds)
+	}
+	s.tester.Key(0, ui.KeyEscape)
+	s.tester.Key(0, ui.KeyEscape)
+	r.Frame()
+	r.SetDirection(ui.RightToLeft)
 	choose("Context menu configuration", "Translated browser menu")
 	open("Context menu target")
 	s = latest()
@@ -294,7 +312,7 @@ func TestContextMenuCompositionsSourceWorkflow(t *testing.T) {
 	}
 	// The injected Backend does not run the operating system's FitContent
 	// sizing loop. Give both native panels a canvas, as menu SDK tests do.
-	s.tester.SetSize(392, s.spec.Height)
+	s.tester.SetSize(376, s.spec.Height)
 	s.tester.Frame()
 	r.Frame()
 	forward, found := s.tester.AccessByRole(ui.RoleMenuItem, "קדימה")
@@ -303,10 +321,18 @@ func TestContextMenuCompositionsSourceWorkflow(t *testing.T) {
 	}
 	rootPanel, rootOK := s.tester.AccessByRole(ui.RoleMenu, "Context menu")
 	subPanel, subOK := s.tester.AccessByRole(ui.RoleMenu, "ניווט")
-	if !s.spec.FitContent || !rootOK || !subOK || rootPanel.Bounds.X == subPanel.Bounds.X || subPanel.Bounds.W != 192 {
-		t.Fatal("translated submenu did not lay out an independent second native panel")
+	if !s.spec.FitContent || !rootOK || !subOK || rootPanel.Bounds.W != 192 || subPanel.Bounds.W != 176 || rootPanel.Bounds.X-(subPanel.Bounds.X+subPanel.Bounds.W) != 4 {
+		t.Fatalf("source RTL panels root192/sub176/gap4: root=%v child=%v", rootPanel.Bounds, subPanel.Bounds)
 	}
 	contextCompositionSnapshot(t, s.tester, "context-hebrew-submenu-dark")
+	s.tester.Key(0, ui.KeyEscape)
+	if err := s.tester.Click("כלים נוספים"); err != nil {
+		t.Fatal(err)
+	}
+	rtlTools, _ := s.tester.AccessByRole(ui.RoleMenu, "כלים נוספים")
+	if rtlTools.Bounds.W != 176 {
+		t.Fatalf("source RTL More Tools width=%v", rtlTools.Bounds)
+	}
 	s.tester.Key(0, ui.KeyEscape)
 	s.tester.Key(0, ui.KeyEscape)
 	r.Frame()
@@ -323,6 +349,10 @@ func TestContextMenuCompositionsSourceWorkflow(t *testing.T) {
 	s.tester.SetSize(392, max(s.spec.Height, 240))
 	s.tester.Frame()
 	r.Frame()
+	dialogSubmenu, _ := s.tester.AccessByRole(ui.RoleMenu, "More Options")
+	if dialogSubmenu.Bounds.W != 192 {
+		t.Fatalf("unsized source submenu lost shared192 fallback: %v", dialogSubmenu.Bounds)
+	}
 	contextCompositionSnapshot(t, s.tester, "context-dialog-submenu-flyout-dark")
 	if err := s.tester.Click("Save Page..."); err != nil {
 		t.Fatal(err)

@@ -1,6 +1,6 @@
 # ContextMenu compositions
 
-In the Gallery overlays page, choose **Context menu configuration**, then
+In the Gallery Navigation page, choose **Context menu configuration**, then
 secondary-click the bordered target or focus it and press the Context Menu
 key / Shift+F10. The target's accessible name is **Context menu target**;
 side examples append `: inline-start`, `: left`, etc. **Open Dialog** opens
@@ -39,9 +39,9 @@ window's measured width, and may extend beyond its parent window. Requested
 logical sides resolve using the current reading direction; display collision
 handling may change the final physical placement. Checkbox/radio rows keep
 the styled menu open by default, as the source component does; ordinary
-actions close it. The current public Menu API uses one width for every panel:
-the docs Demo/RTL source requests 176-DIP subpanels under a 192-DIP root,
-which this module renders as 192-DIP subpanels.
+actions close it. `MenuItem.SubmenuWidth` preserves the docs Demo/RTL source's
+176-DIP subpanels under a 192-DIP root. Unspecified submenu widths retain the
+root's shared width; nested panels remain 4 DIPs apart in either direction.
 
 **Native** uses `desktop.NativeContextMenu` and the operating system's menu
 tracking, painting and placement. Source item labels, selection/disabled

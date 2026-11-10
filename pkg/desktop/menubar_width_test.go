@@ -26,7 +26,7 @@ func TestMenubarPerMenuWidthIndependentWindowWorkflow(t *testing.T) {
 	var menuErr error
 	p := desktop.MenubarProps{Width: 224, KeepOpenOnSelect: true, Items: []overlay.MenubarItem{
 		{Key: "file", Label: "File", Width: 260, Items: []overlay.MenuItem{{Key: "open", Label: "Open file"}}},
-		{Key: "view", Label: "View", Width: 176, Items: []overlay.MenuItem{{Key: "note", Label: "Note"}}},
+		{Key: "view", Label: "View", Width: 176, Items: []overlay.MenuItem{{Key: "note", Label: "Note"}, {Key: "nested", Label: "Nested tools", SubmenuWidth: 176, Children: []overlay.MenuItem{{Key: "nested-action", Label: "Nested action"}}}}},
 		{Key: "tools", Label: "Tools", Items: []overlay.MenuItem{{Key: "find", Label: "Find"}}},
 	}}
 	p.ItemContent = func(c *ui.Context, item overlay.MenuItem) {
@@ -103,6 +103,24 @@ func TestMenubarPerMenuWidthIndependentWindowWorkflow(t *testing.T) {
 		t.Fatalf("width refresh lost editor identity or selection: spec=%d mounts=%d note=%q selection=%v", surface.spec.Width, mounted, note, selection)
 	}
 	panelWidth("View", 192)
+	// Nested widths refresh on the existing surface, even when a child event
+	// precedes its parent's item-data fingerprint/invalidating frame.
+	if err := child.Click("Nested tools"); err != nil {
+		t.Fatal(err)
+	}
+	child.SetSize(500, 240)
+	child.Frame()
+	panelWidth("Nested tools", 176)
+	p.Items[1].Items[1].SubmenuWidth = 240
+	child.Key(0, ui.KeyDown)
+	panelWidth("Nested tools", 240)
+	invalidates := surface.invalidates
+	parent.Frame()
+	if surface.invalidates <= invalidates || len(b.surfaces) != 1 || surface.closes != 0 || surface.spec.Width != 192 {
+		t.Fatal("nested width change ignored fingerprint or replaced its surface")
+	}
+	panelWidth("Nested tools", 240)
+	child.Key(0, ui.KeyEscape)
 	// Leave the editor using the menu's public focus target, then switch to an
 	// unspecified menu whose width comes from the bar's existing fallback.
 	child.Key(0, ui.KeyEscape)
@@ -135,13 +153,21 @@ func TestMenubarPerMenuWidthIndependentWindowWorkflow(t *testing.T) {
 	// Every candidate must be finite, including an inactive sibling. Rejecting
 	// invalid dimensions closes the existing surface safely, without a new one.
 	count := len(b.surfaces)
-	for _, invalid := range []float32{float32(math.NaN()), float32(math.Inf(1))} {
+	for _, invalid := range []float32{float32(math.NaN()), float32(math.Inf(1)), float32(math.Inf(-1))} {
+		p.Items[0].Items[0].SubmenuWidth = 0
 		p.Items[0].Width = invalid
 		parent.Frame()
 		if menuErr == nil || state.Open || surface.closes != 1 || len(b.surfaces) != count {
-			t.Fatal("non-finite candidate width was accepted or reopened a surface")
+			t.Fatal("non-finite top-level candidate width was accepted or reopened a surface")
+		}
+		p.Items[0].Width = 260
+		p.Items[0].Items[0].SubmenuWidth = invalid
+		parent.Frame()
+		if menuErr == nil || state.Open || surface.closes != 1 || len(b.surfaces) != count {
+			t.Fatal("non-finite nested candidate width was accepted or reopened a surface")
 		}
 	}
+	p.Items[0].Items[0].SubmenuWidth = 0
 	p.Items[0].Width, p.Width = 260, float32(math.NaN())
 	parent.Frame()
 	if menuErr == nil {
@@ -151,6 +177,7 @@ func TestMenubarPerMenuWidthIndependentWindowWorkflow(t *testing.T) {
 	// overrides; it still delivers the platform menu's actual selected action.
 	native = true
 	p.Items[0].Width = float32(math.NaN())
+	p.Items[0].Items[0].SubmenuWidth = float32(math.NaN())
 	parent.Frame()
 	if menuErr != nil {
 		t.Fatal(menuErr)

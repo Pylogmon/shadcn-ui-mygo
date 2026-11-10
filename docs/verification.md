@@ -578,3 +578,5 @@ Windows/Linux 的真实窗口、GPU、输入和系统偏好尚未运行验证。
 - Root与独审实际逐张查看profile浅色／Hebrew窄Modal／Chat Personalization深色／sticky滚至末段4图，Root正式隔离4PNG与作者最终SHA全吻合。模型仅app data／Handle，Footer／当前Children／child View回调不持久存入应用模型；没有SDK、字体、资产、依赖或缓存改动。native child菜单／tooltip注入与CPU图不计真实OS tracking／AT／IME／字体／多屏或Windows／Linux运行时完整验收。
 
 - Kbd源组合：精确`3337b90`加本阶段11文件的新鲜隔离`/private/tmp/kbd-composition-root-final-jeian2k0`，Gallery／cmd共290结果全部通过，vet与macOS app通过；17配置的集中原生flow覆盖静态cap、父button、实际editor／undo、独立richTooltip与RTL，新增整页搜索／键帽click／跨页返回验证。4份最终PNG与已逐张审查的作者／独审版本字节相同。独立审查`cde386501cc4f656671e8bf7ecdfe825ac676f2811c851d33be3c3f89ef49330`无阻塞；复用SDK，无新增快捷键或字体依赖。软件子窗画布不计OS fitter／AT／IME实机验收。
+
+- Context Menu收口：精确`3337b90`加冻结11文件的新鲜隔离`/private/tmp/context-menu-priority-root-final-w3z02nnd`，全库2382结果全部通过、vet与macOS／Linux／Windows构建成功。13份固定源原文与raw SDK差异独立复核，4份最终PNG逐张检查且与冻结作者图字节相同；审查收据`56ecd74c783ced9c8c50acb3a58ec223541efdb0b71d855747680872e054aa9b`。逐owner176DIP宽度、共享fallback、同窗动态刷新、RTL深层间距、退出最大包络及NaN／±Inf守卫覆盖，禁用菜单行原生像素255→128且拒绝输入。提交后文档仅改正Gallery页面名并说明API；Kbd／Label未混入该隔离，最终联合验证随Label阶段。OS菜单绘制保持平台样式，注入canvas不计真实FitContent／tracking／AT／IME。

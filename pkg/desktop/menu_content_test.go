@@ -2,6 +2,8 @@ package desktop
 
 import (
 	"fmt"
+	"image/color"
+	"math"
 	"slices"
 	"testing"
 	"time"
@@ -61,6 +63,41 @@ func TestMenuContentKeyboardTypeaheadAndDisabledSkipping(t *testing.T) {
 	if !ok || !item.Focused {
 		t.Fatalf("highlight not exposed to native accessibility: %+v", item)
 	}
+	// A solid decorative child isolates inherited disabled paint from glyph
+	// antialiasing. Disabled rows still reject pointer activation and skip keys.
+	for _, disabled := range []bool{false, true} {
+		state := MenuState{}
+		selected := 0
+		paint := ui.NewTesterWith(func(c *ui.Context) {
+			tokens := theme.Preset("blue", false)
+			tokens.Popover, tokens.Border, tokens.Background = ui.RGB(0, 0, 0), ui.RGB(0, 0, 0), ui.RGB(0, 0, 0)
+			theme.Scope(c, tokens).Fill().Background(tokens.Background).Padding(20).Children(func() {
+				MenuContent(c, &state, []overlay.MenuItem{{Key: "row", Label: "Paint row", Disabled: disabled}}, MenuContentProps{ItemContent: func(c *ui.Context, _ overlay.MenuItem) {
+					ui.Box(c).Size(16, 16).Background(ui.RGB(255, 255, 255)).AccessHidden(true)
+				}, OnChoose: func(string) { selected++ }})
+			})
+		}, 240, 120, ui.TesterOptions{Preferences: ui.Preferences{ReduceMotion: true}})
+		row, _ := paint.AccessByRole(ui.RoleMenuItem, "Paint row")
+		peak := uint8(0)
+		image := paint.Image()
+		for y := int(row.Bounds.Y) + 3; y < int(row.Bounds.Y+row.Bounds.H)-3; y++ {
+			for x := int(row.Bounds.X) + 3; x < int(row.Bounds.X+row.Bounds.W)-3; x++ {
+				peak = max(peak, color.NRGBAModel.Convert(image.At(x, y)).(color.NRGBA).R)
+			}
+		}
+		want := uint8(255)
+		if disabled {
+			want = 128
+		}
+		if peak != want || row.Disabled != disabled {
+			t.Fatalf("disabled=%v decorative white=%d want%d", disabled, peak, want)
+		}
+		paint.ClickAt(row.Bounds.X+12, row.Bounds.Y+16)
+		paint.Key(0, ui.KeyEnter)
+		if disabled && selected != 0 {
+			t.Fatal("disabled row accepted native pointer or keyboard input")
+		}
+	}
 }
 
 func TestMenuContentScopedSubmenusChecksAndFocus(t *testing.T) {
@@ -68,7 +105,13 @@ func TestMenuContentScopedSubmenusChecksAndFocus(t *testing.T) {
 	state := MenuState{}
 	items := []overlay.MenuItem{{Key: "left", Label: "Left", Children: []overlay.MenuItem{{Key: "pin", Label: "Pin left", Checked: &left}}}, {Key: "right", Label: "Right", Children: []overlay.MenuItem{{Key: "pin", Label: "Pin right", Checked: &right}}}}
 	closed := 0
-	tt := contentTester(&state, items, MenuContentProps{OnClose: func() { closed++ }}, false)
+	var measured ui.Rect
+	tt := ui.NewTester(func(c *ui.Context) {
+		theme.Apply(c)
+		ui.Column(c).Padding(12).AlignItems(ui.Start).Children(func() {
+			measured = MenuContent(c, &state, items, MenuContentProps{OnClose: func() { closed++ }}).LayoutBounds()
+		})
+	}, 700, 600)
 	tt.Key(0, ui.KeyRight)
 	if state.ActiveDepth != 1 || !slices.Equal(state.Path, []string{"left"}) {
 		t.Fatalf("submenu not opened: %+v", state)
@@ -94,11 +137,67 @@ func TestMenuContentScopedSubmenusChecksAndFocus(t *testing.T) {
 	if !ok || !node.Checked {
 		t.Fatalf("checked menu state missing: %+v", node)
 	}
+	// Widths belong to each owner, including grandchildren. Unset descendants
+	// inherit the shared192 fallback rather than their parent's explicit176.
+	items[0].SubmenuWidth = 240
+	items[1].SubmenuWidth = 176
+	items[1].Children = append(items[1].Children, overlay.MenuItem{Key: "nested", Label: "Nested", Children: []overlay.MenuItem{{Key: "leaf", Label: "Leaf"}}})
+	state.Path, state.Highlighted, state.ActiveDepth = []string{"left"}, []string{"left", "pin"}, 1
+	tt.Frame()
+	tt.Advance(110 * time.Millisecond)
+	state.Path, state.Highlighted, state.ActiveDepth = []string{"right", "nested"}, []string{"right", "nested", "leaf"}, 2
+	tt.Frame()
+	// The old240-DIP sibling is still leaving. Advance into its overlap with
+	// the narrower live path, then settle and verify exact native panel geometry.
+	tt.Advance(50 * time.Millisecond)
+	tt.Frame()
+	if len(state.Path) != 2 || !tt.HasText("Leaf") || measured.W != 192+4+240+4+192 {
+		t.Fatalf("retiring sibling did not retain its max envelope: bounds=%v path=%v", measured, state.Path)
+	}
+	items[0].SubmenuWidth = 128
+	tt.Frame()
+	tt.Frame()
+	if measured.W != 192+4+240+4+192 {
+		t.Fatalf("retiring owner resize collapsed its in-flight envelope: %v", measured)
+	}
+	tt.Advance(60 * time.Millisecond)
+	root, _ = tt.AccessByRole(ui.RoleMenu, "Menu")
+	rightPanel, _ := tt.AccessByRole(ui.RoleMenu, "Right")
+	nested, _ := tt.AccessByRole(ui.RoleMenu, "Nested")
+	if root.Bounds.W != 192 || rightPanel.Bounds.W != 176 || nested.Bounds.W != 192 || rightPanel.Bounds.X-root.Bounds.X-root.Bounds.W != 4 || nested.Bounds.X-rightPanel.Bounds.X-rightPanel.Bounds.W != 4 {
+		t.Fatalf("per-owner width/shared fallback/gap: root=%v right=%v nested=%v", root.Bounds, rightPanel.Bounds, nested.Bounds)
+	}
+	items[1].Children[1].SubmenuWidth = 144
+	tt.Frame()
+	nested, _ = tt.AccessByRole(ui.RoleMenu, "Nested")
+	if nested.Bounds.W != 144 {
+		t.Fatalf("current owner width did not refresh: %v", nested.Bounds)
+	}
+	for _, invalid := range []float32{float32(math.NaN()), float32(math.Inf(1)), float32(math.Inf(-1))} {
+		func() {
+			defer func() {
+				if recover() == nil {
+					t.Error("direct MenuContent accepted a non-finite nested width")
+				}
+			}()
+			items[1].Children[1].SubmenuWidth = invalid
+			_ = contentTester(&MenuState{}, items, MenuContentProps{}, false)
+		}()
+	}
 }
 
 func TestMenuContentRTLSubmenuArrows(t *testing.T) {
 	state := MenuState{}
-	tt := contentTester(&state, []overlay.MenuItem{{Key: "more", Label: "More", Children: []overlay.MenuItem{{Key: "one", Label: "One"}}}}, MenuContentProps{}, true)
+	items := []overlay.MenuItem{{Key: "more", Label: "More", SubmenuWidth: 176, Children: []overlay.MenuItem{{Key: "one", Label: "One", SubmenuWidth: 144, Children: []overlay.MenuItem{{Key: "leaf", Label: "Leaf"}}}}}, {Key: "wide", Label: "Wide", SubmenuWidth: 240, Children: []overlay.MenuItem{{Key: "old", Label: "Old"}}}}
+	markers := map[string]ui.Rect{}
+	tt := ui.NewTester(func(c *ui.Context) {
+		theme.Apply(c)
+		ui.Column(c).Padding(12).Direction(ui.RightToLeft).Children(func() {
+			MenuContent(c, &state, items, MenuContentProps{ItemContent: func(c *ui.Context, item overlay.MenuItem) {
+				markers[item.Label] = ui.Box(c).FillWidth().Height(16).LayoutBounds()
+			}})
+		})
+	}, 700, 600)
 	tt.Key(0, ui.KeyLeft)
 	if state.ActiveDepth != 1 || len(state.Path) != 1 {
 		t.Fatalf("RTL Left did not open: %+v", state)
@@ -107,12 +206,34 @@ func TestMenuContentRTLSubmenuArrows(t *testing.T) {
 	tt.Advance(110 * time.Millisecond)
 	root, _ := tt.AccessByRole(ui.RoleMenu, "Menu")
 	child, _ := tt.AccessByRole(ui.RoleMenu, "More")
-	if child.Bounds.X+child.Bounds.W > root.Bounds.X {
+	if child.Bounds.W != 176 || root.Bounds.X-child.Bounds.X-child.Bounds.W != 4 {
 		t.Fatalf("RTL submenu not on leading side: root=%v child=%v", root.Bounds, child.Bounds)
 	}
+	tt.Key(0, ui.KeyLeft)
+	tt.Advance(110 * time.Millisecond)
+	nested, _ := tt.AccessByRole(ui.RoleMenu, "One")
+	if nested.Bounds.W != 144 || child.Bounds.X-nested.Bounds.X-nested.Bounds.W != 4 {
+		t.Fatalf("RTL grandchild lost actual owner gap: parent=%v nested=%v", child.Bounds, nested.Bounds)
+	}
+	tt.Key(0, ui.KeyRight)
 	tt.Key(0, ui.KeyRight)
 	if state.ActiveDepth != 0 || len(state.Path) != 0 {
 		t.Fatal("RTL Right did not close submenu")
+	}
+	tt.Key(0, ui.KeyDown)
+	tt.Key(0, ui.KeyLeft)
+	tt.Advance(110 * time.Millisecond)
+	if err := tt.Click("More"); err != nil {
+		t.Fatal(err)
+	}
+	tt.Key(0, ui.KeyLeft)
+	tt.Advance(50 * time.Millisecond)
+	tt.Frame()
+	// Scalar LayoutBounds omit entry transforms. A retiring240-DIP column must
+	// not leave64 extra DIPs between the current176 parent and144 grandchild.
+	one, leaf := markers["One"], markers["Leaf"]
+	if math.Abs(float64((one.X+one.W)-(leaf.X+leaf.W)-(176+4))) > .1 {
+		t.Fatalf("RTL retained wide branch left a gap before the live grandchild: one=%v leaf=%v", one, leaf)
 	}
 }
 

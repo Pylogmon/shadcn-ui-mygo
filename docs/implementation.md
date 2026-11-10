@@ -172,7 +172,9 @@
 | 5.EK | 优先里程碑Input／Item专项复核 | 已提交 `7fdfcf9`；Input25／Item35配置的29原文与公开API复核、native Date／Time能力与Item真实link／独立actions／禁用／220DIP边界probe通过，无新增产品阻断；最终联合验证随里程碑收口 |
 | 5.EL | Gallery完整Dialog源组合 | 已提交 `3337b90`；12配置的完整原生Modal／profile／scroll／sticky／no-close与四面板Chat Settings；隔离Gallery／cmd共288结果、vet与macOS构建通过，复用原SDK |
 
-| 5.EM | Gallery完整Kbd源组合 | 本阶段提交；17配置的静态键帽／真实父按钮／原生输入／独立Tooltip及RTL，复用既有SDK；隔离Gallery／cmd290结果、vet与macOS构建通过 |
+| 5.EM | Gallery完整Kbd源组合 | 已提交 `05bdc26`；17配置的静态键帽／真实父按钮／原生输入／独立Tooltip及RTL，复用既有SDK；隔离Gallery／cmd290结果、vet与macOS构建通过 |
+
+| 5.EN | Context Menu逐子菜单宽度与禁用视觉 | 本阶段提交；公开SubmenuWidth、RTL／动态／退出包络与有限值守卫，补齐源176DIP宽度与单层禁用透明度；隔离全库2382结果、vet与三平台构建通过 |
 
 用户已明确允许原生平台适配：Popover、menu、下拉菜单可以使用 MyGo 的系统菜单与独立 Flyout，超出父窗口范围；无需逐像素照搬网页浮层。Gallery 以 [shadcn/create](https://ui.shadcn.com/create) 的配置与实时预览流程为参考。完整组件功能、主题、动画范围保持不变。
 

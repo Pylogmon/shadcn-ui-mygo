@@ -6,10 +6,10 @@
 
 | 组件 | 当前里程碑状态 | 范围 |
 | --- | --- | --- |
-| Context Menu | 收尾中 | 22配置已实现；补齐显式submenu宽度与禁用视觉，复核双路菜单及原生交互 |
+| Context Menu | 本阶段完成 | 22配置；逐submenu宽度／RTL／动态与禁用视觉、双路菜单及原生交互；全量2382结果、vet与三平台构建通过 |
 | Dialog | 已提交3337b90 | 12完整docs／Create／guide配置、表单、滚动／footer、Chat Settings四面板、焦点与关闭行为；隔离Gallery／cmd288结果、vet与macOS构建通过 |
 | Input | 专项复核通过，待最终联合验证 | 25配置与真实文本／数字／日期／时间／文件；17原文与API审查无新增阻断，保留明确的原生Date／Time适配边界 |
-| Kbd | 本阶段完成 | 17配置；真实按钮／输入与独立Tooltip、窄RTL搜索和跨页状态；Gallery／cmd290结果、vet与macOS构建通过，静态keycap不安装快捷键 |
+| Kbd | 已提交05bdc26 | 17配置；真实按钮／输入与独立Tooltip、窄RTL搜索和跨页状态；Gallery／cmd290结果、vet与macOS构建通过，静态keycap不安装快捷键 |
 | Label | 实施中 | 完整源配置、真实目标关联、leading-none与disabled peer样式 |
 | Item | 专项复核通过，待最终联合验证 | 35配置、12原文、真实主目标与独立动作／header／footer及窄布局；新增公开链接／禁用／窄边界探针通过 |
 | Tabs | 已提交b55927d | 20配置、原生pointer／RTL keys／独立状态、真实header控件和禁用单层透明度；全量2380结果、vet和三平台构建通过 |
