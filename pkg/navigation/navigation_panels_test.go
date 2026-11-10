@@ -100,6 +100,60 @@ func panelMove(t *testing.T, r *ui.Tester, label string) {
 	r.Move(b.X+b.W/2, b.Y+b.H/2)
 }
 
+type animatedPanelBackend struct{ panelBackend }
+type animatedPanelSurface struct {
+	*panelSurface
+	dismiss func() bool
+}
+
+func (b *animatedPanelBackend) Open(spec desktop.Spec, view func(*ui.Context), closed func()) (desktop.Surface, error) {
+	s, err := b.panelBackend.Open(spec, view, closed)
+	if err != nil {
+		return nil, err
+	}
+	return &animatedPanelSurface{panelSurface: s.(*panelSurface)}, nil
+}
+func (s *animatedPanelSurface) SetDismissHandler(handler func() bool) { s.dismiss = handler }
+
+func TestNavigationPanelSurfaceFadesWithoutBackingOrTeardownFlash(t *testing.T) {
+	b := &animatedPanelBackend{}
+	h := desktop.NewHostWithBackend(b)
+	route := "intro"
+	changes := 0
+	p := NavigationMenuProps{Items: panelItems()}
+	parent := panelParent(t, &b.panelBackend, h, &route, &p, &changes, nil)
+	parent.Key(0, ui.KeyTab)
+	parent.Key(0, ui.KeyDown)
+	if len(b.surfaces) != 1 {
+		t.Fatalf("opened %d navigation surfaces", len(b.surfaces))
+	}
+	surface := b.surfaces[0]
+	child := ui.NewTester(surface.view, surface.spec.Width, surface.spec.Height)
+	alpha := func() uint64 {
+		var total uint64
+		for i := 3; i < len(child.Image().Pix); i += 4 {
+			total += uint64(child.Image().Pix[i])
+		}
+		return total
+	}
+	if got := alpha(); got != 0 {
+		t.Fatalf("navigation entry painted a backing before its content: alpha=%d", got)
+	}
+	child.Advance(500 * time.Millisecond)
+	shown := alpha()
+	h.Close("nav")
+	child.Frame()
+	child.Advance(35 * time.Millisecond)
+	if leaving := alpha(); leaving == 0 || leaving >= shown || surface.closes != 0 {
+		t.Fatalf("navigation surface did not fade: leaving=%d shown=%d closes=%d", leaving, shown, surface.closes)
+	}
+	child.Advance(150 * time.Millisecond)
+	child.Frame()
+	if got := alpha(); got != 0 || child.FramePending() || surface.closes != 1 {
+		t.Fatalf("navigation teardown flashed or kept rendering: alpha=%d closes=%d pending=%v", got, surface.closes, child.FramePending())
+	}
+}
+
 func TestNavigationPanelsIndependentContextChooseOnceAndCurrentRoute(t *testing.T) {
 	b := &panelBackend{}
 	h := desktop.NewHostWithBackend(b)

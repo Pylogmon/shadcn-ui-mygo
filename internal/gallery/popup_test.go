@@ -91,6 +91,8 @@ func TestCreatorSecondaryDateAndHoverPopupsUseDesktopHost(t *testing.T) {
 				t.Fatal("tooltip did not render in child window")
 			}
 			tip.tester.SetSize(tip.spec.MaxWidth, 100)
+			// Find returns visual bounds, including the flyout's entry scale.
+			tip.tester.Advance(200 * time.Millisecond)
 			if !tip.tester.HasText("Search components") {
 				t.Fatal("rich tooltip omitted the actual application action")
 			}

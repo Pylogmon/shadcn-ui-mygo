@@ -64,3 +64,32 @@ func TestMenuPresetComboboxAndSelectUseForceDarkAndNoPopupAnimation(t *testing.T
 		t.Fatalf("Select native selection=%q", selected)
 	}
 }
+
+func TestLegacyComboboxThemeWrappersPreserveTranslucentBackdrop(t *testing.T) {
+	for _, multiple := range []bool{false, true} {
+		query := ""
+		selected := []string{}
+		r := ui.NewTester(func(c *ui.Context) {
+			c.Root().Background(ui.RGB(0, 70, 220))
+			theme.MenuScope(c, theme.Preset("neutral", true), theme.MenuOptions{Color: theme.MenuDefaultTranslucent}).Background(ui.Transparent).Fill().Padding(20).Children(func() {
+				if multiple {
+					MultiCombobox(c, &selected, &query, MultiComboboxProps{Label: "Query", Options: []Option{{Value: "one", Label: "One"}}})
+				} else {
+					Combobox(c, &query, ComboboxProps{Label: "Query", Options: []Option{{Value: "one", Label: "One"}}})
+				}
+			})
+		}, 400, 240)
+		if err := r.Click("Query"); err != nil {
+			t.Fatal(err)
+		}
+		r.Type("o")
+		item, ok := r.AccessByRole(ui.RoleListItem, "One")
+		if !ok {
+			t.Fatal("combobox option missing")
+		}
+		pixel := r.Image().RGBAAt(int(item.Bounds.X+item.Bounds.W-24), int(item.Bounds.Y+item.Bounds.H/2))
+		if int(pixel.B)-int(pixel.R) < 20 {
+			t.Errorf("multiple=%v theme wrapper covered the blue backdrop: %v", multiple, pixel)
+		}
+	}
+}

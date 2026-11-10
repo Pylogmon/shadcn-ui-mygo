@@ -199,7 +199,7 @@ func hostedCombobox[T any](c *ui.Context, h *Host, key string, state *control.Co
 			popupErr = h.Popover(c, key, anchor, &state.Open, popup, func(child *ui.Context) {
 				build := func() { buildHostedCombobox(child, state, s, childProps, view) }
 				if native {
-					theme.NativeScope(child).Children(build)
+					theme.NativeScope(child).Background(ui.Transparent).Children(build)
 				} else {
 					build()
 				}

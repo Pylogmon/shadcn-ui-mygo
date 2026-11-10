@@ -356,7 +356,7 @@ func hoverCard(c *ui.Context, h *Host, key string, anchor ui.Element, p HoverCar
 		body := ui.Column(child).FillWidth().Gap(8).Role(ui.RoleGroup).Label(label).Disabled(!interactive)
 		if interactive {
 			// The explicit keyboard-entry group is a real focus target, not a
-			// hidden parent-frame sentinel. It survives Host's measuring frame.
+			// hidden parent-frame sentinel. It survives the Host's entry animation.
 			body.Focusable()
 			if s.keyboardChild && !body.FocusWithin() {
 				body.Focus()

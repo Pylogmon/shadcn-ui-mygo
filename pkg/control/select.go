@@ -169,7 +169,7 @@ func Combobox(c *ui.Context, value *string, p ComboboxProps) ui.Element {
 			Shadow(0, 4, 12, 0, ui.RGBA(0, 0, 0, .12)).Transition(motion.Menu(c))
 		menu.Surface(c, panel)
 		panel.Children(func() {
-			ui.Themed(c, menu.Theme()).FillWidth().Children(func() {
+			ui.Themed(c, menu.Theme()).Background(ui.Transparent).FillWidth().Children(func() {
 				ui.Scroll(c).MaxHeight(272).FillWidth().Children(func() {
 					if len(shown) == 0 {
 						empty := p.EmptyText
@@ -298,7 +298,7 @@ func MultiCombobox(c *ui.Context, selected *[]string, query *string, p MultiComb
 			panel.MinWidth(max(float32(160), input.Bounds().W)).MaxHeight(280).Padding(4).Margin(4, 0, 0, 0).Radius(t.RadiusMD()).Border(1, t.Border).Background(t.Popover).TextColor(t.PopoverForeground).Transition(motion.Menu(c))
 			menu.Surface(c, panel)
 			panel.Children(func() {
-				ui.Themed(c, menu.Theme()).FillWidth().Children(func() {
+				ui.Themed(c, menu.Theme()).Background(ui.Transparent).FillWidth().Children(func() {
 					ui.Scroll(c).FillWidth().MaxHeight(272).Children(func() {
 						if len(shown) == 0 {
 							empty := p.EmptyText

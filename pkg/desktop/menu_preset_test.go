@@ -78,3 +78,39 @@ func TestMenuPresetHostCopiesSnapshotRequestsMaterialAndKeepsLiveSurface(t *test
 		t.Fatalf("no-animation profile retained native exit: closes%d present%v", first.closes, host.IsPresent("preset"))
 	}
 }
+
+func TestMenuMaterialTintAndSubmenuGapHaveNoOpaqueBacking(t *testing.T) {
+	backend := &menuMaterialBackend{}
+	host := NewHostWithBackend(backend)
+	open := true
+	state := MenuState{}
+	ui.NewTester(func(c *ui.Context) {
+		theme.MenuScope(c, theme.Preset("neutral", true), theme.MenuOptions{Color: theme.MenuDefaultTranslucent}).Children(func() {
+			host.BeginFrame()
+			defer host.EndFrame()
+			anchor := control.Button(c, "Open", control.ButtonProps{})
+			_, err := Menu(c, host, "material", anchor, &open, &state, MenuProps{Items: []overlay.MenuItem{{Key: "more", Label: "More", Children: []overlay.MenuItem{{Key: "child", Label: "Child"}}}}})
+			if err != nil {
+				t.Fatal(err)
+			}
+		})
+	}, 400, 200)
+	child := ui.NewTester(backend.surface.view, 400, 200)
+	child.SetVibrancy(true)
+	child.Key(0, ui.KeyRight)
+	panel, ok := child.AccessByRole(ui.RoleMenu, "Menu")
+	if !ok {
+		t.Fatal("root menu missing")
+	}
+	x, y := int(panel.Bounds.X+panel.Bounds.W/2), int(panel.Bounds.Y+2)
+	if alpha := child.Image().RGBAAt(x, y).A; alpha < 177 || alpha > 180 {
+		t.Fatalf("70%% menu tint is covered by another background: alpha=%d", alpha)
+	}
+	if alpha := child.Image().RGBAAt(int(panel.Bounds.X+panel.Bounds.W+2), 20).A; alpha != 0 {
+		t.Fatalf("submenu gap has an opaque theme wrapper: alpha=%d", alpha)
+	}
+	child.SetPreferences(ui.Preferences{ReduceTransparency: true})
+	if alpha := child.Image().RGBAAt(x, y).A; alpha != 255 {
+		t.Fatalf("reduced transparency lost its opaque fallback: alpha=%d", alpha)
+	}
+}

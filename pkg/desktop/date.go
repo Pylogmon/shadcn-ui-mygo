@@ -253,7 +253,7 @@ func datePicker(c *ui.Context, h *Host, key string, date *time.Time, dates *disp
 		content := func(child *ui.Context) {
 			build := func() { datePickerContent(child, s, p, loc, rangeMode, native, commit, cancel) }
 			if native {
-				theme.NativeScope(child).Children(build)
+				theme.NativeScope(child).Background(ui.Transparent).Children(build)
 			} else {
 				build()
 			}
@@ -319,7 +319,11 @@ func datePickerContent(c *ui.Context, s *desktopDateState, p DatePickerProps, lo
 		}
 		if rangeMode {
 			previous := s.Range
-			if display.CalendarRange(c, &s.Range, props).Changed() {
+			calendar := display.CalendarRange(c, &s.Range, props)
+			if native && c.Vibrancy() {
+				calendar.Background(ui.Transparent)
+			}
+			if calendar.Changed() {
 				next := s.Range
 				if p.ShowTime {
 					next.From = pickerWithDay(s.Clocks.From, next.From, loc)
@@ -342,7 +346,11 @@ func datePickerContent(c *ui.Context, s *desktopDateState, p DatePickerProps, lo
 			}
 		} else {
 			previous := s.Working
-			if display.CalendarWith(c, &s.Working, props).Changed() {
+			calendar := display.CalendarWith(c, &s.Working, props)
+			if native && c.Vibrancy() {
+				calendar.Background(ui.Transparent)
+			}
+			if calendar.Changed() {
 				if !pickerValidDate(s.Working, p.Calendar, loc) {
 					s.Working = previous
 				} else if !confirm {

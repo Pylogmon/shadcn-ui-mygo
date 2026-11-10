@@ -182,7 +182,7 @@ func motionNativeRed(t *testing.T, r *ui.Tester) (x, y int, p color.RGBA) {
 	minX, minY = image.Bounds().Max.X, image.Bounds().Max.Y
 	for y := image.Bounds().Min.Y; y < image.Bounds().Max.Y; y++ {
 		for x := image.Bounds().Min.X; x < image.Bounds().Max.X; x++ {
-			c := image.RGBAAt(x, y)
+			c := color.NRGBAModel.Convert(image.RGBAAt(x, y)).(color.NRGBA)
 			if c.R > 240 && c.G < 230 && c.B < 230 && int(c.R)-int(c.G) > 25 {
 				minX = min(minX, x)
 				minY = min(minY, y)
@@ -205,8 +205,8 @@ func TestMenuMotionSourceNativeMidpointAndDeadline(t *testing.T) {
 			h.child.Advance(50 * time.Millisecond)
 			_, _, p := motionNativeRed(t, h.child)
 			// CSS ease(.25,.1,.25,1) is 0.802403 at half of a 100ms fade.
-			// Native painted red over white therefore has G/B approximately 50.
-			if p.G < 47 || p.G > 54 || p.B < 47 || p.B > 54 {
+			// The native surface stays transparent behind the fading panel.
+			if p.A < 201 || p.A > 208 || p.R != p.A || p.G != 0 || p.B != 0 {
 				t.Fatalf("50ms source midpoint got %v, want alpha~.8024", p)
 			}
 			h.child.Advance(60 * time.Millisecond)
@@ -335,7 +335,7 @@ func motionNativeRedCenter(t *testing.T, r *ui.Tester) (float64, float64) {
 	minX, minY, maxX, maxY := im.Bounds().Max.X, im.Bounds().Max.Y, -1, -1
 	for y := 0; y < im.Bounds().Max.Y; y++ {
 		for x := 0; x < im.Bounds().Max.X; x++ {
-			c := im.RGBAAt(x, y)
+			c := color.NRGBAModel.Convert(im.RGBAAt(x, y)).(color.NRGBA)
 			if c.R > 240 && c.G < 230 && c.B < 230 && int(c.R)-int(c.G) > 25 {
 				minX = min(minX, x)
 				minY = min(minY, y)
@@ -738,7 +738,7 @@ func TestMenuMotionMenubarChildSiblingSwitchEntersBeforeParentRebuild(t *testing
 	child.Advance(50 * time.Millisecond)
 	child.Frame()
 	_, _, middle := motionNativeRed(t, child)
-	if middle.G < 47 || middle.G > 54 {
+	if middle.A < 201 || middle.A > 208 || middle.R != middle.A || middle.G != 0 || middle.B != 0 {
 		t.Fatalf("sibling did not use source entry clock: %v", middle)
 	}
 	parent.Frame()

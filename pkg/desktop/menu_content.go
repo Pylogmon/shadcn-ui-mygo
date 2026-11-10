@@ -358,7 +358,9 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 	if label == "" {
 		label = "Menu"
 	}
-	root := ui.Themed(c, menu.Theme()).Row().Gap(4).AlignItems(ui.Start).Role(ui.RoleGroup).Label(label)
+	// Only the individual panels paint a surface. This theme/measurement
+	// wrapper stays transparent while those panels animate independently.
+	root := ui.Themed(c, menu.Theme()).Background(ui.Transparent).Row().Gap(4).AlignItems(ui.Start).Role(ui.RoleGroup).Label(label)
 	x, y, over := root.PointerPosition()
 	moved := over && (!state.pointerOver || state.pointerX != x || state.pointerY != y)
 	state.pointerOver, state.pointerX, state.pointerY = over, x, y

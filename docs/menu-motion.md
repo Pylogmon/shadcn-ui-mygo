@@ -2,6 +2,8 @@
 
 `desktop.Menu`、`DropdownMenu`、`ContextMenu`和`Menubar`使用独立原生Flyout，并对实际菜单面板应用Vega的100ms CSS ease、95%缩放和透明度变化。进入时按实际面向锚点的方向移动8DIP；退出目标不带平移。进行中的打开/关闭反转从当前可见姿态继续。系统减少动态效果、Instant及隐藏窗口立即收敛到目标。
 
+原生窗口根层及菜单的主题／测量容器保持透明，只有各个面板绘制背景。缩放边缘和子菜单间隙因此显示窗口后方的内容，半透明预设的70% tint也不会被另一层实色背景盖住。退出完成帧及销毁前的过期子窗口回调同样保持透明，避免面板淡出后又闪出默认主题背景。
+
 连续反转是原生交互适配：中途关闭时，尚未完成的进入位移会从当前值连续归零。它遵守退出目标不平移的样式，不宣称任意中断帧与CSS重启动画逐像素相同。
 
 此处沿用项目既有的固定`bases/base`组件基线。Base MenubarContent通过DropdownMenuContent组合，继承其关闭动画；同一shadcn提交的Radix直接MenubarContent使用另一组class。实现按组合后的实际class核对，不能只读单独的`.cn-menubar-content`规则。

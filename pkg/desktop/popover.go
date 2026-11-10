@@ -375,6 +375,9 @@ func (h *Host) configureDismiss(e *entry, surface Surface, generation uint64) {
 }
 
 func (h *Host) view(c *ui.Context, e *entry, generation uint64) {
+	// Native destruction is queued after the current frame. Even an obsolete
+	// callback must clear the default theme background during that interval.
+	c.Root().Background(ui.Transparent)
 	if e.generation != generation {
 		return
 	}
@@ -382,6 +385,10 @@ func (h *Host) view(c *ui.Context, e *entry, generation uint64) {
 		c.SetTheme(e.nativeTheme)
 		c.SetMenuPresentation(e.presentation)
 	}
+	// SetTheme also paints the window root. The content below owns the whole
+	// surface: a stationary backing would defeat its opacity/scale and cover
+	// NSPopover's material while its arrow still showed the system material.
+	c.Root().Background(ui.Transparent)
 	if e.reduced {
 		c.DisableAnimations()
 	}
@@ -417,18 +424,14 @@ func (h *Host) view(c *ui.Context, e *entry, generation uint64) {
 			return
 		}
 	} else if !e.props.SystemStyle && !e.spec.SystemPopover {
-		// MyGo intentionally skips presence animation on a view's very first
-		// tree. Measure invisibly once, then add the visible keyed panel on the
-		// next frame so a newly created native window really enters. Measuring
-		// still includes content for FitContent; reduced motion shows it at once.
-		entered := ui.Local(c.Root(), "shadcn.desktop.entered", func() bool { return false })
-		if !*entered && !motion.Reduced(c) {
-			root.Key("measuring").Opacity(0).IgnoreInput(true)
+		// Seed one reversible animation on the final content tree. Combining a
+		// keyed enter transition with AnimateWith remounted native editors and
+		// applied two independent animations to the same pixels.
+		const presence = "shadcn.desktop.presence"
+		entered := ui.Local(root, "shadcn.desktop.entered", func() bool { return false })
+		if !*entered {
+			root.Jump(presence, 0)
 			*entered = true
-			c.Invalidate()
-		} else {
-			root.Key("visible").Transition(motion.Popup(c))
-			e.presented = true
 		}
 		// Keep one measurable native surface alive while its styled content
 		// exits. Input and accessibility leave immediately, pixels leave over
@@ -437,10 +440,12 @@ func (h *Host) view(c *ui.Context, e *entry, generation uint64) {
 		if e.closing {
 			target, duration = 0, 100*time.Millisecond
 		}
-		progress := root.AnimateWith("shadcn.desktop.presence", target, duration, motion.EaseOut)
-		if e.presented {
-			root.Opacity(progress).Scale(.95+.05*progress, .95+.05*progress).Translate(0, -4*(1-progress))
+		if c.WindowHidden() {
+			root.Jump(presence, target)
 		}
+		progress := root.AnimateWith(presence, target, duration, motion.EaseOut)
+		root.Opacity(progress).Scale(.95+.05*progress, .95+.05*progress).Translate(0, -4*(1-progress))
+		e.presented = true
 		if e.closing {
 			root.IgnoreInput(true).AccessHidden(true)
 		}
@@ -455,7 +460,6 @@ func (h *Host) view(c *ui.Context, e *entry, generation uint64) {
 	}
 	if e.props.tooltipSurface {
 		root.Background(ui.Transparent).Radius(0).Gap(0).IgnoreInput(true).Disabled(true).DimDisabled(false)
-		c.Root().Background(ui.Transparent)
 	}
 	if !e.spec.FitContent {
 		root.Fill()
@@ -464,11 +468,6 @@ func (h *Host) view(c *ui.Context, e *entry, generation uint64) {
 	}
 	if c.Vibrancy() {
 		root.Background(ui.Transparent)
-		if e.props.menuMotion != menuMotionNone && e.menu.Translucent() && !c.Preferences().ReduceTransparency && !c.Preferences().HighContrast {
-			// The native root otherwise paints the theme background over the
-			// system material. Menu panels supply their own 70% tint above it.
-			c.Root().Background(ui.Transparent)
-		}
 	}
 	label := e.props.Label
 	if label == "" {

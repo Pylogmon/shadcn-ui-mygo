@@ -67,7 +67,7 @@ func InWindowDropdownMenu(c *ui.Context, open *bool, p MenuProps, trigger func(u
 		menuPanel(c, panel, p.Width)
 		panel.Children(func() {
 			profile := theme.MenuOf(c).ForScene()
-			ui.Themed(c, profile.Theme()).FillWidth().Children(func() { menuItems(c, m, p.Items, p.Width, &chosen) })
+			ui.Themed(c, profile.Theme()).Background(ui.Transparent).FillWidth().Children(func() { menuItems(c, m, p.Items, p.Width, &chosen) })
 		})
 	})
 	return chosen
@@ -83,7 +83,7 @@ func InWindowContextMenu(c *ui.Context, target ui.Element, p MenuProps) string {
 		menuPanel(c, panel, p.Width)
 		panel.Children(func() {
 			profile := theme.MenuOf(c).ForScene()
-			ui.Themed(c, profile.Theme()).FillWidth().Children(func() { menuItems(c, m, p.Items, p.Width, &chosen) })
+			ui.Themed(c, profile.Theme()).Background(ui.Transparent).FillWidth().Children(func() { menuItems(c, m, p.Items, p.Width, &chosen) })
 		})
 	})
 	return chosen
@@ -179,7 +179,7 @@ func menuItems(c *ui.Context, m ui.MenuParts, items []MenuItem, width float32, c
 				}
 				panel.Children(func() {
 					profile := theme.MenuOf(c).ForScene()
-					ui.Themed(c, profile.Theme()).FillWidth().Children(func() { menuItems(c, m, it.Children, width, chosen) })
+					ui.Themed(c, profile.Theme()).Background(ui.Transparent).FillWidth().Children(func() { menuItems(c, m, it.Children, width, chosen) })
 				})
 			})
 		}
