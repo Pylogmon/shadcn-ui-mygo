@@ -2,6 +2,7 @@ package overlay
 
 import (
 	"github.com/egoist/mygo/ui"
+	"github.com/pylogmon/shadcn-ui-mygo/internal/indicator"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/motion"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/theme"
 )
@@ -15,10 +16,18 @@ type MenuItem struct {
 	NativeIcon                       ui.MenuIcon
 	Disabled, Destructive, Separator bool
 	Group                            string
-	Checked                          *bool
-	Radio                            bool
-	Selected                         bool
-	Children                         []MenuItem
+	// Inset increases logical-start padding from 8 to 32 pixels. GroupInset
+	// applies independently to the group caption introduced by this item.
+	// Native system menus ignore both visual-only flags.
+	Inset, GroupInset bool
+	// CloseOnSelect overrides the styled desktop menu default: actions close,
+	// checkboxes and radio items stay open. KeepOpenOnSelect still takes priority.
+	// Native menus and legacy InWindow menus retain MyGo selection tracking.
+	CloseOnSelect *bool
+	Checked       *bool
+	Radio         bool
+	Selected      bool
+	Children      []MenuItem
 }
 
 type MenuProps struct {
@@ -84,7 +93,10 @@ func menuItems(c *ui.Context, m ui.MenuParts, items []MenuItem, width float32, c
 		}
 		if it.Group != "" && it.Group != group {
 			group = it.Group
-			ui.Text(c, group).Padding(6, 8).FontSize(12).FontWeight(500).TextColor(t.MutedForeground)
+			caption := ui.Text(c, group).Padding(6, 8).FontSize(12).FontWeight(500).TextColor(t.MutedForeground)
+			if it.GroupInset {
+				caption.PaddingStart(32)
+			}
 		}
 		var row ui.Element
 		switch {
@@ -98,6 +110,12 @@ func menuItems(c *ui.Context, m ui.MenuParts, items []MenuItem, width float32, c
 			row = m.Item()
 		}
 		row.Label(it.Label).Disabled(it.Disabled).Height(32).Padding(6, 8).Gap(8).Radius(max(2, t.Radius-2)).FontSize(14).TextColor(t.PopoverForeground)
+		if it.Inset {
+			row.PaddingStart(32)
+		}
+		if it.Checked != nil || it.Radio {
+			row.PaddingEnd(32)
+		}
 		if profile.Animated() {
 			motion.ApplyTransition(c, row)
 		}
@@ -119,17 +137,11 @@ func menuItems(c *ui.Context, m ui.MenuParts, items []MenuItem, width float32, c
 			row.Opacity(0.5)
 		}
 		row.Children(func() {
-			if it.Checked != nil || it.Radio {
-				mark := ""
-				if it.Checked != nil && *it.Checked {
-					mark = "✓"
-				}
-				if it.Radio && it.Selected {
-					mark = "●"
-				}
-				ui.Text(c, mark).Width(16).FontSize(12)
-			} else if it.Icon != nil {
-				ui.Icon(c, it.Icon).Size(16, 16)
+			if it.Icon != nil {
+				ui.Icon(c, it.Icon).Size(16, 16).AccessHidden(true)
+			}
+			if (it.Checked != nil && *it.Checked) || (it.Radio && it.Selected) {
+				ui.Box(c).Absolute().End(8).TopPercent(50).Size(16, 16).Translate(0, -8).Children(func() { indicator.Check(c) })
 			}
 			ui.Text(c, it.Label).Grow(1).SingleLine()
 			if it.Shortcut != "" {
@@ -137,10 +149,14 @@ func menuItems(c *ui.Context, m ui.MenuParts, items []MenuItem, width float32, c
 				if it.Destructive && profile.Translucent() {
 					shortcutColor = t.AccentForeground
 				}
-				ui.Text(c, it.Shortcut).FontSize(12).TextColor(shortcutColor).MarginStart(24)
+				ui.Text(c, it.Shortcut).FontSize(12).TextColor(shortcutColor)
 			}
 			if len(it.Children) > 0 {
-				ui.Text(c, "›").FontSize(16)
+				angle := float32(-90)
+				if c.Direction() == ui.RightToLeft {
+					angle = 90
+				}
+				indicator.ChevronDown(c).Rotate(angle)
 			}
 		})
 		if len(it.Children) > 0 {

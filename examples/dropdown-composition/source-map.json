@@ -1,0 +1,261 @@
+{
+  "repository": "https://github.com/shadcn-ui/ui",
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "sourceArchiveManifestSHA256": "64b1a9b41837d69905a23a695f241924e3d329191e6412f57b88ec8a081a9151",
+  "sourceFilesVerified": 36,
+  "files": [
+    {
+      "path": "apps/v4/content/docs/components/base/dropdown-menu.mdx",
+      "gitBlob": "fd03457bb4fe87a08ab8d7dda1a3e2ced8a7b93f",
+      "sha256": "36e21a0f00fb6f808c5ce4af27353f9cbaac4f8d746ada2306f809114826d990",
+      "bytes": 4833,
+      "rawURL": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/content/docs/components/base/dropdown-menu.mdx"
+    },
+    {
+      "path": "apps/v4/examples/base/dropdown-menu-avatar.tsx",
+      "gitBlob": "20a268aef18b3478189209cc21560b840f4df1b1",
+      "sha256": "77d748e94061625e618028e25e05252db8499c82e1e5159e3d93fbbcdcee4916",
+      "bytes": 1420,
+      "rawURL": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/dropdown-menu-avatar.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/dropdown-menu-basic.tsx",
+      "gitBlob": "5a86dafebc518117471af2646ca930d7799b41b1",
+      "sha256": "2f627d8d53e59c91b5814c6c70ae022581f8f0be1c3fff36c00898ba91be9c5b",
+      "bytes": 1011,
+      "rawURL": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/dropdown-menu-basic.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/dropdown-menu-checkboxes-icons.tsx",
+      "gitBlob": "6bbf1851354bb9317231a7e68f6f2db827abf55b",
+      "sha256": "b50b08098653f6639e3a6225633662e4d57c47add8d8c38140d0fccbc74510b5",
+      "bytes": 1855,
+      "rawURL": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/dropdown-menu-checkboxes-icons.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/dropdown-menu-checkboxes.tsx",
+      "gitBlob": "905b0bba6c3e4a5eaa858c986644bad317515c9e",
+      "sha256": "a4b092f10b23689d1402350caeaf313574249580b8453ee70f125d82099cb46c",
+      "bytes": 1478,
+      "rawURL": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/dropdown-menu-checkboxes.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/dropdown-menu-complex.tsx",
+      "gitBlob": "2cdb33da3ce578f7c6cd01b56072c64ecb7abdcb",
+      "sha256": "8acc550d9a2a70363879459640945da369123258eb76cbb105d07d9b5ee41ce0",
+      "bytes": 9722,
+      "rawURL": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/dropdown-menu-complex.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/dropdown-menu-demo.tsx",
+      "gitBlob": "730f771850160a739a54edec622f05e1c794c887",
+      "sha256": "1c06196af05a7e0a05b78d4fdec221b0f36ba24dfc570628b93303f8c0a4d4d1",
+      "bytes": 2503,
+      "rawURL": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/dropdown-menu-demo.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/dropdown-menu-destructive.tsx",
+      "gitBlob": "63cc6387974dbe7444386f0ffb01040a7beb024c",
+      "sha256": "2362640f2c4d53dd50ac983b77b6b3e99a5031ff7d5bb774eadcf0f6df743f69",
+      "bytes": 1064,
+      "rawURL": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/dropdown-menu-destructive.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/dropdown-menu-icons.tsx",
+      "gitBlob": "95aa4c38213048f3407416e3a3273ddcb03a97a9",
+      "sha256": "90533e248e0f66c68572980f38a5b8d726510c942a9eac272ae145c5d2a60391",
+      "bytes": 1034,
+      "rawURL": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/dropdown-menu-icons.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/dropdown-menu-radio-group.tsx",
+      "gitBlob": "24e866df3b96b08137ff8e2d8a5c93c2f6317205",
+      "sha256": "52c09d7cef24efebecfe9f033fc54c53ecd8eb0d5a454fcf8f39853fc5a758aa",
+      "bytes": 1127,
+      "rawURL": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/dropdown-menu-radio-group.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/dropdown-menu-radio-icons.tsx",
+      "gitBlob": "f40e0a8e6920515efb90a71afeb3b72a3bcb8431",
+      "sha256": "8cf9c241b7383c102cb7d0bbe9daf31a5a86480bd245e0e9746de9825fe4ea27",
+      "bytes": 1464,
+      "rawURL": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/dropdown-menu-radio-icons.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/dropdown-menu-rtl.tsx",
+      "gitBlob": "4417de18e462756d23fa8833ab5dc8631c374c01",
+      "sha256": "e007cdaedc052d900237da32d158613aef79370acb71e5fdf322bfa63059239e",
+      "bytes": 7959,
+      "rawURL": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/dropdown-menu-rtl.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/dropdown-menu-shortcuts.tsx",
+      "gitBlob": "531273e33dceeccad78db192cbedd37f934f02b6",
+      "sha256": "a23a4174f4e9b616331ef5b1d807f79f0fef5054c0c62d2dafc43e80a08f79d1",
+      "bytes": 1273,
+      "rawURL": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/dropdown-menu-shortcuts.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/dropdown-menu-submenu.tsx",
+      "gitBlob": "2f211d995c1f308945ea842c6c6c09f8391c00c2",
+      "sha256": "0b9d631d545863f8342232a4b87f85a9fd076bc1351f33529eb4e958b6515ddc",
+      "bytes": 1952,
+      "rawURL": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/dropdown-menu-submenu.tsx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/examples/dropdown-menu-example.tsx",
+      "gitBlob": "0bb355119844f3d95db4608fe6c36964fe3d6d2b",
+      "sha256": "2d5b5ad4b4181c66250c6748aee9365249eb3a3f13ab298387b1e82257070e08",
+      "bytes": 32403,
+      "rawURL": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/examples/dropdown-menu-example.tsx"
+    }
+  ],
+  "recipes": [
+    {
+      "recipe": "avatar",
+      "source": "apps/v4/examples/base/dropdown-menu-avatar.tsx",
+      "features": "source text, group structure, state/defaults, shortcuts, disabled/destructive flags, nested actions and semantic Material Symbols mapping"
+    },
+    {
+      "recipe": "basic",
+      "source": "apps/v4/examples/base/dropdown-menu-basic.tsx",
+      "features": "source text, group structure, state/defaults, shortcuts, disabled/destructive flags, nested actions and semantic Material Symbols mapping"
+    },
+    {
+      "recipe": "checkboxes-icons",
+      "source": "apps/v4/examples/base/dropdown-menu-checkboxes-icons.tsx",
+      "features": "source text, group structure, state/defaults, shortcuts, disabled/destructive flags, nested actions and semantic Material Symbols mapping"
+    },
+    {
+      "recipe": "checkboxes",
+      "source": "apps/v4/examples/base/dropdown-menu-checkboxes.tsx",
+      "features": "source text, group structure, state/defaults, shortcuts, disabled/destructive flags, nested actions and semantic Material Symbols mapping"
+    },
+    {
+      "recipe": "complex",
+      "source": "apps/v4/examples/base/dropdown-menu-complex.tsx",
+      "features": "source text, group structure, state/defaults, shortcuts, disabled/destructive flags, nested actions and semantic Material Symbols mapping"
+    },
+    {
+      "recipe": "demo",
+      "source": "apps/v4/examples/base/dropdown-menu-demo.tsx",
+      "features": "source text, group structure, state/defaults, shortcuts, disabled/destructive flags, nested actions and semantic Material Symbols mapping"
+    },
+    {
+      "recipe": "destructive",
+      "source": "apps/v4/examples/base/dropdown-menu-destructive.tsx",
+      "features": "source text, group structure, state/defaults, shortcuts, disabled/destructive flags, nested actions and semantic Material Symbols mapping"
+    },
+    {
+      "recipe": "icons",
+      "source": "apps/v4/examples/base/dropdown-menu-icons.tsx",
+      "features": "source text, group structure, state/defaults, shortcuts, disabled/destructive flags, nested actions and semantic Material Symbols mapping"
+    },
+    {
+      "recipe": "radio-group",
+      "source": "apps/v4/examples/base/dropdown-menu-radio-group.tsx",
+      "features": "source text, group structure, state/defaults, shortcuts, disabled/destructive flags, nested actions and semantic Material Symbols mapping"
+    },
+    {
+      "recipe": "radio-icons",
+      "source": "apps/v4/examples/base/dropdown-menu-radio-icons.tsx",
+      "features": "source text, group structure, state/defaults, shortcuts, disabled/destructive flags, nested actions and semantic Material Symbols mapping"
+    },
+    {
+      "recipe": "rtl",
+      "source": "apps/v4/examples/base/dropdown-menu-rtl.tsx",
+      "features": "source text, group structure, state/defaults, shortcuts, disabled/destructive flags, nested actions and semantic Material Symbols mapping"
+    },
+    {
+      "recipe": "shortcuts",
+      "source": "apps/v4/examples/base/dropdown-menu-shortcuts.tsx",
+      "features": "source text, group structure, state/defaults, shortcuts, disabled/destructive flags, nested actions and semantic Material Symbols mapping"
+    },
+    {
+      "recipe": "submenu",
+      "source": "apps/v4/examples/base/dropdown-menu-submenu.tsx",
+      "features": "source text, group structure, state/defaults, shortcuts, disabled/destructive flags, nested actions and semantic Material Symbols mapping"
+    },
+    {
+      "recipe": "create-basic",
+      "source": "apps/v4/registry/bases/base/examples/dropdown-menu-example.tsx",
+      "section": "DropdownMenuBasic"
+    },
+    {
+      "recipe": "create-sides",
+      "source": "apps/v4/registry/bases/base/examples/dropdown-menu-example.tsx",
+      "section": "DropdownMenuSides"
+    },
+    {
+      "recipe": "create-with-icons",
+      "source": "apps/v4/registry/bases/base/examples/dropdown-menu-example.tsx",
+      "section": "DropdownMenuWithIcons"
+    },
+    {
+      "recipe": "create-with-shortcuts",
+      "source": "apps/v4/registry/bases/base/examples/dropdown-menu-example.tsx",
+      "section": "DropdownMenuWithShortcuts"
+    },
+    {
+      "recipe": "create-with-submenu",
+      "source": "apps/v4/registry/bases/base/examples/dropdown-menu-example.tsx",
+      "section": "DropdownMenuWithSubmenu"
+    },
+    {
+      "recipe": "create-with-checkboxes",
+      "source": "apps/v4/registry/bases/base/examples/dropdown-menu-example.tsx",
+      "section": "DropdownMenuWithCheckboxes"
+    },
+    {
+      "recipe": "create-with-radio",
+      "source": "apps/v4/registry/bases/base/examples/dropdown-menu-example.tsx",
+      "section": "DropdownMenuWithRadio"
+    },
+    {
+      "recipe": "create-with-checkboxes-icons",
+      "source": "apps/v4/registry/bases/base/examples/dropdown-menu-example.tsx",
+      "section": "DropdownMenuWithCheckboxesIcons"
+    },
+    {
+      "recipe": "create-with-radio-icons",
+      "source": "apps/v4/registry/bases/base/examples/dropdown-menu-example.tsx",
+      "section": "DropdownMenuWithRadioIcons"
+    },
+    {
+      "recipe": "create-with-destructive",
+      "source": "apps/v4/registry/bases/base/examples/dropdown-menu-example.tsx",
+      "section": "DropdownMenuWithDestructive"
+    },
+    {
+      "recipe": "create-with-avatar",
+      "source": "apps/v4/registry/bases/base/examples/dropdown-menu-example.tsx",
+      "section": "DropdownMenuWithAvatar"
+    },
+    {
+      "recipe": "create-in-dialog",
+      "source": "apps/v4/registry/bases/base/examples/dropdown-menu-example.tsx",
+      "section": "DropdownMenuInDialog"
+    },
+    {
+      "recipe": "create-with-inset",
+      "source": "apps/v4/registry/bases/base/examples/dropdown-menu-example.tsx",
+      "section": "DropdownMenuWithInset"
+    },
+    {
+      "recipe": "create-complex",
+      "source": "apps/v4/registry/bases/base/examples/dropdown-menu-example.tsx",
+      "section": "DropdownMenuComplex"
+    }
+  ],
+  "adaptation": {
+    "rendering": "Go/MyGo controls; semantic Material Symbols SVG equivalents for business icons. Selection indicator remains the fixed shared Check SVG; submenu arrows reuse the fixed16px decorative Chevron SVG rotated for LTR/RTL without text-bidi mirroring.",
+    "state": "Each recipe has independent persistent checks and radio state from its source defaults; repeated bindings inside one source recipe share state.",
+    "actions": "Source application/backend placeholders are local status actions; no external navigation or pretend filesystem/network effects.",
+    "avatar": "Existing original shadcn Card avatar bitmap reused; account and top/end avatar triggers preserved.",
+    "placement": "Create Sides exposes all six source sides; logical sides resolve from context direction. NativeOS uses platform menu tracking and does not promise source placement.",
+    "inset": "Logical start8→32px (+24); group captions independently inset. Checkbox/radio reserve logical end32px with Check16px at end8px and independent leading business icon.",
+    "close": "Styled ordinary actions close; checkboxes/radio stay open by default per archived BaseUI1.6.0; CloseOnSelect overrides a row, KeepOpenOnSelect takes priority. Native/legacy keep platform SDK tracking.",
+    "dialog": "Real source Dialog contains dropdown; menu content renders through the independent desktop Host.",
+    "native": "NativeDropdownMenu always requests SystemMenus. Source business icons are recursively converted with mygo.NewMenuIconSVG into cached template ui.MenuIcon handles. The OS owns final icon presentation, style, placement, state, disabled/destructive/shortcut tracking; source rich visual styling is not simulated."
+  }
+}

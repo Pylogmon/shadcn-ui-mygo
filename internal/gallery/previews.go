@@ -231,6 +231,7 @@ func (s *State) overlays(c *ui.Context) {
 		overlay.Command(c, &s.commandPreviewQuery, overlay.CommandProps{InputLabel: "Example command search", Items: []overlay.CommandItem{{Value: "calendar", Label: "Calendar", Group: "Suggestions"}, {Value: "search", Label: "Search", Group: "Suggestions"}, {Value: "settings", Label: "Settings", Group: "Workspace"}}})
 	})
 	s.popupCompositions.view(c, s.Popovers, s.Config.NativeMenus)
+	s.dropdownCompositions.view(c, s.Popovers, s.Config.NativeMenus)
 }
 func (s *State) themes(c *ui.Context) {
 	s.heading(c, "Colors that work together.", "Your base, accent and chart selections apply to every semantic token.")

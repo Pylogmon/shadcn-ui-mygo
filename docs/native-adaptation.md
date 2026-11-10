@@ -29,6 +29,8 @@
 
 自绘 Menu 的内容实际位于 Flyout 子窗口，使用 shadcn 颜色、字体、圆角与状态反馈。子菜单以可测量的相邻面板呈现，可使用键盘、typeahead、禁用项、复选/单选和长菜单滚动；原生窗口负责显示器工作区约束。它没有用父窗口内的绝对定位覆盖层冒充越窗实现。
 
+`MenuItem.Inset` 与 `GroupInset` 分别控制行、组标题的逻辑起点缩进（8→32DIP）；勾选／单选指示采用尾端16DIP SVG，独立前置图标同时保留。自绘桌面菜单默认普通动作关闭，勾选／单选保持打开，匹配固定 Base UI 1.6.0；`CloseOnSelect *bool` 可以逐项覆盖，`KeepOpenOnSelect` 优先保持全局打开。Select 内部单选项显式选后关闭。子菜单箭头复用固定16DIP SVG，按LTR／RTL旋转，避免文本双向算法再次镜像。系统菜单继续采用 OS tracking；旧 InWindow 关闭行为由 MyGo MenuBase 控制，不能用上述字段承诺自绘桌面菜单的生命周期。
+
 菜单面板使用固定Base/Vega的100ms进退动画，退出时保留测量空间并立即移出输入及无障碍树，同路径重开接续当前姿态。方向与缩放原点采用可观测的原生几何；自定义Backend的可选GeometrySurface、未知side及平台边界见[菜单动画](menu-motion.md)。
 
 `Menubar` 使用调用方持有的 `MenubarState{Open,Active}`，同一个 Flyout 在顶层标题间重锚。左右键与RTL、指针切换、子菜单优先、动态移除及结果只回传一次均已测试；子窗口连续按键可在父窗口尚未刷新前操作新菜单。Tab 关闭并恢复当前触发器，可通过 `MenubarProps.OnTab` 用真实控件 Handle 指定相邻目标。`NativeMenubar` 是系统弹出菜单的触发器组，不是应用级操作系统菜单栏；MyGo 目前没有暴露系统 tracking 期间跨顶层触发器切换的 hook。
@@ -69,6 +71,8 @@ err := desktop.Popover(c, host, "settings", anchor, &open,
 Gallery 的日期、日期范围、Tooltip 和作者 HoverCard 已接入组件对，随 Menu style 配置切换。共享的层名称与订阅状态变化会更新子内容版本，避免父窗口已更新而子窗口仍显示旧值。小窗口对照示例同时展示两套 API。
 
 Overlays 页另提供 [Popover／HoverCard 源组合](../examples/popup-composition/README.md)：四维输入/两项表单、三对齐与六侧、Dialog内真实独立窗口、Next.js及产品预览。每个编辑器和Title/Description关系都由当前子Context构造，父模型只持草稿/打开值/Handle；Native保持子窗口平台主题。逻辑侧与start/end按实际Direction映射，源10/100ms预览延迟明确传入。无Parent Context/Element跨窗复用，切页与配置变化释放旧弹层。
+
+同页的 [Dropdown Menu 源组合](../examples/dropdown-composition/README.md) 保留13份文档示例和 Create 的14个配置，包含两种头像触发器、独立勾选和多组单选、带图标的状态项、六个方向及 Dialog；源动作只更新当前应用模型，不向外部服务提交。Native 使用系统菜单和公开模板图像能力，图标／缩进的精确外观由 OS 决定。
 
 Navigation 页的 Menubar 和导航面板也随配置切换；普通模式支持同窗兄弟菜单及富内容，系统模式使用菜单栏触发器组和系统路由菜单。Forms 页新增范围/多拇指/竖向滑块，Data 页新增带禁用项的边框Accordion、保留笔记内容的Collapsible和可折叠/嵌套Resizable工作区。
 

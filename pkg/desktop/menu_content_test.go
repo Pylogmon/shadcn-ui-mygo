@@ -87,7 +87,7 @@ func TestMenuContentScopedSubmenusChecksAndFocus(t *testing.T) {
 	tt.Key(0, ui.KeyDown)
 	tt.Key(0, ui.KeyRight)
 	tt.Key(0, ui.KeyEnter)
-	if left || !right || closed != 1 || !slices.Equal(state.ChosenPath, []string{"right", "pin"}) {
+	if left || !right || closed != 0 || !slices.Equal(state.ChosenPath, []string{"right", "pin"}) {
 		t.Fatalf("duplicate leaf crossed branches: left=%v right=%v state=%+v", left, right, state)
 	}
 	node, ok := tt.AccessByRole(ui.RoleMenuItemCheckBox, "Pin right")

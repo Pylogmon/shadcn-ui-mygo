@@ -35,6 +35,8 @@ func Select(c *ui.Context, host *Host, key string, selected *string, p control.S
 	var chosen control.Option
 	found := false
 	items := make([]overlay.MenuItem, 0, len(p.Options))
+	// Select commits a value and closes, independently of menu radio defaults.
+	closeOnSelect := true
 	for _, o := range p.Options {
 		text := o.Label
 		if text == "" {
@@ -45,7 +47,7 @@ func Select(c *ui.Context, host *Host, key string, selected *string, p control.S
 			label = text
 			found = true
 		}
-		items = append(items, overlay.MenuItem{Key: o.Value, Label: text, Disabled: o.Disabled, Separator: o.Separator, Group: o.Group, Radio: !o.Separator, Selected: o.Value == *selected})
+		items = append(items, overlay.MenuItem{Key: o.Value, Label: text, Disabled: o.Disabled, Separator: o.Separator, Group: o.Group, Radio: !o.Separator, Selected: o.Value == *selected, CloseOnSelect: &closeOnSelect})
 	}
 	anchor.Value(label).Children(func() {
 		ui.Row(c).Grow(1).MinWidth(0).Children(func() {

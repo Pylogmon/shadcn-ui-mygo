@@ -385,12 +385,16 @@ func menubarStamp(items []overlay.MenubarItem, revision uint64) uint64 {
 	visit = func(items []overlay.MenuItem) {
 		fmt.Fprint(hash, "[")
 		for _, item := range items {
+			closeOnSelect := "default"
+			if item.CloseOnSelect != nil {
+				closeOnSelect = fmt.Sprint(*item.CloseOnSelect)
+			}
 			checked := "none"
 			if item.Checked != nil {
 				checked = fmt.Sprint(*item.Checked)
 			}
-			fmt.Fprintf(hash, "%q/%q/%q/%q/%t/%t/%t/%t/%t/%s/%p;", item.Key, item.Label, item.Shortcut, item.Group,
-				item.Disabled, item.Destructive, item.Separator, item.Radio, item.Selected, checked, item.Icon)
+			fmt.Fprintf(hash, "%q/%q/%q/%q/%t/%t/%t/%t/%t/%t/%t/%s/%s/%p;", item.Key, item.Label, item.Shortcut, item.Group,
+				item.Disabled, item.Destructive, item.Separator, item.Radio, item.Selected, item.Inset, item.GroupInset, checked, closeOnSelect, item.Icon)
 			visit(item.Children)
 		}
 		fmt.Fprint(hash, "]")

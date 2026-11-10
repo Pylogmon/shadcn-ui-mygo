@@ -9,6 +9,7 @@ import (
 	"unicode"
 
 	"github.com/egoist/mygo/ui"
+	"github.com/pylogmon/shadcn-ui-mygo/internal/indicator"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/motion"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/overlay"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/theme"
@@ -41,10 +42,13 @@ type MenuContentProps struct {
 	// ItemHeight is the full row height in DIPs, including custom ItemContent.
 	// Positive finite values override the default 32; group labels/separators
 	// keep their own metrics. Match the height to the content's native layout.
-	ItemHeight                    float32
-	NoAutoFocus, KeepOpenOnSelect bool
-	OnChoose                      func(string)
-	OnClose                       func()
+	ItemHeight  float32
+	NoAutoFocus bool
+	// KeepOpenOnSelect prevents closing for every row. By default actions close
+	// and checkbox/radio rows stay open; MenuItem.CloseOnSelect overrides a row.
+	KeepOpenOnSelect bool
+	OnChoose         func(string)
+	OnClose          func()
 	// OnSwitch receives -1/1 for a logical previous/next top-level menu when
 	// a horizontal key has no submenu action. Menubars use it across windows.
 	OnSwitch func(delta int)
@@ -185,7 +189,11 @@ func menuActivate(state *MenuState, items []overlay.MenuItem, depth int, p MenuC
 	if p.OnChoose != nil {
 		p.OnChoose(item.Key)
 	}
-	if !p.KeepOpenOnSelect && p.OnClose != nil {
+	closeOnSelect := item.Checked == nil && !item.Radio
+	if item.CloseOnSelect != nil {
+		closeOnSelect = *item.CloseOnSelect
+	}
+	if closeOnSelect && !p.KeepOpenOnSelect && p.OnClose != nil {
 		p.OnClose()
 	}
 }
@@ -475,7 +483,10 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 						}
 						if item.Group != "" && item.Group != group {
 							group = item.Group
-							ui.Text(c, group).Padding(6, 8).FontSize(12).FontWeight(500).TextColor(t.MutedForeground)
+							caption := ui.Text(c, group).Padding(6, 8).FontSize(12).FontWeight(500).TextColor(t.MutedForeground)
+							if item.GroupInset {
+								caption.PaddingStart(32)
+							}
 						}
 						role := ui.RoleMenuItem
 						if item.Checked != nil {
@@ -484,6 +495,12 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 							role = ui.RoleMenuItemRadio
 						}
 						row := ui.Row(c.Key(key)).FillWidth().Height(itemHeight).PaddingX(8).Gap(8).Radius(max(2, t.Radius-2)).AlignItems(ui.Center).Role(role).Label(item.Label).Disabled(item.Disabled).FontSize(14).TextColor(t.PopoverForeground)
+						if item.Inset {
+							row.PaddingStart(32)
+						}
+						if item.Checked != nil || item.Radio {
+							row.PaddingEnd(32)
+						}
 						if menu.Animated() {
 							motion.ApplyTransition(c, row)
 						}
@@ -525,17 +542,11 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 							row.Opacity(.5).Cursor(ui.CursorNotAllowed)
 						}
 						row.Children(func() {
-							if item.Checked != nil || item.Radio {
-								mark := ""
-								if item.Checked != nil && *item.Checked {
-									mark = "✓"
-								}
-								if item.Radio && item.Selected {
-									mark = "●"
-								}
-								ui.Text(c, mark).Width(16).FontSize(12).AccessHidden(true)
-							} else if item.Icon != nil {
+							if item.Icon != nil {
 								ui.Icon(c, item.Icon).Size(16, 16).AccessHidden(true)
+							}
+							if (item.Checked != nil && *item.Checked) || (item.Radio && item.Selected) {
+								ui.Box(c).Absolute().End(8).TopPercent(50).Size(16, 16).Translate(0, -8).Children(func() { indicator.Check(c) })
 							}
 							if p.ItemContent != nil {
 								ui.Column(c).Grow(1).MinWidth(0).Children(func() { p.ItemContent(c, item) })
@@ -547,14 +558,14 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 								if item.Destructive && menu.Translucent() {
 									shortcutColor = t.AccentForeground
 								}
-								ui.Text(c, item.Shortcut).FontSize(12).TextColor(shortcutColor).MarginStart(20)
+								ui.Text(c, item.Shortcut).FontSize(12).TextColor(shortcutColor)
 							}
 							if len(item.Children) > 0 {
-								arrow := "›"
+								angle := float32(-90)
 								if rtl {
-									arrow = "‹"
+									angle = 90
 								}
-								ui.Text(c, arrow).FontSize(16).AccessHidden(true)
+								indicator.ChevronDown(c).Rotate(angle)
 							}
 						})
 						hovered := row.Hovered()

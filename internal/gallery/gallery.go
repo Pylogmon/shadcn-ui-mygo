@@ -55,6 +55,7 @@ type State struct {
 	disclosureCompositions                                                         disclosureCompositionPreviewState
 	itemCompositions                                                               itemCompositionPreviewState
 	popupCompositions                                                              popupCompositionPreviewState
+	dropdownCompositions                                                           dropdownCompositionPreviewState
 	chartPreview                                                                   chartPreviewState
 	chartCatalogue                                                                 chartcatalog.State
 	comboboxCompound                                                               comboboxCompoundPreviewState
@@ -119,7 +120,7 @@ var pages = []creatorPage{
 	{Key: "display", Label: "Data & display", Keywords: []string{"Table", "DataTable", "Payments", "Payment", "Calendar", "Avatar", "AvatarDropdown", "Accordion", "Collapsible", "Disclosure", "RadiusSettings", "FileTree", "Chart", "BarChart", "LineChart", "AreaChart", "PieChart", "DonutChart", "RadarChart", "RadialChart", "Carousel", "Slides", "Slideshow", "Progress", "Skeleton"}},
 	{Key: "content", Label: "Content & feedback", Keywords: []string{"Alert", "AlertColors", "Empty", "EmptySearch", "Item", "Badge"}},
 	{Key: "text-layout", Label: "Text & layout", Keywords: []string{"Typography", "Kbd", "Keyboard", "CodeBlock", "Code", "Spinner", "Skeleton", "ScrollArea", "AspectRatio"}},
-	{Key: "overlays", Label: "Overlays", Keywords: []string{"AlertDialog", "Dialog", "Sheet", "Popover", "Tooltip", "HoverCard", "Toast", "Sonner", "Command"}},
+	{Key: "overlays", Label: "Overlays", Keywords: []string{"AlertDialog", "Dialog", "Sheet", "Popover", "Tooltip", "HoverCard", "DropdownMenu", "Toast", "Sonner", "Command"}},
 	{Key: "conversation", Label: "Messages & questions", Keywords: []string{"Bubble", "Attachment", "Trace", "Message", "Marker", "MessageScroller", "Questionnaire", "Questionnaire workflows", "Migration", "Conditional"}},
 	{Key: "navigation", Label: "Navigation"},
 	{Key: "themes", Label: "Colors & themes"},

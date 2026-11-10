@@ -1,0 +1,22 @@
+{
+  "package": "@base-ui/react",
+  "version": "1.6.0",
+  "license": "../npm/base-ui-react/LICENSE",
+  "contract": "Both source components default closeOnClick to false.",
+  "files": [
+    {
+      "path": "MenuCheckboxItem.js",
+      "packagePath": "menu/checkbox-item/MenuCheckboxItem.js",
+      "origin": "https://unpkg.com/@base-ui/react@1.6.0/menu/checkbox-item/MenuCheckboxItem.js",
+      "sha256": "b84a87d82bb5d8ea22a8b2d9efcc1bc3aee7f8e07810b1b4570cacb93d0c7373",
+      "bytes": 3604
+    },
+    {
+      "path": "MenuRadioItem.js",
+      "packagePath": "menu/radio-item/MenuRadioItem.js",
+      "origin": "https://unpkg.com/@base-ui/react@1.6.0/menu/radio-item/MenuRadioItem.js",
+      "sha256": "f3bcd685de3835b0f1e42465e04b22c684264c95705507799783788e0229f428",
+      "bytes": 3510
+    }
+  ]
+}

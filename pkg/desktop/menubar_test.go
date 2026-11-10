@@ -185,8 +185,8 @@ func TestMenubarHoverSwitchAndDynamicContentDoNotScheduleIdleFrames(t *testing.T
 func TestMenubarSelectionCallbackAndReturnEachOccurOnce(t *testing.T) {
 	b, s := &fakeBackend{}, &MenubarState{}
 	callbacks, returns, dismissals := 0, 0, 0
-	checked := false
-	p := MenubarProps{Items: []overlay.MenubarItem{{Key: "view", Label: "View", Items: []overlay.MenuItem{{Key: "grid", Label: "Show grid", Checked: &checked}}}},
+	checked, closeOnSelect := false, true
+	p := MenubarProps{Items: []overlay.MenubarItem{{Key: "view", Label: "View", Items: []overlay.MenuItem{{Key: "grid", Label: "Show grid", Checked: &checked, CloseOnSelect: &closeOnSelect}}}},
 		OnChoose: func(value string) {
 			callbacks++
 			if value != "grid" {
