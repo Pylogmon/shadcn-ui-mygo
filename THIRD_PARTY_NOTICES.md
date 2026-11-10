@@ -74,6 +74,8 @@ The shared Select chevron reuses the existing inline SVG from
 `pkg/control/select.go`, with the same Lucide/Feather license notice. Its local
 migration source, original literal digest and shared helper digest are recorded
 in `internal/indicator/manifest.json`.
+Accordion and Collapsible reuse this same fixed16-DIP chevron helper, including
+its native disclosure-progress rotation; no extra icon binary is introduced.
 Combobox check/clear visuals reuse the already pinned exact Lucide assets,
 with original asset paths and digests recorded in that shared manifest.
 Toast status SVGs are archived in `pkg/overlay/assets/` with their own manifest.

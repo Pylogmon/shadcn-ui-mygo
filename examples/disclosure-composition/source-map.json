@@ -1,0 +1,273 @@
+{
+  "repository": "https://github.com/shadcn-ui/ui",
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "files": [
+    {
+      "path": "apps/v4/examples/base/accordion-basic.tsx",
+      "gitBlob": "e9c69ec3da9dce484c099513b1f03e4e5627b5e0",
+      "sha256": "5e6f6ec734edaa585c648f64c53f233d79e861b9ec2ec0c3c13f168d0fb3cffc",
+      "bytes": 1245,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/accordion-basic.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/accordion-borders.tsx",
+      "gitBlob": "17b700bbee0a17ade63c233eee5e40da48b58600",
+      "sha256": "6e49df9170a1ea9f7a7f72ac259222048437d5959b971c7882c491a61f59b77f",
+      "bytes": 1488,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/accordion-borders.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/accordion-card.tsx",
+      "gitBlob": "663d57eb4f258521c25574e8f5f26ab4d161b50a",
+      "sha256": "1cfa8b75564ae209c54a6484225f574740f579c756c83b2c951995027844182e",
+      "bytes": 1890,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/accordion-card.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/accordion-demo.tsx",
+      "gitBlob": "5649d267fee381b8847dde5c30cbe3356b4b33cf",
+      "sha256": "76f89511c074041f1f837abfda80edf952a320859c97761f5c2f02831733fdf2",
+      "bytes": 1230,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/accordion-demo.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/accordion-disabled.tsx",
+      "gitBlob": "17a3f90d8b685c7c9268c4fb4e158c64f9109f4e",
+      "sha256": "1b731aec77e8bff6545d43a2df443306222e4e123ad16946c98d4d55e06bc429",
+      "bytes": 1304,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/accordion-disabled.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/accordion-multiple.tsx",
+      "gitBlob": "9bd4918e2d0a375815e1de53d6faa402111e5660",
+      "sha256": "2579366b01c01c1ddc9e532367401114c1f43c575f53964ddf7a12dcf7feffd8",
+      "bytes": 1324,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/accordion-multiple.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/accordion-rtl.tsx",
+      "gitBlob": "8600990fdaad63858c45159392e9902e0dbb900f",
+      "sha256": "a1ed04a5381822cb18458e394ea48244fe527e189d054f2805cac5bb6dd5e67e",
+      "bytes": 3677,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/accordion-rtl.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/collapsible-basic.tsx",
+      "gitBlob": "f57ae11355114e041815d57fd59fd4915064f348",
+      "sha256": "d9ab761c6c302d38d37e1cdd168c47f022f5523ed3197feaa967a8d6d0906997",
+      "bytes": 1104,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/collapsible-basic.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/collapsible-demo.tsx",
+      "gitBlob": "dd36edcb8da8a6453b61c955bd080fa6e11e6cee",
+      "sha256": "e2087c3fcc44adc3501c6d09589e4f27f5bc084f4d7402e25d606143f9654227",
+      "bytes": 1610,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/collapsible-demo.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/collapsible-file-tree.tsx",
+      "gitBlob": "b7306532f799422d8dc1b5c9799ef12611141bf5",
+      "sha256": "9e47a67f0f36f1e46cac81a84fe03c2f9bcfad635a9f11ccaed90a7289a12117",
+      "bytes": 3377,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/collapsible-file-tree.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/collapsible-settings.tsx",
+      "gitBlob": "6053804abe38561f416c6f96fa3402f68648e1ce",
+      "sha256": "3f6cc3adcc332f057ac0d1b00fd5bcff3e74aa33642075069ec99551bed42dc5",
+      "bytes": 2371,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/collapsible-settings.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/collapsible-rtl.tsx",
+      "gitBlob": "53374681378c7ea49638de68b510bc552dfde959",
+      "sha256": "4714a93307d2dac02905404086d7435e3f6293f7de41530c1d9d124e6a6e9616",
+      "bytes": 2772,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/collapsible-rtl.tsx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/examples/accordion-example.tsx",
+      "gitBlob": "a11d9f875d49e478a787e947a4a1245760705b74",
+      "sha256": "2d22b2749b4e3f32ed753ff5fdc46db6c8e5d4bce8b42d7af1c7e02aca41d0fe",
+      "bytes": 12169,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/examples/accordion-example.tsx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/examples/collapsible-example.tsx",
+      "gitBlob": "f5de33e89ca5269302bf0b30a1efdef158cb08f6",
+      "sha256": "dd365dedc98eea455ed379673d956197900692ee581fbe029d5ab97775f049b5",
+      "bytes": 7143,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/examples/collapsible-example.tsx"
+    }
+  ],
+  "configurations": {
+    "count": 17,
+    "accordionDocs": 7,
+    "accordionCreate": 5,
+    "collapsibleDocs": 5,
+    "collapsibleCreateReused": [
+      "tree",
+      "settings"
+    ]
+  },
+  "nativeAdaptation": [
+    "Independent current-build Trigger/Content; Settings content is declared before its trigger and shares its two-column grid.",
+    "Source repeated Radius X/Y labels use distinct Expanded Radius X/Y names for the additional native editors.",
+    "Typed application-owned radius values and folder/accordion open values survive page changes; no frame objects are stored.",
+    "Source hash-only annual billing link and actions update local status; no account, file, order or subscription service is contacted.",
+    "File-tree Explorer/Outline changes only selected tab, as the source contains no distinct tab panels.",
+    "Ordinary and translated source inputs are not placed inside a trigger."
+  ],
+  "recipes": [
+    {
+      "key": "settings",
+      "sources": [
+        {
+          "path": "apps/v4/examples/base/collapsible-settings.tsx"
+        },
+        {
+          "path": "apps/v4/registry/bases/base/examples/collapsible-example.tsx",
+          "section": "CollapsibleSettings"
+        }
+      ]
+    },
+    {
+      "key": "tree",
+      "sources": [
+        {
+          "path": "apps/v4/examples/base/collapsible-file-tree.tsx"
+        },
+        {
+          "path": "apps/v4/registry/bases/base/examples/collapsible-example.tsx",
+          "section": "CollapsibleFileTree"
+        }
+      ]
+    },
+    {
+      "key": "order",
+      "sources": [
+        {
+          "path": "apps/v4/examples/base/collapsible-demo.tsx"
+        }
+      ]
+    },
+    {
+      "key": "product",
+      "sources": [
+        {
+          "path": "apps/v4/examples/base/collapsible-basic.tsx"
+        }
+      ]
+    },
+    {
+      "key": "collapsible-rtl",
+      "sources": [
+        {
+          "path": "apps/v4/examples/base/collapsible-rtl.tsx"
+        }
+      ]
+    },
+    {
+      "key": "accordion-demo",
+      "sources": [
+        {
+          "path": "apps/v4/examples/base/accordion-demo.tsx"
+        }
+      ]
+    },
+    {
+      "key": "accordion-basic",
+      "sources": [
+        {
+          "path": "apps/v4/examples/base/accordion-basic.tsx"
+        }
+      ]
+    },
+    {
+      "key": "accordion-borders",
+      "sources": [
+        {
+          "path": "apps/v4/examples/base/accordion-borders.tsx"
+        }
+      ]
+    },
+    {
+      "key": "accordion-multiple",
+      "sources": [
+        {
+          "path": "apps/v4/examples/base/accordion-multiple.tsx"
+        }
+      ]
+    },
+    {
+      "key": "accordion-disabled",
+      "sources": [
+        {
+          "path": "apps/v4/examples/base/accordion-disabled.tsx"
+        }
+      ]
+    },
+    {
+      "key": "accordion-card",
+      "sources": [
+        {
+          "path": "apps/v4/examples/base/accordion-card.tsx"
+        }
+      ]
+    },
+    {
+      "key": "accordion-rtl",
+      "sources": [
+        {
+          "path": "apps/v4/examples/base/accordion-rtl.tsx"
+        }
+      ]
+    },
+    {
+      "key": "create-basic",
+      "sources": [
+        {
+          "path": "apps/v4/registry/bases/base/examples/accordion-example.tsx",
+          "section": "AccordionBasic"
+        }
+      ]
+    },
+    {
+      "key": "create-multiple",
+      "sources": [
+        {
+          "path": "apps/v4/registry/bases/base/examples/accordion-example.tsx",
+          "section": "AccordionMultiple"
+        }
+      ]
+    },
+    {
+      "key": "create-borders",
+      "sources": [
+        {
+          "path": "apps/v4/registry/bases/base/examples/accordion-example.tsx",
+          "section": "AccordionWithBorders"
+        }
+      ]
+    },
+    {
+      "key": "create-card",
+      "sources": [
+        {
+          "path": "apps/v4/registry/bases/base/examples/accordion-example.tsx",
+          "section": "AccordionInCard"
+        }
+      ]
+    },
+    {
+      "key": "create-disabled",
+      "sources": [
+        {
+          "path": "apps/v4/registry/bases/base/examples/accordion-example.tsx",
+          "section": "AccordionWithDisabled"
+        }
+      ]
+    }
+  ]
+}

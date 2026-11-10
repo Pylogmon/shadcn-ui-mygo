@@ -1,0 +1,30 @@
+{
+  "repository": "https://github.com/shadcn-ui/ui",
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "files": [
+    {
+      "path": "accordion.tsx",
+      "source": "apps/v4/registry/bases/base/ui/accordion.tsx",
+      "gitBlob": "182ccd8e3e872fc0b0a24bb72c0469b6a5857b16",
+      "sha256": "2322a35cef124ca359476584e209bb21bc5c4b233b4dfdffc1a2c7a7839cad4f",
+      "bytes": 2743
+    },
+    {
+      "path": "collapsible.tsx",
+      "source": "apps/v4/registry/bases/base/ui/collapsible.tsx",
+      "gitBlob": "488fb33af5107a94791ef3235ee58861e3ed6855",
+      "sha256": "ead4349ff7b01d696ef89294a81d18ee1d3f732321398896462c834ab9b9e065",
+      "bytes": 658
+    }
+  ],
+  "reusedStyle": {
+    "path": "../../../control/testdata/shadcn-select/shadcn/styles/style-vega.css",
+    "source": "apps/v4/registry/styles/style-vega.css",
+    "sha256": "10fa07bd61b429ae2c14c572ba9975f6e991d68a04f8fec7e354a062597e0d4e",
+    "contractLines": [
+      3,
+      17
+    ]
+  },
+  "examples": "../../../../examples/disclosure-composition/source-map.json"
+}

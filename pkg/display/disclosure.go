@@ -4,6 +4,7 @@ import (
 	"strconv"
 
 	"github.com/egoist/mygo/ui"
+	"github.com/pylogmon/shadcn-ui-mygo/internal/indicator"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/motion"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/theme"
 )
@@ -27,6 +28,15 @@ type AccordionProps struct {
 	HeadingLevel int
 	Loop         bool
 	OnChange     func(openKeys []string)
+	// StyleItem receives only this build's actual parts. Content is the inner
+	// panel, invalid while it has not mounted. Do not retain these Elements.
+	StyleItem func(*ui.Context, AccordionItemParts)
+}
+
+type AccordionItemParts struct {
+	Key                    string
+	Open                   bool
+	Root, Trigger, Content ui.Element
 }
 
 type accordionOpenState struct {
@@ -130,7 +140,7 @@ func Accordion(c *ui.Context, p AccordionProps) ui.Element {
 						if tr.Hovered() {
 							text.Underline().UnderlineOffset(4)
 						}
-						ui.Text(c, "⌄").FontSize(16).Shrink(0).Rotate(180 * part.Progress()).TextColor(t.MutedForeground).AccessHidden(true)
+						indicator.ChevronDown(c).Rotate(180 * part.Progress()).TextColor(t.MutedForeground)
 					})
 					if tr.Changed() {
 						// Native input is delivered as the trigger constructor
@@ -148,6 +158,9 @@ func Accordion(c *ui.Context, p AccordionProps) ui.Element {
 				panel := disclosurePanel(c, part, it.Open, it.KeepMounted, it.Title, it.Content)
 				if panel.Valid() && p.Bordered {
 					panel.PaddingX(16)
+				}
+				if p.StyleItem != nil {
+					p.StyleItem(c, AccordionItemParts{Key: key, Open: *it.Open, Root: item, Trigger: part.Trigger, Content: panel})
 				}
 			})
 		}
@@ -230,7 +243,7 @@ func CollapsibleWith(c *ui.Context, open *bool, p CollapsibleProps) ui.Element {
 		} else {
 			tr.Padding(8).Radius(t.RadiusMD()).FillWidth().Children(func() {
 				ui.Text(c, p.Label).Grow(1)
-				ui.Text(c, "⌄").Rotate(180 * part.Progress()).AccessHidden(true)
+				indicator.ChevronDown(c).Rotate(180 * part.Progress())
 			})
 		}
 		if p.Disabled {
@@ -275,6 +288,10 @@ func disclosurePanel(c *ui.Context, part ui.CollapsibleParts, open *bool, keep b
 		})
 	})
 	part.Trigger.Controls(clip)
+	// An initial zero-height clip may cull Draw; layout still measures inner.
+	if previous := inner.LayoutBounds().H; previous > 0 {
+		*height = previous
+	}
 	if progress < 1 {
 		clip.Height(max(0, progress) * *height)
 	}

@@ -65,6 +65,7 @@ Forms 页也包含 [原生文本输入](docs/text-input.md)、[可调整高度�
 数值、日期、时间和系统文件选择可直接绑定应用模型，见[类型化输入](docs/typed-input.md)；运行 `go run ./examples/typed-input` 或 `make inputs-app`。
 Persian/Jalali 日历和应用控制解析的可编辑日期见[历法与日期输入](docs/date-input.md)，运行 `go run ./examples/date-composition` 或 `make dates-app`。
 Gallery 的整卡单选、进度标签与数值、灰度头像及 Skeleton 表单/表格见[组合示例](examples/gallery-recipes/README.md)。
+独立展开布局、文件树、Radius输入和FAQ组合见 [Disclosure API](docs/disclosure-composition.md)；Data页的17个[源配置](examples/disclosure-composition/README.md)保留真实输入、同组键盘导航和跨页草稿。
 Forms 页还提供可保存的预约表单和带复制、收藏、菜单、搜索与草稿预览的 InputGroup，编辑状态跨页保留。
 
 Data 页也展示头像尺寸、状态角标、加载/回退和头像组。对应 API 见 [Avatar](docs/avatar.md) 与 [Card 槽位](docs/card.md)。

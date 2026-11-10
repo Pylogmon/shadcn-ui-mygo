@@ -171,6 +171,7 @@ func (s *State) displays(c *ui.Context) {
 		display.Alert(c, display.AlertProps{Title: "Everything is up to date", Description: "Your workspace is ready for the next idea."})
 		display.CodeBlock(c, display.CodeBlockProps{Title: "main.go", Language: "go", Code: "func view(c *ui.Context) {\n    theme.Apply(c)\n    control.Button(c, \"Hello, Go\", control.ButtonProps{})\n}", LineNumbers: true, Height: 130})
 	})
+	s.disclosureCompositions.view(c, s.Popovers, s.Config.NativeMenus)
 	s.recipeProgressPreview(c)
 	s.recipeAvatarPreview(c)
 	s.recipeSkeletonPreview(c)
