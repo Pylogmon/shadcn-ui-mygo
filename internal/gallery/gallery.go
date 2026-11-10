@@ -63,6 +63,7 @@ type State struct {
 	switchCompositions                                                             switchCompositionPreviewState
 	checkboxCompositions                                                           checkboxCompositionPreviewState
 	radioCompositions                                                              radioCompositionPreviewState
+	textareaCompositions                                                           textareaCompositionPreviewState
 	chartPreview                                                                   chartPreviewState
 	chartCatalogue                                                                 chartcatalog.State
 	comboboxCompound                                                               comboboxCompoundPreviewState

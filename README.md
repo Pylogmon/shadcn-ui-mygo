@@ -94,6 +94,7 @@ Forms 页的 [Button 源组合](examples/button-composition/README.md) 提供20�
 同页的 [Switch 源组合](examples/switch-composition/README.md) 提供12个配置，保留两尺寸、前置说明、整卡选择、禁用／错误状态和译文，操作真实原生Switch。
 该页的 [Checkbox 源组合](examples/checkbox-composition/README.md) 提供15个配置，包含独立默认值、描述／整卡、分组、禁用／错误、真实表格选择和RTL；表格全选保持源布尔规则。
 同页的 [RadioGroup 源组合](examples/radio-composition/README.md) 提供13个配置，包含原生键盘互斥、整卡计划、价格／Fieldset、两列网格、单项／整组禁用、错误与翻译RTL。
+同页的 [Textarea 源组合](examples/textarea-composition/README.md) 提供11个配置，保留原生多行编辑、说明前后顺序、固定行数、禁用／错误、真实发送按钮与独立本地草稿。
 该页还可配置Combobox定位/RTL/高亮，试用对象多选表单、Dialog内搜索、Grid及100项滚动窗口。
 通知的应用队列、六位置堆叠、loading更新、可阻止关闭的动作、原生滑动及完整自定义正文见 [Toast/Sonner](docs/toast.md)。
 Overlays 页的 [Popover／HoverCard 源组合](examples/popup-composition/README.md) 提供12个配置：独立窗口表单、对齐和逻辑侧、Dialog内弹层、延迟预览及翻译RTL。

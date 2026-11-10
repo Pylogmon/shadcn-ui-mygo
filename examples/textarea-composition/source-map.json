@@ -1,0 +1,141 @@
+{
+  "repository": "https://github.com/shadcn-ui/ui",
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "sourceManifestSHA256": "60cea4517fbce24938ff6992b1c58fc394d517c9908df2cc2ab30fae938d35b9",
+  "files": [
+    {
+      "path": "apps/v4/content/docs/components/base/textarea.mdx",
+      "gitBlob": "77379eab4c14d7d64426d26192bb6b765011035c",
+      "sha256": "42887e101023fadc9b8d085a1ae3d4fe91c547285c8381bcf51337eca42c7d5c",
+      "bytes": 1989,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/content/docs/components/base/textarea.mdx"
+    },
+    {
+      "path": "apps/v4/examples/base/textarea-button.tsx",
+      "gitBlob": "ddc4fc56ac339636ebd8c17b93d6212c2549b3e9",
+      "sha256": "baf7ca685f1ff5491c30b7cc67e80ba10032fc5b5ed388292e71cf34ba7ee90e",
+      "bytes": 309,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/textarea-button.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/textarea-demo.tsx",
+      "gitBlob": "22d7050d6ec50e77b6cb5ab379de24739bb561ef",
+      "sha256": "8a4433051253c97f77fe0fc94b19472fae7648fecee7bfd827278c99cb6c8822",
+      "bytes": 162,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/textarea-demo.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/textarea-disabled.tsx",
+      "gitBlob": "1a6a1a00a13fbf0408e7889fa2fbdc6b2e37b3e7",
+      "sha256": "9fed69e49e31a0630073ce851f88f673ba9f6185e9042851896c12ceaac78121",
+      "bytes": 402,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/textarea-disabled.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/textarea-field.tsx",
+      "gitBlob": "27fca4e4131854415fded9278e500b24642d5678",
+      "sha256": "768aedc904d9f9a8c836126b9c68126a4226cbb7d83faf0dfeef6e458847c12b",
+      "bytes": 438,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/textarea-field.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/textarea-invalid.tsx",
+      "gitBlob": "b60ee256c08aabe936b43ac46d98f874dc9a5d56",
+      "sha256": "ee25cd05a7b89bd7bd363d18631777ed1bad52b34bb3481419eeaeec7d162dbd",
+      "bytes": 500,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/textarea-invalid.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/textarea-rtl.tsx",
+      "gitBlob": "4c82314d7604973db1e3ad1e3fa711181fa81144",
+      "sha256": "6542fea79aa91775937fb1a8e019a010f5892c08612a9f0d058c07752d3a66fc",
+      "bytes": 1393,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/textarea-rtl.tsx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/examples/textarea-example.tsx",
+      "gitBlob": "f20ba0050f3eab9b66a15bc5bf0b902834e07fcb",
+      "sha256": "3199a0816889450768a891d9c3c97ca7618d7d03eca0867cf359bb2d3c9b30d9",
+      "bytes": 1918,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/examples/textarea-example.tsx"
+    }
+  ],
+  "counts": {
+    "documentationExamples": 6,
+    "createSections": 5,
+    "recipes": 11,
+    "originalFilesIncludingGuide": 8
+  },
+  "configurations": [
+    {
+      "recipe": "demo",
+      "source": "apps/v4/examples/base/textarea-demo.tsx",
+      "retained": "docs320, bare, auto-grow min64"
+    },
+    {
+      "recipe": "field",
+      "source": "apps/v4/examples/base/textarea-field.tsx",
+      "retained": "docs320, Message, preceding description"
+    },
+    {
+      "recipe": "disabled",
+      "source": "apps/v4/examples/base/textarea-disabled.tsx",
+      "retained": "docs320, disabled Field and editor"
+    },
+    {
+      "recipe": "invalid",
+      "source": "apps/v4/examples/base/textarea-invalid.tsx",
+      "retained": "docs320, invalid Field and editable editor, following description"
+    },
+    {
+      "recipe": "button",
+      "source": "apps/v4/examples/base/textarea-button.tsx",
+      "retained": "docs320, gap8, Send message local snapshot"
+    },
+    {
+      "recipe": "rtl",
+      "source": "apps/v4/examples/base/textarea-rtl.tsx",
+      "retained": "320 maximum, 4 rows, original English/Arabic/Hebrew"
+    },
+    {
+      "recipe": "create-basic",
+      "source": "apps/v4/registry/bases/base/examples/textarea-example.tsx",
+      "section": "TextareaBasic",
+      "retained": "bare full available width, auto-grow min64"
+    },
+    {
+      "recipe": "create-invalid",
+      "source": "apps/v4/registry/bases/base/examples/textarea-example.tsx",
+      "section": "TextareaInvalid",
+      "retained": "bare invalid editable editor, no Field or description"
+    },
+    {
+      "recipe": "create-label",
+      "source": "apps/v4/registry/bases/base/examples/textarea-example.tsx",
+      "section": "TextareaWithLabel",
+      "retained": "Message, declared6 rows"
+    },
+    {
+      "recipe": "create-description",
+      "source": "apps/v4/registry/bases/base/examples/textarea-example.tsx",
+      "section": "TextareaWithDescription",
+      "retained": "Message, declared6 rows, following description, Enter stays newline"
+    },
+    {
+      "recipe": "create-disabled",
+      "source": "apps/v4/registry/bases/base/examples/textarea-example.tsx",
+      "section": "TextareaDisabled",
+      "retained": "Message label, editor disabled, no data-disabled Field"
+    }
+  ],
+  "adaptation": {
+    "nativeEditor": "Existing control.Textarea with native multiline/selection/paste/undo. Native line boxes obey platform font metrics. Rows6 and Rows4 use the public fixed-line option; other examples auto-grow with the64DIP minimum.",
+    "defaultBounds": "Docs preview max-w-xs is320DIP. Create examples have no explicit source width and fill their available native card width.",
+    "localAction": "Source Send message has no transport handler. The Gallery records a local submission snapshot and leaves the draft unchanged.",
+    "enter": "Create description says press enter to send but supplies no event handler; Enter remains a native newline.",
+    "resize": "No extra resize handle is added; native auto-growing editor uses the existing API.",
+    "accessibility": "Bare editors use original placeholder as native accessible Label; Field examples preserve visible labels and described-by order. Pinned MyGo AX returns from disabled nodes before native editor Multiline/placeholder/value metadata; public Multiline(true) cannot bypass this. Real disabled native editors are retained and reject input, editable examples explicitly verify native Multiline metadata. No fake replacement node.",
+    "scope": "Application stores strings, selection integers and counters only, never Context/Element/FieldScope. Selector mode follows Flyout/Native; textarea content remains styled native content.",
+    "verification": "One public-input workflow plus software PNGs. No real OS/IME/AT/platform matrix claim."
+  }
+}
