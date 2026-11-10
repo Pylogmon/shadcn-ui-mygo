@@ -10,6 +10,16 @@ Theme/color source notices are kept alongside their archived data at
 `pkg/theme/sources/LICENSE.shadcn` and `pkg/theme/sources/LICENSE.tailwind`.
 Go module dependencies retain their respective licenses in their module sources.
 
+Gallery Card compositions include the five image resources referenced directly
+by the fixed shadcn examples: the mymind Unsplash landscape, the shadcn1 event
+cover and the shadcn/maxleiter/evilrabbit profile images. Original bytes, source
+URLs, redirects and SHA-256 values are recorded in
+[`examples/card-composition/source-map.json`](examples/card-composition/source-map.json).
+Their provenance and image terms are documented in
+[`internal/gallery/card-assets/README.md`](internal/gallery/card-assets/README.md),
+also included in macOS bundles as `licenses/card-example-images.txt`.
+The kit's MIT code license does not relicense these third-party images.
+
 The optional Create font collection uses the 26 families named by the fixed
 shadcn Create picker. Original Google Fonts assets are pinned to commit
 `5bb28733cec313b63fbd415b574b5ae35c8aa8b8`; original supplemental faces and

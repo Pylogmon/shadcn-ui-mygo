@@ -1,0 +1,204 @@
+{
+  "repository": "https://github.com/shadcn-ui/ui",
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "sourceFiles": [
+    {
+      "source": "apps/v4/examples/base/card-demo.tsx",
+      "gitBlob": "5080f0370f3f57241e13ea1049b085d9c525f1c3",
+      "sha256": "9fe011a4cd18ee259b8a149ad977751d046916d03636da3c97ca88173d16e276",
+      "bytes": 1835
+    },
+    {
+      "source": "apps/v4/examples/base/card-small.tsx",
+      "gitBlob": "5d88905d35cfddb640c373928a3f38e19e49ecb5",
+      "sha256": "23b6f4300d5c8e0aadf83cc994e32c5850622b961c8db0e40b6cd3c5b2b39440",
+      "bytes": 1587
+    },
+    {
+      "source": "apps/v4/examples/base/card-spacing.tsx",
+      "gitBlob": "ba07fcf02a3060aacca9408d86abea3abcd23f85",
+      "sha256": "c34775b8a6e54e34d5e5e62640f01fc48f07f20478af49557423a83ca9359bf9",
+      "bytes": 3156
+    },
+    {
+      "source": "apps/v4/examples/base/card-edge-to-edge.tsx",
+      "gitBlob": "15d7a3c6e2e9158592e57471d966d6d5c344c151",
+      "sha256": "fee5aff6730dea88b1c14b6ed94881c59d23b56d48ff317d2fc8ed7b13f747c5",
+      "bytes": 1651
+    },
+    {
+      "source": "apps/v4/examples/base/card-image.tsx",
+      "gitBlob": "e89b487702f64eee7b99226a4c73e24034215444",
+      "sha256": "f4b3e4d827225a24a122d1e7e0ad2da353c2dfb508f91805e7059ff395de3c30",
+      "bytes": 1058
+    },
+    {
+      "source": "apps/v4/examples/base/card-rtl.tsx",
+      "gitBlob": "76035b46cbda2c5492c8c1bf469c5badd82d7c0a",
+      "sha256": "2fc2119646dcea0a631e5692e6418086cf8343be402f4dc178939cfbd974ff1c",
+      "bytes": 3467
+    },
+    {
+      "source": "apps/v4/registry/bases/base/examples/card-example.tsx",
+      "gitBlob": "3296cc3615240d4671aa520e7e29d36260aa04d7",
+      "sha256": "00daf26ba404d0bfc41167a244d993ddc2837ba820cedfd6967d4a96932b3425",
+      "bytes": 15115
+    },
+    {
+      "source": "apps/v4/registry/bases/base/ui/card.tsx",
+      "gitBlob": "2062884f29a8044fa48edf86605182eca29f8716",
+      "sha256": "0d525c03e086b0047f7c0700850281023359cfc020eb233fdb0d74ec870ebea0",
+      "bytes": 2031
+    },
+    {
+      "source": "apps/v4/content/docs/components/base/card.mdx",
+      "gitBlob": "f39e9ca9cc8047adccc451d3a3acb18c43e83838",
+      "sha256": "a058a2f8a1fdfaece149524fa4bf6466b0af831276d25489f918f6ceb4c10c0c",
+      "bytes": 7077
+    }
+  ],
+  "createConfigurations": [
+    {
+      "function": "CardDefault",
+      "recipe": "default"
+    },
+    {
+      "function": "CardSmall",
+      "recipe": "small"
+    },
+    {
+      "function": "CardContentEdgeToEdge",
+      "recipe": "edge"
+    },
+    {
+      "function": "CardCustomSpacing",
+      "recipe": "spacing"
+    },
+    {
+      "function": "CardHeaderWithBorder",
+      "recipe": "header"
+    },
+    {
+      "function": "CardFooterWithBorder",
+      "recipe": "footer"
+    },
+    {
+      "function": "CardHeaderWithBorderSmall",
+      "recipe": "header-small"
+    },
+    {
+      "function": "CardFooterWithBorderSmall",
+      "recipe": "footer-small"
+    },
+    {
+      "function": "CardWithImage",
+      "recipe": "image"
+    },
+    {
+      "function": "CardWithImageSmall",
+      "recipe": "image-small"
+    },
+    {
+      "function": "CardLogin",
+      "recipe": "login"
+    },
+    {
+      "function": "CardMeetingNotes",
+      "recipe": "notes"
+    }
+  ],
+  "documentationConfigurations": [
+    {
+      "example": "card-demo",
+      "recipe": "docs-login"
+    },
+    {
+      "example": "card-small",
+      "recipe": "reports"
+    },
+    {
+      "example": "card-spacing",
+      "recipe": "docs-spacing"
+    },
+    {
+      "example": "card-edge-to-edge",
+      "recipe": "edge"
+    },
+    {
+      "example": "card-image",
+      "recipe": "event"
+    },
+    {
+      "example": "card-rtl",
+      "recipe": "rtl"
+    }
+  ],
+  "uniqueRecipes": 17,
+  "assets": [
+    {
+      "name": "create-cover",
+      "url": "https://images.unsplash.com/photo-1604076850742-4c7221f3101b?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "finalUrl": "https://images.unsplash.com/photo-1604076850742-4c7221f3101b?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "contentType": "image/jpeg",
+      "bytes": 296503,
+      "sha256": "3d176136bc21b6d0c76199beb9b93bf53278fe7d805f72729c5810ada6a43645",
+      "path": "internal/gallery/card-assets/landscape.jpg",
+      "captured": "2026-11-10",
+      "modified": false
+    },
+    {
+      "name": "event-cover",
+      "url": "https://avatar.vercel.sh/shadcn1",
+      "finalUrl": "https://avatar.vercel.sh/shadcn1",
+      "contentType": "image/png",
+      "bytes": 4086,
+      "sha256": "82a889804014e7d2669ca3ccb9a0d44985c08dfacafb719195d97de423d25cc3",
+      "path": "internal/gallery/card-assets/event.png",
+      "captured": "2026-11-10",
+      "modified": false
+    },
+    {
+      "name": "avatar-shadcn",
+      "url": "https://github.com/shadcn.png",
+      "finalUrl": "https://avatars.githubusercontent.com/u/124599?v=4",
+      "contentType": "image/jpeg",
+      "bytes": 31007,
+      "sha256": "513d06f542692036ff0bb17938f04b3efd60567ba2cae08049469d21f18e0524",
+      "path": "internal/gallery/card-assets/shadcn.jpg",
+      "captured": "2026-11-10",
+      "modified": false
+    },
+    {
+      "name": "avatar-maxleiter",
+      "url": "https://github.com/maxleiter.png",
+      "finalUrl": "https://avatars.githubusercontent.com/u/8675906?v=4",
+      "contentType": "image/png",
+      "bytes": 216590,
+      "sha256": "3a31d3d0c3bb2074929755298773d14e53048a8a85abbc0c944fb19fc65106bf",
+      "path": "internal/gallery/card-assets/maxleiter.png",
+      "captured": "2026-11-10",
+      "modified": false
+    },
+    {
+      "name": "avatar-evilrabbit",
+      "url": "https://github.com/evilrabbit.png",
+      "finalUrl": "https://avatars.githubusercontent.com/u/6880091?v=4",
+      "contentType": "image/png",
+      "bytes": 10647,
+      "sha256": "8dcdb391f1f8f6610d31a9a3e06733fec308be75732571ccc6d5ce634c695382",
+      "path": "internal/gallery/card-assets/evilrabbit.png",
+      "captured": "2026-11-10",
+      "modified": false
+    }
+  ],
+  "nativeAdaptations": [
+    "Current child Contexts build every Card slot; application-owned models preserve independent login drafts across recipes/page unmounts.",
+    "Native TextInput password mode and local email/required validation replace browser constraint UI; no authentication, OAuth or audio service is called.",
+    "Source # links and inert example buttons update a local status instead of creating fake URL navigation.",
+    "Source negative margin in Terms is composed as an edge-to-edge zero-gap native Scroll/actions column.",
+    "Original decoded image pixels receive source grayscale/brightness; the Create primary overlay implements the color blend using SetLum/ClipColor then 50% alpha compositing.",
+    "Source Lucide/IconPlaceholder visuals use the installed Material Symbols outlined family."
+  ],
+  "assetNotice": "../../internal/gallery/card-assets/README.md",
+  "verification": "TestCardCompositionsSourceWorkflowAndDrafts is one native module workflow; complete Gallery routing is checked separately by the parent integration. These are not all-platform runtime/AT or a complete visual matrix."
+}

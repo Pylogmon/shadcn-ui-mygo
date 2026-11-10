@@ -93,6 +93,7 @@ cp pkg/control/testdata/input-otp/LICENSE "$bundle/Contents/Resources/licenses/i
 cp internal/indicator/LICENSE.lucide "$bundle/Contents/Resources/licenses/lucide.txt"
 cp pkg/overlay/testdata/sonner/LICENSE.md "$bundle/Contents/Resources/licenses/sonner.txt"
 cp internal/shimmer/testdata/shadcn/LICENSE "$bundle/Contents/Resources/licenses/shadcn.txt"
+cp internal/gallery/card-assets/README.md "$bundle/Contents/Resources/licenses/card-example-images.txt"
 cp pkg/theme/sources/LICENSE.tailwind "$bundle/Contents/Resources/licenses/tailwind.txt"
 cp pkg/display/testdata/recharts-animation/LICENSE "$bundle/Contents/Resources/licenses/recharts.txt"
 cp pkg/display/testdata/shadcn-chart/cartesian/LICENSE.d3-shape "$bundle/Contents/Resources/licenses/d3-shape.txt"

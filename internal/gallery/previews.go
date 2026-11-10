@@ -83,6 +83,7 @@ func (s *State) overview(c *ui.Context) {
 			}
 		})
 	})
+	s.cardCompositions.view(c, s.Popovers, s.Config.NativeMenus)
 }
 func (s *State) controls(c *ui.Context) {
 	s.heading(c, "Forms & controls", "Keyboard-ready building blocks with controlled state.")

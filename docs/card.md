@@ -21,3 +21,5 @@ display.CardWith(c, display.CardProps{
 `Media` 默认放在顶部并贴边；`MediaBottom` 将它放到页脚之后并贴住底边。媒体需要自己指定高度或宽高比，卡片负责外圆角裁剪。`ContentBleed` 让正文的表格、图像等贴左右边缘。分隔线和对应内侧留白由 `HeaderBorder` / `FooterBorder` 提供。
 
 原有 `Card(c, content)` 继续提供统一24 DIP内边距，兼容已有 `CardHeader` / `CardContent` / `CardFooter` 组合。新槽位 API 已管理各区内边距，回调中直接构建内容即可。`CardTitle`、`CardDescription`、`CardAction` 也可单独组合。
+
+Gallery 的 Cards 页通过 `Card configuration` 展示固定 Create 的12种配置和文档不同内容，共17个可选配方。可切换16/20/24/32间距、默认/小尺寸的头尾边框和图片，编辑独立登录草稿、查看会议笔记和本地转写状态、滚动条款并接受/拒绝，以及切换阿拉伯语/希伯来语。登录和页内动作只更新本地状态。原始图片离线提供，媒体的灰度/亮度由应用侧处理；来源、映射和原生适配见[示例说明](../examples/card-composition/README.md)。搜索 Card 或 CardSpacing 可定位该页面，切页保留模型。
