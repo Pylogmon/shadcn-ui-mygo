@@ -48,3 +48,5 @@ Select的窗口内、独立Flyout和系统菜单入口使用同一个16×16DIP S
 Gallery Forms 页的[Switch源组合](../examples/switch-composition/README.md)提供7份文档与5个Create分区的12个配置，保持各自默认、label／description、尺寸、禁用／错误与整卡布局。FieldLabel／整卡关联实际原生Switch，按键和指针更新独立的应用草稿；配置与页面切换后仍保留。
 
 `control.FieldGroup` 默认间距为固定Vega的28DIP；源checkbox-group的12DIP和嵌套group的16DIP可以在返回Element上用Gap显式组合。
+
+[Checkbox源组合](../examples/checkbox-composition/README.md)映射8份文档和7个Create分区，共15个配置；原label、不同默认、组／整卡、错误／禁用、译文和四行表格独立保存。源Table的header只在全部行选中时checked，部分选择保持普通未勾选；原Workspace access示例另演示受控Mixed，不把该扩展替代源表格合同。

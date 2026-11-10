@@ -92,6 +92,7 @@ Forms & controls页已接入框架搜索、国家分组/城市描述过滤、Off
 同页可切换 [ButtonGroup 的13种组合](examples/control-compounds/README.md)，Data页提供同模块的Avatar下拉菜单；组内编辑与菜单动作随全局Flyout／Native模式切换。
 Forms 页的 [Button 源组合](examples/button-composition/README.md) 提供20个配置，包含四尺寸／六变体矩阵、左右图标、独立原生链接、禁用／加载／Invalid、圆角与翻译RTL。
 同页的 [Switch 源组合](examples/switch-composition/README.md) 提供12个配置，保留两尺寸、前置说明、整卡选择、禁用／错误状态和译文，操作真实原生Switch。
+该页的 [Checkbox 源组合](examples/checkbox-composition/README.md) 提供15个配置，包含独立默认值、描述／整卡、分组、禁用／错误、真实表格选择和RTL；表格全选保持源布尔规则。
 该页还可配置Combobox定位/RTL/高亮，试用对象多选表单、Dialog内搜索、Grid及100项滚动窗口。
 通知的应用队列、六位置堆叠、loading更新、可阻止关闭的动作、原生滑动及完整自定义正文见 [Toast/Sonner](docs/toast.md)。
 Overlays 页的 [Popover／HoverCard 源组合](examples/popup-composition/README.md) 提供12个配置：独立窗口表单、对齐和逻辑侧、Dialog内弹层、延迟预览及翻译RTL。

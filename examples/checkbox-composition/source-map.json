@@ -1,0 +1,171 @@
+{
+  "repository": "https://github.com/shadcn-ui/ui",
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "sourceManifestSHA256": "60cea4517fbce24938ff6992b1c58fc394d517c9908df2cc2ab30fae938d35b9",
+  "counts": {
+    "docs": 8,
+    "createSections": 7,
+    "configurations": 15,
+    "sourceOriginals": 10
+  },
+  "files": [
+    {
+      "path": "apps/v4/content/docs/components/base/checkbox.mdx",
+      "git_blob": "1f53c05e22b313842c7ebce6c5c3d4df4a288b26",
+      "sha256": "36d0cc475ca4e1b4f501060e1033837d7f6138c4cdbdb43d3d15b1f51dece296",
+      "bytes": 2746,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/content/docs/components/base/checkbox.mdx"
+    },
+    {
+      "path": "apps/v4/examples/base/checkbox-basic.tsx",
+      "git_blob": "815776bf1d65441fd25070c6d1c835ddb348cd94",
+      "sha256": "5235fb27ec5aeb707fe65e9f22e4dbe9c7f17ee794add2eca6aae96aa4198a23",
+      "bytes": 487,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/checkbox-basic.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/checkbox-demo.tsx",
+      "git_blob": "7c975428403d74be211f9894463a85aee7a8bcd0",
+      "sha256": "2d220ddbfcf8f16f991a85608bb9bd2217f323b1135ee014a07cbb8dd7d73e33",
+      "bytes": 1651,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/checkbox-demo.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/checkbox-description.tsx",
+      "git_blob": "5c1189425237ec7ca9329f2b8f93cfb60fe5e391",
+      "sha256": "75811b1e2c1545b03c458bfffc68c23f92e1f264b93d29ce998d298dab70451e",
+      "bytes": 776,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/checkbox-description.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/checkbox-disabled.tsx",
+      "git_blob": "31746b4d36cacdecde9fb84b96add6ed15ad58bf",
+      "sha256": "7dacd9f5420bc5d8afc63fe515fb58ee65493bba0eef0a6455ba0098ac335488",
+      "bytes": 556,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/checkbox-disabled.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/checkbox-group.tsx",
+      "git_blob": "1566befd26a1d303228c44b608395ae3a85a64cd",
+      "sha256": "f63cacd0ebbf24224a29c72634ccd5fcdc5d118504a2f3ee5d1d13c1a381a4a0",
+      "bytes": 2181,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/checkbox-group.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/checkbox-invalid.tsx",
+      "git_blob": "a49cee5cfa7592dff2518dc8f5463f99e13542a7",
+      "sha256": "88abf83300120e342d0e9134a3a76e28b4be608a60b23377c45f1dca930338d9",
+      "bytes": 559,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/checkbox-invalid.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/checkbox-rtl.tsx",
+      "git_blob": "952dab1db597299bf5cbe43d010fb8c66200f9b5",
+      "sha256": "846d84146dc4703ccfd9c73c126918cf71276e4e392c81c460d6eb3f9ebc94da",
+      "bytes": 3018,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/checkbox-rtl.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/checkbox-table.tsx",
+      "git_blob": "a89f37fd5dcf315c5651344bde0dc6a365d34296",
+      "sha256": "3e7067a5e41fc07e0301353c890a09492ac89ad3b0edaac0a8b52112f317ab67",
+      "bytes": 2543,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/checkbox-table.tsx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/examples/checkbox-example.tsx",
+      "git_blob": "0b9320f0d40dc75ec22749bc166ab89fd1aba9e7",
+      "sha256": "1d1980a77777c91d3b8ca8014433b20c508c76a9a096b4e3c8dd71714ab7dabe",
+      "bytes": 6719,
+      "origin": "/private/tmp/shadcn-reference-ui/apps/v4/registry/bases/base/examples/checkbox-example.tsx"
+    }
+  ],
+  "configurations": [
+    {
+      "recipe": "demo",
+      "source": "apps/v4/examples/base/checkbox-demo.tsx",
+      "component": "CheckboxDemo"
+    },
+    {
+      "recipe": "basic",
+      "source": "apps/v4/examples/base/checkbox-basic.tsx",
+      "component": "CheckboxBasic"
+    },
+    {
+      "recipe": "description",
+      "source": "apps/v4/examples/base/checkbox-description.tsx",
+      "component": "CheckboxDescription"
+    },
+    {
+      "recipe": "disabled",
+      "source": "apps/v4/examples/base/checkbox-disabled.tsx",
+      "component": "CheckboxDisabled"
+    },
+    {
+      "recipe": "group",
+      "source": "apps/v4/examples/base/checkbox-group.tsx",
+      "component": "CheckboxGroup"
+    },
+    {
+      "recipe": "invalid",
+      "source": "apps/v4/examples/base/checkbox-invalid.tsx",
+      "component": "CheckboxInvalid"
+    },
+    {
+      "recipe": "table",
+      "source": "apps/v4/examples/base/checkbox-table.tsx",
+      "component": "CheckboxInTable"
+    },
+    {
+      "recipe": "rtl",
+      "source": "apps/v4/examples/base/checkbox-rtl.tsx",
+      "component": "CheckboxRtl"
+    },
+    {
+      "recipe": "create-basic",
+      "source": "apps/v4/registry/bases/base/examples/checkbox-example.tsx",
+      "component": "CheckboxBasic"
+    },
+    {
+      "recipe": "create-description",
+      "source": "apps/v4/registry/bases/base/examples/checkbox-example.tsx",
+      "component": "CheckboxWithDescription"
+    },
+    {
+      "recipe": "create-invalid",
+      "source": "apps/v4/registry/bases/base/examples/checkbox-example.tsx",
+      "component": "CheckboxInvalid"
+    },
+    {
+      "recipe": "create-disabled",
+      "source": "apps/v4/registry/bases/base/examples/checkbox-example.tsx",
+      "component": "CheckboxDisabled"
+    },
+    {
+      "recipe": "create-title",
+      "source": "apps/v4/registry/bases/base/examples/checkbox-example.tsx",
+      "component": "CheckboxWithTitle"
+    },
+    {
+      "recipe": "create-table",
+      "source": "apps/v4/registry/bases/base/examples/checkbox-example.tsx",
+      "component": "CheckboxInTable"
+    },
+    {
+      "recipe": "create-group",
+      "source": "apps/v4/registry/bases/base/examples/checkbox-example.tsx",
+      "component": "CheckboxGroup"
+    }
+  ],
+  "adaptations": {
+    "native": "Real MyGo Checkbox through public control.Checkbox and FieldWith; scopes and Elements exist only within the current build. Native/Flyout menu selection changes configuration selectors; checkboxes keep the same native input and shadcn visual model.",
+    "models": "Each recipe owns independent bool fields, selection rows and horizontal scroll state. Source state remains after style/configuration/page changes.",
+    "table": "The original source has boolean checked=allSelected, not indeterminate. Partial selections keep the header unchecked. Row1 initially selected in both independent tables; selecting the header updates all four actual row values. Native controls receive explicit nonvisual labels and native table semantics; a bounded native horizontal viewport preserves all original names/emails/roles. Preferred minimum width is600DIP as a native layout adaptation.",
+    "widths": "Docs Basic/Disabled/Invalid use224DIP and Description288DIP; Demo/RTL max384DIP. Create unspecified widths and docs no-width group are bounded to384DIP in the native Gallery.",
+    "defaults": "Docs Demo/RTL terms2=true; Description=true. Docs desktop group Hard disks/External disks=true while Create Group has all false and no description. Create Title first=true and second disabled; docs whole-card notification starts false.",
+    "styling": "The existing fixed Vega source uses FieldGroup gap28 and horizontal rich-control top offset1DIP. Disabled source title cards keep the boundary/description opaque and dim only title/check; fluent overrides preserve native disabled semantics. Plain docs demo/RTL Label uses leading-none; group labels use font-normal.",
+    "rtl": "Original English/Arabic/Hebrew values retained, Arabic default; direction is scoped to the source content.",
+    "externalEffects": "Changes update only the application-owned model/status. No new fonts, icons, assets, dependencies, OS settings or external data writes."
+  },
+  "verification": "One public native Tester flow plus injected independent selector backend. Software images do not establish real OS, assistive-technology, IME, display scaling or platform-font parity."
+}
