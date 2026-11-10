@@ -76,6 +76,7 @@ Text & layout 页集中展示 [Typography/Kbd](docs/typography.md)、[CodeBlock]
 响应式导航布局见 [Sidebar](docs/sidebar.md)；对话框焦点、固定页脚与抽屉吸附手势见 [Modal API](docs/modals.md)。
 命令面板的虚拟列表、过滤、快捷键与自定义内容见 [Command](docs/command.md)。
 选值/搜索文本分离、可清除单选、多选标签、对象值与独立组合槽位见[Combobox](docs/combobox.md)。
+Field 的多条错误、自定义原生正文与实际编辑器关联见 [Field errors 示例](examples/field-errors/README.md)。
 多项可见布局、独立轮播控件、吸附位置、应用控制器与原生编辑内容见[Carousel](docs/carousel.md)。
 Gallery的Data & display页可切换Carousel布局、间距、循环和项目顺序，编辑卡片备注，并试用垂直/RTL导航。
 Forms & controls页已接入框架搜索、国家分组/城市描述过滤、Office弹层搜索、多选技术标签与表单状态示例。

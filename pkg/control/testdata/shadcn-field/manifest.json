@@ -1,0 +1,30 @@
+{
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "repository": "https://github.com/shadcn-ui/ui",
+  "files": [
+    {
+      "path": "field.tsx",
+      "source": "apps/v4/registry/bases/base/ui/field.tsx",
+      "gitBlob": "d58e0d29dbfe52053a21eff0b837f571b278f1ef",
+      "sha256": "e7305c507a3f777b0193045fdd5ebfb1c58020d3d8e0821cb9e8d19b203576b9",
+      "bytes": 5338
+    },
+    {
+      "path": "field.mdx",
+      "source": "apps/v4/content/docs/components/base/field.mdx",
+      "gitBlob": "fa77feb27e91276742082b1be634fa32082883e7",
+      "sha256": "80b9a621fe3cfb41ed49a8afb9df21ef8458b8836f60e9a23fa3ddfcc8a0a6b5",
+      "bytes": 11005
+    }
+  ],
+  "reusedStyle": {
+    "path": "../shadcn-select/shadcn/styles/style-vega.css",
+    "source": "apps/v4/registry/styles/style-vega.css",
+    "gitBlob": "9f03b3c6dc5a803db963a81743d47d5b5f8f9fe0",
+    "sha256": "10fa07bd61b429ae2c14c572ba9975f6e991d68a04f8fec7e354a062597e0d4e",
+    "contractLines": [
+      663,
+      665
+    ]
+  }
+}

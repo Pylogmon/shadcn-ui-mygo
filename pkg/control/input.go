@@ -13,8 +13,14 @@ func Label(c *ui.Context, text string) ui.Element {
 
 type FieldProps struct {
 	Label, Description, Error string
-	Required, Disabled        bool
-	Orientation               FieldOrientation
+	// Errors extends the single Error convenience with deduplicated messages.
+	// ErrorContent replaces their visual text/list in the current build only;
+	// ErrorLabel supplies its accessible summary, defaulting to Error/Errors.
+	Errors             []string
+	ErrorLabel         string
+	ErrorContent       func(*ui.Context)
+	Required, Disabled bool
+	Orientation        FieldOrientation
 	// LabelWidth reserves label room in horizontal layouts; zero uses 140 DIPs.
 	LabelWidth float32
 	// ResponsiveWidth is the enclosing FieldGroup's width for responsive fields.
@@ -100,6 +106,11 @@ func fieldTarget(c *ui.Context, root ui.Element) ui.Element {
 // Field links its label and helper text to the returned editor for assistive technology.
 func Field(c *ui.Context, p FieldProps, editor func() ui.Element) ui.Element {
 	t := theme.TokensOf(c)
+	messages := p.Errors
+	if p.Error != "" {
+		messages = append([]string{p.Error}, messages...)
+	}
+	errorContent := resolveFieldError(FieldErrorProps{Errors: messages, Label: p.ErrorLabel, Content: p.ErrorContent})
 	root := ui.Column(c).Gap(7).FillWidth().Disabled(p.Disabled).Role(ui.RoleGroup)
 	horizontal := p.Orientation == FieldHorizontal
 	if p.Orientation == FieldResponsive {
@@ -133,7 +144,7 @@ func Field(c *ui.Context, p FieldProps, editor func() ui.Element) ui.Element {
 			}
 		}
 		ui.Column(c).Grow(1).MinWidth(0).Gap(7).Children(func() {
-			input := fieldTarget(c, fieldEditor(c, p.Error != "", editor))
+			input := fieldTarget(c, fieldEditor(c, errorContent.present(), editor))
 			if label != "" {
 				input.Label(label).LabelledBy(title)
 			}
@@ -144,8 +155,8 @@ func Field(c *ui.Context, p FieldProps, editor func() ui.Element) ui.Element {
 				desc := ui.Text(c, p.Description).FontSize(14).TextColor(t.MutedForeground)
 				input.DescribedBy(desc)
 			}
-			if p.Error != "" {
-				desc := ui.Text(c, p.Error).FontSize(14).TextColor(t.Destructive).Role(ui.RoleAlert)
+			if errorContent.present() {
+				desc := renderFieldError(c, errorContent)
 				input.Invalid(true).ErrorMessage(desc).DescribedBy(desc)
 			}
 		})

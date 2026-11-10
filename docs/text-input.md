@@ -30,4 +30,8 @@ Textarea 默认最小高度 64 DIP，按换行和折行内容增长；`MaxRows: 
 
 `Field.Error` 在构建编辑器时作用于错误外观，并关联原生错误描述。`InputGroup` 把环与边框放在组合根节点，保留内部编辑器自己的 Disabled/Invalid、原生回调和选择状态；独立输入不继承相邻字段的错误状态。
 
+`FieldProps.Errors` 可同时显示多条错误：忽略空字符串、按原顺序去除完全相同的消息，原有 `Error` 放在列表最前。单条显示普通错误文字，多条显示带原生列表语义的 alert；清空后移除错误容器与编辑器错误关联，保留草稿和选择。
+
+`ErrorContent` 可用当前构建回调替换错误正文，`ErrorLabel` 提供可访问摘要，省略时使用合并后的消息。没有消息的自定义正文必须提供非空摘要。独立槽位使用 `control.FieldError`，由调用方将返回元素关联到实际编辑器；无消息及正文时返回无效 Element。验证规则和提交、编辑或失焦时机由应用持有，参见可运行的 [Field errors 示例](../examples/field-errors/README.md)。
+
 本阶段验证了实际像素、键鼠、剪贴板、原生 IME 客户端和光标几何。真实中文候选窗、辅助技术播报和完整跨平台视觉矩阵仍需验收；对照基线见 [upstream.md](upstream.md)。
