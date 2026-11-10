@@ -7,7 +7,7 @@
 | 组件 | 当前里程碑状态 | 范围 |
 | --- | --- | --- |
 | Context Menu | 收尾中 | 22配置已实现；补齐显式submenu宽度与禁用视觉，复核双路菜单及原生交互 |
-| Dialog | 实施中 | 完整docs／Create／guide配置、表单、滚动／footer、Chat Settings、焦点与关闭行为 |
+| Dialog | 本阶段完成 | 12完整docs／Create／guide配置、表单、滚动／footer、Chat Settings四面板、焦点与关闭行为；隔离Gallery／cmd288结果、vet与macOS构建通过 |
 | Input | 专项复核通过，待最终联合验证 | 25配置与真实文本／数字／日期／时间／文件；17原文与API审查无新增阻断，保留明确的原生Date／Time适配边界 |
 | Kbd | 实施中 | 完整源配置与组合；静态keycap不自动安装快捷键 |
 | Label | 实施中 | 完整源配置、真实目标关联、leading-none与disabled peer样式 |

@@ -70,6 +70,7 @@ type State struct {
 	sliderCompositions                                                             sliderCompositionPreviewState
 	selectCompositions                                                             selectCompositionPreviewState
 	tabsCompositions                                                               tabsCompositionPreviewState
+	dialogCompositions                                                             dialogCompositionPreviewState
 	chartPreview                                                                   chartPreviewState
 	chartCatalogue                                                                 chartcatalog.State
 	comboboxCompound                                                               comboboxCompoundPreviewState

@@ -35,6 +35,7 @@ var componentSearchTargets = []struct {
 	{"overlays", "popover", []string{"Popover"}},
 	{"overlays", "hover-card", []string{"HoverCard"}},
 	{"overlays", "dropdown-menu", []string{"DropdownMenu"}},
+	{"overlays", "dialog", []string{"Dialog"}},
 	{"navigation", "context-menu", []string{"ContextMenu"}},
 	{"navigation", "menubar", []string{"Menubar"}},
 	{"navigation", "tabs", []string{"Tabs"}},

@@ -1,0 +1,167 @@
+{
+  "repository": "https://github.com/shadcn-ui/ui",
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "sourceManifestSHA256": "60cea4517fbce24938ff6992b1c58fc394d517c9908df2cc2ab30fae938d35b9",
+  "files": [
+    {
+      "path": "apps/v4/content/docs/components/base/dialog.mdx",
+      "gitBlob": "0614f95b25645bceb14f3b0e3a3d9b9637c49c40",
+      "sha256": "9079868107a2eed2486d7529f1f1e358fe58858c73542add3876e93d695b0b76",
+      "bytes": 2825,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/content/docs/components/base/dialog.mdx"
+    },
+    {
+      "path": "apps/v4/examples/base/dialog-close-button.tsx",
+      "gitBlob": "81f35c153eba67416b9fb567e4093a081b3ffa78",
+      "sha256": "49fefe0767e792e2c8728c6ff9593a0114c4af376995cb6544ea9300c01d4f1c",
+      "bytes": 1311,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/dialog-close-button.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/dialog-demo.tsx",
+      "gitBlob": "cad24831774d3740958eb635fe638893c2f7fa74",
+      "sha256": "35e451795f40bfd4ed6db6d3aad892d2a52f45af819739d8bf3fdaecd121cfbc",
+      "bytes": 1561,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/dialog-demo.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/dialog-no-close-button.tsx",
+      "gitBlob": "89e755e7a8ebf80b4e8b0f3c5b169d04a4e7fecb",
+      "sha256": "4d73c3bdd944e8b679516949bb368a93e119620f9da4f6787885e3e82c7716ca",
+      "bytes": 744,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/dialog-no-close-button.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/dialog-rtl.tsx",
+      "gitBlob": "d841043f6fc2e586c890e22c3f95c9dfb85ec452",
+      "sha256": "14901aa1a9db5e1292792f4414ec644982f569bc644148d7bf731ffc035ddfea",
+      "bytes": 2944,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/dialog-rtl.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/dialog-scrollable-content.tsx",
+      "gitBlob": "6358459557c69df0000e79f8c5b06324c9a75359",
+      "sha256": "ec1ae54d37d58f538322de8b23db251c33476a555cd6316983bd5863d8f77c89",
+      "bytes": 1446,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/dialog-scrollable-content.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/dialog-sticky-footer.tsx",
+      "gitBlob": "dd21889a2bc77fce8b34ae716ef657db7c219761",
+      "sha256": "fb2a727ced06f58051a11abdfd96d267c40ab9ce0ba807f6a0deec34c4013739",
+      "bytes": 1638,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/dialog-sticky-footer.tsx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/examples/dialog-example.tsx",
+      "gitBlob": "cddca3145aa37bfb7b2e8b712073aeed2afaa0eb",
+      "sha256": "8c0951ad73042f692673b1552d6dac25c0c69b1d0f218d1e9e603aeab93fd09d",
+      "bytes": 24362,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/examples/dialog-example.tsx"
+    }
+  ],
+  "references": [
+    {
+      "path": "apps/v4/registry/bases/base/ui/dialog.tsx",
+      "gitBlob": "8c68524ade906dc3754769729ae3cbcb1b9d7b55",
+      "sha256": "aba6df6cbf51a1edcc22e415a3a46a666fc8cb66729e47b3ed2ecd97f166adff",
+      "bytes": 3701,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/ui/dialog.tsx"
+    },
+    {
+      "path": "apps/v4/registry/styles/style-vega.css",
+      "gitBlob": "9f03b3c6dc5a803db963a81743d47d5b5f8f9fe0",
+      "sha256": "10fa07bd61b429ae2c14c572ba9975f6e991d68a04f8fec7e354a062597e0d4e",
+      "bytes": 78221,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/styles/style-vega.css"
+    }
+  ],
+  "counts": {
+    "documentationPreviews": 6,
+    "guideUsage": 1,
+    "createSections": 5,
+    "chatSettingsSections": 4,
+    "recipes": 12,
+    "exampleGuideFiles": 8,
+    "referenceFiles": 2
+  },
+  "configurations": [
+    {
+      "recipe": "demo",
+      "source": "apps/v4/examples/base/dialog-demo.tsx",
+      "retained": "docs384; Name/Username defaults; native local snapshot; no Enter handler"
+    },
+    {
+      "recipe": "usage",
+      "source": "apps/v4/content/docs/components/base/dialog.mdx",
+      "retained": "distinct inline Usage destructive description, no confirmation actions"
+    },
+    {
+      "recipe": "share",
+      "source": "apps/v4/examples/base/dialog-close-button.tsx",
+      "retained": "readonly native URL; primary start footer Close"
+    },
+    {
+      "recipe": "no-close",
+      "source": "apps/v4/examples/base/dialog-no-close-button.tsx",
+      "retained": "no corner/footer Close; Escape/backdrop retained"
+    },
+    {
+      "recipe": "sticky",
+      "source": "apps/v4/examples/base/dialog-sticky-footer.tsx",
+      "retained": "distinct title/description;10 paragraphs;50vh fixed footer"
+    },
+    {
+      "recipe": "scrollable",
+      "source": "apps/v4/examples/base/dialog-scrollable-content.tsx",
+      "retained": "10paragraphs;50vh; no footer"
+    },
+    {
+      "recipe": "rtl",
+      "source": "apps/v4/examples/base/dialog-rtl.tsx",
+      "retained": "verbatim translations; Arabic default;384DIP"
+    },
+    {
+      "recipe": "create-form",
+      "source": "apps/v4/registry/bases/base/examples/dialog-example.tsx",
+      "retained": "448DIP; extended description; independent defaults/draft",
+      "section": "DialogWithForm"
+    },
+    {
+      "recipe": "create-scrollable",
+      "source": "apps/v4/registry/bases/base/examples/dialog-example.tsx",
+      "retained": "70vh native viewport;10 paragraphs",
+      "section": "DialogScrollableContent"
+    },
+    {
+      "recipe": "create-sticky",
+      "source": "apps/v4/registry/bases/base/examples/dialog-example.tsx",
+      "retained": "Scrollable Content title;70vh;Close footer",
+      "section": "DialogWithStickyFooter"
+    },
+    {
+      "recipe": "create-no-close",
+      "source": "apps/v4/registry/bases/base/examples/dialog-example.tsx",
+      "retained": "no corner close; explicit footer Close",
+      "section": "DialogNoCloseButton"
+    },
+    {
+      "recipe": "create-chat",
+      "source": "apps/v4/registry/bases/base/examples/dialog-example.tsx",
+      "retained": "4fullsections;18languages;8voices; native responsive selector; min550 content",
+      "section": "DialogChatSettings"
+    }
+  ],
+  "adaptations": {
+    "nativeModal": "Public overlay.Dialog/HideHeader/NoScroll retains native trap/presence; actual current panel.Children hosts real Material Close button,32DIP logical-end. No retained Element/Context.",
+    "header": "Vega inherited14DIP/weight500/leading-none; native font floor permitted.",
+    "bounds": "Native constrained32DIP total window margin; source384 and448 widths; explicit50/70percent scroll caps may shrink further. Chat min448 adapts to available width; min550 content preserved in bounded viewport.",
+    "footer": "Actual source reversed column below640 with full-width buttons; wide share start-aligned.",
+    "menus": "Config/language and General single-value menus follow global Flyout/Native; desktop facade ordinary geometry is not source item-aligned full Select. Chat mobile section always real NativeSelect.",
+    "tooltip": "Rich tooltip receives current independent child Context and uses original description/Kbd N; Native is platform-themed surface, not OS tooltip widget.",
+    "actions": "Buttons record local snapshots/intents; no backend, automatic Enter submit, theme application, notifications, security change or logout. SourceSave stays open.",
+    "hashLink": "Public local Router accepts actual native pointer/Enter link, consumes path/query and drops fragment; no HTML anchor scroll/history or OS browser.",
+    "state": "Only app values, counters/maps and public Handles persist; no scope/frame callback/Context/Element.",
+    "verification": "One public native workflow and four software PNGs; no OS/AT/IME/multi-display/full platform/font matrix claim."
+  }
+}

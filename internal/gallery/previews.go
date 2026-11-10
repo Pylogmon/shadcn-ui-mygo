@@ -239,6 +239,7 @@ func (s *State) overlays(c *ui.Context) {
 		s.cardHeader(c, "Command palette", "Search by name. Select with the keyboard.")
 		overlay.Command(c, &s.commandPreviewQuery, overlay.CommandProps{InputLabel: "Example command search", Items: []overlay.CommandItem{{Value: "calendar", Label: "Calendar", Group: "Suggestions"}, {Value: "search", Label: "Search", Group: "Suggestions"}, {Value: "settings", Label: "Settings", Group: "Workspace"}}})
 	})
+	s.componentPreview(c, "dialog", func() { s.dialogCompositions.view(c, s.Popovers, s.Config.NativeMenus) })
 	popover, hover := s.popupCompositions.view(c, s.Popovers, s.Config.NativeMenus)
 	s.revealComponent("popover", popover)
 	s.revealComponent("hover-card", hover)

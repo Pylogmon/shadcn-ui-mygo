@@ -105,6 +105,7 @@ Gallery 搜索已登记的源组合名称（例如 Input、Switch、Empty、Hove
 该页还可配置Combobox定位/RTL/高亮，试用对象多选表单、Dialog内搜索、Grid及100项滚动窗口。
 通知的应用队列、六位置堆叠、loading更新、可阻止关闭的动作、原生滑动及完整自定义正文见 [Toast/Sonner](docs/toast.md)。
 Overlays 页的 [Popover／HoverCard 源组合](examples/popup-composition/README.md) 提供12个配置：独立窗口表单、对齐和逻辑侧、Dialog内弹层、延迟预览及翻译RTL。
+同页的 [Dialog 源组合](examples/dialog-composition/README.md) 提供12个配置，包含真实Profile编辑、两种无关闭按钮契约、固定页脚／完整滚动内容，以及四面板Chat Settings、菜单、Tooltip和Kbd。
 同页的 [Dropdown Menu 源组合](examples/dropdown-composition/README.md) 提供27个配置：嵌套动作、带图标的勾选／单选、独立组与行缩进、头像、六侧、Dialog及翻译RTL，随全局 Flyout／Native 模式切换。
 Navigation 页的 [Context Menu 源组合](examples/context-menu-composition/README.md) 提供22个配置，可通过右键／菜单键操作，包含分组状态、子菜单、六侧、Dialog、独立缩进与翻译RTL。
 同页的 [Menubar 源组合](examples/menubar-composition/README.md) 用15个配置保留6份文档与12个Create分区：完整File／Edit／View／Profiles、格式／插入动作、独立状态与双路菜单。
