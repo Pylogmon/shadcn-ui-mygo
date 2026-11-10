@@ -176,7 +176,9 @@
 
 | 5.EN | Context Menu逐子菜单宽度与禁用视觉 | 已提交 `31ee0b3`；公开SubmenuWidth、RTL／动态／退出包络与有限值守卫，补齐源176DIP宽度与单层禁用透明度；隔离全库2382结果、vet与三平台构建通过 |
 
-| 5.EO | Label原生关联样式与完整源组合 | 本阶段提交；leading-none／select-none、disabled peer单层样式与9配置的真实关联／完整Field付款表单；七组件最终联合隔离全库2386结果、vet与三平台构建通过 |
+| 5.EO | Label原生关联样式与完整源组合 | 已提交 `270aa8b`；leading-none／select-none、disabled peer单层样式与9配置的真实关联／完整Field付款表单；七组件最终联合隔离全库2386结果、vet与三平台构建通过 |
+
+| 5.EP | 七组件里程碑普通消费者验收与暂停 | 本阶段提交；精确270aa8b的标准8命令与外部6命令通过，七API集中原生flow通过，1344份Git／ZIP／新缓存原文一致；Gallery bundle更新，按用户要求暂停后续开发 |
 
 用户已明确允许原生平台适配：Popover、menu、下拉菜单可以使用 MyGo 的系统菜单与独立 Flyout，超出父窗口范围；无需逐像素照搬网页浮层。Gallery 以 [shadcn/create](https://ui.shadcn.com/create) 的配置与实时预览流程为参考。完整组件功能、主题、动画范围保持不变。
 
