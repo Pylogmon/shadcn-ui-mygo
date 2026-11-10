@@ -1,0 +1,1692 @@
+{
+  "repository": "https://github.com/google/fonts",
+  "commit": "5bb28733cec313b63fbd415b574b5ae35c8aa8b8",
+  "shadcnDefinitions": {
+    "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+    "path": "apps/v4/lib/font-definitions.ts",
+    "gitBlob": "f585bcbe8835e232541dea3d6b1af595b85dbc33",
+    "sha256": "f23d280be4c0acab293699e9d640dbe9928ed8472b8388fe561e92473bbcb732",
+    "asset": "testdata/shadcn/font-definitions.ts",
+    "bytes": 8988
+  },
+  "families": [
+    {
+      "id": "geist",
+      "title": "Geist",
+      "kind": "sans",
+      "family": "Geist",
+      "sources": [
+        {
+          "path": "ofl/geist/Geist-Italic[wght].ttf",
+          "gitBlob": "63c3c6c2154421e6eb445e328fb17734593fad7a",
+          "sha256": "a464348abe41a6392f18d04c0ac2ad3c26619357ff5fdd76aff3059116f45e62",
+          "bytes": 174584,
+          "asset": "assets/geist/italic.ttf"
+        },
+        {
+          "path": "ofl/geist/Geist[wght].ttf",
+          "gitBlob": "f63f0afc6390323715972b6645115485f37cc9f4",
+          "sha256": "73894e0448cae90a92b6c2f8732b7bb9acb7b94c418bff559dad4a18e1de9659",
+          "bytes": 169056,
+          "asset": "assets/geist/normal.ttf"
+        }
+      ],
+      "documents": [
+        {
+          "path": "ofl/geist/METADATA.pb",
+          "gitBlob": "e9ba1c28356f1fc1a1373a98feb9b6fb948a7763",
+          "sha256": "62d302155bfbf778e9c488ef00671a4ad71a8a4cdc808ec66ceb668373afe900",
+          "bytes": 1348,
+          "asset": "assets/geist/METADATA.pb",
+          "license": false
+        },
+        {
+          "path": "ofl/geist/OFL.txt",
+          "gitBlob": "61f6f4b7853081236aec6407f2dd3c7170997f84",
+          "sha256": "1781d2806a07d91c4edf4740b88449fab7d0eadad53f7c351b94cd4d4eb8c00f",
+          "bytes": 4387,
+          "asset": "assets/geist/OFL.txt",
+          "license": true
+        }
+      ],
+      "italic": true,
+      "weights": [
+        100,
+        200,
+        300,
+        400,
+        500,
+        600,
+        700,
+        800,
+        900
+      ],
+      "axes": [
+        {
+          "tag": "wght",
+          "min": 100.0,
+          "default": 400.0,
+          "max": 900.0
+        }
+      ]
+    },
+    {
+      "id": "inter",
+      "title": "Inter",
+      "kind": "sans",
+      "family": "Inter",
+      "sources": [
+        {
+          "path": "ofl/inter/Inter-Italic[opsz,wght].ttf",
+          "gitBlob": "c177578428248f08eedcc60e292acc6f414c2167",
+          "sha256": "acd98e64795781b2058f07b18475e0ecee2a0fe2b42a49e2f9e37d0d6bf66ce6",
+          "bytes": 906596,
+          "asset": "assets/inter/italic.ttf"
+        },
+        {
+          "path": "ofl/inter/Inter[opsz,wght].ttf",
+          "gitBlob": "047c92f6e2212473dc436020afed689527076d44",
+          "sha256": "29160a80ff49ddcab2c97711247e08b1fab27a484a329ce8b813d820dc559031",
+          "bytes": 876576,
+          "asset": "assets/inter/normal.ttf"
+        }
+      ],
+      "documents": [
+        {
+          "path": "ofl/inter/METADATA.pb",
+          "gitBlob": "2b68e433ea1923f86fa295977274a84e878d65ec",
+          "sha256": "79e4721ef4f72251c6080a40dfd9efb6728b4df1fc690f0c70eb4b1b5303a5b0",
+          "bytes": 1342,
+          "asset": "assets/inter/METADATA.pb",
+          "license": false
+        },
+        {
+          "path": "ofl/inter/OFL.txt",
+          "gitBlob": "21f6aff961064c2e429f570995e446bcdd555422",
+          "sha256": "5b9321a4298cfeb6b34354164a1c3afc3db114569984c502b9b35d988fd58c57",
+          "bytes": 4377,
+          "asset": "assets/inter/OFL.txt",
+          "license": true
+        }
+      ],
+      "italic": true,
+      "weights": [
+        100,
+        200,
+        300,
+        400,
+        500,
+        600,
+        700,
+        800,
+        900
+      ],
+      "axes": [
+        {
+          "tag": "opsz",
+          "min": 14.0,
+          "default": 14.0,
+          "max": 32.0
+        },
+        {
+          "tag": "wght",
+          "min": 100.0,
+          "default": 400.0,
+          "max": 900.0
+        }
+      ]
+    },
+    {
+      "id": "noto-sans",
+      "title": "Noto Sans",
+      "kind": "sans",
+      "family": "Noto Sans",
+      "sources": [
+        {
+          "path": "ofl/notosans/NotoSans-Italic[wdth,wght].ttf",
+          "gitBlob": "429692da4c3f2751f50bdfab7d0fdb3639717524",
+          "sha256": "58e6e0ebd1931b29a365aa2d3e2ee9a9e831a3af7cf3ad1462d4e72154f0b291",
+          "bytes": 2322640,
+          "asset": "assets/noto-sans/italic.ttf"
+        },
+        {
+          "path": "ofl/notosans/NotoSans[wdth,wght].ttf",
+          "gitBlob": "75575046c015ff623a848096a15779867ba71453",
+          "sha256": "bfb7bb691513f12e734dc346c03a03f784912432d7e3fa8e56efcf906fe86b3d",
+          "bytes": 2049096,
+          "asset": "assets/noto-sans/normal.ttf"
+        }
+      ],
+      "documents": [
+        {
+          "path": "ofl/notosans/METADATA.pb",
+          "gitBlob": "87f93924f3fa3dbdfd2a5e38329d409159fa5126",
+          "sha256": "9fd9566184e9833ae3a33b8950e2782a8abb1f0a9d6fb2c51b3fb615f2d78cfe",
+          "bytes": 32340,
+          "asset": "assets/noto-sans/METADATA.pb",
+          "license": false
+        },
+        {
+          "path": "ofl/notosans/OFL.txt",
+          "gitBlob": "6843f31878c9945e1e71e1baa275546b4eefead8",
+          "sha256": "cee9892f9f0cc8fe882c9e9537ee6a89621d86ee7ceaf70b02e2b2b1c25c061a",
+          "bytes": 4396,
+          "asset": "assets/noto-sans/OFL.txt",
+          "license": true
+        }
+      ],
+      "italic": true,
+      "weights": [
+        100,
+        200,
+        300,
+        400,
+        500,
+        600,
+        700,
+        800,
+        900
+      ],
+      "axes": [
+        {
+          "tag": "wght",
+          "min": 100.0,
+          "default": 400.0,
+          "max": 900.0
+        },
+        {
+          "tag": "wdth",
+          "min": 62.5,
+          "default": 100.0,
+          "max": 100.0
+        }
+      ]
+    },
+    {
+      "id": "nunito-sans",
+      "title": "Nunito Sans",
+      "kind": "sans",
+      "family": "Nunito Sans",
+      "sources": [
+        {
+          "path": "ofl/nunitosans/NunitoSans-Italic[YTLC,opsz,wdth,wght].ttf",
+          "gitBlob": "5b325adf55fe1e0e99b10a4ef74a205b322e3cd5",
+          "sha256": "d9d5db18f3c11221a4fbb553cbc709391c1179964c7eaa4466ef43c78aa4492f",
+          "bytes": 558412,
+          "asset": "assets/nunito-sans/italic.ttf"
+        },
+        {
+          "path": "ofl/nunitosans/NunitoSans[YTLC,opsz,wdth,wght].ttf",
+          "gitBlob": "ccc8565733e7d037ede2c9cc971ceb6375e28733",
+          "sha256": "f934d7142fb4784bf828da485b7dcbd90c0c80d514e9d49a5da0ed3a1ae2491d",
+          "bytes": 571240,
+          "asset": "assets/nunito-sans/normal.ttf"
+        }
+      ],
+      "documents": [
+        {
+          "path": "ofl/nunitosans/METADATA.pb",
+          "gitBlob": "6adcc91db706529c6006ba8e559b82f41dea30f8",
+          "sha256": "b60c93a2cdadb477316d22d22c8d43fa957899a4e4fe75cbb2b9e39e03c5e96e",
+          "bytes": 1758,
+          "asset": "assets/nunito-sans/METADATA.pb",
+          "license": false
+        },
+        {
+          "path": "ofl/nunitosans/OFL.txt",
+          "gitBlob": "2ae17359801c71b7b568854b98f73969ad822474",
+          "sha256": "efbb0c9e864cef973982d9a17567e6be5c3d1759695574586f3f18c7ecca064b",
+          "bytes": 4393,
+          "asset": "assets/nunito-sans/OFL.txt",
+          "license": true
+        }
+      ],
+      "italic": true,
+      "weights": [
+        200,
+        300,
+        400,
+        500,
+        600,
+        700,
+        800,
+        900,
+        1000
+      ],
+      "axes": [
+        {
+          "tag": "wght",
+          "min": 200.0,
+          "default": 200.0,
+          "max": 1000.0
+        },
+        {
+          "tag": "wdth",
+          "min": 75.0,
+          "default": 100.0,
+          "max": 125.0
+        },
+        {
+          "tag": "opsz",
+          "min": 6.0,
+          "default": 12.0,
+          "max": 12.0
+        },
+        {
+          "tag": "YTLC",
+          "min": 440.0,
+          "default": 500.0,
+          "max": 540.0
+        }
+      ]
+    },
+    {
+      "id": "figtree",
+      "title": "Figtree",
+      "kind": "sans",
+      "family": "Figtree",
+      "sources": [
+        {
+          "path": "ofl/figtree/Figtree-Italic[wght].ttf",
+          "gitBlob": "fbcbb0f5631ea7a524d24b9699a9f68cc7c5b295",
+          "sha256": "94dec1f18b9275d69e8b4a91b6514bdc18199048347e1c36e1285b11b0b87653",
+          "bytes": 62632,
+          "asset": "assets/figtree/italic.ttf"
+        },
+        {
+          "path": "ofl/figtree/Figtree[wght].ttf",
+          "gitBlob": "579e2ab5f30beb21cd0b618dd0796b0fce0eff8e",
+          "sha256": "26ad3db9b31ff7dde67a91ff515d022d2f495cd506590699cf264f0bfe6fb714",
+          "bytes": 62712,
+          "asset": "assets/figtree/normal.ttf"
+        }
+      ],
+      "documents": [
+        {
+          "path": "ofl/figtree/METADATA.pb",
+          "gitBlob": "da1db0d73a7729b61dab9d90a41040d25b5e4bd1",
+          "sha256": "0f70233b05de662ffa31a5dc3d310cb4eb047dc3b776046f937219179d79d905",
+          "bytes": 1282,
+          "asset": "assets/figtree/METADATA.pb",
+          "license": false
+        },
+        {
+          "path": "ofl/figtree/OFL.txt",
+          "gitBlob": "80b12bb3d0c0942676657ef6d125daf4a1e1346d",
+          "sha256": "140d37233e7f3ce7313798befa9600893bcceaf41a55fa0fa5ad52f7f657a268",
+          "bytes": 4388,
+          "asset": "assets/figtree/OFL.txt",
+          "license": true
+        }
+      ],
+      "italic": true,
+      "weights": [
+        300,
+        400,
+        500,
+        600,
+        700,
+        800,
+        900
+      ],
+      "axes": [
+        {
+          "tag": "wght",
+          "min": 300.0,
+          "default": 300.0,
+          "max": 900.0
+        }
+      ]
+    },
+    {
+      "id": "roboto",
+      "title": "Roboto",
+      "kind": "sans",
+      "family": "Roboto",
+      "sources": [
+        {
+          "path": "ofl/roboto/Roboto-Italic[wdth,wght].ttf",
+          "gitBlob": "a122c13964daac37f1186a22603a5180d2dba5d6",
+          "sha256": "9725a847af6b460ffca162ae66d20dad48b01876137947180b42d7dcd7887182",
+          "bytes": 530944,
+          "asset": "assets/roboto/italic.ttf"
+        },
+        {
+          "path": "ofl/roboto/Roboto[wdth,wght].ttf",
+          "gitBlob": "5522a368d9072fd88c299916e61fcff369949061",
+          "sha256": "d7598e12c5dbef095ff8272cfc55da0250bd07fbdecbac8a530b9b277872a134",
+          "bytes": 488584,
+          "asset": "assets/roboto/normal.ttf"
+        }
+      ],
+      "documents": [
+        {
+          "path": "ofl/roboto/METADATA.pb",
+          "gitBlob": "9ae795d676a683ce135be1835797e3ad8968ec02",
+          "sha256": "6fef19da54fb62d152f0c7b21710e6849950db7ecf852ea29511c593dad462f0",
+          "bytes": 1463,
+          "asset": "assets/roboto/METADATA.pb",
+          "license": false
+        },
+        {
+          "path": "ofl/roboto/OFL.txt",
+          "gitBlob": "9c48e05a24fa2267e207ecf17560291b5621c197",
+          "sha256": "061402327a96aadb0bfb694a960ed289ecd38d383e396243831ab81feb109c41",
+          "bytes": 4394,
+          "asset": "assets/roboto/OFL.txt",
+          "license": true
+        }
+      ],
+      "italic": true,
+      "weights": [
+        100,
+        200,
+        300,
+        400,
+        500,
+        600,
+        700,
+        800,
+        900
+      ],
+      "axes": [
+        {
+          "tag": "wght",
+          "min": 100.0,
+          "default": 400.0,
+          "max": 900.0
+        },
+        {
+          "tag": "wdth",
+          "min": 75.0,
+          "default": 100.0,
+          "max": 100.0
+        }
+      ]
+    },
+    {
+      "id": "raleway",
+      "title": "Raleway",
+      "kind": "sans",
+      "family": "Raleway",
+      "sources": [
+        {
+          "path": "ofl/raleway/Raleway-Italic[wght].ttf",
+          "gitBlob": "62d9e8480909eb2df71e230a67a4013490d0d5f3",
+          "sha256": "96629caf2202183fab46c70237055a7d67e6a5400b85413d45a77ed6f2a0770c",
+          "bytes": 318476,
+          "asset": "assets/raleway/italic.ttf"
+        },
+        {
+          "path": "ofl/raleway/Raleway[wght].ttf",
+          "gitBlob": "d81d42f537c7dc1bbde81b54e4c52a92977a8fde",
+          "sha256": "8bbcc3eb8275c388f4bcd998832f8a4b943eadbaf6a595205312774b5951aefb",
+          "bytes": 312352,
+          "asset": "assets/raleway/normal.ttf"
+        }
+      ],
+      "documents": [
+        {
+          "path": "ofl/raleway/FONTLOG.txt",
+          "gitBlob": "abc2756bde86a7991a623e35a2bf281ecfe1d110",
+          "sha256": "016d64b40928ed56df1b886039d218bc80508b1a688c82af374335e261b23803",
+          "bytes": 4768,
+          "asset": "assets/raleway/FONTLOG.txt",
+          "license": false
+        },
+        {
+          "path": "ofl/raleway/METADATA.pb",
+          "gitBlob": "1cb32e406e2448d1c5f7dbf0aa531ce225a9a6bf",
+          "sha256": "206017b9829b8f0a9aa3d2af2e8118520d8bff4930b4c834a52f057fc5965c9f",
+          "bytes": 1013,
+          "asset": "assets/raleway/METADATA.pb",
+          "license": false
+        },
+        {
+          "path": "ofl/raleway/OFL.txt",
+          "gitBlob": "a6b73db200c56a3b2b659f01948fd1b3baca91d5",
+          "sha256": "7e946cf1171784d1015279e7dc35f827957a6b5d1f1f659ae0c98e5f5e37ed9b",
+          "bytes": 4497,
+          "asset": "assets/raleway/OFL.txt",
+          "license": true
+        }
+      ],
+      "italic": true,
+      "weights": [
+        100,
+        200,
+        300,
+        400,
+        500,
+        600,
+        700,
+        800,
+        900
+      ],
+      "axes": [
+        {
+          "tag": "wght",
+          "min": 100.0,
+          "default": 100.0,
+          "max": 900.0
+        }
+      ]
+    },
+    {
+      "id": "dm-sans",
+      "title": "DM Sans",
+      "kind": "sans",
+      "family": "DM Sans",
+      "sources": [
+        {
+          "path": "ofl/dmsans/DMSans-Italic[opsz,wght].ttf",
+          "gitBlob": "bf6819b0f811026ecf98d66183509b7302c0bf61",
+          "sha256": "22259c0cc8237221b80f44c76ba8d36e6bce3cda72779f5b2773643d499720ae",
+          "bytes": 285040,
+          "asset": "assets/dm-sans/italic.ttf"
+        },
+        {
+          "path": "ofl/dmsans/DMSans[opsz,wght].ttf",
+          "gitBlob": "c672f98060af9b2c85fca704ebd5ad9a8717c1df",
+          "sha256": "8cd08d97e89c24d0aa92edd2f0f4c8ee6195eee9b7c9f154865a58b02f0c1c0d",
+          "bytes": 240164,
+          "asset": "assets/dm-sans/normal.ttf"
+        }
+      ],
+      "documents": [
+        {
+          "path": "ofl/dmsans/METADATA.pb",
+          "gitBlob": "bc40f78c6b8e917312c2321248cdcbec55cb7796",
+          "sha256": "55b3697a416f7d08c093918a4019a75cca7186c64bc56b1bb23e197a5d559dee",
+          "bytes": 1283,
+          "asset": "assets/dm-sans/METADATA.pb",
+          "license": false
+        },
+        {
+          "path": "ofl/dmsans/OFL.txt",
+          "gitBlob": "4430b85ac62998e2edb914360f9ebdfe43f4deaa",
+          "sha256": "9af36190332437f5ecd09974de43c1f7c77a310a996cdd8ceb25628b458840e1",
+          "bytes": 4482,
+          "asset": "assets/dm-sans/OFL.txt",
+          "license": true
+        }
+      ],
+      "italic": true,
+      "weights": [
+        100,
+        200,
+        300,
+        400,
+        500,
+        600,
+        700,
+        800,
+        900,
+        1000
+      ],
+      "axes": [
+        {
+          "tag": "opsz",
+          "min": 9.0,
+          "default": 9.0,
+          "max": 40.0
+        },
+        {
+          "tag": "wght",
+          "min": 100.0,
+          "default": 400.0,
+          "max": 1000.0
+        }
+      ]
+    },
+    {
+      "id": "public-sans",
+      "title": "Public Sans",
+      "kind": "sans",
+      "family": "Public Sans",
+      "sources": [
+        {
+          "path": "ofl/publicsans/PublicSans-Italic[wght].ttf",
+          "gitBlob": "b5e5f4c2025e6e86e484582f7199f6b09a5116ea",
+          "sha256": "6ce292b05aa8c66bc644bedff834b4d0ddee9af75c55f98dcb28faa32a81056f",
+          "bytes": 107940,
+          "asset": "assets/public-sans/italic.ttf"
+        },
+        {
+          "path": "ofl/publicsans/PublicSans[wght].ttf",
+          "gitBlob": "c747e1de8c8deadb6ba852eb9a0a7d893b8bd36f",
+          "sha256": "d75a7dc1a27eb9e336d5b33f55489d2ecb5621bf694d5c43b2415bce2ca830a8",
+          "bytes": 103316,
+          "asset": "assets/public-sans/normal.ttf"
+        }
+      ],
+      "documents": [
+        {
+          "path": "ofl/publicsans/METADATA.pb",
+          "gitBlob": "76320a7b79df7964887419b35e922d3bc9749672",
+          "sha256": "a6bf37ce312a499068a820ae995601242aaf7c6d92fbcfe1e4c609392c1defb7",
+          "bytes": 1330,
+          "asset": "assets/public-sans/METADATA.pb",
+          "license": false
+        },
+        {
+          "path": "ofl/publicsans/OFL.txt",
+          "gitBlob": "9eef1e9900892e8e971c1e731546f7987241641b",
+          "sha256": "157a9e77f7580246e97c769490e2e977ae94399f9d30f4556015c41fe8c28bac",
+          "bytes": 4390,
+          "asset": "assets/public-sans/OFL.txt",
+          "license": true
+        }
+      ],
+      "italic": true,
+      "weights": [
+        100,
+        200,
+        300,
+        400,
+        500,
+        600,
+        700,
+        800,
+        900
+      ],
+      "axes": [
+        {
+          "tag": "wght",
+          "min": 100.0,
+          "default": 100.0,
+          "max": 900.0
+        }
+      ]
+    },
+    {
+      "id": "outfit",
+      "title": "Outfit",
+      "kind": "sans",
+      "family": "Outfit",
+      "sources": [
+        {
+          "path": "ofl/outfit/Outfit[wght].ttf",
+          "gitBlob": "466d6245f9582df39bf73da91a8b3c938fd061cd",
+          "sha256": "fc7287273e66929776e2ba54f144fe699080bec29f61bf649d70d871468aeade",
+          "bytes": 110884,
+          "asset": "assets/outfit/normal.ttf"
+        }
+      ],
+      "documents": [
+        {
+          "path": "ofl/outfit/METADATA.pb",
+          "gitBlob": "a74603f110557fc9ddcd23d93dd89ce4b6ef8e2a",
+          "sha256": "4cd9d2154f15495ca97de561060d535eaba9f7007be4a87e40f3b58ea8111cf2",
+          "bytes": 835,
+          "asset": "assets/outfit/METADATA.pb",
+          "license": false
+        },
+        {
+          "path": "ofl/outfit/OFL.txt",
+          "gitBlob": "723cd447edee83ed3bb07c3343f478d352aa7440",
+          "sha256": "c676351bf8576b9aba743cd5eaa8c0e7ee0d51f805d720447b4df4ddb6a2e416",
+          "bytes": 4389,
+          "asset": "assets/outfit/OFL.txt",
+          "license": true
+        }
+      ],
+      "italic": false,
+      "weights": [
+        100,
+        200,
+        300,
+        400,
+        500,
+        600,
+        700,
+        800,
+        900
+      ],
+      "axes": [
+        {
+          "tag": "wght",
+          "min": 100.0,
+          "default": 100.0,
+          "max": 900.0
+        }
+      ]
+    },
+    {
+      "id": "oxanium",
+      "title": "Oxanium",
+      "kind": "sans",
+      "family": "Oxanium",
+      "sources": [
+        {
+          "path": "ofl/oxanium/Oxanium[wght].ttf",
+          "gitBlob": "ead485c7bf517197db91ef657614ac37d8007775",
+          "sha256": "2ce01d946e1e1ffc8d7eecfffbda8623bedd63eaf811a20488c4b69af45babb0",
+          "bytes": 43536,
+          "asset": "assets/oxanium/normal.ttf"
+        }
+      ],
+      "documents": [
+        {
+          "path": "ofl/oxanium/METADATA.pb",
+          "gitBlob": "9d711ccfff2031eac628ba57aa772c4bfde9f6c8",
+          "sha256": "adf6faeb4238003d1d5eb8d15f59c940e145672e3f78bcf82b1802afe9f7c4d2",
+          "bytes": 1583,
+          "asset": "assets/oxanium/METADATA.pb",
+          "license": false
+        },
+        {
+          "path": "ofl/oxanium/OFL.txt",
+          "gitBlob": "38913c09407f12006ade3c8391bc3ad48fadc4ee",
+          "sha256": "fe17c0f2581d71b4e1ea7e636e7f4877c29223e11bb1dd1a871e8c3f2a86336b",
+          "bytes": 4384,
+          "asset": "assets/oxanium/OFL.txt",
+          "license": true
+        }
+      ],
+      "italic": false,
+      "weights": [
+        200,
+        300,
+        400,
+        500,
+        600,
+        700,
+        800
+      ],
+      "axes": [
+        {
+          "tag": "wght",
+          "min": 200.0,
+          "default": 200.0,
+          "max": 800.0
+        }
+      ]
+    },
+    {
+      "id": "manrope",
+      "title": "Manrope",
+      "kind": "sans",
+      "family": "Manrope",
+      "sources": [
+        {
+          "path": "ofl/manrope/Manrope[wght].ttf",
+          "gitBlob": "75274da58537d6123b14f2cd0c355ad4681fc2b3",
+          "sha256": "3ae11c49db0455a3cc33e37d380f20fdb8c7f8b41dc07625c177e3d87a9d6ae6",
+          "bytes": 164700,
+          "asset": "assets/manrope/normal.ttf"
+        }
+      ],
+      "documents": [
+        {
+          "path": "ofl/manrope/FONTLOG.txt",
+          "gitBlob": "94b99a9e7ca7dbd4c571a09305bbbf5ef78df0ca",
+          "sha256": "b6b54bcc1dbd1b18d5afd087ec0b578097644b1c9ec3e0a642d4df7808f449c2",
+          "bytes": 3075,
+          "asset": "assets/manrope/FONTLOG.txt",
+          "license": false
+        },
+        {
+          "path": "ofl/manrope/METADATA.pb",
+          "gitBlob": "3e79d88e5324a509c44005bc94449d0a93f34fc7",
+          "sha256": "fb204147a7c16d009d4fa53248b6075bc941d7adfa450a825bc5d4cef2f9ded9",
+          "bytes": 732,
+          "asset": "assets/manrope/METADATA.pb",
+          "license": false
+        },
+        {
+          "path": "ofl/manrope/OFL.txt",
+          "gitBlob": "e271172a9ed0cddc895aabb6509f1c7d880b492d",
+          "sha256": "58172e0c0fac2cda8a37b348164bb55e44b0e69051e557e92b1d3f6910141f7b",
+          "bytes": 4387,
+          "asset": "assets/manrope/OFL.txt",
+          "license": true
+        }
+      ],
+      "italic": false,
+      "weights": [
+        200,
+        300,
+        400,
+        500,
+        600,
+        700,
+        800
+      ],
+      "axes": [
+        {
+          "tag": "wght",
+          "min": 200.0,
+          "default": 200.0,
+          "max": 800.0
+        }
+      ]
+    },
+    {
+      "id": "space-grotesk",
+      "title": "Space Grotesk",
+      "kind": "sans",
+      "family": "Space Grotesk",
+      "sources": [
+        {
+          "path": "ofl/spacegrotesk/SpaceGrotesk[wght].ttf",
+          "gitBlob": "a1b2e6c26093066510a31147e7aec9abdc8d6c5e",
+          "sha256": "acad6de1fc93436f5c0f1f4137751ef04f1aea3063e7036535970ffcfbd79f72",
+          "bytes": 136676,
+          "asset": "assets/space-grotesk/normal.ttf"
+        }
+      ],
+      "documents": [
+        {
+          "path": "ofl/spacegrotesk/METADATA.pb",
+          "gitBlob": "5086d39302540c03bae9512d54554c90cbbca616",
+          "sha256": "3713adf5c1a21affdbede103b6bb23f551d4195771fa8bc1b91ce813bd1623ee",
+          "bytes": 1509,
+          "asset": "assets/space-grotesk/METADATA.pb",
+          "license": false
+        },
+        {
+          "path": "ofl/spacegrotesk/OFL.txt",
+          "gitBlob": "cb512b9af44ff61e75e1aad387b7424cdfab36a3",
+          "sha256": "564ce565c371c5e5bbf286006565a7c9aa55a9f56e7ca58d56e05d649dd61a72",
+          "bytes": 4495,
+          "asset": "assets/space-grotesk/OFL.txt",
+          "license": true
+        }
+      ],
+      "italic": false,
+      "weights": [
+        300,
+        400,
+        500,
+        600,
+        700
+      ],
+      "axes": [
+        {
+          "tag": "wght",
+          "min": 300.0,
+          "default": 300.0,
+          "max": 700.0
+        }
+      ],
+      "derived": [
+        {
+          "asset": "assets/space-grotesk/semibold-native.ttf",
+          "sha256": "8c94e8bcde49d83cbc139c15b7730ddaf7b80fdb38e291aae3ae46bc6f325d54",
+          "bytes": 88504,
+          "sourceAsset": "assets/space-grotesk/normal.ttf",
+          "sourceSHA256": "acad6de1fc93436f5c0f1f4137751ef04f1aea3063e7036535970ffcfbd79f72",
+          "tool": "fonttools==4.60.1",
+          "script": "internal/generate/static-instance.py",
+          "coordinates": {
+            "wght": 600
+          },
+          "internalFamily": "Native Go Font 13",
+          "headCreated": 3684442777,
+          "headModified": 3684470115,
+          "reason": "Pinned variable and official static release omit a 600 named face; the native workflow matched 500 and 600 to identical glyphs.",
+          "authorStaticRelease": {
+            "repository": "https://github.com/floriankarsten/space-grotesk",
+            "commit": "03507d024a01282884232081fc6011c09ff4e849",
+            "files": [
+              {
+                "path": "fonts/ttf/static/SpaceGrotesk-Bold.ttf",
+                "gitBlob": "f8eb245d1ec7fd02d77f5a9b55ef6afc4c9ed1c1"
+              },
+              {
+                "path": "fonts/ttf/static/SpaceGrotesk-Light.ttf",
+                "gitBlob": "b2c106e99ab6f29715b298c3f7c4aa6c869410d6"
+              },
+              {
+                "path": "fonts/ttf/static/SpaceGrotesk-Medium.ttf",
+                "gitBlob": "341b633572a9af2c4440fa8060f83d08bca70a7f"
+              },
+              {
+                "path": "fonts/ttf/static/SpaceGrotesk-Regular.ttf",
+                "gitBlob": "46aa5dada9c4833e55256a4f3437388f42c5f666"
+              }
+            ],
+            "has600Face": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "montserrat",
+      "title": "Montserrat",
+      "kind": "sans",
+      "family": "Montserrat",
+      "sources": [
+        {
+          "path": "ofl/montserrat/Montserrat-Italic[wght].ttf",
+          "gitBlob": "c8b8441744f2092ea8cbeb7b6f881e53bfe9c623",
+          "sha256": "51607f316bc020e59f03cbf51543eecffbea501c0b31d73e5b82927c5cca442c",
+          "bytes": 762376,
+          "asset": "assets/montserrat/italic.ttf"
+        },
+        {
+          "path": "ofl/montserrat/Montserrat[wght].ttf",
+          "gitBlob": "c97aca18592834d8706549c279cb8d5ac5d85f69",
+          "sha256": "0f7b311b2f3279e4eef9b2f968bcdbab6e28f4daeb1f049f4f278a902bcd82f7",
+          "bytes": 744936,
+          "asset": "assets/montserrat/normal.ttf"
+        }
+      ],
+      "documents": [
+        {
+          "path": "ofl/montserrat/METADATA.pb",
+          "gitBlob": "26ff69860a1f09f65fc2b8b542238b9dd3c8da08",
+          "sha256": "c48dbcaee013b8f6a33e7e6a79191adbf098a36839367d9750598594ff664e5f",
+          "bytes": 6727,
+          "asset": "assets/montserrat/METADATA.pb",
+          "license": false
+        },
+        {
+          "path": "ofl/montserrat/OFL.txt",
+          "gitBlob": "fe576a2ee1f96353b05d030c0b7620d525cc53a8",
+          "sha256": "8b7141c03fa4f8d44e6345d5d4931709290f0f67875e452e95ac1fd3a027802e",
+          "bytes": 4400,
+          "asset": "assets/montserrat/OFL.txt",
+          "license": true
+        }
+      ],
+      "italic": true,
+      "weights": [
+        100,
+        200,
+        300,
+        400,
+        500,
+        600,
+        700,
+        800,
+        900
+      ],
+      "axes": [
+        {
+          "tag": "wght",
+          "min": 100.0,
+          "default": 100.0,
+          "max": 900.0
+        }
+      ]
+    },
+    {
+      "id": "ibm-plex-sans",
+      "title": "IBM Plex Sans",
+      "kind": "sans",
+      "family": "IBM Plex Sans",
+      "sources": [
+        {
+          "path": "ofl/ibmplexsans/IBMPlexSans-Italic[wdth,wght].ttf",
+          "gitBlob": "35722e5e79e3616407f479ece5c60c39c1efd68f",
+          "sha256": "0b94c5e981993764db32bf9c610ecc60cbd34ad77ec2f10ba03c64ab75124d8e",
+          "bytes": 599624,
+          "asset": "assets/ibm-plex-sans/italic.ttf"
+        },
+        {
+          "path": "ofl/ibmplexsans/IBMPlexSans[wdth,wght].ttf",
+          "gitBlob": "30f837e8b02e8ecddce6cbebc425b1f422392515",
+          "sha256": "3b031aa4216174205bd8471f88a49b91f093169e9e87bd5262242bc5967fe2e3",
+          "bytes": 537244,
+          "asset": "assets/ibm-plex-sans/normal.ttf"
+        }
+      ],
+      "documents": [
+        {
+          "path": "ofl/ibmplexsans/METADATA.pb",
+          "gitBlob": "ccfb809905fe8f3133b5ea2937b8abdce1134f02",
+          "sha256": "85f7e73668461cfacc4d9ecf94a7b67dd14dc24a71c0ae2cecd36215f0ca856c",
+          "bytes": 1554,
+          "asset": "assets/ibm-plex-sans/METADATA.pb",
+          "license": false
+        },
+        {
+          "path": "ofl/ibmplexsans/OFL.txt",
+          "gitBlob": "c35c4c618fab33da8695177b3a6cefe0810b7b28",
+          "sha256": "7e6b2818edbd8f6a01ae80641cc8f16a51080d08fb4e532be3a0b6f74adb07da",
+          "bytes": 4456,
+          "asset": "assets/ibm-plex-sans/OFL.txt",
+          "license": true
+        }
+      ],
+      "italic": true,
+      "weights": [
+        100,
+        200,
+        300,
+        400,
+        500,
+        600,
+        700
+      ],
+      "axes": [
+        {
+          "tag": "wght",
+          "min": 100.0,
+          "default": 400.0,
+          "max": 700.0
+        },
+        {
+          "tag": "wdth",
+          "min": 75.0,
+          "default": 100.0,
+          "max": 100.0
+        }
+      ]
+    },
+    {
+      "id": "source-sans-3",
+      "title": "Source Sans 3",
+      "kind": "sans",
+      "family": "Source Sans 3",
+      "sources": [
+        {
+          "path": "ofl/sourcesans3/SourceSans3-Italic[wght].ttf",
+          "gitBlob": "ee54b36fd07749f63466845ae14d533be06f3c22",
+          "sha256": "39e3ab05ccd7cb94907c31005bb5bec1d5432f0b096a2b782976e217a540eb6c",
+          "bytes": 395372,
+          "asset": "assets/source-sans-3/italic.ttf"
+        },
+        {
+          "path": "ofl/sourcesans3/SourceSans3[wght].ttf",
+          "gitBlob": "d259aa494fe7117141a2752a998a52c172bbd42b",
+          "sha256": "042fe2cc0b933e328410d7acbd0aa6a1873dca5aef81875f4bc214b08825c7b9",
+          "bytes": 646340,
+          "asset": "assets/source-sans-3/normal.ttf"
+        }
+      ],
+      "documents": [
+        {
+          "path": "ofl/sourcesans3/METADATA.pb",
+          "gitBlob": "9d8d06d028559f18a184188558ca52e067c267b1",
+          "sha256": "f855c7833e0c780c90e5a797a003f86e1201990c0af65b9c75d0a04c9be05ed7",
+          "bytes": 995,
+          "asset": "assets/source-sans-3/METADATA.pb",
+          "license": false
+        },
+        {
+          "path": "ofl/sourcesans3/OFL.txt",
+          "gitBlob": "50ee76cf00fbfe42fb7c74a9b95c9508dec5bb8f",
+          "sha256": "09746787287a289323b0ec3cff4d1a4a801331b82b7207c1e186f5d26619a392",
+          "bytes": 4579,
+          "asset": "assets/source-sans-3/OFL.txt",
+          "license": true
+        }
+      ],
+      "italic": true,
+      "weights": [
+        200,
+        300,
+        400,
+        500,
+        600,
+        700,
+        800,
+        900
+      ],
+      "axes": [
+        {
+          "tag": "wght",
+          "min": 200.0,
+          "default": 200.0,
+          "max": 900.0
+        }
+      ]
+    },
+    {
+      "id": "instrument-sans",
+      "title": "Instrument Sans",
+      "kind": "sans",
+      "family": "Instrument Sans",
+      "sources": [
+        {
+          "path": "ofl/instrumentsans/InstrumentSans-Italic[wdth,wght].ttf",
+          "gitBlob": "72c12d6254b5151b3a31ba769d0a66433b85a87d",
+          "sha256": "a74203cc5066a3b2f8de1a7b0887ef897773c2319dc86c911f8e85350cde0d07",
+          "bytes": 202128,
+          "asset": "assets/instrument-sans/italic.ttf"
+        },
+        {
+          "path": "ofl/instrumentsans/InstrumentSans[wdth,wght].ttf",
+          "gitBlob": "3589b81b22d3defc725dfdcdf16b5da7c9adc691",
+          "sha256": "b24f1812584816958afcf22e22d08e44318c5e51651e25d2438efdde389b33b1",
+          "bytes": 194336,
+          "asset": "assets/instrument-sans/normal.ttf"
+        }
+      ],
+      "documents": [
+        {
+          "path": "ofl/instrumentsans/METADATA.pb",
+          "gitBlob": "ae799bd1e4cb371fbf236572fd1c0628825d94ad",
+          "sha256": "111191daf841919d5d09b88ca7a17fb691c4b835c61ca81c958f334c40c11535",
+          "bytes": 1449,
+          "asset": "assets/instrument-sans/METADATA.pb",
+          "license": false
+        },
+        {
+          "path": "ofl/instrumentsans/OFL.txt",
+          "gitBlob": "26bd2f954bfa282d235370728095db97d8a36f6f",
+          "sha256": "9e27a72ed30eb49a08678f6a5d6ed98ec7ba5368f541637ee0683ec9134ef966",
+          "bytes": 4403,
+          "asset": "assets/instrument-sans/OFL.txt",
+          "license": true
+        }
+      ],
+      "italic": true,
+      "weights": [
+        400,
+        500,
+        600,
+        700
+      ],
+      "axes": [
+        {
+          "tag": "wdth",
+          "min": 75.0,
+          "default": 100.0,
+          "max": 100.0
+        },
+        {
+          "tag": "wght",
+          "min": 400.0,
+          "default": 400.0,
+          "max": 700.0
+        }
+      ]
+    },
+    {
+      "id": "geist-mono",
+      "title": "Geist Mono",
+      "kind": "mono",
+      "family": "Geist Mono",
+      "sources": [
+        {
+          "path": "ofl/geistmono/GeistMono-Italic[wght].ttf",
+          "gitBlob": "9a0d8997e9686aafcbef468b7b985b310d5a4202",
+          "sha256": "70c15be47d55f637197f7e38570dbca16b35777ea647dc3598f61bf3961d2b0d",
+          "bytes": 182656,
+          "asset": "assets/geist-mono/italic.ttf"
+        },
+        {
+          "path": "ofl/geistmono/GeistMono[wght].ttf",
+          "gitBlob": "173867dce0580ea751e4b9c558740d34f20ce549",
+          "sha256": "d00e590b8eb3a59acc329b2d044fd143ae935090b7da33199ebee27cc7de8196",
+          "bytes": 171948,
+          "asset": "assets/geist-mono/normal.ttf"
+        }
+      ],
+      "documents": [
+        {
+          "path": "ofl/geistmono/METADATA.pb",
+          "gitBlob": "f40ef77deec00cc31f7ed1c44145e44ed8fcaccb",
+          "sha256": "55d2fe9078cf7debb333b4d294e945586e6b1c3b2bc68225f88a2e01d87a69a3",
+          "bytes": 1473,
+          "asset": "assets/geist-mono/METADATA.pb",
+          "license": false
+        },
+        {
+          "path": "ofl/geistmono/OFL.txt",
+          "gitBlob": "61f6f4b7853081236aec6407f2dd3c7170997f84",
+          "sha256": "1781d2806a07d91c4edf4740b88449fab7d0eadad53f7c351b94cd4d4eb8c00f",
+          "bytes": 4387,
+          "asset": "assets/geist-mono/OFL.txt",
+          "license": true
+        }
+      ],
+      "italic": true,
+      "weights": [
+        100,
+        200,
+        300,
+        400,
+        500,
+        600,
+        700,
+        800,
+        900
+      ],
+      "axes": [
+        {
+          "tag": "wght",
+          "min": 100.0,
+          "default": 400.0,
+          "max": 900.0
+        }
+      ]
+    },
+    {
+      "id": "jetbrains-mono",
+      "title": "JetBrains Mono",
+      "kind": "mono",
+      "family": "JetBrains Mono",
+      "sources": [
+        {
+          "path": "ofl/jetbrainsmono/JetBrainsMono-Italic[wght].ttf",
+          "gitBlob": "5210f7350c95eef62d53de85b5953f4d5ff022ec",
+          "sha256": "85ae2a5cd3f56baf1ce1c21a851322c58e3d8fbe8e8ad4a4d090a820dd7fe558",
+          "bytes": 191556,
+          "asset": "assets/jetbrains-mono/italic.ttf"
+        },
+        {
+          "path": "ofl/jetbrainsmono/JetBrainsMono[wght].ttf",
+          "gitBlob": "aa310be8b717fe3774f9444dd89d5f4101cc6d10",
+          "sha256": "48715a42ec242c21e9f02692891e147d022299a52e48d5e413e1a942193ffeda",
+          "bytes": 187208,
+          "asset": "assets/jetbrains-mono/normal.ttf"
+        },
+        {
+          "path": "fonts/ttf/JetBrainsMono-SemiBold.ttf",
+          "asset": "assets/jetbrains-mono/semibold.ttf",
+          "repository": "https://github.com/JetBrains/JetBrainsMono",
+          "commit": "cd5227bd1f61dff3bbd6c814ceaf7ffd95e947d9",
+          "gitBlob": "a70e69bd21aa901f93ffa280f691cf513d13859d",
+          "sha256": "1b3bfa1ed5665a4ce3f9feb68d2d4e40e70bf8b4b7d9a3edd418f321b4e166a0",
+          "bytes": 277092,
+          "tag": "v2.304"
+        },
+        {
+          "path": "fonts/ttf/JetBrainsMono-SemiBoldItalic.ttf",
+          "asset": "assets/jetbrains-mono/semibold-italic.ttf",
+          "repository": "https://github.com/JetBrains/JetBrainsMono",
+          "commit": "cd5227bd1f61dff3bbd6c814ceaf7ffd95e947d9",
+          "gitBlob": "968602e88d186ba807f3dbc717a277849277eb1f",
+          "sha256": "3b3000507a7285872395ddbb4e53a28f07910dbf494fb0d5e1421dd60b5d8436",
+          "bytes": 279828,
+          "tag": "v2.304"
+        }
+      ],
+      "documents": [
+        {
+          "path": "ofl/jetbrainsmono/METADATA.pb",
+          "gitBlob": "dde1dd50ea6d10a04539d1579950dc9b48d65542",
+          "sha256": "220f22dd4d2a3d9c77183fbbcb250779267725d90d9be673b403dc6bcfada0af",
+          "bytes": 3203,
+          "asset": "assets/jetbrains-mono/METADATA.pb",
+          "license": false
+        },
+        {
+          "path": "ofl/jetbrainsmono/OFL.txt",
+          "gitBlob": "821a3dac22aff15a1f1c9689a1d79c45bb58ca39",
+          "sha256": "b2fe5e8987594e9ffd1d2ca52a2f5d73eb8335243893c5d6254b5ad69269591d",
+          "bytes": 4399,
+          "asset": "assets/jetbrains-mono/OFL.txt",
+          "license": true
+        },
+        {
+          "path": "OFL.txt",
+          "asset": "assets/jetbrains-mono/OFL.upstream.txt",
+          "repository": "https://github.com/JetBrains/JetBrainsMono",
+          "commit": "cd5227bd1f61dff3bbd6c814ceaf7ffd95e947d9",
+          "gitBlob": "8bee4148c1d54dbf5dae6d6c117fc80414266abb",
+          "sha256": "30f0c136e3c88e422d0791acd97238870f9054a9729bc34cf2ff0d4ed8cac4ad",
+          "bytes": 4399,
+          "license": true,
+          "tag": "v2.304"
+        }
+      ],
+      "italic": true,
+      "weights": [
+        100,
+        200,
+        300,
+        400,
+        500,
+        600,
+        700,
+        800
+      ],
+      "axes": [
+        {
+          "tag": "wght",
+          "min": 100.0,
+          "default": 400.0,
+          "max": 800.0
+        }
+      ]
+    },
+    {
+      "id": "noto-serif",
+      "title": "Noto Serif",
+      "kind": "serif",
+      "family": "Noto Serif",
+      "sources": [
+        {
+          "path": "ofl/notoserif/NotoSerif-Italic[wdth,wght].ttf",
+          "gitBlob": "0e60f3e9248b524e6c9a28d38fbfc147463b1f5a",
+          "sha256": "e87acbc6c0efd0d9a20d6a8cbbda2b266c14be3a3a6f5af8ec9d7b2460570ad1",
+          "bytes": 2448496,
+          "asset": "assets/noto-serif/italic.ttf"
+        },
+        {
+          "path": "ofl/notoserif/NotoSerif[wdth,wght].ttf",
+          "gitBlob": "7664d59c95d6c589f7b15017a218f7a42b93f86d",
+          "sha256": "4d8e6761424656867019081a1a01336f3cb086982682698714054fc33f782713",
+          "bytes": 1887192,
+          "asset": "assets/noto-serif/normal.ttf"
+        }
+      ],
+      "documents": [
+        {
+          "path": "ofl/notoserif/METADATA.pb",
+          "gitBlob": "5e878ae462bf8dca275c79b27ed821bef65f32a4",
+          "sha256": "659cf6a2475eabfa3e3bbb92e3ed15c604e6fb035b3b1057d469cc88e67357bb",
+          "bytes": 29397,
+          "asset": "assets/noto-serif/METADATA.pb",
+          "license": false
+        },
+        {
+          "path": "ofl/notoserif/OFL.txt",
+          "gitBlob": "6843f31878c9945e1e71e1baa275546b4eefead8",
+          "sha256": "cee9892f9f0cc8fe882c9e9537ee6a89621d86ee7ceaf70b02e2b2b1c25c061a",
+          "bytes": 4396,
+          "asset": "assets/noto-serif/OFL.txt",
+          "license": true
+        }
+      ],
+      "italic": true,
+      "weights": [
+        100,
+        200,
+        300,
+        400,
+        500,
+        600,
+        700,
+        800,
+        900
+      ],
+      "axes": [
+        {
+          "tag": "wght",
+          "min": 100.0,
+          "default": 400.0,
+          "max": 900.0
+        },
+        {
+          "tag": "wdth",
+          "min": 62.5,
+          "default": 100.0,
+          "max": 100.0
+        }
+      ]
+    },
+    {
+      "id": "roboto-slab",
+      "title": "Roboto Slab",
+      "kind": "serif",
+      "family": "Roboto Slab",
+      "sources": [
+        {
+          "path": "apache/robotoslab/RobotoSlab[wght].ttf",
+          "gitBlob": "1c46b300eda3677f604575ede4cd80f0d139c3be",
+          "sha256": "786ae192477447d33c6672c3055fba7cbfe45184c9a79e77a14f15716ca05b16",
+          "bytes": 251880,
+          "asset": "assets/roboto-slab/normal.ttf"
+        }
+      ],
+      "documents": [
+        {
+          "path": "apache/robotoslab/COPYRIGHT.txt",
+          "gitBlob": "d645695673349e3947e8e5ae42332d0ac3164cd7",
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "bytes": 11358,
+          "asset": "assets/roboto-slab/COPYRIGHT.txt",
+          "license": true
+        },
+        {
+          "path": "apache/robotoslab/LICENSE.txt",
+          "gitBlob": "d645695673349e3947e8e5ae42332d0ac3164cd7",
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "bytes": 11358,
+          "asset": "assets/roboto-slab/LICENSE.txt",
+          "license": true
+        },
+        {
+          "path": "apache/robotoslab/METADATA.pb",
+          "gitBlob": "e4484f18a90c0e0bece58da72f5df26fd03c0f8a",
+          "sha256": "d1b6fa86e355dc4b25a206ac9eb952495c30924f928a3b6965d45a8d7836e9cc",
+          "bytes": 996,
+          "asset": "assets/roboto-slab/METADATA.pb",
+          "license": false
+        }
+      ],
+      "italic": false,
+      "weights": [
+        100,
+        200,
+        300,
+        400,
+        500,
+        600,
+        700,
+        800,
+        900
+      ],
+      "axes": [
+        {
+          "tag": "wght",
+          "min": 100.0,
+          "default": 400.0,
+          "max": 900.0
+        }
+      ]
+    },
+    {
+      "id": "merriweather",
+      "title": "Merriweather",
+      "kind": "serif",
+      "family": "Merriweather",
+      "sources": [
+        {
+          "path": "ofl/merriweather/Merriweather-Italic[opsz,wdth,wght].ttf",
+          "gitBlob": "f16120757a8a92cfa12a5fc9a7dcbaa2f8297ab6",
+          "sha256": "f68a8f4989258679e4fbaf50aa42400132b5373c2d9d2514ba82ef6e85947a0b",
+          "bytes": 4591168,
+          "asset": "assets/merriweather/italic.ttf"
+        },
+        {
+          "path": "ofl/merriweather/Merriweather[opsz,wdth,wght].ttf",
+          "gitBlob": "cb775b80fa0a6f3b2aea114869a7171695b50a62",
+          "sha256": "d0ed0e359e396af7ad05e73dffd11a3a4c326ea0d0283c56bd9361cb2cc86a96",
+          "bytes": 4628080,
+          "asset": "assets/merriweather/normal.ttf"
+        }
+      ],
+      "documents": [
+        {
+          "path": "ofl/merriweather/FONTLOG.txt",
+          "gitBlob": "6c028b6e497072f89019921e1e94a164b7ca8bd9",
+          "sha256": "6f2488f6a54f2798994413ee2820427340998961df0553705ba3e0400bb25332",
+          "bytes": 6049,
+          "asset": "assets/merriweather/FONTLOG.txt",
+          "license": false
+        },
+        {
+          "path": "ofl/merriweather/METADATA.pb",
+          "gitBlob": "4a3fa62b7f2f30b18b43c8665b9d347292442448",
+          "sha256": "50aa12ab94b75275eb90b6353dd3f9b187c101ce0a89071f5456c052490a4345",
+          "bytes": 5391,
+          "asset": "assets/merriweather/METADATA.pb",
+          "license": false
+        },
+        {
+          "path": "ofl/merriweather/OFL.txt",
+          "gitBlob": "17d2c5151b6a31ca53721fc253708caf5cf0329a",
+          "sha256": "715bd349bfa6116f99e351e1548321dcfa25b91df65502d22ca8d624557697d2",
+          "bytes": 4438,
+          "asset": "assets/merriweather/OFL.txt",
+          "license": true
+        }
+      ],
+      "italic": true,
+      "weights": [
+        300,
+        400,
+        500,
+        600,
+        700,
+        800,
+        900
+      ],
+      "axes": [
+        {
+          "tag": "wght",
+          "min": 300.0,
+          "default": 300.0,
+          "max": 900.0
+        },
+        {
+          "tag": "wdth",
+          "min": 87.0,
+          "default": 100.0,
+          "max": 112.0
+        },
+        {
+          "tag": "opsz",
+          "min": 18.0,
+          "default": 18.0,
+          "max": 144.0
+        }
+      ]
+    },
+    {
+      "id": "lora",
+      "title": "Lora",
+      "kind": "serif",
+      "family": "Lora",
+      "sources": [
+        {
+          "path": "ofl/lora/Lora-Italic[wght].ttf",
+          "gitBlob": "e973ccf7e5c69a831090c729a0dc2c592f42f4cc",
+          "sha256": "22d8d8854b53807aa664ca34f2031a9ed57a1d0dea296b8b96cdd3aad937a2b3",
+          "bytes": 221232,
+          "asset": "assets/lora/italic.ttf"
+        },
+        {
+          "path": "ofl/lora/Lora[wght].ttf",
+          "gitBlob": "ee1914c3746140523de2940d267ec2215bd85d5b",
+          "sha256": "822a6621ccbe8d97d20ac88c1c41f5615c9c2c202eaa75f272cd452aac6475a7",
+          "bytes": 212196,
+          "asset": "assets/lora/normal.ttf"
+        }
+      ],
+      "documents": [
+        {
+          "path": "ofl/lora/FONTLOG.txt",
+          "gitBlob": "d90b9f3afb032e04b2d054595cc860d6cc0d5ee5",
+          "sha256": "9e1799f449c237b91601cbb7f6b9666af30a343f45249efb033d70ffa92d0a2d",
+          "bytes": 2591,
+          "asset": "assets/lora/FONTLOG.txt",
+          "license": false
+        },
+        {
+          "path": "ofl/lora/METADATA.pb",
+          "gitBlob": "07e2d58c443728b167f3e21c992791cefa176307",
+          "sha256": "6d9e38cc8926e903359a1c4c358fd2e71864f422aae9550d0d9a2ae0c62ddb8d",
+          "bytes": 1349,
+          "asset": "assets/lora/METADATA.pb",
+          "license": false
+        },
+        {
+          "path": "ofl/lora/OFL.txt",
+          "gitBlob": "d0ce7fe062e60eaa92c4af3ee1bebe81c5141b4e",
+          "sha256": "1d9a970809ac804b582a6ce7f0ebc4e7fefcbfd7ff6299cad35ee656a21be716",
+          "bytes": 4423,
+          "asset": "assets/lora/OFL.txt",
+          "license": true
+        }
+      ],
+      "italic": true,
+      "weights": [
+        400,
+        500,
+        600,
+        700
+      ],
+      "axes": [
+        {
+          "tag": "wght",
+          "min": 400.0,
+          "default": 400.0,
+          "max": 700.0
+        }
+      ]
+    },
+    {
+      "id": "playfair-display",
+      "title": "Playfair Display",
+      "kind": "serif",
+      "family": "Playfair Display",
+      "sources": [
+        {
+          "path": "ofl/playfairdisplay/PlayfairDisplay-Italic[wght].ttf",
+          "gitBlob": "94fae1f2853dd325b1a3602370780d154ffc8c89",
+          "sha256": "a5e26dc5e2e77fb2803a0bf02fd4f81ee136ec8dea863ccdb0c59a263b21378b",
+          "bytes": 278688,
+          "asset": "assets/playfair-display/italic.ttf"
+        },
+        {
+          "path": "ofl/playfairdisplay/PlayfairDisplay[wght].ttf",
+          "gitBlob": "7a09eb71f10622fd083134ac9ed46f59b21bee18",
+          "sha256": "c40f2293766a503bc70cce9e512ef844a4ccb7cbcde792fe2ea31d191917d8d6",
+          "bytes": 300724,
+          "asset": "assets/playfair-display/normal.ttf"
+        }
+      ],
+      "documents": [
+        {
+          "path": "ofl/playfairdisplay/FONTLOG.txt",
+          "gitBlob": "af2786edb7454da990e7f6e07a19143b95653d1c",
+          "sha256": "5bdf831796b209470b531bba8de75c7db8c2c28b473b350d6e0c1195f3d8f86e",
+          "bytes": 3005,
+          "asset": "assets/playfair-display/FONTLOG.txt",
+          "license": false
+        },
+        {
+          "path": "ofl/playfairdisplay/METADATA.pb",
+          "gitBlob": "f6dcb8b87343f6976e9f3f25798177a0bc0bc789",
+          "sha256": "c9e6a996754f710fb7ff2ba36f8dd807244318d561d63d247a22199ea1a5e94a",
+          "bytes": 1202,
+          "asset": "assets/playfair-display/METADATA.pb",
+          "license": false
+        },
+        {
+          "path": "ofl/playfairdisplay/OFL.txt",
+          "gitBlob": "13153890847ba9bde8a852596d1515261156e474",
+          "sha256": "566be814f8e96e93dfa16101331557eb6b5467e9e03f627c0910fe93ca12300e",
+          "bytes": 4449,
+          "asset": "assets/playfair-display/OFL.txt",
+          "license": true
+        }
+      ],
+      "italic": true,
+      "weights": [
+        400,
+        500,
+        600,
+        700,
+        800,
+        900
+      ],
+      "axes": [
+        {
+          "tag": "wght",
+          "min": 400.0,
+          "default": 400.0,
+          "max": 900.0
+        }
+      ]
+    },
+    {
+      "id": "eb-garamond",
+      "title": "EB Garamond",
+      "kind": "serif",
+      "family": "EB Garamond",
+      "sources": [
+        {
+          "path": "ofl/ebgaramond/EBGaramond-Italic[wght].ttf",
+          "gitBlob": "f9ad996001c8ee72fd43b4b8e67c8924b7f615b1",
+          "sha256": "bba2c4499c93c9612b90b9825d32b07da52fce2fe57562a1eb6b833553f93c4e",
+          "bytes": 754468,
+          "asset": "assets/eb-garamond/italic.ttf"
+        },
+        {
+          "path": "ofl/ebgaramond/EBGaramond[wght].ttf",
+          "gitBlob": "52d34b86ec20977f222ce37e8158e6b3002c0a31",
+          "sha256": "ef9512f92f6d579e5dc75af59a5a4b1b8b47d2eda89e00b954d44520e5369027",
+          "bytes": 851176,
+          "asset": "assets/eb-garamond/normal.ttf"
+        }
+      ],
+      "documents": [
+        {
+          "path": "ofl/ebgaramond/METADATA.pb",
+          "gitBlob": "0b771182c0dc4c62e24ef5c8de2c2c696921ce05",
+          "sha256": "be94098be975a66281842ed599baefa14959eff9da14c87250678e905f6043f2",
+          "bytes": 1457,
+          "asset": "assets/eb-garamond/METADATA.pb",
+          "license": false
+        },
+        {
+          "path": "ofl/ebgaramond/OFL.txt",
+          "gitBlob": "c1ec5e1818415eab6f8fca95a230af477d64eb61",
+          "sha256": "0985066662eb755ed3683ae5482a81a9195b49ce3f7e165cc2388b3dbece7dd7",
+          "bytes": 4398,
+          "asset": "assets/eb-garamond/OFL.txt",
+          "license": true
+        }
+      ],
+      "italic": true,
+      "weights": [
+        400,
+        500,
+        600,
+        700,
+        800
+      ],
+      "axes": [
+        {
+          "tag": "wght",
+          "min": 400.0,
+          "default": 400.0,
+          "max": 800.0
+        }
+      ]
+    },
+    {
+      "id": "instrument-serif",
+      "title": "Instrument Serif",
+      "kind": "serif",
+      "family": "Instrument Serif",
+      "sources": [
+        {
+          "path": "ofl/instrumentserif/InstrumentSerif-Italic.ttf",
+          "gitBlob": "192c3eda9864241ad280e9bcc84e258c80a4a588",
+          "sha256": "08939b8bdf534afec24ae0ef5e03f948940cd9a8fe08e7fecbad040e62327385",
+          "bytes": 71592,
+          "asset": "assets/instrument-serif/italic.ttf"
+        },
+        {
+          "path": "ofl/instrumentserif/InstrumentSerif-Regular.ttf",
+          "gitBlob": "36fac00ef9b7d523236df6536cb09c712bb2c7e4",
+          "sha256": "498efd461f6ddfcb7a111bf9a565709d2085d48201d501ead960d93e84ffbb88",
+          "bytes": 70012,
+          "asset": "assets/instrument-serif/normal.ttf"
+        }
+      ],
+      "documents": [
+        {
+          "path": "ofl/instrumentserif/METADATA.pb",
+          "gitBlob": "22619007900d69b3d136ca68ecc08ec56c6ac4d5",
+          "sha256": "9a650bee57af3478f9294c8765292dcea36322082b987b857e29a2ea64861f6a",
+          "bytes": 1287,
+          "asset": "assets/instrument-serif/METADATA.pb",
+          "license": false
+        },
+        {
+          "path": "ofl/instrumentserif/OFL.txt",
+          "gitBlob": "669ce7917bec662fcf7244d37f49c4277f6fbd73",
+          "sha256": "129ed7618959716959f2941fdd5b49e0ad6e6c1d78726761786a00253d865521",
+          "bytes": 4405,
+          "asset": "assets/instrument-serif/OFL.txt",
+          "license": true
+        }
+      ],
+      "italic": true,
+      "weights": [
+        400
+      ],
+      "axes": []
+    }
+  ],
+  "shadcnPicker": {
+    "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+    "path": "apps/v4/app/(app)/(create)/lib/fonts.ts",
+    "asset": "testdata/shadcn/fonts.ts",
+    "sha256": "d0662ea27985fe6ab9326b9c071e6ff325e2a913a41c882086875481a49cadb2",
+    "gitBlob": "a05f858bfc611b305de6688163e16fb36a383586",
+    "bytes": 2009
+  }
+}

@@ -10,6 +10,19 @@ Theme/color source notices are kept alongside their archived data at
 `pkg/theme/sources/LICENSE.shadcn` and `pkg/theme/sources/LICENSE.tailwind`.
 Go module dependencies retain their respective licenses in their module sources.
 
+The optional Create font collection uses the 26 families named by the fixed
+shadcn Create picker. Original Google Fonts assets are pinned to commit
+`5bb28733cec313b63fbd415b574b5ae35c8aa8b8`; original supplemental faces and
+derived assets are recorded separately in `pkg/fonts/manifest.json`, with
+their individual provenance, hashes and reproduction steps. Original font
+licenses/copyright notices remain under `pkg/fonts/assets/<family>/`.
+Roboto Slab supplies its Apache license; the other families supply their OFL
+notices. The shadcn MIT license covers the reference source, not these fonts.
+Applications can obtain the required unchanged notices through
+`Font.Licenses()`. The macOS packaging script copies the font text notices to
+`Contents/Resources/licenses/fonts/<family>/`; it embeds no extra font binary
+outside the assets linked by Go. See [`pkg/fonts/README.md`](pkg/fonts/README.md).
+
 The optional Material Symbols module includes Google's original static SVGs
 from `google/material-design-icons` commit
 `10ecc14790612ca8fd164e3f4ffe9c16fc50d5b7`, under Apache-2.0.

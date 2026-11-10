@@ -98,6 +98,17 @@ cp pkg/desktop/testdata/shadcn-menu/npm/tw-animate-css/LICENSE "$bundle/Contents
 cp pkg/icons/material/sources/LICENSE "$bundle/Contents/Resources/licenses/material-symbols.txt"
 cp pkg/display/testdata/shadcn-calendar/npm/date-fns-jalali/LICENSE.md "$bundle/Contents/Resources/licenses/date-fns-jalali.txt"
 cp pkg/display/testdata/shadcn-calendar/npm/react-day-picker/LICENSE "$bundle/Contents/Resources/licenses/react-day-picker.txt"
+# Font binaries are embedded by Go. Preserve every original text notice beside
+# its family ID, including the notices for any supplemental static faces.
+for font_dir in pkg/fonts/assets/*; do
+    [ -d "$font_dir" ] || continue
+    font_id=$(basename "$font_dir")
+    for notice in "$font_dir"/*.txt; do
+        [ -f "$notice" ] || continue
+        mkdir -p "$bundle/Contents/Resources/licenses/fonts/$font_id"
+        cp "$notice" "$bundle/Contents/Resources/licenses/fonts/$font_id/"
+    done
+done
 CGO_ENABLED=0 go build -o "$bundle/Contents/MacOS/gallery" "$package"
 cat > "$bundle/Contents/Info.plist" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>

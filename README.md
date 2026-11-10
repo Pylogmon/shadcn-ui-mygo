@@ -45,6 +45,7 @@ func view(c *ui.Context) {
 | 模块 | 内容 |
 | --- | --- |
 | `pkg/theme` | 语义颜色、OKLCH、官方主题与色阶、作用域主题、浅/深/系统模式、偏好存储 |
+| `pkg/fonts` / `pkg/fonts/all` | Create 的 26 族离线字体、按需函数、独立全量目录与显式原生注册 |
 | `pkg/motion` | 交互过渡、浮层动画、减少动态效果支持 |
 | `pkg/control` | 按钮、输入、选择、表单、OTP、开关、单值/范围/多拇指滑块 |
 | `pkg/display` | 卡片、排版、日历、数据表、图表、代码块、可折叠/多面板布局与反馈 |
@@ -85,6 +86,7 @@ Forms & controls页已接入框架搜索、国家分组/城市描述过滤、Off
 通知的应用队列、六位置堆叠、loading更新、可阻止关闭的动作、原生滑动及完整自定义正文见 [Toast/Sonner](docs/toast.md)。
 可组合的原生文字扫光、颜色与字体传递见 [Shimmer](docs/shimmer.md)。
 独立正文/标题字体、局部作用域和 styled Flyout 传递见 [字体角色](docs/font-roles.md)。
+可分发的字体文件、许可、按需/全量注册与固定来源见 [Create 字体包](pkg/fonts/README.md)。
 静态共享列组合与原生虚拟表格见 [Table](docs/table.md)。
 会话内容面、原生按钮/链接与反应层组合见 [Bubble](docs/bubble.md)。
 文件/图片卡片、应用持有的上传状态与横向附件组见 [Attachment](docs/attachment.md)。
