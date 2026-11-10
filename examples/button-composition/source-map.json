@@ -1,0 +1,254 @@
+{
+  "repository": "https://github.com/shadcn-ui/ui",
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "sourceManifestSHA256": "60cea4517fbce24938ff6992b1c58fc394d517c9908df2cc2ab30fae938d35b9",
+  "counts": {
+    "documentationExamples": 14,
+    "createSections": 6,
+    "galleryConfigurations": 20,
+    "originalFilesIncludingGuide": 16
+  },
+  "files": [
+    {
+      "path": "apps/v4/examples/base/button-default.tsx",
+      "gitBlob": "a4324e737c36d4b4c84b96421e818cbf517e930e",
+      "sha256": "833cef061f69e149746a60dccd91f71e10578cac1582fb97b8459686bf12515e",
+      "bytes": 132,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/button-default.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/button-demo.tsx",
+      "gitBlob": "000174382611bc2ece747cc154b7b6f037abf967",
+      "sha256": "29cac94b2017e1f7f0931f9fd8a064060a8c3a44e46c14821a09a36a8b2836a0",
+      "bytes": 387,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/button-demo.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/button-destructive.tsx",
+      "gitBlob": "50168ea59297d379629d4ec2b8c966d40ed988c3",
+      "sha256": "2fcaf071d073f8fd2f1cf6e9e13ce468de00f4058170fe2629bf6f88af0c2a1d",
+      "bytes": 163,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/button-destructive.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/button-ghost.tsx",
+      "gitBlob": "e02eab4a9e08039aa37e467f11bfe07b59b5e6e4",
+      "sha256": "d20d9c950f30949d4b5c1237d615aeda46990604d8c8274ffa762937122525cd",
+      "bytes": 145,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/button-ghost.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/button-icon.tsx",
+      "gitBlob": "e004712d56377af61d06283eafeb208fc7b7df74",
+      "sha256": "55efb293daab7b11bcb4ef340f6ebe84db426886a2bea1cd9866198b856bd5c4",
+      "bytes": 258,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/button-icon.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/button-link.tsx",
+      "gitBlob": "c23a3995c128d409718dd374189d14acb22ac80d",
+      "sha256": "4af0ae48d45a0b7a722a0108fa57ccbf36a500220293d83192f90740e79ff734",
+      "bytes": 142,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/button-link.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/button-outline.tsx",
+      "gitBlob": "b642b78c205904779ef2b562c5fbe15ff6983667",
+      "sha256": "b24f546b93ca466824b5006445d7e3e5b02884080f8984b15addd42d2d3aba44",
+      "bytes": 151,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/button-outline.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/button-render.tsx",
+      "gitBlob": "04590db243b6d50c7f22f490a652f65190ac635a",
+      "sha256": "4008ca99ac922705ac61d73df82f3856eb148647c99195b57d92116902095425",
+      "bytes": 241,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/button-render.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/button-rounded.tsx",
+      "gitBlob": "0067b2824613770804481c84978185088c0a534c",
+      "sha256": "7123d4ea834e2fa3e9a6a97d50e791109196da1bec980b116d508c1ea6ef3f78",
+      "bytes": 372,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/button-rounded.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/button-rtl.tsx",
+      "gitBlob": "2f7cd3e8554f1936f9c9f8bac964524f2c08da6a",
+      "sha256": "b0e0676f979157cee939b37ef50375ca68e24f4165dca3c07a4c1c8306145bb9",
+      "bytes": 1452,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/button-rtl.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/button-secondary.tsx",
+      "gitBlob": "aa84568e211c536c556b253c2015d2272ad7492f",
+      "sha256": "172d1bfc317c91c73f32966f494d79d97c140058fc5395f4e30891a9d25829f7",
+      "bytes": 157,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/button-secondary.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/button-size.tsx",
+      "gitBlob": "7b07c48a42e86b6bb1c791530e02c7a53cf20dec",
+      "sha256": "27e5c88ee966dbc48166a6f3ba0e287a15024f5e874aa5a5e4986f1903d738e4",
+      "bytes": 1244,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/button-size.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/button-spinner.tsx",
+      "gitBlob": "96d5b6fc1822826d24e9fe2771b36b1296915b90",
+      "sha256": "edb31db23a4d39fa4c2c2712efc595c7c60eccd852368679f3edbcab64929716",
+      "bytes": 461,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/button-spinner.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/button-with-icon.tsx",
+      "gitBlob": "66d902fd58b84027b853f9bc615e21e78635399f",
+      "sha256": "9ae6272b60f6d715dc6435261ec30b4f79fb689953c3550b89db0e4c264b89bf",
+      "bytes": 445,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/button-with-icon.tsx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/examples/button-example.tsx",
+      "gitBlob": "61424d7903ced07c1dfe3abf522883426694bccd",
+      "sha256": "18eb30f758a5f64d918014952bce3f867a4ba06f79fa36f92f83ac331ef82f8a",
+      "bytes": 31971,
+      "origin": "/private/tmp/shadcn-reference-ui/apps/v4/registry/bases/base/examples/button-example.tsx"
+    },
+    {
+      "path": "apps/v4/content/docs/components/base/button.mdx",
+      "gitBlob": "4c67c69f85957d8522893fcec86890a9c2f4c268",
+      "sha256": "3580d11761e0cb4f035567ac08dc2d8e8023d8c2fb964bbe163b9111e1892ebd",
+      "bytes": 4195,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/content/docs/components/base/button.mdx"
+    }
+  ],
+  "configurations": [
+    {
+      "recipe": "demo",
+      "source": "apps/v4/examples/base/button-demo.tsx",
+      "features": "Outline text button and ArrowUp Submit icon button"
+    },
+    {
+      "recipe": "size",
+      "source": "apps/v4/examples/base/button-size.tsx",
+      "features": "Four sizes, each with outline text and icon-only Submit buttons"
+    },
+    {
+      "recipe": "default",
+      "source": "apps/v4/examples/base/button-default.tsx",
+      "features": "Default Button"
+    },
+    {
+      "recipe": "outline",
+      "source": "apps/v4/examples/base/button-outline.tsx",
+      "features": "Outline Button"
+    },
+    {
+      "recipe": "secondary",
+      "source": "apps/v4/examples/base/button-secondary.tsx",
+      "features": "Secondary Button"
+    },
+    {
+      "recipe": "ghost",
+      "source": "apps/v4/examples/base/button-ghost.tsx",
+      "features": "Ghost Button"
+    },
+    {
+      "recipe": "destructive",
+      "source": "apps/v4/examples/base/button-destructive.tsx",
+      "features": "Destructive Button"
+    },
+    {
+      "recipe": "link",
+      "source": "apps/v4/examples/base/button-link.tsx",
+      "features": "Link visual variant remains a real Button"
+    },
+    {
+      "recipe": "with-icon",
+      "source": "apps/v4/examples/base/button-with-icon.tsx",
+      "features": "New Branch leading branch icon and Fork trailing fork icon"
+    },
+    {
+      "recipe": "icon",
+      "source": "apps/v4/examples/base/button-icon.tsx",
+      "features": "CircleFadingArrowUp semantic circle-up icon-only outline button"
+    },
+    {
+      "recipe": "rounded",
+      "source": "apps/v4/examples/base/button-rounded.tsx",
+      "features": "Get Started plus rounded icon-only ArrowUp button"
+    },
+    {
+      "recipe": "spinner",
+      "source": "apps/v4/examples/base/button-spinner.tsx",
+      "features": "Disabled Generating with leading spinner and Downloading with trailing spinner; both source markers are inline-start"
+    },
+    {
+      "recipe": "render",
+      "source": "apps/v4/examples/base/button-render.tsx",
+      "features": "Small secondary native Link Login, href=#"
+    },
+    {
+      "recipe": "rtl",
+      "source": "apps/v4/examples/base/button-rtl.tsx",
+      "features": "Verbatim Arabic/Hebrew/English buttons; explicit trailing ArrowRight mirrors in RTL; disabled loading and Add"
+    },
+    {
+      "recipe": "create-variants",
+      "source": "apps/v4/registry/bases/base/examples/button-example.tsx",
+      "section": "ButtonVariantsAndSizes",
+      "features": "Four sizes times all six variants, preserving every source cell"
+    },
+    {
+      "recipe": "create-icon-right",
+      "source": "apps/v4/registry/bases/base/examples/button-example.tsx",
+      "section": "ButtonIconRight",
+      "features": "Four sizes times all six variants, preserving every source cell"
+    },
+    {
+      "recipe": "create-icon-left",
+      "source": "apps/v4/registry/bases/base/examples/button-example.tsx",
+      "section": "ButtonIconLeft",
+      "features": "Four sizes times all six variants, preserving every source cell"
+    },
+    {
+      "recipe": "create-icon-only",
+      "source": "apps/v4/registry/bases/base/examples/button-example.tsx",
+      "section": "ButtonIconOnly",
+      "features": "Four sizes times all six variants, preserving every source cell"
+    },
+    {
+      "recipe": "create-invalid",
+      "source": "apps/v4/registry/bases/base/examples/button-example.tsx",
+      "section": "ButtonInvalidStates",
+      "features": "Four sizes times all six variants, preserving every source cell"
+    },
+    {
+      "recipe": "create-examples",
+      "source": "apps/v4/registry/bases/base/examples/button-example.tsx",
+      "section": "ButtonExamples",
+      "features": "Cancel/Submit and Delete/icon action groups, plus default native Link href=#"
+    }
+  ],
+  "adaptations": {
+    "nativeTargets": "Real MyGo ButtonBase for source Button, including visual link variant; true native Link for both source anchors. No hidden extra ButtonBase exists under links.",
+    "samePageHref": "Original href=# is handled by a public Router stored in SDK ui.Local. MyGo resolves it to the same local page; no browser launch, URL-bar fragment update or browser hash scrolling is claimed.",
+    "linkComposition": "Native Link target paints current StyleButton hover/pressed/focus appearance; an inert, input-transparent, AX-hidden Row at ZIndex1 paints its label above the target background.",
+    "accessibleNames": "Source-provided meaning is preserved; repeated matrix buttons append size to their accessible name, and originally unlabeled icon-only buttons receive descriptive names. Visible text is unchanged.",
+    "icons": {
+      "ArrowUpIcon": "Material ArrowUpward",
+      "ArrowUpRightIcon": "Material ArrowOutward",
+      "CircleFadingArrowUpIcon": "Material ArrowCircleUp",
+      "IconGitBranch": "Material AccountTree",
+      "IconGitFork": "Material ForkRight",
+      "ArrowRightIcon": "Material ArrowForward",
+      "ArrowLeftCircleIcon": "Material ArrowCircleLeft",
+      "PlusIcon": "Material Add",
+      "Spinner": "existing shared decorative Spinner SVG"
+    },
+    "markers": "The Small Outline cell in Create Icon Right has no data-icon and retains ordinary padding. Downloading has a trailing spinner with inline-start marker and therefore reduces logical-start padding. Other custom inline icons reduce their marked logical edge to6DIP at xs/sm or8DIP at default/lg.",
+    "localActions": "Source action buttons record Local button action; source anchors record Local button link. No submission, filesystem, authentication or network effects are simulated. Per-recipe action/counter values survive configuration changes and page return.",
+    "theme": "Menu style changes the configuration and language pickers only. Source button/link targets always use native MyGo input/AX and the kit theme. No new font/icon-font/assets/dependencies.",
+    "verification": "One concentrated public MyGo Tester/Backend workflow. Software PNGs do not establish real-platform windows, screen readers, IME or complete visual acceptance."
+  }
+}

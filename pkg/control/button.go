@@ -79,7 +79,20 @@ func StyleButton(c *ui.Context, b ui.Element, label string, p ButtonProps) ui.El
 		AlignItems(ui.Center).Justify(ui.Center).Cursor(ui.CursorPointer).
 		Disabled(p.Disabled || p.Loading).Busy(p.Loading).Invalid(p.Invalid).FocusRing(false))
 	if p.Size == ExtraSmall || p.Size == IconExtraSmall {
-		b.FontSize(12).Gap(4)
+		b.FontSize(12).Gap(4).Radius(min(t.RadiusMD(), 8))
+	} else if p.Size == Small || p.Size == IconSmall {
+		b.Radius(min(t.RadiusMD(), 10))
+		if p.Size == Small {
+			b.Gap(4)
+		}
+	}
+	iconOnly := p.Size == Icon || p.Size == IconExtraSmall || p.Size == IconSmall || p.Size == IconLarge
+	if !iconOnly && (p.Icon != nil || p.Loading) {
+		inset := float32(8)
+		if p.Size == ExtraSmall || p.Size == Small {
+			inset = 6
+		}
+		b.PaddingStart(inset)
 	}
 	bg, fg, border := t.Primary, t.PrimaryForeground, ui.Transparent
 	switch p.Variant {
@@ -140,14 +153,14 @@ func StyleButton(c *ui.Context, b ui.Element, label string, p ButtonProps) ui.El
 		}
 		b.Border(1, border).Shadow(0, 0, 0, 3, ring)
 	}
-	if p.Size == Icon || p.Size == IconExtraSmall || p.Size == IconSmall || p.Size == IconLarge {
+	if iconOnly {
 		b.Width(h)
 	}
 	if p.Label != "" {
 		b.Label(p.Label)
 	}
 	if p.Disabled {
-		b.Opacity(.5).Cursor(ui.CursorNotAllowed)
+		b.DimDisabled(false).Opacity(.5).Cursor(ui.CursorNotAllowed)
 	}
 	if p.Loading {
 		b.Cursor(ui.CursorWait)

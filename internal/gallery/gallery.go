@@ -59,6 +59,7 @@ type State struct {
 	contextMenuCompositions                                                        contextMenuCompositionPreviewState
 	menubarCompositions                                                            menubarCompositionPreviewState
 	badgeCompositions                                                              badgeCompositionPreviewState
+	buttonCompositions                                                             buttonCompositionPreviewState
 	chartPreview                                                                   chartPreviewState
 	chartCatalogue                                                                 chartcatalog.State
 	comboboxCompound                                                               comboboxCompoundPreviewState
@@ -119,7 +120,7 @@ type creatorPage struct {
 
 var pages = []creatorPage{
 	{Key: "overview", Label: "Cards", Keywords: []string{"Card", "CardSpacing", "Card compositions", "Meeting Notes"}},
-	{Key: "controls", Label: "Forms & controls", Keywords: []string{"Combobox", "MultiCombobox", "Autocomplete", "ButtonGroup", "RadioGroup", "Radio", "Field", "FieldComposition", "FieldSet", "FieldGroup", "InputGroup", "NumberInput", "DateInput", "TimeInput", "FileInput", "DatePickerInput", "Booking", "Jalali", "Persian", "Slider", "Switch", "Checkbox", "Textarea", "InputOTP", "Select"}},
+	{Key: "controls", Label: "Forms & controls", Keywords: []string{"Button", "Combobox", "MultiCombobox", "Autocomplete", "ButtonGroup", "RadioGroup", "Radio", "Field", "FieldComposition", "FieldSet", "FieldGroup", "InputGroup", "NumberInput", "DateInput", "TimeInput", "FileInput", "DatePickerInput", "Booking", "Jalali", "Persian", "Slider", "Switch", "Checkbox", "Textarea", "InputOTP", "Select"}},
 	{Key: "display", Label: "Data & display", Keywords: []string{"Table", "DataTable", "Payments", "Payment", "Calendar", "Avatar", "AvatarDropdown", "Accordion", "Collapsible", "Disclosure", "RadiusSettings", "FileTree", "Chart", "BarChart", "LineChart", "AreaChart", "PieChart", "DonutChart", "RadarChart", "RadialChart", "Carousel", "Slides", "Slideshow", "Progress", "Skeleton"}},
 	{Key: "content", Label: "Content & feedback", Keywords: []string{"Alert", "AlertColors", "Empty", "EmptySearch", "Item", "Badge"}},
 	{Key: "text-layout", Label: "Text & layout", Keywords: []string{"Typography", "Kbd", "Keyboard", "CodeBlock", "Code", "Spinner", "Skeleton", "ScrollArea", "AspectRatio"}},

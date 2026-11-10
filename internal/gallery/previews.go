@@ -96,6 +96,7 @@ func (s *State) controls(c *ui.Context) {
 			control.Button(c, "Disabled", control.ButtonProps{Disabled: true})
 		})
 	})
+	s.buttonCompositions.view(c, s.Popovers, s.Config.NativeMenus)
 	columns(c, func() {
 		display.Card(c, func() {
 			s.cardHeader(c, "Profile", "Labels, descriptions and inline validation.")
