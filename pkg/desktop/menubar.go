@@ -32,8 +32,10 @@ type MenubarState struct {
 }
 
 type MenubarProps struct {
-	Items            []overlay.MenubarItem
-	Label            string
+	Items []overlay.MenubarItem
+	Label string
+	// Width is the fallback panel width in DIPs. Each positive MenubarItem.Width
+	// overrides it for that top-level menu. Nonpositive fallbacks use 144 DIPs.
 	Width, MaxHeight float32
 	Placement        mygo.Placement
 	Gap              int
@@ -77,6 +79,16 @@ func menubarNext(items []overlay.MenubarItem, from, delta int) string {
 		}
 	}
 	return ""
+}
+
+func menubarPanelWidth(item overlay.MenubarItem, fallback float32) float32 {
+	if item.Width > 0 {
+		return item.Width
+	}
+	if fallback > 0 {
+		return fallback
+	}
+	return 144
 }
 
 func (s *MenubarState) restore() {
@@ -240,14 +252,15 @@ func Menubar(c *ui.Context, h *Host, key string, s *MenubarState, p MenubarProps
 		s.Open, s.wasOpen = false, false
 		return result, nil
 	}
-	width, maxHeight := p.Width, p.MaxHeight
-	if math.IsNaN(float64(width)) || math.IsInf(float64(width), 0) || math.IsNaN(float64(maxHeight)) || math.IsInf(float64(maxHeight), 0) {
+	maxHeight := p.MaxHeight
+	finite := !math.IsNaN(float64(p.Width)) && !math.IsInf(float64(p.Width), 0) && !math.IsNaN(float64(maxHeight)) && !math.IsInf(float64(maxHeight), 0)
+	for _, candidate := range p.Items {
+		finite = finite && !math.IsNaN(float64(candidate.Width)) && !math.IsInf(float64(candidate.Width), 0)
+	}
+	if !finite {
 		s.Open, s.wasOpen = false, false
 		h.Close(key)
 		return result, errors.New("desktop: Menubar dimensions must be finite")
-	}
-	if width <= 0 {
-		width = 144
 	}
 	if maxHeight <= 0 {
 		maxHeight = 480
@@ -257,6 +270,7 @@ func Menubar(c *ui.Context, h *Host, key string, s *MenubarState, p MenubarProps
 		return result, nil
 	}
 	item := p.Items[active]
+	width := menubarPanelWidth(item, p.Width)
 	closeMenu := func(dismiss bool) {
 		if !s.Open {
 			return
@@ -293,9 +307,17 @@ func Menubar(c *ui.Context, h *Host, key string, s *MenubarState, p MenubarProps
 			return
 		}
 		currentItem := p.Items[current]
+		// Application data can change between independently scheduled windows.
+		// Do not feed a non-finite width into child layout while the parent is
+		// waiting to report the normal dimensions error on its next build.
+		if math.IsNaN(float64(currentItem.Width)) || math.IsInf(float64(currentItem.Width), 0) {
+			closeMenu(true)
+			return
+		}
+		currentWidth := menubarPanelWidth(currentItem, p.Width)
 		selectedInEvent := false
 		MenuContent(child.Key("menubar-menu:"+s.Active), &s.menu, currentItem.Items, MenuContentProps{
-			Label: currentItem.Label, Width: width, MaxHeight: maxHeight,
+			Label: currentItem.Label, Width: currentWidth, MaxHeight: maxHeight,
 			KeepOpenOnSelect: p.KeepOpenOnSelect, ItemContent: p.ItemContent,
 			OnChoose: func(value string) {
 				selectedInEvent = true
@@ -400,7 +422,7 @@ func menubarStamp(items []overlay.MenubarItem, revision uint64) uint64 {
 		fmt.Fprint(hash, "]")
 	}
 	for _, item := range items {
-		fmt.Fprintf(hash, "%q/%q/%t;", item.Key, item.Label, item.Disabled)
+		fmt.Fprintf(hash, "%q/%q/%t/%g;", item.Key, item.Label, item.Disabled, item.Width)
 		visit(item.Items)
 	}
 	return hash.Sum64()

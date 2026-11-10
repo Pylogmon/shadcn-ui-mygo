@@ -1,6 +1,8 @@
 package overlay
 
 import (
+	"math"
+
 	"github.com/egoist/mygo/ui"
 	"github.com/pylogmon/shadcn-ui-mygo/internal/indicator"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/motion"
@@ -182,6 +184,10 @@ type MenubarItem struct {
 	Label    string
 	Items    []MenuItem
 	Disabled bool
+	// Width overrides the styled popup panel width for this top-level menu.
+	// Nonpositive values inherit MenubarProps.Width (or the legacy default).
+	// Native system menus retain their operating system's width.
+	Width float32
 }
 type menubarState struct{ open []bool }
 
@@ -197,7 +203,11 @@ func InWindowMenubar(c *ui.Context, items []MenubarItem) string {
 	chosen := ""
 	root.Children(func() {
 		for i, item := range items {
-			value := InWindowDropdownMenu(c.Key(i), &s.open[i], MenuProps{Items: item.Items}, func(trigger ui.Element) {
+			width := item.Width
+			if math.IsNaN(float64(width)) || math.IsInf(float64(width), 0) {
+				width = 0
+			}
+			value := InWindowDropdownMenu(c.Key(i), &s.open[i], MenuProps{Items: item.Items, Width: width}, func(trigger ui.Element) {
 				button(c, trigger.Disabled(item.Disabled), item.Label, false).Border(0, ui.Transparent).Height(28)
 				if s.open[i] {
 					trigger.Background(t.Accent)

@@ -37,21 +37,34 @@ Inset padding follows the logical start. Six-side placement resolves logical
 sides from the direction selector; the platform may flip the final placement
 to fit the work area.
 
-`MenubarProps.Width` supplies one popup-panel width for every top-level menu
-in a bar. This Gallery generally uses 224 DIPs; Checkboxes uses 256, With Inset
-uses 176, and side previews use 192. Four explicit source widths are therefore
-normalized to the shared 224-DIP width:
+`overlay.MenubarItem.Width` gives each top-level styled menu its own panel
+width. A positive finite value overrides `desktop.MenubarProps.Width`;
+nonpositive values inherit that fallback, whose default remains 144 DIPs.
+Styled desktop menus reject non-finite widths on any candidate. The source's
+explicit widths now map directly:
 
-| Source menu | Source width | Gallery width |
-| --- | --- | --- |
-| Docs Demo: View | 176 DIPs | 224 DIPs |
-| Docs RTL: View | 176 DIPs | 224 DIPs |
-| Create Insert: Tools | 176 DIPs | 224 DIPs |
-| Create Destructive: File | 160 DIPs | 224 DIPs |
+| Source menu | Source and Gallery width |
+| --- | --- |
+| Docs Demo / RTL: View | 176 DIPs |
+| Docs / Create Checkboxes: View | 256 DIPs |
+| Create Insert: Tools | 176 DIPs |
+| Create Destructive: File | 160 DIPs |
+| Create With Inset: View | 176 DIPs |
 
-A future per-top-level popup-width API could restore these source widths.
-This module uses the current shared-width API; Native popup width remains
-under system control.
+Checkboxes' Format has no explicit source width and retains the 224-DIP Gallery
+fallback. Other unspecified widths also retain 224, and side previews retain 192.
+The fixed Vega source uses a 144-DIP minimum with natural CSS content sizing;
+these Gallery fallbacks are native fixed-width adaptations, not source pixel
+measurements. Intrinsic content sizing and the complete font/platform visual
+matrix remain acceptance work.
+
+The child reads the current sibling's width before the parent's next reanchor
+frame. The standard native adapter implements `desktop.SizeSurface`, so a
+width-only change resizes the same Flyout and retains its editor/focus. A custom
+backend without this optional capability retains Host's replacement policy.
+Legacy `InWindowMenubar` forwards finite item widths as its existing menu minimum;
+non-finite legacy values fall back safely. Native popup width stays under OS
+control and ignores this visual setting.
 
 **Native** uses `desktop.NativeMenubar`, a group of system popup triggers.
 It is distinct from an application's global operating-system menu bar.

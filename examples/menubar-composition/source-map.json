@@ -271,42 +271,60 @@
     "nativeLimits": "System popup positioning, tracking and styling are retained; no Flyout inset, custom six-side placement or cross-popup sibling switching during OS tracking is claimed for Native.",
     "closeOnSelect": "Flyout checkbox/radio items follow Base UI keep-open defaults; ordinary actions close. OS popup dismissal follows the platform.",
     "popupWidths": {
-      "api": "MenubarProps.Width supplies one shared popup-panel width for all top-level menus in a bar.",
-      "defaultDIPs": 224,
-      "checkboxDIPs": 256,
-      "insetDIPs": 176,
-      "sidesDIPs": 192,
-      "sourceNormalizations": [
+      "api": "A positive finite overlay.MenubarItem.Width overrides desktop.MenubarProps.Width for that top-level styled menu. Nonpositive item values use the bar fallback; its default remains144DIPs. NaN/Inf on styled candidates are rejected. Native OS ignores visual widths.",
+      "fallbackDIPs": 224,
+      "sidesFallbackDIPs": 192,
+      "explicitSourceWidths": [
         {
           "recipe": "demo",
           "source": "menubar-demo.tsx",
           "topLevel": "View",
           "sourceDIPs": 176,
-          "galleryDIPs": 224
+          "galleryDIPs": 176
         },
         {
           "recipe": "rtl",
           "source": "menubar-rtl.tsx",
           "topLevel": "View",
           "sourceDIPs": 176,
-          "galleryDIPs": 224
+          "galleryDIPs": 176
+        },
+        {
+          "recipe": "checkbox",
+          "source": [
+            "menubar-checkbox.tsx",
+            "menubar-example.tsx:MenubarWithCheckboxes"
+          ],
+          "topLevel": "View",
+          "sourceDIPs": 256,
+          "galleryDIPs": 256
         },
         {
           "recipe": "insert",
           "source": "menubar-example.tsx:MenubarInsert",
           "topLevel": "Tools",
           "sourceDIPs": 176,
-          "galleryDIPs": 224
+          "galleryDIPs": 176
         },
         {
           "recipe": "destructive",
           "source": "menubar-example.tsx:MenubarDestructive",
           "topLevel": "File",
           "sourceDIPs": 160,
-          "galleryDIPs": 224
+          "galleryDIPs": 160
+        },
+        {
+          "recipe": "inset",
+          "source": "menubar-example.tsx:MenubarWithInset",
+          "topLevel": "View",
+          "sourceDIPs": 176,
+          "galleryDIPs": 176
         }
       ],
-      "futureAPI": "A future per-top-level popup-width API could restore these four explicit source widths. This module uses the current shared-width API. Native popup width remains under system control."
+      "checkboxFormat": "Source has no explicit width; Gallery Format falls back to224DIPs rather than inheriting View256.",
+      "naturalSizingBoundary": "Vega cn-menubar-content uses min-w-36=144DIPs with natural CSS content sizing. Unspecified Gallery menus retain native fixed224DIP fallback (sides192), which is not a measured source width. Intrinsic sizing and complete font/platform visual acceptance remain.",
+      "lifecycle": "Child sibling events use the current item width before the parent reanchor. A SizeSurface backend resizes the same native surface; the standard MyGo adapter implements it. Custom backends lacking that optional capability retain Host replacement behavior.",
+      "legacy": "Finite item widths forward to the existing InWindow minimum-width API; non-finite values use its safe default."
     }
   }
 }

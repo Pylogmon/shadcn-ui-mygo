@@ -80,7 +80,7 @@ Navigation 页的 Project actions、File 和 Project workspace 右键菜单共�
 
 同页另提供 [Context Menu 源组合](../examples/context-menu-composition/README.md) 的22个配置，保留11份文档与11个Create分区的不同内容。右键、Context菜单键和Shift+F10操作真实目标；独立草稿保存复选与People／Theme多组单选。系统路线使用公开SVG模板图标，Flyout保留逻辑缩进、子菜单、六侧、Dialog及译文。源Demo／RTL的176DIP子菜单采用当前公共API的192DIP宽度；实际跨显示器放置与原生菜单跟踪仍需平台验收。
 
-[Menubar 源组合](../examples/menubar-composition/README.md) 的15个配置映射6份文档与12个Create分区，保留两套Icons、Format／Insert、六侧／Inset／Dialog和完整译文。每项命令更新独立的Last command；真实复选与单选值随全局Menu style切换保留。当前共享bar宽度将Demo／RTL的View与Insert的Tools从源176DIP放宽到224，Destructive的File从160放宽到224；逐顶层宽度仍为后续API适配项。Native继续是系统弹出菜单触发器组。
+[Menubar 源组合](../examples/menubar-composition/README.md) 的15个配置映射6份文档与12个Create分区，保留两套Icons、Format／Insert、六侧／Inset／Dialog和完整译文。每项命令更新独立的Last command；真实复选与单选值随全局Menu style切换保留。`overlay.MenubarItem.Width` 可逐顶层覆盖 `MenubarProps.Width`，零值沿用共享默认；显式宽度在兄弟菜单切换时更新同一Flyout，不需要重建子窗口。源Demo／RTL的View、Checkbox的View、Insert的Tools、Destructive的File和Inset的View保留各自显式尺寸；无显式尺寸的源CSS采用内容自然宽，当前Go定宽默认仍是明确适配边界。Native继续是系统弹出菜单触发器组，其宽度由OS决定。
 
 ## 窗口内与迁移
 

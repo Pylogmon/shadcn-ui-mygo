@@ -149,12 +149,6 @@ func (p *menubarCompositionPreviewState) draw(c *ui.Context, h *desktop.Host, na
 	}
 	build := func() {
 		width := float32(224)
-		if p.recipe == "checkbox" {
-			width = 256
-		}
-		if p.recipe == "inset" {
-			width = 176
-		}
 		placement := mygo.PlacementBottomStart
 		if c.Direction() == ui.RightToLeft {
 			placement = mygo.PlacementBottomEnd
@@ -272,6 +266,12 @@ func menubarTop(label string, items ...overlay.MenuItem) overlay.MenubarItem {
 	return overlay.MenubarItem{Key: label, Label: label, Items: items}
 }
 
+func menubarTopWidth(width float32, label string, items ...overlay.MenuItem) overlay.MenubarItem {
+	item := menubarTop(label, items...)
+	item.Width = width
+	return item
+}
+
 func (p *menubarCompositionPreviewState) check(recipe, name, label string, initial bool) overlay.MenuItem {
 	key := recipe + ":" + name
 	value := p.checks[key]
@@ -311,7 +311,7 @@ func (p *menubarCompositionPreviewState) items(recipe string) []overlay.MenubarI
 		}
 	case "checkbox":
 		return []overlay.MenubarItem{
-			menubarTop("View", p.check(recipe, "bookmarks", "Always Show Bookmarks Bar", false), p.check(recipe, "urls", "Always Show Full URLs", true), sep(), menubarInset(a("Reload", "⌘R")), menubarDisabled(menubarInset(a("Force Reload", "⇧⌘R")))),
+			menubarTopWidth(256, "View", p.check(recipe, "bookmarks", "Always Show Bookmarks Bar", false), p.check(recipe, "urls", "Always Show Full URLs", true), sep(), menubarInset(a("Reload", "⌘R")), menubarDisabled(menubarInset(a("Force Reload", "⇧⌘R")))),
 			menubarTop("Format", p.check(recipe, "strikethrough", "Strikethrough", true), p.check(recipe, "code", "Code", false), p.check(recipe, "superscript", "Superscript", false)),
 		}
 	case "radio":
@@ -337,10 +337,10 @@ func (p *menubarCompositionPreviewState) items(recipe string) []overlay.MenubarI
 	case "insert":
 		media := sub("Media", a("Image", ""), a("Video", ""), a("Audio", ""))
 		media.Icon = outlined.Image()
-		return []overlay.MenubarItem{menubarTop("Insert", media, sep(), menubarIcon("Link", "⌘K", outlined.Link()), menubarIcon("Table", "", outlined.Table())), menubarTop("Tools", menubarIcon("Find & Replace", "⌘F", outlined.Search()), menubarIcon("Spell Check", "", outlined.Check()))}
+		return []overlay.MenubarItem{menubarTop("Insert", media, sep(), menubarIcon("Link", "⌘K", outlined.Link()), menubarIcon("Table", "", outlined.Table())), menubarTopWidth(176, "Tools", menubarIcon("Find & Replace", "⌘F", outlined.Search()), menubarIcon("Spell Check", "", outlined.Check()))}
 	case "destructive":
 		return []overlay.MenubarItem{
-			menubarTop("File", menubarIcon("New File", "⌘N", outlined.Draft()), menubarIcon("Open Folder", "", outlined.Folder()), sep(), menubarDanger(menubarIcon("Delete File", "⌘⌫", outlined.Delete()))),
+			menubarTopWidth(160, "File", menubarIcon("New File", "⌘N", outlined.Draft()), menubarIcon("Open Folder", "", outlined.Folder()), sep(), menubarDanger(menubarIcon("Delete File", "⌘⌫", outlined.Delete()))),
 			menubarTop("Account", menubarIcon("Profile", "", outlined.Person()), menubarIcon("Settings", "", outlined.Settings()), sep(), menubarDanger(menubarIcon("Sign out", "", outlined.Logout())), sep(), menubarDanger(menubarIcon("Delete", "", outlined.Delete()))),
 		}
 	case "dialog":
@@ -363,7 +363,7 @@ func (p *menubarCompositionPreviewState) items(recipe string) []overlay.MenubarI
 		items := []overlay.MenuItem{copy, menubarIcon("Cut", "", outlined.ContentCut()), menubarInset(a("Paste", "")), sep(), bookmarks, menubarInset(p.check(recipe, "urls", "Full URLs", false)), sep()}
 		items = append(items, themes...)
 		items = append(items, sep(), menubarInset(sub("More Options", a("Save Page...", ""), a("Create Shortcut...", ""))))
-		return []overlay.MenubarItem{menubarTop("View", items...)}
+		return []overlay.MenubarItem{menubarTopWidth(176, "View", items...)}
 	default:
 		return p.demoItems(recipe)
 	}
@@ -381,7 +381,7 @@ func (p *menubarCompositionPreviewState) demoItems(recipe string) []overlay.Menu
 	return []overlay.MenubarItem{
 		menubarTop(w("file"), a(w("newTab"), "⌘T"), a(w("newWindow"), "⌘N"), menubarDisabled(a(w("incognito"), "")), sep(), menubarSub(w("share"), a(w("email"), ""), a(w("messages"), ""), a(w("notes"), "")), sep(), a(w("print"), "⌘P")),
 		menubarTop(w("edit"), a(w("undo"), "⌘Z"), a(w("redo"), "⇧⌘Z"), sep(), menubarSub(w("find"), a(w("web"), ""), sep(), a(w("findItem"), ""), a(w("next"), ""), a(w("previous"), "")), sep(), a(w("cut"), ""), a(w("copy"), ""), a(w("paste"), "")),
-		menubarTop(w("view"), p.check(recipe, "bookmarks", w("bookmarks"), false), p.check(recipe, "urls", w("urls"), true), sep(), menubarInset(a(w("reload"), "⌘R")), menubarDisabled(menubarInset(a(w("force"), "⇧⌘R"))), sep(), menubarInset(a(w("fullscreen"), "")), sep(), menubarInset(a(w("sidebar"), ""))),
+		menubarTopWidth(176, w("view"), p.check(recipe, "bookmarks", w("bookmarks"), false), p.check(recipe, "urls", w("urls"), true), sep(), menubarInset(a(w("reload"), "⌘R")), menubarDisabled(menubarInset(a(w("force"), "⇧⌘R"))), sep(), menubarInset(a(w("fullscreen"), "")), sep(), menubarInset(a(w("sidebar"), ""))),
 		menubarTop(w("profiles"), append(p.radios(recipe, "profile", "benoit", []string{"andy", "benoit", "Luis"}, []string{"Andy", "Benoit", "Luis"}, false), sep(), menubarInset(a(w("editProfile"), "")), sep(), menubarInset(a(w("addProfile"), "")))...),
 	}
 }

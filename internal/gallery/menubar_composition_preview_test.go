@@ -220,6 +220,10 @@ func TestMenubarCompositionsSourceWorkflow(t *testing.T) {
 	}
 	click("View")
 	s = latest()
+	if s.spec.Width != 176 {
+		t.Fatal("docs Demo View did not preserve its explicit source w-44 width")
+	}
+	menubarCompositionSnapshot(t, s.tester, "menubar-view-width176-dark")
 	if a := compoundAccess(t, s.tester, ui.RoleMenuItemCheckBox, "Full URLs"); a.Checked {
 		t.Fatal("route change reset checkbox draft")
 	}
@@ -243,6 +247,20 @@ func TestMenubarCompositionsSourceWorkflow(t *testing.T) {
 		t.Fatal("source radio failed to keep its menu open and refresh selection")
 	}
 	closeChild()
+	// These are the fixed source's explicit per-menu w-64/w-44/w-40 values;
+	// Checkbox's Format has no explicit width and must retain the224 fallback.
+	for _, example := range []struct {
+		configuration, trigger string
+		width                  int
+	}{{"With Checkboxes", "View", 256}, {"With Checkboxes", "Format", 224}, {"Insert", "Tools", 176}, {"Destructive", "File", 160}} {
+		choose("Menubar configuration", example.configuration)
+		click(example.trigger)
+		s = latest()
+		if s.spec.Width != example.width {
+			t.Fatalf("source %s/%s width=%d want%d", example.configuration, example.trigger, s.spec.Width, example.width)
+		}
+		closeChild()
+	}
 	choose("Menubar configuration", "With Inset")
 	click("View")
 	s = latest()
@@ -307,6 +325,12 @@ func TestMenubarCompositionsSourceWorkflow(t *testing.T) {
 		t.Fatal("source RTL alignment/translation missing")
 	}
 	menubarCompositionSnapshot(t, s.tester, "menubar-flyout-hebrew-dark")
+	closeChild()
+	click("תצוגה")
+	s = latest()
+	if s.spec.Width != 176 {
+		t.Fatal("translated View did not preserve its source w-44 width")
+	}
 	closeChild()
 	choose("Menubar configuration", "In Dialog")
 	click("Open Dialog")
