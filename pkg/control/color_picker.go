@@ -32,8 +32,9 @@ type ColorPickerProps struct {
 	Custom      bool
 	CustomLabel string
 	Shape       ColorSwatchShape
-	// SwatchSize is in DIPs; zero uses 48. Spacing defaults to 24; a pointer
-	// permits an explicit zero. Invalid dimensions fall back to the defaults.
+	// SwatchSize is in DIPs; zero uses 48. Outlines scale with the swatch.
+	// Spacing defaults to 24; a pointer permits an explicit zero. Invalid
+	// dimensions fall back to the defaults.
 	SwatchSize        float32
 	Spacing           *float32
 	Disabled, Invalid bool
@@ -215,6 +216,9 @@ func styleColorSwatch(c *ui.Context, swatch colorPickerSwatch, selected bool, si
 	}
 	e.Draw(func(p *ui.Painter, r ui.Rect) {
 		outline := func(amount, width float32, color ui.Color) {
+			// The reference outline is sized for a 48-DIP swatch.
+			amount *= size / 48
+			width *= size / 48
 			rad := radius
 			if rad > 0 {
 				rad += amount

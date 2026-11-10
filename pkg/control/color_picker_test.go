@@ -259,6 +259,66 @@ func TestColorPickerCustomPaletteEmptyAndDimensions(t *testing.T) {
 	}
 }
 
+func TestColorPickerSmallSwatchesScaleTheirOutlines(t *testing.T) {
+	for _, size := range []float32{16, 24, 32, 48} {
+		for _, state := range []struct {
+			name                     string
+			shape                    ColorSwatchShape
+			custom, focused, invalid bool
+		}{
+			{name: "rounded", shape: ColorSwatchRounded},
+			{name: "square", shape: ColorSwatchSquare},
+			{name: "circle", shape: ColorSwatchCircle},
+			{name: "custom", custom: true},
+			{name: "focused", focused: true},
+			{name: "invalid", invalid: true},
+		} {
+			t.Run(fmt.Sprintf("size=%g/%s", size, state.name), func(t *testing.T) {
+				value := DefaultColorOptions()[0].Color
+				if state.custom {
+					value = ui.Hex("#e11d48")
+				}
+				r := colorPickerTester(func(c *ui.Context) {
+					ColorPicker(c, &value, ColorPickerProps{SwatchSize: size, Shape: state.shape, Custom: state.custom, Invalid: state.invalid})
+				}, true, 760)
+				role, name := ui.RoleRadio, "Blue"
+				if state.custom {
+					role, name = ui.RoleColorWell, "Custom color"
+				}
+				if state.focused {
+					r.Key(0, ui.KeyTab)
+					if !r.Focused(name) {
+						t.Fatal("native keyboard focus did not reach the swatch")
+					}
+				}
+				a := choiceAccess(t, r, role, name)
+				im := r.Image()
+				background := im.RGBAAt(0, 0)
+				outermost, painted := 0, 0
+				// Measure the actual rasterized outline along its straight middle
+				// edge, including antialiasing and a visible keyboard focus ring.
+				for distance := 1; distance < 24; distance++ {
+					if im.RGBAAt(int(a.Bounds.X)-distance, int(a.Bounds.Y+a.Bounds.H/2)) != background {
+						outermost = distance
+						painted++
+					}
+				}
+				outset := float32(7)
+				if state.focused {
+					outset = 11
+				}
+				limit := int(math.Ceil(float64(size * outset / 48)))
+				if outermost == 0 || outermost > limit {
+					t.Fatalf("outline extends %d pixels beyond a %g-DIP swatch; want at most %d", outermost, size, limit)
+				}
+				if !state.focused && painted > int(math.Ceil(float64(size*4/48)))+1 {
+					t.Fatalf("outline remains too thick on a %g-DIP swatch: %d painted pixels", size, painted)
+				}
+			})
+		}
+	}
+}
+
 func TestColorPickerCheckRemainsReadableOnWhiteAndTransparentPresets(t *testing.T) {
 	for _, dark := range []bool{false, true} {
 		for _, color := range []ui.Color{ui.RGB(255, 255, 255), ui.Transparent} {
