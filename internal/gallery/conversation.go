@@ -14,4 +14,5 @@ func (s *State) conversation(c *ui.Context) {
 }
 func (s *State) workspaceQuestions(c *ui.Context) {
 	s.workspaceQuestionnaire(c)
+	s.questionnaireRecipes.view(c)
 }

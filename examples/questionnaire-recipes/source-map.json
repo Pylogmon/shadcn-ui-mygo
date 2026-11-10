@@ -1,0 +1,58 @@
+{
+  "repository": "https://github.com/shadcn-ui/ui",
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "files": [
+    {
+      "path": "apps/v4/examples/base/questionnaire-conditional.tsx",
+      "git_blob": "29045f572c3a4c8d3c807bc7e1de16165e200ba7",
+      "sha256": "ff2f9dfb499337a26932b0164d8c16846fe03eb0b4ee3e3bbd4b1334eb561fd1",
+      "bytes": 3654,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/questionnaire-conditional.tsx",
+      "lines": [
+        22,
+        27,
+        55,
+        79,
+        118
+      ],
+      "contract": "local/cloud dependency; disabled environment is excluded from navigation/progress/form values"
+    },
+    {
+      "path": "apps/v4/examples/base/questionnaire-resume.tsx",
+      "git_blob": "ad67100cfc4ca8808759b988390120402a73b868",
+      "sha256": "482ea0cfa545be4ed68097cf61020996675ae2036a8a5bff3ff6a4f2a9625f57",
+      "bytes": 3597,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/questionnaire-resume.tsx",
+      "lines": [
+        48,
+        61,
+        79,
+        101,
+        106
+      ],
+      "contract": "saved second item and defaults, Reset restores saved values"
+    },
+    {
+      "path": "apps/v4/examples/base/questionnaire-validation.tsx",
+      "git_blob": "eb7321cd23ad1f557611fb8283758747205e31fc",
+      "sha256": "27da778854dd9a9c507ff208e03c8d984a5cbbb2fbf0b534ae26175b3c7e56a0",
+      "bytes": 5555,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/questionnaire-validation.tsx",
+      "lines": [
+        39,
+        82,
+        107,
+        143,
+        190
+      ],
+      "contract": "cross-answer rule, controlled return to earlier invalid item, clear on accepted correction"
+    }
+  ],
+  "nativeMapping": [
+    "application-owned independent drafts; no SDK state-machine changes",
+    "DefaultAnswer/DefaultItem express saved session hydration; no mandatory persistence backend",
+    "Disabled metadata changes after accepted runtime answer; all logical items still build",
+    "ValidateAll uses the source public+summary predicate; native current errors and first-invalid focus",
+    "native readable submission status replaces browser toasts; existing Review/Edit preview unchanged"
+  ]
+}

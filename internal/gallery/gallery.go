@@ -57,6 +57,7 @@ type State struct {
 	ConversationComposition                                                        conversationCompositionState
 	Questionnaire                                                                  conversation.QuestionnaireState
 	QuestionnairePreview                                                           questionnairePreviewState
+	questionnaireRecipes                                                           questionnaireRecipesState
 	Trace                                                                          conversation.TraceState
 	undo, redo                                                                     []Preset
 	lastThemeMode                                                                  theme.Mode
@@ -111,7 +112,7 @@ var pages = []creatorPage{
 	{Key: "content", Label: "Content & feedback"},
 	{Key: "text-layout", Label: "Text & layout", Keywords: []string{"Typography", "Kbd", "Keyboard", "CodeBlock", "Code", "Spinner", "Skeleton", "ScrollArea", "AspectRatio"}},
 	{Key: "overlays", Label: "Overlays"},
-	{Key: "conversation", Label: "Messages & questions", Keywords: []string{"Bubble", "Attachment", "Trace", "Message", "Marker", "MessageScroller", "Questionnaire"}},
+	{Key: "conversation", Label: "Messages & questions", Keywords: []string{"Bubble", "Attachment", "Trace", "Message", "Marker", "MessageScroller", "Questionnaire", "Questionnaire workflows", "Migration", "Conditional"}},
 	{Key: "navigation", Label: "Navigation"},
 	{Key: "themes", Label: "Colors & themes"},
 }

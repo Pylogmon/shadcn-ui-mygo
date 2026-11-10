@@ -93,6 +93,7 @@ Forms & controls页已接入框架搜索、国家分组/城市描述过滤、Off
 静态标记、分隔线、状态扫光与原生链接组合见 [Marker](docs/marker.md)。
 回合锚定、流式跟随、历史位置保持与跳转见 [Message Scroller](docs/message-scroller.md)。
 严格逐步导航、原生选项/输入、草稿与受控校验组合见 [Questionnaire](docs/questionnaire.md)。
+Gallery 同页的 [Questionnaire workflows](examples/questionnaire-recipes/README.md) 提供条件步骤、保存进度恢复和跨答案校验，三个草稿各自保留。
 横向柱形、分组/堆叠、原值检查与坐标轴配置见 [Chart](docs/chart.md)。
 30个Area/Bar/Line源例及曲线、渐变、标签和自定义标记见[Cartesian配置](docs/chart-cartesian.md)。
 31个Pie/Radar/Radial源例及角度、半径、扇区、网格与中心内容见[Polar配置](docs/chart-polar.md)。
