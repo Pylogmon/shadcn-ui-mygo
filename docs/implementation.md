@@ -135,7 +135,8 @@
 | 5.CZ | 新增API的正常Go模块消费 | 已提交 `c4dedf8`；实际`1b993fa`的canonical ZIP/pseudo-version通过独立项目正常require，无replace；单条跨组件原生表单/图表/菜单流程首次通过，970份源码与Git/ZIP/modulecache一致 |
 | 5.DA | Gallery Progress/Radio/Avatar/Skeleton源组合 | 已提交 `1d77483`；同值进度slider、整卡及网格原生单选、真实灰度肖像、非交互form/table占位与共享暂停；保留原独立模型与旧流程 |
 | 5.DB | Gallery类型化预约与InputGroup动作组合 | 已提交 `6822d90`；同日期的原生/可编辑输入、文件选择与保存快照，真实clipboard/收藏/搜索/textarea动作、Flyout/OS菜单及窄栏跨页/搜索接线 |
-| 5.DC | Field多条错误与自定义原生内容 | 本阶段提交；去重列表/独立槽位、真实InputGroup编辑器关联、当前构建正文及应用验证示例；隔离全量2313结果、vet与三平台构建通过 |
+| 5.DC | Field多条错误与自定义原生内容 | 已提交 `97e6e16`；去重列表/独立槽位、真实InputGroup编辑器关联、当前构建正文及应用验证示例；隔离全量2313结果、vet与三平台构建通过 |
+| 5.DD | 原生正文/标题字体角色与作用域 | 本阶段提交；固定七类标题、继承/system分离、Controller同指针更新和styled Flyout字体快照；隔离全量2318结果、vet与三平台构建通过；26种命名字体资产另行实施 |
 
 用户已明确允许原生平台适配：Popover、menu、下拉菜单可以使用 MyGo 的系统菜单与独立 Flyout，超出父窗口范围；无需逐像素照搬网页浮层。Gallery 以 [shadcn/create](https://ui.shadcn.com/create) 的配置与实时预览流程为参考。完整组件功能、主题、动画范围保持不变。
 

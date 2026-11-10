@@ -20,6 +20,7 @@ import (
 type themeMetadata struct {
 	tokens Tokens
 	menu   MenuSnapshot
+	fonts  FontRoles
 }
 
 var metadata sync.Map // map[weak.Pointer[ui.Theme]]themeMetadata
@@ -40,7 +41,8 @@ func (t *Tokens) Theme() *ui.Theme {
 
 func remember(native *ui.Theme, tokens *Tokens) {
 	key := weak.Make(native)
-	metadata.Store(key, themeMetadata{tokens: *tokens, menu: MenuSnapshot{Color: MenuDefault, Accent: MenuSubtle, Tokens: *tokens, scopeTokens: *tokens}})
+	fonts := (FontRoles{Body: native.Font}).Normalized()
+	metadata.Store(key, themeMetadata{tokens: *tokens, menu: MenuSnapshot{Color: MenuDefault, Accent: MenuSubtle, Tokens: *tokens, scopeTokens: *tokens, Fonts: fonts}, fonts: fonts})
 	runtime.AddCleanup(native, func(k weak.Pointer[ui.Theme]) { metadata.Delete(k) }, key)
 	runtime.KeepAlive(native)
 }
@@ -102,7 +104,11 @@ type Controller struct {
 	Radius         float32  `json:"radius,omitempty"`
 	RadiusOverride *float32 `json:"radiusOverride,omitempty"`
 	ReduceMotion   bool     `json:"reduceMotion,omitempty"`
+	// Fonts nil inherits the caller's native roles. Non-nil is an explicit
+	// copied configuration; mutations at the same pointer refresh the theme.
+	Fonts          *FontRoles `json:"fonts,omitempty"`
 	last           Tokens
+	lastFonts      FontRoles
 	lastMenuColor  MenuColor
 	lastMenuAccent MenuAccent
 	native         *ui.Theme
@@ -135,16 +141,28 @@ func (s *Controller) Apply(c *ui.Context) {
 		dark = c.Theme().Dark
 	}
 	t := s.Resolve(dark)
+	fonts := FontsOf(c)
+	if s.Fonts != nil {
+		fonts = s.Fonts.Normalized()
+	}
 	p := c.Preferences()
 	applyPreferences(t, p)
-	if s.native == nil || s.last != *t || s.lastMenuColor != s.MenuColor || s.lastMenuAccent != s.MenuAccent {
+	if s.native == nil || s.last != *t || s.lastFonts != fonts || s.lastMenuColor != s.MenuColor || s.lastMenuAccent != s.MenuAccent {
 		s.lastMenuColor, s.lastMenuAccent = s.MenuColor, s.MenuAccent
 		s.last = *t
+		s.lastFonts = fonts
 		darkController := *s
 		darkController.Mode = DarkMode
 		darkTokens := darkController.Resolve(true)
 		applyPreferences(darkTokens, p)
 		s.native = menuTheme(c, t, []MenuOptions{{Color: s.MenuColor, Accent: s.MenuAccent, InvertedTokens: darkTokens}})
+		s.native.Font = fonts.Body
+		m := MenuOf(c)
+		if value, ok := metadata.Load(weak.Make(s.native)); ok {
+			m = value.(themeMetadata).menu
+		}
+		m.Fonts = fonts
+		metadata.Store(weak.Make(s.native), themeMetadata{tokens: *t, menu: m, fonts: fonts})
 	}
 	c.SetTheme(s.native)
 	if s.ReduceMotion {

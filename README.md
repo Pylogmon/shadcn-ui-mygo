@@ -83,6 +83,7 @@ Forms & controls页已接入框架搜索、国家分组/城市描述过滤、Off
 该页还可配置Combobox定位/RTL/高亮，试用对象多选表单、Dialog内搜索、Grid及100项滚动窗口。
 通知的应用队列、六位置堆叠、loading更新、可阻止关闭的动作、原生滑动及完整自定义正文见 [Toast/Sonner](docs/toast.md)。
 可组合的原生文字扫光、颜色与字体传递见 [Shimmer](docs/shimmer.md)。
+独立正文/标题字体、局部作用域和 styled Flyout 传递见 [字体角色](docs/font-roles.md)。
 静态共享列组合与原生虚拟表格见 [Table](docs/table.md)。
 会话内容面、原生按钮/链接与反应层组合见 [Bubble](docs/bubble.md)。
 文件/图片卡片、应用持有的上传状态与横向附件组见 [Attachment](docs/attachment.md)。

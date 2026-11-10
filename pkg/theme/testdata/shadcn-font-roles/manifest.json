@@ -1,0 +1,78 @@
+{
+  "repository": "https://github.com/shadcn-ui/ui",
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "files": [
+    {
+      "path": "apps/v4/registry/bases/base/ui/card.tsx",
+      "gitBlob": "2062884f29a8044fa48edf86605182eca29f8716",
+      "sha256": "0d525c03e086b0047f7c0700850281023359cfc020eb233fdb0d74ec870ebea0",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/ui/card.tsx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/ui/dialog.tsx",
+      "gitBlob": "8c68524ade906dc3754769729ae3cbcb1b9d7b55",
+      "sha256": "aba6df6cbf51a1edcc22e415a3a46a666fc8cb66729e47b3ed2ecd97f166adff",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/ui/dialog.tsx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/ui/alert-dialog.tsx",
+      "gitBlob": "ab1dc757812bf207ee16691f265470b78ce56d40",
+      "sha256": "86a20c2cae7d8a686dded2ca61b84f8c0bb4c9e56cd5f423eddac87827469caf",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/ui/alert-dialog.tsx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/ui/drawer.tsx",
+      "gitBlob": "bebe3a912626745d7567982acd7b2465504e59c1",
+      "sha256": "7180299dff3cc1659ab75130f0521ba485e18b38625b904e1da4049f23479060",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/ui/drawer.tsx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/ui/sheet.tsx",
+      "gitBlob": "72669ad9cb812dcbf389f8be6e8157eaa8023479",
+      "sha256": "5816119da5f3468b0b91d2c65bcf6befe1d769b7867e236b9f18db83908581cb",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/ui/sheet.tsx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/ui/empty.tsx",
+      "gitBlob": "6a49a9813c02e2ce2548402e1a63b05de550bace",
+      "sha256": "05c419160ac0226973f6f00d7d8865dc46645a75ea0697138992cdbc736efec4",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/ui/empty.tsx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/ui/questionnaire.tsx",
+      "gitBlob": "59de4ea25facd1a4514a192eb08d6fe7987ca14e",
+      "sha256": "8db2dcd740e76717774c62f0bd834f5f260c737c2c5d4f003364a9414cedd94d",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/ui/questionnaire.tsx"
+    },
+    {
+      "path": "apps/v4/registry/config.ts",
+      "gitBlob": "6f256f1434c2fca95bd591da6e583ea66eb659f4",
+      "sha256": "4b93e49cdb39c146a548396511da2c493fcd322acb63140b2f3fe34e27fd0c43",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/config.ts"
+    },
+    {
+      "path": "apps/v4/app/(app)/(create)/lib/fonts.ts",
+      "gitBlob": "a05f858bfc611b305de6688163e16fb36a383586",
+      "sha256": "d0662ea27985fe6ab9326b9c071e6ff325e2a913a41c882086875481a49cadb2",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/app/(app)/(create)/lib/fonts.ts"
+    },
+    {
+      "path": "apps/v4/app/(app)/(create)/components/font-picker.tsx",
+      "gitBlob": "5460446b37667bad0f22090812d276ac07ec6c06",
+      "sha256": "b6a9722191319e4efe53b512d778cbccf50b318364e3c9de6fd6dd11dfedea01",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/app/(app)/(create)/components/font-picker.tsx"
+    },
+    {
+      "path": "apps/v4/app/(app)/(create)/components/design-system-provider.tsx",
+      "gitBlob": "c844e77a51769a9f51148b2857d40b8ee9652e4e",
+      "sha256": "2a9fcce4704ac4854a64fa1aa2c81b89cb355af3c5aec5c5cfd4dff0c9496a3a",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/app/(app)/(create)/components/design-system-provider.tsx"
+    },
+    {
+      "path": "apps/v4/app/(app)/(create)/lib/search-params.ts",
+      "gitBlob": "5bc9c2161ce8167defcc359e4d0f1c80da40563c",
+      "sha256": "833b42a4d78feb27ae7b6a6e9349e85b890d990732faaa73e4f5be2f652c9959",
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/app/(app)/(create)/lib/search-params.ts"
+    }
+  ]
+}

@@ -132,7 +132,7 @@ func CardTitle(c *ui.Context, title string, size ...CardSize) ui.Element {
 	if len(size) > 0 && size[0] == CardSmall {
 		font = 14
 	}
-	return ui.Text(c, title).FontSize(font).LineHeight(1.5).FontWeight(500)
+	return theme.StyleHeading(c, ui.Text(c, title).FontSize(font).LineHeight(1.5).FontWeight(500))
 }
 
 func CardDescription(c *ui.Context, description string) ui.Element {

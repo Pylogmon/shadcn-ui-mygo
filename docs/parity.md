@@ -144,3 +144,5 @@ source are the evidence for what they verify. Unexecuted, missing or narrowly
 scoped tests leave the corresponding gate open.
 
 Create menu presets now provide six effective color/accent combinations, matching dark scope palettes, source solid motion and immediate translucent content. Same-scene blur/saturation/tint runs below native children; independent Flyouts use reported system material or opaque fallback. NativeMenu variants retain OS styling. See [menu presets](menu-presets.md) for API and platform boundaries.
+
+Create body/heading font roles now propagate through Controller, local FontScope and styled independent-window snapshots, including font-only refresh. The seven fixed source title markers use the heading role; inherited titles preserve ordinary native ancestor composition, while Native surfaces keep their platform theme. See [font roles](font-roles.md). The 26 named-family assets, their individual licenses and Gallery catalog selection remain a separate incomplete module; actual platform font/AT/visual acceptance remains.

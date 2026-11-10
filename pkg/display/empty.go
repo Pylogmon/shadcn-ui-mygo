@@ -83,7 +83,7 @@ func EmptyWith(c *ui.Context, p EmptyProps, slots EmptySlots) ui.Element {
 					EmptyMedia(child.Key(emptyMediaKey), EmptyMediaProps{Variant: p.MediaVariant, Icon: p.Icon, Content: slots.Media})
 				}
 				if slots.Title != nil || p.Title != "" {
-					ui.Column(child.Key(emptyTitleKey)).FillWidth().MinWidth(0).AlignItems(ui.Center).FontSize(18).FontWeight(500).Children(func() {
+					theme.StyleHeading(child, ui.Column(child.Key(emptyTitleKey)).FillWidth().MinWidth(0).AlignItems(ui.Center).FontSize(18).FontWeight(500)).Children(func() {
 						if slots.Title != nil {
 							slots.Title(child)
 						} else {
@@ -163,7 +163,7 @@ func EmptyMedia(c *ui.Context, p EmptyMediaProps) ui.Element {
 }
 
 func EmptyTitle(c *ui.Context, title string) ui.Element {
-	return ui.Text(c, title).FontSize(18).FontWeight(500).TextAlign(ui.Center)
+	return theme.StyleHeading(c, ui.Text(c, title).FontSize(18).FontWeight(500).TextAlign(ui.Center))
 }
 
 func EmptyDescription(c *ui.Context, description string) ui.Element {

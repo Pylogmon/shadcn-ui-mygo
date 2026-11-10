@@ -69,6 +69,7 @@ func (p MenuOptions) Validate() error {
 type MenuSnapshot struct {
 	Color                     MenuColor
 	Accent                    MenuAccent
+	Fonts                     FontRoles
 	scopeTokens               Tokens
 	Tokens                    Tokens
 	inverted                  Tokens
@@ -90,17 +91,21 @@ func (m MenuSnapshot) ForScene() MenuSnapshot        { m.nativeWindow = false; r
 func (m MenuSnapshot) Theme() *ui.Theme              { return m.Tokens.ThemeWithMenus(m) }
 func (t *Tokens) ThemeWithMenus(m MenuSnapshot) *ui.Theme {
 	native := t.Theme()
+	m.Fonts = m.Fonts.Normalized()
+	native.Font = m.Fonts.Body
 	m.scopeTokens = *t
-	metadata.Store(weak.Make(native), themeMetadata{tokens: *t, menu: m})
+	metadata.Store(weak.Make(native), themeMetadata{tokens: *t, menu: m, fonts: m.Fonts})
 	return native
 }
 func MenuOf(c *ui.Context) MenuSnapshot {
 	if native := c.Theme(); native != nil {
 		if value, ok := metadata.Load(weak.Make(native)); ok {
-			return value.(themeMetadata).menu
+			m := value.(themeMetadata).menu
+			m.Fonts = FontsOf(c)
+			return m
 		}
 	}
-	return MenuSnapshot{Color: MenuDefault, Accent: MenuSubtle, Tokens: *TokensOf(c)}
+	return MenuSnapshot{Color: MenuDefault, Accent: MenuSubtle, Tokens: *TokensOf(c), Fonts: FontsOf(c)}
 }
 func menuTheme(c *ui.Context, t *Tokens, options []MenuOptions) *ui.Theme {
 	return menuThemeFrom(t, MenuOf(c), options)

@@ -192,7 +192,7 @@ func dialogHeader(c *ui.Context, title, description string) ui.Element {
 	t := theme.TokensOf(c)
 	return ui.Column(c).FillWidth().Shrink(0).Gap(8).Children(func() {
 		if title != "" {
-			ui.Text(c, title).FontSize(18).FontWeight(500).LineHeight(1).PaddingEnd(24).Role(ui.RoleHeading).Level(2)
+			theme.StyleHeading(c, ui.Text(c, title).FontSize(18).FontWeight(500).LineHeight(1).PaddingEnd(24).Role(ui.RoleHeading).Level(2))
 		}
 		if description != "" {
 			ui.Text(c, description).FontSize(14).TextColor(t.MutedForeground)
@@ -305,7 +305,7 @@ func AlertDialog(c *ui.Context, open *bool, p AlertDialogProps) bool {
 			}
 			text.Children(func() {
 				if p.Title != "" {
-					ui.Text(c, p.Title).FontSize(18).FontWeight(500).Role(ui.RoleHeading).Level(2)
+					theme.StyleHeading(c, ui.Text(c, p.Title).FontSize(18).FontWeight(500).Role(ui.RoleHeading).Level(2))
 				}
 				if p.Description != "" {
 					ui.Text(c, p.Description).FontSize(14).TextColor(t.MutedForeground)

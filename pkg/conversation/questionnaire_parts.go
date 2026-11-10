@@ -290,7 +290,7 @@ func (p *QuestionnaireParts) Item(id string, build func(*QuestionnaireItemParts)
 	return root
 }
 func (i *QuestionnaireItemParts) Title(text string) ui.Element {
-	e := ui.Text(i.c, text).FontSize(16).LineHeight(1.5).FontWeight(600).Pretty()
+	e := theme.StyleHeading(i.c, ui.Text(i.c, text).FontSize(16).LineHeight(1.5).FontWeight(600).Pretty())
 	i.Root.LabelledBy(e)
 	return e
 }

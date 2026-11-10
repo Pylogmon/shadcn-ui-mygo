@@ -27,7 +27,7 @@ func Questionnaire(c *ui.Context, state *QuestionnaireState, p QuestionnaireProp
 		q := p.Questions[state.Index]
 		id := questionID(q, state.Index)
 		ui.Text(c, fmt.Sprintf("Question %d of %d", state.Index+1, len(p.Questions))).FontSize(12).TextColor(tk.MutedForeground).Role(ui.RoleStatus)
-		ui.Text(c, q.Title).FontSize(18).FontWeight(600)
+		theme.StyleHeading(c, ui.Text(c, q.Title).FontSize(18).FontWeight(600))
 		if q.Description != "" {
 			ui.Text(c, q.Description).TextColor(tk.MutedForeground)
 		}
