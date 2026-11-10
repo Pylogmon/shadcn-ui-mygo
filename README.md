@@ -68,6 +68,7 @@ Forms 页还提供可保存的预约表单和带复制、收藏、菜单、搜�
 
 Data 页也展示头像尺寸、状态角标、加载/回退和头像组。对应 API 见 [Avatar](docs/avatar.md) 与 [Card 槽位](docs/card.md)。
 Table composition 展示真实单元格选择、状态菜单、可编辑备注、稳定键重排、页脚总额与空表；窄窗口可横向滚动，状态和动作菜单跟随全局 Flyout／系统菜单选择。
+同页的 [Payments 示例](examples/payments/README.md) 提供邮件过滤/排序、列显隐、当前页混合选择、分页及确认后的 ID 复制，状态跨页保留。
 
 Content & feedback 页展示 [Badge](docs/badge.md)、[Item](docs/item.md)、[Alert/Empty](docs/status-surfaces.md) 的组合示例，包含真实原生按钮/链接、独立主动作、通知操作和空状态表单。
 

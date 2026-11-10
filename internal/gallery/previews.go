@@ -183,6 +183,7 @@ func (s *State) displays(c *ui.Context) {
 			return 0
 		}}}})
 	})
+	s.payments.view(c, s.Popovers, s.Config.NativeMenus)
 	s.workspacePreview(c)
 	s.chartCompositionPreview(c)
 	s.chartSourcePreview(c)

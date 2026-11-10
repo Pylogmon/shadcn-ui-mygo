@@ -1,0 +1,52 @@
+{
+  "repository": "https://github.com/shadcn-ui/ui",
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "files": [
+    {
+      "path": "apps/v4/examples/base/data-table-demo.tsx",
+      "git_blob": "4eea8626161ac6dbe35e526fc0621d2de4af66f1",
+      "sha256": "0c866650c361ca0ebc6745ccb2993eef6fb88520abb772a41e631d1ef3505e4e",
+      "bytes": 9468,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/data-table-demo.tsx",
+      "lines": [
+        64,
+        105,
+        133,
+        161,
+        224,
+        278
+      ],
+      "contract": "five source rows; email filter/sort; protected select/actions; column visibility; copy ID; paging/count"
+    },
+    {
+      "path": "apps/v4/content/docs/components/base/data-table.mdx",
+      "git_blob": "e1b9addf24a5a5c6f3201fe94b79c3842c7243fd",
+      "sha256": "a502d72b8242cb77f724a723a83c684a7738ba9b784b64db6df79111724bc41e",
+      "bytes": 24295,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/content/docs/components/base/data-table.mdx",
+      "lines": [
+        20,
+        842,
+        899
+      ],
+      "contract": "application-owned table composition and reusable page-size/visibility controls"
+    },
+    {
+      "path": "apps/v4/examples/base/data-table-rtl.tsx",
+      "git_blob": "197c62015a7dc073dc34e1a8c9715a637fc5b4b0",
+      "sha256": "5634f5b725092e93a5e8e7acc3f41ab44268499216e0de4a36f8e64263e635fc",
+      "bytes": 13335,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/data-table-rtl.tsx",
+      "lines": [
+        1
+      ],
+      "contract": "mirrored table and direction-aware controls"
+    }
+  ],
+  "nativeMapping": [
+    "existing DataRows/TableWith and app-owned query/sort/visibility/keyed selection",
+    "source default five rows and page size ten preserved; demo page-size 2/5 enables actual transitions",
+    "clipboard completion acknowledges success; local details has no customer backend",
+    "paired styled Flyout/OS menus; native table RTL; no table SDK rewrite"
+  ]
+}
