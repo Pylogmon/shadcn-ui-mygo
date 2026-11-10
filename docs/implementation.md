@@ -153,7 +153,8 @@
 | 5.DR | Gallery完整Item源组合 | 已提交 `c562a6b`；35配置的尺寸/变体/原始图像、真实主链接和独立动作、Header/Footer/分组及成员菜单，补充自绘菜单可配置行高；隔离全量2345结果、vet与三平台构建通过 |
 | 5.DS | Gallery完整Popover与HoverCard源组合 | 已提交 `de7ba53`；12配置的真实独立字段、Title/Description、align/6side、Dialog嵌套、10/100ms预览与RTL；复用已有桌面API，Gallery256结果、vet与macOS构建通过 |
 | 5.DT | Gallery完整Dropdown Menu与源菜单选择契约 | 已提交 `067fef3`；27配置的原始组／快捷键／禁用与状态、多层动作、双头像、六侧／Dialog／RTL，补充逻辑行／标题缩进、独立前置图标与尾端SVG、逐项CloseOnSelect及Select兼容、SVG方向箭头；隔离全量2350结果、vet与三平台构建通过 |
-| 5.DU | Gallery完整Context Menu源组合 | 本阶段提交；22配置的真实右键／菜单键、分组状态与原生SVG模板、六侧／Dialog／Inset及翻译RTL；隔离Gallery／cmd共260结果、vet及macOS构建通过 |
+| 5.DU | Gallery完整Context Menu源组合 | 已提交 `0a7485f`；22配置的真实右键／菜单键、分组状态与原生SVG模板、六侧／Dialog／Inset及翻译RTL；隔离Gallery／cmd共260结果、vet及macOS构建通过 |
+| 5.DV | Gallery完整Menubar源组合 | 本阶段提交；15配置映射18源分区，保留完整命令／Format／Insert／图标差异、同child单选互斥、Native模板图与六侧／Inset／Dialog／RTL；隔离Gallery／cmd共263结果、vet及macOS构建通过 |
 
 用户已明确允许原生平台适配：Popover、menu、下拉菜单可以使用 MyGo 的系统菜单与独立 Flyout，超出父窗口范围；无需逐像素照搬网页浮层。Gallery 以 [shadcn/create](https://ui.shadcn.com/create) 的配置与实时预览流程为参考。完整组件功能、主题、动画范围保持不变。
 

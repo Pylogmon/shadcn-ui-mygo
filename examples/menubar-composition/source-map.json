@@ -1,0 +1,312 @@
+{
+  "repository": "https://github.com/shadcn-ui/ui",
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "guide": "apps/v4/content/docs/components/base/menubar.mdx",
+  "sourceManifestSHA256": "64b1a9b41837d69905a23a695f241924e3d329191e6412f57b88ec8a081a9151",
+  "documentationExamples": 6,
+  "createSections": 12,
+  "files": [
+    {
+      "path": "apps/v4/content/docs/components/base/menubar.mdx",
+      "gitBlob": "8eb069b2a2218dd0498a554bed1a2f8200ce7e7c",
+      "sha256": "18c979d74cacd51bb7c1db36541f2b44606643676a2cf60b6447890c0707eb97",
+      "bytes": 3839,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/content/docs/components/base/menubar.mdx"
+    },
+    {
+      "path": "apps/v4/examples/base/menubar-checkbox.tsx",
+      "gitBlob": "8d178f90c5007405d69ef56dbe7f8c33dfc02efb",
+      "sha256": "151e4e7e6ba1c90a1053a4ddac581a1cdcd580e30f483e7304cd8292d645317b",
+      "bytes": 1243,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/menubar-checkbox.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/menubar-demo.tsx",
+      "gitBlob": "562009134545e0b0421250df7c366ecbae1bde03",
+      "sha256": "6bfba9844fe59bbb68e00e5342ff4821c6d4d38fcf73bc414e7899fe3589e1c0",
+      "bytes": 4531,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/menubar-demo.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/menubar-icons.tsx",
+      "gitBlob": "341c06babb25da69dd457813a14c7eeac80132eb",
+      "sha256": "ca190afe5f72ac0ad6dc37d204361c81333e1a319de8b0952e2aad7df35bc478",
+      "bytes": 1487,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/menubar-icons.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/menubar-radio.tsx",
+      "gitBlob": "3d2674fe4c1ab395deb74a8f08e402d713c6a789",
+      "sha256": "b334154a5d49731029aff29d8a6b2ede4851fd6cec0b64b706698798943663c8",
+      "bytes": 1465,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/menubar-radio.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/menubar-rtl.tsx",
+      "gitBlob": "4dae6b1ec3a8f692e35f509778bc076a059791d3",
+      "sha256": "e5be74050dd4486dc22b68e0a219a0f2ffc57ac06030c8cc15b753e8d42b0703",
+      "bytes": 9104,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/menubar-rtl.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/menubar-submenu.tsx",
+      "gitBlob": "c1047b31c6b74f3a024122d27acf048f89efd610",
+      "sha256": "37e71efddec7cbb469f9a1597fcb198bcebcc9d86a50fc77528af5712acfbb10",
+      "bytes": 1780,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/menubar-submenu.tsx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/examples/menubar-example.tsx",
+      "gitBlob": "62621a1394d550d40f00f78232ab1ccd1e64c2d9",
+      "sha256": "9db7cb209ee6e3e08d8408f2238b0bf91d25611132159b1120893565459b11ac",
+      "bytes": 24823,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/examples/menubar-example.tsx"
+    }
+  ],
+  "configurations": [
+    {
+      "component": "Menubar",
+      "recipe": "demo",
+      "source": [
+        "menubar-demo.tsx"
+      ],
+      "features": [
+        "File/Edit/View/Profiles",
+        "Share and Find nested groups",
+        "disabled incognito and Force Reload",
+        "Bookmarks false / URLs true / Benoit",
+        "inset reload/profile actions"
+      ]
+    },
+    {
+      "component": "Menubar",
+      "recipe": "basic",
+      "source": [
+        "menubar-example.tsx:MenubarBasic"
+      ],
+      "features": [
+        "File/Edit",
+        "disabled New Incognito Window",
+        "shortcut metadata and separators"
+      ]
+    },
+    {
+      "component": "Menubar",
+      "recipe": "submenu",
+      "source": [
+        "menubar-submenu.tsx",
+        "menubar-example.tsx:MenubarWithSubmenu"
+      ],
+      "features": [
+        "Share Email link/Messages/Notes",
+        "Find three items",
+        "source separators and shortcuts"
+      ]
+    },
+    {
+      "component": "Menubar",
+      "recipe": "sides",
+      "source": [
+        "menubar-example.tsx:MenubarSides"
+      ],
+      "features": [
+        "inline-start,left,top,bottom,right,inline-end",
+        "source Incognito enabled",
+        "logical direction selector"
+      ]
+    },
+    {
+      "component": "Menubar",
+      "recipe": "checkbox",
+      "source": [
+        "menubar-checkbox.tsx",
+        "menubar-example.tsx:MenubarWithCheckboxes"
+      ],
+      "features": [
+        "View+Format",
+        "unchecked Bookmarks / checked URLs",
+        "checked Strikethrough / unchecked Code and Superscript",
+        "disabled inset Force Reload"
+      ]
+    },
+    {
+      "component": "Menubar",
+      "recipe": "radio",
+      "source": [
+        "menubar-radio.tsx",
+        "menubar-example.tsx:MenubarWithRadio"
+      ],
+      "features": [
+        "Profiles+Theme",
+        "Benoit / System defaults",
+        "independent caller-owned radio groups"
+      ]
+    },
+    {
+      "component": "Menubar",
+      "recipe": "icons",
+      "source": [
+        "menubar-icons.tsx"
+      ],
+      "features": [
+        "File/Folder/Save/Settings/Help/Trash semantic Material Symbols",
+        "destructive Delete",
+        "shortcuts"
+      ]
+    },
+    {
+      "component": "Menubar",
+      "recipe": "create-icons",
+      "source": [
+        "menubar-example.tsx:MenubarWithIcons"
+      ],
+      "features": [
+        "File/Folder/Save semantic symbols",
+        "three generic CircleDashed placeholders mapped to ProgressActivity",
+        "destructive Delete"
+      ]
+    },
+    {
+      "component": "Menubar",
+      "recipe": "shortcuts",
+      "source": [
+        "menubar-example.tsx:MenubarWithShortcuts"
+      ],
+      "features": [
+        "File/Edit",
+        "Cut/Copy/Paste display shortcuts",
+        "source separators"
+      ]
+    },
+    {
+      "component": "Menubar",
+      "recipe": "format",
+      "source": [
+        "menubar-example.tsx:MenubarFormat"
+      ],
+      "features": [
+        "Bold/Italic/Underline icons+shortcuts",
+        "Strikethrough true / Code false",
+        "Show Ruler false / Show Grid true",
+        "inset Zoom In/Out"
+      ]
+    },
+    {
+      "component": "Menubar",
+      "recipe": "insert",
+      "source": [
+        "menubar-example.tsx:MenubarInsert"
+      ],
+      "features": [
+        "Media icon+Image/Video/Audio submenu",
+        "Link/Table icons",
+        "Tools Find & Replace/Spell Check"
+      ]
+    },
+    {
+      "component": "Menubar",
+      "recipe": "destructive",
+      "source": [
+        "menubar-example.tsx:MenubarDestructive"
+      ],
+      "features": [
+        "File+Account",
+        "Delete File shortcut and icon",
+        "Sign out/Delete destructive variants",
+        "local action readout"
+      ]
+    },
+    {
+      "component": "Menubar",
+      "recipe": "dialog",
+      "source": [
+        "menubar-example.tsx:MenubarInDialog"
+      ],
+      "features": [
+        "Open Dialog real modal",
+        "Menubar Example labelled/described dialog",
+        "Copy/Cut/Paste icons",
+        "More Options four actions and separator",
+        "Delete destructive",
+        "Edit Undo/Redo"
+      ]
+    },
+    {
+      "component": "Menubar",
+      "recipe": "inset",
+      "source": [
+        "menubar-example.tsx:MenubarWithInset"
+      ],
+      "features": [
+        "normal Actions caption and Copy/Cut icons",
+        "Paste inset",
+        "Appearance+Theme captions independently inset",
+        "Bookmarks true / URLs false",
+        "System radio default",
+        "inset More Options submenu"
+      ]
+    },
+    {
+      "component": "Menubar",
+      "recipe": "rtl",
+      "source": [
+        "menubar-rtl.tsx"
+      ],
+      "features": [
+        "Arabic default",
+        "verbatim English/Arabic/Hebrew labels",
+        "RTL bar/content/submenu alignment",
+        "Benoit default",
+        "source Luis radio value retained"
+      ]
+    }
+  ],
+  "adaptation": {
+    "Menu": "desktop.Menubar independent Flyout with shared source data",
+    "NativeMenu": "desktop.NativeMenubar OS popup trigger group; not the application global menubar",
+    "icons": "On-demand Material Symbols SVG; template native images cached from the same SVG. Original Lucide/placeholder icon intent retained.",
+    "commands": "Each selected leaf updates a local last-command readout and count. Shortcuts are display metadata. No filesystem, account, or document backend is implied.",
+    "drafts": "Per-recipe checkbox and radio drafts survive recipe and presentation changes.",
+    "inset": "MenuItem.Inset and GroupInset add logical-start padding in Flyout. Native OS owns layout.",
+    "nativeLimits": "System popup positioning, tracking and styling are retained; no Flyout inset, custom six-side placement or cross-popup sibling switching during OS tracking is claimed for Native.",
+    "closeOnSelect": "Flyout checkbox/radio items follow Base UI keep-open defaults; ordinary actions close. OS popup dismissal follows the platform.",
+    "popupWidths": {
+      "api": "MenubarProps.Width supplies one shared popup-panel width for all top-level menus in a bar.",
+      "defaultDIPs": 224,
+      "checkboxDIPs": 256,
+      "insetDIPs": 176,
+      "sidesDIPs": 192,
+      "sourceNormalizations": [
+        {
+          "recipe": "demo",
+          "source": "menubar-demo.tsx",
+          "topLevel": "View",
+          "sourceDIPs": 176,
+          "galleryDIPs": 224
+        },
+        {
+          "recipe": "rtl",
+          "source": "menubar-rtl.tsx",
+          "topLevel": "View",
+          "sourceDIPs": 176,
+          "galleryDIPs": 224
+        },
+        {
+          "recipe": "insert",
+          "source": "menubar-example.tsx:MenubarInsert",
+          "topLevel": "Tools",
+          "sourceDIPs": 176,
+          "galleryDIPs": 224
+        },
+        {
+          "recipe": "destructive",
+          "source": "menubar-example.tsx:MenubarDestructive",
+          "topLevel": "File",
+          "sourceDIPs": 160,
+          "galleryDIPs": 224
+        }
+      ],
+      "futureAPI": "A future per-top-level popup-width API could restore these four explicit source widths. This module uses the current shared-width API. Native popup width remains under system control."
+    }
+  }
+}
