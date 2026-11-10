@@ -23,6 +23,7 @@ var componentSearchTargets = []struct {
 	{"controls", "input", []string{"Input"}},
 	{"controls", "input-otp", []string{"InputOTP"}},
 	{"controls", "slider", []string{"Slider"}},
+	{"controls", "color-picker", []string{"ColorPicker", "Color Picker", "颜色选择"}},
 	{"controls", "select", []string{"Select"}},
 	{"controls", "label", []string{"Label"}},
 	{"controls", "field", []string{"Field", "FieldComposition", "FieldSet", "FieldGroup"}},

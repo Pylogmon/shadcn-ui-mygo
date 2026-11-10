@@ -63,6 +63,7 @@ Gallery 的 Navigation 页展示菜单栏、可切换尺寸的导航内容面板
 
 Forms 页也包含 [原生文本输入](docs/text-input.md)、[可调整高度的 Textarea](docs/textarea.md)、[分组 OTP](docs/input-otp.md) 与 [三态/单多选控件](docs/choices.md)。Bio 草稿和高度、验证码与选择状态跨页保留；Navigation 页的面包屑可切换独立 Flyout／系统菜单，并展示有界的大页数分页。
 数值、日期、时间和系统文件选择可直接绑定应用模型，见[类型化输入](docs/typed-input.md)；运行 `go run ./examples/typed-input` 或 `make inputs-app`。
+参考色块式[颜色选择组件](docs/color-picker.md)支持预设颜色、可选 MyGo 选色面板及方形／圆形／圆角方形；Gallery 搜索 `ColorPicker`，或运行 `go run ./examples/color-picker`。
 Persian/Jalali 日历和应用控制解析的可编辑日期见[历法与日期输入](docs/date-input.md)，运行 `go run ./examples/date-composition` 或 `make dates-app`。
 Gallery 的整卡单选、进度标签与数值、灰度头像及 Skeleton 表单/表格见[组合示例](examples/gallery-recipes/README.md)。
 独立展开布局、文件树、Radius输入和FAQ组合见 [Disclosure API](docs/disclosure-composition.md)；Data页的17个[源配置](examples/disclosure-composition/README.md)保留真实输入、同组键盘导航和跨页草稿。

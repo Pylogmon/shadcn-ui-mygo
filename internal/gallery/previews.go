@@ -137,6 +137,7 @@ func (s *State) controls(c *ui.Context) {
 	s.componentPreview(c, "input", func() { s.inputCompositions.view(c, s.Window, s.Popovers, s.Config.NativeMenus) })
 	s.componentPreview(c, "input-otp", func() { s.otpCompositions.view(c, s.Popovers, s.Config.NativeMenus) })
 	s.componentPreview(c, "slider", func() { s.sliderCompositions.view(c, s.Popovers, s.Config.NativeMenus) })
+	s.componentPreview(c, "color-picker", func() { s.colorPicker.view(c) })
 	s.componentPreview(c, "select", func() { s.selectCompositions.view(c, s.Popovers, s.Config.NativeMenus) })
 	s.componentPreview(c, "label", func() { s.labelCompositions.view(c, s.Popovers, s.Config.NativeMenus) })
 	s.typedInputs.view(c, s.Window)
