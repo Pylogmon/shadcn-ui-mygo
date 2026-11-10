@@ -1,0 +1,301 @@
+{
+  "repository": "https://github.com/shadcn-ui/ui",
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "files": [
+    {
+      "path": "apps/v4/examples/base/field-demo.tsx",
+      "gitBlob": "448cb67b81eae4ca99055e8c3bcce0ff5f92ec0f",
+      "sha256": "4ac44250626b200412bd8d7f933bfb9ad227b97e6f5c8e73164c0a6b792dc7cf",
+      "bytes": 5663,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/field-demo.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/field-input.tsx",
+      "gitBlob": "c39ae98664e4b695a9c8725d1d5fb3531573402b",
+      "sha256": "08e10ff210a0a8497826bcc0b2fcbcf9e7f80bf3a849dc51a847bf3f604ce6a7",
+      "bytes": 895,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/field-input.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/field-textarea.tsx",
+      "gitBlob": "ad8b62c30b05d1765fd32a64e84349f59183b142",
+      "sha256": "03aa7094a014c645d173ecf4ce6ecfb682590d3031c38c5b8f6f7a9d56a09902",
+      "bytes": 677,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/field-textarea.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/field-select.tsx",
+      "gitBlob": "fa7c9a2112e1f1efb1fac13e8e08809dc834fba0",
+      "sha256": "aaeffb2b6f1955236f273132c78c5b50be33dd51a5b09531eecde9feef3c9406",
+      "bytes": 1291,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/field-select.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/field-slider.tsx",
+      "gitBlob": "e769589b5e45e3fcf0e042aa707f7a0f21d61cec",
+      "sha256": "1f9423dbb0fc94f99d0abed9beeac8b2d15124793a8c96cc0ee9195b098f969f",
+      "bytes": 864,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/field-slider.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/field-fieldset.tsx",
+      "gitBlob": "37b815a540606b7475099e1cfc42610b4ddbaef5",
+      "sha256": "90acf9c6cf606694fd85ff2e1f6132bca849169fff67bad36f88d0525314cccc",
+      "bytes": 1046,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/field-fieldset.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/field-checkbox.tsx",
+      "gitBlob": "ee171605e3735f62b74ea3c85655cb47f3a3b8f5",
+      "sha256": "a9d537ad28c1daf72fb5e9315d0a34166b19527cb4564d8e15f636904cc87b44",
+      "bytes": 2466,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/field-checkbox.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/field-radio.tsx",
+      "gitBlob": "031e1e23fa05a6623c66116cae97ad385ed45b81",
+      "sha256": "ff8b0c0b240834291bbdd2e1a0043053d69a79149a825ad5722a0c6b2baf67b3",
+      "bytes": 1287,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/field-radio.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/field-switch.tsx",
+      "gitBlob": "6017f42a3c886d5cbd01e0de6f4d3042595710bc",
+      "sha256": "c02a5b27e092a815014304fe45c5730e2797d20c7d380ea2a4769df569de6bbe",
+      "bytes": 343,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/field-switch.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/field-choice-card.tsx",
+      "gitBlob": "1e30e76462edd26f38c05abaead3dd0652e6e48e",
+      "sha256": "58579490e9a09e6cf945aa68812c8a4b3c1dd685f71f49128d702b0e8133bbe8",
+      "bytes": 1529,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/field-choice-card.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/field-group.tsx",
+      "gitBlob": "82ce0d3faabc0ed369b8797ec4039947e226853a",
+      "sha256": "eef64c44aa9d0440432f34bb14cca91ceeababb5d9047add13a6a66a6d42249e",
+      "bytes": 1686,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/field-group.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/field-rtl.tsx",
+      "gitBlob": "b92bffce4e710580bd4ccb922b32a215fdbfc561",
+      "sha256": "fcaf9bc0c464a5d1f121eb78254ae5a1cab3628a17ac563498080e8513b9e535",
+      "bytes": 9281,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/field-rtl.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/field-responsive.tsx",
+      "gitBlob": "173d04686820deec042a625524eb637e0af2a23c",
+      "sha256": "25b2536183afaddfe7a8410fbbb91a825ffd3ea7ab7ee05772f8f27df31cc9be",
+      "bytes": 1200,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/field-responsive.tsx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/examples/field-example.tsx",
+      "gitBlob": "71db4847216b714cc7fca2de2ce52492ed72ca34",
+      "sha256": "54e279b7e55e513d3f313df38bff379feedda7ce89ad92c142cebb65ff993fc6",
+      "bytes": 35787,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/registry/bases/base/examples/field-example.tsx"
+    }
+  ],
+  "reusedPrimitive": "../../pkg/control/testdata/shadcn-field/manifest.json",
+  "gallery": "../../internal/gallery/field_composition_preview.go",
+  "mapping": [
+    {
+      "source": "apps/v4/examples/base/field-demo.tsx",
+      "recipe": "payment"
+    },
+    {
+      "source": "apps/v4/examples/base/field-input.tsx",
+      "recipe": "input"
+    },
+    {
+      "source": "apps/v4/examples/base/field-textarea.tsx",
+      "recipe": "textarea"
+    },
+    {
+      "source": "apps/v4/examples/base/field-select.tsx",
+      "recipe": "select"
+    },
+    {
+      "source": "apps/v4/examples/base/field-slider.tsx",
+      "recipe": "slider"
+    },
+    {
+      "source": "apps/v4/examples/base/field-fieldset.tsx",
+      "recipe": "fieldset"
+    },
+    {
+      "source": "apps/v4/examples/base/field-checkbox.tsx",
+      "recipe": "checkbox"
+    },
+    {
+      "source": "apps/v4/examples/base/field-radio.tsx",
+      "recipe": "radio"
+    },
+    {
+      "source": "apps/v4/examples/base/field-switch.tsx",
+      "recipe": "switch"
+    },
+    {
+      "source": "apps/v4/examples/base/field-choice-card.tsx",
+      "recipe": "choice"
+    },
+    {
+      "source": "apps/v4/examples/base/field-group.tsx",
+      "recipe": "group"
+    },
+    {
+      "source": "apps/v4/examples/base/field-rtl.tsx",
+      "recipe": "rtl"
+    },
+    {
+      "source": "apps/v4/examples/base/field-responsive.tsx",
+      "recipe": "responsive"
+    },
+    {
+      "source": "apps/v4/registry/bases/base/examples/field-example.tsx",
+      "entry": "InputFields",
+      "recipe": "create-input",
+      "variants": [
+        "basic",
+        "description",
+        "email",
+        "required",
+        "disabled-input",
+        "badge",
+        "invalid",
+        "disabled-field"
+      ]
+    },
+    {
+      "source": "apps/v4/registry/bases/base/examples/field-example.tsx",
+      "entry": "TextareaFields",
+      "recipe": "create-textarea",
+      "variants": [
+        "basic",
+        "comments",
+        "bio",
+        "message",
+        "invalid",
+        "disabled"
+      ]
+    },
+    {
+      "source": "apps/v4/registry/bases/base/examples/field-example.tsx",
+      "entry": "SelectFields",
+      "recipe": "create-select",
+      "variants": [
+        "basic",
+        "country",
+        "timezone",
+        "invalid",
+        "disabled"
+      ]
+    },
+    {
+      "source": "apps/v4/registry/bases/base/examples/field-example.tsx",
+      "entry": "NativeSelectFields",
+      "recipe": "create-native",
+      "variants": [
+        "basic",
+        "country",
+        "timezone",
+        "grouped",
+        "invalid",
+        "disabled"
+      ]
+    },
+    {
+      "source": "apps/v4/registry/bases/base/examples/field-example.tsx",
+      "entry": "CheckboxFields",
+      "recipe": "create-checkbox",
+      "variants": [
+        "basic",
+        "right",
+        "description",
+        "card",
+        "preferences",
+        "invalid",
+        "disabled"
+      ]
+    },
+    {
+      "source": "apps/v4/registry/bases/base/examples/field-example.tsx",
+      "entry": "RadioFields",
+      "recipe": "create-radio",
+      "variants": [
+        "subscription",
+        "battery",
+        "description",
+        "card",
+        "invalid",
+        "disabled"
+      ]
+    },
+    {
+      "source": "apps/v4/registry/bases/base/examples/field-example.tsx",
+      "entry": "SwitchFields",
+      "recipe": "create-switch",
+      "variants": [
+        "airplane",
+        "dark",
+        "marketing",
+        "privacy",
+        "invalid",
+        "disabled"
+      ]
+    },
+    {
+      "source": "apps/v4/registry/bases/base/examples/field-example.tsx",
+      "entry": "SliderFields",
+      "recipe": "create-slider",
+      "variants": [
+        "volume",
+        "brightness",
+        "quality",
+        "temperature",
+        "price",
+        "balance",
+        "invalid",
+        "disabled"
+      ]
+    },
+    {
+      "source": "apps/v4/registry/bases/base/examples/field-example.tsx",
+      "entry": "InputOTPFields",
+      "recipe": "create-otp",
+      "variants": [
+        "basic",
+        "description",
+        "separator",
+        "pin",
+        "invalid",
+        "disabled"
+      ]
+    },
+    {
+      "source": "apps/v4/registry/bases/base/examples/field-example.tsx",
+      "entry": "HorizontalFields",
+      "recipe": "create-horizontal",
+      "variants": [
+        "username",
+        "bio",
+        "notifications",
+        "fruit",
+        "country",
+        "volume"
+      ]
+    }
+  ],
+  "adaptations": [
+    "FieldWith declares current-build Content/Label/Description/Control parts and binds the real native target after the callback, allowing either declaration order.",
+    "Field configuration selects thirteen documented recipes plus the ten Create sections. Field variant selects each section material configuration instead of stacking every field in the Gallery.",
+    "Drafts, radio/checkbox/slider values and local saved snapshots belong to the Gallery owner. Submit/Cancel do not contact an account, payment, task or other backend.",
+    "Native selects use the OS menu; styled selects use an independent desktop Flyout. The explicit Native select source section always uses the OS route.",
+    "Source hash links and readonly Git tree checks establish provenance, not complete operating-system/assistive-technology/visual acceptance."
+  ]
+}

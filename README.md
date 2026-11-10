@@ -81,6 +81,7 @@ Text & layout 页集中展示 [Typography/Kbd](docs/typography.md)、[CodeBlock]
 选值/搜索文本分离、可清除单选、多选标签、对象值与独立组合槽位见[Combobox](docs/combobox.md)。
 越出父窗口的真实搜索编辑器使用 [`desktop.Combobox` / `NativeCombobox`](docs/combobox-hosted.md)，可运行[独立窗口示例](examples/desktop-combobox/README.md)或 `make comboboxes-app`；Native 使用平台主题的 Flyout。
 Field 的多条错误、自定义原生正文与实际编辑器关联见 [Field errors 示例](examples/field-errors/README.md)。
+独立 Label、Content、前置说明、整卡选择和 Legend/Separator 见 [Field 组合 API](docs/field-composition.md)；Forms 页提供13个文档示例和 Create 10 分区的[可操作组合](examples/field-composition/README.md)。
 多项可见布局、独立轮播控件、吸附位置、应用控制器与原生编辑内容见[Carousel](docs/carousel.md)。
 Gallery的Data & display页可切换Carousel布局、间距、循环和项目顺序，编辑卡片备注，并试用垂直/RTL导航。
 Forms & controls页已接入框架搜索、国家分组/城市描述过滤、Office弹层搜索、多选技术标签与表单状态示例。

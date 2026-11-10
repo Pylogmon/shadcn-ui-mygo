@@ -17,7 +17,10 @@ type SliderProps struct {
 	Min, Max, Step float64
 	Label          string
 	Disabled       bool
-	Vertical       bool
+	// Invalid marks application validation independently of impossible numeric
+	// constraints. It preserves keyboard/pointer editing of a valid domain.
+	Invalid  bool
+	Vertical bool
 	// Adjacent thumbs cannot cross. The larger of these two gaps applies;
 	// a positive Step rounds the gap up to a whole number of steps.
 	MinGap                float64
@@ -107,8 +110,9 @@ func slider(c *ui.Context, binding sliderBinding, p SliderProps) ui.Element {
 		}
 	}
 	disabled := p.Disabled || d.invalid || d.lo == d.hi || len(values) == 0
+	invalid := fieldInputInvalid(c, p.Invalid) || d.invalid
 	root := ui.Box(c).Role(ui.RoleGroup).Label(p.Label).Disabled(disabled).
-		Invalid(d.invalid).Shrink(0).Cursor(ui.CursorPointer)
+		Invalid(invalid).Shrink(0).Cursor(ui.CursorPointer)
 	if p.Vertical {
 		root.Width(20).Height(160).Orientation(ui.Vertical)
 	} else {
@@ -191,7 +195,7 @@ func slider(c *ui.Context, binding sliderBinding, p SliderProps) ui.Element {
 			}
 			thumb := motion.ApplyTransition(c, ui.Box(c).Key(key).Absolute().Size(16, 16).Focusable().
 				Role(ui.RoleSlider).Label(sliderThumbLabel(p, i, len(values))).
-				Disabled(disabled).Invalid(d.invalid).FocusRing(false).
+				Disabled(disabled).Invalid(invalid).FocusRing(false).
 				Cursor(ui.CursorPointer).Radius(8).Border(1, t.Primary).
 				Background(ui.RGB(255, 255, 255)).Shadow(0, 1, 2, 0, ui.RGBA(0, 0, 0, .05)))
 			if thumb.Focused() && !st.focus {

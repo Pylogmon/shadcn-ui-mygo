@@ -16,3 +16,17 @@ Field links its accessible summary to the actual editor, including InputGroup
 and Textarea. Custom content needs an explicit label or message summary.
 Validation rules and change/blur/submit timing stay application-owned. Native
 role/relationship checks do not establish real screen-reader announcements.
+
+The full wrapper also supplies independent FieldContent, FieldLabel,
+FieldTitle, FieldDescription, FieldLegend and FieldSeparator parts.
+`control.FieldWith` exposes a current-build native scope with one explicit
+Control target and deferred label/description/error associations; this allows
+description-before-editor, horizontal content columns and whole choice labels
+without retaining frame objects. `FieldSetWith` provides native legend and
+description elements. Choice selection colors are explicit application values
+instead of CSS descendant queries. The legacy convenience layouts remain.
+
+FieldProps.Invalid propagates validation without requiring an error message;
+Slider now carries this state to actual native thumbs while keeping valid
+numeric domains editable. The application recipes and their original blob/SHA
+mapping are recorded under `examples/field-composition/source-map.json`.

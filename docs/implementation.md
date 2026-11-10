@@ -146,7 +146,8 @@
 | 5.DK | Combobox固定Unicode筛选与JS trim | 已提交 `cb13d72`；固定UTF-16窗口、区域search/标点/零权重、原始query与选值策略；64官方Intl向量及同原生流程，隔离全量2329结果、vet与三平台构建通过 |
 | 5.DL | Gallery完整ButtonGroup组合与Avatar菜单 | 已提交 `151577a`；13配置的输入/选择/动作/独立task与原生双路菜单，窄RTL整页搜索/编辑/跨页保留；Gallery244结果、vet与macOS构建通过 |
 | 5.DM | 独立可编辑Combobox组件对 | 已提交 `f4d1601`；当前窗口provider、typed单/多选、真实搜索编辑器与即时Filter，取消外点保留同一编辑器；Host统一退出/清理、平台主题版本及可运行小窗口示例；隔离全量2332结果、vet与两应用三平台构建通过 |
-| 5.DN | Gallery完整Card源组合 | 本阶段提交；Create12配置与文档不同内容共17配置，原始图片离线、间距/边框/贴边滚动、真实登录编辑与本地动作、会议笔记和RTL；复用现有Card API，Gallery246结果、vet与macOS构建通过 |
+| 5.DN | Gallery完整Card源组合 | 已提交 `ff4f839`；Create12配置与文档不同内容共17配置，原始图片离线、间距/边框/贴边滚动、真实登录编辑与本地动作、会议笔记和RTL；复用现有Card API，Gallery246结果、vet与macOS构建通过 |
+| 5.DO | Field独立组合与完整源表单 | 本阶段提交；顺序自由的真实目标关联、前置说明/丰富标签/整卡选择、Legend/Separator及Slider独立Invalid；Gallery映射13docs与Create10分区，旧便利布局保留；隔离全量2337结果、vet与三平台构建通过 |
 
 用户已明确允许原生平台适配：Popover、menu、下拉菜单可以使用 MyGo 的系统菜单与独立 Flyout，超出父窗口范围；无需逐像素照搬网页浮层。Gallery 以 [shadcn/create](https://ui.shadcn.com/create) 的配置与实时预览流程为参考。完整组件功能、主题、动画范围保持不变。
 

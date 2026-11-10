@@ -20,7 +20,9 @@ type FieldProps struct {
 	ErrorLabel         string
 	ErrorContent       func(*ui.Context)
 	Required, Disabled bool
-	Orientation        FieldOrientation
+	// Invalid marks the field independently of whether error text is present.
+	Invalid     bool
+	Orientation FieldOrientation
 	// LabelWidth reserves label room in horizontal layouts; zero uses 140 DIPs.
 	LabelWidth float32
 	// ResponsiveWidth is the enclosing FieldGroup's width for responsive fields.
@@ -144,7 +146,10 @@ func Field(c *ui.Context, p FieldProps, editor func() ui.Element) ui.Element {
 			}
 		}
 		ui.Column(c).Grow(1).MinWidth(0).Gap(7).Children(func() {
-			input := fieldTarget(c, fieldEditor(c, errorContent.present(), editor))
+			input := fieldTarget(c, fieldEditor(c, p.Invalid || errorContent.present(), editor))
+			if p.Invalid {
+				input.Invalid(true)
+			}
 			if label != "" {
 				input.Label(label).LabelledBy(title)
 			}

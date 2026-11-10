@@ -130,6 +130,7 @@ func (s *State) controls(c *ui.Context) {
 	s.choiceVariantsPreview(c)
 	s.recipeChoicesPreview(c)
 	s.typedInputs.view(c, s.Window)
+	s.fieldCompositions.view(c, s.Popovers, s.Config.NativeMenus)
 	s.inputGroups.view(c, s.Popovers, s.Config.NativeMenus)
 	s.controlCompounds.buttonGroups(c, s.Popovers, s.Config.NativeMenus)
 	s.sliderRangesPreview(c)
