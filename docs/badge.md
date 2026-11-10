@@ -18,3 +18,5 @@ display.BadgeWith(c, "Documentation", display.BadgeProps{
 高度固定20 DIP、文字12 DIP，图标槽12 DIP；逻辑起止图标使对应内边距缩为6 DIP，RTL自动换边。`Leading` / `Trailing` 覆盖图标，`Content` 覆盖文字，只应构建非交互视觉内容。没有文字或含义不同的自定义内容应提供Label。Disabled/Busy禁止动作，Invalid与键盘可见焦点使用语义边框/光环。
 
 Link变体悬停为默认和自定义文字提供继承下划线。原生字体采用1 DIP基线偏移；照搬CSS的4 DIP偏移会让下划线被20 DIP容器裁掉，此处按原生绘制适配。
+
+Gallery 的 Content & feedback 页提供[完整源组合](../examples/badge-composition/README.md)，包括7份文档和7个Create分区。14个配置保留双侧图标、加载、明暗颜色、原始长文本横滚与RTL。示例原链接#／#link通过局部原生Router激活本地状态；当前Router仅保留path／query，不提供HTML锚点滚动或fragment历史。

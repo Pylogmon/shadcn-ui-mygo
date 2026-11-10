@@ -155,7 +155,8 @@
 | 5.DT | Gallery完整Dropdown Menu与源菜单选择契约 | 已提交 `067fef3`；27配置的原始组／快捷键／禁用与状态、多层动作、双头像、六侧／Dialog／RTL，补充逻辑行／标题缩进、独立前置图标与尾端SVG、逐项CloseOnSelect及Select兼容、SVG方向箭头；隔离全量2350结果、vet与三平台构建通过 |
 | 5.DU | Gallery完整Context Menu源组合 | 已提交 `0a7485f`；22配置的真实右键／菜单键、分组状态与原生SVG模板、六侧／Dialog／Inset及翻译RTL；隔离Gallery／cmd共260结果、vet及macOS构建通过 |
 | 5.DV | Gallery完整Menubar源组合 | 已提交 `a021b3e`；15配置映射18源分区，保留完整命令／Format／Insert／图标差异、同child单选互斥、Native模板图与六侧／Inset／Dialog／RTL；隔离Gallery／cmd共263结果、vet及macOS构建通过 |
-| 5.DW | Menubar逐顶层宽度与源尺寸接通 | 本阶段提交；逐菜单宽度覆盖共享默认，同Surface兄弟切换／child提前输入／动态更新与有限值守卫，保留所有显式源尺寸；隔离全量2356结果、vet与三平台构建通过 |
+| 5.DW | Menubar逐顶层宽度与源尺寸接通 | 已提交 `5385ef6`；逐菜单宽度覆盖共享默认，同Surface兄弟切换／child提前输入／动态更新与有限值守卫，保留所有显式源尺寸；隔离全量2356结果、vet与三平台构建通过 |
+| 5.DX | Gallery完整Badge源组合 | 本阶段提交；14配置的六变体／双侧图标／加载／真实链接、完整长文本横滚、显式明暗颜色与RTL；隔离Gallery／cmd共265结果、vet及macOS构建通过 |
 
 用户已明确允许原生平台适配：Popover、menu、下拉菜单可以使用 MyGo 的系统菜单与独立 Flyout，超出父窗口范围；无需逐像素照搬网页浮层。Gallery 以 [shadcn/create](https://ui.shadcn.com/create) 的配置与实时预览流程为参考。完整组件功能、主题、动画范围保持不变。
 

@@ -1,0 +1,180 @@
+{
+  "repository": "https://github.com/shadcn-ui/ui",
+  "commit": "8ab27715521cbd4f87ae6886cd989cbb678f6de7",
+  "sourceManifestSHA256": "60cea4517fbce24938ff6992b1c58fc394d517c9908df2cc2ab30fae938d35b9",
+  "documentationExamples": 7,
+  "createSections": 7,
+  "configurations": 14,
+  "files": [
+    {
+      "path": "apps/v4/content/docs/components/base/badge.mdx",
+      "gitBlob": "a9844228a3116713c10c2d5f4933a0704e58fa8f",
+      "sha256": "1bee6e70606e0c374c84c5294525f876de671fe7d9640eb5d7491741cf48f59f",
+      "bytes": 2557,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/content/docs/components/base/badge.mdx"
+    },
+    {
+      "path": "apps/v4/examples/base/badge-colors.tsx",
+      "gitBlob": "020683766e985a9055ea4a6e7637cda81ac794d7",
+      "sha256": "5e2a401863ade8469076a01876362b5e416eef210c621ecc890930d22929a64e",
+      "bytes": 742,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/badge-colors.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/badge-demo.tsx",
+      "gitBlob": "e73e957936d2aeae81d7c2c6d14adb32b1d928c4",
+      "sha256": "89f053edac9d636984cf9c54248d6866684550cedde12fceb26c09b81db86e9e",
+      "bytes": 364,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/badge-demo.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/badge-icon.tsx",
+      "gitBlob": "8a66a500b42f9538e579002cac5e08d7ef633cbf",
+      "sha256": "80e2b83139f8e1ff3eb2ba5b134ee63be5701622e2c110a146229224f0948f4e",
+      "bytes": 445,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/badge-icon.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/badge-link.tsx",
+      "gitBlob": "5695a56132c36f06bae945b171f2cc8f98f7837f",
+      "sha256": "dc47c47d5b7fc218480a0c95a04a3a3fb91dbf95751de39913213da90a6be2d9",
+      "bytes": 264,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/badge-link.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/badge-rtl.tsx",
+      "gitBlob": "ceed6761d0dbc6e7ec2e0e5c1d7822c8e6957399",
+      "sha256": "7ef3a3e1bfc10671f556d7d71c6fe8d2d73ce0938c9a18d72920fd033cea0b0c",
+      "bytes": 1594,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/badge-rtl.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/badge-spinner.tsx",
+      "gitBlob": "47cb63b9dbee8ce04d2cd13bd37172fb7aefacf9",
+      "sha256": "2792829afb384da9993b8bf2b225fb7d5227afb51c2c1db0811aa6dafaf88626",
+      "bytes": 441,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/badge-spinner.tsx"
+    },
+    {
+      "path": "apps/v4/examples/base/badge-variants.tsx",
+      "gitBlob": "862e9485c65ce4c0f91fc425380d211a2df98b74",
+      "sha256": "ce4c02b24dfe3be76b87d0cd16ee4612f98bcd99c349eee6c33ea7541900d085",
+      "bytes": 383,
+      "origin": "https://raw.githubusercontent.com/shadcn-ui/ui/8ab27715521cbd4f87ae6886cd989cbb678f6de7/apps/v4/examples/base/badge-variants.tsx"
+    },
+    {
+      "path": "apps/v4/registry/bases/base/examples/badge-example.tsx",
+      "gitBlob": "ca74b833c1e093ded739ebd5475f6de99b780808",
+      "sha256": "b5ec41da831fe3034393d95bd93625d0f2331115353c96d5773a921cefdc2a97",
+      "bytes": 9944,
+      "origin": "/private/tmp/shadcn-reference-ui/apps/v4/registry/bases/base/examples/badge-example.tsx"
+    }
+  ],
+  "recipes": [
+    {
+      "key": "demo",
+      "source": "apps/v4/examples/base/badge-demo.tsx",
+      "section": null,
+      "sourceBadgeCount": 4
+    },
+    {
+      "key": "variants",
+      "source": "apps/v4/examples/base/badge-variants.tsx",
+      "section": null,
+      "sourceBadgeCount": 5
+    },
+    {
+      "key": "icon",
+      "source": "apps/v4/examples/base/badge-icon.tsx",
+      "section": null,
+      "sourceBadgeCount": 2
+    },
+    {
+      "key": "spinner",
+      "source": "apps/v4/examples/base/badge-spinner.tsx",
+      "section": null,
+      "sourceBadgeCount": 2
+    },
+    {
+      "key": "link",
+      "source": "apps/v4/examples/base/badge-link.tsx",
+      "section": null,
+      "sourceBadgeCount": 1
+    },
+    {
+      "key": "colors",
+      "source": "apps/v4/examples/base/badge-colors.tsx",
+      "section": null,
+      "sourceBadgeCount": 5
+    },
+    {
+      "key": "rtl",
+      "source": "apps/v4/examples/base/badge-rtl.tsx",
+      "section": null,
+      "sourceBadgeCount": 6
+    },
+    {
+      "key": "create-variants",
+      "source": "apps/v4/registry/bases/base/examples/badge-example.tsx",
+      "section": "BadgeVariants",
+      "sourceBadgeCount": 6
+    },
+    {
+      "key": "create-icon-left",
+      "source": "apps/v4/registry/bases/base/examples/badge-example.tsx",
+      "section": "BadgeWithIconLeft",
+      "sourceBadgeCount": 6
+    },
+    {
+      "key": "create-icon-right",
+      "source": "apps/v4/registry/bases/base/examples/badge-example.tsx",
+      "section": "BadgeWithIconRight",
+      "sourceBadgeCount": 6
+    },
+    {
+      "key": "create-spinner",
+      "source": "apps/v4/registry/bases/base/examples/badge-example.tsx",
+      "section": "BadgeWithSpinner",
+      "sourceBadgeCount": 6
+    },
+    {
+      "key": "create-link",
+      "source": "apps/v4/registry/bases/base/examples/badge-example.tsx",
+      "section": "BadgeAsLink",
+      "sourceBadgeCount": 4
+    },
+    {
+      "key": "create-long-text",
+      "source": "apps/v4/registry/bases/base/examples/badge-example.tsx",
+      "section": "BadgeLongText",
+      "sourceBadgeCount": 1
+    },
+    {
+      "key": "create-colors",
+      "source": "apps/v4/registry/bases/base/examples/badge-example.tsx",
+      "section": "BadgeCustomColors",
+      "sourceBadgeCount": 9
+    }
+  ],
+  "adaptation": {
+    "body": "Existing native Vega BadgeWith API; static spans stay non-interactive. Only source anchor recipes create native Links. Global Native/Flyout changes selectors, not a nonexistent OS badge.",
+    "icons": {
+      "BadgeCheck": "Material Symbols outlined.Verified",
+      "BookmarkIcon": "Material Symbols outlined.Bookmark",
+      "ArrowRightIcon": "Material Symbols outlined.ArrowForward",
+      "ArrowUpRightIcon": "Material Symbols outlined.ArrowOutward",
+      "Spinner": "Existing shared decorative loader SVG at 12DIP; badge busy state and native reduced-motion-aware animation"
+    },
+    "links": {
+      "docsOriginalHref": "#link",
+      "createOriginalHref": "#",
+      "nativeModel": "Public local ui.Router at /badge-examples consumes the unchanged hash-only hrefs; current Router.resolve retains Path/RawQuery and discards Fragment.",
+      "activation": "Local badge action: <original link text>",
+      "limits": "No HTML anchor scrolling, fragment navigation history or external browser operation is claimed."
+    },
+    "colors": "Existing fixed Tailwind Palette: solid600/50 in both appearances, pastel50/700 light and950/300 dark. Four solid colors occur only in Create; both sources retain all five pastel colors.",
+    "longText": "Source wrapper is shrink-0/whitespace-nowrap. Bounded native horizontal viewport preserves full original content in narrow parents rather than wrapping or truncating it.",
+    "rtl": "Verbatim source English/Arabic/Hebrew values; Arabic default. Logical leading/trailing visual slots and native direction reorder the badges.",
+    "styleScope": "Vega theme and current native font metrics, not unimplemented per-style Sera gap overrides. Full platform/font/AT/visual acceptance remains."
+  }
+}

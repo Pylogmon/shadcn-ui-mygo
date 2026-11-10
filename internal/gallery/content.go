@@ -115,6 +115,7 @@ func (s *State) contents(c *ui.Context) {
 	})
 	s.statusCompositions.view(c, s.Popovers, s.Config.NativeMenus)
 	s.itemCompositions.view(c, s.Popovers, s.Config.NativeMenus)
+	s.badgeCompositions.view(c, s.Popovers, s.Config.NativeMenus)
 	if s.contentAction != "" {
 		ui.Text(c, s.contentAction).FontSize(14).Role(ui.RoleStatus)
 	}

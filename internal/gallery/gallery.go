@@ -58,6 +58,7 @@ type State struct {
 	dropdownCompositions                                                           dropdownCompositionPreviewState
 	contextMenuCompositions                                                        contextMenuCompositionPreviewState
 	menubarCompositions                                                            menubarCompositionPreviewState
+	badgeCompositions                                                              badgeCompositionPreviewState
 	chartPreview                                                                   chartPreviewState
 	chartCatalogue                                                                 chartcatalog.State
 	comboboxCompound                                                               comboboxCompoundPreviewState
