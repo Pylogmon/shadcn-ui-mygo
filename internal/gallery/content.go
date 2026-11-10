@@ -113,9 +113,11 @@ func (s *State) contents(c *ui.Context) {
 			},
 		})
 	})
-	s.statusCompositions.view(c, s.Popovers, s.Config.NativeMenus)
-	s.itemCompositions.view(c, s.Popovers, s.Config.NativeMenus)
-	s.badgeCompositions.view(c, s.Popovers, s.Config.NativeMenus)
+	alert, empty := s.statusCompositions.view(c, s.Popovers, s.Config.NativeMenus)
+	s.revealComponent("alert", alert)
+	s.revealComponent("empty", empty)
+	s.componentPreview(c, "item", func() { s.itemCompositions.view(c, s.Popovers, s.Config.NativeMenus) })
+	s.componentPreview(c, "badge", func() { s.badgeCompositions.view(c, s.Popovers, s.Config.NativeMenus) })
 	if s.contentAction != "" {
 		ui.Text(c, s.contentAction).FontSize(14).Role(ui.RoleStatus)
 	}

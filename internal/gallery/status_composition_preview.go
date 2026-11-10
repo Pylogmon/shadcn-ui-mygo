@@ -93,7 +93,7 @@ func (p *statusCompositionPreviewState) choose(c *ui.Context, h *desktop.Host, n
 	}
 }
 
-func (p *statusCompositionPreviewState) view(c *ui.Context, h *desktop.Host, native bool) {
+func (p *statusCompositionPreviewState) view(c *ui.Context, h *desktop.Host, native bool) (ui.Element, ui.Element) {
 	p.initialize(native)
 	if p.native != native {
 		p.native, p.popupError = native, ""
@@ -103,7 +103,7 @@ func (p *statusCompositionPreviewState) view(c *ui.Context, h *desktop.Host, nat
 			}
 		}
 	}
-	display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: "Alert compositions"}, display.CardSlots{
+	alert := display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: "Alert compositions"}, display.CardSlots{
 		Title: "Alert compositions", Description: "Source notices, inline links and independent actions.",
 		Content: func(child *ui.Context) {
 			p.choose(child, h, native, "status-alert-recipe", &p.alertRecipe, control.SelectProps{Label: "Alert configuration", Options: statusAlertRecipes})
@@ -122,7 +122,7 @@ func (p *statusCompositionPreviewState) view(c *ui.Context, h *desktop.Host, nat
 			}
 		},
 	})
-	display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: "Empty compositions"}, display.CardSlots{
+	empty := display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: "Empty compositions"}, display.CardSlots{
 		Title: "Empty compositions", Description: "A useful next step, real search and local actions.",
 		Content: func(child *ui.Context) {
 			p.choose(child, h, native, "status-empty-recipe", &p.emptyRecipe, control.SelectProps{Label: "Empty configuration", Options: statusEmptyRecipes})
@@ -147,6 +147,7 @@ func (p *statusCompositionPreviewState) view(c *ui.Context, h *desktop.Host, nat
 			}
 		},
 	})
+	return alert, empty
 }
 
 func statusLanguages() []control.Option {

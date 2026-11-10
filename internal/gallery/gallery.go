@@ -28,6 +28,7 @@ type State struct {
 	Window                                                                         *mygo.Window
 	Popovers                                                                       *desktop.Host
 	Page                                                                           string
+	pendingPreview                                                                 string
 	Name, Email, Bio, Framework, Plan, OTP, Query                                  string
 	Notifications, Marketing, Checked, Bold, Dialog, Sheet, Popover, Menu, Command bool
 	Accordion, Collapsible                                                         bool
@@ -468,7 +469,9 @@ func (s *State) creatorDialogs(c *ui.Context) {
 	}
 	if choice := overlay.CommandDialog(c, &s.Command, &s.Query, overlay.CommandProps{Items: commands, Filter: creatorPageScore, Placeholder: "Find a preview…"}); choice != "" {
 		s.Page = choice
+		s.pendingPreview = componentSearchTarget(choice, s.Query)
 		s.Command = false
+		c.Invalidate()
 	}
 	overlay.Dialog(c, &s.importOpen, overlay.DialogProps{Title: "Open preset", Description: "Paste a Native Go design preset. Changes apply only after validation."}, func() {
 		control.Textarea(c, &s.importText, control.TextareaProps{Label: "Preset JSON", Placeholder: DefaultPreset().JSON(), MinRows: 8, MaxRows: 12, Invalid: s.importError != ""}).FillWidth().Font("monospace")

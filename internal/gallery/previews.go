@@ -83,7 +83,7 @@ func (s *State) overview(c *ui.Context) {
 			}
 		})
 	})
-	s.cardCompositions.view(c, s.Popovers, s.Config.NativeMenus)
+	s.componentPreview(c, "card", func() { s.cardCompositions.view(c, s.Popovers, s.Config.NativeMenus) })
 }
 func (s *State) controls(c *ui.Context) {
 	s.heading(c, "Forms & controls", "Keyboard-ready building blocks with controlled state.")
@@ -96,7 +96,7 @@ func (s *State) controls(c *ui.Context) {
 			control.Button(c, "Disabled", control.ButtonProps{Disabled: true})
 		})
 	})
-	s.buttonCompositions.view(c, s.Popovers, s.Config.NativeMenus)
+	s.componentPreview(c, "button", func() { s.buttonCompositions.view(c, s.Popovers, s.Config.NativeMenus) })
 	columns(c, func() {
 		display.Card(c, func() {
 			s.cardHeader(c, "Profile", "Labels, descriptions and inline validation.")
@@ -130,15 +130,15 @@ func (s *State) controls(c *ui.Context) {
 	})
 	s.choiceVariantsPreview(c)
 	s.recipeChoicesPreview(c)
-	s.switchCompositions.view(c, s.Popovers, s.Config.NativeMenus)
-	s.checkboxCompositions.view(c, s.Popovers, s.Config.NativeMenus)
-	s.radioCompositions.view(c, s.Popovers, s.Config.NativeMenus)
-	s.textareaCompositions.view(c, s.Popovers, s.Config.NativeMenus)
-	s.inputCompositions.view(c, s.Window, s.Popovers, s.Config.NativeMenus)
+	s.componentPreview(c, "switch", func() { s.switchCompositions.view(c, s.Popovers, s.Config.NativeMenus) })
+	s.componentPreview(c, "checkbox", func() { s.checkboxCompositions.view(c, s.Popovers, s.Config.NativeMenus) })
+	s.componentPreview(c, "radio", func() { s.radioCompositions.view(c, s.Popovers, s.Config.NativeMenus) })
+	s.componentPreview(c, "textarea", func() { s.textareaCompositions.view(c, s.Popovers, s.Config.NativeMenus) })
+	s.componentPreview(c, "input", func() { s.inputCompositions.view(c, s.Window, s.Popovers, s.Config.NativeMenus) })
 	s.typedInputs.view(c, s.Window)
-	s.fieldCompositions.view(c, s.Popovers, s.Config.NativeMenus)
-	s.inputGroups.view(c, s.Popovers, s.Config.NativeMenus)
-	s.controlCompounds.buttonGroups(c, s.Popovers, s.Config.NativeMenus)
+	s.componentPreview(c, "field", func() { s.fieldCompositions.view(c, s.Popovers, s.Config.NativeMenus) })
+	s.componentPreview(c, "input-group", func() { s.inputGroups.view(c, s.Popovers, s.Config.NativeMenus) })
+	s.componentPreview(c, "button-group", func() { s.controlCompounds.buttonGroups(c, s.Popovers, s.Config.NativeMenus) })
 	s.sliderRangesPreview(c)
 	s.comboboxPreview(c)
 	s.comboboxCompoundPreview(c)
@@ -177,7 +177,7 @@ func (s *State) displays(c *ui.Context) {
 		display.Alert(c, display.AlertProps{Title: "Everything is up to date", Description: "Your workspace is ready for the next idea."})
 		display.CodeBlock(c, display.CodeBlockProps{Title: "main.go", Language: "go", Code: "func view(c *ui.Context) {\n    theme.Apply(c)\n    control.Button(c, \"Hello, Go\", control.ButtonProps{})\n}", LineNumbers: true, Height: 130})
 	})
-	s.disclosureCompositions.view(c, s.Popovers, s.Config.NativeMenus)
+	s.componentPreview(c, "disclosure", func() { s.disclosureCompositions.view(c, s.Popovers, s.Config.NativeMenus) })
 	s.recipeProgressPreview(c)
 	s.recipeAvatarPreview(c)
 	s.recipeSkeletonPreview(c)
@@ -236,8 +236,10 @@ func (s *State) overlays(c *ui.Context) {
 		s.cardHeader(c, "Command palette", "Search by name. Select with the keyboard.")
 		overlay.Command(c, &s.commandPreviewQuery, overlay.CommandProps{InputLabel: "Example command search", Items: []overlay.CommandItem{{Value: "calendar", Label: "Calendar", Group: "Suggestions"}, {Value: "search", Label: "Search", Group: "Suggestions"}, {Value: "settings", Label: "Settings", Group: "Workspace"}}})
 	})
-	s.popupCompositions.view(c, s.Popovers, s.Config.NativeMenus)
-	s.dropdownCompositions.view(c, s.Popovers, s.Config.NativeMenus)
+	popover, hover := s.popupCompositions.view(c, s.Popovers, s.Config.NativeMenus)
+	s.revealComponent("popover", popover)
+	s.revealComponent("hover-card", hover)
+	s.componentPreview(c, "dropdown-menu", func() { s.dropdownCompositions.view(c, s.Popovers, s.Config.NativeMenus) })
 }
 func (s *State) themes(c *ui.Context) {
 	s.heading(c, "Colors that work together.", "Your base, accent and chart selections apply to every semantic token.")

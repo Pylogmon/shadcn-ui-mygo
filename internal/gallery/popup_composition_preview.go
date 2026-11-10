@@ -109,10 +109,10 @@ func (p *popupCompositionPreviewState) choose(c *ui.Context, h *desktop.Host, na
 	}
 }
 
-func (p *popupCompositionPreviewState) view(c *ui.Context, h *desktop.Host, native bool) {
+func (p *popupCompositionPreviewState) view(c *ui.Context, h *desktop.Host, native bool) (ui.Element, ui.Element) {
 	p.initialize(native)
 	p.sync(h, native)
-	display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: "Popover compositions"}, display.CardSlots{
+	popover := display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: "Popover compositions"}, display.CardSlots{
 		Title: "Popover compositions", Description: "Independent editable windows, alignment and nested dialogs.",
 		Content: func(child *ui.Context) {
 			p.choose(child, h, native, "source-popover-config", &p.popoverRecipe, control.SelectProps{Label: "Popover configuration", Options: popupPopoverRecipes})
@@ -123,7 +123,7 @@ func (p *popupCompositionPreviewState) view(c *ui.Context, h *desktop.Host, nati
 			p.popoverExamples(child, h, native)
 		},
 	})
-	display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: "Hover card compositions"}, display.CardSlots{
+	hover := display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: "Hover card compositions"}, display.CardSlots{
 		Title: "Hover card compositions", Description: "Source profiles, delayed previews and directional placement.",
 		Content: func(child *ui.Context) {
 			p.choose(child, h, native, "source-hover-config", &p.hoverRecipe, control.SelectProps{Label: "Hover card configuration", Options: popupHoverRecipes})
@@ -134,6 +134,7 @@ func (p *popupCompositionPreviewState) view(c *ui.Context, h *desktop.Host, nati
 			}
 		},
 	})
+	return popover, hover
 }
 
 func popupPlacement(side string, direction ui.Direction) mygo.Placement {
