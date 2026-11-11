@@ -6,11 +6,14 @@
 display.Badge(c, "New", display.BadgeSecondary)
 // Soft 默认使用当前主题的 Primary 色。
 display.Badge(c, "Ready", display.BadgeSoft)
-// 自定义颜色同时用于文字、图标、浅色背景、悬停及焦点反馈。
+// 五种变体都可通过 Color 设置颜色。
 green := ui.RGB(22, 163, 74)
-display.BadgeWith(c, "Success", display.BadgeProps{
-    Variant: display.BadgeSoft, Color: &green,
-})
+for _, variant := range []display.BadgeVariant{
+    display.BadgeDefault, display.BadgeOutline, display.BadgeSoft,
+    display.BadgeLink, display.BadgeGhost,
+} {
+    display.BadgeWith(c, "Success", display.BadgeProps{Variant: variant, Color: &green})
+}
 // 危险状态通过 Soft + 主题危险色表达。
 tokens := theme.TokensOf(c)
 display.BadgeWith(c, "Deleting", display.BadgeProps{
@@ -25,7 +28,17 @@ display.BadgeWith(c, "Documentation", display.BadgeProps{
 })
 ```
 
-`BadgeProps.Color` 类型为 `*ui.Color`，仅作用于 `BadgeSoft`；nil 跟随当前作用域的主题主色，也可显式指定黑色、透明色或半透明色。与按钮的 Soft 一致，背景透明度在亮色主题下为 10%，交互徽标悬停／按下为 20%；暗色主题下分别为 20%／30%，与颜色自身的透明度相乘。焦点边框和光环使用相同颜色，`Invalid` 优先使用主题危险色。
+`BadgeProps.Color` 类型为 `*ui.Color`，支持主要（BadgeDefault）、描边（BadgeOutline）、柔和（BadgeSoft）、链接（BadgeLink）和幽灵（BadgeGhost）变体。nil 保留各变体原有主题外观；BadgeSecondary 继续使用主题次要色。可显式指定黑色、透明色或半透明色，静态、按钮和 URL 徽章均支持。
+
+| 变体 | 自定义颜色的作用 |
+| --- | --- |
+| BadgeDefault | 填充背景；交互徽章悬停／按下为颜色自身透明度的 80%；文字和图标根据填充色与主题背景的合成结果，自动选择对比度较高的黑色或白色 |
+| BadgeOutline | 文字、图标和描边；交互徽章悬停／按下使用同色浅背景，亮色主题为 10%，暗色主题为 20% |
+| BadgeSoft | 文字、图标和浅色背景；亮色主题背景为 10%，交互徽章悬停／按下为 20%；暗色主题分别为 20%／30% |
+| BadgeLink | 文字和图标；保留透明背景与悬停下划线 |
+| BadgeGhost | 文字和图标；默认透明背景，悬停使用同色浅背景，亮色主题为 10%，暗色主题为 20% |
+
+上述透明度与自定义颜色自身的透明度相乘。交互徽章的焦点边框和焦点环均跟随自定义颜色：边框透明度为 40%，焦点环在亮色主题下为 20%、暗色主题下为 40%。`Invalid` 优先使用主题危险色。
 
 原 `display.BadgeDestructive` 已替换为 `display.BadgeSoft`，枚举位置不变。旧用法迁移为 `BadgeWith(c, text, BadgeProps{Variant: display.BadgeSoft, Color: &tokens.Destructive})`，可保留危险状态外观。Gallery 的 Badges 展示默认 Soft，Themes 页演示成功、警告、危险色；固定源组合中的 Destructive 示例也通过此方式保留。
 

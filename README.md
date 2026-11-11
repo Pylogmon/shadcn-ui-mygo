@@ -82,7 +82,7 @@ Content & feedback 页展示 [Badge](docs/badge.md)、[Item](docs/item.md)、[Al
 其中 [Alert／Empty 源组合](examples/status-composition/README.md) 提供20种通知与13种空状态配置，包含内联链接、明暗 amber 色、真实头像、404搜索和翻译RTL。
 同页的 [Item 源组合](examples/item-composition/README.md) 提供35个配置，包含三尺寸／三变体、独立动作、音乐／模型原图、分组分隔、Header／Footer和成员菜单。
 该页的 [Badge 源组合](examples/badge-composition/README.md) 提供14个配置，保留六变体、双侧图标、Spinner、真实原生链接、完整长文本横滚、自定义明暗颜色及翻译RTL。
-Badge 的 [Soft 变体](docs/badge.md) 与按钮一致，默认使用主题主色，可通过 `BadgeProps.Color` 自定义颜色；原 BadgeDestructive 用法迁移为 BadgeSoft 并显式传入主题危险色。
+Badge 的[主要、描边、柔和、链接和幽灵变体](docs/badge.md)与按钮一致，可通过 `BadgeProps.Color` 自定义颜色；nil 保留主题外观。原 BadgeDestructive 用法迁移为 BadgeSoft 并显式传入主题危险色。
 
 Text & layout 页集中展示 [Typography/Kbd](docs/typography.md)、[CodeBlock](docs/code-block.md)、[Spinner/Skeleton](docs/loading.md) 与 [ScrollArea/AspectRatio](docs/scroll-area.md)。文章详情、确认后的复制反馈、加载暂停和滚动定位均可交互；滚动条统一使用 MyGo，代码 Buffer、输入草稿与滚动位置跨页保留。通过 Search 输入组件名，或运行 `go run ./cmd/gallery -page text-layout` 可直接进入。
 该页的 [Kbd 源组合](examples/kbd-composition/README.md) 提供17个配置，包含静态修饰键／图标、真实按钮和输入框、独立富Tooltip及翻译RTL；键帽本身不安装快捷键。
@@ -98,7 +98,7 @@ Gallery的Data & display页可切换Carousel布局、间距、循环和项目顺
 Forms & controls页已接入框架搜索、国家分组/城市描述过滤、Office弹层搜索、多选技术标签与表单状态示例。
 同页可切换 [ButtonGroup 的13种组合](examples/control-compounds/README.md)，Data页提供同模块的Avatar下拉菜单；组内编辑与菜单动作随全局Flyout／Native模式切换。
 Forms 页的 [Button 源组合](examples/button-composition/README.md) 提供20个配置，包含四尺寸／六变体矩阵、左右图标、独立原生链接、禁用／加载／Invalid、圆角与翻译RTL。
-Button 的 [Soft 变体](docs/button.md) 默认使用主题主色，可通过 `ButtonProps.Color` 自定义颜色；原 Destructive 用法迁移为 Soft 并显式传入主题危险色。
+Button 的[主要、描边、柔和、链接和幽灵变体](docs/button.md)可通过 `ButtonProps.Color` 自定义颜色；nil 保留主题外观。原 Destructive 用法迁移为 Soft 并显式传入主题危险色。
 同页的 [Switch 源组合](examples/switch-composition/README.md) 提供12个配置，保留两尺寸、前置说明、整卡选择、禁用／错误状态和译文，操作真实原生Switch。
 该页的 [Checkbox 源组合](examples/checkbox-composition/README.md) 提供15个配置，包含独立默认值、描述／整卡、分组、禁用／错误、真实表格选择和RTL；表格全选保持源布尔规则。
 同页的 [RadioGroup 源组合](examples/radio-composition/README.md) 提供13个配置，包含原生键盘互斥、整卡计划、价格／Fieldset、两列网格、单项／整组禁用、错误与翻译RTL。

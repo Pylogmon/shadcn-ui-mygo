@@ -21,8 +21,9 @@ type BadgeProps struct {
 	// AlignSelf positions the whole badge across its parent's axis; zero is Start.
 	AlignSelf ui.Align
 	Variant   BadgeVariant
-	// Color overrides BadgeSoft's foreground, tinted background and focus feedback.
-	// Nil uses the current theme's Primary color. Other variants ignore Color.
+	// Color overrides BadgeDefault, BadgeOutline, BadgeSoft, BadgeLink and
+	// BadgeGhost colors, including hover and focus feedback. Nil preserves theme
+	// styles; BadgeSecondary ignores it.
 	Color              *ui.Color
 	Label, Description string
 	Icon, EndIcon      *ui.SVG
@@ -142,33 +143,51 @@ func BadgeWith(c *ui.Context, text string, p BadgeProps) ui.Element {
 
 func badgeAppearance(c *ui.Context, root, target ui.Element, variant BadgeVariant, color *ui.Color, invalid, disabled bool) {
 	t := theme.TokensOf(c)
-	softColor := t.Primary
+	accent := t.Primary
 	if color != nil {
-		softColor = *color
+		accent = *color
 	}
+	customColor := color != nil && variant != BadgeSecondary
 	bg, fg, border := t.Primary, t.PrimaryForeground, ui.Transparent
 	switch variant {
+	case BadgeDefault:
+		if customColor {
+			bg = accent
+		}
 	case BadgeSecondary:
 		bg, fg = t.Secondary, t.SecondaryForeground
 	case BadgeOutline:
 		bg, fg, border = ui.Transparent, t.Foreground, t.Border
+		if customColor {
+			fg, border = accent, accent
+		}
 	case BadgeSoft:
-		bg, fg = softColor.Alpha(.1), softColor
+		bg, fg = accent.Alpha(.1), accent
 		if t.Dark {
-			bg = softColor.Alpha(.2)
+			bg = accent.Alpha(.2)
 		}
 	case BadgeGhost:
 		bg, fg = ui.Transparent, t.Foreground
+		if customColor {
+			fg = accent
+		}
 	case BadgeLink:
-		bg, fg = ui.Transparent, t.Primary
+		bg, fg = ui.Transparent, accent
 	}
 	hovered := !disabled && (target.Valid() && (target.Hovered() || target.Pressed()) || !target.Valid() && root.Hovered())
 	if hovered {
 		switch variant {
 		case BadgeGhost:
-			bg, fg = t.Muted, t.MutedForeground
-			if t.Dark {
-				bg = t.Muted.Alpha(.5)
+			if customColor {
+				bg = accent.Alpha(.1)
+				if t.Dark {
+					bg = accent.Alpha(.2)
+				}
+			} else {
+				bg, fg = t.Muted, t.MutedForeground
+				if t.Dark {
+					bg = t.Muted.Alpha(.5)
+				}
 			}
 		case BadgeLink:
 			// MyGo offsets from the native font's baseline. Four DIPs puts
@@ -180,18 +199,33 @@ func badgeAppearance(c *ui.Context, root, target ui.Element, variant BadgeVarian
 			if target.Valid() {
 				switch variant {
 				case BadgeOutline:
-					bg, fg = t.Muted, t.MutedForeground
+					if customColor {
+						bg = accent.Alpha(.1)
+						if t.Dark {
+							bg = accent.Alpha(.2)
+						}
+					} else {
+						bg, fg = t.Muted, t.MutedForeground
+					}
 				case BadgeSoft:
-					bg = softColor.Alpha(.2)
+					bg = accent.Alpha(.2)
 					if t.Dark {
-						bg = softColor.Alpha(.3)
+						bg = accent.Alpha(.3)
 					}
 				case BadgeSecondary:
 					bg = t.Secondary.Alpha(.8)
 				default:
-					bg = t.Primary.Alpha(.8)
+					bg = bg.Alpha(.8)
 				}
 			}
+		}
+	}
+	if customColor && variant == BadgeDefault {
+		// Choose readable text against the fill composited over the theme page.
+		fill := theme.Mix(t.Background, ui.RGB(bg.R, bg.G, bg.B), float32(bg.A)/255)
+		fg = ui.RGB(255, 255, 255)
+		if theme.Contrast(ui.RGB(0, 0, 0), fill) > theme.Contrast(fg, fill) {
+			fg = ui.RGB(0, 0, 0)
 		}
 	}
 	root.Background(bg).TextColor(fg).Border(1, border)
@@ -201,8 +235,8 @@ func badgeAppearance(c *ui.Context, root, target ui.Element, variant BadgeVarian
 	if target.Valid() && target.FocusVisible() {
 		ring := t.Ring.Alpha(.5)
 		border := t.Ring
-		if variant == BadgeSoft || invalid {
-			color := softColor
+		if variant == BadgeSoft || customColor || invalid {
+			color := accent
 			if invalid {
 				color = t.Destructive
 			}

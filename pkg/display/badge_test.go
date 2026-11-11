@@ -48,11 +48,7 @@ func TestBadgeAllVariantsFitTextAndUseThemedTones(t *testing.T) {
 				tokens = theme.TokensOf(c)
 				ui.Column(c).Fill().Padding(20).Gap(12).Background(tokens.Background).Children(func() {
 					for _, variant := range []BadgeVariant{BadgeDefault, BadgeSecondary, BadgeOutline, BadgeSoft, BadgeGhost, BadgeLink} {
-						props := BadgeProps{Variant: variant, Color: new(ui.RGB(20, 160, 80))}
-						if variant == BadgeSoft {
-							props.Color = nil
-						}
-						BadgeWith(c.Key(variant), "Ready", props).Label(fmt.Sprint("badge-", variant))
+						BadgeWith(c.Key(variant), "Ready", BadgeProps{Variant: variant}).Label(fmt.Sprint("badge-", variant))
 					}
 				})
 			}, 300, 250)

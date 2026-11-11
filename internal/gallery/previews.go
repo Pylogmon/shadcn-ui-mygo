@@ -268,15 +268,19 @@ func (s *State) themes(c *ui.Context) {
 				control.Button(c, tr(c, "Secondary"), control.ButtonProps{Variant: control.Secondary})
 				control.Button(c, tr(c, "Outline"), control.ButtonProps{Variant: control.Outline})
 				control.Button(c, tr(c, "Soft"), control.ButtonProps{Variant: control.Soft})
-				control.Button(c, tr(c, "Success"), control.ButtonProps{Variant: control.Soft, Color: &c.Theme().Success})
-				control.Button(c, tr(c, "Warning"), control.ButtonProps{Variant: control.Soft, Color: &c.Theme().Warning})
+				control.Button(c, tr(c, "Success"), control.ButtonProps{Color: &c.Theme().Success})
+				control.Button(c, tr(c, "Warning"), control.ButtonProps{Variant: control.Outline, Color: &c.Theme().Warning})
 				control.Button(c, tr(c, "Destructive"), control.ButtonProps{Variant: control.Soft, Color: &t.Destructive})
+				control.Button(c, tr(c, "Success"), control.ButtonProps{Variant: control.Ghost, Color: &c.Theme().Success})
+				control.Button(c, tr(c, "Warning"), control.ButtonProps{Variant: control.Link, Color: &c.Theme().Warning})
 			})
 			ui.Row(c).Gap(8).Wrap().Children(func() {
 				display.Badge(c, tr(c, "Soft"), display.BadgeSoft)
-				display.BadgeWith(c, tr(c, "Success"), display.BadgeProps{Variant: display.BadgeSoft, Color: &c.Theme().Success})
-				display.BadgeWith(c, tr(c, "Warning"), display.BadgeProps{Variant: display.BadgeSoft, Color: &c.Theme().Warning})
+				display.BadgeWith(c, tr(c, "Success"), display.BadgeProps{Color: &c.Theme().Success})
+				display.BadgeWith(c, tr(c, "Warning"), display.BadgeProps{Variant: display.BadgeOutline, Color: &c.Theme().Warning})
 				display.BadgeWith(c, tr(c, "Destructive"), display.BadgeProps{Variant: display.BadgeSoft, Color: &t.Destructive})
+				display.BadgeWith(c, tr(c, "Success"), display.BadgeProps{Variant: display.BadgeGhost, Color: &c.Theme().Success})
+				display.BadgeWith(c, tr(c, "Warning"), display.BadgeProps{Variant: display.BadgeLink, Color: &c.Theme().Warning})
 			})
 			ui.Row(c).Gap(10).Wrap().Children(func() {
 				for _, color := range []struct {
