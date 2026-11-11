@@ -23,10 +23,11 @@ func StyleInput(c *ui.Context, e ui.Element, p InputProps) ui.Element {
 	return e.Height(max(height, theme.ControlFontSize(c, inputReferenceFont(c, p.Size), p.FontSize)*inputLineHeight(p.Size)+2*inputPaddingY(p.Size)+2))
 }
 
-// NumberInputStepperProps opts into two native buttons beside the editor.
+// NumberInputStepperProps opts into two native buttons inside the input group.
 // Button props configure variants, icons and accessible Label values; omitted
 // icons use minus/plus text and omitted labels use Decrease/Increase value.
-// Tooltips are explicit in-window hints and also describe each button.
+// Tooltips use this window's bound desktop Host when available, falling back
+// to in-window hints, and also describe each button.
 type NumberInputStepperProps struct {
 	Decrement, Increment               ButtonProps
 	DecrementTooltip, IncrementTooltip string
@@ -105,7 +106,9 @@ func NumberInput(c *ui.Context, value *float64, p NumberInputProps) ui.Element {
 		panic("control: NumberInput requires numeric state")
 	}
 	root := ui.Box(c).FillWidth().MinWidth(0)
-	if p.Stepper != nil {
+	group := ui.Local(c.Root(), inputGroupAppearanceKey{}, func() inputGroupAppearance { return inputGroupAppearance{} })
+	insideGroup := len(group.active) > 0
+	if p.Stepper != nil && insideGroup {
 		root.Row().Gap(4).AlignItems(ui.Center)
 	}
 	isEmpty := func() bool { return p.Empty != nil && *p.Empty }
@@ -126,7 +129,8 @@ func NumberInput(c *ui.Context, value *float64, p NumberInputProps) ui.Element {
 	lo, hi, step, configurationValid := numberLimits(p)
 	before, beforeEmpty := *value, isEmpty()
 	services := c.Services()
-	root.Children(func() {
+	var stepper func()
+	buildEditor := func() ui.Element {
 		editor := ui.TextInputBase(c.Key(numberInputEditorKey{}), &s.draft)
 		// The editor belongs inside the component root, keeping independent keyed
 		// draft/selection state when several controls share the same numeric model.
@@ -225,38 +229,49 @@ func NumberInput(c *ui.Context, value *float64, p NumberInputProps) ui.Element {
 		editor.Bind(handle)
 		if p.Stepper != nil {
 			editor.Grow(1)
-			ui.Row(c).Shrink(0).Gap(2).Children(func() {
-				stepButton := func(direction numberInputStepKey, props ButtonProps, hint string) {
-					delta, text, label := step, "+", "Increase value"
-					if direction < 0 {
-						delta, text, label = -step, "−", "Decrease value"
+			stepper = func() {
+				ui.Row(c).Shrink(0).Gap(2).Children(func() {
+					stepButton := func(direction numberInputStepKey, props ButtonProps, hint string) {
+						delta, text, label := step, "+", "Increase value"
+						if direction < 0 {
+							delta, text, label = -step, "−", "Decrease value"
+						}
+						_, canStep := nextInputNumber(*value, isEmpty(), lo, hi, delta)
+						props.Disabled = props.Disabled || !editable || !canStep
+						if props.Label == "" {
+							props.Label = label
+						}
+						if props.Size == DefaultSize {
+							props.Size = numberStepperSize(p.Size)
+						}
+						if props.FontSize == 0 {
+							props.FontSize = p.FontSize
+						}
+						if props.Icon != nil {
+							text = ""
+						}
+						button := InputGroupButton(c.Key(direction), text, props)
+						tooltip.Show(c, button, hint)
+						if button.Clicked() && !button.IsDisabled() {
+							stepBy(delta)
+							editor.Focus()
+						}
 					}
-					_, canStep := nextInputNumber(*value, isEmpty(), lo, hi, delta)
-					props.Disabled = props.Disabled || !editable || !canStep
-					if props.Label == "" {
-						props.Label = label
-					}
-					if props.Size == DefaultSize {
-						props.Size = numberStepperSize(p.Size)
-					}
-					if props.FontSize == 0 {
-						props.FontSize = p.FontSize
-					}
-					if props.Icon != nil {
-						text = ""
-					}
-					button := Button(c.Key(direction), text, props)
-					if hint != "" {
-						tooltip.InWindow(c, button, hint, false, nil)
-					}
-					if button.Clicked() && !button.IsDisabled() {
-						stepBy(delta)
-						editor.Focus()
-					}
-				}
-				stepButton(-1, p.Stepper.Decrement, p.Stepper.DecrementTooltip)
-				stepButton(1, p.Stepper.Increment, p.Stepper.IncrementTooltip)
-			})
+					stepButton(-1, p.Stepper.Decrement, p.Stepper.DecrementTooltip)
+					stepButton(1, p.Stepper.Increment, p.Stepper.IncrementTooltip)
+				})
+			}
+		}
+		return editor
+	}
+	root.Children(func() {
+		if p.Stepper != nil && !insideGroup {
+			InputGroup(c, InputGroupProps{Label: p.Label, InlineEnd: func() { stepper() }}, buildEditor)
+		} else {
+			buildEditor()
+			if stepper != nil {
+				stepper()
+			}
 		}
 	})
 	if isEmpty() != beforeEmpty || *value != before && !(math.IsNaN(*value) && math.IsNaN(before)) {

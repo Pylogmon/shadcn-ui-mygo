@@ -13,6 +13,8 @@ desktop.TooltipWith(c, host, "save-hint", saveButton,
 
 每个 Host 显式绑定父窗口，并由 `BeginFrame` / `EndFrame` 管理消失的触发器。内容回调使用传入的 child Context，只能构建非交互视觉内容；不能捕获父窗口 Context、Element 或旧帧。`Description` 是必填的无障碍描述，内容的应用状态改变时增加 `Revision`。视图卸载会关闭窗口并清理回调。
 
+窗口视图调用 `desktop.BindHost(c, host)` 后，`NumberInput.Stepper` 内置的加减按钮提示也自动走这个 Host，与显式调用 `desktop.Tooltip` 的默认外观和交互一致。绑定按窗口隔离；`BindHost(c, nil)` 清除路由，没有绑定的独立窗口使用同窗提示。
+
 Tooltip 不抢焦点，整个窗口穿透鼠标；hover 或触发器获得焦点时显示。Escape 关闭后保持抑制，直到指针与焦点离开，避免立即重开。需要交互内容时使用 HoverCard。默认立即打开，仍支持 OpenDelay / CloseDelay、Disabled、MaxWidth 和 OnOpenChange。
 
 设置 `TooltipProps{HoverOnly: true}` 可仅由悬停触发视觉提示，焦点不会打开或维持提示，也不会跳过 `OpenDelay`；指针离开后按 `CloseDelay` 关闭，Escape 后移出再移入可重新触发。默认 `false` 保留键盘聚焦显示，所有模式都保留触发器的无障碍描述和正常键盘焦点。该选项适用于 `Tooltip`、`TooltipWith` 及对应的 Native 入口；`overlay.InWindowTooltip` 和兼容入口也接受 `HoverOnly`，继续使用 MyGo 的原生 Tooltip 延迟与关闭策略。

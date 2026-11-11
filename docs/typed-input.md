@@ -24,7 +24,7 @@ control.Field(c, control.FieldProps{
 
 `NumberInputProps.Handle` 指向实际文本编辑器，返回的 Element 是布局根。Field、LabelFor、InputGroup 把标签、描述、错误和 addon 焦点关联到同一实际编辑器；同时提供上下界时，Range/Step 元数据也位于该编辑器。它保留原生文本选择、IME 和撤销，角色仍为文本字段。可用 `Stepper: &control.NumberInputStepperProps{}` 添加加减按钮；不提供浏览器约束验证气泡。
 
-`NumberInputProps.FontSize` 直接覆盖真实编辑器字号，并保留系统文字缩放；0 使用主题和 Size 比例。Stepper 可分别配置 Decrement / Increment 的 ButtonProps（变体、图标、可访问性 Label）和 Tooltip；按钮复用键盘的范围、空值及草稿提交，边界、只读、禁用和 IME 组合期间统一禁用。配置示例见 [通用控件能力](control-capabilities.md)。
+`NumberInputProps.FontSize` 直接覆盖真实编辑器字号，并保留系统文字缩放；0 使用主题和 Size 比例。Stepper 的加减按钮内嵌在与编辑器共用边框的 InputGroup 中；已有外层 InputGroup 时复用外层表面，不叠加内部边框。可分别配置 Decrement / Increment 的 ButtonProps（变体、图标、可访问性 Label）和 Tooltip；按钮复用键盘的范围、空值及草稿提交，边界、只读、禁用和 IME 组合期间统一禁用。调用 `desktop.BindHost` 后，提示自动使用同窗口的 `desktop.Tooltip`，共享外观、位置、焦点、Escape 和卸载生命周期；没有 Host 时使用标准同窗提示。配置示例见 [通用控件能力](control-capabilities.md)。
 
 需要可选数值时，传入应用持有的 `Empty *bool`。`true` 显示真实空编辑器与 Placeholder；清空只改变 Empty 并保留最后数值，输入0则得到存在的0。未提供 Empty 时保留原来的必有值行为。`OnEmptyChange` 只通知用户引起的存在状态转换，应用外部同步不会触发；`OnChange` 只通知有效数值提交。从空变为数值会分别通知 `OnEmptyChange(false)` 与 `OnChange(value)`，应用若统计编辑次数，应分别处理存在与数值通道。空值Enter不提交，Up／Down从0开始再加减Step并遵守边界。空值不暴露有值的Range元数据。
 

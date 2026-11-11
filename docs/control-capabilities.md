@@ -63,7 +63,7 @@ control.NumberInput(c, &app.quantity, control.NumberInputProps{
 })
 ```
 
-`Stepper=nil` 保持原有单编辑器布局；`&NumberInputStepperProps{}` 使用加减文字及默认可访问性标签。传入 ButtonProps 可选按钮变体、图标、标签、字号和尺寸；未指定尺寸时匹配输入档位。提示与 `overlay.InWindowTooltip` 共用底层实现，同时设置按钮的可访问性描述，无需桌面 Host。
+`Stepper=nil` 保持原有单编辑器布局；`&NumberInputStepperProps{}` 使用内嵌在同一输入边框中的加减按钮及默认可访问性标签，已有外层 InputGroup 时不叠加边框。传入 ButtonProps 可选按钮变体、图标、标签、字号和尺寸；未指定尺寸时匹配输入档位。提示自动使用 `desktop.BindHost` 绑定的同窗口 Host，与 `desktop.Tooltip` 共享默认外观及交互；没有 Host 时回退到与 `overlay.InWindowTooltip` 相同的实现。两条路由均设置按钮的可访问性描述。
 
 按钮与 Up/Down 共用 Min、Max、Step、Empty、草稿及回调提交路径。超出边界会钳制到有限端点；无法产生新数值时禁用相应按钮。从空值步进仍以 0 加减 Step，再钳制边界；存在状态回调可拒绝提交或替换存储。无效配置、只读、继承禁用或 IME 组合期间禁用按钮。步进采用最后已提交的值并规范化草稿，保留实际编辑器焦点，不触发 OnSubmit。
 

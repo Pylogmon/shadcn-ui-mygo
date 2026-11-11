@@ -1,6 +1,7 @@
 package control_test
 
 import (
+	"fmt"
 	"math"
 	"slices"
 	"testing"
@@ -8,7 +9,59 @@ import (
 
 	"github.com/egoist/mygo/ui"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/control"
+	"github.com/pylogmon/shadcn-ui-mygo/pkg/theme"
 )
+
+func TestNumberInputStepperSharesOneBorderWithEditor(t *testing.T) {
+	for _, dark := range []bool{false, true} {
+		for _, wrapped := range []bool{false, true} {
+			for _, scale := range []float32{1, 1.5} {
+				t.Run(fmt.Sprintf("dark=%v/wrapped=%v/scale=%g", dark, wrapped, scale), func(t *testing.T) {
+					n := 3.
+					var bounds ui.Rect
+					r := ui.NewTesterWith(func(c *ui.Context) {
+						tokens := theme.Preset("orange", dark)
+						c.SetTheme(tokens.Theme())
+						ui.Column(c).Padding(20).Background(tokens.Background).Children(func() {
+							build := func() ui.Element {
+								return control.NumberInput(c, &n, control.NumberInputProps{Label: "Width", Stepper: &control.NumberInputStepperProps{
+									Decrement: control.ButtonProps{Variant: control.Ghost, Size: control.IconExtraSmall},
+									Increment: control.ButtonProps{Variant: control.Ghost, Size: control.IconExtraSmall},
+								}})
+							}
+							var root ui.Element
+							if wrapped {
+								root = control.InputGroup(c, control.InputGroupProps{Prefix: "px"}, build)
+							} else {
+								root = build()
+							}
+							root.Width(240).DrawOver(func(_ *ui.Painter, r ui.Rect) { bounds = r })
+						})
+					}, 400, 160, ui.TesterOptions{Preferences: ui.Preferences{ReduceMotion: true, TextScale: scale}})
+					editor := numberText(t, r, "Width").Bounds
+					more, ok := r.AccessByRole(ui.RoleButton, "Increase value")
+					if !ok || more.Bounds.X < editor.X+editor.W || more.Bounds.X+more.Bounds.W >= bounds.X+bounds.W {
+						t.Fatalf("step button left the shared input surface: root=%v editor=%v button=%+v", bounds, editor, more)
+					}
+					img := r.Image()
+					x := int(more.Bounds.X + more.Bounds.W/2)
+					for _, y := range []int{int(bounds.Y), int(bounds.Y + bounds.H - 1)} {
+						outside := img.RGBAAt(int(bounds.X+bounds.W+4), y)
+						if pixel := img.RGBAAt(x, y); max(pixel.R, outside.R)-min(pixel.R, outside.R) <= 2 && max(pixel.G, outside.G)-min(pixel.G, outside.G) <= 2 && max(pixel.B, outside.B)-min(pixel.B, outside.B) <= 2 {
+							t.Fatalf("input border does not surround its step buttons: pixel=%v outside=%v root=%v", pixel, outside, bounds)
+						}
+					}
+					// The editor must not keep an inner right border, including when
+					// NumberInput itself is composed inside an existing InputGroup.
+					x, y := int(editor.X+editor.W-1), int(editor.Y+editor.H/2)
+					if img.RGBAAt(x, y) != img.RGBAAt(x-3, y) {
+						t.Fatal("number editor retained a separate inner border")
+					}
+				})
+			}
+		}
+	}
+}
 
 func TestNumberInputStepperSharesNativeCommitAndBoundaryRules(t *testing.T) {
 	n, lo, hi := 0., 0., 5.

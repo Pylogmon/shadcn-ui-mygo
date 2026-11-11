@@ -7,7 +7,107 @@ import (
 	"github.com/egoist/mygo/ui"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/control"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/overlay"
+	"github.com/pylogmon/shadcn-ui-mygo/pkg/theme"
 )
+
+func TestNumberInputStepperUsesBoundHostTooltipAndClearsBinding(t *testing.T) {
+	backend, otherBackend := &fakeBackend{}, &fakeBackend{}
+	host, otherHost := NewHostWithBackend(backend), NewHostWithBackend(otherBackend)
+	bound, mounted := host, true
+	n := 3.
+	parent := ui.NewTesterWith(func(c *ui.Context) {
+		c.SetTheme(theme.Preset("orange", false).Theme())
+		BindHost(c, bound)
+		host.BeginFrame()
+		defer host.EndFrame()
+		ui.Column(c).Padding(20).Gap(12).Children(func() {
+			if mounted {
+				control.NumberInput(c, &n, control.NumberInputProps{Label: "Width", Stepper: &control.NumberInputStepperProps{
+					Increment: control.ButtonProps{Label: "Wider", Variant: control.Ghost, Size: control.IconExtraSmall}, IncrementTooltip: "Increase stroke width",
+				}}).Width(180)
+			}
+			control.Button(c, "Outside", control.ButtonProps{})
+		})
+	}, 400, 180, ui.TesterOptions{Preferences: ui.Preferences{ReduceMotion: true}})
+	hover := func(r *ui.Tester, name string) {
+		t.Helper()
+		a, ok := r.AccessByRole(ui.RoleButton, name)
+		if !ok {
+			t.Fatal("missing tooltip trigger", name)
+		}
+		r.Move(a.Bounds.X+a.Bounds.W/2, a.Bounds.Y+a.Bounds.H/2)
+	}
+	hover(parent, "Wider")
+	if len(backend.surfaces) != 1 || len(otherBackend.surfaces) != 0 {
+		t.Fatal("stepper did not immediately use its own window's native tooltip host")
+	}
+	surface := backend.surfaces[0]
+	if surface.spec.Focusable || !surface.spec.IgnoreMouseEvents || !surface.spec.ShowInactive {
+		t.Fatalf("stepper tooltip does not share desktop tooltip input behavior: %+v", surface.spec)
+	}
+	child := ui.NewTesterWith(surface.view, 220, 80, ui.TesterOptions{Preferences: ui.Preferences{ReduceMotion: true}})
+	if _, ok := child.AccessByRole(ui.RoleTooltip, "Increase stroke width"); !ok || parent.HasText("Increase stroke width") {
+		t.Fatal("stepper did not render exactly one tooltip in the independent child")
+	}
+	// The inverse tooltip surface must follow desktop.Tooltip, even when the
+	// owner's accent is orange. It must not use the old Primary-colored panel.
+	tokens := theme.Preset("orange", false)
+	pixel := child.Image().RGBAAt(15, 15)
+	if pixel.R != tokens.Foreground.R || pixel.G != tokens.Foreground.G || pixel.B != tokens.Foreground.B {
+		t.Fatalf("stepper tooltip kept a separate accent-colored appearance: %v", pixel)
+	}
+	if err := parent.Click("Wider"); err != nil {
+		t.Fatal(err)
+	}
+	if n != 4 || !parent.Focused("Width") || surface.closes != 1 {
+		t.Fatal("step click failed to close tooltip, commit or restore editor focus")
+	}
+	parent.Move(1, 1)
+	parent.Key(0, ui.KeyTab)
+	parent.Key(0, ui.KeyTab)
+	if !parent.Focused("Wider") || len(backend.surfaces) != 2 {
+		t.Fatal("keyboard focus did not open the same native tooltip route")
+	}
+	parent.Key(0, ui.KeyEscape)
+	parent.Frame()
+	if backend.surfaces[1].closes != 1 || len(backend.surfaces) != 2 {
+		t.Fatal("Escape failed to close and suppress the stepper tooltip")
+	}
+	if err := parent.Click("Outside"); err != nil {
+		t.Fatal(err)
+	}
+	hover(parent, "Wider")
+	if len(backend.surfaces) != 3 {
+		t.Fatal("tooltip did not reopen after leaving its trigger")
+	}
+	mounted = false
+	parent.Frame()
+	if backend.surfaces[2].closes != 1 || len(host.entries) != 0 {
+		t.Fatal("unmounted number input retained a native tooltip or callback")
+	}
+	// A separate window owns its own binding. Binding it must not redirect
+	// the first window's compound-control hints.
+	other := ui.NewTesterWith(func(c *ui.Context) {
+		theme.Apply(c)
+		BindHost(c, otherHost)
+		otherHost.BeginFrame()
+		defer otherHost.EndFrame()
+		control.NumberInput(c, &n, control.NumberInputProps{Label: "Other", Stepper: &control.NumberInputStepperProps{
+			Increment: control.ButtonProps{Label: "Other wider"}, IncrementTooltip: "Other hint",
+		}})
+	}, 240, 100, ui.TesterOptions{Preferences: ui.Preferences{ReduceMotion: true}})
+	hover(other, "Other wider")
+	if len(otherBackend.surfaces) != 1 || len(backend.surfaces) != 3 {
+		t.Fatal("compound tooltip host leaked between windows")
+	}
+	bound, mounted = nil, true
+	parent.Frame()
+	hover(parent, "Wider")
+	parent.Advance(time.Second)
+	if !parent.HasText("Increase stroke width") || len(backend.surfaces) != 3 {
+		t.Fatal("clearing BindHost did not restore the in-window fallback")
+	}
+}
 
 func TestContextHostIsWindowLocalAndExplicitHostWins(t *testing.T) {
 	leftBackend, rightBackend := &fakeBackend{}, &fakeBackend{}
