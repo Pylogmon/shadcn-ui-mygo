@@ -90,7 +90,7 @@ func (s *State) controls(c *ui.Context) {
 	display.Card(c, func() {
 		s.cardHeader(c, "Buttons", "Six variants. Consistent sizing and focus treatment.")
 		ui.Row(c).Gap(8).Wrap().Children(func() {
-			for i, label := range []string{"Default", "Secondary", "Outline", "Ghost", "Destructive", "Link"} {
+			for i, label := range []string{"Default", "Secondary", "Outline", "Ghost", "Soft", "Link"} {
 				control.Button(c, tr(c, label), control.ButtonProps{Variant: control.Variant(i)})
 			}
 			control.Button(c, tr(c, "Disabled"), control.ButtonProps{Disabled: true})
@@ -267,7 +267,10 @@ func (s *State) themes(c *ui.Context) {
 				control.Button(c, tr(c, "Primary"), control.ButtonProps{})
 				control.Button(c, tr(c, "Secondary"), control.ButtonProps{Variant: control.Secondary})
 				control.Button(c, tr(c, "Outline"), control.ButtonProps{Variant: control.Outline})
-				control.Button(c, tr(c, "Destructive"), control.ButtonProps{Variant: control.Destructive})
+				control.Button(c, tr(c, "Soft"), control.ButtonProps{Variant: control.Soft})
+				control.Button(c, tr(c, "Success"), control.ButtonProps{Variant: control.Soft, Color: &c.Theme().Success})
+				control.Button(c, tr(c, "Warning"), control.ButtonProps{Variant: control.Soft, Color: &c.Theme().Warning})
+				control.Button(c, tr(c, "Destructive"), control.ButtonProps{Variant: control.Soft, Color: &t.Destructive})
 			})
 			ui.Row(c).Gap(10).Wrap().Children(func() {
 				for _, color := range []struct {

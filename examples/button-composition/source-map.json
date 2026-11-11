@@ -231,6 +231,7 @@
     }
   ],
   "adaptations": {
+    "softVariant": "The public API replaces Destructive with Soft and optional ButtonProps.Color. Original Destructive labels, matrix cells and delete actions retain their source appearance through Soft with the current theme Destructive color.",
     "nativeTargets": "Real MyGo ButtonBase for source Button, including visual link variant; true native Link for both source anchors. No hidden extra ButtonBase exists under links.",
     "samePageHref": "Original href=# is handled by a public Router stored in SDK ui.Local. MyGo resolves it to the same local page; no browser launch, URL-bar fragment update or browser hash scrolling is claimed.",
     "linkComposition": "Native Link target paints current StyleButton hover/pressed/focus appearance; an inert, input-transparent, AX-hidden Row at ZIndex1 paints its label above the target background.",

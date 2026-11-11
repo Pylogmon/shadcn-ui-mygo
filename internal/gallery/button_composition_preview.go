@@ -47,6 +47,7 @@ var buttonCompositionRecipes = []control.Option{
 type buttonCompositionSpec struct {
 	text, label                                       string
 	variant                                           control.Variant
+	color                                             *ui.Color
 	size                                              control.Size
 	icon                                              *ui.SVG
 	end, spin, disabled, invalid, round, mirror, link bool
@@ -153,7 +154,7 @@ func (p *buttonCompositionPreviewState) button(c *ui.Context, key string, s butt
 	if label == "" {
 		label = s.text
 	}
-	props := control.ButtonProps{Variant: s.variant, Size: s.size, Label: tr(c, label), Disabled: s.disabled, Invalid: s.invalid}
+	props := control.ButtonProps{Variant: s.variant, Color: s.color, Size: s.size, Label: tr(c, label), Disabled: s.disabled, Invalid: s.invalid}
 	if s.link {
 		return p.link(c.Key(key), s, props)
 	}
@@ -227,6 +228,9 @@ func (p *buttonCompositionPreviewState) matrix(c *ui.Context, kind string) {
 		var items []buttonCompositionSpec
 		for v, text := range buttonSourceVariants {
 			s := buttonCompositionSpec{text: text, label: text + " (" + size.label + ")", variant: control.Variant(v), size: size.size}
+			if s.variant == control.Soft {
+				s.color = &theme.TokensOf(c).Destructive
+			}
 			switch kind {
 			case "create-icon-right":
 				s.icon, s.end = outlined.ArrowForward(), true
@@ -273,7 +277,7 @@ func (p *buttonCompositionPreviewState) draw(c *ui.Context) {
 	case "ghost":
 		p.row(c, "ghost", buttonCompositionSpec{text: "Ghost", variant: control.Ghost})
 	case "destructive":
-		p.row(c, "destructive", buttonCompositionSpec{text: "Destructive", variant: control.Destructive})
+		p.row(c, "destructive", buttonCompositionSpec{text: "Destructive", variant: control.Soft, color: &theme.TokensOf(c).Destructive})
 	case "link":
 		p.row(c, "link", buttonCompositionSpec{text: "Link", variant: control.Link})
 	case "with-icon":
@@ -288,11 +292,11 @@ func (p *buttonCompositionPreviewState) draw(c *ui.Context) {
 		p.row(c, "render", buttonCompositionSpec{text: "Login", variant: control.Secondary, size: control.Small, link: true})
 	case "rtl":
 		button, submit, delete, loading := buttonCompositionWords(p.language)
-		p.row(c, "rtl", buttonCompositionSpec{text: button, variant: control.Outline}, buttonCompositionSpec{text: delete, variant: control.Destructive}, buttonCompositionSpec{text: submit, variant: control.Outline, icon: outlined.ArrowForward(), end: true, mirror: true}, buttonCompositionSpec{label: "Add", variant: control.Outline, size: control.Icon, icon: outlined.Add()}, buttonCompositionSpec{text: loading, variant: control.Secondary, spin: true, disabled: true})
+		p.row(c, "rtl", buttonCompositionSpec{text: button, variant: control.Outline}, buttonCompositionSpec{text: delete, variant: control.Soft, color: &theme.TokensOf(c).Destructive}, buttonCompositionSpec{text: submit, variant: control.Outline, icon: outlined.ArrowForward(), end: true, mirror: true}, buttonCompositionSpec{label: "Add", variant: control.Outline, size: control.Icon, icon: outlined.Add()}, buttonCompositionSpec{text: loading, variant: control.Secondary, spin: true, disabled: true})
 	case "create-examples":
 		ui.Row(c).Gap(16).Wrap().Justify(ui.Center).AlignItems(ui.Center).Children(func() {
 			p.row(c, "examples-save", buttonCompositionSpec{text: "Cancel", variant: control.Outline}, buttonCompositionSpec{text: "Submit", icon: outlined.ArrowForward(), end: true})
-			p.row(c, "examples-delete", buttonCompositionSpec{text: "Delete", variant: control.Destructive}, buttonCompositionSpec{label: "Continue", size: control.Icon, icon: outlined.ArrowForward()})
+			p.row(c, "examples-delete", buttonCompositionSpec{text: "Delete", variant: control.Soft, color: &theme.TokensOf(c).Destructive}, buttonCompositionSpec{label: "Continue", size: control.Icon, icon: outlined.ArrowForward()})
 			p.button(c, "examples-link", buttonCompositionSpec{text: "Link", link: true})
 		})
 	}

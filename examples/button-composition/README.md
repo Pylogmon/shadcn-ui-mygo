@@ -15,6 +15,13 @@ buttons, disabled Generating/Downloading spinners, a Login anchor and verbatim
 Arabic/Hebrew/English content. The translated Submit arrow mirrors explicitly;
 source Add keeps its accessible name. The Link visual variant remains a Button.
 
+The public API replaces Destructive with `control.Soft`. Soft uses the current
+theme's Primary color by default and accepts an optional `ButtonProps.Color`.
+These fixed source recipes preserve their original Destructive labels and
+appearance through Soft with `Color: &tokens.Destructive`. Gallery's Buttons
+overview demonstrates default Soft; Themes shows custom success/warning/danger colors.
+See [Button colors and migration](../../docs/button.md) for usage.
+
 Create exposes Variants & Sizes, Icon Right, Icon Left, Icon Only, Invalid States
 and Examples. Each of the first five configurations contains all four sizes and
 six variants. Invalid buttons remain usable. Examples preserves Cancel/Submit,

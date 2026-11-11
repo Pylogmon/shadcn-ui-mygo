@@ -17,7 +17,7 @@ const (
 	Secondary
 	Outline
 	Ghost
-	Destructive
+	Soft
 	Link
 )
 
@@ -37,6 +37,9 @@ const (
 type ButtonProps struct {
 	Variant Variant
 	Size    Size
+	// Color overrides Soft's foreground, tinted background and focus feedback.
+	// Nil uses the current theme's Primary color. Other variants ignore Color.
+	Color *ui.Color
 	// FontSize overrides the theme/Size font in unscaled DIPs. Zero inherits.
 	FontSize          float32
 	Disabled, Invalid bool
@@ -102,6 +105,10 @@ func StyleButton(c *ui.Context, b ui.Element, label string, p ButtonProps) ui.El
 		}
 		b.PaddingStart(inset)
 	}
+	softColor := t.Primary
+	if p.Color != nil {
+		softColor = *p.Color
+	}
 	bg, fg, border := t.Primary, t.PrimaryForeground, ui.Transparent
 	switch p.Variant {
 	case Secondary:
@@ -113,10 +120,10 @@ func StyleButton(c *ui.Context, b ui.Element, label string, p ButtonProps) ui.El
 		}
 	case Ghost:
 		bg, fg = ui.Transparent, t.Foreground
-	case Destructive:
-		bg, fg = t.Destructive.Alpha(.1), t.Destructive
+	case Soft:
+		bg, fg = softColor.Alpha(.1), softColor
 		if t.Dark {
-			bg = t.Destructive.Alpha(.2)
+			bg = softColor.Alpha(.2)
 		}
 	case Link:
 		bg, fg = ui.Transparent, t.Primary
@@ -132,10 +139,10 @@ func StyleButton(c *ui.Context, b ui.Element, label string, p ButtonProps) ui.El
 					bg = t.Muted.Alpha(.5)
 				}
 			}
-		case Destructive:
-			bg = t.Destructive.Alpha(.2)
+		case Soft:
+			bg = softColor.Alpha(.2)
 			if t.Dark {
-				bg = t.Destructive.Alpha(.3)
+				bg = softColor.Alpha(.3)
 			}
 		case Link:
 		case Secondary:
@@ -152,11 +159,15 @@ func StyleButton(c *ui.Context, b ui.Element, label string, p ButtonProps) ui.El
 	if b.FocusVisible() {
 		ring := t.Ring.Alpha(.5)
 		border = t.Ring
-		if p.Variant == Destructive || p.Invalid {
-			ring = t.Destructive.Alpha(.2)
-			border = t.Destructive.Alpha(.4)
+		if p.Variant == Soft || p.Invalid {
+			color := softColor
+			if p.Invalid {
+				color = t.Destructive
+			}
+			ring = color.Alpha(.2)
+			border = color.Alpha(.4)
 			if t.Dark {
-				ring = t.Destructive.Alpha(.4)
+				ring = color.Alpha(.4)
 			}
 		}
 		b.Border(1, border).Shadow(0, 0, 0, 3, ring)
