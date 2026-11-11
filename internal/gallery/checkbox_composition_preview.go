@@ -89,12 +89,12 @@ func (p *checkboxCompositionPreviewState) view(c *ui.Context, h *desktop.Host, n
 		}
 		p.native, p.popupError = native, ""
 	}
-	display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: "Checkbox compositions"}, display.CardSlots{
-		Title: "Checkbox compositions", Description: "Source fields, cards, desktop preferences and controlled table selection.",
+	display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: tr(c, "Checkbox compositions")}, display.CardSlots{
+		Title: tr(c, "Checkbox compositions"), Description: tr(c, "Source fields, cards, desktop preferences and controlled table selection."),
 		Content: func(child *ui.Context) {
-			p.choose(child, h, native, "source-checkbox-config", &p.recipe, control.SelectProps{Label: "Checkbox configuration", Options: checkboxCompositionRecipes})
+			p.choose(child, h, native, "source-checkbox-config", &p.recipe, control.SelectProps{Label: tr(child, "Checkbox configuration"), Options: localizedOptions(child, checkboxCompositionRecipes)})
 			if p.recipe == "rtl" {
-				p.choose(child, h, native, "source-checkbox-language", &p.language, control.SelectProps{Label: "Checkbox language", Options: statusLanguages()})
+				p.choose(child, h, native, "source-checkbox-language", &p.language, control.SelectProps{Label: tr(child, "Checkbox language"), Options: localizedOptions(child, statusLanguages())})
 			}
 			ui.Column(child.Key(p.recipe)).FillWidth().MinWidth(0).AlignItems(ui.Center).Children(func() {
 				if p.recipe == "rtl" {
@@ -104,7 +104,7 @@ func (p *checkboxCompositionPreviewState) view(c *ui.Context, h *desktop.Host, n
 				}
 			})
 			if p.action != "" {
-				ui.Text(child, p.action).FontSize(13).Role(ui.RoleStatus).Label(p.action)
+				ui.Text(child, tr(child, p.action)).FontSize(13).Role(ui.RoleStatus).Label(tr(child, p.action))
 			}
 			if p.popupError != "" {
 				ui.Text(child, p.popupError).FontSize(13).Role(ui.RoleAlert)
@@ -148,15 +148,15 @@ func (p *checkboxCompositionPreviewState) field(c *ui.Context, m *checkboxCompos
 			})
 		}
 		if s.card {
-			card := f.Label(c, control.FieldLabelProps{Label: s.label, Choice: true, Selected: m.values[s.index], Disabled: s.fieldDisabled}, func() {
+			card := f.Label(c, control.FieldLabelProps{Label: tr(c, s.label), Choice: true, Selected: m.values[s.index], Disabled: s.fieldDisabled}, func() {
 				ui.Row(c).FillWidth().MinWidth(0).Gap(12).AlignItems(ui.Start).Children(func() {
 					checkbox()
 					f.Content(c, func() {
-						title := control.FieldTitle(c, s.label)
+						title := control.FieldTitle(c, tr(c, s.label))
 						if s.fieldDisabled {
 							title.Opacity(.5)
 						}
-						f.Description(c, s.description)
+						f.Description(c, tr(c, s.description))
 					})
 				})
 			})
@@ -169,7 +169,7 @@ func (p *checkboxCompositionPreviewState) field(c *ui.Context, m *checkboxCompos
 		}
 		checkbox()
 		caption := func() {
-			label := f.Label(c, control.FieldLabelProps{Text: s.label}, nil)
+			label := f.Label(c, control.FieldLabelProps{Text: tr(c, s.label)}, nil)
 			if s.plain {
 				label.LineHeight(1)
 			}
@@ -177,7 +177,7 @@ func (p *checkboxCompositionPreviewState) field(c *ui.Context, m *checkboxCompos
 				label.FontWeight(400)
 			}
 			if s.description != "" {
-				f.Description(c, s.description)
+				f.Description(c, tr(c, s.description))
 			}
 		}
 		if s.description != "" {
@@ -232,14 +232,14 @@ func (p *checkboxCompositionPreviewState) draw(c *ui.Context) {
 				})
 			}
 			if p.recipe == "group" {
-				control.FieldSetWith(c, control.FieldSetProps{Legend: "Show these items on the desktop:", Description: "Select the items you want to show on the desktop."}, control.FieldSetSlots{
+				control.FieldSetWith(c, control.FieldSetProps{Legend: "Show these items on the desktop:", Description: tr(c, "Select the items you want to show on the desktop.")}, control.FieldSetSlots{
 					Legend: func(child *ui.Context) ui.Element {
-						return control.FieldLegend(child, "Show these items on the desktop:", control.FieldLegendLabel)
+						return control.FieldLegend(child, tr(child, "Show these items on the desktop:"), control.FieldLegendLabel)
 					}, Content: fields,
 				})
 			} else {
-				ui.Column(c).FillWidth().MinWidth(0).Gap(12).Role(ui.RoleGroup).Label("Show these items on the desktop:").Children(func() {
-					control.FieldLabel(c, control.FieldLabelProps{Text: "Show these items on the desktop:"}, nil)
+				ui.Column(c).FillWidth().MinWidth(0).Gap(12).Role(ui.RoleGroup).Label(tr(c, "Show these items on the desktop:")).Children(func() {
+					control.FieldLabel(c, control.FieldLabelProps{Text: tr(c, "Show these items on the desktop:")}, nil)
 					fields(c)
 				})
 			}
@@ -269,7 +269,7 @@ func (p *checkboxCompositionPreviewState) table(c *ui.Context, m *checkboxCompos
 					m.rows[i] = checked
 				}
 				p.changed("Select all rows")
-			}}).Label("Select all rows")
+			}}).Label(tr(child, "Select all rows"))
 		}}),
 		display.TableHead("Name"), display.TableHead("Email"), display.TableHead("Role"),
 	)
@@ -277,12 +277,12 @@ func (p *checkboxCompositionPreviewState) table(c *ui.Context, m *checkboxCompos
 	for i, person := range checkboxSourcePeople {
 		rows = append(rows, display.TableRow(display.TableRowProps{Key: person.email, Selected: m.rows[i]},
 			display.TableCell("", display.TableCellProps{Checkbox: true, Content: func(child *ui.Context) {
-				control.Checkbox(child, &m.rows[i], "", control.CheckboxProps{OnCheckedChange: func(bool) { p.changed(person.name) }}).Label("Select " + person.name)
+				control.Checkbox(child, &m.rows[i], "", control.CheckboxProps{OnCheckedChange: func(bool) { p.changed(person.name) }}).Label(tr(child, "Select ") + person.name)
 			}}),
 			display.TableCell(person.name, display.TableCellProps{Medium: true}), display.TableCell(person.email), display.TableCell(person.role),
 		))
 	}
-	display.TableWith(c, display.TableOptions{Label: "Source checkbox table", MinWidth: 600, Scroll: &m.scroll, Columns: []display.TableColumn{{Key: "selected", Width: 32}, {Key: "name"}, {Key: "email"}, {Key: "role"}}}, display.TableHeader(header), display.TableBody(rows...))
+	display.TableWith(c, display.TableOptions{Label: tr(c, "Source checkbox table"), MinWidth: 600, Scroll: &m.scroll, Columns: []display.TableColumn{{Key: "selected", Width: 32}, {Key: "name"}, {Key: "email"}, {Key: "role"}}}, display.TableHeader(header), display.TableBody(rows...))
 }
 
 func checkboxRecipeLabel(key string) string {

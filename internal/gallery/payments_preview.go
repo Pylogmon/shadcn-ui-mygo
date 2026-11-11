@@ -94,7 +94,7 @@ func (p *paymentsPreviewState) copyID(c *ui.Context, id string) {
 	})
 }
 func (p *paymentsPreviewState) menu(c *ui.Context, h *desktop.Host, native bool, key, label, caption string, items []overlay.MenuItem, state *paymentPreviewMenu) string {
-	props := control.ButtonProps{Variant: control.Outline, Size: control.Small, Label: label}
+	props := control.ButtonProps{Variant: control.Outline, Size: control.Small, Label: tr(c, label)}
 	if caption == "" {
 		props.Variant, props.Size, props.Icon = control.Ghost, control.IconExtraSmall, outlined.MoreHoriz()
 	}
@@ -109,11 +109,11 @@ func (p *paymentsPreviewState) menu(c *ui.Context, h *desktop.Host, native bool,
 	chosen := ""
 	var err error
 	if native {
-		chosen, err = desktop.NativeMenu(c, overlay.MenuProps{Items: items}, func(e ui.Element) { control.StyleButton(c, e, caption, props); content(e) })
+		chosen, err = desktop.NativeMenu(c, overlay.MenuProps{Items: items}, func(e ui.Element) { control.StyleButton(c, e, tr(c, caption), props); content(e) })
 	} else {
-		anchor := control.Button(c, caption, props)
+		anchor := control.Button(c, tr(c, caption), props)
 		content(anchor)
-		chosen, err = desktop.DropdownMenu(c, h, key, anchor, &state.open, &state.state, desktop.MenuProps{Label: label, Items: items, Placement: mygo.PlacementBottomEnd, Width: 210, Gap: 4})
+		chosen, err = desktop.DropdownMenu(c, h, key, anchor, &state.open, &state.state, desktop.MenuProps{Label: tr(c, label), Items: items, Placement: mygo.PlacementBottomEnd, Width: 210, Gap: 4})
 	}
 	if err != nil {
 		p.popupError = "Could not open payment menu: " + err.Error()
@@ -142,15 +142,15 @@ func (p *paymentsPreviewState) view(c *ui.Context, h *desktop.Host, native bool)
 	t := theme.TokensOf(c)
 	display.Card(c.Key("payments-source-preview"), func() {
 		ui.Column(c).FillWidth().Gap(16).Children(func() {
-			display.Typography(c, "Payments", display.H3)
-			ui.Text(c, "Filter recent payments, choose columns, and select the rows on each page.").TextColor(t.MutedForeground)
+			display.Typography(c, tr(c, "Payments"), display.H3)
+			ui.Text(c, tr(c, "Filter recent payments, choose columns, and select the rows on each page.")).TextColor(t.MutedForeground)
 			ui.Row(c).FillWidth().Wrap().Gap(8).AlignItems(ui.Center).Children(func() {
-				input := control.Input(c, &p.table.Query, control.InputProps{Label: "Filter payment emails", Placeholder: "Filter emails…", OnChange: func(string) { p.table.Page = 0 }}).Width(300).MaxWidthPercent(100)
+				input := control.Input(c, &p.table.Query, control.InputProps{Label: tr(c, "Filter payment emails"), Placeholder: tr(c, "Filter emails…"), OnChange: func(string) { p.table.Page = 0 }}).Width(300).MaxWidthPercent(100)
 				if input.Changed() {
 					c.Invalidate()
 				}
 				ui.Box(c).Grow(1)
-				items := []overlay.MenuItem{{Key: "status", Label: "Status", Checked: &p.visible[0]}, {Key: "email", Label: "Email", Checked: &p.visible[1]}, {Key: "amount", Label: "Amount", Checked: &p.visible[2]}}
+				items := []overlay.MenuItem{{Key: "status", Label: tr(c, "Status"), Checked: &p.visible[0]}, {Key: "email", Label: tr(c, "Email"), Checked: &p.visible[1]}, {Key: "amount", Label: tr(c, "Amount"), Checked: &p.visible[2]}}
 				if chosen := p.menu(c, h, native, "payment-columns", "Payment columns", "Columns", items, &p.columns); chosen != "" {
 					for i, id := range []string{"status", "email", "amount"} {
 						if chosen == id {
@@ -169,7 +169,7 @@ func (p *paymentsPreviewState) view(c *ui.Context, h *desktop.Host, native bool)
 			}
 			headerAlign := ui.Start
 			columns := []display.TableColumn{{Key: "select", Width: 48}}
-			headers := []display.TableCellProps{display.TableHead("", display.TableCellProps{Key: "select", Checkbox: true, Align: &headerAlign, Style: func(e ui.Element) { e.Label("Payment selection") }, Content: func(child *ui.Context) {
+			headers := []display.TableCellProps{display.TableHead("", display.TableCellProps{Key: "select", Checkbox: true, Align: &headerAlign, Style: func(e ui.Element) { e.Label(tr(c, "Payment selection")) }, Content: func(child *ui.Context) {
 				count := 0
 				for _, row := range page {
 					if p.table.Selection.Has(row.ID) {
@@ -182,7 +182,7 @@ func (p *paymentsPreviewState) view(c *ui.Context, h *desktop.Host, native bool)
 				} else if count > 0 {
 					state = ui.CheckOn
 				}
-				if control.CheckboxState(child, &state, "Select all payments on page", control.CheckboxProps{Disabled: len(page) == 0, Content: func(*ui.Context) {}}).Changed() {
+				if control.CheckboxState(child, &state, tr(child, "Select all payments on page"), control.CheckboxProps{Disabled: len(page) == 0, Content: func(*ui.Context) {}}).Changed() {
 					for _, row := range page {
 						if state == ui.CheckOn {
 							p.table.Selection.Add(row.ID)
@@ -207,9 +207,9 @@ func (p *paymentsPreviewState) view(c *ui.Context, h *desktop.Host, native bool)
 							direction = ui.SortDescending
 						}
 					}
-					e.Label("Email").Sort(direction)
+					e.Label(tr(c, "Email")).Sort(direction)
 				}, Content: func(child *ui.Context) {
-					if control.Button(child, "Email", control.ButtonProps{Label: "Sort payment emails", Variant: control.Ghost, Size: control.Small, Icon: outlined.SwapVert()}).Clicked() {
+					if control.Button(child, tr(child, "Email"), control.ButtonProps{Label: tr(child, "Sort payment emails"), Variant: control.Ghost, Size: control.Small, Icon: outlined.SwapVert()}).Clicked() {
 						p.table.Sort = ui.SortOrder{Column: "email", Descending: p.table.Sort.Column == "email" && !p.table.Sort.Descending}
 						child.Invalidate()
 					}
@@ -220,13 +220,13 @@ func (p *paymentsPreviewState) view(c *ui.Context, h *desktop.Host, native bool)
 				headers = append(headers, display.TableHead("Amount", display.TableCellProps{Key: "amount", Align: &amountAlign}))
 			}
 			columns = append(columns, display.TableColumn{Key: "actions", Width: 56})
-			headers = append(headers, display.TableHead("", display.TableCellProps{Key: "actions", Align: &headerAlign, Style: func(e ui.Element) { e.Label("Payment actions") }}))
+			headers = append(headers, display.TableHead("", display.TableCellProps{Key: "actions", Align: &headerAlign, Style: func(e ui.Element) { e.Label(tr(c, "Payment actions")) }}))
 			body := make([]display.TableRowProps, 0, len(page))
 			for _, record := range page {
 				row := record
 				cells := []display.TableCellProps{display.TableCell("", display.TableCellProps{Key: "select", Checkbox: true, Content: func(child *ui.Context) {
 					selected := p.table.Selection.Has(row.ID)
-					if control.Checkbox(child, &selected, "Select payment "+row.ID, control.CheckboxProps{Content: func(*ui.Context) {}}).Changed() {
+					if control.Checkbox(child, &selected, tr(child, "Select payment ")+row.ID, control.CheckboxProps{Content: func(*ui.Context) {}}).Changed() {
 						if selected {
 							p.table.Selection.Add(row.ID)
 						} else {
@@ -250,7 +250,7 @@ func (p *paymentsPreviewState) view(c *ui.Context, h *desktop.Host, native bool)
 						state = &paymentPreviewMenu{}
 						p.rows[row.ID] = state
 					}
-					switch p.menu(child, h, native, "payment-actions-"+row.ID, "Payment actions "+row.ID, "", []overlay.MenuItem{{Key: "copy", Label: "Copy payment ID", Icon: outlined.ContentCopy(), Group: "Actions"}, {Separator: true}, {Key: "customer", Label: "View customer"}, {Key: "details", Label: "View payment details"}}, state) {
+					switch p.menu(child, h, native, "payment-actions-"+row.ID, "Payment actions "+row.ID, "", []overlay.MenuItem{{Key: "copy", Label: tr(child, "Copy payment ID"), Icon: outlined.ContentCopy(), Group: tr(child, "Actions")}, {Separator: true}, {Key: "customer", Label: tr(child, "View customer")}, {Key: "details", Label: tr(child, "View payment details")}}, state) {
 					case "copy":
 						p.copyID(child, row.ID)
 					case "customer":
@@ -265,7 +265,7 @@ func (p *paymentsPreviewState) view(c *ui.Context, h *desktop.Host, native bool)
 				center := ui.Center
 				body = append(body, display.TableRow(display.TableRowProps{Key: "empty-payments"}, display.TableCell("No results.", display.TableCellProps{Key: "empty", ColSpan: len(columns), Align: &center, Style: func(e ui.Element) { e.Height(96) }})))
 			}
-			display.TableWith(c.Key("payments-table"), display.TableOptions{Label: "Recent payments", Scroll: &p.scroll, MinWidth: 600, Columns: columns}, display.TableHeader(display.TableRow(display.TableRowProps{Key: "header"}, headers...)), display.TableBody(body...))
+			display.TableWith(c.Key("payments-table"), display.TableOptions{Label: tr(c, "Recent payments"), Scroll: &p.scroll, MinWidth: 600, Columns: columns}, display.TableHeader(display.TableRow(display.TableRowProps{Key: "header"}, headers...)), display.TableBody(body...))
 			filtered := p.filteredRows(props)
 			selected := 0
 			for _, row := range filtered {
@@ -274,9 +274,9 @@ func (p *paymentsPreviewState) view(c *ui.Context, h *desktop.Host, native bool)
 				}
 			}
 			ui.Row(c).FillWidth().Wrap().Gap(8).AlignItems(ui.Center).Children(func() {
-				ui.Text(c, fmt.Sprintf("%d of %d row(s) selected.", selected, total)).Grow(1).FontSize(13).TextColor(t.MutedForeground)
-				ui.Text(c, "Rows per page").FontSize(13)
-				if chosen := p.menu(c, h, native, "payment-page-size", "Payments page size", strconv.Itoa(p.table.PageSize), []overlay.MenuItem{{Key: "2", Label: "2 per page (demo)"}, {Key: "5", Label: "5 per page"}, {Key: "10", Label: "10 per page"}}, &p.pageSize); chosen != "" {
+				ui.Text(c, fmt.Sprintf(tr(c, "%d of %d row(s) selected."), selected, total)).Grow(1).FontSize(13).TextColor(t.MutedForeground)
+				ui.Text(c, tr(c, "Rows per page")).FontSize(13)
+				if chosen := p.menu(c, h, native, "payment-page-size", "Payments page size", strconv.Itoa(p.table.PageSize), []overlay.MenuItem{{Key: "2", Label: tr(c, "2 per page (demo)")}, {Key: "5", Label: tr(c, "5 per page")}, {Key: "10", Label: tr(c, "10 per page")}}, &p.pageSize); chosen != "" {
 					size, err := strconv.Atoi(chosen)
 					if err == nil {
 						p.table.PageSize, p.table.Page = size, 0
@@ -284,12 +284,12 @@ func (p *paymentsPreviewState) view(c *ui.Context, h *desktop.Host, native bool)
 					}
 				}
 				pages := max(1, (total+p.table.PageSize-1)/p.table.PageSize)
-				ui.Text(c, fmt.Sprintf("Page %d of %d", p.table.Page+1, pages)).FontSize(13)
-				if control.Button(c, "Previous", control.ButtonProps{Label: "Previous payments page", Variant: control.Outline, Size: control.Small, Disabled: p.table.Page == 0}).Clicked() {
+				ui.Text(c, fmt.Sprintf(tr(c, "Page %d of %d"), p.table.Page+1, pages)).FontSize(13)
+				if control.Button(c, tr(c, "Previous"), control.ButtonProps{Label: tr(c, "Previous payments page"), Variant: control.Outline, Size: control.Small, Disabled: p.table.Page == 0}).Clicked() {
 					p.table.Page--
 					c.Invalidate()
 				}
-				if control.Button(c, "Next", control.ButtonProps{Label: "Next payments page", Variant: control.Outline, Size: control.Small, Disabled: p.table.Page+1 >= pages}).Clicked() {
+				if control.Button(c, tr(c, "Next"), control.ButtonProps{Label: tr(c, "Next payments page"), Variant: control.Outline, Size: control.Small, Disabled: p.table.Page+1 >= pages}).Clicked() {
 					p.table.Page++
 					c.Invalidate()
 				}
@@ -301,13 +301,13 @@ func (p *paymentsPreviewState) view(c *ui.Context, h *desktop.Host, native bool)
 					}
 					ui.Column(c.Key("payment-details")).FillWidth().Padding(12).Gap(6).Border(1, t.Border).Radius(t.RadiusMD()).Children(func() {
 						if p.detailKind == "customer" {
-							ui.Text(c, "Customer contact").FontWeight(600)
+							ui.Text(c, tr(c, "Customer contact")).FontWeight(600)
 							ui.Text(c, row.Email)
 						} else {
-							ui.Text(c, "Payment details · "+row.ID).FontWeight(600)
+							ui.Text(c, tr(c, "Payment details · ")+row.ID).FontWeight(600)
 							ui.Text(c, fmt.Sprintf("%s · $%.2f · %s", row.Status, row.Amount, row.Email))
 						}
-						if control.Button(c, "Close details", control.ButtonProps{Variant: control.Ghost, Size: control.ExtraSmall}).Clicked() {
+						if control.Button(c, tr(c, "Close details"), control.ButtonProps{Variant: control.Ghost, Size: control.ExtraSmall}).Clicked() {
 							p.detailID = ""
 							c.Invalidate()
 						}
@@ -322,5 +322,5 @@ func (p *paymentsPreviewState) view(c *ui.Context, h *desktop.Host, native bool)
 				ui.Text(c, p.popupError).Role(ui.RoleAlert)
 			}
 		})
-	}).Role(ui.RoleGroup).Label("Payments example")
+	}).Role(ui.RoleGroup).Label(tr(c, "Payments example"))
 }

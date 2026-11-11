@@ -108,7 +108,7 @@ func (p *controlCompoundsPreviewState) menu(c *ui.Context, h *desktop.Host, nati
 	if native {
 		chosen, err = desktop.NativeMenu(c, overlay.MenuProps{Items: items}, render)
 	} else {
-		anchor := ui.ButtonBase(c).Label(label)
+		anchor := ui.ButtonBase(c).Label(tr(c, label))
 		render(anchor)
 		width := float32(160)
 		if key == "compound-follow" {
@@ -116,7 +116,7 @@ func (p *controlCompoundsPreviewState) menu(c *ui.Context, h *desktop.Host, nati
 		} else if key == "compound-avatar" {
 			width = 128
 		}
-		chosen, err = desktop.Menu(c, h, key, anchor, &state.open, &state.state, desktop.MenuProps{Label: label, Items: items, Width: width, Placement: mygo.PlacementBottomEnd, Gap: 6})
+		chosen, err = desktop.Menu(c, h, key, anchor, &state.open, &state.state, desktop.MenuProps{Label: tr(c, label), Items: items, Width: width, Placement: mygo.PlacementBottomEnd, Gap: 6})
 	}
 	if err != nil {
 		p.error = err.Error()
@@ -126,7 +126,7 @@ func (p *controlCompoundsPreviewState) menu(c *ui.Context, h *desktop.Host, nati
 
 func (p *controlCompoundsPreviewState) iconMenu(c *ui.Context, h *desktop.Host, native bool, key, label string, state *controlCompoundMenu, icon *ui.SVG, items []overlay.MenuItem) string {
 	return p.menu(c, h, native, key, label, state, items, func(e ui.Element) {
-		control.StyleButton(c, e, "", control.ButtonProps{Variant: control.Outline, Size: control.Icon, Label: label, Icon: icon})
+		control.StyleButton(c, e, "", control.ButtonProps{Variant: control.Outline, Size: control.Icon, Label: tr(c, label), Icon: icon})
 	})
 }
 
@@ -134,12 +134,12 @@ func (p *controlCompoundsPreviewState) iconMenu(c *ui.Context, h *desktop.Host, 
 // configurations share application drafts; selecting a recipe never resets them.
 func (p *controlCompoundsPreviewState) buttonGroups(c *ui.Context, h *desktop.Host, native bool) {
 	p.syncRoute(h, native)
-	display.CardWith(c.Key("control-compound-groups"), display.CardProps{Label: "Button group examples"}, display.CardSlots{
-		Title: "Button groups", Description: "Joined actions, editors and native popup choices.",
+	display.CardWith(c.Key("control-compound-groups"), display.CardProps{Label: tr(c, "Button group examples")}, display.CardSlots{
+		Title: tr(c, "Button groups"), Description: tr(c, "Joined actions, editors and native popup choices."),
 		Content: func(child *ui.Context) {
 			ui.Column(child).FillWidth().MinWidth(0).Gap(20).Children(func() {
 				before := p.recipe
-				p.choose(child, h, native, "compound-recipe", &p.recipe, control.SelectProps{Label: "Button group configuration", Options: controlCompoundRecipes}).MaxWidth(360)
+				p.choose(child, h, native, "compound-recipe", &p.recipe, control.SelectProps{Label: tr(child, "Button group configuration"), Options: localizedOptions(child, controlCompoundRecipes)}).MaxWidth(360)
 				if before != p.recipe {
 					p.error = ""
 					p.taskOpen, p.more.open, p.follow.open = false, false, false
@@ -153,10 +153,10 @@ func (p *controlCompoundsPreviewState) buttonGroups(c *ui.Context, h *desktop.Ho
 					p.renderGroup(child, h, native)
 				})
 				if p.action != "" {
-					ui.Text(child, p.action).FontSize(13).Role(ui.RoleStatus)
+					ui.Text(child, tr(child, p.action)).FontSize(13).Role(ui.RoleStatus)
 				}
 				if p.error != "" {
-					ui.Text(child, p.error).TextColor(theme.TokensOf(child).Destructive).Role(ui.RoleAlert)
+					ui.Text(child, tr(child, p.error)).TextColor(theme.TokensOf(child).Destructive).Role(ui.RoleAlert)
 				}
 			})
 		},
@@ -167,7 +167,7 @@ func (p *controlCompoundsPreviewState) actionButton(c *ui.Context, caption, labe
 	if props.Label == "" {
 		props.Label = label
 	}
-	b := control.Button(c, caption, props)
+	b := control.Button(c, tr(c, caption), props)
 	if b.Clicked() {
 		p.action = label + " selected locally."
 	}
@@ -180,14 +180,14 @@ func (p *controlCompoundsPreviewState) renderGroup(c *ui.Context, h *desktop.Hos
 		p.mailGroup(c, h, native)
 	case "orientation":
 		control.ButtonGroup(c, func() {
-			if control.Button(c, "", control.ButtonProps{Variant: control.Outline, Size: control.Icon, Icon: outlined.Add(), Label: "Increase media level"}).Clicked() {
+			if control.Button(c, "", control.ButtonProps{Variant: control.Outline, Size: control.Icon, Icon: outlined.Add(), Label: tr(c, "Increase media level")}).Clicked() {
 				p.mediaLevel = min(100, p.mediaLevel+10)
 			}
-			if control.Button(c, "", control.ButtonProps{Variant: control.Outline, Size: control.Icon, Icon: outlined.Remove(), Label: "Decrease media level"}).Clicked() {
+			if control.Button(c, "", control.ButtonProps{Variant: control.Outline, Size: control.Icon, Icon: outlined.Remove(), Label: tr(c, "Decrease media level")}).Clicked() {
 				p.mediaLevel = max(0, p.mediaLevel-10)
 			}
-		}, control.ButtonGroupProps{Label: "Media controls", Vertical: true})
-		ui.Text(c, fmt.Sprintf("Media level: %d", p.mediaLevel)).Role(ui.RoleStatus)
+		}, control.ButtonGroupProps{Label: tr(c, "Media controls"), Vertical: true})
+		ui.Text(c, fmt.Sprintf(tr(c, "Media level: %d"), p.mediaLevel)).Role(ui.RoleStatus)
 	case "size":
 		for _, size := range []struct {
 			label      string
@@ -205,11 +205,11 @@ func (p *controlCompoundsPreviewState) renderGroup(c *ui.Context, h *desktop.Hos
 			p.actionButton(c, "Button", "Split primary action", control.ButtonProps{Variant: control.Secondary})
 			control.ButtonGroupSeparator(c)
 			p.addButton(c, control.Icon)
-		}, control.ButtonGroupProps{Label: "Split button"})
-		ui.Text(c, fmt.Sprintf("Added locally: %d", p.additions)).Role(ui.RoleStatus)
+		}, control.ButtonGroupProps{Label: tr(c, "Split button")})
+		ui.Text(c, fmt.Sprintf(tr(c, "Added locally: %d"), p.additions)).Role(ui.RoleStatus)
 	case "separator":
 		control.ButtonGroup(c, func() {
-			if control.Button(c, "Copy", control.ButtonProps{Variant: control.Secondary, Size: control.Small, Label: "Copy grouped draft"}).Clicked() {
+			if control.Button(c, tr(c, "Copy"), control.ButtonProps{Variant: control.Secondary, Size: control.Small, Label: tr(c, "Copy grouped draft")}).Clicked() {
 				p.copySerial++
 				serial := p.copySerial
 				text := p.message
@@ -227,19 +227,19 @@ func (p *controlCompoundsPreviewState) renderGroup(c *ui.Context, h *desktop.Hos
 				})
 			}
 			control.ButtonGroupSeparator(c)
-			if control.Button(c, "Paste", control.ButtonProps{Variant: control.Secondary, Size: control.Small, Label: "Paste grouped draft"}).Clicked() {
+			if control.Button(c, tr(c, "Paste"), control.ButtonProps{Variant: control.Secondary, Size: control.Small, Label: tr(c, "Paste grouped draft")}).Clicked() {
 				p.message = c.ReadClipboard()
 				p.action = "Pasted into the grouped draft."
 			}
-		}, control.ButtonGroupProps{Label: "Copy and paste group"})
-		ui.Text(c, "Draft: "+p.message).FontSize(13)
+		}, control.ButtonGroupProps{Label: tr(c, "Copy and paste group")})
+		ui.Text(c, tr(c, "Draft: ")+p.message).FontSize(13)
 	case "input":
 		control.ButtonGroup(c, func() {
-			control.Input(c, &p.query, control.InputProps{Label: "Grouped search", Placeholder: "Search..."}).MinWidth(0).Grow(1)
-			if control.Button(c, "", control.ButtonProps{Variant: control.Outline, Size: control.Icon, Icon: outlined.Search(), Label: "Search grouped text"}).Clicked() {
+			control.Input(c, &p.query, control.InputProps{Label: tr(c, "Grouped search"), Placeholder: tr(c, "Search...")}).MinWidth(0).Grow(1)
+			if control.Button(c, "", control.ButtonProps{Variant: control.Outline, Size: control.Icon, Icon: outlined.Search(), Label: tr(c, "Search grouped text")}).Clicked() {
 				p.action = "Local search: " + p.query
 			}
-		}, control.ButtonGroupProps{Label: "Search group"}).FillWidth().MaxWidth(440)
+		}, control.ButtonGroupProps{Label: tr(c, "Search group")}).FillWidth().MaxWidth(440)
 	case "nested", "input-group":
 		p.messageGroup(c, h, native)
 	case "dropdown":
@@ -248,24 +248,24 @@ func (p *controlCompoundsPreviewState) renderGroup(c *ui.Context, h *desktop.Hos
 			if p.following {
 				caption = "Following"
 			}
-			if control.Button(c, caption, control.ButtonProps{Variant: control.Outline, Label: "Follow conversation"}).Clicked() {
+			if control.Button(c, tr(c, caption), control.ButtonProps{Variant: control.Outline, Label: tr(c, "Follow conversation")}).Clicked() {
 				p.following = !p.following
 				p.action = "Local follow: " + strconv.FormatBool(p.following)
 			}
-			items := []overlay.MenuItem{{Key: "mute", Label: "Mute Conversation"}, {Key: "read", Label: "Mark as Read"}, {Key: "report", Label: "Report Conversation"}, {Key: "block", Label: "Block User"}, {Key: "share", Label: "Share Conversation"}, {Key: "copy", Label: "Copy Conversation"}, {Separator: true}, {Key: "delete", Label: "Delete Conversation", Destructive: true}}
+			items := []overlay.MenuItem{{Key: "mute", Label: tr(c, "Mute Conversation")}, {Key: "read", Label: tr(c, "Mark as Read")}, {Key: "report", Label: tr(c, "Report Conversation")}, {Key: "block", Label: tr(c, "Block User")}, {Key: "share", Label: tr(c, "Share Conversation")}, {Key: "copy", Label: tr(c, "Copy Conversation")}, {Separator: true}, {Key: "delete", Label: tr(c, "Delete Conversation"), Destructive: true}}
 			if chosen := p.iconMenu(c, h, native, "compound-follow", "Conversation options", &p.follow, outlined.ExpandMore(), items); chosen != "" {
 				p.action = "Local conversation action: " + chosen
 			}
-		}, control.ButtonGroupProps{Label: "Follow group"})
+		}, control.ButtonGroupProps{Label: tr(c, "Follow group")})
 	case "select":
 		control.ButtonGroup(c, func() {
 			control.ButtonGroup(c, func() {
-				props := control.SelectProps{Label: "Grouped currency", Options: []control.Option{{Value: "$", Label: "$ US Dollar"}, {Value: "€", Label: "€ Euro"}, {Value: "£", Label: "£ British Pound"}}, TriggerContent: func(child *ui.Context, o control.Option) { ui.Text(child, o.Value).Font("monospace") }}
+				props := control.SelectProps{Label: tr(c, "Grouped currency"), Options: localizedOptions(c, []control.Option{{Value: "$", Label: "$ US Dollar"}, {Value: "€", Label: "€ Euro"}, {Value: "£", Label: "£ British Pound"}}), TriggerContent: func(child *ui.Context, o control.Option) { ui.Text(child, o.Value).Font("monospace") }}
 				control.ButtonGroupItem(c, p.choose(c, h, native, "compound-currency", &p.currency, props).MinWidth(72))
-				control.Input(c, &p.amount, control.InputProps{Label: "Grouped amount", Placeholder: "10.00"}).MinWidth(0).Width(150)
-			}, control.ButtonGroupProps{Label: "Currency and amount"})
+				control.Input(c, &p.amount, control.InputProps{Label: tr(c, "Grouped amount"), Placeholder: "10.00"}).MinWidth(0).Width(150)
+			}, control.ButtonGroupProps{Label: tr(c, "Currency and amount")})
 			control.ButtonGroup(c, func() {
-				if control.Button(c, "", control.ButtonProps{Variant: control.Outline, Size: control.Icon, Icon: outlined.ArrowForward(), Label: "Preview grouped amount"}).Clicked() {
+				if control.Button(c, "", control.ButtonProps{Variant: control.Outline, Size: control.Icon, Icon: outlined.ArrowForward(), Label: tr(c, "Preview grouped amount")}).Clicked() {
 					amount, err := strconv.ParseFloat(strings.TrimSpace(p.amount), 64)
 					if err != nil || math.IsNaN(amount) || math.IsInf(amount, 0) {
 						p.action = "Enter a finite amount."
@@ -273,19 +273,19 @@ func (p *controlCompoundsPreviewState) renderGroup(c *ui.Context, h *desktop.Hos
 						p.action = fmt.Sprintf("Local amount preview: %s%.2f", p.currency, amount)
 					}
 				}
-			}, control.ButtonGroupProps{Label: "Amount action"})
-		}, control.ButtonGroupProps{Label: "Nested amount group"})
+			}, control.ButtonGroupProps{Label: tr(c, "Amount action")})
+		}, control.ButtonGroupProps{Label: tr(c, "Nested amount group")})
 	case "popover":
 		control.ButtonGroup(c, func() {
 			p.actionButton(c, "Copilot", "Copilot task", control.ButtonProps{Variant: control.Outline, Icon: outlined.SmartToy()})
-			anchor := control.Button(c, "", control.ButtonProps{Variant: control.Outline, Size: control.Icon, Icon: outlined.ExpandMore(), Label: "Open grouped task"})
+			anchor := control.Button(c, "", control.ButtonProps{Variant: control.Outline, Size: control.Icon, Icon: outlined.ExpandMore(), Label: tr(c, "Open grouped task")})
 			p.taskPopover(c, h, native, anchor)
-		}, control.ButtonGroupProps{Label: "Task group"})
+		}, control.ButtonGroupProps{Label: tr(c, "Task group")})
 	case "text":
 		control.ButtonGroup(c, func() {
 			tag := control.ButtonGroupText(c, "Name")
-			control.Input(c, &p.name, control.InputProps{Label: "Grouped name", Placeholder: "Type something here...", Handle: &p.nameHandle}).LabelledBy(tag).MinWidth(0).Grow(1)
-		}, control.ButtonGroupProps{Label: "Text and input group"}).FillWidth().MaxWidth(440)
+			control.Input(c, &p.name, control.InputProps{Label: tr(c, "Grouped name"), Placeholder: tr(c, "Type something here..."), Handle: &p.nameHandle}).LabelledBy(tag).MinWidth(0).Grow(1)
+		}, control.ButtonGroupProps{Label: tr(c, "Text and input group")}).FillWidth().MaxWidth(440)
 	}
 }
 
@@ -294,7 +294,7 @@ func (p *controlCompoundsPreviewState) addButton(c *ui.Context, size control.Siz
 	if p.recipe == "split" {
 		variant = control.Secondary
 	}
-	if control.Button(c, "", control.ButtonProps{Variant: variant, Size: size, Icon: outlined.Add(), Label: "Add grouped item"}).Clicked() {
+	if control.Button(c, "", control.ButtonProps{Variant: variant, Size: size, Icon: outlined.Add(), Label: tr(c, "Add grouped item")}).Clicked() {
 		p.additions++
 		p.action = fmt.Sprintf("Added locally: %d", p.additions)
 	}
@@ -311,7 +311,7 @@ func (p *controlCompoundsPreviewState) messageGroup(c *ui.Context, h *desktop.Ho
 						p.voiceTooltip(c, h, native, anchor)
 						return
 					}
-					b := control.Toggle(c, &p.voice, "", control.ToggleProps{Size: control.IconExtraSmall, Label: "Voice Mode", Icon: outlined.GraphicEq()})
+					b := control.Toggle(c, &p.voice, "", control.ToggleProps{Size: control.IconExtraSmall, Label: tr(c, "Voice Mode"), Icon: outlined.GraphicEq()})
 					if p.voice {
 						if theme.TokensOf(c).Dark {
 							b.Background(ui.RGB(154, 52, 18)).TextColor(ui.RGB(255, 237, 213))
@@ -325,10 +325,10 @@ func (p *controlCompoundsPreviewState) messageGroup(c *ui.Context, h *desktop.Ho
 					if p.recipe == "input-group" && p.voice {
 						placeholder = "Record and send audio..."
 					}
-					return control.Input(c, &p.message, control.InputProps{Label: "Grouped message", Placeholder: placeholder, Disabled: p.recipe == "input-group" && p.voice})
+					return control.Input(c, &p.message, control.InputProps{Label: tr(c, "Grouped message"), Placeholder: tr(c, placeholder), Disabled: p.recipe == "input-group" && p.voice})
 				})
 			}).Grow(1).MinWidth(0)
-		}, control.ButtonGroupProps{Label: "Nested message group"}).FillWidth().MaxWidth(480)
+		}, control.ButtonGroupProps{Label: tr(c, "Nested message group")}).FillWidth().MaxWidth(480)
 	}
 	if p.recipe == "input-group" {
 		tokens := *theme.TokensOf(c)
@@ -363,16 +363,16 @@ func (p *controlCompoundsPreviewState) taskPopover(c *ui.Context, h *desktop.Hos
 	if anchor.Clicked() {
 		p.error = ""
 	}
-	props := desktop.PopoverProps{Label: "Grouped task", Width: 340, Height: 250, FitContent: true, MaxHeight: 320, Placement: mygo.PlacementBottomEnd}
+	props := desktop.PopoverProps{Label: tr(c, "Grouped task"), Width: 340, Height: 250, FitContent: true, MaxHeight: 320, Placement: mygo.PlacementBottomEnd}
 	content := func(child *ui.Context) {
-		ui.Text(child, "Start a new task with Copilot").FontWeight(600)
-		ui.Text(child, "Describe your task in natural language.")
+		ui.Text(child, tr(child, "Start a new task with Copilot")).FontWeight(600)
+		ui.Text(child, tr(child, "Describe your task in natural language."))
 		if native {
-			ui.TextArea(child, &p.task).Label("Task Description").Placeholder("I need to...").FillWidth().Height(96)
+			ui.TextArea(child, &p.task).Label(tr(child, "Task Description")).Placeholder(tr(child, "I need to...")).FillWidth().Height(96)
 		} else {
-			control.Textarea(child, &p.task, control.TextareaProps{Label: "Task Description", Placeholder: "I need to...", Rows: 3})
+			control.Textarea(child, &p.task, control.TextareaProps{Label: tr(child, "Task Description"), Placeholder: tr(child, "I need to..."), Rows: 3})
 		}
-		ui.Text(child, "Your task draft stays in this preview.").FontSize(12)
+		ui.Text(child, tr(child, "Your task draft stays in this preview.")).FontSize(12)
 	}
 	var err error
 	if native {
@@ -389,12 +389,12 @@ func (p *controlCompoundsPreviewState) taskPopover(c *ui.Context, h *desktop.Hos
 // source's four items; actions deliberately report a local preview selection.
 func (p *controlCompoundsPreviewState) avatar(c *ui.Context, h *desktop.Host, native bool) {
 	p.syncRoute(h, native)
-	display.CardWith(c.Key("control-compound-avatar"), display.CardProps{Label: "Avatar dropdown example", Size: display.CardSmall}, display.CardSlots{
-		Title: "Avatar menu", Description: "A circular portrait trigger with a native popup menu.",
+	display.CardWith(c.Key("control-compound-avatar"), display.CardProps{Label: tr(c, "Avatar dropdown example"), Size: display.CardSmall}, display.CardSlots{
+		Title: tr(c, "Avatar menu"), Description: tr(c, "A circular portrait trigger with a native popup menu."),
 		Content: func(child *ui.Context) {
-			items := []overlay.MenuItem{{Key: "profile", Label: "Profile"}, {Key: "billing", Label: "Billing"}, {Key: "settings", Label: "Settings"}, {Separator: true}, {Key: "logout", Label: "Log out", Destructive: true}}
+			items := []overlay.MenuItem{{Key: "profile", Label: tr(child, "Profile")}, {Key: "billing", Label: tr(child, "Billing")}, {Key: "settings", Label: tr(child, "Settings")}, {Separator: true}, {Key: "logout", Label: tr(child, "Log out"), Destructive: true}}
 			if chosen := p.menu(child, h, native, "compound-avatar", "Open avatar menu", &p.avatarMenu, items, func(e ui.Element) {
-				control.StyleButton(child, e, "", control.ButtonProps{Variant: control.Ghost, Size: control.Icon, Label: "Open avatar menu"}).Radius(999)
+				control.StyleButton(child, e, "", control.ButtonProps{Variant: control.Ghost, Size: control.Icon, Label: tr(child, "Open avatar menu")}).Radius(999)
 				e.Children(func() {
 					display.Avatar(child, display.AvatarProps{Image: avatarPortrait, Fallback: "CN", Decorative: true})
 				})
@@ -405,7 +405,7 @@ func (p *controlCompoundsPreviewState) avatar(c *ui.Context, h *desktop.Host, na
 				ui.Text(child, p.avatarAction).Role(ui.RoleStatus)
 			}
 			if p.error != "" {
-				ui.Text(child, p.error).TextColor(theme.TokensOf(child).Destructive).Role(ui.RoleAlert)
+				ui.Text(child, tr(child, p.error)).TextColor(theme.TokensOf(child).Destructive).Role(ui.RoleAlert)
 			}
 		},
 	})
@@ -415,7 +415,7 @@ func (p *controlCompoundsPreviewState) mailGroup(c *ui.Context, h *desktop.Host,
 	words := compoundMailWords["en"]
 	direction := c.Direction()
 	if p.recipe == "rtl" {
-		p.choose(c, h, native, "compound-language", &p.language, control.SelectProps{Label: "Button group language", Options: []control.Option{{Value: "en", Label: "English"}, {Value: "ar", Label: "العربية"}, {Value: "he", Label: "עברית"}}}).MaxWidth(200)
+		p.choose(c, h, native, "compound-language", &p.language, control.SelectProps{Label: tr(c, "Button group language"), Options: localizedOptions(c, []control.Option{{Value: "en", Label: "English"}, {Value: "ar", Label: "العربية"}, {Value: "he", Label: "עברית"}})}).MaxWidth(200)
 		words = compoundMailWords[p.language]
 		direction = ui.RightToLeft
 		if p.language == "en" {
@@ -440,8 +440,8 @@ func (p *controlCompoundsPreviewState) mailGroup(c *ui.Context, h *desktop.Host,
 			})
 			control.ButtonGroup(c, func() {
 				p.actionButton(c, words.snooze, "Snooze mail", control.ButtonProps{Variant: control.Outline})
-				labels := []overlay.MenuItem{{Key: "personal", Label: words.personal, Radio: true, Selected: p.label == "personal"}, {Key: "work", Label: words.work, Radio: true, Selected: p.label == "work"}, {Key: "other", Label: words.other, Radio: true, Selected: p.label == "other"}}
-				items := []overlay.MenuItem{{Key: "read", Label: words.read, Icon: outlined.MarkEmailRead()}, {Key: "archive", Label: words.archive, Icon: outlined.Archive()}, {Separator: true}, {Key: "snooze", Label: words.snooze, Icon: outlined.Schedule()}, {Key: "calendar", Label: words.calendar}, {Key: "list", Label: words.list}, {Key: "labels", Label: words.labels, Icon: outlined.Label(), Children: labels}, {Separator: true}, {Key: "trash", Label: words.trash, Destructive: true, Icon: outlined.Delete()}}
+				labels := []overlay.MenuItem{{Key: "personal", Label: tr(c, words.personal), Radio: true, Selected: p.label == "personal"}, {Key: "work", Label: tr(c, words.work), Radio: true, Selected: p.label == "work"}, {Key: "other", Label: tr(c, words.other), Radio: true, Selected: p.label == "other"}}
+				items := []overlay.MenuItem{{Key: "read", Label: tr(c, words.read), Icon: outlined.MarkEmailRead()}, {Key: "archive", Label: tr(c, words.archive), Icon: outlined.Archive()}, {Separator: true}, {Key: "snooze", Label: tr(c, words.snooze), Icon: outlined.Schedule()}, {Key: "calendar", Label: tr(c, words.calendar)}, {Key: "list", Label: tr(c, words.list)}, {Key: "labels", Label: tr(c, words.labels), Icon: outlined.Label(), Children: labels}, {Separator: true}, {Key: "trash", Label: tr(c, words.trash), Destructive: true, Icon: outlined.Delete()}}
 				if chosen := p.iconMenu(c, h, native, "compound-mail", "Mail options", &p.more, outlined.MoreHoriz(), items); chosen != "" {
 					if chosen == "personal" || chosen == "work" || chosen == "other" {
 						p.label = chosen
@@ -449,9 +449,9 @@ func (p *controlCompoundsPreviewState) mailGroup(c *ui.Context, h *desktop.Host,
 					p.action = "Local mail action: " + chosen
 				}
 			})
-		}, control.ButtonGroupProps{Label: "Mail action groups"})
+		}, control.ButtonGroupProps{Label: tr(c, "Mail action groups")})
 	})
-	ui.Text(c, "Current label: "+p.label).FontSize(13).Role(ui.RoleStatus)
+	ui.Text(c, tr(c, "Current label: ")+p.label).FontSize(13).Role(ui.RoleStatus)
 }
 
 type compoundMailText struct{ archive, report, snooze, read, calendar, list, labels, personal, work, other, trash string }

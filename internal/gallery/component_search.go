@@ -61,7 +61,7 @@ func componentSearchTarget(page, query string) string {
 			continue
 		}
 		for _, alias := range target.names {
-			if name == componentSearchName(alias) {
+			if name == componentSearchName(alias) || name == componentSearchName(messages.Format(LocaleChinese, alias, nil)) {
 				return target.anchor
 			}
 		}

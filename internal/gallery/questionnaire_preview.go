@@ -30,7 +30,7 @@ func workspaceQuestionnaireQuestions() []conversation.Question {
 
 func (s *State) workspaceQuestionnaire(c *ui.Context) {
 	p := &s.QuestionnairePreview
-	questions := workspaceQuestionnaireQuestions()
+	questions := localizedQuestions(c, workspaceQuestionnaireQuestions())
 	if !p.ready {
 		p.ready = true
 		index := max(0, min(s.Questionnaire.Index, len(questions)-1))
@@ -52,17 +52,17 @@ func (s *State) workspaceQuestionnaire(c *ui.Context) {
 			OnReset:      func(*conversation.QuestionnaireResetEvent) { p.result = nil; p.focus = "role" },
 			OnSubmit:     func(result map[string]conversation.Answer) { p.result = result; p.reviewing = true; p.focus = "result" },
 		}, func(parts *conversation.QuestionnaireParts) {
-			parts.Progress()
+			localizedQuestionnaireProgress(c, parts, "Questionnaire progress")
 			for _, question := range questions {
 				parts.Item(question.ID, func(item *conversation.QuestionnaireItemParts) {
-					item.Header(func(*ui.Context) { item.Title(question.Title); item.Description(question.Description) })
+					item.Header(func(*ui.Context) { item.Title(tr(c, question.Title)); item.Description(tr(c, question.Description)) })
 					item.Choices(func(c *ui.Context) {
 						for _, choice := range question.Choices {
 							item.Choice(choice.Value)
 						}
 						if question.Freeform {
 							item.Input(conversation.QuestionnaireInputProps{
-								Label: question.InputLabel, Placeholder: question.Placeholder,
+								Label: tr(c, question.InputLabel), Placeholder: tr(c, question.Placeholder),
 								Validate: func(value string) string {
 									if utf8.RuneCountInString(value) > 280 {
 										return "Keep your note to 280 characters."
@@ -70,7 +70,7 @@ func (s *State) workspaceQuestionnaire(c *ui.Context) {
 									return ""
 								},
 								Editor: func(c *ui.Context, value *string) ui.Element {
-									return control.Textarea(c, value, control.TextareaProps{Label: question.InputLabel, Placeholder: question.Placeholder, Rows: 3, Invalid: item.Invalid})
+									return control.Textarea(c, value, control.TextareaProps{Label: tr(c, question.InputLabel), Placeholder: tr(c, question.Placeholder), Rows: 3, Invalid: item.Invalid})
 								},
 							}).MinHeight(104)
 						}
@@ -83,17 +83,17 @@ func (s *State) workspaceQuestionnaire(c *ui.Context) {
 				})
 			}
 			parts.Actions(func(*ui.Context) {
-				parts.Previous(conversation.QuestionnaireActionProps{Label: "Back"})
-				parts.Skip()
-				parts.Next()
+				parts.Previous(conversation.QuestionnaireActionProps{Label: tr(c, "Back")})
+				parts.Skip(conversation.QuestionnaireActionProps{Label: tr(c, "Skip")})
+				parts.Next(conversation.QuestionnaireActionProps{Label: tr(c, "Next")})
 				label := "Save preferences"
 				if p.result != nil {
 					label = "Save changes"
 				}
-				parts.Submit(conversation.QuestionnaireActionProps{Label: label})
+				parts.Submit(conversation.QuestionnaireActionProps{Label: tr(c, label)})
 			})
 			ghost := control.Ghost
-			parts.Reset(conversation.QuestionnaireActionProps{Label: "Reset preferences", Size: control.Small, Variant: &ghost}).AlignSelf(ui.Start)
+			parts.Reset(conversation.QuestionnaireActionProps{Label: tr(c, "Reset preferences"), Size: control.Small, Variant: &ghost}).AlignSelf(ui.Start)
 		})
 	})
 	ui.Local(card, questionnairePreviewOwnerKey{}, func() questionnairePreviewOwner { return questionnairePreviewOwner{p} })
@@ -101,15 +101,15 @@ func (s *State) workspaceQuestionnaire(c *ui.Context) {
 
 func (s *State) questionnaireResult(c *ui.Context, questions []conversation.Question) {
 	p := &s.QuestionnairePreview
-	title := display.CardTitle(c, "Your workspace preferences").Role(ui.RoleHeading).Level(3).Focusable().TabStop(false)
+	title := display.CardTitle(c, tr(c, "Your workspace preferences")).Role(ui.RoleHeading).Level(3).Focusable().TabStop(false)
 	if p.focus == "result" {
 		title.Focus()
 		p.focus = ""
 	}
-	display.CardDescription(c, "Your choices are ready. Change an answer or start again.")
+	display.CardDescription(c, tr(c, "Your choices are ready. Change an answer or start again."))
 	for _, question := range questions {
 		ui.Column(c.Key(question.ID)).FillWidth().MinWidth(0).Gap(6).Children(func() {
-			ui.Text(c, question.Title).FontSize(14).FontWeight(600)
+			ui.Text(c, tr(c, question.Title)).FontSize(14).FontWeight(600)
 			answer := p.result[question.ID]
 			text := "Skipped"
 			if !answer.Skipped {
@@ -124,8 +124,8 @@ func (s *State) questionnaireResult(c *ui.Context, questions []conversation.Ques
 				}
 				text = strings.Join(labels, ", ")
 			}
-			ui.Text(c, text).FontSize(14).LineHeight(1.5).TextColor(theme.TokensOf(c).MutedForeground)
-			if control.Button(c, workspaceQuestionnaireEditLabel(question.ID), control.ButtonProps{Variant: control.Outline, Size: control.Small}).Clicked() {
+			ui.Text(c, tr(c, text)).FontSize(14).LineHeight(1.5).TextColor(theme.TokensOf(c).MutedForeground)
+			if control.Button(c, tr(c, workspaceQuestionnaireEditLabel(question.ID)), control.ButtonProps{Variant: control.Outline, Size: control.Small}).Clicked() {
 				p.reviewing = false
 				p.item = question.ID
 				p.focus = question.ID
@@ -133,7 +133,7 @@ func (s *State) questionnaireResult(c *ui.Context, questions []conversation.Ques
 			}
 		})
 	}
-	if control.Button(c, "Reset preferences", control.ButtonProps{Variant: control.Ghost, Size: control.Small}).Clicked() {
+	if control.Button(c, tr(c, "Reset preferences"), control.ButtonProps{Variant: control.Ghost, Size: control.Small}).Clicked() {
 		s.Questionnaire.Reset(questions)
 		p.item = "role"
 		p.result = nil

@@ -27,6 +27,7 @@ func projectMenuItems() []overlay.MenuItem {
 }
 
 func (s *State) projectContextMenu(c *ui.Context, target ui.Element, items []overlay.MenuItem) {
+	items = localizedMenuItems(c, items)
 	if s.Config.NativeMenus {
 		chosen, err := desktop.NativeContextMenu(c, target, overlay.MenuProps{Items: items})
 		if err != nil {
@@ -47,7 +48,7 @@ func (s *State) projectContextMenu(c *ui.Context, target ui.Element, items []ove
 		s.menuStates[key] = state
 	}
 	_, err := desktop.ContextMenu(c, s.Popovers, key, target, &state.Open, &state.Menu, desktop.MenuProps{
-		Label: "Project workspace actions", Items: items,
+		Label: tr(c, "Project workspace actions"), Items: items,
 		OnChoose: func(chosen string) { s.pendingMenuAction = chosen },
 	})
 	if err != nil {
@@ -73,16 +74,16 @@ func (s *State) projectMenuActionPreview(c *ui.Context) {
 		s.navigationMenuAction = menuActionLabel(s.pendingMenuAction)
 	}
 	if s.navigationMenuAction != "" {
-		ui.Text(c, "Last action: "+s.navigationMenuAction).FontSize(12).TextColor(theme.TokensOf(c).MutedForeground)
+		ui.Text(c, tr(c, "Last action: ")+tr(c, s.navigationMenuAction)).FontSize(12).TextColor(theme.TokensOf(c).MutedForeground)
 	}
 }
 
 func (s *State) cardHeader(c *ui.Context, title, description string) ui.Element {
 	t := theme.TokensOf(c)
 	return ui.Column(c).Gap(6).Children(func() {
-		theme.StyleHeading(c, ui.Text(c, title).FontSize(18).FontWeight(600))
+		theme.StyleHeading(c, ui.Text(c, tr(c, title)).FontSize(18).FontWeight(600))
 		if description != "" {
-			ui.Text(c, description).FontSize(14).TextColor(t.MutedForeground)
+			ui.Text(c, tr(c, description)).FontSize(14).TextColor(t.MutedForeground)
 		}
 	})
 }
@@ -95,8 +96,8 @@ func (s *State) navigationPreview(c *ui.Context) {
 			s.composedProjectTabs(c)
 			display.Separator(c, false)
 			s.cardHeader(c, "Manual activation", "Move focus with arrows; press Enter to select.")
-			navigation.Tabs(c, &s.manualTab, navigation.TabsProps{Label: "Manual tabs", Manual: true, Items: []navigation.TabItem{{Label: "Account"}, {Label: "Security"}, {Label: "Unavailable", Disabled: true}}}, func(i int) {
-				ui.Text(c, []string{"Update your account information.", "Review your sign-in preferences.", ""}[i]).Padding(12)
+			navigation.Tabs(c, &s.manualTab, navigation.TabsProps{Label: tr(c, "Manual tabs"), Manual: true, Items: []navigation.TabItem{{Label: tr(c, "Account")}, {Label: tr(c, "Security")}, {Label: tr(c, "Unavailable"), Disabled: true}}}, func(i int) {
+				ui.Text(c, tr(c, []string{"Update your account information.", "Review your sign-in preferences.", ""}[i])).Padding(12)
 			})
 		})
 	}, func() {
@@ -108,14 +109,14 @@ func (s *State) navigationPreview(c *ui.Context) {
 			tokens := theme.TokensOf(c)
 			target := ui.Column(c).FillWidth().MinWidth(0).MinHeight(92).Padding(16).Gap(6).
 				Border(1, tokens.Border).Radius(tokens.RadiusMD()).Background(tokens.Muted.Alpha(.3)).
-				Focusable().Role(ui.RoleGroup).Label("Project workspace").
-				Description("Right-click or press Shift+F10 for project actions.").Children(func() {
-				ui.Text(c, "Project workspace").FontSize(14).FontWeight(500)
-				ui.Text(c, "Right-click or press Shift+F10 for project actions.").FontSize(12).TextColor(tokens.MutedForeground)
+				Focusable().Role(ui.RoleGroup).Label(tr(c, "Project workspace")).
+				Description(tr(c, "Right-click or press Shift+F10 for project actions.")).Children(func() {
+				ui.Text(c, tr(c, "Project workspace")).FontSize(14).FontWeight(500)
+				ui.Text(c, tr(c, "Right-click or press Shift+F10 for project actions.")).FontSize(12).TextColor(tokens.MutedForeground)
 			})
 			s.projectContextMenu(c, target, menu.Items)
 			s.projectMenuActionPreview(c)
-		}).Label("Project menu preview")
+		}).Label(tr(c, "Project menu preview"))
 	})
 	s.routePanelsPreview(c)
 	s.componentPreview(c, "tabs", func() { s.tabsCompositions.view(c, s.Popovers, s.Config.NativeMenus) })

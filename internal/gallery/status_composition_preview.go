@@ -103,12 +103,12 @@ func (p *statusCompositionPreviewState) view(c *ui.Context, h *desktop.Host, nat
 			}
 		}
 	}
-	alert := display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: "Alert compositions"}, display.CardSlots{
-		Title: "Alert compositions", Description: "Source notices, inline links and independent actions.",
+	alert := display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: tr(c, "Alert compositions")}, display.CardSlots{
+		Title: tr(c, "Alert compositions"), Description: tr(c, "Source notices, inline links and independent actions."),
 		Content: func(child *ui.Context) {
-			p.choose(child, h, native, "status-alert-recipe", &p.alertRecipe, control.SelectProps{Label: "Alert configuration", Options: statusAlertRecipes})
+			p.choose(child, h, native, "status-alert-recipe", &p.alertRecipe, control.SelectProps{Label: tr(child, "Alert configuration"), Options: localizedOptions(child, statusAlertRecipes)})
 			if p.alertRecipe == "rtl" {
-				p.choose(child, h, native, "status-alert-language", &p.alertLanguage, control.SelectProps{Label: "Alert language", Options: statusLanguages()})
+				p.choose(child, h, native, "status-alert-language", &p.alertLanguage, control.SelectProps{Label: tr(child, "Alert language"), Options: localizedOptions(child, statusLanguages())})
 			}
 			ui.Column(child.Key("source-alert:" + p.alertRecipe)).FillWidth().MinWidth(0).AlignItems(ui.Center).Gap(16).Children(func() {
 				if p.alertRecipe == "rtl" {
@@ -122,12 +122,12 @@ func (p *statusCompositionPreviewState) view(c *ui.Context, h *desktop.Host, nat
 			}
 		},
 	})
-	empty := display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: "Empty compositions"}, display.CardSlots{
-		Title: "Empty compositions", Description: "A useful next step, real search and local actions.",
+	empty := display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: tr(c, "Empty compositions")}, display.CardSlots{
+		Title: tr(c, "Empty compositions"), Description: tr(c, "A useful next step, real search and local actions."),
 		Content: func(child *ui.Context) {
-			p.choose(child, h, native, "status-empty-recipe", &p.emptyRecipe, control.SelectProps{Label: "Empty configuration", Options: statusEmptyRecipes})
+			p.choose(child, h, native, "status-empty-recipe", &p.emptyRecipe, control.SelectProps{Label: tr(child, "Empty configuration"), Options: localizedOptions(child, statusEmptyRecipes)})
 			if p.emptyRecipe == "rtl" {
-				p.choose(child, h, native, "status-empty-language", &p.emptyLanguage, control.SelectProps{Label: "Empty language", Options: statusLanguages()})
+				p.choose(child, h, native, "status-empty-language", &p.emptyLanguage, control.SelectProps{Label: tr(child, "Empty language"), Options: localizedOptions(child, statusLanguages())})
 			}
 			ui.Column(child.Key("source-empty:" + p.emptyRecipe)).FillWidth().MinWidth(0).AlignItems(ui.Center).Children(func() {
 				build := func(current *ui.Context) { p.empty(current) }
@@ -158,9 +158,9 @@ func (p *statusCompositionPreviewState) inline(c *ui.Context, color ui.Color, pa
 	return ui.RichText(c).FillWidth().MinWidth(0).FontSize(14).LineHeight(1.5).TextColor(color).Children(func() {
 		for _, part := range parts {
 			if part.action == "" {
-				ui.Text(c, part.text)
+				ui.Text(c, tr(c, part.text))
 			} else {
-				if ui.Link(c, part.text, "").TextColor(color).Underline().UnderlineOffset(4).Clicked() {
+				if ui.Link(c, tr(c, part.text), "").TextColor(color).Underline().UnderlineOffset(4).Clicked() {
 					p.alertAction = "Local alert link: " + part.action
 				}
 			}
@@ -188,14 +188,14 @@ func (p *statusCompositionPreviewState) alert(c *ui.Context) {
 		}
 		props.Title, props.Icon = "Your subscription will expire in 3 days.", outlined.Warning()
 		slots.Description = func(child *ui.Context) {
-			ui.Text(child, "Renew now to avoid service interruption or upgrade to a paid plan to continue using the service.").FontSize(14).LineHeight(1.5).TextColor(foreground)
+			ui.Text(child, tr(child, "Renew now to avoid service interruption or upgrade to a paid plan to continue using the service.")).FontSize(14).LineHeight(1.5).TextColor(foreground)
 		}
 		display.AlertWith(c, props, slots).MaxWidth(width).Border(1, border).Background(background).TextColor(foreground)
 		return
 	case "enable":
 		props.Title, props.Description = "Dark mode is now available", "Enable it under your profile settings to get started."
 		slots.Action = func(child *ui.Context) {
-			if control.Button(child, "Enable", control.ButtonProps{Size: control.ExtraSmall}).Clicked() {
+			if control.Button(child, tr(child, "Enable"), control.ButtonProps{Size: control.ExtraSmall}).Clicked() {
 				p.enabled = true
 				p.alertAction = "Dark mode preference enabled locally"
 			}
@@ -212,8 +212,8 @@ func (p *statusCompositionPreviewState) alert(c *ui.Context) {
 		width = 448
 	case "rtl":
 		payment, paymentBody, feature, featureBody := statusAlertWords(p.alertLanguage)
-		display.Alert(c.Key("payment"), display.AlertProps{Title: payment, Description: paymentBody, Icon: outlined.CheckCircle()}).MaxWidth(448)
-		display.Alert(c.Key("feature"), display.AlertProps{Title: feature, Description: featureBody, Icon: outlined.Info()}).MaxWidth(448)
+		display.Alert(c.Key("payment"), display.AlertProps{Title: tr(c, payment), Description: tr(c, paymentBody), Icon: outlined.CheckCircle()}).MaxWidth(448)
+		display.Alert(c.Key("feature"), display.AlertProps{Title: tr(c, feature), Description: tr(c, featureBody), Icon: outlined.Info()}).MaxWidth(448)
 		return
 	case "basic-title", "basic-both":
 		props.Title = "Success! Your changes have been saved."
@@ -247,11 +247,11 @@ func (p *statusCompositionPreviewState) alert(c *ui.Context) {
 		props.Icon, props.Title, props.Destructive = outlined.Error(), "Unable to process your payment.", true
 		slots.Description = func(child *ui.Context) {
 			p.inline(child, t.Destructive.Alpha(.9), statusInlinePart{text: "Please verify your "}, statusInlinePart{text: "billing information", action: "billing"}, statusInlinePart{text: " and try again."})
-			ui.Column(child).FillWidth().MinWidth(0).Role(ui.RoleList).Label("Payment recovery checklist").Children(func() {
+			ui.Column(child).FillWidth().MinWidth(0).Role(ui.RoleList).Label(tr(child, "Payment recovery checklist")).Children(func() {
 				for i, text := range []string{"Check your card details", "Ensure sufficient funds", "Verify billing address"} {
-					ui.Row(child.Key(i)).FillWidth().MinWidth(0).Gap(6).Role(ui.RoleListItem).Label(text).PositionInSet(i+1, 3).Children(func() {
+					ui.Row(child.Key(i)).FillWidth().MinWidth(0).Gap(6).Role(ui.RoleListItem).Label(tr(child, text)).PositionInSet(i+1, 3).Children(func() {
 						ui.Text(child, "•").AccessHidden(true)
-						ui.Text(child, text).MinWidth(0).Grow(1).AccessHidden(true)
+						ui.Text(child, tr(child, text)).MinWidth(0).Grow(1).AccessHidden(true)
 					})
 				}
 			})
@@ -260,13 +260,13 @@ func (p *statusCompositionPreviewState) alert(c *ui.Context) {
 		props.Icon, props.Title = outlined.Error(), "The selected emails have been marked as spam."
 		if p.alertRecipe == "undo" {
 			slots.Action = func(child *ui.Context) {
-				if control.Button(child, "Undo", control.ButtonProps{Size: control.ExtraSmall}).Clicked() {
+				if control.Button(child, tr(child, "Undo"), control.ButtonProps{Size: control.ExtraSmall}).Clicked() {
 					p.undone, p.alertAction = true, "Local spam action undone"
 				}
 			}
 		} else {
 			props.Description = "This is a very long alert title that demonstrates how the component handles extended text content."
-			slots.Action = func(child *ui.Context) { display.Badge(child, "Badge", display.BadgeSecondary) }
+			slots.Action = func(child *ui.Context) { display.Badge(child, tr(child, "Badge"), display.BadgeSecondary) }
 		}
 	}
 	display.AlertWith(c, props, slots).MaxWidth(width)
@@ -286,12 +286,12 @@ func statusAlertWords(language string) (string, string, string, string) {
 }
 
 func (p *statusCompositionPreviewState) button(c *ui.Context, label string, variant control.Variant, size control.Size, icon *ui.SVG, link bool) ui.Element {
-	props := control.ButtonProps{Variant: variant, Size: size, Icon: icon, Label: label}
+	props := control.ButtonProps{Variant: variant, Size: size, Icon: icon, Label: tr(c, label)}
 	var e ui.Element
 	if link {
-		e = control.StyleButton(c, ui.Link(c, "", ""), label, props)
+		e = control.StyleButton(c, ui.Link(c, "", ""), tr(c, label), props)
 	} else {
-		e = control.Button(c, label, props)
+		e = control.Button(c, tr(c, label), props)
 	}
 	if e.Clicked() {
 		p.emptyAction = "Local action: " + label
@@ -306,9 +306,9 @@ func (p *statusCompositionPreviewState) learnMore(c *ui.Context, label string) {
 	face := control.StyleButton(c, ui.Row(c), "", control.ButtonProps{Variant: control.Link, Size: control.Small}).TextColor(t.MutedForeground)
 	var target ui.Element
 	face.Children(func() {
-		target = ui.Link(c.Key("learn-target"), "", "").Label(label).Absolute().Left(0).Top(0).Right(0).Bottom(0).FocusRing(false).Cursor(ui.CursorPointer)
+		target = ui.Link(c.Key("learn-target"), "", "").Label(tr(c, label)).Absolute().Left(0).Top(0).Right(0).Bottom(0).FocusRing(false).Cursor(ui.CursorPointer)
 		ui.Row(c.Key("learn-visual")).Gap(6).AlignItems(ui.Center).IgnoreInput(true).Disabled(true).DimDisabled(false).AccessHidden(true).Children(func() {
-			text := ui.Text(c, label).SingleLine()
+			text := ui.Text(c, tr(c, label)).SingleLine()
 			if target.Hovered() {
 				text.Underline().UnderlineOffset(4)
 			}
@@ -328,7 +328,7 @@ func (p *statusCompositionPreviewState) learnMore(c *ui.Context, label string) {
 
 func (p *statusCompositionPreviewState) empty(c *ui.Context) {
 	t := theme.TokensOf(c)
-	props := display.EmptyProps{Label: "Source empty"}
+	props := display.EmptyProps{Label: tr(c, "Source empty")}
 	slots := display.EmptySlots{}
 	outsideMore, lowerCase, learnLabel := false, false, "Learn More"
 	projectDescription := "You haven't created any projects yet. Get started by creating your first project."
@@ -367,7 +367,7 @@ func (p *statusCompositionPreviewState) empty(c *ui.Context) {
 	case "team":
 		props.Title, props.Description = "No Team Members", "Invite your team to collaborate on this project."
 		slots.Media = func(child *ui.Context) {
-			display.AvatarGroup(child, display.AvatarGroupProps{Label: "Team invitation avatars", Items: []display.AvatarProps{
+			display.AvatarGroup(child, display.AvatarGroupProps{Label: tr(child, "Team invitation avatars"), Items: []display.AvatarProps{
 				{Key: "shadcn", Image: statusGrayAvatars[0], Fallback: "CN", Label: "@shadcn", Size: 48},
 				{Key: "maxleiter", Image: statusGrayAvatars[1], Fallback: "LR", Label: "@maxleiter", Size: 48},
 				{Key: "evilrabbit", Image: statusGrayAvatars[2], Fallback: "ER", Label: "@evilrabbit", Size: 48},
@@ -378,7 +378,7 @@ func (p *statusCompositionPreviewState) empty(c *ui.Context) {
 		}
 	case "notifications":
 		props.Title, props.Description, props.Icon, props.MediaVariant = "No Notifications", "You're all caught up. New notifications will appear here.", outlined.Notifications(), display.EmptyMediaIcon
-		slots.Description = func(child *ui.Context) { display.EmptyDescription(child, props.Description).MaxWidth(320) }
+		slots.Description = func(child *ui.Context) { display.EmptyDescription(child, tr(child, props.Description)).MaxWidth(320) }
 		slots.Content = func(child *ui.Context) {
 			if p.button(child, "Refresh", control.Outline, control.DefaultSize, outlined.Refresh(), false).Clicked() {
 				p.refreshes++
@@ -396,16 +396,16 @@ func (p *statusCompositionPreviewState) empty(c *ui.Context) {
 				icon = outlined.Search()
 			}
 			q := p.query(p.emptyRecipe)
-			group := control.InputGroup(child, control.InputGroupProps{Label: "Search missing pages", InlineStart: func() { material.Icon(child, icon, material.Props{Size: 16}) }, InlineEnd: func() { display.Kbd(child, "/") }}, func() ui.Element {
-				return control.Input(child, q, control.InputProps{Label: "Search missing pages", Placeholder: "Try searching for pages...", OnSubmit: func(value string) { p.emptyAction = "Local page search: " + value }})
+			group := control.InputGroup(child, control.InputGroupProps{Label: tr(child, "Search missing pages"), InlineStart: func() { material.Icon(child, icon, material.Props{Size: 16}) }, InlineEnd: func() { display.Kbd(child, "/") }}, func() ui.Element {
+				return control.Input(child, q, control.InputProps{Label: tr(child, "Search missing pages"), Placeholder: tr(child, "Try searching for pages..."), OnSubmit: func(value string) { p.emptyAction = "Local page search: " + value }})
 			})
 			viewportWidth, _ := child.Size()
 			if p.emptyRecipe != "search" || viewportWidth >= 640 {
 				group.WidthPercent(75)
 			}
 			ui.RichText(child).FillWidth().FontSize(14).LineHeight(1.625).TextAlign(ui.Center).TextColor(t.MutedForeground).Children(func() {
-				ui.Text(child, "Need help? ")
-				if ui.Link(child, "Contact support", "").Underline().UnderlineOffset(4).TextColor(t.MutedForeground).Clicked() {
+				ui.Text(child, tr(child, "Need help? "))
+				if ui.Link(child, tr(child, "Contact support"), "").Underline().UnderlineOffset(4).TextColor(t.MutedForeground).Clicked() {
 					p.emptyAction = "Local help action: Contact support"
 				}
 			})
@@ -420,8 +420,8 @@ func (p *statusCompositionPreviewState) empty(c *ui.Context) {
 		props.Title, props.Icon, props.MediaVariant = "Nothing to see here", outlined.Folder(), display.EmptyMediaIcon
 		slots.Description = func(child *ui.Context) {
 			ui.RichText(child).FillWidth().FontSize(14).LineHeight(1.625).TextAlign(ui.Center).TextColor(t.MutedForeground).Children(func() {
-				ui.Text(child, "No posts have been created yet. Get started by ")
-				if ui.Link(child, "creating your first post", "").TextColor(t.MutedForeground).Underline().UnderlineOffset(4).Clicked() {
+				ui.Text(child, tr(child, "No posts have been created yet. Get started by "))
+				if ui.Link(child, tr(child, "creating your first post"), "").TextColor(t.MutedForeground).Underline().UnderlineOffset(4).Clicked() {
 					p.emptyAction = "Local action: creating your first post"
 				}
 				ui.Text(child, ".")

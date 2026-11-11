@@ -108,21 +108,21 @@ func (p *dropdownCompositionPreviewState) view(c *ui.Context, h *desktop.Host, n
 			h.Close("dropdown-language")
 		}
 	}
-	display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: "Dropdown Menu compositions"}, display.CardSlots{
-		Title: "Dropdown Menu compositions", Description: "Docs and Create menus with local actions and independent source state.",
+	display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: tr(c, "Dropdown Menu compositions")}, display.CardSlots{
+		Title: tr(c, "Dropdown Menu compositions"), Description: tr(c, "Docs and Create menus with local actions and independent source state."),
 		Content: func(child *ui.Context) {
 			options := make([]control.Option, 0, len(dropdownSourceRecipes))
 			for _, r := range dropdownSourceRecipes {
-				options = append(options, control.Option{Value: r.Key, Label: r.Title})
+				options = append(options, control.Option{Value: r.Key, Label: tr(child, r.Title)})
 			}
-			p.choose(child, h, native, "dropdown-recipe", &p.recipe, control.SelectProps{Label: "Dropdown Menu configuration", Options: options})
+			p.choose(child, h, native, "dropdown-recipe", &p.recipe, control.SelectProps{Label: tr(child, "Dropdown Menu configuration"), Options: localizedOptions(child, options)})
 			if p.previous != p.recipe {
 				p.closeMenus(h)
 				p.dialog = false
 				p.previous = p.recipe
 			}
 			if p.recipe == "rtl" {
-				p.choose(child, h, native, "dropdown-language", &p.language, control.SelectProps{Label: "Dropdown Menu language", Options: statusLanguages()})
+				p.choose(child, h, native, "dropdown-language", &p.language, control.SelectProps{Label: tr(child, "Dropdown Menu language"), Options: localizedOptions(child, statusLanguages())})
 			}
 			ui.Column(child.Key("dropdown-source:" + p.recipe)).FillWidth().MinWidth(0).AlignItems(ui.Center).Children(func() {
 				if p.recipe == "rtl" {
@@ -132,7 +132,7 @@ func (p *dropdownCompositionPreviewState) view(c *ui.Context, h *desktop.Host, n
 				}
 			})
 			if p.action != "" {
-				ui.Text(child, p.action).FontSize(13).Role(ui.RoleStatus)
+				ui.Text(child, tr(child, p.action)).FontSize(13).Role(ui.RoleStatus)
 			}
 			if p.popupError != "" {
 				ui.Text(child, p.popupError).FontSize(13).TextColor(theme.TokensOf(child).Destructive).Role(ui.RoleAlert)
@@ -229,11 +229,11 @@ func (p *dropdownCompositionPreviewState) selected(r dropdownSourceRecipe, key s
 }
 func (p *dropdownCompositionPreviewState) trigger(c *ui.Context, b ui.Element, label, avatar string) ui.Element {
 	if avatar == "" {
-		return control.StyleButton(c, b, label, control.ButtonProps{Label: label, Variant: control.Outline})
+		return control.StyleButton(c, b, tr(c, label), control.ButtonProps{Label: tr(c, label), Variant: control.Outline})
 	}
-	b = control.StyleButton(c, b, "", control.ButtonProps{Label: label, Variant: control.Ghost, Size: control.Icon}).Radius(999)
+	b = control.StyleButton(c, b, "", control.ButtonProps{Label: tr(c, label), Variant: control.Ghost, Size: control.Icon}).Radius(999)
 	if avatar == "account" {
-		b = control.StyleButton(c, b, "", control.ButtonProps{Label: label, Variant: control.Outline}).Height(48).Width(200).PaddingX(8).Justify(ui.Start)
+		b = control.StyleButton(c, b, "", control.ButtonProps{Label: tr(c, label), Variant: control.Outline}).Height(48).Width(200).PaddingX(8).Justify(ui.Start)
 	}
 	return b.Children(func() {
 		fallback := "CN"
@@ -257,7 +257,7 @@ func (p *dropdownCompositionPreviewState) menu(c *ui.Context, h *desktop.Host, n
 		m = &dropdownSourceMenu{}
 		p.menus[key] = m
 	}
-	items := p.items(r)
+	items := localizedMenuItems(c, p.items(r))
 	if native {
 		p.withNativeIcons(items)
 		value, err := desktop.NativeDropdownMenu(c.Key(id), overlay.MenuProps{Items: items, Width: r.Width}, func(b ui.Element) { p.trigger(c, b, label, avatar) })
@@ -300,11 +300,11 @@ func (p *dropdownCompositionPreviewState) draw(c *ui.Context, h *desktop.Host, n
 	case "avatar":
 		p.menu(c, h, native, r, "avatar", "Open shadcn avatar menu", "end", "avatar")
 	case "create-in-dialog":
-		b := control.Button(c, "Open Dialog", control.ButtonProps{Label: "Open dropdown dialog", Variant: control.Outline}).Bind(&p.dialogReturn)
+		b := control.Button(c, tr(c, "Open Dialog"), control.ButtonProps{Label: tr(c, "Open dropdown dialog"), Variant: control.Outline}).Bind(&p.dialogReturn)
 		if b.Clicked() {
 			p.dialog = true
 		}
-		overlay.Dialog(c, &p.dialog, overlay.DialogProps{Title: "Dropdown Menu Example", Description: "Click the button below to see the dropdown menu.", ReturnFocus: &p.dialogReturn}, func() { p.menu(c, h, native, r, "dialog", "Open Menu", "start", "") })
+		overlay.Dialog(c, &p.dialog, overlay.DialogProps{Title: tr(c, "Dropdown Menu Example"), Description: tr(c, "Click the button below to see the dropdown menu."), ReturnFocus: &p.dialogReturn}, func() { p.menu(c, h, native, r, "dialog", "Open Menu", "start", "") })
 	default:
 		label := r.Trigger
 		if p.recipe == "rtl" {

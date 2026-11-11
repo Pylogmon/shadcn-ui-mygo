@@ -112,21 +112,21 @@ func (p *popupCompositionPreviewState) choose(c *ui.Context, h *desktop.Host, na
 func (p *popupCompositionPreviewState) view(c *ui.Context, h *desktop.Host, native bool) (ui.Element, ui.Element) {
 	p.initialize(native)
 	p.sync(h, native)
-	popover := display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: "Popover compositions"}, display.CardSlots{
-		Title: "Popover compositions", Description: "Independent editable windows, alignment and nested dialogs.",
+	popover := display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: tr(c, "Popover compositions")}, display.CardSlots{
+		Title: tr(c, "Popover compositions"), Description: tr(c, "Independent editable windows, alignment and nested dialogs."),
 		Content: func(child *ui.Context) {
-			p.choose(child, h, native, "source-popover-config", &p.popoverRecipe, control.SelectProps{Label: "Popover configuration", Options: popupPopoverRecipes})
+			p.choose(child, h, native, "source-popover-config", &p.popoverRecipe, control.SelectProps{Label: tr(child, "Popover configuration"), Options: localizedOptions(child, popupPopoverRecipes)})
 			if p.popoverRecipe == "rtl" || p.hoverRecipe == "rtl" {
-				p.choose(child, h, native, "source-popup-language", &p.language, control.SelectProps{Label: "Popup language", Options: statusLanguages()})
+				p.choose(child, h, native, "source-popup-language", &p.language, control.SelectProps{Label: tr(child, "Popup language"), Options: localizedOptions(child, statusLanguages())})
 			}
 			p.sync(h, native)
 			p.popoverExamples(child, h, native)
 		},
 	})
-	hover := display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: "Hover card compositions"}, display.CardSlots{
-		Title: "Hover card compositions", Description: "Source profiles, delayed previews and directional placement.",
+	hover := display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: tr(c, "Hover card compositions")}, display.CardSlots{
+		Title: tr(c, "Hover card compositions"), Description: tr(c, "Source profiles, delayed previews and directional placement."),
 		Content: func(child *ui.Context) {
-			p.choose(child, h, native, "source-hover-config", &p.hoverRecipe, control.SelectProps{Label: "Hover card configuration", Options: popupHoverRecipes})
+			p.choose(child, h, native, "source-hover-config", &p.hoverRecipe, control.SelectProps{Label: tr(child, "Hover card configuration"), Options: localizedOptions(child, popupHoverRecipes)})
 			p.sync(h, native)
 			p.hoverExamples(child, h, native)
 			if p.popupError != "" {
@@ -215,11 +215,11 @@ func popupHeader(c *ui.Context, native bool, title, description string, role ui.
 			if dimensions {
 				level = 4
 			}
-			t := ui.Text(c, title).FontSize(font).FontWeight(500).Role(ui.RoleHeading).Level(level)
+			t := ui.Text(c, tr(c, title)).FontSize(font).FontWeight(500).Role(ui.RoleHeading).Level(level)
 			if dimensions && !native {
 				t.LineHeight(1)
 			}
-			d := ui.Text(c, description).FontSize(font).TextColor(muted)
+			d := ui.Text(c, tr(c, description)).FontSize(font).TextColor(muted)
 			group.LabelledBy(t).DescribedBy(d)
 		})
 		if content != nil {
@@ -239,7 +239,7 @@ func (p *popupCompositionPreviewState) popover(c *ui.Context, h *desktop.Host, n
 	if kind == "dimensions" {
 		visible = "Open popover"
 	}
-	anchor := control.Button(c, visible, control.ButtonProps{Label: label, Variant: control.Outline, Size: size})
+	anchor := control.Button(c, visible, control.ButtonProps{Label: tr(c, label), Variant: control.Outline, Size: size})
 	if h == nil {
 		if anchor.Clicked() || *p.open(key) {
 			p.popupError = "Opening this popover requires a parent-bound Host."
@@ -268,7 +268,7 @@ func (p *popupCompositionPreviewState) popover(c *ui.Context, h *desktop.Host, n
 			if kind == "alignment" {
 				text = "Aligned to " + side
 			}
-			ui.Text(child, text).FontSize(popupFont(child, native)).Role(ui.RoleDialog).Label(text)
+			ui.Text(child, tr(child, text)).FontSize(popupFont(child, native)).Role(ui.RoleDialog).Label(tr(child, text))
 			return
 		}
 		title, description := popupWords(language)
@@ -318,7 +318,7 @@ func (p *popupCompositionPreviewState) fields(c *ui.Context, native bool, kind s
 				if native {
 					input = ui.TextInput(c, values[i]).Label(name)
 				} else {
-					input = control.Input(c, values[i], control.InputProps{Label: name})
+					input = control.Input(c, values[i], control.InputProps{Label: tr(c, name)})
 				}
 				input.LabelledBy(caption).MinWidth(0)
 				if kind == "dimensions" {
@@ -387,11 +387,11 @@ func (p *popupCompositionPreviewState) popoverExamples(c *ui.Context, h *desktop
 			build()
 		}
 	case "dialog":
-		anchor := control.Button(c, "Open Dialog", control.ButtonProps{Label: "Open popover dialog", Variant: control.Outline}).Bind(&p.popoverReturn)
+		anchor := control.Button(c, tr(c, "Open Dialog"), control.ButtonProps{Label: tr(c, "Open popover dialog"), Variant: control.Outline}).Bind(&p.popoverReturn)
 		if anchor.Clicked() {
 			p.popoverDialog = true
 		}
-		overlay.Dialog(c, &p.popoverDialog, overlay.DialogProps{Title: "Popover Example", Description: "Click the button below to see the popover.", ReturnFocus: &p.popoverReturn}, func() {
+		overlay.Dialog(c, &p.popoverDialog, overlay.DialogProps{Title: tr(c, "Popover Example"), Description: tr(c, "Click the button below to see the popover."), ReturnFocus: &p.popoverReturn}, func() {
 			p.popover(c, h, native, "source-popover:dialog", "Open popover in dialog", "dialog", "start", "en")
 		})
 	}
@@ -402,7 +402,7 @@ func (p *popupCompositionPreviewState) hover(c *ui.Context, h *desktop.Host, nat
 	if kind == "profile" {
 		variant = control.Link
 	}
-	anchor := control.Button(c, label, control.ButtonProps{Variant: variant})
+	anchor := control.Button(c, tr(c, label), control.ButtonProps{Variant: variant})
 	delay := 100 * time.Millisecond
 	if kind == "profile" || kind == "product" {
 		delay = 10 * time.Millisecond
@@ -417,7 +417,7 @@ func (p *popupCompositionPreviewState) hover(c *ui.Context, h *desktop.Host, nat
 	if kind == "product" {
 		description = popupProductName(language) + " " + popupProductPrice(language)
 	}
-	props := desktop.HoverCardProps{Label: "Source hover card", Description: description, Placement: popupPlacement(side, c.Direction()), Width: 256, Height: 180, MaxHeight: 480, Gap: 4, OpenDelay: delay, CloseDelay: 100 * time.Millisecond}
+	props := desktop.HoverCardProps{Label: tr(c, "Source hover card"), Description: tr(c, description), Placement: popupPlacement(side, c.Direction()), Width: 256, Height: 180, MaxHeight: 480, Gap: 4, OpenDelay: delay, CloseDelay: 100 * time.Millisecond}
 	draw := desktop.HoverCard
 	if native {
 		draw = desktop.NativeHoverCard
@@ -429,13 +429,13 @@ func (p *popupCompositionPreviewState) hover(c *ui.Context, h *desktop.Host, nat
 			muted = child.Theme().TextMuted
 		}
 		if kind == "profile" {
-			ui.Column(child).FillWidth().MinWidth(0).Gap(2).Role(ui.RoleGroup).Label("Next.js profile").Children(func() {
+			ui.Column(child).FillWidth().MinWidth(0).Gap(2).Role(ui.RoleGroup).Label(tr(child, "Next.js profile")).Children(func() {
 				ui.Text(child, "@nextjs").FontSize(font).FontWeight(600)
-				ui.Text(child, "The React Framework – created and maintained by @vercel.").FontSize(font)
-				ui.Text(child, "Joined December 2021").FontSize(12).TextColor(muted).Margin(4, 0, 0, 0)
+				ui.Text(child, tr(child, "The React Framework – created and maintained by @vercel.")).FontSize(font)
+				ui.Text(child, tr(child, "Joined December 2021")).FontSize(12).TextColor(muted).Margin(4, 0, 0, 0)
 			})
 		} else if kind == "product" {
-			ui.Column(child).FillWidth().MinWidth(0).Gap(4).Role(ui.RoleGroup).Label(description).Children(func() {
+			ui.Column(child).FillWidth().MinWidth(0).Gap(4).Role(ui.RoleGroup).Label(tr(child, description)).Children(func() {
 				ui.Text(child, popupProductName(language)).FontSize(font).FontWeight(600)
 				ui.Text(child, popupProductPrice(language)).FontSize(font).TextColor(muted)
 			})
@@ -444,9 +444,9 @@ func (p *popupCompositionPreviewState) hover(c *ui.Context, h *desktop.Host, nat
 			if kind == "docs-side" {
 				gap = 4
 			}
-			ui.Column(child).FillWidth().MinWidth(0).Gap(gap).Role(ui.RoleGroup).Label("Hover Card").Children(func() {
-				ui.Text(child, "Hover Card").FontSize(font).FontWeight(500)
-				ui.Text(child, description).FontSize(font)
+			ui.Column(child).FillWidth().MinWidth(0).Gap(gap).Role(ui.RoleGroup).Label(tr(child, "Hover Card")).Children(func() {
+				ui.Text(child, tr(child, "Hover Card")).FontSize(font).FontWeight(500)
+				ui.Text(child, tr(child, description)).FontSize(font)
 			})
 		}
 	})
@@ -512,11 +512,11 @@ func (p *popupCompositionPreviewState) hoverExamples(c *ui.Context, h *desktop.H
 			build()
 		}
 	case "dialog":
-		anchor := control.Button(c, "Open Dialog", control.ButtonProps{Label: "Open hover card dialog", Variant: control.Outline}).Bind(&p.hoverReturn)
+		anchor := control.Button(c, tr(c, "Open Dialog"), control.ButtonProps{Label: tr(c, "Open hover card dialog"), Variant: control.Outline}).Bind(&p.hoverReturn)
 		if anchor.Clicked() {
 			p.hoverDialog = true
 		}
-		overlay.Dialog(c, &p.hoverDialog, overlay.DialogProps{Title: "Hover Card Example", Description: "Hover over the button below to see the hover card.", ReturnFocus: &p.hoverReturn}, func() {
+		overlay.Dialog(c, &p.hoverDialog, overlay.DialogProps{Title: tr(c, "Hover Card Example"), Description: tr(c, "Hover over the button below to see the hover card."), ReturnFocus: &p.hoverReturn}, func() {
 			p.hover(c, h, native, "source-hover:dialog", "Hover me", "dialog", "bottom", "en")
 		})
 	}

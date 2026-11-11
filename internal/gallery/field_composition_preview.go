@@ -115,23 +115,23 @@ func (p *fieldCompositionPreviewState) view(c *ui.Context, h *desktop.Host, nati
 		p.native = native
 		p.popupError = ""
 	}
-	display.CardWith(c, display.CardProps{Label: "Field compositions"}, display.CardSlots{Title: "Field compositions", Description: "Independent labels, descriptions, controls and grouped form layouts.", Content: func(child *ui.Context) {
-		p.choose(child, h, native, "field-recipe", &p.recipe, control.SelectProps{Label: "Field configuration", Options: fieldCompositionRecipes})
+	display.CardWith(c, display.CardProps{Label: tr(c, "Field compositions")}, display.CardSlots{Title: tr(c, "Field compositions"), Description: tr(c, "Independent labels, descriptions, controls and grouped form layouts."), Content: func(child *ui.Context) {
+		p.choose(child, h, native, "field-recipe", &p.recipe, control.SelectProps{Label: tr(child, "Field configuration"), Options: localizedOptions(child, fieldCompositionRecipes)})
 		if strings.HasPrefix(p.recipe, "create-") {
 			recipes := fieldCreateRecipes(p.recipe)
 			options := make([]control.Option, 0, len(recipes))
 			for _, d := range recipes {
-				options = append(options, control.Option{Value: d.id, Label: d.label})
+				options = append(options, control.Option{Value: d.id, Label: tr(child, d.label)})
 			}
 			selected := p.variants[p.recipe]
 			if selected == "" && len(recipes) > 0 {
 				selected = recipes[0].id
 			}
-			p.choose(child, h, native, "field-variant", &selected, control.SelectProps{Label: "Field variant", Options: options})
+			p.choose(child, h, native, "field-variant", &selected, control.SelectProps{Label: tr(child, "Field variant"), Options: localizedOptions(child, options)})
 			p.variants[p.recipe] = selected
 		}
 		if p.recipe == "rtl" {
-			p.choose(child, h, native, "field-language", &p.language, control.SelectProps{Label: "Field language", Options: []control.Option{{Value: "en", Label: "English"}, {Value: "ar", Label: "العربية"}, {Value: "he", Label: "עברית"}}})
+			p.choose(child, h, native, "field-language", &p.language, control.SelectProps{Label: tr(child, "Field language"), Options: localizedOptions(child, []control.Option{{Value: "en", Label: "English"}, {Value: "ar", Label: "العربية"}, {Value: "he", Label: "עברית"}})})
 		}
 		dir := child.Direction()
 		if p.recipe == "rtl" {
@@ -144,7 +144,7 @@ func (p *fieldCompositionPreviewState) view(c *ui.Context, h *desktop.Host, nati
 			ui.Column(child.Key("field-preview")).FillWidth().MaxWidth(p.previewWidth()).MinWidth(0).Gap(28).Children(func() { p.draw(child, h, native) })
 		})
 		if p.status != "" {
-			ui.Text(child, p.status).Role(ui.RoleStatus).FontSize(13).TextColor(theme.TokensOf(child).MutedForeground)
+			ui.Text(child, tr(child, p.status)).Role(ui.RoleStatus).FontSize(13).TextColor(theme.TokensOf(child).MutedForeground)
 		}
 		if p.popupError != "" {
 			ui.Text(child, p.popupError).Role(ui.RoleAlert).TextColor(theme.TokensOf(child).Destructive)
@@ -174,13 +174,13 @@ func fieldSet(c *ui.Context, title, description string, label bool, content func
 	if label {
 		variant = control.FieldLegendLabel
 	}
-	return control.FieldSetWith(c, control.FieldSetProps{Legend: title, Description: description}, control.FieldSetSlots{
-		Legend: func(child *ui.Context) ui.Element { return control.FieldLegend(child, title, variant) },
+	return control.FieldSetWith(c, control.FieldSetProps{Legend: title, Description: tr(c, description)}, control.FieldSetSlots{
+		Legend: func(child *ui.Context) ui.Element { return control.FieldLegend(child, tr(child, title), variant) },
 		Description: func(child *ui.Context) ui.Element {
 			if description == "" {
 				return ui.Element{}
 			}
-			return control.FieldDescription(child, description)
+			return control.FieldDescription(child, tr(child, description))
 		}, Content: content,
 	})
 }
@@ -193,14 +193,14 @@ func (p *fieldCompositionPreviewState) basic(c *ui.Context, h *desktop.Host, nat
 	}
 	result := control.FieldWith(c.Key(d.id), props, func(f *control.FieldScope) {
 		label := func() {
-			f.Label(c, control.FieldLabelProps{Text: d.label, Label: d.label, Disabled: fieldDisabled}, func() {
-				control.FieldTitle(c, d.label)
+			f.Label(c, control.FieldLabelProps{Text: tr(c, d.label), Label: tr(c, d.label), Disabled: fieldDisabled}, func() {
+				control.FieldTitle(c, tr(c, d.label))
 				if d.required {
 					ui.Text(c, "*").TextColor(theme.TokensOf(c).Destructive)
 				}
 				if d.badge {
 					ui.Box(c).Grow(1)
-					display.Badge(c, "Recommended", display.BadgeSecondary)
+					display.Badge(c, tr(c, "Recommended"), display.BadgeSecondary)
 				}
 			})
 		}
@@ -256,22 +256,22 @@ func (p *fieldCompositionPreviewState) fieldDescription(key string, d fieldRecip
 func (p *fieldCompositionPreviewState) editor(c *ui.Context, h *desktop.Host, native bool, key string, d fieldRecipe) ui.Element {
 	switch d.kind {
 	case "textarea":
-		e := control.Textarea(c, p.text(key, ""), control.TextareaProps{Label: d.label, Placeholder: d.placeholder, Disabled: d.disabled, Invalid: d.invalid, Rows: d.rows})
+		e := control.Textarea(c, p.text(key, ""), control.TextareaProps{Label: tr(c, d.label), Placeholder: tr(c, d.placeholder), Disabled: d.disabled, Invalid: d.invalid, Rows: d.rows})
 		if d.minHeight > 0 {
 			e.MinHeight(d.minHeight)
 		}
 		return e
 	case "select", "native":
-		return p.choose(c, h, native || d.kind == "native", "field-option:"+key, p.text(key, ""), control.SelectProps{Label: d.label, Placeholder: d.placeholder, Options: d.options, Disabled: d.disabled, Invalid: d.invalid})
+		return p.choose(c, h, native || d.kind == "native", "field-option:"+key, p.text(key, ""), control.SelectProps{Label: tr(c, d.label), Placeholder: tr(c, d.placeholder), Options: localizedOptions(c, d.options), Disabled: d.disabled, Invalid: d.invalid})
 	case "slider":
 		values := p.values(key, d.values...)
-		return control.SliderValues(c, values, control.SliderProps{Label: d.label, Min: d.min, Max: d.max, Step: d.step, Disabled: d.disabled, Invalid: d.invalid})
+		return control.SliderValues(c, values, control.SliderProps{Label: tr(c, d.label), Min: d.min, Max: d.max, Step: d.step, Disabled: d.disabled, Invalid: d.invalid})
 	case "otp":
-		return control.InputOTP(c, p.text(key, ""), control.InputOTPProps{Label: d.label, Length: d.length, Groups: d.groups, DigitsOnly: d.length == 4, Disabled: d.disabled, Invalid: d.invalid})
+		return control.InputOTP(c, p.text(key, ""), control.InputOTPProps{Label: tr(c, d.label), Length: d.length, Groups: d.groups, DigitsOnly: d.length == 4, Disabled: d.disabled, Invalid: d.invalid})
 	case "switch":
-		return control.Switch(c, p.checked(key, d.id == "profile"), control.SwitchProps{Label: d.label, Disabled: d.disabled, Invalid: d.invalid})
+		return control.Switch(c, p.checked(key, d.id == "profile"), control.SwitchProps{Label: tr(c, d.label), Disabled: d.disabled, Invalid: d.invalid})
 	default:
-		return control.Input(c, p.text(key, ""), control.InputProps{Label: d.label, Placeholder: d.placeholder, Password: d.kind == "password", Disabled: d.disabled, Invalid: d.invalid})
+		return control.Input(c, p.text(key, ""), control.InputProps{Label: tr(c, d.label), Placeholder: tr(c, d.placeholder), Password: d.kind == "password", Disabled: d.disabled, Invalid: d.invalid})
 	}
 }
 func (p *fieldCompositionPreviewState) choice(c *ui.Context, key, label, description, kind, value string, checked, disabled, invalid, right, card bool) {
@@ -291,9 +291,9 @@ func (p *fieldCompositionPreviewState) choice(c *ui.Context, key, label, descrip
 		}
 		caption := func() {
 			f.Content(c, func() {
-				control.FieldTitle(c, label)
+				control.FieldTitle(c, tr(c, label))
 				if description != "" {
-					f.Description(c, description)
+					f.Description(c, tr(c, description))
 				}
 			})
 		}
@@ -302,7 +302,7 @@ func (p *fieldCompositionPreviewState) choice(c *ui.Context, key, label, descrip
 			if kind == "radio" {
 				selected = *p.text(stateKey, "") == value
 			}
-			f.Label(c, control.FieldLabelProps{Label: label, Choice: true, Selected: selected, Disabled: disabled}, func() {
+			f.Label(c, control.FieldLabelProps{Label: tr(c, label), Choice: true, Selected: selected, Disabled: disabled}, func() {
 				ui.Row(c).FillWidth().MinWidth(0).Gap(12).AlignItems(ui.Start).Children(func() {
 					if right {
 						caption()
@@ -316,9 +316,12 @@ func (p *fieldCompositionPreviewState) choice(c *ui.Context, key, label, descrip
 		} else {
 			caption = func() {
 				if description != "" {
-					f.Content(c, func() { f.Label(c, control.FieldLabelProps{Text: label}, nil); f.Description(c, description) })
+					f.Content(c, func() {
+						f.Label(c, control.FieldLabelProps{Text: tr(c, label)}, nil)
+						f.Description(c, tr(c, description))
+					})
 				} else {
-					f.Label(c, control.FieldLabelProps{Text: label}, nil).Grow(1)
+					f.Label(c, control.FieldLabelProps{Text: tr(c, label)}, nil).Grow(1)
 				}
 			}
 			if right {
@@ -350,11 +353,11 @@ func (p *fieldCompositionPreviewState) draw(c *ui.Context, h *desktop.Host, nati
 	case "slider":
 		key := "slider:budget"
 		values := p.values(key, 200, 800)
-		control.FieldWith(c, control.FieldProps{Label: "Price Range"}, func(f *control.FieldScope) {
-			control.FieldTitle(c, "Price Range")
-			f.Description(c, fmt.Sprintf("Set your budget range ($%.0f - $%.0f).", (*values)[0], (*values)[1]))
+		control.FieldWith(c, control.FieldProps{Label: tr(c, "Price Range")}, func(f *control.FieldScope) {
+			control.FieldTitle(c, tr(c, "Price Range"))
+			f.Description(c, fmt.Sprintf(tr(c, "Set your budget range ($%.0f - $%.0f)."), (*values)[0], (*values)[1]))
 			f.Control(c, func() ui.Element {
-				return control.SliderValues(c, values, control.SliderProps{Label: "Price Range", Max: 1000, Step: 10})
+				return control.SliderValues(c, values, control.SliderProps{Label: tr(c, "Price Range"), Max: 1000, Step: 10})
 			})
 		})
 	case "fieldset":
@@ -370,7 +373,7 @@ func (p *fieldCompositionPreviewState) draw(c *ui.Context, h *desktop.Host, nati
 	case "checkbox":
 		p.desktopChoices(c)
 	case "radio":
-		p.radioGroup(c, "plan", "Subscription Plan", "Yearly and lifetime plans offer significant savings.", []control.Option{{Value: "monthly", Label: "Monthly ($9.99/month)"}, {Value: "yearly", Label: "Yearly ($99.99/year)"}, {Value: "lifetime", Label: "Lifetime ($299.99)"}}, "monthly", false, false)
+		p.radioGroup(c, "plan", "Subscription Plan", "Yearly and lifetime plans offer significant savings.", []control.Option{{Value: "monthly", Label: tr(c, "Monthly ($9.99/month)")}, {Value: "yearly", Label: tr(c, "Yearly ($99.99/year)")}, {Value: "lifetime", Label: tr(c, "Lifetime ($299.99)")}}, "monthly", false, false)
 	case "switch":
 		p.choice(c, "mfa", "Multi-factor authentication", "", "switch", "", false, false, false, true, false)
 	case "choice":
@@ -391,20 +394,20 @@ func (p *fieldCompositionPreviewState) draw(c *ui.Context, h *desktop.Host, nati
 func (p *fieldCompositionPreviewState) profile(c *ui.Context) {
 	fieldSet(c, "Profile", "Fill in your profile information.", false, func(child *ui.Context) {
 		fieldCompositionGroup(child, func() {
-			control.FieldWith(child.Key("profile-name"), control.FieldProps{Orientation: control.FieldResponsive, Required: true, Error: p.profileError}, func(f *control.FieldScope) {
+			control.FieldWith(child.Key("profile-name"), control.FieldProps{Orientation: control.FieldResponsive, Required: true, Error: tr(child, p.profileError)}, func(f *control.FieldScope) {
 				f.Content(child, func() {
-					f.Label(child, control.FieldLabelProps{Text: "Name", Label: "Name *"}, nil)
-					f.Description(child, "Provide your full name for identification")
+					f.Label(child, control.FieldLabelProps{Text: tr(child, "Name"), Label: tr(child, "Name *")}, nil)
+					f.Description(child, tr(child, "Provide your full name for identification"))
 				})
 				f.Control(child, func() ui.Element {
 					return control.Input(child, p.text("profile:name", ""), control.InputProps{Placeholder: "Evil Rabbit", Handle: &p.profileName, OnSubmit: func(string) { p.saveProfile(child) }}).Grow(1).MinWidth(0)
 				})
 			})
 			control.FieldWith(child, control.FieldProps{Orientation: control.FieldResponsive}, func(_ *control.FieldScope) {
-				if control.Button(child, "Submit", control.ButtonProps{Label: "Submit profile"}).Clicked() {
+				if control.Button(child, tr(child, "Submit"), control.ButtonProps{Label: tr(child, "Submit profile")}).Clicked() {
 					p.saveProfile(child)
 				}
-				if control.Button(child, "Cancel", control.ButtonProps{Label: "Cancel profile", Variant: control.Outline}).Clicked() {
+				if control.Button(child, tr(child, "Cancel"), control.ButtonProps{Label: tr(child, "Cancel profile"), Variant: control.Outline}).Clicked() {
 					*p.text("profile:name", "") = p.profileSaved
 					p.profileError = ""
 					p.status = "Profile draft restored"
@@ -430,9 +433,12 @@ func (p *fieldCompositionPreviewState) compute(c *ui.Context) {
 		ui.RadioGroup(child, func() {
 			for _, option := range []struct{ value, label, description string }{{"kubernetes", "Kubernetes", "Run GPU workloads on a K8s cluster."}, {"vm", "Virtual Machine", "Access a cluster to run GPU workloads."}} {
 				control.FieldWith(child.Key(option.value), control.FieldProps{Orientation: control.FieldHorizontal}, func(f *control.FieldScope) {
-					f.Label(child, control.FieldLabelProps{Label: option.label, Choice: true, Selected: *selected == option.value}, func() {
+					f.Label(child, control.FieldLabelProps{Label: tr(child, option.label), Choice: true, Selected: *selected == option.value}, func() {
 						ui.Row(child).FillWidth().MinWidth(0).Gap(12).Children(func() {
-							f.Content(child, func() { control.FieldTitle(child, option.label); f.Description(child, option.description) })
+							f.Content(child, func() {
+								control.FieldTitle(child, tr(child, option.label))
+								f.Description(child, tr(child, option.description))
+							})
 							f.Control(child, func() ui.Element { return control.Radio(child, selected, option.value, "", false) })
 						})
 					})
@@ -458,7 +464,7 @@ func (p *fieldCompositionPreviewState) notificationGroups(c *ui.Context) {
 	})
 	control.FieldSeparator(c, "")
 	fieldSet(c, "Tasks", "Get notified when tasks you've created have updates.", true, func(child *ui.Context) {
-		if control.Button(child, "Manage tasks", control.ButtonProps{Variant: control.Link, Size: control.Small}).Clicked() {
+		if control.Button(child, tr(child, "Manage tasks"), control.ButtonProps{Variant: control.Link, Size: control.Small}).Clicked() {
 			p.status = "Opened local task preferences"
 		}
 		ui.Column(child).Gap(12).Children(func() {
@@ -476,7 +482,7 @@ func (p *fieldCompositionPreviewState) radioGroup(c *ui.Context, key, title, des
 					f.Control(child, func() ui.Element {
 						return control.RadioWith(child, selected, option.Value, "", control.RadioProps{Disabled: disabled, Invalid: invalid})
 					})
-					f.Label(child, control.FieldLabelProps{Text: option.Label, Disabled: disabled}, nil)
+					f.Label(child, control.FieldLabelProps{Text: tr(child, option.Label), Disabled: disabled}, nil)
 				})
 			}
 		}).Gap(12)
@@ -546,9 +552,9 @@ func (p *fieldCompositionPreviewState) drawCreate(c *ui.Context, h *desktop.Host
 	case "create-radio":
 		switch d.id {
 		case "subscription":
-			p.radioGroup(c, d.id, d.label, "", []control.Option{{Value: "free", Label: "Free Plan"}, {Value: "pro", Label: "Pro Plan"}, {Value: "enterprise", Label: "Enterprise"}}, "free", false, false)
+			p.radioGroup(c, d.id, d.label, "", []control.Option{{Value: "free", Label: tr(c, "Free Plan")}, {Value: "pro", Label: tr(c, "Pro Plan")}, {Value: "enterprise", Label: tr(c, "Enterprise")}}, "free", false, false)
 		case "battery":
-			p.radioGroup(c, d.id, d.label, "Choose your preferred battery level.", []control.Option{{Value: "high", Label: "High"}, {Value: "medium", Label: "Medium"}, {Value: "low", Label: "Low"}}, "", false, false)
+			p.radioGroup(c, d.id, d.label, "Choose your preferred battery level.", []control.Option{{Value: "high", Label: tr(c, "High")}, {Value: "medium", Label: tr(c, "Medium")}, {Value: "low", Label: tr(c, "Low")}}, "", false, false)
 		case "invalid", "disabled":
 			p.radioGroup(c, d.id, d.label, "", []control.Option{{Value: "one", Label: strings.Fields(d.label)[0] + " Option 1"}, {Value: "two", Label: strings.Fields(d.label)[0] + " Option 2"}}, "", d.disabled, d.invalid)
 		default:
@@ -559,8 +565,8 @@ func (p *fieldCompositionPreviewState) drawCreate(c *ui.Context, h *desktop.Host
 	case "create-switch":
 		if d.kind == "privacy" {
 			control.FieldWith(c, control.FieldProps{}, func(f *control.FieldScope) {
-				f.Label(c, control.FieldLabelProps{Text: d.label}, nil)
-				f.Description(c, "Manage your privacy preferences.")
+				f.Label(c, control.FieldLabelProps{Text: tr(c, d.label)}, nil)
+				f.Description(c, tr(c, "Manage your privacy preferences."))
 				p.choice(c, "profile", "Make profile visible to others", "", "switch", "", true, false, false, false, false)
 				p.choice(c, "email", "Show email on profile", "", "switch", "", false, false, false, false, false)
 			})
@@ -599,11 +605,11 @@ func (p *fieldCompositionPreviewState) payment(c *ui.Context, h *desktop.Host, n
 				if p.recipe == "rtl" && p.language == "ar" {
 					label = strings.NewReplacer("0", "٠", "1", "١", "2", "٢", "3", "٣", "4", "٤", "5", "٥", "6", "٦", "7", "٧", "8", "٨", "9", "٩").Replace(v)
 				}
-				months[i] = control.Option{Value: v, Label: label}
+				months[i] = control.Option{Value: v, Label: tr(child, label)}
 			}
 			for i := range years {
 				v := fmt.Sprint(2024 + i)
-				years[i] = control.Option{Value: v, Label: v}
+				years[i] = control.Option{Value: v, Label: tr(child, v)}
 			}
 			ui.Row(child).FillWidth().MinWidth(0).Gap(16).Children(func() {
 				for _, d := range []fieldRecipe{{id: "month", label: labels.month, kind: "select", placeholder: "MM", options: months}, {id: "year", label: labels.year, kind: "select", placeholder: "YYYY", options: years}, {id: "cvv", label: labels.cvv, placeholder: "123", required: true}} {
@@ -623,7 +629,7 @@ func (p *fieldCompositionPreviewState) payment(c *ui.Context, h *desktop.Host, n
 			submitLabel = "Submit payment fields"
 			cancelLabel = "Cancel payment fields"
 		}
-		if control.Button(c, labels.submit, control.ButtonProps{Label: submitLabel}).Clicked() {
+		if control.Button(c, labels.submit, control.ButtonProps{Label: tr(c, submitLabel)}).Clicked() {
 			read := func(key string) string { return *p.text(p.recipe+":"+key, "") }
 			if strings.TrimSpace(read("card-name")) == "" || strings.TrimSpace(read("card-number")) == "" || strings.TrimSpace(read("cvv")) == "" {
 				p.status = "Complete the required local payment fields"
@@ -632,7 +638,7 @@ func (p *fieldCompositionPreviewState) payment(c *ui.Context, h *desktop.Host, n
 				p.status = "Saved local payment example; no transaction was sent"
 			}
 		}
-		if control.Button(c, labels.cancel, control.ButtonProps{Label: cancelLabel, Variant: control.Outline}).Clicked() {
+		if control.Button(c, labels.cancel, control.ButtonProps{Label: tr(c, cancelLabel), Variant: control.Outline}).Clicked() {
 			s, saved := p.paymentSaved[p.recipe]
 			if !saved {
 				s.Shipping = true

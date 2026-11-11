@@ -20,6 +20,9 @@ import (
 )
 
 type State struct {
+	// OnLocaleChange lets an embedding host apply language changes. By default,
+	// the Gallery uses MyGo's application language, including its persistence.
+	OnLocaleChange      func(string)
 	lastSolidMenuAccent theme.MenuAccent
 	// Theme.Mode remains supported for command-line appearance selection.
 	// The creator's Config controls the scoped live preview independently of chrome.
@@ -200,17 +203,25 @@ func (s *State) View(c *ui.Context) {
 
 func (s *State) header(c *ui.Context, preview *theme.Tokens) {
 	t := theme.TokensOf(c)
-	ui.Row(c).Height(58).FillWidth().PaddingX(24).Gap(10).AlignItems(ui.Center).InsetShadow(0, -1, 0, 0, t.Border).Children(func() {
+	width, _ := c.Size()
+	row := ui.Row(c).Height(58).FillWidth().PaddingX(24).Gap(10).AlignItems(ui.Center).InsetShadow(0, -1, 0, 0, t.Border)
+	if width < 640 {
+		row.PaddingX(12)
+	}
+	row.Children(func() {
 		ui.Text(c, "◩").FontSize(25).FontWeight(700)
 		ui.Text(c, "shadcn/ui").FontSize(16).FontWeight(600)
-		ui.Text(c, "/").TextColor(t.MutedForeground).Margin(0, 6)
-		ui.Text(c, "Create").FontSize(14).FontWeight(500)
-		display.Badge(c, "Native Go", display.BadgeOutline).AlignSelf(ui.Center)
+		if width >= 640 {
+			ui.Text(c, "/").TextColor(t.MutedForeground).Margin(0, 6)
+			ui.Text(c, tr(c, "Create")).FontSize(14).FontWeight(500)
+			display.Badge(c, tr(c, "Native Go"), display.BadgeOutline).AlignSelf(ui.Center)
+		}
 		ui.Box(c).Grow(1)
-		if control.Button(c, "Search", control.ButtonProps{Variant: control.Ghost, Size: control.Small, Label: "Search components"}).Clicked() {
+		s.languageSwitch(c)
+		if control.Button(c, tr(c, "Search"), control.ButtonProps{Variant: control.Ghost, Size: control.Small, Label: tr(c, "Search components")}).Clicked() {
 			s.Command = true
 		}
-		if control.Button(c, "◐", control.ButtonProps{Variant: control.Ghost, Size: control.IconSmall, Label: "Toggle theme"}).Clicked() {
+		if control.Button(c, "◐", control.ButtonProps{Variant: control.Ghost, Size: control.IconSmall, Label: tr(c, "Toggle theme")}).Clicked() {
 			p := s.Config
 			if preview.Dark {
 				p.Appearance = theme.LightMode
@@ -230,11 +241,11 @@ func (s *State) customizer(c *ui.Context, compact bool, preview *theme.Tokens) {
 	}
 	card.Children(func() {
 		ui.Row(c).Height(48).FillWidth().PaddingX(14).Gap(6).AlignItems(ui.Center).InsetShadow(0, -1, 0, 0, t.Border).Children(func() {
-			ui.Text(c, "Design system").FontSize(13).FontWeight(600).Grow(1)
-			if control.Button(c, "↶", control.ButtonProps{Variant: control.Ghost, Size: control.IconSmall, Disabled: !s.CanUndo(), Label: "Undo design change"}).Clicked() {
+			ui.Text(c, tr(c, "Design system")).FontSize(13).FontWeight(600).Grow(1)
+			if control.Button(c, "↶", control.ButtonProps{Variant: control.Ghost, Size: control.IconSmall, Disabled: !s.CanUndo(), Label: tr(c, "Undo design change")}).Clicked() {
 				s.Undo()
 			}
-			if control.Button(c, "↷", control.ButtonProps{Variant: control.Ghost, Size: control.IconSmall, Disabled: !s.CanRedo(), Label: "Redo design change"}).Clicked() {
+			if control.Button(c, "↷", control.ButtonProps{Variant: control.Ghost, Size: control.IconSmall, Disabled: !s.CanRedo(), Label: tr(c, "Redo design change")}).Clicked() {
 				s.Redo()
 			}
 		})
@@ -289,28 +300,28 @@ func (s *State) customizer(c *ui.Context, compact bool, preview *theme.Tokens) {
 		})
 		ui.Column(c).FillWidth().Padding(12).Gap(8).InsetShadow(0, 1, 0, 0, t.Border).Children(func() {
 			ui.Row(c).FillWidth().Gap(6).Children(func() {
-				if control.Button(c, "Copy preset", control.ButtonProps{Variant: control.Outline, Size: control.Small}).Grow(1).Clicked() {
+				if control.Button(c, tr(c, "Copy preset"), control.ButtonProps{Variant: control.Outline, Size: control.Small}).Grow(1).Clicked() {
 					c.WriteClipboard(s.ExportPreset())
 					s.status = "Preset copied"
 				}
-				if control.Button(c, "Open", control.ButtonProps{Variant: control.Outline, Size: control.Small, Label: "Open preset"}).Clicked() {
+				if control.Button(c, tr(c, "Open"), control.ButtonProps{Variant: control.Outline, Size: control.Small, Label: tr(c, "Open preset")}).Clicked() {
 					s.importOpen = true
 					s.importError = ""
 				}
 			})
 			ui.Row(c).FillWidth().Gap(6).Children(func() {
-				if control.Button(c, "Shuffle", control.ButtonProps{Variant: control.Outline, Size: control.Small, Label: "Randomize design"}).Grow(1).Clicked() {
+				if control.Button(c, tr(c, "Shuffle"), control.ButtonProps{Variant: control.Outline, Size: control.Small, Label: tr(c, "Randomize design")}).Grow(1).Clicked() {
 					s.randomSequence++
 					s.Randomize(uint64(c.Now().UnixNano()) ^ s.randomSequence)
 				}
-				if control.Button(c, "Reset", control.ButtonProps{Variant: control.Ghost, Size: control.Small}).Clicked() {
+				if control.Button(c, tr(c, "Reset"), control.ButtonProps{Variant: control.Ghost, Size: control.Small}).Clicked() {
 					s.Reset()
 				}
 			})
-			anchor := control.Button(c, "Inspect theme", control.ButtonProps{Variant: control.Ghost, Size: control.Small}).FillWidth()
+			anchor := control.Button(c, tr(c, "Inspect theme"), control.ButtonProps{Variant: control.Ghost, Size: control.Small}).FillWidth()
 			s.inspector(c, anchor, preview)
 			if s.status != "" {
-				ui.Text(c, s.status).FontSize(11).TextColor(t.MutedForeground).Role(ui.RoleStatus)
+				ui.Text(c, tr(c, s.status)).FontSize(11).TextColor(t.MutedForeground).Role(ui.RoleStatus)
 			}
 		})
 	})
@@ -355,12 +366,12 @@ func (s *State) choice(c *ui.Context, label, value string, values []string, chan
 		state.Value, state.Last = value, value
 	}
 	root.Children(func() {
-		ui.Text(c, label).FontSize(11).FontWeight(500).TextColor(t.MutedForeground)
+		ui.Text(c, tr(c, label)).FontSize(11).FontWeight(500).TextColor(t.MutedForeground)
 		options := make([]control.Option, len(values))
 		for i, v := range values {
-			options[i] = control.Option{Value: v, Label: choiceLabel(v)}
+			options[i] = control.Option{Value: v, Label: tr(c, choiceLabel(v))}
 		}
-		props := control.SelectProps{Label: label, Options: options, Size: control.Small}
+		props := control.SelectProps{Label: tr(c, label), Options: localizedOptions(c, options), Size: control.Small}
 		var field ui.Element
 		if s.Config.NativeMenus {
 			field = desktop.NativeSelect(c, &state.Value, props)
@@ -390,7 +401,7 @@ func (s *State) choiceSwitch(c *ui.Context, label string, value bool, changed fu
 		state.Value, state.Last = value, value
 	}
 	root.Children(func() {
-		if control.Switch(c, &state.Value, control.SwitchProps{Label: label}).Changed() {
+		if control.Switch(c, &state.Value, control.SwitchProps{Label: tr(c, label)}).Changed() {
 			state.Last = state.Value
 			changed(state.Value)
 			c.Invalidate()
@@ -408,14 +419,14 @@ func (s *State) preview(c *ui.Context, t *theme.Tokens) {
 		ui.Row(c).Height(48).FillWidth().InsetShadow(0, -1, 0, 0, t.Border).Background(t.Card).Children(func() {
 			ui.ScrollHorizontal(c).Grow(1).MinWidth(0).Children(func() {
 				parts = ui.TabsBase(c, &s.previewIndex, len(pages))
-				parts.List.Label("Component previews").Gap(2).PaddingX(12).Height(48).Children(func() {
+				parts.List.Label(tr(c, "Component previews")).Gap(2).PaddingX(12).Height(48).Children(func() {
 					for i, page := range pages {
 						b := parts.Tab(i).Height(48).PaddingX(11).FontSize(12).TextColor(t.MutedForeground)
 						if i == s.previewIndex {
 							b.TextColor(t.Foreground).InsetShadow(0, -2, 0, 0, t.Primary)
 						}
 						triggers[i] = b
-						b.Children(func() { ui.Text(c, page.Label).SingleLine() })
+						b.Children(func() { ui.Text(c, tr(c, page.Label)).SingleLine() })
 					}
 				})
 			})
@@ -429,7 +440,7 @@ func (s *State) preview(c *ui.Context, t *theme.Tokens) {
 			s.lastPreviewPage = s.Page
 			s.lastPreviewWidth = width
 		}
-		panel := ui.Scroll(c.Key(s.Page)).Grow(1).MinHeight(0).FillWidth().Role(ui.RoleRegion).Label(pages[s.previewIndex].Label)
+		panel := ui.Scroll(c.Key(s.Page)).Grow(1).MinHeight(0).FillWidth().Role(ui.RoleRegion).Label(tr(c, pages[s.previewIndex].Label))
 		panel.LabelledBy(triggers[s.previewIndex])
 		triggers[s.previewIndex].Controls(panel)
 		panel.Children(func() {
@@ -473,24 +484,28 @@ func creatorPageScore(item overlay.CommandItem, query string) float64 {
 func (s *State) creatorDialogs(c *ui.Context) {
 	commands := make([]overlay.CommandItem, len(pages))
 	for i, page := range pages {
-		commands[i] = overlay.CommandItem{Key: page.Key, Value: page.Key, Label: page.Label, Keywords: page.Keywords}
+		keywords := []string{page.Label, messages.Format(LocaleChinese, page.Label, nil)}
+		for _, keyword := range page.Keywords {
+			keywords = append(keywords, keyword, messages.Format(LocaleChinese, keyword, nil))
+		}
+		commands[i] = overlay.CommandItem{Key: page.Key, Value: page.Key, Label: tr(c, page.Label), Keywords: keywords}
 	}
-	if choice := overlay.CommandDialog(c, &s.Command, &s.Query, overlay.CommandProps{Items: commands, Filter: creatorPageScore, Placeholder: "Find a preview…"}); choice != "" {
+	if choice := overlay.CommandDialog(c, &s.Command, &s.Query, overlay.CommandProps{Items: commands, Filter: creatorPageScore, Label: tr(c, "Commands"), InputLabel: tr(c, "Search commands"), ListLabel: tr(c, "Command results"), EmptyText: tr(c, "No results found."), Placeholder: tr(c, "Find a preview…")}); choice != "" {
 		s.Page = choice
 		s.pendingPreview = componentSearchTarget(choice, s.Query)
 		s.Command = false
 		c.Invalidate()
 	}
-	overlay.Dialog(c, &s.importOpen, overlay.DialogProps{Title: "Open preset", Description: "Paste a Native Go design preset. Changes apply only after validation."}, func() {
-		control.Textarea(c, &s.importText, control.TextareaProps{Label: "Preset JSON", Placeholder: DefaultPreset().JSON(), MinRows: 8, MaxRows: 12, Invalid: s.importError != ""}).FillWidth().Font("monospace")
+	overlay.Dialog(c, &s.importOpen, overlay.DialogProps{Title: tr(c, "Open preset"), Description: tr(c, "Paste a Native Go design preset. Changes apply only after validation.")}, func() {
+		control.Textarea(c, &s.importText, control.TextareaProps{Label: tr(c, "Preset JSON"), Placeholder: DefaultPreset().JSON(), MinRows: 8, MaxRows: 12, Invalid: s.importError != ""}).FillWidth().Font("monospace")
 		if s.importError != "" {
 			ui.Text(c, s.importError).TextColor(theme.TokensOf(c).Destructive).FontSize(12).Role(ui.RoleAlert)
 		}
 		ui.Row(c).Gap(8).Justify(ui.End).Children(func() {
-			if control.Button(c, "Paste clipboard", control.ButtonProps{Variant: control.Outline, Size: control.Small}).Clicked() {
+			if control.Button(c, tr(c, "Paste clipboard"), control.ButtonProps{Variant: control.Outline, Size: control.Small}).Clicked() {
 				s.importText = c.ReadClipboard()
 			}
-			if control.Button(c, "Apply preset", control.ButtonProps{Size: control.Small}).Clicked() {
+			if control.Button(c, tr(c, "Apply preset"), control.ButtonProps{Size: control.Small}).Clicked() {
 				if err := s.ImportPreset(s.importText); err != nil {
 					s.importError = err.Error()
 				} else {
@@ -504,18 +519,18 @@ func (s *State) creatorDialogs(c *ui.Context) {
 }
 func (s *State) previewDialogs(c *ui.Context) {
 	if s.pendingMenuAction != "" {
-		overlay.Toast(c, ui.Toast{Title: "Menu action", Description: menuActionLabel(s.pendingMenuAction)})
+		overlay.Toast(c, ui.Toast{Title: tr(c, "Menu action"), Description: tr(c, menuActionLabel(s.pendingMenuAction))})
 		s.pendingMenuAction = ""
 	}
-	overlay.Dialog(c, &s.Dialog, overlay.DialogProps{Title: "Edit profile", Description: "Make changes to your profile. Save when you are done."}, func() {
-		control.Field(c, control.FieldProps{Label: "Name"}, func() ui.Element { return control.Input(c, &s.Name, control.InputProps{}) })
-		control.Field(c, control.FieldProps{Label: "Email"}, func() ui.Element { return control.Input(c, &s.Email, control.InputProps{}) })
-		if control.Button(c, "Save changes", control.ButtonProps{}).AlignSelf(ui.End).Clicked() {
+	overlay.Dialog(c, &s.Dialog, overlay.DialogProps{Title: tr(c, "Edit profile"), Description: tr(c, "Make changes to your profile. Save when you are done.")}, func() {
+		control.Field(c, control.FieldProps{Label: tr(c, "Name")}, func() ui.Element { return control.Input(c, &s.Name, control.InputProps{}) })
+		control.Field(c, control.FieldProps{Label: tr(c, "Email")}, func() ui.Element { return control.Input(c, &s.Email, control.InputProps{}) })
+		if control.Button(c, tr(c, "Save changes"), control.ButtonProps{}).AlignSelf(ui.End).Clicked() {
 			s.Dialog = false
-			overlay.Toast(c, ui.Toast{Title: "Profile updated", Description: "Your changes have been saved."})
+			overlay.Toast(c, ui.Toast{Title: tr(c, "Profile updated"), Description: tr(c, "Your changes have been saved.")})
 		}
 	})
-	overlay.Sheet(c, &s.Sheet, overlay.SheetProps{Title: "Settings", Description: "Your workspace preferences", Side: overlay.Right}, func() { control.Switch(c, &s.Notifications, control.SwitchProps{Label: "Notifications"}) })
+	overlay.Sheet(c, &s.Sheet, overlay.SheetProps{Title: tr(c, "Settings"), Description: tr(c, "Your workspace preferences"), Side: overlay.Right}, func() { control.Switch(c, &s.Notifications, control.SwitchProps{Label: tr(c, "Notifications")}) })
 	s.notificationViewport(c)
 }
 
@@ -530,7 +545,7 @@ func (s *State) inspector(c *ui.Context, anchor ui.Element, t *theme.Tokens) {
 	if t.Dark {
 		revision ^= 1 << 63
 	}
-	p := desktop.PopoverProps{Label: "Theme tokens", Placement: mygo.PlacementRightStart, Width: 360, Height: 420, FitContent: true, Revision: revision}
+	p := desktop.PopoverProps{Label: tr(c, "Theme tokens"), Placement: mygo.PlacementRightStart, Width: 360, Height: 420, FitContent: true, Revision: revision}
 	var err error
 	if s.Config.NativeMenus {
 		err = desktop.NativePopover(c, s.Popovers, "theme-inspector", anchor, &s.tokenOpen, p, func(child *ui.Context) { s.nativeInspectorContent(child, t) })
@@ -543,22 +558,22 @@ func (s *State) inspector(c *ui.Context, anchor ui.Element, t *theme.Tokens) {
 	}
 }
 func (s *State) popupError(c *ui.Context, err error) {
-	overlay.Toast(c, ui.Toast{Title: "Could not open popup", Description: err.Error(), Type: "error"})
+	overlay.Toast(c, ui.Toast{Title: tr(c, "Could not open popup"), Description: tr(c, err.Error()), Type: "error"})
 }
 func (s *State) nativeInspectorContent(c *ui.Context, t *theme.Tokens) {
 	ui.Column(c).FillWidth().Gap(12).Children(func() {
-		ui.Text(c, "Theme tokens").FontSize(16).FontWeight(600)
+		ui.Text(c, tr(c, "Theme tokens")).FontSize(16).FontWeight(600)
 		for _, v := range []struct {
 			name  string
 			color ui.Color
 		}{{"Background", t.Background}, {"Foreground", t.Foreground}, {"Primary", t.Primary}, {"Muted", t.Muted}, {"Border", t.Border}, {"Chart 1", t.Chart1}} {
 			ui.Row(c).Gap(10).AlignItems(ui.Center).Children(func() {
 				ui.Box(c).Size(24, 24).Radius(5).Background(v.color)
-				ui.Text(c, v.name).Grow(1)
+				ui.Text(c, tr(c, v.name)).Grow(1)
 				ui.Text(c, fmt.Sprintf("#%02x%02x%02x", v.color.R, v.color.G, v.color.B)).Font("monospace").FontSize(11)
 			})
 		}
-		if ui.Button(c, "Copy preset").Clicked() {
+		if ui.Button(c, tr(c, "Copy preset")).Clicked() {
 			c.WriteClipboard(s.ExportPreset())
 		}
 	})
@@ -574,11 +589,11 @@ func (s *State) inspectorContent(c *ui.Context, t *theme.Tokens) {
 			}{{"Background", t.Background}, {"Foreground", t.Foreground}, {"Primary", t.Primary}, {"Muted", t.Muted}, {"Border", t.Border}, {"Chart 1", t.Chart1}} {
 				ui.Row(c).Gap(10).AlignItems(ui.Center).Children(func() {
 					ui.Box(c).Size(24, 24).Radius(5).Background(v.color).Border(1, t.Border)
-					ui.Text(c, v.name).Grow(1).FontSize(12)
+					ui.Text(c, tr(c, v.name)).Grow(1).FontSize(12)
 					ui.Text(c, fmt.Sprintf("#%02x%02x%02x", v.color.R, v.color.G, v.color.B)).Font("monospace").FontSize(11).TextColor(t.MutedForeground)
 				})
 			}
-			if control.Button(c, "Copy preset", control.ButtonProps{Variant: control.Outline, Size: control.Small}).FillWidth().Clicked() {
+			if control.Button(c, tr(c, "Copy preset"), control.ButtonProps{Variant: control.Outline, Size: control.Small}).FillWidth().Clicked() {
 				c.WriteClipboard(s.ExportPreset())
 			}
 		})

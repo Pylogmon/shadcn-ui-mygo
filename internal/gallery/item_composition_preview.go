@@ -68,12 +68,12 @@ func (p *itemCompositionPreviewState) view(c *ui.Context, h *desktop.Host, nativ
 			}
 		}
 	}
-	display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: "Item compositions"}, display.CardSlots{
-		Title: "Item compositions", Description: "Independent actions, real links, images and source collections.",
+	display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: tr(c, "Item compositions")}, display.CardSlots{
+		Title: tr(c, "Item compositions"), Description: tr(c, "Independent actions, real links, images and source collections."),
 		Content: func(child *ui.Context) {
-			p.choose(child, h, native, "item-recipe", &p.recipe, control.SelectProps{Label: "Item configuration", Options: itemCompositionRecipes})
+			p.choose(child, h, native, "item-recipe", &p.recipe, control.SelectProps{Label: tr(child, "Item configuration"), Options: localizedOptions(child, itemCompositionRecipes)})
 			if p.recipe == "rtl" {
-				p.choose(child, h, native, "item-language", &p.language, control.SelectProps{Label: "Item language", Options: statusLanguages()})
+				p.choose(child, h, native, "item-language", &p.language, control.SelectProps{Label: tr(child, "Item language"), Options: localizedOptions(child, statusLanguages())})
 			}
 			ui.Column(child.Key("item-source:" + p.recipe)).FillWidth().MinWidth(0).AlignItems(ui.Center).Children(func() {
 				build := func() { p.draw(child, h, native) }
@@ -84,7 +84,7 @@ func (p *itemCompositionPreviewState) view(c *ui.Context, h *desktop.Host, nativ
 				}
 			})
 			if p.action != "" {
-				ui.Text(child, p.action).FontSize(13).Role(ui.RoleStatus)
+				ui.Text(child, tr(child, p.action)).FontSize(13).Role(ui.RoleStatus)
 			}
 			if p.popupError != "" {
 				ui.Text(child, p.popupError).FontSize(13).TextColor(theme.TokensOf(child).Destructive).Role(ui.RoleAlert)
@@ -109,7 +109,7 @@ func itemRecipeShape(recipe string) (display.ItemVariant, display.ItemSize) {
 }
 
 func (p *itemCompositionPreviewState) actionButton(c *ui.Context, text, label, result string, variant control.Variant, size control.Size, icon *ui.SVG) ui.Element {
-	e := control.Button(c, text, control.ButtonProps{Label: label, Variant: variant, Size: size, Icon: icon})
+	e := control.Button(c, tr(c, text), control.ButtonProps{Label: tr(c, label), Variant: variant, Size: size, Icon: icon})
 	if e.Clicked() {
 		p.action = "Local item action: " + result
 	}
@@ -125,9 +125,9 @@ func itemLinkContent(title, description string, icon *ui.SVG) func(*ui.Context) 
 	return func(c *ui.Context) {
 		ui.Row(c).FillWidth().MinWidth(0).Gap(8).AlignItems(ui.Center).Children(func() {
 			ui.Column(c).Basis(0).Grow(1).MinWidth(0).Gap(4).Children(func() {
-				display.ItemTitle(c, title)
+				display.ItemTitle(c, tr(c, title))
 				if description != "" {
-					display.ItemDescription(c, description)
+					display.ItemDescription(c, tr(c, description))
 				}
 			})
 			material.Icon(c, icon, material.Props{Size: 16}).Shrink(0)
@@ -136,7 +136,7 @@ func itemLinkContent(title, description string, icon *ui.SVG) func(*ui.Context) 
 }
 
 func (p *itemCompositionPreviewState) group(c *ui.Context, label string, items []display.ItemProps, gap float32) ui.Element {
-	return display.ItemGroup(c, display.ItemGroupProps{Label: label, Items: items, Gap: &gap}).MaxWidth(448)
+	return display.ItemGroup(c, display.ItemGroupProps{Label: tr(c, label), Items: items, Gap: &gap}).MaxWidth(448)
 }
 
 func (p *itemCompositionPreviewState) draw(c *ui.Context, h *desktop.Host, native bool) {
@@ -146,17 +146,17 @@ func (p *itemCompositionPreviewState) draw(c *ui.Context, h *desktop.Host, nativ
 	case "variant":
 		items := []display.ItemProps{}
 		for i, row := range [][2]string{{"Default Variant", "Transparent background with no border."}, {"Outline Variant", "Outlined style with a visible border."}, {"Muted Variant", "Muted background for secondary content."}} {
-			items = append(items, display.ItemProps{Key: row[0], Title: row[0], Description: row[1], Variant: display.ItemVariant(i), Media: itemInbox()})
+			items = append(items, display.ItemProps{Key: row[0], Title: tr(c, row[0]), Description: tr(c, row[1]), Variant: display.ItemVariant(i), Media: itemInbox()})
 		}
 		p.group(c, "Item variants", items, 24)
 	case "size":
 		items := []display.ItemProps{}
 		for i, row := range [][2]string{{"Default Size", "The standard size for most use cases."}, {"Small Size", "A compact size for dense layouts."}, {"Extra Small Size", "The most compact size available."}} {
-			items = append(items, display.ItemProps{Key: row[0], Title: row[0], Description: row[1], Variant: display.ItemOutline, Size: display.ItemSize(i), Media: itemInbox()})
+			items = append(items, display.ItemProps{Key: row[0], Title: tr(c, row[0]), Description: tr(c, row[1]), Variant: display.ItemOutline, Size: display.ItemSize(i), Media: itemInbox()})
 		}
 		p.group(c, "Item sizes", items, 24)
 	case "icon":
-		p.group(c, "Security item", []display.ItemProps{{Key: "security", Title: "Security Alert", Description: "New login detected from unknown device.", Variant: display.ItemOutline, Media: &display.ItemMediaProps{Variant: display.ItemMediaIcon, Icon: outlined.Shield(), Decorative: true}, Actions: func(child *ui.Context) {
+		p.group(c, "Security item", []display.ItemProps{{Key: "security", Title: tr(c, "Security Alert"), Description: tr(c, "New login detected from unknown device."), Variant: display.ItemOutline, Media: &display.ItemMediaProps{Variant: display.ItemMediaIcon, Icon: outlined.Shield(), Decorative: true}, Actions: func(child *ui.Context) {
 			p.actionButton(child, "Review", "Review security alert", "Security Alert", control.Outline, control.Small, nil)
 		}}}, 24).MaxWidth(512)
 	case "avatar":
@@ -171,8 +171,8 @@ func (p *itemCompositionPreviewState) draw(c *ui.Context, h *desktop.Host, nativ
 		p.peopleMenu(c, h, native)
 	case "link":
 		p.group(c, "Item links", []display.ItemProps{
-			{Key: "documentation", Title: "Visit our documentation", Description: "Learn how to get started with our components.", Primary: p.primary("Visit our documentation"), Content: itemLinkContent("Visit our documentation", "Learn how to get started with our components.", outlined.ChevronRight())},
-			{Key: "external", Title: "External resource", Description: "Opens in a new tab with security attributes.", Variant: display.ItemOutline, Primary: p.primary("External resource"), Content: itemLinkContent("External resource", "Opens in a new tab with security attributes.", outlined.OpenInNew())},
+			{Key: "documentation", Title: tr(c, "Visit our documentation"), Description: tr(c, "Learn how to get started with our components."), Primary: p.primary("Visit our documentation"), Content: itemLinkContent("Visit our documentation", "Learn how to get started with our components.", outlined.ChevronRight())},
+			{Key: "external", Title: tr(c, "External resource"), Description: tr(c, "Opens in a new tab with security attributes."), Variant: display.ItemOutline, Primary: p.primary("External resource"), Content: itemLinkContent("External resource", "Opens in a new tab with security attributes.", outlined.OpenInNew())},
 		}, 16)
 	default:
 		p.create(c)
@@ -199,10 +199,10 @@ func (p *itemCompositionPreviewState) demo(c *ui.Context) {
 		actionLabel = action
 	}
 	p.group(c, "Basic item examples", []display.ItemProps{
-		{Key: "basic", Title: title, Description: desc, Variant: display.ItemOutline, Actions: func(child *ui.Context) {
+		{Key: "basic", Title: tr(c, title), Description: tr(c, desc), Variant: display.ItemOutline, Actions: func(child *ui.Context) {
 			p.actionButton(child, action, actionLabel, title, control.Outline, control.Small, nil)
 		}},
-		{Key: "verified", Title: verified, Size: display.ItemSmall, Variant: display.ItemOutline, Media: &display.ItemMediaProps{Icon: outlined.Verified(), IconSize: 20, Decorative: true}, Primary: p.primary(verified), Content: itemLinkContent(verified, "", outlined.ChevronRight())},
+		{Key: "verified", Title: tr(c, verified), Size: display.ItemSmall, Variant: display.ItemOutline, Media: &display.ItemMediaProps{Icon: outlined.Verified(), IconSize: 20, Decorative: true}, Primary: p.primary(verified), Content: itemLinkContent(verified, "", outlined.ChevronRight())},
 	}, 24)
 }
 
@@ -219,10 +219,10 @@ func itemAvatar(index int, gray bool, size float32) *display.ItemMediaProps {
 }
 func (p *itemCompositionPreviewState) avatars(c *ui.Context) {
 	p.group(c, "Item avatars", []display.ItemProps{
-		{Key: "evilrabbit", Title: "Evil Rabbit", Description: "Last seen 5 months ago", Variant: display.ItemOutline, Media: itemAvatar(2, false, 40), Actions: func(child *ui.Context) {
+		{Key: "evilrabbit", Title: "Evil Rabbit", Description: tr(c, "Last seen 5 months ago"), Variant: display.ItemOutline, Media: itemAvatar(2, false, 40), Actions: func(child *ui.Context) {
 			p.actionButton(child, "", "Invite Evil Rabbit", "Invite Evil Rabbit", control.Outline, control.IconSmall, outlined.Add()).Radius(999)
 		}},
-		{Key: "team", Title: "No Team Members", Description: "Invite your team to collaborate on this project.", Variant: display.ItemOutline, Media: &display.ItemMediaProps{Content: func(child *ui.Context) {
+		{Key: "team", Title: tr(c, "No Team Members"), Description: tr(c, "Invite your team to collaborate on this project."), Variant: display.ItemOutline, Media: &display.ItemMediaProps{Content: func(child *ui.Context) {
 			w, _ := child.Size()
 			start := 0
 			if w < 640 {
@@ -232,7 +232,7 @@ func (p *itemCompositionPreviewState) avatars(c *ui.Context) {
 			for i := start; i < 3; i++ {
 				items = append(items, display.AvatarProps{Key: itemPeople[i].name, Label: "@" + itemPeople[i].name, Image: itemGrayPeople[i], Fallback: itemPeople[i].fallback})
 			}
-			display.AvatarGroup(child, display.AvatarGroupProps{Label: "Item team avatars", Items: items, Max: 3, Total: len(items)})
+			display.AvatarGroup(child, display.AvatarGroupProps{Label: tr(child, "Item team avatars"), Items: items, Max: 3, Total: len(items)})
 		}}, Actions: func(child *ui.Context) {
 			p.actionButton(child, "Invite", "Invite team members", "Invite team members", control.Outline, control.Small, nil)
 		}},
@@ -242,7 +242,7 @@ func (p *itemCompositionPreviewState) people(c *ui.Context) {
 	items := []display.ItemProps{}
 	for i, person := range itemPeople {
 		i, person := i, person
-		items = append(items, display.ItemProps{Key: person.name, Title: person.name, Description: person.email, Variant: display.ItemOutline, Media: itemAvatar(i, true, 32), Actions: func(child *ui.Context) {
+		items = append(items, display.ItemProps{Key: person.name, Title: tr(c, person.name), Description: tr(c, person.email), Variant: display.ItemOutline, Media: itemAvatar(i, true, 32), Actions: func(child *ui.Context) {
 			p.actionButton(child, "", "Invite "+person.name, "Invite "+person.name, control.Ghost, control.Icon, outlined.Add()).Radius(999)
 		}})
 	}
@@ -255,7 +255,7 @@ func (p *itemCompositionPreviewState) peopleMenu(c *ui.Context, h *desktop.Host,
 		items = append(items, overlay.MenuItem{Key: person.name, Label: person.name + " · " + person.email})
 	}
 	render := func(e ui.Element) {
-		control.StyleButton(c, e, "Select", control.ButtonProps{Variant: control.Outline, Label: "Select item person"})
+		control.StyleButton(c, e, tr(c, "Select"), control.ButtonProps{Variant: control.Outline, Label: tr(c, "Select item person")})
 		e.Children(func() { indicator.ChevronDown(c) })
 	}
 	var chosen string
@@ -265,7 +265,7 @@ func (p *itemCompositionPreviewState) peopleMenu(c *ui.Context, h *desktop.Host,
 	} else {
 		anchor := ui.ButtonBase(c)
 		render(anchor)
-		chosen, err = desktop.Menu(c, h, "item-people", anchor, &p.menuOpen, &p.menu, desktop.MenuProps{Label: "Item people menu", Items: items, Width: 192, ItemHeight: 60, MaxHeight: 320, Placement: mygo.PlacementBottomEnd, Gap: 6, ItemContent: func(child *ui.Context, item overlay.MenuItem) {
+		chosen, err = desktop.Menu(c, h, "item-people", anchor, &p.menuOpen, &p.menu, desktop.MenuProps{Label: tr(c, "Item people menu"), Items: items, Width: 192, ItemHeight: 60, MaxHeight: 320, Placement: mygo.PlacementBottomEnd, Gap: 6, ItemContent: func(child *ui.Context, item overlay.MenuItem) {
 			for i, person := range itemPeople {
 				if person.name == item.Key {
 					display.Item(child, display.ItemProps{Key: person.name, Size: display.ItemExtraSmall, Media: itemAvatar(i, true, 26), Content: func(current *ui.Context) {
@@ -309,7 +309,7 @@ func (p *itemCompositionPreviewState) createRows(c *ui.Context, v display.ItemVa
 	items := []display.ItemProps{}
 	for i, title := range titles {
 		i, title := i, title
-		item := display.ItemProps{Key: fmt.Sprint(i), Title: title, Description: desc[i], Variant: v, Size: size}
+		item := display.ItemProps{Key: fmt.Sprint(i), Title: tr(c, title), Description: tr(c, desc[i]), Variant: v, Size: size}
 		if i >= 4 && i <= 7 {
 			item.Media = itemInbox()
 		}
@@ -347,7 +347,7 @@ func (p *itemCompositionPreviewState) createLinks(c *ui.Context, v display.ItemV
 	descriptions := []string{"", "Clickable item with title and description.", "", "Complete link item with media, title, and description.", "Link item that also has action buttons."}
 	items := []display.ItemProps{}
 	for i, title := range titles {
-		item := display.ItemProps{Key: fmt.Sprint(i), Title: title, Description: descriptions[i], Variant: v, Primary: p.primary(title)}
+		item := display.ItemProps{Key: fmt.Sprint(i), Title: tr(c, title), Description: tr(c, descriptions[i]), Variant: v, Primary: p.primary(title)}
 		if i == 2 || i == 3 {
 			item.Media = itemInbox()
 		}
@@ -370,7 +370,7 @@ func (p *itemCompositionPreviewState) createGroup(c *ui.Context, v display.ItemV
 		} else if v == display.ItemMuted {
 			desc = ordinal + " item in muted group."
 		}
-		item := display.ItemProps{Key: fmt.Sprint(i), Title: title, Description: desc, Variant: v}
+		item := display.ItemProps{Key: fmt.Sprint(i), Title: tr(c, title), Description: tr(c, desc), Variant: v}
 		if v == display.ItemOutline {
 			item.Media = itemInbox()
 		}
@@ -386,9 +386,9 @@ func (p *itemCompositionPreviewState) createGroup(c *ui.Context, v display.ItemV
 func (p *itemCompositionPreviewState) separator(c *ui.Context) {
 	items := []display.ItemProps{}
 	for _, row := range [][2]string{{"Inbox", "View all incoming messages."}, {"Sent", "View all sent messages."}, {"Drafts", "View all draft messages."}, {"Archive", "View archived messages."}} {
-		items = append(items, display.ItemProps{Key: row[0], Title: row[0], Description: row[1], Variant: display.ItemOutline, Media: itemInbox()})
+		items = append(items, display.ItemProps{Key: row[0], Title: tr(c, row[0]), Description: tr(c, row[1]), Variant: display.ItemOutline, Media: itemInbox()})
 	}
-	display.ItemGroup(c, display.ItemGroupProps{Label: "Separated mailbox items", Items: items, Separators: true}).MaxWidth(448)
+	display.ItemGroup(c, display.ItemGroupProps{Label: tr(c, "Separated mailbox items"), Items: items, Separators: true}).MaxWidth(448)
 }
 func (p *itemCompositionPreviewState) headersFooters(c *ui.Context) {
 	var data [][4]string
@@ -403,7 +403,7 @@ func (p *itemCompositionPreviewState) headersFooters(c *ui.Context) {
 	items := []display.ItemProps{}
 	for i, row := range data {
 		row := row
-		item := display.ItemProps{Key: fmt.Sprint(i), Title: row[1], Description: row[2], Variant: display.ItemVariant(i)}
+		item := display.ItemProps{Key: fmt.Sprint(i), Title: tr(c, row[1]), Description: tr(c, row[2]), Variant: display.ItemVariant(i)}
 		if row[0] != "" {
 			item.Header = func(child *ui.Context) { ui.Text(child, row[0]).FontSize(14).FontWeight(500) }
 		}
@@ -427,7 +427,7 @@ func (p *itemCompositionPreviewState) createImages(c *ui.Context, v display.Item
 		if size == display.ItemExtraSmall {
 			desc = ""
 		}
-		item := display.ItemProps{Key: fmt.Sprint(i), Title: title, Description: desc, Variant: v, Size: size, Media: &display.ItemMediaProps{Variant: display.ItemMediaImage, Image: itemProjectImages[i], Label: []string{"Project", "Document", "File"}[i]}}
+		item := display.ItemProps{Key: fmt.Sprint(i), Title: tr(c, title), Description: tr(c, desc), Variant: v, Size: size, Media: &display.ItemMediaProps{Variant: display.ItemMediaImage, Image: itemProjectImages[i], Label: tr(c, []string{"Project", "Document", "File"}[i])}}
 		if i > 0 {
 			text, variant := "View", control.Outline
 			if i == 2 {
@@ -448,7 +448,7 @@ func (p *itemCompositionPreviewState) music(c *ui.Context) {
 	items := []display.ItemProps{}
 	for i, song := range itemSongs {
 		i, song := i, song
-		items = append(items, display.ItemProps{Key: song.title, Title: song.title, Description: song.artist + " · " + song.album + " · " + song.duration, Variant: display.ItemOutline, Primary: p.primary(song.title), Media: &display.ItemMediaProps{Variant: display.ItemMediaImage, Image: itemSongImages[i], Label: song.title}, Content: func(child *ui.Context) {
+		items = append(items, display.ItemProps{Key: song.title, Title: tr(c, song.title), Description: song.artist + " · " + song.album + " · " + song.duration, Variant: display.ItemOutline, Primary: p.primary(song.title), Media: &display.ItemMediaProps{Variant: display.ItemMediaImage, Image: itemSongImages[i], Label: tr(c, song.title)}, Content: func(child *ui.Context) {
 			ui.Row(child).FillWidth().MinWidth(0).Gap(12).AlignItems(ui.Center).Children(func() {
 				ui.Column(child).Basis(0).Grow(1).MinWidth(0).Gap(4).Children(func() {
 					ui.RichText(child).MinWidth(0).FontSize(14).FontWeight(500).MaxLines(1).Children(func() {
@@ -464,11 +464,11 @@ func (p *itemCompositionPreviewState) music(c *ui.Context) {
 	p.group(c, "Music tracks", items, 16)
 }
 func (p *itemCompositionPreviewState) models(c *ui.Context) {
-	ui.Row(c).FillWidth().MaxWidth(576).MinWidth(0).Gap(16).AlignItems(ui.Start).Role(ui.RoleList).Label("Model image items").Children(func() {
+	ui.Row(c).FillWidth().MaxWidth(576).MinWidth(0).Gap(16).AlignItems(ui.Start).Role(ui.RoleList).Label(tr(c, "Model image items")).Children(func() {
 		for i, row := range [][2]string{{"v0-1.5-sm", "Everyday tasks and UI generation."}, {"v0-1.5-lg", "Advanced thinking or reasoning."}, {"v0-2.0-mini", "Open Source model for everyone."}} {
 			i, row := i, row
 			ui.Column(c.Key(row[0])).Basis(0).Grow(1).MinWidth(0).Children(func() {
-				display.Item(c, display.ItemProps{Key: row[0], Title: row[0], Description: row[1], Variant: display.ItemOutline, Header: func(child *ui.Context) {
+				display.Item(c, display.ItemProps{Key: row[0], Title: tr(c, row[0]), Description: tr(c, row[1]), Variant: display.ItemOutline, Header: func(child *ui.Context) {
 					ui.Image(child, itemModelImages[i]).FillWidth().AspectRatio(1).Fit(ui.Cover).Radius(theme.TokensOf(child).RadiusSM()).Role(ui.RoleImage).Label(row[0])
 				}}).Role(ui.RoleListItem).Label(row[0]).PositionInSet(i+1, 3)
 			})

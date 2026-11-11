@@ -109,10 +109,10 @@ func (p *tabsCompositionPreviewState) view(c *ui.Context, h *desktop.Host, nativ
 		p.menuOpen = false
 		p.native, p.lastRecipe, p.popupError = native, p.recipe, ""
 	}
-	display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: "Tabs compositions"}, display.CardSlots{Title: "Tabs compositions", Description: "Source native tab lists, independent panels, dashboard cards and real header controls.", Content: func(child *ui.Context) {
-		p.choose(child, h, native, "source-tabs-config", &p.recipe, control.SelectProps{Label: "Tabs configuration", Options: tabsCompositionOptions()})
+	display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: tr(c, "Tabs compositions")}, display.CardSlots{Title: tr(c, "Tabs compositions"), Description: tr(c, "Source native tab lists, independent panels, dashboard cards and real header controls."), Content: func(child *ui.Context) {
+		p.choose(child, h, native, "source-tabs-config", &p.recipe, control.SelectProps{Label: tr(child, "Tabs configuration"), Options: localizedOptions(child, tabsCompositionOptions())})
 		if p.recipe == "rtl" {
-			p.choose(child, h, native, "source-tabs-language", &p.language, control.SelectProps{Label: "Tabs language", Options: statusLanguages()})
+			p.choose(child, h, native, "source-tabs-language", &p.language, control.SelectProps{Label: tr(child, "Tabs language"), Options: localizedOptions(child, statusLanguages())})
 		}
 		preview := ui.Column(child.Key("tabs-source:" + p.recipe)).FillWidth().MinWidth(0).AlignItems(ui.Center)
 		if p.recipe == "rtl" {
@@ -120,7 +120,7 @@ func (p *tabsCompositionPreviewState) view(c *ui.Context, h *desktop.Host, nativ
 		}
 		preview.Children(func() { p.draw(child, h, native) })
 		if p.action != "" {
-			ui.Text(child, p.action).FontSize(13).Role(ui.RoleStatus)
+			ui.Text(child, tr(child, p.action)).FontSize(13).Role(ui.RoleStatus)
 		}
 		if p.popupError != "" {
 			ui.Text(child, p.popupError).Role(ui.RoleAlert)
@@ -159,7 +159,7 @@ func (p *tabsCompositionPreviewState) draw(c *ui.Context, h *desktop.Host, nativ
 	}
 	ui.Column(c).FillWidth().MinWidth(0).MaxWidth(width).AlignItems(ui.Center).Children(func() {
 		if r.comparison {
-			ui.ScrollHorizontal(c).FillWidth().MinWidth(0).Label("Tabs variant comparison viewport").Children(func() {
+			ui.ScrollHorizontal(c).FillWidth().MinWidth(0).Label(tr(c, "Tabs variant comparison viewport")).Children(func() {
 				ui.Row(c).Gap(16).Children(func() {
 					p.group(c, h, native, r, d, &d.value, "default", false)
 					p.group(c, h, native, r, d, &d.second, "line", true)
@@ -171,13 +171,13 @@ func (p *tabsCompositionPreviewState) draw(c *ui.Context, h *desktop.Host, nativ
 	})
 }
 func (p *tabsCompositionPreviewState) group(c *ui.Context, h *desktop.Host, native bool, r tabsSourceRecipe, d *tabsCompositionDraft, value *string, key string, line bool) {
-	root := nav.TabsRoot(c, value, nav.TabsRootProps{Key: r.id + ":" + key, Label: "Source tabs " + key, Vertical: r.vertical, OnValueChange: func(string) { d.changes++ }}, func(current *ui.Context) {
+	root := nav.TabsRoot(c, value, nav.TabsRootProps{Key: r.id + ":" + key, Label: tr(c, "Source tabs ") + key, Vertical: r.vertical, OnValueChange: func(string) { d.changes++ }}, func(current *ui.Context) {
 		list := func() {
 			variant := nav.TabsDefault
 			if line {
 				variant = nav.TabsLine
 			}
-			nav.TabsList(current, nav.TabsListProps{Label: "Source tabs " + key, Variant: variant}, func(current *ui.Context) {
+			nav.TabsList(current, nav.TabsListProps{Label: tr(current, "Source tabs ") + key, Variant: variant}, func(current *ui.Context) {
 				for _, v := range r.values {
 					label := tabsSourceLabel(v)
 					if r.id == "rtl" {
@@ -186,7 +186,7 @@ func (p *tabsCompositionPreviewState) group(c *ui.Context, h *desktop.Host, nati
 					if v == "settings" && r.disabled == v {
 						label = "Disabled"
 					}
-					props := nav.TabsTriggerProps{Label: label, Disabled: r.disabled == v, HideLabel: r.iconOnly}
+					props := nav.TabsTriggerProps{Label: tr(current, label), Disabled: r.disabled == v, HideLabel: r.iconOnly}
 					if r.icons {
 						props.Icon = tabsSourceIcon(v)
 					}
@@ -199,14 +199,14 @@ func (p *tabsCompositionPreviewState) group(c *ui.Context, h *desktop.Host, nati
 			if r.id == "create-input" {
 				headerMinimum = 512
 			}
-			ui.ScrollHorizontal(current).FillWidth().MinWidth(0).Label("Tabs header viewport").Children(func() {
+			ui.ScrollHorizontal(current).FillWidth().MinWidth(0).Label(tr(current, "Tabs header viewport")).Children(func() {
 				ui.Row(current).FillWidth().MinWidth(headerMinimum).Gap(16).AlignItems(ui.Center).Children(func() {
 					list()
 					ui.Box(current).Grow(1)
 					if r.id == "create-input" {
 						ui.Row(current).Gap(8).AlignItems(ui.Center).Children(func() {
-							control.Input(current, &d.query, control.InputProps{Label: "Search tabs", Placeholder: "Search..."}).Width(176).Shrink(0)
-							if control.Button(current, "Action", control.ButtonProps{}).Shrink(0).Clicked() {
+							control.Input(current, &d.query, control.InputProps{Label: tr(current, "Search tabs"), Placeholder: tr(current, "Search...")}).Width(176).Shrink(0)
+							if control.Button(current, tr(current, "Action"), control.ButtonProps{}).Shrink(0).Clicked() {
 								d.savedQuery, d.savedTab = d.query, *value
 								d.actions++
 								p.action = "Local tabs action: Action"
@@ -218,7 +218,7 @@ func (p *tabsCompositionPreviewState) group(c *ui.Context, h *desktop.Host, nati
 				})
 			})
 		} else if r.content != "" && !r.vertical {
-			ui.ScrollHorizontal(current).FillWidth().MinWidth(0).Label("Source tab list viewport").Children(list)
+			ui.ScrollHorizontal(current).FillWidth().MinWidth(0).Label(tr(current, "Source tab list viewport")).Children(list)
 		} else {
 			list()
 		}
@@ -256,7 +256,7 @@ func (p *tabsCompositionPreviewState) panel(c *ui.Context, r tabsSourceRecipe, v
 			language = p.language
 		}
 		words := tabsSourceTranslations[language]
-		display.CardWith(c, display.CardProps{}, display.CardSlots{Title: words[value+"Title"], Description: words[value+"Desc"], Content: func(current *ui.Context) {
+		display.CardWith(c, display.CardProps{}, display.CardSlots{Title: tr(c, words[value+"Title"]), Description: tr(c, words[value+"Desc"]), Content: func(current *ui.Context) {
 			ui.Text(current, words[value+"Content"]).FontSize(14).TextColor(theme.TokensOf(current).MutedForeground)
 		}})
 		return
@@ -277,12 +277,12 @@ func (p *tabsCompositionPreviewState) panel(c *ui.Context, r tabsSourceRecipe, v
 			}
 		}
 	}
-	ui.Text(c, text).FontSize(14)
+	ui.Text(c, tr(c, text)).FontSize(14)
 }
 func (p *tabsCompositionPreviewState) more(c *ui.Context, h *desktop.Host, native bool, d *tabsCompositionDraft) {
-	items := []overlay.MenuItem{{Key: "settings", Label: "Settings"}, {Key: "export", Label: "Export"}, {Separator: true}, {Key: "archive", Label: "Archive"}}
+	items := []overlay.MenuItem{{Key: "settings", Label: tr(c, "Settings")}, {Key: "export", Label: tr(c, "Export")}, {Separator: true}, {Key: "archive", Label: tr(c, "Archive")}}
 	decorate := func(e ui.Element) {
-		control.StyleButton(c, e, "", control.ButtonProps{Variant: control.Ghost, Size: control.IconSmall, Label: "More options", Icon: outlined.MoreHoriz()}).Size(32, 32)
+		control.StyleButton(c, e, "", control.ButtonProps{Variant: control.Ghost, Size: control.IconSmall, Label: tr(c, "More options"), Icon: outlined.MoreHoriz()}).Size(32, 32)
 	}
 	choice := ""
 	var err error
@@ -291,7 +291,7 @@ func (p *tabsCompositionPreviewState) more(c *ui.Context, h *desktop.Host, nativ
 	} else {
 		anchor := ui.ButtonBase(c)
 		decorate(anchor)
-		choice, err = desktop.DropdownMenu(c, h, "source-tabs-more", anchor, &p.menuOpen, &p.menu, desktop.MenuProps{Label: "More options", Items: items, Width: 192, Placement: mygo.PlacementBottomEnd, Gap: 4})
+		choice, err = desktop.DropdownMenu(c, h, "source-tabs-more", anchor, &p.menuOpen, &p.menu, desktop.MenuProps{Label: tr(c, "More options"), Items: items, Width: 192, Placement: mygo.PlacementBottomEnd, Gap: 4})
 	}
 	if err != nil {
 		p.popupError = err.Error()

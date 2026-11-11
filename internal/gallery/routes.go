@@ -11,12 +11,12 @@ import (
 func (s *State) breadcrumbPreview(c *ui.Context) {
 	items := []navigation.BreadcrumbItem{
 		{Key: "home", Label: "shadcn/ui", URL: "https://ui.shadcn.com/create"},
-		{Key: "components", Label: "Components", URL: "https://ui.shadcn.com/docs/components"},
-		{Key: "forms", Label: "Forms"},
-		{Key: "patterns", Label: "Patterns"},
-		{Key: "navigation", Label: "Navigation"},
+		{Key: "components", Label: tr(c, "Components"), URL: "https://ui.shadcn.com/docs/components"},
+		{Key: "forms", Label: tr(c, "Forms")},
+		{Key: "patterns", Label: tr(c, "Patterns")},
+		{Key: "navigation", Label: tr(c, "Navigation")},
 	}
-	props := navigation.BreadcrumbProps{MaxItems: 3, EllipsisLabel: "Show parent routes", OnSelect: func(item navigation.BreadcrumbItem) {
+	props := navigation.BreadcrumbProps{MaxItems: 3, EllipsisLabel: tr(c, "Show parent routes"), OnSelect: func(item navigation.BreadcrumbItem) {
 		s.breadcrumbSelection = "Selected parent: " + item.Label
 	}}
 	var err error
@@ -36,7 +36,7 @@ func (s *State) breadcrumbPreview(c *ui.Context) {
 func (s *State) paginationPreview(c *ui.Context) {
 	display.Card(c, func() {
 		s.cardHeader(c, "Pagination", "Explore a million pages with a bounded navigation window.")
-		navigation.PaginationWith(c, &s.PageNumber, navigation.PaginationProps{Pages: 1_000_000, Label: "Preview pages"})
-		ui.Text(c, fmt.Sprintf("Page %d of 1,000,000", s.PageNumber)).Role(ui.RoleStatus).FontSize(14)
+		navigation.PaginationWith(c, &s.PageNumber, navigation.PaginationProps{Pages: 1_000_000, Label: tr(c, "Preview pages")})
+		ui.Text(c, fmt.Sprintf(tr(c, "Page %d of 1,000,000"), s.PageNumber)).Role(ui.RoleStatus).FontSize(14)
 	})
 }

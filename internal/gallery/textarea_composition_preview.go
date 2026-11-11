@@ -68,12 +68,12 @@ func (p *textareaCompositionPreviewState) view(c *ui.Context, h *desktop.Host, n
 		}
 		p.native, p.popupError = native, ""
 	}
-	display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: "Textarea compositions"}, display.CardSlots{
-		Title: "Textarea compositions", Description: "Source multiline editors, field order, native selection and local message drafts.",
+	display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: tr(c, "Textarea compositions")}, display.CardSlots{
+		Title: tr(c, "Textarea compositions"), Description: tr(c, "Source multiline editors, field order, native selection and local message drafts."),
 		Content: func(child *ui.Context) {
-			p.choose(child, h, native, "source-textarea-config", &p.recipe, control.SelectProps{Label: "Textarea configuration", Options: textareaCompositionRecipes})
+			p.choose(child, h, native, "source-textarea-config", &p.recipe, control.SelectProps{Label: tr(child, "Textarea configuration"), Options: localizedOptions(child, textareaCompositionRecipes)})
 			if p.recipe == "rtl" {
-				p.choose(child, h, native, "source-textarea-language", &p.language, control.SelectProps{Label: "Textarea language", Options: statusLanguages()})
+				p.choose(child, h, native, "source-textarea-language", &p.language, control.SelectProps{Label: tr(child, "Textarea language"), Options: localizedOptions(child, statusLanguages())})
 			}
 			preview := ui.Column(child.Key("textarea-source:" + p.recipe)).FillWidth().MinWidth(0).AlignItems(ui.Center)
 			if p.recipe == "rtl" {
@@ -81,7 +81,7 @@ func (p *textareaCompositionPreviewState) view(c *ui.Context, h *desktop.Host, n
 			}
 			preview.Children(func() { p.draw(child) })
 			if p.action != "" {
-				ui.Text(child, p.action).FontSize(13).Role(ui.RoleStatus).Label(p.action)
+				ui.Text(child, tr(child, p.action)).FontSize(13).Role(ui.RoleStatus).Label(tr(child, p.action))
 			}
 			if p.popupError != "" {
 				ui.Text(child, p.popupError).Role(ui.RoleAlert)
@@ -137,7 +137,7 @@ func (p *textareaCompositionPreviewState) draw(c *ui.Context) {
 			name = placeholder
 		}
 		editor := func() ui.Element {
-			e := control.Textarea(c, p.draft(p.recipe), control.TextareaProps{Label: name, Placeholder: placeholder, Rows: rows, Disabled: disabled, Invalid: invalid, OnChange: func(string) {
+			e := control.Textarea(c, p.draft(p.recipe), control.TextareaProps{Label: tr(c, name), Placeholder: tr(c, placeholder), Rows: rows, Disabled: disabled, Invalid: invalid, OnChange: func(string) {
 				p.changes[p.recipe]++
 			}})
 			a, b := e.TextSelection()
@@ -146,19 +146,19 @@ func (p *textareaCompositionPreviewState) draw(c *ui.Context) {
 		}
 		if field {
 			control.FieldWith(c, control.FieldProps{Disabled: fieldDisabled, Invalid: invalid}, func(f *control.FieldScope) {
-				f.Label(c, control.FieldLabelProps{Text: label}, nil)
+				f.Label(c, control.FieldLabelProps{Text: tr(c, label)}, nil)
 				if before {
-					f.Description(c, description)
+					f.Description(c, tr(c, description))
 				}
 				f.Control(c, editor)
 				if !before && description != "" {
-					f.Description(c, description)
+					f.Description(c, tr(c, description))
 				}
 			})
 		} else {
 			editor()
 		}
-		if p.recipe == "button" && control.Button(c, "Send message", control.ButtonProps{}).FillWidth().Clicked() {
+		if p.recipe == "button" && control.Button(c, tr(c, "Send message"), control.ButtonProps{}).FillWidth().Clicked() {
 			p.submitted[p.recipe] = *p.draft(p.recipe)
 			p.sends++
 			p.action = "Local textarea action: Send message"

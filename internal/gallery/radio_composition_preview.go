@@ -132,12 +132,12 @@ func (p *radioCompositionPreviewState) view(c *ui.Context, h *desktop.Host, nati
 		}
 		p.native, p.popupError = native, ""
 	}
-	display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: "Radio Group compositions"}, display.CardSlots{
-		Title: "Radio Group compositions", Description: "Source spacing, plan cards, native groups and independent selections.",
+	display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: tr(c, "Radio Group compositions")}, display.CardSlots{
+		Title: tr(c, "Radio Group compositions"), Description: tr(c, "Source spacing, plan cards, native groups and independent selections."),
 		Content: func(child *ui.Context) {
-			p.choose(child, h, native, "source-radio-config", &p.recipe, control.SelectProps{Label: "Radio Group configuration", Options: radioCompositionRecipes})
+			p.choose(child, h, native, "source-radio-config", &p.recipe, control.SelectProps{Label: tr(child, "Radio Group configuration"), Options: localizedOptions(child, radioCompositionRecipes)})
 			if p.recipe == "rtl" {
-				p.choose(child, h, native, "source-radio-language", &p.language, control.SelectProps{Label: "Radio Group language", Options: statusLanguages()})
+				p.choose(child, h, native, "source-radio-language", &p.language, control.SelectProps{Label: tr(child, "Radio Group language"), Options: localizedOptions(child, statusLanguages())})
 			}
 			ui.Column(child.Key(p.recipe)).FillWidth().MinWidth(0).AlignItems(ui.Center).Children(func() {
 				if p.recipe == "rtl" {
@@ -162,20 +162,20 @@ func (p *radioCompositionPreviewState) draw(c *ui.Context) {
 			for _, option := range r.options {
 				p.option(child.Key(option.value), value, option, r)
 			}
-		}).Gap(12).FillWidth().MinWidth(0).Role(ui.RoleRadioGroup).Label("Source radio group").FocusGroup(ui.Horizontal | ui.Vertical).Disabled(r.disabled).DimDisabled(false).Invalid(r.invalid)
+		}).Gap(12).FillWidth().MinWidth(0).Role(ui.RoleRadioGroup).Label(tr(child, "Source radio group")).FocusGroup(ui.Horizontal | ui.Vertical).Disabled(r.disabled).DimDisabled(false).Invalid(r.invalid)
 		if r.grid {
 			g.Grid().Columns(2).Gap(8)
 		}
 	}
 	ui.Column(c).FillWidth().MinWidth(0).MaxWidth(r.width).Gap(12).Children(func() {
 		if r.legend != "" {
-			control.FieldSetWith(c, control.FieldSetProps{Legend: r.legend, Description: r.description}, control.FieldSetSlots{
+			control.FieldSetWith(c, control.FieldSetProps{Legend: r.legend, Description: tr(c, r.description)}, control.FieldSetSlots{
 				Legend: func(child *ui.Context) ui.Element {
 					variant := control.FieldLegendDefault
 					if r.legendLabel {
 						variant = control.FieldLegendLabel
 					}
-					return control.FieldLegend(child, r.legend, variant)
+					return control.FieldLegend(child, tr(child, r.legend), variant)
 				},
 				Content: group,
 			})
@@ -193,7 +193,7 @@ func (p *radioCompositionPreviewState) draw(c *ui.Context) {
 			p.action = "Local radio choice: " + label
 			p.changes[p.recipe]++
 		}
-		ui.Text(c, "Selected value: "+label).FontSize(12).TextColor(theme.TokensOf(c).MutedForeground).Role(ui.RoleStatus).Label("Selected value: " + label)
+		ui.Text(c, tr(c, "Selected value: ")+label).FontSize(12).TextColor(theme.TokensOf(c).MutedForeground).Role(ui.RoleStatus).Label(tr(c, "Selected value: ") + label)
 	})
 }
 
@@ -206,10 +206,10 @@ func (p *radioCompositionPreviewState) option(c *ui.Context, selected *string, o
 			})
 		}
 		if r.card {
-			f.Label(c, control.FieldLabelProps{Label: option.label, Choice: true, Selected: *selected == option.value}, func() {
+			f.Label(c, control.FieldLabelProps{Label: tr(c, option.label), Choice: true, Selected: *selected == option.value}, func() {
 				ui.Row(c).FillWidth().MinWidth(0).Gap(12).AlignItems(ui.Center).Children(func() {
 					caption := func() {
-						f.Content(c, func() { control.FieldTitle(c, option.label); f.Description(c, option.description) })
+						f.Content(c, func() { control.FieldTitle(c, tr(c, option.label)); f.Description(c, tr(c, option.description)) })
 					}
 					if r.grid {
 						buildControl()
@@ -224,11 +224,11 @@ func (p *radioCompositionPreviewState) option(c *ui.Context, selected *string, o
 		}
 		buildControl()
 		caption := func() {
-			label := f.Label(c, control.FieldLabelProps{Text: option.label, Disabled: disabled}, nil)
+			label := f.Label(c, control.FieldLabelProps{Text: tr(c, option.label), Disabled: disabled}, nil)
 			if !r.medium {
 				label.FontWeight(400)
 			}
-			f.Description(c, option.description)
+			f.Description(c, tr(c, option.description))
 		}
 		if option.description != "" {
 			f.Content(c, caption)

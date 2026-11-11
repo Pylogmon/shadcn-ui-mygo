@@ -94,7 +94,7 @@ func (p *inputGroupPreviewState) search() {
 	p.feedback = fmt.Sprintf("%d result(s) in %s.", len(p.results), p.target)
 }
 func (p *inputGroupPreviewState) menu(c *ui.Context, h *desktop.Host, native bool, key, label, caption string, icon *ui.SVG, items []overlay.MenuItem, open *bool, state *desktop.MenuState) string {
-	props := control.ButtonProps{Label: label, Variant: control.Ghost, Size: control.ExtraSmall, Icon: icon}
+	props := control.ButtonProps{Label: tr(c, label), Variant: control.Ghost, Size: control.ExtraSmall, Icon: icon}
 	if caption == "" {
 		props.Size = control.IconExtraSmall
 	} else {
@@ -111,7 +111,7 @@ func (p *inputGroupPreviewState) menu(c *ui.Context, h *desktop.Host, native boo
 	var err error
 	if native {
 		chosen, err = desktop.NativeMenu(c, overlay.MenuProps{Items: items}, func(e ui.Element) {
-			control.StyleButton(c, e, caption, props)
+			control.StyleButton(c, e, tr(c, caption), props)
 			trailingIcon(e)
 			if e.Clicked() {
 				p.popupError = ""
@@ -123,7 +123,7 @@ func (p *inputGroupPreviewState) menu(c *ui.Context, h *desktop.Host, native boo
 		if anchor.Clicked() {
 			p.popupError = ""
 		}
-		chosen, err = desktop.DropdownMenu(c, h, key, anchor, open, state, desktop.MenuProps{Label: label, Items: items, Placement: mygo.PlacementBottomEnd, Gap: 8, Width: 210})
+		chosen, err = desktop.DropdownMenu(c, h, key, anchor, open, state, desktop.MenuProps{Label: tr(c, label), Items: items, Placement: mygo.PlacementBottomEnd, Gap: 8, Width: 210})
 	}
 	if err != nil {
 		p.popupError = "Could not open menu: " + err.Error()
@@ -146,20 +146,20 @@ func (p *inputGroupPreviewState) view(c *ui.Context, h *desktop.Host, native boo
 	t := theme.TokensOf(c)
 	display.Card(c.Key("input-group-source-examples"), func() {
 		ui.Column(c).FillWidth().Gap(18).Children(func() {
-			display.Typography(c, "Input groups with actions", display.H3)
-			ui.Text(c, "Copy a link, choose where to search, and preview an editable draft.").TextColor(t.MutedForeground)
+			display.Typography(c, tr(c, "Input groups with actions"), display.H3)
+			ui.Text(c, tr(c, "Copy a link, choose where to search, and preview an editable draft.")).TextColor(t.MutedForeground)
 			ui.Row(c).FillWidth().Wrap().Gap(24).AlignItems(ui.Start).Children(func() {
 				ui.Column(c).Basis(0).Grow(1).MinWidth(300).Gap(18).Children(func() {
-					control.Field(c, control.FieldProps{Label: "Share link"}, func() ui.Element {
+					control.Field(c, control.FieldProps{Label: tr(c, "Share link")}, func() ui.Element {
 						return control.InputGroup(c.Key("share-link"), control.InputGroupProps{InlineEnd: func() {
-							if control.InputGroupButton(c, "", control.ButtonProps{Label: "Copy link", Icon: p.copyIcon("link", p.link), Variant: control.Ghost, Size: control.IconExtraSmall, Loading: p.copyPending == "link"}).Clicked() {
+							if control.InputGroupButton(c, "", control.ButtonProps{Label: tr(c, "Copy link"), Icon: p.copyIcon("link", p.link), Variant: control.Ghost, Size: control.IconExtraSmall, Loading: p.copyPending == "link"}).Clicked() {
 								p.copy(c, p.link, "link")
 							}
 						}}, func() ui.Element { return control.Input(c, &p.link, control.InputProps{ReadOnly: true}) })
 					})
-					control.Field(c, control.FieldProps{Label: "Favorite site"}, func() ui.Element {
+					control.Field(c, control.FieldProps{Label: tr(c, "Favorite site")}, func() ui.Element {
 						return control.InputGroup(c.Key("favorite-site"), control.InputGroupProps{InlineStart: func() {
-							anchor := control.InputGroupButton(c, "", control.ButtonProps{Label: "Site information", Icon: outlined.Info(), Variant: control.Secondary, Size: control.IconExtraSmall})
+							anchor := control.InputGroupButton(c, "", control.ButtonProps{Label: tr(c, "Site information"), Icon: outlined.Info(), Variant: control.Secondary, Size: control.IconExtraSmall})
 							if anchor.Clicked() {
 								p.popupError = ""
 							}
@@ -174,11 +174,11 @@ func (p *inputGroupPreviewState) view(c *ui.Context, h *desktop.Host, native boo
 									build = desktop.NativePopover
 								}
 								site := p.site
-								if err := build(c, h, "input-group-info", anchor, &p.infoOpen, desktop.PopoverProps{Label: "Site information", Width: 280, FitContent: true}, func(child *ui.Context) {
+								if err := build(c, h, "input-group-info", anchor, &p.infoOpen, desktop.PopoverProps{Label: tr(c, "Site information"), Width: 280, FitContent: true}, func(child *ui.Context) {
 									ui.Column(child).Gap(8).Children(func() {
-										ui.Text(child, "Example address").FontWeight(600)
+										ui.Text(child, tr(child, "Example address")).FontWeight(600)
 										ui.Text(child, "https://"+site)
-										ui.Text(child, "Use the star to keep this address in your favorites.")
+										ui.Text(child, tr(child, "Use the star to keep this address in your favorites."))
 									})
 								}); err != nil {
 									p.popupError = "Could not open site information: " + err.Error()
@@ -190,7 +190,7 @@ func (p *inputGroupPreviewState) view(c *ui.Context, h *desktop.Host, native boo
 							if p.favorite {
 								fill = material.Filled
 							}
-							if control.InputGroupButton(c, "", control.ButtonProps{Label: "Favorite site toggle", Icon: outlined.Star(fill), Variant: control.Ghost, Size: control.IconExtraSmall}).Checked(p.favorite).Clicked() {
+							if control.InputGroupButton(c, "", control.ButtonProps{Label: tr(c, "Favorite site toggle"), Icon: outlined.Star(fill), Variant: control.Ghost, Size: control.IconExtraSmall}).Checked(p.favorite).Clicked() {
 								p.favorite = !p.favorite
 								if p.favorite {
 									p.feedback = "Site added to favorites."
@@ -200,9 +200,9 @@ func (p *inputGroupPreviewState) view(c *ui.Context, h *desktop.Host, native boo
 							}
 						}}, func() ui.Element { return control.Input(c, &p.site, control.InputProps{Placeholder: "example.com"}) })
 					})
-					control.Field(c, control.FieldProps{Label: "Search query", Description: "Search the small local example collection."}, func() ui.Element {
+					control.Field(c, control.FieldProps{Label: tr(c, "Search query"), Description: tr(c, "Search the small local example collection.")}, func() ui.Element {
 						return control.InputGroup(c.Key("target-search"), control.InputGroupProps{InlineStart: func() { material.Icon(c, outlined.Search(), material.Props{Size: 16}) }, InlineEnd: func() {
-							items := []overlay.MenuItem{{Key: "Documentation", Label: "Documentation"}, {Key: "Blog Posts", Label: "Blog Posts"}, {Key: "Changelog", Label: "Changelog"}}
+							items := []overlay.MenuItem{{Key: "Documentation", Label: tr(c, "Documentation")}, {Key: "Blog Posts", Label: tr(c, "Blog Posts")}, {Key: "Changelog", Label: tr(c, "Changelog")}}
 							if target := p.menu(c, h, native, "input-group-target", "Search target", p.target, outlined.ExpandMore(), items, &p.targetOpen, &p.targetMenu); target != "" {
 								p.target = target
 								p.searched = false
@@ -213,25 +213,25 @@ func (p *inputGroupPreviewState) view(c *ui.Context, h *desktop.Host, native boo
 								p.search()
 							}
 						}}, func() ui.Element {
-							return control.Input(c, &p.query, control.InputProps{Placeholder: "Type to search…", OnSubmit: func(string) { p.search() }})
+							return control.Input(c, &p.query, control.InputProps{Placeholder: tr(c, "Type to search…"), OnSubmit: func(string) { p.search() }})
 						})
 					})
 					if p.searched {
 						ui.Column(c.Key("input-group-results")).Gap(6).Children(func() {
-							ui.Text(c, fmt.Sprintf("%s · %d result(s)", p.target, len(p.results))).FontWeight(500)
+							ui.Text(c, fmt.Sprintf(tr(c, "%s · %d result(s)"), p.target, len(p.results))).FontWeight(500)
 							for _, result := range p.results {
 								ui.Text(c, result)
 							}
 							if len(p.results) == 0 {
-								ui.Text(c, "No matching examples.").TextColor(t.MutedForeground)
+								ui.Text(c, tr(c, "No matching examples.")).TextColor(t.MutedForeground)
 							}
 						})
 					}
 				})
 				ui.Column(c).Basis(0).Grow(1).MinWidth(340).Gap(16).Children(func() {
-					control.Field(c, control.FieldProps{Label: "Draft file name"}, func() ui.Element {
+					control.Field(c, control.FieldProps{Label: tr(c, "Draft file name")}, func() ui.Element {
 						return control.InputGroup(c.Key("draft-file-name"), control.InputGroupProps{InlineEnd: func() {
-							switch p.menu(c, h, native, "input-group-file", "Draft file actions", "", outlined.MoreHoriz(), []overlay.MenuItem{{Key: "settings", Label: "Settings"}, {Key: "copy", Label: "Copy file name"}, {Key: "details", Label: "Show file details"}}, &p.fileOpen, &p.fileMenu) {
+							switch p.menu(c, h, native, "input-group-file", "Draft file actions", "", outlined.MoreHoriz(), []overlay.MenuItem{{Key: "settings", Label: tr(c, "Settings")}, {Key: "copy", Label: tr(c, "Copy file name")}, {Key: "details", Label: tr(c, "Show file details")}}, &p.fileOpen, &p.fileMenu) {
 							case "settings":
 								p.settingsOpen = !p.settingsOpen
 							case "copy":
@@ -240,19 +240,19 @@ func (p *inputGroupPreviewState) view(c *ui.Context, h *desktop.Host, native boo
 								p.detailsOpen = !p.detailsOpen
 							}
 						}}, func() ui.Element {
-							return control.Input(c, &p.fileName, control.InputProps{Placeholder: "Enter file name"})
+							return control.Input(c, &p.fileName, control.InputProps{Placeholder: tr(c, "Enter file name")})
 						})
 					})
-					control.Field(c, control.FieldProps{Label: "Draft text"}, func() ui.Element {
+					control.Field(c, control.FieldProps{Label: tr(c, "Draft text")}, func() ui.Element {
 						return control.InputGroup(c.Key("draft-editor"), control.InputGroupProps{BlockStart: func() {
 							material.Icon(c, outlined.Code(), material.Props{Size: 16})
 							ui.Text(c, p.fileName).Font("monospace").SingleLine().Grow(1).MinWidth(0)
-							if control.InputGroupButton(c, "", control.ButtonProps{Label: "Reset draft", Icon: outlined.RestartAlt(), Variant: control.Ghost, Size: control.IconExtraSmall}).Clicked() {
+							if control.InputGroupButton(c, "", control.ButtonProps{Label: tr(c, "Reset draft"), Icon: outlined.RestartAlt(), Variant: control.Ghost, Size: control.IconExtraSmall}).Clicked() {
 								p.draft = inputGroupInitialDraft
 								p.previewed = false
 								p.feedback = "Draft restored."
 							}
-							if control.InputGroupButton(c, "", control.ButtonProps{Label: "Copy draft", Icon: p.copyIcon("draft", p.draft), Variant: control.Ghost, Size: control.IconExtraSmall, Loading: p.copyPending == "draft"}).Clicked() {
+							if control.InputGroupButton(c, "", control.ButtonProps{Label: tr(c, "Copy draft"), Icon: p.copyIcon("draft", p.draft), Variant: control.Ghost, Size: control.IconExtraSmall, Loading: p.copyPending == "draft"}).Clicked() {
 								p.copy(c, p.draft, "draft")
 							}
 						}, BlockEnd: func() {
@@ -261,29 +261,29 @@ func (p *inputGroupPreviewState) view(c *ui.Context, h *desktop.Host, native boo
 							prefix := string(utf16.Decode(units[:max(0, min(end, len(units)))]))
 							line := strings.Count(prefix, "\n") + 1
 							column := utf8.RuneCountInString(prefix[strings.LastIndex(prefix, "\n")+1:]) + 1
-							ui.Text(c, fmt.Sprintf("Line %d, Column %d", line, column)).FontSize(12).TextColor(t.MutedForeground).Grow(1)
+							ui.Text(c, fmt.Sprintf(tr(c, "Line %d, Column %d"), line, column)).FontSize(12).TextColor(t.MutedForeground).Grow(1)
 							if control.InputGroupButton(c, "Preview draft", control.ButtonProps{Variant: control.Default, Icon: outlined.Preview()}).Clicked() {
 								p.preview, p.previewed = p.draft, true
 								p.feedback = "Draft preview updated."
 							}
 						}}, func() ui.Element {
-							return control.Textarea(c, &p.draft, control.TextareaProps{Placeholder: inputGroupInitialDraft, Rows: 7, Handle: &p.draftHandle}).MinHeight(200)
+							return control.Textarea(c, &p.draft, control.TextareaProps{Placeholder: tr(c, inputGroupInitialDraft), Rows: 7, Handle: &p.draftHandle}).MinHeight(200)
 						})
 					})
 					if p.settingsOpen {
-						control.Checkbox(c, &p.monospace, "Monospace preview", control.CheckboxProps{})
+						control.Checkbox(c, &p.monospace, tr(c, "Monospace preview"), control.CheckboxProps{})
 					}
 					if p.detailsOpen {
-						ui.Text(c, fmt.Sprintf("%s · %d characters · %d lines", p.fileName, utf8.RuneCountInString(p.draft), strings.Count(p.draft, "\n")+1)).TextColor(t.MutedForeground)
+						ui.Text(c, fmt.Sprintf(tr(c, "%s · %d characters · %d lines"), p.fileName, utf8.RuneCountInString(p.draft), strings.Count(p.draft, "\n")+1)).TextColor(t.MutedForeground)
 					}
 					if p.previewed {
 						ui.Column(c.Key("draft-preview")).FillWidth().Gap(8).Padding(12).Border(1, t.Border).Radius(t.RadiusMD()).Children(func() {
-							ui.Text(c, "Draft preview").FontWeight(600)
+							ui.Text(c, tr(c, "Draft preview")).FontWeight(600)
 							text := p.preview
 							if text == "" {
 								text = "(Empty draft)"
 							}
-							e := ui.Text(c, text).MinWidth(0)
+							e := ui.Text(c, tr(c, text)).MinWidth(0)
 							if p.monospace {
 								e.Font("monospace")
 							}
@@ -298,5 +298,5 @@ func (p *inputGroupPreviewState) view(c *ui.Context, h *desktop.Host, native boo
 				ui.Text(c, p.popupError).Role(ui.RoleAlert)
 			}
 		})
-	}).Role(ui.RoleGroup).Label("Input group examples")
+	}).Role(ui.RoleGroup).Label(tr(c, "Input group examples"))
 }

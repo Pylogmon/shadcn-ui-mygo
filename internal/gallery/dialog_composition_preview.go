@@ -88,16 +88,16 @@ func (p *dialogCompositionPreviewState) view(c *ui.Context, h *desktop.Host, nat
 		}
 		p.native, p.lastRecipe, p.popupError = native, p.recipe, ""
 	}
-	display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: "Dialog compositions"}, display.CardSlots{
-		Title: "Dialog compositions", Description: "Source native modals, profile drafts, fixed actions and complete chat settings.",
+	display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: tr(c, "Dialog compositions")}, display.CardSlots{
+		Title: tr(c, "Dialog compositions"), Description: tr(c, "Source native modals, profile drafts, fixed actions and complete chat settings."),
 		Content: func(child *ui.Context) {
-			p.choose(child, h, native, "source-dialog-config", &p.recipe, control.SelectProps{Label: "Dialog configuration", Options: dialogCompositionRecipes})
+			p.choose(child, h, native, "source-dialog-config", &p.recipe, control.SelectProps{Label: tr(child, "Dialog configuration"), Options: localizedOptions(child, dialogCompositionRecipes)})
 			if p.recipe == "rtl" {
-				p.choose(child, h, native, "source-dialog-language", &p.language, control.SelectProps{Label: "Dialog language", Options: statusLanguages()})
+				p.choose(child, h, native, "source-dialog-language", &p.language, control.SelectProps{Label: tr(child, "Dialog language"), Options: localizedOptions(child, statusLanguages())})
 			}
 			ui.Column(child.Key("dialog-source:" + p.recipe)).FillWidth().MinWidth(0).AlignItems(ui.Center).Children(func() { p.draw(child, h, native) })
 			if p.action != "" {
-				ui.Text(child, p.action).FontSize(13).Role(ui.RoleStatus)
+				ui.Text(child, tr(child, p.action)).FontSize(13).Role(ui.RoleStatus)
 			}
 			if p.popupError != "" {
 				ui.Text(child, p.popupError).Role(ui.RoleAlert)
@@ -124,8 +124,8 @@ const dialogSourceLorem = "Lorem ipsum dolor sit amet, consectetur adipiscing el
 func dialogSourceHeader(c *ui.Context, title, description string) {
 	t := theme.TokensOf(c)
 	ui.Column(c).FillWidth().MinWidth(0).Shrink(0).Gap(8).Children(func() {
-		theme.StyleHeading(c, ui.Text(c, title).FontSize(14).FontWeight(500).LineHeight(1).PaddingEnd(24).Role(ui.RoleHeading).Level(2))
-		ui.Text(c, description).FontSize(14).TextColor(t.MutedForeground)
+		theme.StyleHeading(c, ui.Text(c, tr(c, title)).FontSize(14).FontWeight(500).LineHeight(1).PaddingEnd(24).Role(ui.RoleHeading).Level(2))
+		ui.Text(c, tr(c, description)).FontSize(14).TextColor(t.MutedForeground)
 	})
 }
 
@@ -163,7 +163,7 @@ func (p *dialogCompositionPreviewState) draw(c *ui.Context, h *desktop.Host, nat
 		d.open = true
 	}
 	build := func() {
-		props := overlay.DialogProps{Title: words.title, Description: words.description, Width: width, HideClose: true, HideHeader: true, NoScroll: true, ReturnFocus: &d.trigger}
+		props := overlay.DialogProps{Title: tr(c, words.title), Description: tr(c, words.description), Width: width, HideClose: true, HideHeader: true, NoScroll: true, ReturnFocus: &d.trigger}
 		if profile {
 			props.InitialFocus = &d.nameTarget
 		}
@@ -187,13 +187,13 @@ func (p *dialogCompositionPreviewState) draw(c *ui.Context, h *desktop.Host, nat
 					}
 				} else {
 					closeButton := func() {
-						if fit(control.Button(c, "Close", control.ButtonProps{Variant: control.Outline})).Clicked() {
+						if fit(control.Button(c, tr(c, "Close"), control.ButtonProps{Variant: control.Outline})).Clicked() {
 							d.open = false
 						}
 					}
 					if p.recipe == "share" {
 						ui.Row(c).FillWidth().Justify(ui.Start).Children(func() {
-							if fit(control.Button(c, "Close", control.ButtonProps{})).Clicked() {
+							if fit(control.Button(c, tr(c, "Close"), control.ButtonProps{})).Clicked() {
 								d.open = false
 							}
 						})
@@ -215,25 +215,25 @@ func (p *dialogCompositionPreviewState) draw(c *ui.Context, h *desktop.Host, nat
 							handle *ui.Handle
 						}{{words.name, &d.name, &d.nameTarget}, {words.username, &d.username, nil}} {
 							control.FieldWith(c.Key(field.label), control.FieldProps{}, func(f *control.FieldScope) {
-								label := f.Label(c, control.FieldLabelProps{Text: field.label}, nil)
+								label := f.Label(c, control.FieldLabelProps{Text: tr(c, field.label)}, nil)
 								if p.recipe != "create-form" {
 									label.LineHeight(1)
 								}
 								f.Control(c, func() ui.Element {
-									return control.Input(c, field.value, control.InputProps{Label: field.label, Handle: field.handle, OnChange: func(string) { d.changes++ }})
+									return control.Input(c, field.value, control.InputProps{Label: tr(c, field.label), Handle: field.handle, OnChange: func(string) { d.changes++ }})
 								})
 							})
 						}
 					})
 				case p.recipe == "share":
-					control.Input(c, &d.link, control.InputProps{Label: "Link", ReadOnly: true})
+					control.Input(c, &d.link, control.InputProps{Label: tr(c, "Link"), ReadOnly: true})
 				case scrollable:
 					_, height := c.Size()
 					fraction := float32(.5)
 					if strings.HasPrefix(p.recipe, "create-") {
 						fraction = .7
 					}
-					ui.Scroll(c).FillWidth().MinHeight(0).Shrink(1).MaxHeight(height * fraction).Scrollbars(false).Role(ui.RoleRegion).Label("Dialog source scroll").Children(func() {
+					ui.Scroll(c).FillWidth().MinHeight(0).Shrink(1).MaxHeight(height * fraction).Scrollbars(false).Role(ui.RoleRegion).Label(tr(c, "Dialog source scroll")).Children(func() {
 						ui.Column(c).FillWidth().Shrink(0).Children(func() {
 							for i := 0; i < 10; i++ {
 								ui.Text(c.Key(i), dialogSourceLorem).FontSize(14).LineHeight(1.5).Margin(0, 0, 16, 0)
@@ -250,7 +250,7 @@ func (p *dialogCompositionPreviewState) draw(c *ui.Context, h *desktop.Host, nat
 			// face. Appending children to the returned native panel retains its
 			// modal focus/disabled/exit scope; no frame Element is stored.
 			panel.Children(func() {
-				if control.Button(c, "", control.ButtonProps{Variant: control.Ghost, Size: control.IconSmall, Label: "Close dialog", Icon: outlined.Close()}).Absolute().Top(16).End(16).Clicked() {
+				if control.Button(c, "", control.ButtonProps{Variant: control.Ghost, Size: control.IconSmall, Label: tr(c, "Close dialog"), Icon: outlined.Close()}).Absolute().Top(16).End(16).Clicked() {
 					d.open = false
 					c.Invalidate()
 				}
@@ -274,17 +274,17 @@ func (p *dialogCompositionPreviewState) chat(c *ui.Context, h *desktop.Host, nat
 	w, height := c.Size()
 	ui.Column(c).FillWidth().MinWidth(0).MinHeight(0).Gap(16).Children(func() {
 		if w < 768 {
-			control.NativeSelect(c, &d.tab, control.SelectProps{Label: "Chat settings section", Options: dialogChatSections}).FillWidth()
+			control.NativeSelect(c, &d.tab, control.SelectProps{Label: tr(c, "Chat settings section"), Options: localizedOptions(c, dialogChatSections)}).FillWidth()
 		}
-		nav.TabsRoot(c, &d.tab, nav.TabsRootProps{Key: "dialog-chat-tabs", Label: "Chat settings tabs"}, func(current *ui.Context) {
+		nav.TabsRoot(c, &d.tab, nav.TabsRootProps{Key: "dialog-chat-tabs", Label: tr(c, "Chat settings tabs")}, func(current *ui.Context) {
 			if w >= 768 {
-				nav.TabsList(current, nav.TabsListProps{Label: "Chat settings tabs"}, func(current *ui.Context) {
+				nav.TabsList(current, nav.TabsListProps{Label: tr(current, "Chat settings tabs")}, func(current *ui.Context) {
 					for _, o := range dialogChatSections {
-						nav.TabsTrigger(current, o.Value, nav.TabsTriggerProps{Label: o.Label})
+						nav.TabsTrigger(current, o.Value, nav.TabsTriggerProps{Label: tr(current, o.Label)})
 					}
 				}).FillWidth().AlignSelf(ui.Stretch)
 			}
-			ui.Scroll(current).FillWidth().MinWidth(0).MinHeight(0).Shrink(1).MaxHeight(height*.7).Border(1, theme.TokensOf(current).Border).Radius(theme.TokensOf(current).RadiusLG()).Role(ui.RoleRegion).Label("Chat settings content").Children(func() {
+			ui.Scroll(current).FillWidth().MinWidth(0).MinHeight(0).Shrink(1).MaxHeight(height*.7).Border(1, theme.TokensOf(current).Border).Radius(theme.TokensOf(current).RadiusLG()).Role(ui.RoleRegion).Label(tr(current, "Chat settings content")).Children(func() {
 				ui.Column(current).FillWidth().MinWidth(0).MinHeight(550).Padding(24).Children(func() {
 					for _, section := range dialogChatSections {
 						nav.TabsContent(current, section.Value, nav.TabsContentProps{}, func(current *ui.Context) { p.chatPanel(current, h, native, d, section.Value) })
@@ -302,12 +302,15 @@ func (p *dialogCompositionPreviewState) chatSelect(c *ui.Context, h *desktop.Hos
 	}
 	control.FieldWith(c.Key(key), control.FieldProps{Orientation: orientation, ResponsiveWidth: 400}, func(f *control.FieldScope) {
 		if description != "" {
-			f.Content(c, func() { f.Label(c, control.FieldLabelProps{Text: label}, nil); f.Description(c, description) })
+			f.Content(c, func() {
+				f.Label(c, control.FieldLabelProps{Text: tr(c, label)}, nil)
+				f.Description(c, tr(c, description))
+			})
 		} else {
-			f.Label(c, control.FieldLabelProps{Text: label}, nil)
+			f.Label(c, control.FieldLabelProps{Text: tr(c, label)}, nil)
 		}
 		f.Control(c, func() ui.Element {
-			e := p.choose(c, h, native, "source-dialog-"+key, value, control.SelectProps{Label: label, Options: options}).MinWidth(125).Width(125).Shrink(0)
+			e := p.choose(c, h, native, "source-dialog-"+key, value, control.SelectProps{Label: tr(c, label), Options: localizedOptions(c, options)}).MinWidth(125).Width(125).Shrink(0)
 			if e.Changed() {
 				d.changes++
 			}
@@ -330,22 +333,22 @@ func (p *dialogCompositionPreviewState) chatPanel(c *ui.Context, h *desktop.Host
 			p.chatSelect(c, h, native, d, "voice", "Voice", "", &d.voice, dialogChatVoices, false)
 		case "notifications":
 			dialogSourceFieldset(c, func() {
-				control.FieldLabel(c, control.FieldLabelProps{Text: "Responses"}, nil)
-				control.FieldDescription(c, "Get notified when ChatGPT responds to requests that take time, like research or image generation.")
+				control.FieldLabel(c, control.FieldLabelProps{Text: tr(c, "Responses")}, nil)
+				control.FieldDescription(c, tr(c, "Get notified when ChatGPT responds to requests that take time, like research or image generation."))
 				checked := true
-				control.Checkbox(c, &checked, "Push notifications", control.CheckboxProps{Disabled: true}).FontWeight(400)
+				control.Checkbox(c, &checked, tr(c, "Push notifications"), control.CheckboxProps{Disabled: true}).FontWeight(400)
 			})
 			sep()
 			dialogSourceFieldset(c, func() {
-				control.FieldLabel(c, control.FieldLabelProps{Text: "Tasks"}, nil)
+				control.FieldLabel(c, control.FieldLabelProps{Text: tr(c, "Tasks")}, nil)
 				owner := ui.Box(c).FillWidth()
 				router := ui.Local(owner, "dialog-tasks-router", func() *ui.Router { return ui.NewRouter("/dialog-examples") })
 				owner.Children(func() {
 					(*router).View(c, func(*ui.Route) {
 						control.FieldDescriptionWith(c, "Get notified when tasks you've created have updates. Manage tasks", func() {
 							ui.RichText(c).FillWidth().MinWidth(0).FontSize(14).TextColor(theme.TokensOf(c).MutedForeground).Children(func() {
-								ui.Text(c, "Get notified when tasks you've created have updates. ")
-								if ui.Link(c, "Manage tasks", "#").Underline().Clicked() {
+								ui.Text(c, tr(c, "Get notified when tasks you've created have updates. "))
+								if ui.Link(c, tr(c, "Manage tasks"), "#").Underline().Clicked() {
 									d.actions++
 									p.action = "Local dialog action: Manage tasks"
 								}
@@ -354,20 +357,20 @@ func (p *dialogCompositionPreviewState) chatPanel(c *ui.Context, h *desktop.Host
 					})
 				})
 				ui.Column(c).Gap(12).Children(func() {
-					control.Checkbox(c, &d.taskPush, "Push notifications", control.CheckboxProps{}).FontWeight(400)
-					control.Checkbox(c, &d.taskEmail, "Email notifications", control.CheckboxProps{}).FontWeight(400)
+					control.Checkbox(c, &d.taskPush, tr(c, "Push notifications"), control.CheckboxProps{}).FontWeight(400)
+					control.Checkbox(c, &d.taskEmail, tr(c, "Email notifications"), control.CheckboxProps{}).FontWeight(400)
 				})
 			})
 		case "personalization":
 			control.FieldWith(c, control.FieldProps{Orientation: control.FieldResponsive, ResponsiveWidth: 400}, func(f *control.FieldScope) {
-				f.Label(c, control.FieldLabelProps{Text: "Nickname"}, nil)
+				f.Label(c, control.FieldLabelProps{Text: tr(c, "Nickname")}, nil)
 				f.Control(c, func() ui.Element {
 					return control.InputGroup(c, control.InputGroupProps{InlineEnd: func() {
-						anchor := control.Button(c, "", control.ButtonProps{Variant: control.Ghost, Size: control.IconExtraSmall, Label: "Nickname help", Icon: outlined.Info()})
-						props := desktop.TooltipProps{Description: "Used to identify you in the chat.", MaxWidth: 280}
+						anchor := control.Button(c, "", control.ButtonProps{Variant: control.Ghost, Size: control.IconExtraSmall, Label: tr(c, "Nickname help"), Icon: outlined.Info()})
+						props := desktop.TooltipProps{Description: tr(c, "Used to identify you in the chat."), MaxWidth: 280}
 						content := func(child *ui.Context) {
 							ui.Row(child).Gap(8).AlignItems(ui.Center).Children(func() {
-								ui.Text(child, "Used to identify you in the chat.")
+								ui.Text(child, tr(child, "Used to identify you in the chat."))
 								display.KbdWith(child, "N", display.KbdProps{InTooltip: !native})
 							})
 						}
@@ -381,27 +384,27 @@ func (p *dialogCompositionPreviewState) chatPanel(c *ui.Context, h *desktop.Host
 							p.popupError = err.Error()
 						}
 					}}, func() ui.Element {
-						return control.Input(c, &d.nickname, control.InputProps{Label: "Nickname", Placeholder: "Broski", OnChange: func(string) { d.changes++ }})
+						return control.Input(c, &d.nickname, control.InputProps{Label: tr(c, "Nickname"), Placeholder: "Broski", OnChange: func(string) { d.changes++ }})
 					})
 				})
 			})
 			sep()
 			control.FieldWith(c, control.FieldProps{}, func(f *control.FieldScope) {
 				f.Content(c, func() {
-					f.Label(c, control.FieldLabelProps{Text: "More about you"}, nil)
-					f.Description(c, "Tell us more about yourself. This will be used to help us personalize your experience.")
+					f.Label(c, control.FieldLabelProps{Text: tr(c, "More about you")}, nil)
+					f.Description(c, tr(c, "Tell us more about yourself. This will be used to help us personalize your experience."))
 				})
 				f.Control(c, func() ui.Element {
-					return control.Textarea(c, &d.about, control.TextareaProps{Label: "More about you", Placeholder: "I'm a software engineer...", OnChange: func(string) { d.changes++ }}).MinHeight(120)
+					return control.Textarea(c, &d.about, control.TextareaProps{Label: tr(c, "More about you"), Placeholder: tr(c, "I'm a software engineer..."), OnChange: func(string) { d.changes++ }}).MinHeight(120)
 				})
 			})
 			sep()
 			control.FieldWith(c, control.FieldProps{}, func(f *control.FieldScope) {
-				f.Label(c, control.FieldLabelProps{Label: "Enable customizations", Choice: true}, func() {
+				f.Label(c, control.FieldLabelProps{Label: tr(c, "Enable customizations"), Choice: true}, func() {
 					ui.Row(c).FillWidth().MinWidth(0).Gap(12).AlignItems(ui.Center).Children(func() {
 						f.Content(c, func() {
-							ui.Text(c, "Enable customizations").FontSize(14).FontWeight(500)
-							f.Description(c, "Enable customizations to make ChatGPT more personalized.")
+							ui.Text(c, tr(c, "Enable customizations")).FontSize(14).FontWeight(500)
+							f.Description(c, tr(c, "Enable customizations to make ChatGPT more personalized."))
 						})
 						f.Control(c, func() ui.Element {
 							return control.Switch(c, &d.custom, control.SwitchProps{})
@@ -412,8 +415,8 @@ func (p *dialogCompositionPreviewState) chatPanel(c *ui.Context, h *desktop.Host
 		case "security":
 			control.FieldWith(c, control.FieldProps{Orientation: control.FieldHorizontal}, func(f *control.FieldScope) {
 				f.Content(c, func() {
-					f.Label(c, control.FieldLabelProps{Text: "Multi-factor authentication"}, nil)
-					f.Description(c, "Enable multi-factor authentication to secure your account. If you do not have a two-factor authentication device, you can use a one-time code sent to your email.")
+					f.Label(c, control.FieldLabelProps{Text: tr(c, "Multi-factor authentication")}, nil)
+					f.Description(c, tr(c, "Enable multi-factor authentication to secure your account. If you do not have a two-factor authentication device, you can use a one-time code sent to your email."))
 				})
 				f.Control(c, func() ui.Element {
 					return control.Switch(c, &d.twoFactor, control.SwitchProps{})
@@ -423,8 +426,8 @@ func (p *dialogCompositionPreviewState) chatPanel(c *ui.Context, h *desktop.Host
 			for _, item := range []struct{ title, description, button string }{{"Log out", "Log out of your account on this device.", "Log Out"}, {"Log out of all devices", "This will log you out of all devices, including the current session. It may take up to 30 minutes for the changes to take effect.", "Log Out All"}} {
 				ui.Row(c.Key(item.title)).FillWidth().MinWidth(0).Gap(12).AlignItems(ui.Center).Children(func() {
 					control.FieldContent(c, func() {
-						ui.Text(c, item.title).FontSize(14).FontWeight(500)
-						control.FieldDescription(c, item.description)
+						ui.Text(c, tr(c, item.title)).FontSize(14).FontWeight(500)
+						control.FieldDescription(c, tr(c, item.description))
 					})
 					if control.Button(c, item.button, control.ButtonProps{Variant: control.Outline, Size: control.Small}).Shrink(0).Clicked() {
 						d.actions++

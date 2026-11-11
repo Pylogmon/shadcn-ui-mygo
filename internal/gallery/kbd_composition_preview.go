@@ -74,12 +74,12 @@ func (p *kbdCompositionPreviewState) view(c *ui.Context, h *desktop.Host, native
 		}
 		p.native, p.popupError = native, ""
 	}
-	display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: "Kbd compositions"}, display.CardSlots{
-		Title: "Kbd compositions", Description: "Source keycaps, inert shortcut notation and real button, input and tooltip compositions.",
+	display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: tr(c, "Kbd compositions")}, display.CardSlots{
+		Title: tr(c, "Kbd compositions"), Description: tr(c, "Source keycaps, inert shortcut notation and real button, input and tooltip compositions."),
 		Content: func(child *ui.Context) {
-			p.choose(child, h, native, "source-kbd-config", &p.recipe, control.SelectProps{Label: "Kbd configuration", Options: kbdCompositionRecipes})
+			p.choose(child, h, native, "source-kbd-config", &p.recipe, control.SelectProps{Label: tr(child, "Kbd configuration"), Options: localizedOptions(child, kbdCompositionRecipes)})
 			if p.recipe == "rtl" {
-				p.choose(child, h, native, "source-kbd-language", &p.language, control.SelectProps{Label: "Kbd language", Options: statusLanguages()})
+				p.choose(child, h, native, "source-kbd-language", &p.language, control.SelectProps{Label: tr(child, "Kbd language"), Options: localizedOptions(child, statusLanguages())})
 			}
 			preview := ui.Column(child.Key("kbd-source:" + p.recipe)).FillWidth().MinWidth(0).AlignItems(ui.Center)
 			if p.recipe == "rtl" {
@@ -87,7 +87,7 @@ func (p *kbdCompositionPreviewState) view(c *ui.Context, h *desktop.Host, native
 			}
 			preview.Children(func() { p.draw(child, h, native) })
 			if p.action != "" {
-				ui.Text(child, p.action).FontSize(13).Role(ui.RoleStatus)
+				ui.Text(child, tr(child, p.action)).FontSize(13).Role(ui.RoleStatus)
 			}
 			if p.popupError != "" {
 				ui.Text(child, p.popupError).Role(ui.RoleAlert)
@@ -109,7 +109,7 @@ func (p *kbdCompositionPreviewState) tooltip(c *ui.Context, h *desktop.Host, nat
 	for _, key := range keys {
 		description += " " + key
 	}
-	props := desktop.TooltipProps{Description: description, Gap: 4, MaxWidth: 240}
+	props := desktop.TooltipProps{Description: tr(c, description), Gap: 4, MaxWidth: 240}
 	// Only copied text/keys and presentation values enter the SDK-owned child
 	// provider. The child builds using its own current Context.
 	content := func(child *ui.Context) {
@@ -122,7 +122,7 @@ func (p *kbdCompositionPreviewState) tooltip(c *ui.Context, h *desktop.Host, nat
 			row.MarginEnd(-6)
 		}
 		row.Children(func() {
-			ui.Text(child, text).SingleLine()
+			ui.Text(child, tr(child, text)).SingleLine()
 			display.KbdGroup(child, func(current *ui.Context) {
 				for _, key := range keys {
 					display.KbdWith(current, key, display.KbdProps{InTooltip: !native})
@@ -149,31 +149,31 @@ func (p *kbdCompositionPreviewState) draw(c *ui.Context, h *desktop.Host, native
 			display.KbdGroup(c, func(child *ui.Context) { display.Kbd(child, "Ctrl"); ui.Text(child, "+"); display.Kbd(child, "B") }).AlignSelf(ui.Center)
 		case "group":
 			ui.Row(c).Wrap().Gap(4).AlignItems(ui.Center).FontSize(14).TextColor(theme.TokensOf(c).MutedForeground).Children(func() {
-				ui.Text(c, "Use")
+				ui.Text(c, tr(c, "Use"))
 				kbdSourceGroup(c, "Ctrl + B", "Ctrl + K")
-				ui.Text(c, "to open the command palette")
+				ui.Text(c, tr(c, "to open the command palette"))
 			})
 		case "usage":
 			display.Kbd(c, "Ctrl").AlignSelf(ui.Center)
 		case "usage-group":
 			kbdSourceGroup(c, "Ctrl", "B")
 		case "button":
-			button := control.Button(c, "", control.ButtonProps{Label: "Accept", Variant: control.Outline}).PaddingEnd(8)
-			button.Children(func() { ui.Text(c, "Accept"); display.Kbd(c, "⏎").Translate(2, 0) })
+			button := control.Button(c, "", control.ButtonProps{Label: tr(c, "Accept"), Variant: control.Outline}).PaddingEnd(8)
+			button.Children(func() { ui.Text(c, tr(c, "Accept")); display.Kbd(c, "⏎").Translate(2, 0) })
 			if button.Clicked() {
 				p.accepted++
 				p.action = "Local Kbd action: Accept"
 			}
 		case "tooltip":
 			control.ButtonGroup(c, func() {
-				save := control.Button(c, "Save", control.ButtonProps{Variant: control.Outline})
+				save := control.Button(c, tr(c, "Save"), control.ButtonProps{Variant: control.Outline})
 				p.tooltip(c, h, native, save, "source-kbd-save", "Save Changes", []string{"S"}, false)
-				print := control.Button(c, "Print", control.ButtonProps{Variant: control.Outline})
+				print := control.Button(c, tr(c, "Print"), control.ButtonProps{Variant: control.Outline})
 				p.tooltip(c, h, native, print, "source-kbd-print", "Print Document", []string{"Ctrl", "P"}, false)
 			})
 		case "input-group", "create-input":
 			ui.Column(c).FillWidth().MinWidth(0).MaxWidth(320).Gap(24).Children(func() {
-				props := control.InputGroupProps{Label: "Kbd source input"}
+				props := control.InputGroupProps{Label: tr(c, "Kbd source input")}
 				placeholder := ""
 				if p.recipe == "input-group" {
 					placeholder = "Search..."
@@ -183,7 +183,7 @@ func (p *kbdCompositionPreviewState) draw(c *ui.Context, h *desktop.Host, native
 					props.InlineStart = func() { display.Kbd(c, "Space") }
 				}
 				control.InputGroup(c, props, func() ui.Element {
-					return control.Input(c, p.draft(), control.InputProps{Label: "Kbd source input", Placeholder: placeholder, OnChange: func(string) { p.changes[p.recipe]++ }})
+					return control.Input(c, p.draft(), control.InputProps{Label: tr(c, "Kbd source input"), Placeholder: tr(c, placeholder), OnChange: func(string) { p.changes[p.recipe]++ }})
 				})
 			})
 		case "create-basic":
@@ -204,9 +204,9 @@ func (p *kbdCompositionPreviewState) draw(c *ui.Context, h *desktop.Host, native
 			})
 		case "create-icons":
 			display.KbdGroup(c, func(child *ui.Context) {
-				display.KbdWith(child, "", display.KbdProps{Label: "Dashed circle", Icon: outlined.MotionPhotosOn()})
-				display.KbdWith(child, "", display.KbdProps{Label: "Arrow left", Icon: outlined.ArrowBack()})
-				display.KbdWith(child, "", display.KbdProps{Label: "Arrow right", Icon: outlined.ArrowForward()})
+				display.KbdWith(child, "", display.KbdProps{Label: tr(child, "Dashed circle"), Icon: outlined.MotionPhotosOn()})
+				display.KbdWith(child, "", display.KbdProps{Label: tr(child, "Arrow left"), Icon: outlined.ArrowBack()})
+				display.KbdWith(child, "", display.KbdProps{Label: tr(child, "Arrow right"), Icon: outlined.ArrowForward()})
 			}).AlignSelf(ui.Center)
 		case "create-icon-text":
 			display.KbdGroup(c, func(child *ui.Context) {
@@ -214,10 +214,10 @@ func (p *kbdCompositionPreviewState) draw(c *ui.Context, h *desktop.Host, native
 				display.KbdWith(child, "Voice Enabled", display.KbdProps{Icon: outlined.MotionPhotosOn()})
 			}).AlignSelf(ui.Center)
 		case "create-tooltip":
-			button := control.Button(c, "", control.ButtonProps{Label: "Save changes", Variant: control.Outline, Size: control.IconSmall, Icon: outlined.Save()})
+			button := control.Button(c, "", control.ButtonProps{Label: tr(c, "Save changes"), Variant: control.Outline, Size: control.IconSmall, Icon: outlined.Save()})
 			p.tooltip(c, h, native, button, "source-kbd-create-save", "Save Changes", []string{"S"}, true)
 		case "create-samp":
-			display.KbdWith(c, "", display.KbdProps{Label: "File", Content: func(child *ui.Context) { ui.Text(child, "File").Font("monospace").SingleLine() }}).AlignSelf(ui.Center)
+			display.KbdWith(c, "", display.KbdProps{Label: tr(c, "File"), Content: func(child *ui.Context) { ui.Text(child, tr(child, "File")).Font("monospace").SingleLine() }}).AlignSelf(ui.Center)
 		}
 	})
 }

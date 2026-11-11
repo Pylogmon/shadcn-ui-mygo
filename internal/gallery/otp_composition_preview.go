@@ -90,12 +90,12 @@ func (p *otpCompositionPreviewState) view(c *ui.Context, h *desktop.Host, native
 		}
 		p.native, p.popupError = native, ""
 	}
-	display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: "Input OTP compositions"}, display.CardSlots{
-		Title: "Input OTP compositions", Description: "Source code slots, native selection, controlled values and local verification drafts.",
+	display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: tr(c, "Input OTP compositions")}, display.CardSlots{
+		Title: tr(c, "Input OTP compositions"), Description: tr(c, "Source code slots, native selection, controlled values and local verification drafts."),
 		Content: func(child *ui.Context) {
-			p.choose(child, h, native, "source-otp-config", &p.recipe, control.SelectProps{Label: "Input OTP configuration", Options: otpCompositionRecipes})
+			p.choose(child, h, native, "source-otp-config", &p.recipe, control.SelectProps{Label: tr(child, "Input OTP configuration"), Options: localizedOptions(child, otpCompositionRecipes)})
 			if p.recipe == "rtl" {
-				p.choose(child, h, native, "source-otp-language", &p.language, control.SelectProps{Label: "Input OTP language", Options: statusLanguages()})
+				p.choose(child, h, native, "source-otp-language", &p.language, control.SelectProps{Label: tr(child, "Input OTP language"), Options: localizedOptions(child, statusLanguages())})
 			}
 			preview := ui.Column(child.Key("otp-source:" + p.recipe)).FillWidth().MinWidth(0).AlignItems(ui.Center)
 			if p.recipe == "rtl" {
@@ -103,7 +103,7 @@ func (p *otpCompositionPreviewState) view(c *ui.Context, h *desktop.Host, native
 			}
 			preview.Children(func() { p.draw(child) })
 			if p.action != "" {
-				ui.Text(child, p.action).FontSize(13).Role(ui.RoleStatus).Label(p.action)
+				ui.Text(child, tr(child, p.action)).FontSize(13).Role(ui.RoleStatus).Label(tr(child, p.action))
 			}
 			if p.popupError != "" {
 				ui.Text(child, p.popupError).Role(ui.RoleAlert)
@@ -180,9 +180,9 @@ func (p *otpCompositionPreviewState) draw(c *ui.Context) {
 			}
 			fieldRoot := control.FieldWith(c, fieldProps, func(f *control.FieldScope) {
 				// Source invalid state belongs to slots/error, not the Field label.
-				f.Label(c, control.FieldLabelProps{Text: label}, nil).TextColor(theme.TokensOf(c).Foreground)
+				f.Label(c, control.FieldLabelProps{Text: tr(c, label)}, nil).TextColor(theme.TokensOf(c).Foreground)
 				if description != "" {
-					f.Description(c, description)
+					f.Description(c, tr(c, description))
 				}
 				f.Control(c, func() ui.Element { return p.editor(c, label, props) })
 			})
@@ -197,7 +197,7 @@ func (p *otpCompositionPreviewState) draw(c *ui.Context) {
 			if value := *p.draft(); value != "" {
 				text = "You entered: " + value
 			}
-			ui.Text(c, text).FontSize(14).TextAlign(ui.Center)
+			ui.Text(c, tr(c, text)).FontSize(14).TextAlign(ui.Center)
 		}
 	})
 }
@@ -208,7 +208,7 @@ func (p *otpCompositionPreviewState) intent(action string) {
 }
 
 func otpSourceLink(c *ui.Context, text string) ui.Element {
-	link := ui.Link(c, text, "#").Underline().UnderlineOffset(4).TextColor(theme.TokensOf(c).MutedForeground)
+	link := ui.Link(c, tr(c, text), "#").Underline().UnderlineOffset(4).TextColor(theme.TokensOf(c).MutedForeground)
 	if link.Hovered() {
 		link.TextColor(theme.TokensOf(c).Primary)
 	}
@@ -221,11 +221,11 @@ func (p *otpCompositionPreviewState) form(c *ui.Context) {
 	owner.Children(func() {
 		(*router).View(c, func(_ *ui.Route) {
 			display.CardWith(c, display.CardProps{}, display.CardSlots{
-				Title: "Verify your login",
+				Title: tr(c, "Verify your login"),
 				Header: func(child *ui.Context) {
-					display.CardTitle(child, "Verify your login")
+					display.CardTitle(child, tr(child, "Verify your login"))
 					ui.RichText(child).FillWidth().MinWidth(0).FontSize(14).TextColor(theme.TokensOf(child).MutedForeground).Children(func() {
-						ui.Text(child, "Enter the verification code we sent to your email address: ")
+						ui.Text(child, tr(child, "Enter the verification code we sent to your email address: "))
 						ui.Text(child, "m@example.com").FontWeight(500)
 						ui.Text(child, ".")
 					})
@@ -233,14 +233,14 @@ func (p *otpCompositionPreviewState) form(c *ui.Context) {
 				Content: func(child *ui.Context) {
 					control.FieldWith(child, control.FieldProps{Required: true}, func(f *control.FieldScope) {
 						ui.Row(child).FillWidth().MinWidth(0).Gap(8).AlignItems(ui.Center).Children(func() {
-							f.Label(child, control.FieldLabelProps{Label: "Verification code"}, func() { ui.Text(child, "Verification code") }).Grow(1).MinWidth(0)
-							if control.Button(child, "Resend Code", control.ButtonProps{Variant: control.Outline, Size: control.ExtraSmall, Icon: outlined.Refresh()}).Shrink(0).Clicked() {
+							f.Label(child, control.FieldLabelProps{Label: tr(child, "Verification code")}, func() { ui.Text(child, tr(child, "Verification code")) }).Grow(1).MinWidth(0)
+							if control.Button(child, tr(child, "Resend Code"), control.ButtonProps{Variant: control.Outline, Size: control.ExtraSmall, Icon: outlined.Refresh()}).Shrink(0).Clicked() {
 								p.intent("Resend Code")
 							}
 						})
 						f.Control(child, func() ui.Element {
 							var input ui.Element
-							ui.ScrollHorizontal(child).FillWidth().MinWidth(0).Role(ui.RoleRegion).Label("Verification code slots").Children(func() {
+							ui.ScrollHorizontal(child).FillWidth().MinWidth(0).Role(ui.RoleRegion).Label(tr(child, "Verification code slots")).Children(func() {
 								gap := float32(8)
 								props := control.InputOTPProps{Length: 6, Groups: []int{3, 3}, SlotWidth: 48, SlotHeight: 64, Gap: &gap, SlotContent: func(current *ui.Context, slot control.InputOTPSlotProps) {
 									control.InputOTPSlot(current, slot).FontSize(20)
@@ -265,12 +265,12 @@ func (p *otpCompositionPreviewState) form(c *ui.Context) {
 						gap = 12
 					}
 					ui.Column(child).FillWidth().MinWidth(0).Gap(gap).Children(func() {
-						if control.Button(child, "Verify", control.ButtonProps{}).FillWidth().Clicked() {
+						if control.Button(child, tr(child, "Verify"), control.ButtonProps{}).FillWidth().Clicked() {
 							p.submitted[p.recipe] = *p.draft()
 							p.intent("Verify")
 						}
 						ui.RichText(child).FillWidth().MinWidth(0).FontSize(14).TextColor(theme.TokensOf(child).MutedForeground).Children(func() {
-							ui.Text(child, "Having trouble signing in? ")
+							ui.Text(child, tr(child, "Having trouble signing in? "))
 							if otpSourceLink(child, "Contact support").Clicked() {
 								p.intent("Contact support")
 							}

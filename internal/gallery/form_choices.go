@@ -10,7 +10,7 @@ import (
 )
 
 func (s *State) otpPreview(c *ui.Context) {
-	control.Field(c, control.FieldProps{Label: "Verification code", Description: "Enter the six-digit code from your authenticator."}, func() ui.Element {
+	control.Field(c, control.FieldProps{Label: tr(c, "Verification code"), Description: tr(c, "Enter the six-digit code from your authenticator.")}, func() ui.Element {
 		return control.InputOTP(c, &s.OTP, control.InputOTPProps{Length: 6, Groups: []int{3, 3}, DigitsOnly: true,
 			OnChange: func(string) { s.formStatus = "" }, OnComplete: func(string) { s.formStatus = "Verification code complete" }})
 	})
@@ -29,24 +29,24 @@ func (s *State) choiceVariantsPreview(c *ui.Context) {
 			} else if !s.readAccess && !s.writeAccess {
 				state = ui.CheckOff
 			}
-			control.CheckboxState(c, &state, "All permissions", control.CheckboxProps{Description: "Manage reading and editing together.", OnStateChange: func(value ui.CheckState) {
+			control.CheckboxState(c, &state, tr(c, "All permissions"), control.CheckboxProps{Description: tr(c, "Manage reading and editing together."), OnStateChange: func(value ui.CheckState) {
 				s.readAccess, s.writeAccess = value == ui.CheckOn, value == ui.CheckOn
 			}})
 			ui.Column(c).PaddingStart(24).Gap(12).Children(func() {
-				control.Checkbox(c, &s.readAccess, "Read projects", control.CheckboxProps{})
-				control.Checkbox(c, &s.writeAccess, "Edit projects", control.CheckboxProps{})
+				control.Checkbox(c, &s.readAccess, tr(c, "Read projects"), control.CheckboxProps{})
+				control.Checkbox(c, &s.writeAccess, tr(c, "Edit projects"), control.CheckboxProps{})
 			})
 			display.Separator(c, false)
-			control.Switch(c, &s.quietNotifications, control.SwitchProps{Size: control.Small, Label: "Quiet notifications", Description: "Send a daily summary instead of individual updates."})
+			control.Switch(c, &s.quietNotifications, control.SwitchProps{Size: control.Small, Label: tr(c, "Quiet notifications"), Description: tr(c, "Send a daily summary instead of individual updates.")})
 		})
 	}, func() {
 		display.Card(c, func() {
 			s.cardHeader(c, "Compose your message", "Choose several formatting options with the keyboard.")
 			joined := float32(0)
-			control.ToggleGroup(c, &s.formatting, control.ToggleGroupProps{Label: "Text formatting", Multiple: true, Outline: true, Spacing: &joined,
-				Items: []control.Option{{Value: "bold", Label: "Bold"}, {Value: "italic", Label: "Italic"}, {Value: "underline", Label: "Underline"}},
+			control.ToggleGroup(c, &s.formatting, control.ToggleGroupProps{Label: tr(c, "Text formatting"), Multiple: true, Outline: true, Spacing: &joined,
+				Items: localizedOptions(c, []control.Option{{Value: "bold", Label: "Bold"}, {Value: "italic", Label: "Italic"}, {Value: "underline", Label: "Underline"}}),
 				ItemContent: func(child *ui.Context, option control.Option, _ bool) {
-					text := ui.Text(child, option.Label).FontSize(14)
+					text := ui.Text(child, tr(child, option.Label)).FontSize(14)
 					if option.Value == "bold" {
 						text.FontWeight(700)
 					} else if option.Value == "italic" {
@@ -56,17 +56,17 @@ func (s *State) choiceVariantsPreview(c *ui.Context) {
 					}
 				}})
 			control.MultiSelect(c, &s.formatting, control.SelectProps{
-				Label: "Selected formatting", Placeholder: "Choose formatting",
-				Options: []control.Option{{Value: "bold", Label: "Bold"}, {Value: "italic", Label: "Italic"}, {Value: "underline", Label: "Underline"}},
+				Label: tr(c, "Selected formatting"), Placeholder: tr(c, "Choose formatting"),
+				Options: localizedOptions(c, []control.Option{{Value: "bold", Label: "Bold"}, {Value: "italic", Label: "Italic"}, {Value: "underline", Label: "Underline"}}),
 				ValuesContent: func(child *ui.Context, view control.SelectValueView) {
 					label := fmt.Sprintf("%d styles selected", len(view.Values))
 					if len(view.Values) == 1 {
 						label = "1 style selected"
 					}
-					ui.Text(child, label).SingleLine()
+					ui.Text(child, tr(child, label)).SingleLine()
 				},
 			}).MaxWidth(260)
-			control.Field(c, control.FieldProps{Label: "Invite code", Description: "Letters, numbers and symbols are welcome. Pasted codes are capitalized."}, func() ui.Element {
+			control.Field(c, control.FieldProps{Label: tr(c, "Invite code"), Description: tr(c, "Letters, numbers and symbols are welcome. Pasted codes are capitalized.")}, func() ui.Element {
 				return control.InputOTP(c, &s.inviteCode, control.InputOTPProps{Length: 6, Groups: []int{2, 4}, PasteTransform: strings.ToUpper})
 			})
 		})

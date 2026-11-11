@@ -117,12 +117,12 @@ func (p *contextMenuCompositionPreviewState) choose(c *ui.Context, h *desktop.Ho
 func (p *contextMenuCompositionPreviewState) view(c *ui.Context, h *desktop.Host, native bool) {
 	p.initialize(native)
 	p.sync(h, native)
-	display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: "Context menu compositions"}, display.CardSlots{
-		Title: "Context menu compositions", Description: "Secondary-click targets, grouped actions and independent system menus.",
+	display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: tr(c, "Context menu compositions")}, display.CardSlots{
+		Title: tr(c, "Context menu compositions"), Description: tr(c, "Secondary-click targets, grouped actions and independent system menus."),
 		Content: func(child *ui.Context) {
-			p.choose(child, h, native, "source-context-config", &p.recipe, control.SelectProps{Label: "Context menu configuration", Options: contextMenuCompositionRecipes})
+			p.choose(child, h, native, "source-context-config", &p.recipe, control.SelectProps{Label: tr(child, "Context menu configuration"), Options: localizedOptions(child, contextMenuCompositionRecipes)})
 			if p.recipe == "rtl" {
-				p.choose(child, h, native, "source-context-language", &p.language, control.SelectProps{Label: "Context menu language", Options: statusLanguages()})
+				p.choose(child, h, native, "source-context-language", &p.language, control.SelectProps{Label: tr(child, "Context menu language"), Options: localizedOptions(child, statusLanguages())})
 			}
 			p.sync(h, native)
 			ui.Column(child.Key("context-source:" + p.recipe)).FillWidth().MinWidth(0).AlignItems(ui.Center).Gap(16).Children(func() {
@@ -133,7 +133,7 @@ func (p *contextMenuCompositionPreviewState) view(c *ui.Context, h *desktop.Host
 				}
 			})
 			if p.action != "" {
-				ui.Text(child, p.action).FontSize(13).Role(ui.RoleStatus)
+				ui.Text(child, tr(child, p.action)).FontSize(13).Role(ui.RoleStatus)
 			}
 			if p.popupError != "" {
 				ui.Text(child, p.popupError).FontSize(13).TextColor(theme.TokensOf(child).Destructive).Role(ui.RoleAlert)
@@ -144,11 +144,11 @@ func (p *contextMenuCompositionPreviewState) view(c *ui.Context, h *desktop.Host
 
 func (p *contextMenuCompositionPreviewState) draw(c *ui.Context, h *desktop.Host, native bool) {
 	if p.recipe == "create-dialog" {
-		b := control.Button(c, "Open Dialog", control.ButtonProps{Variant: control.Outline}).Bind(&p.returnFocus)
+		b := control.Button(c, tr(c, "Open Dialog"), control.ButtonProps{Variant: control.Outline}).Bind(&p.returnFocus)
 		if b.Clicked() {
 			p.dialog = true
 		}
-		overlay.Dialog(c, &p.dialog, overlay.DialogProps{Title: "Context Menu Example", Description: "Right click on the area below to see the context menu.", ReturnFocus: &p.returnFocus, OnOpenChange: func(open bool) {
+		overlay.Dialog(c, &p.dialog, overlay.DialogProps{Title: tr(c, "Context Menu Example"), Description: tr(c, "Right click on the area below to see the context menu."), ReturnFocus: &p.returnFocus, OnOpenChange: func(open bool) {
 			if !open {
 				p.close(h)
 			}
@@ -194,7 +194,7 @@ func (p *contextMenuCompositionPreviewState) target(c *ui.Context, h *desktop.Ho
 	if side != "" {
 		label = "Context menu target: " + side
 	}
-	target := ui.Box(cc).FillWidth().MinWidth(0).MaxWidth(320).AspectRatio(16.0/9).Radius(12).Border(1, t.Border).BorderStyle(ui.BorderDashed).FontSize(14).Center().Focusable().TabStop(true).Role(ui.RoleGroup).Label(label).Description(text)
+	target := ui.Box(cc).FillWidth().MinWidth(0).MaxWidth(320).AspectRatio(16.0/9).Radius(12).Border(1, t.Border).BorderStyle(ui.BorderDashed).FontSize(14).Center().Focusable().TabStop(true).Role(ui.RoleGroup).Label(tr(c, label)).Description(tr(c, text))
 	if strings.HasPrefix(p.recipe, "create-") {
 		target.MaxWidth(560).AspectRatio(4).Radius(8).BorderStyle(ui.BorderSolid)
 	} else {
@@ -204,8 +204,8 @@ func (p *contextMenuCompositionPreviewState) target(c *ui.Context, h *desktop.Ho
 		}
 		target.Description(text + " / " + longPress)
 	}
-	target.Children(func() { ui.Text(cc, text).FontSize(14).AccessHidden(true) })
-	items := p.items()
+	target.Children(func() { ui.Text(cc, tr(c, text)).FontSize(14).AccessHidden(true) })
+	items := localizedMenuItems(c, p.items())
 	if native {
 		p.nativeIcons(items)
 		chosen, err := desktop.NativeContextMenu(cc, target, overlay.MenuProps{Items: items, Width: p.width()})
@@ -222,7 +222,7 @@ func (p *contextMenuCompositionPreviewState) target(c *ui.Context, h *desktop.Ho
 		m = &contextMenuCompositionMenu{}
 		p.menus[key] = m
 	}
-	props := desktop.MenuProps{Items: items, Width: p.width(), Label: "Context menu", OnChoose: func(key string) { p.apply(key) }}
+	props := desktop.MenuProps{Items: items, Width: p.width(), Label: tr(c, "Context menu"), OnChoose: func(key string) { p.apply(key) }}
 	if side != "" {
 		props.Placement = popupPlacement(side, cc.Direction())
 	}

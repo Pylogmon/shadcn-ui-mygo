@@ -86,12 +86,12 @@ func (p *sliderCompositionPreviewState) view(c *ui.Context, h *desktop.Host, nat
 		}
 		p.native, p.popupError = native, ""
 	}
-	display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: "Slider compositions"}, display.CardSlots{
-		Title: "Slider compositions", Description: "Source single, range and multiple native thumbs, vertical pairs and controlled temperature values.",
+	display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: tr(c, "Slider compositions")}, display.CardSlots{
+		Title: tr(c, "Slider compositions"), Description: tr(c, "Source single, range and multiple native thumbs, vertical pairs and controlled temperature values."),
 		Content: func(child *ui.Context) {
-			p.choose(child, h, native, "source-slider-config", &p.recipe, control.SelectProps{Label: "Slider configuration", Options: sliderCompositionRecipes})
+			p.choose(child, h, native, "source-slider-config", &p.recipe, control.SelectProps{Label: tr(child, "Slider configuration"), Options: localizedOptions(child, sliderCompositionRecipes)})
 			if p.recipe == "rtl" {
-				p.choose(child, h, native, "source-slider-language", &p.language, control.SelectProps{Label: "Slider language", Options: statusLanguages()})
+				p.choose(child, h, native, "source-slider-language", &p.language, control.SelectProps{Label: tr(child, "Slider language"), Options: localizedOptions(child, statusLanguages())})
 			}
 			preview := ui.Column(child.Key("slider-source:" + p.recipe)).FillWidth().MinWidth(0).AlignItems(ui.Center)
 			if p.recipe == "rtl" {
@@ -120,19 +120,19 @@ func (p *sliderCompositionPreviewState) draw(c *ui.Context) {
 			}
 			row.Children(func() {
 				for i, label := range []string{"Vertical slider 1", "Vertical slider 2"} {
-					if control.Slider(c.Key(i), &draft.vertical[i], control.SliderProps{Label: label, Max: 100, Step: 1, Vertical: true}).Height(160).Changed() {
+					if control.Slider(c.Key(i), &draft.vertical[i], control.SliderProps{Label: tr(c, label), Max: 100, Step: 1, Vertical: true}).Height(160).Changed() {
 						draft.changes++
 					}
 				}
 			})
 			return
 		}
-		props := control.SliderProps{Label: "Slider", Max: 100, Step: 1, Disabled: kind == "disabled"}
+		props := control.SliderProps{Label: tr(c, "Slider"), Max: 100, Step: 1, Disabled: kind == "disabled"}
 		var label ui.Element
 		if kind == "controlled" {
 			props.Label, props.Max, props.Step = "Temperature", 1, .1
 			ui.Row(c).FillWidth().MinWidth(0).Gap(8).AlignItems(ui.Center).Children(func() {
-				label = control.Label(c, "Temperature")
+				label = control.Label(c, tr(c, "Temperature"))
 				ui.Box(c).Grow(1)
 				ui.Text(c, sliderSourceTemperature(draft.values)).FontSize(14).TextColor(theme.TokensOf(c).MutedForeground)
 			})

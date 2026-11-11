@@ -93,15 +93,15 @@ func (p *menubarCompositionPreviewState) choose(c *ui.Context, h *desktop.Host, 
 func (p *menubarCompositionPreviewState) view(c *ui.Context, h *desktop.Host, native bool) {
 	p.initialize(native)
 	p.sync(h, native)
-	display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: "Menubar compositions"}, display.CardSlots{
-		Title: "Menubar compositions", Description: "Source commands, checked options and nested menus.",
+	display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: tr(c, "Menubar compositions")}, display.CardSlots{
+		Title: tr(c, "Menubar compositions"), Description: tr(c, "Source commands, checked options and nested menus."),
 		Content: func(child *ui.Context) {
-			p.choose(child, h, native, "source-menubar-config", &p.recipe, control.SelectProps{Label: "Menubar configuration", Options: menubarCompositionRecipes})
+			p.choose(child, h, native, "source-menubar-config", &p.recipe, control.SelectProps{Label: tr(child, "Menubar configuration"), Options: localizedOptions(child, menubarCompositionRecipes)})
 			if p.recipe == "rtl" {
-				p.choose(child, h, native, "source-menubar-language", &p.language, control.SelectProps{Label: "Menubar language", Options: statusLanguages()})
+				p.choose(child, h, native, "source-menubar-language", &p.language, control.SelectProps{Label: tr(child, "Menubar language"), Options: localizedOptions(child, statusLanguages())})
 			}
 			if p.recipe == "sides" {
-				p.choose(child, h, native, "source-menubar-direction", &p.sideDirection, control.SelectProps{Label: "Menubar direction", Options: []control.Option{{Value: "ltr", Label: "Left to right"}, {Value: "rtl", Label: "Right to left"}}})
+				p.choose(child, h, native, "source-menubar-direction", &p.sideDirection, control.SelectProps{Label: tr(child, "Menubar direction"), Options: localizedOptions(child, []control.Option{{Value: "ltr", Label: "Left to right"}, {Value: "rtl", Label: "Right to left"}})})
 			}
 			p.sync(h, native)
 			ui.Column(child.Key("source:" + p.recipe)).FillWidth().MinWidth(0).Gap(12).Children(func() {
@@ -121,11 +121,11 @@ func (p *menubarCompositionPreviewState) view(c *ui.Context, h *desktop.Host, na
 
 func (p *menubarCompositionPreviewState) draw(c *ui.Context, h *desktop.Host, native bool) {
 	if p.recipe == "dialog" {
-		if control.Button(c, "Open Dialog", control.ButtonProps{Variant: control.Outline}).Bind(&p.dialogReturn).Clicked() {
+		if control.Button(c, tr(c, "Open Dialog"), control.ButtonProps{Variant: control.Outline}).Bind(&p.dialogReturn).Clicked() {
 			p.dialog = true
 		}
 		overlay.Dialog(c, &p.dialog, overlay.DialogProps{
-			Title: "Menubar Example", Description: "Use the menubar below to see the menu options.", Width: 512,
+			Title: tr(c, "Menubar Example"), Description: tr(c, "Use the menubar below to see the menu options."), Width: 512,
 			ReturnFocus: &p.dialogReturn, OnOpenChange: func(open bool) {
 				if !open {
 					p.close(h)
@@ -142,7 +142,7 @@ func (p *menubarCompositionPreviewState) draw(c *ui.Context, h *desktop.Host, na
 		ui.Row(c).FillWidth().Direction(direction).Wrap().Justify(ui.Center).Gap(8).Children(func() {
 			for _, side := range []string{"inline-start", "left", "top", "bottom", "right", "inline-end"} {
 				label := map[string]string{"inline-start": "Inline Start", "left": "Left", "top": "Top", "bottom": "Bottom", "right": "Right", "inline-end": "Inline End"}[side]
-				p.bar(c, h, native, "side:"+side, []overlay.MenubarItem{{Key: side, Label: label, Items: []overlay.MenuItem{menubarAction("New Tab", ""), menubarAction("New Window", ""), menubarAction("New Incognito Window", "")}}}, popupPlacement(side, direction), 192)
+				p.bar(c, h, native, "side:"+side, []overlay.MenubarItem{{Key: side, Label: tr(c, label), Items: []overlay.MenuItem{menubarAction("New Tab", ""), menubarAction("New Window", ""), menubarAction("New Incognito Window", "")}}}, popupPlacement(side, direction), 192)
 			}
 		})
 		return
@@ -190,6 +190,7 @@ func (p *menubarCompositionPreviewState) withNativeIcons(items []overlay.Menubar
 }
 
 func (p *menubarCompositionPreviewState) bar(c *ui.Context, h *desktop.Host, native bool, key string, items []overlay.MenubarItem, placement mygo.Placement, width float32) {
+	items = localizedMenubarItems(c, items)
 	if native {
 		chosen, err := desktop.NativeMenubar(c.Key(key), p.withNativeIcons(items))
 		if err != nil {
@@ -206,7 +207,7 @@ func (p *menubarCompositionPreviewState) bar(c *ui.Context, h *desktop.Host, nat
 		p.bars[key] = bar
 	}
 	_, err := desktop.Menubar(c, h, "source-menubar:"+key, bar, desktop.MenubarProps{
-		Items: items, Label: "Source menubar", Placement: placement, Width: width, MaxHeight: 480, Gap: 4,
+		Items: items, Label: tr(c, "Source menubar"), Placement: placement, Width: width, MaxHeight: 480, Gap: 4,
 		Revision: uint64(p.commandCount), OnChoose: func(value string) { p.dispatch(items, value) },
 	})
 	if err != nil {

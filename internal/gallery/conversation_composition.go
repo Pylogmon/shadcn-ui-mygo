@@ -115,16 +115,16 @@ func (s *State) messageComposition(c *ui.Context) {
 	p.initialize()
 	display.Card(c, func() {
 		s.cardHeader(c, "A shared update", "A profile, a little context and an action worth keeping together.")
-		conversation.MessageWith(c, conversation.MessageProps{Key: "team-update", Label: "Team update"}, conversation.MessageSlots{
+		conversation.MessageWith(c, conversation.MessageProps{Key: "team-update", Label: tr(c, "Team update")}, conversation.MessageSlots{
 			Avatar: func(c *ui.Context) { display.Avatar(c, display.AvatarProps{Fallback: "MC", Size: 32}) },
-			Header: func(c *ui.Context) { ui.Text(c, "Mira Chen · Just now") },
+			Header: func(c *ui.Context) { ui.Text(c, tr(c, "Mira Chen · Just now")) },
 			Content: func(c *ui.Context) {
-				conversation.BubbleWith(c, conversation.BubbleProps{Variant: conversation.Outline, Trigger: &conversation.BubbleTrigger{Kind: conversation.BubbleLink, Label: "Open the message guide", URL: compositionGuideURL}}, conversation.BubbleSlots{Content: func(c *ui.Context, face conversation.BubbleContentProps) {
+				conversation.BubbleWith(c, conversation.BubbleProps{Variant: conversation.Outline, Trigger: &conversation.BubbleTrigger{Kind: conversation.BubbleLink, Label: tr(c, "Open the message guide"), URL: compositionGuideURL}}, conversation.BubbleSlots{Content: func(c *ui.Context, face conversation.BubbleContentProps) {
 					conversation.BubbleContent(c, face, func() {
 						ui.Row(c).MinWidth(0).Gap(10).AlignItems(ui.Start).Children(func() {
 							ui.Box(c).Size(24, 24).Shrink(0).Center().Radius(6).Background(theme.TokensOf(c).Muted).AccessHidden(true).Children(func() { ui.Text(c, "↗") })
 							ui.Column(c).MinWidth(0).Gap(4).Children(func() {
-								ui.Text(c, "Message guide").FontWeight(500)
+								ui.Text(c, tr(c, "Message guide")).FontWeight(500)
 								ui.Text(c, compositionUpdate)
 							})
 						})
@@ -132,8 +132,8 @@ func (s *State) messageComposition(c *ui.Context) {
 				}})
 			},
 			Footer: func(c *ui.Context) {
-				ui.Text(c, "Shared with the team")
-				if control.Button(c, "Copy team update", control.ButtonProps{Variant: control.Ghost, Size: control.ExtraSmall}).Clicked() {
+				ui.Text(c, tr(c, "Shared with the team"))
+				if control.Button(c, tr(c, "Copy team update"), control.ButtonProps{Variant: control.Ghost, Size: control.ExtraSmall}).Clicked() {
 					c.WriteClipboard(compositionUpdate)
 					p.notice = "Team update copied."
 				}
@@ -172,14 +172,14 @@ func (s *State) conversationChatComposition(c *ui.Context) {
 	root := display.Card(c, func() {
 		s.cardHeader(c, "Keep your place", "Write a message, browse earlier turns and catch up whenever you're ready.")
 		ui.Row(c).Gap(12).Wrap().AlignItems(ui.Center).Children(func() {
-			if control.Button(c, "Load earlier messages", control.ButtonProps{Variant: control.Outline, Size: control.Small}).Clicked() {
+			if control.Button(c, tr(c, "Load earlier messages"), control.ButtonProps{Variant: control.Outline, Size: control.Small}).Clicked() {
 				p.prependHistory()
 			}
-			control.Switch(c, &p.follow, control.SwitchProps{Label: "Follow new replies", Size: control.Small})
+			control.Switch(c, &p.follow, control.SwitchProps{Label: tr(c, "Follow new replies"), Size: control.Small})
 		})
 		conversation.MessageScrollerWith(c, &p.scroll, conversation.MessageScrollerProviderProps{AutoScroll: p.follow}, func(c *ui.Context) {
-			conversation.MessageScrollerViewport(c, conversation.MessageScrollerViewportProps{Label: "Team conversation"}, func(c *ui.Context) {
-				conversation.MessageScrollerContent(c, conversation.MessageScrollerContentProps{PaddingStart: 16, PaddingEnd: 16, Label: "Conversation messages"}, func(c *ui.Context) {
+			conversation.MessageScrollerViewport(c, conversation.MessageScrollerViewportProps{Label: tr(c, "Team conversation")}, func(c *ui.Context) {
+				conversation.MessageScrollerContent(c, conversation.MessageScrollerContentProps{PaddingStart: 16, PaddingEnd: 16, Label: tr(c, "Conversation messages")}, func(c *ui.Context) {
 					for _, message := range p.messages {
 						conversation.MessageScrollerItem(c, conversation.MessageScrollerItemProps{ID: message.id, ScrollAnchor: message.user}, func(c *ui.Context) {
 							s.compositionChatMessage(c, message)
@@ -197,17 +197,17 @@ func (s *State) conversationChatComposition(c *ui.Context) {
 					}
 				})
 			})
-			conversation.MessageScrollerButton(c.Key("beginning"), conversation.MessageScrollerButtonProps{Direction: conversation.MessageScrollerStart, Label: "Back to beginning"})
-			conversation.MessageScrollerButton(c.Key("latest"), conversation.MessageScrollerButtonProps{Label: "Jump to latest"})
+			conversation.MessageScrollerButton(c.Key("beginning"), conversation.MessageScrollerButtonProps{Direction: conversation.MessageScrollerStart, Label: tr(c, "Back to beginning")})
+			conversation.MessageScrollerButton(c.Key("latest"), conversation.MessageScrollerButtonProps{Label: tr(c, "Jump to latest")})
 		}).Height(340).Shrink(0).Border(1, theme.TokensOf(c).Border).Radius(8)
 		ui.Row(c).Gap(8).Wrap().AlignItems(ui.Center).Children(func() {
-			control.Input(c, &p.draft, control.InputProps{Label: "Chat message", Placeholder: "Write a message…", Handle: &p.editor, OnSubmit: func(string) { p.sendRequested = true }}).Basis(0).Grow(1).MinWidth(180)
-			if control.Button(c, "Send message", control.ButtonProps{Size: control.Small, Disabled: p.streaming || strings.TrimSpace(p.draft) == ""}).Bind(&p.send).Clicked() {
+			control.Input(c, &p.draft, control.InputProps{Label: tr(c, "Chat message"), Placeholder: tr(c, "Write a message…"), Handle: &p.editor, OnSubmit: func(string) { p.sendRequested = true }}).Basis(0).Grow(1).MinWidth(180)
+			if control.Button(c, tr(c, "Send message"), control.ButtonProps{Size: control.Small, Disabled: p.streaming || strings.TrimSpace(p.draft) == ""}).Bind(&p.send).Clicked() {
 				p.sendRequested = true
 				p.editor.Focus(c)
 				c.Invalidate()
 			}
-			if control.Button(c, "Stop reply", control.ButtonProps{Variant: control.Outline, Size: control.Small, Disabled: !p.streaming}).Bind(&p.stop).Clicked() {
+			if control.Button(c, tr(c, "Stop reply"), control.ButtonProps{Variant: control.Outline, Size: control.Small, Disabled: !p.streaming}).Bind(&p.stop).Clicked() {
 				p.streaming = false
 				p.nextTick = time.Time{}
 				p.notice = "Reply stopped."
@@ -243,7 +243,7 @@ func (s *State) compositionChatMessage(c *ui.Context, message compositionMessage
 		Content: func(c *ui.Context) {
 			conversation.Bubble(c, conversation.BubbleProps{Variant: variant}, func() {
 				if message.text != "" {
-					ui.Text(c, message.text).Selectable()
+					ui.Text(c, tr(c, message.text)).Selectable()
 				}
 			})
 		},

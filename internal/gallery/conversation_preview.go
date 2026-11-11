@@ -64,24 +64,24 @@ func (s *State) discussionPreview(c *ui.Context) {
 		conversation.Message(c, conversation.MessageProps{Sender: "Sofia", Avatar: func() { display.Avatar(c, display.AvatarProps{Fallback: "SD", Size: 32}) }}, func() {
 			conversation.BubbleWith(c, conversation.BubbleProps{Key: "proposal", Variant: conversation.Secondary}, conversation.BubbleSlots{
 				Content: func(c *ui.Context, face conversation.BubbleContentProps) {
-					face.Trigger = &conversation.BubbleTrigger{Label: "Open review notes", Handle: &p.notesTrigger, OnActivate: func() { p.notesOpen = true; p.notesReturn = &p.notesTrigger }}
-					conversation.BubbleContent(c, face, func() { ui.Text(c, "I checked the focus states. Would you review the notes before we publish?") })
+					face.Trigger = &conversation.BubbleTrigger{Label: tr(c, "Open review notes"), Handle: &p.notesTrigger, OnActivate: func() { p.notesOpen = true; p.notesReturn = &p.notesTrigger }}
+					conversation.BubbleContent(c, face, func() { ui.Text(c, tr(c, "I checked the focus states. Would you review the notes before we publish?")) })
 				},
 				Reactions: func(c *ui.Context) {
-					conversation.BubbleReactions(c, conversation.BubbleReactionsProps{Interactive: true, Label: "Message reactions"}, func() {
+					conversation.BubbleReactions(c, conversation.BubbleReactionsProps{Interactive: true, Label: tr(c, "Message reactions")}, func() {
 						count := 3
 						if p.helpful {
 							count++
 						}
-						conversation.BubbleReaction(c, conversation.Reaction{Key: "helpful", Label: "Helpful", Count: count, Selected: p.helpful, OnSelectedChange: func(on bool) { p.helpful = on; p.result = "Message reaction updated." }})
+						conversation.BubbleReaction(c, conversation.Reaction{Key: "helpful", Label: tr(c, "Helpful"), Count: count, Selected: p.helpful, OnSelectedChange: func(on bool) { p.helpful = on; p.result = "Message reaction updated." }})
 					})
 				},
 			}).Margin(0, 0, 18, 0)
 		})
 		conversation.Message(c, conversation.MessageProps{Sender: "You", Align: conversation.End}, func() {
-			conversation.Bubble(c, conversation.BubbleProps{Key: "reply", Variant: conversation.Tinted}, func() { ui.Text(c, "Yes. I'll review keyboard navigation and check the report.") })
+			conversation.Bubble(c, conversation.BubbleProps{Key: "reply", Variant: conversation.Tinted}, func() { ui.Text(c, tr(c, "Yes. I'll review keyboard navigation and check the report.")) })
 		})
-		control.Input(c, &p.reply, control.InputProps{Label: "Conversation reply", Placeholder: "Write a reply…"})
+		control.Input(c, &p.reply, control.InputProps{Label: tr(c, "Conversation reply"), Placeholder: tr(c, "Write a reply…")})
 		if p.reply != "" {
 			conversation.Bubble(c, conversation.BubbleProps{Key: "draft", Variant: conversation.Ghost}, func() { ui.Text(c, p.reply) })
 		}
@@ -92,12 +92,12 @@ func (s *State) conversationFilesPreview(c *ui.Context) {
 	p.initialize()
 	display.Card(c, func() {
 		s.cardHeader(c, "Review files", "Choose a presentation and try the transfer controls.")
-		control.RadioGroup(c, &p.fileState, control.RadioGroupProps{Label: "Attachment state", Horizontal: true, Options: []control.Option{
+		control.RadioGroup(c, &p.fileState, control.RadioGroupProps{Label: tr(c, "Attachment state"), Horizontal: true, Options: localizedOptions(c, []control.Option{
 			{Value: conversation.AttachmentIdle, Label: "Idle"}, {Value: conversation.AttachmentUploading, Label: "Uploading"}, {Value: conversation.AttachmentProcessing, Label: "Processing"}, {Value: conversation.AttachmentError, Label: "Failed"}, {Value: conversation.AttachmentDone, Label: "Done"},
-		}}).Wrap()
-		control.RadioGroup(c, &p.fileSize, control.RadioGroupProps{Label: "Attachment size", Horizontal: true, Options: []control.Option{{Value: "default", Label: "Default size"}, {Value: "small", Label: "Small size"}, {Value: "xs", Label: "Extra small size"}}}).Wrap()
-		control.RadioGroup(c, &p.fileOrientation, control.RadioGroupProps{Label: "Attachment orientation", Horizontal: true, Options: []control.Option{{Value: "horizontal", Label: "Horizontal files"}, {Value: "vertical", Label: "Vertical files"}}}).Wrap()
-		group := conversation.AttachmentGroupWith(c, conversation.AttachmentGroupProps{State: &p.files, Label: "Review attachments"}, func(c *ui.Context) {
+		})}).Wrap()
+		control.RadioGroup(c, &p.fileSize, control.RadioGroupProps{Label: tr(c, "Attachment size"), Horizontal: true, Options: localizedOptions(c, []control.Option{{Value: "default", Label: "Default size"}, {Value: "small", Label: "Small size"}, {Value: "xs", Label: "Extra small size"}})}).Wrap()
+		control.RadioGroup(c, &p.fileOrientation, control.RadioGroupProps{Label: tr(c, "Attachment orientation"), Horizontal: true, Options: localizedOptions(c, []control.Option{{Value: "horizontal", Label: "Horizontal files"}, {Value: "vertical", Label: "Vertical files"}})}).Wrap()
+		group := conversation.AttachmentGroupWith(c, conversation.AttachmentGroupProps{State: &p.files, Label: tr(c, "Review attachments")}, func(c *ui.Context) {
 			if !p.reportRemoved {
 				props := conversation.AttachmentProps{ID: "report", Name: "audit-report.pdf", MediaType: "application/pdf", SizeBytes: 284000, State: p.fileState, Progress: p.fileProgress, Size: p.size(), Orientation: p.orientation(), OpenLabel: "Preview report", OnOpen: func() { p.previewOpen = true }, OnCancel: func() {
 					p.fileState = conversation.AttachmentError
@@ -131,18 +131,18 @@ func (s *State) conversationFilesPreview(c *ui.Context) {
 			group.Height(84)
 		}
 		if p.fileState == conversation.AttachmentUploading {
-			control.Slider(c, &p.fileProgress, control.SliderProps{Min: 0, Max: 1, Step: .05, Label: "Report progress", FormatValue: func(_ int, value float64) string { return fmt.Sprintf("%.0f%%", value*100) }})
+			control.Slider(c, &p.fileProgress, control.SliderProps{Min: 0, Max: 1, Step: .05, Label: tr(c, "Report progress"), FormatValue: func(_ int, value float64) string { return fmt.Sprintf("%.0f%%", value*100) }})
 		}
 		ui.Row(c).Gap(8).Wrap().Children(func() {
-			if p.orientation() == ui.Vertical && !p.reportRemoved && control.Button(c, "Preview report", control.ButtonProps{Size: control.Small, Variant: control.Outline}).Clicked() {
+			if p.orientation() == ui.Vertical && !p.reportRemoved && control.Button(c, tr(c, "Preview report"), control.ButtonProps{Size: control.Small, Variant: control.Outline}).Clicked() {
 				p.previewOpen = true
 			}
-			if control.Button(c, "Complete transfer", control.ButtonProps{Size: control.Small, Disabled: p.reportRemoved || p.fileState != conversation.AttachmentUploading && p.fileState != conversation.AttachmentProcessing}).Clicked() {
+			if control.Button(c, tr(c, "Complete transfer"), control.ButtonProps{Size: control.Small, Disabled: p.reportRemoved || p.fileState != conversation.AttachmentUploading && p.fileState != conversation.AttachmentProcessing}).Clicked() {
 				p.fileState = conversation.AttachmentDone
 				p.fileProgress = 1
 				p.result = "Report transfer complete."
 			}
-			if p.reportRemoved && control.Button(c, "Restore report", control.ButtonProps{Size: control.Small, Variant: control.Outline}).Clicked() {
+			if p.reportRemoved && control.Button(c, tr(c, "Restore report"), control.ButtonProps{Size: control.Small, Variant: control.Outline}).Clicked() {
 				p.reportRemoved = false
 				p.fileState = conversation.AttachmentIdle
 				p.result = "Report restored to this review."
@@ -157,26 +157,26 @@ func (s *State) conversationTracePreview(c *ui.Context) {
 	display.Card(c, func() {
 		s.cardHeader(c, "Review progress", "Expand a step to edit the notes used by this review.")
 		ui.Row(c).Gap(8).Wrap().Children(func() {
-			if control.Button(c, "Finish review", control.ButtonProps{Size: control.Small, Disabled: p.traceStatus == conversation.Complete}).Clicked() {
+			if control.Button(c, tr(c, "Finish review"), control.ButtonProps{Size: control.Small, Disabled: p.traceStatus == conversation.Complete}).Clicked() {
 				p.traceStatus = conversation.Complete
 			}
-			if control.Button(c, "Report a problem", control.ButtonProps{Size: control.Small, Variant: control.Outline}).Clicked() {
+			if control.Button(c, tr(c, "Report a problem"), control.ButtonProps{Size: control.Small, Variant: control.Outline}).Clicked() {
 				p.traceStatus = conversation.Error
 			}
-			if control.Button(c, "Resume review", control.ButtonProps{Size: control.Small, Variant: control.Ghost}).Clicked() {
+			if control.Button(c, tr(c, "Resume review"), control.ButtonProps{Size: control.Small, Variant: control.Ghost}).Clicked() {
 				p.traceStatus = conversation.Running
 			}
 		})
 		conversation.Trace(c, &p.trace, []conversation.TraceStep{
-			{ID: "tokens", Title: "Loaded design tokens", Status: conversation.Complete, Detail: "Semantic colors, type scale and corner radii are ready."},
-			{ID: "accessibility", Title: "Review accessibility", Status: p.traceStatus, Detail: "Try the actual editor below, then open the notes sheet.", KeepMounted: true, Content: func(c *ui.Context) {
-				control.Input(c, &p.reviewNote, control.InputProps{Label: "Review note", Placeholder: "Add a review note…"})
-				if control.Button(c, "Open notes sheet", control.ButtonProps{Size: control.Small, Variant: control.Outline}).Clicked() {
+			{ID: "tokens", Title: tr(c, "Loaded design tokens"), Status: conversation.Complete, Detail: "Semantic colors, type scale and corner radii are ready."},
+			{ID: "accessibility", Title: tr(c, "Review accessibility"), Status: p.traceStatus, Detail: "Try the actual editor below, then open the notes sheet.", KeepMounted: true, Content: func(c *ui.Context) {
+				control.Input(c, &p.reviewNote, control.InputProps{Label: tr(c, "Review note"), Placeholder: tr(c, "Add a review note…")})
+				if control.Button(c, tr(c, "Open notes sheet"), control.ButtonProps{Size: control.Small, Variant: control.Outline}).Clicked() {
 					p.notesOpen = true
 					p.notesReturn = nil
 				}
 			}},
-			{ID: "reference", Title: "Open shadcn reference", Status: conversation.Complete, URL: "https://ui.shadcn.com/create"},
+			{ID: "reference", Title: tr(c, "Open shadcn reference"), Status: conversation.Complete, URL: "https://ui.shadcn.com/create"},
 		})
 	})
 }
@@ -200,15 +200,15 @@ func (s *State) conversationPreviewDialogs(c *ui.Context) {
 	if !p.notesOpen && p.notesTrigger.Focused(c) {
 		p.notesReturn = nil
 	}
-	overlay.Dialog(c, &p.previewOpen, overlay.DialogProps{Title: "Report preview", Description: "A local preview of the review report.", Width: 540}, func() {
+	overlay.Dialog(c, &p.previewOpen, overlay.DialogProps{Title: tr(c, "Report preview"), Description: tr(c, "A local preview of the review report."), Width: 540}, func() {
 		display.CodeBlock(c, display.CodeBlockProps{Title: "audit-report.json", Language: "json", Code: "{\n  \"review\": \"keyboard and focus\",\n  \"status\": \"ready\"\n}", Height: 150, HideCopy: false})
-		if control.Button(c, "Close report preview", control.ButtonProps{Size: control.Small}).Clicked() {
+		if control.Button(c, tr(c, "Close report preview"), control.ButtonProps{Size: control.Small}).Clicked() {
 			p.previewOpen = false
 		}
 	})
-	overlay.Sheet(c, &p.notesOpen, overlay.SheetProps{Title: "Review notes", Description: "Your notes stay with this conversation.", Side: overlay.Right, Size: 400, ReturnFocus: p.notesReturn}, func() {
-		control.Textarea(c, &p.reviewNote, control.TextareaProps{Label: "Review notes editor", Placeholder: "Write a review note…"}).MinHeight(160)
-		if control.Button(c, "Save review notes", control.ButtonProps{}).Clicked() {
+	overlay.Sheet(c, &p.notesOpen, overlay.SheetProps{Title: tr(c, "Review notes"), Description: tr(c, "Your notes stay with this conversation."), Side: overlay.Right, Size: 400, ReturnFocus: p.notesReturn}, func() {
+		control.Textarea(c, &p.reviewNote, control.TextareaProps{Label: tr(c, "Review notes editor"), Placeholder: tr(c, "Write a review note…")}).MinHeight(160)
+		if control.Button(c, tr(c, "Save review notes"), control.ButtonProps{}).Clicked() {
 			p.notesOpen = false
 			p.result = "Review notes saved."
 		}

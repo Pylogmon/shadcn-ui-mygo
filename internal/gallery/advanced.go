@@ -17,14 +17,14 @@ func (s *State) sliderRangesPreview(c *ui.Context) {
 		s.cardHeader(c, "Ranges & levels", "Drag a thumb or focus it with Tab and use the arrow keys.")
 		ui.Row(c).Gap(24).FillWidth().Children(func() {
 			ui.Column(c).Grow(1).MinWidth(0).Gap(16).Children(func() {
-				display.Typography(c, fmt.Sprintf("Price range: $%.0f–$%.0f", s.SliderRange[0], s.SliderRange[1]), display.Small)
-				control.RangeSlider(c, &s.SliderRange[0], &s.SliderRange[1], control.SliderProps{Label: "Price", Step: 5, MinGap: 10,
+				display.Typography(c, fmt.Sprintf(tr(c, "Price range: $%.0f–$%.0f"), s.SliderRange[0], s.SliderRange[1]), display.Small)
+				control.RangeSlider(c, &s.SliderRange[0], &s.SliderRange[1], control.SliderProps{Label: tr(c, "Price"), Step: 5, MinGap: 10,
 					FormatValue: func(_ int, value float64) string { return fmt.Sprintf("$%.0f", value) }})
-				display.Typography(c, "Equalizer bands", display.Small)
-				control.SliderValues(c, &s.SliderBands, control.SliderProps{Label: "Equalizer", Step: 5, MinGap: 5,
+				display.Typography(c, tr(c, "Equalizer bands"), display.Small)
+				control.SliderValues(c, &s.SliderBands, control.SliderProps{Label: tr(c, "Equalizer"), Step: 5, MinGap: 5,
 					ThumbIDs: []string{"bass", "mid", "treble"}, ThumbLabels: []string{"Bass", "Midrange", "Treble"}})
 			})
-			control.Slider(c, &s.VerticalLevel, control.SliderProps{Label: "Output level", Vertical: true, Step: 5}).Height(120)
+			control.Slider(c, &s.VerticalLevel, control.SliderProps{Label: tr(c, "Output level"), Vertical: true, Step: 5}).Height(120)
 		})
 	})
 }
@@ -33,31 +33,31 @@ func (s *State) workspacePreview(c *ui.Context) {
 	display.Card(c, func() {
 		s.cardHeader(c, "Resizable workspace", "Drag a divider, use its arrow keys, or press Enter to collapse the file pane.")
 		t := theme.TokensOf(c)
-		display.ResizablePanelGroup(c, &s.WorkspaceLayout, display.ResizablePanelGroupProps{Label: "Workspace layout", WithHandle: true, Panels: []display.ResizablePanelProps{
-			{ID: "files", Label: "Files", DefaultSize: 24, MinSize: 15, MaxSize: 40, Collapsible: true, Content: func(child *ui.Context) {
+		display.ResizablePanelGroup(c, &s.WorkspaceLayout, display.ResizablePanelGroupProps{Label: tr(c, "Workspace layout"), WithHandle: true, Panels: []display.ResizablePanelProps{
+			{ID: "files", Label: tr(c, "Files"), DefaultSize: 24, MinSize: 15, MaxSize: 40, Collapsible: true, Content: func(child *ui.Context) {
 				ui.Column(child).Fill().Padding(16).Gap(8).Background(t.Muted).Children(func() {
-					display.Typography(child, "Explorer", display.Small)
+					display.Typography(child, tr(child, "Explorer"), display.Small)
 					ui.Text(child, "main.go")
 					ui.Text(child, "theme.go")
 				})
 			}},
-			{ID: "editor", Label: "Editor", DefaultSize: 52, MinSize: 30, Content: func(child *ui.Context) {
-				display.ResizablePanelGroup(child, &s.EditorLayout, display.ResizablePanelGroupProps{Label: "Editor panes", Vertical: true, WithHandle: true, Panels: []display.ResizablePanelProps{
-					{ID: "source", Label: "Source", DefaultSize: 65, MinSize: 25, Content: func(editor *ui.Context) {
+			{ID: "editor", Label: tr(c, "Editor"), DefaultSize: 52, MinSize: 30, Content: func(child *ui.Context) {
+				display.ResizablePanelGroup(child, &s.EditorLayout, display.ResizablePanelGroupProps{Label: tr(child, "Editor panes"), Vertical: true, WithHandle: true, Panels: []display.ResizablePanelProps{
+					{ID: "source", Label: tr(child, "Source"), DefaultSize: 65, MinSize: 25, Content: func(editor *ui.Context) {
 						ui.Column(editor).Fill().Padding(16).Gap(8).Children(func() {
-							display.Typography(editor, "Source", display.Small)
+							display.Typography(editor, tr(editor, "Source"), display.Small)
 							ui.Text(editor, "func main() {\n    app.Run()\n}").Font("monospace").FontSize(12)
 						})
 					}},
-					{ID: "terminal", Label: "Terminal", DefaultSize: 35, MinSize: 20, Content: func(editor *ui.Context) {
-						ui.Column(editor).Fill().Padding(16).Background(t.Muted).Children(func() { ui.Text(editor, "✓ Build complete").FontSize(12) })
+					{ID: "terminal", Label: tr(child, "Terminal"), DefaultSize: 35, MinSize: 20, Content: func(editor *ui.Context) {
+						ui.Column(editor).Fill().Padding(16).Background(t.Muted).Children(func() { ui.Text(editor, tr(editor, "✓ Build complete")).FontSize(12) })
 					}},
 				}})
 			}},
-			{ID: "inspector", Label: "Inspector", DefaultSize: 24, MinSize: 15, MaxSize: 40, Content: func(child *ui.Context) {
+			{ID: "inspector", Label: tr(c, "Inspector"), DefaultSize: 24, MinSize: 15, MaxSize: 40, Content: func(child *ui.Context) {
 				ui.Column(child).Fill().Padding(16).Gap(8).Children(func() {
-					display.Typography(child, "Inspector", display.Small)
-					ui.Text(child, "Native Go\nTheme aware").FontSize(12)
+					display.Typography(child, tr(child, "Inspector"), display.Small)
+					ui.Text(child, tr(child, "Native Go\nTheme aware")).FontSize(12)
 				})
 			}},
 		}}).Height(280).Border(1, t.Border).Radius(t.RadiusMD()).Clip()
@@ -84,20 +84,20 @@ func (s *State) routePanelsPreview(c *ui.Context) {
 			navigation.NativeNavigationMenu(c, &s.navRoute, previewRoutes)
 		} else {
 			_, err = navigation.NavigationMenuWith(c, s.Popovers, "preview-route-panels", &s.navRoute, navigation.NavigationMenuProps{
-				Label: "Explore navigation", Items: []navigation.NavigationMenuItem{
-					{Key: "docs", Label: "Documentation", Width: 420, Links: previewRoutes[0].Children, Columns: 1},
-					{Key: "components", Label: "Components", Width: 520, Content: func(child *ui.Context, choose func(string)) {
+				Label: tr(c, "Explore navigation"), Items: []navigation.NavigationMenuItem{
+					{Key: "docs", Label: tr(c, "Documentation"), Width: 420, Links: previewRoutes[0].Children, Columns: 1},
+					{Key: "components", Label: tr(c, "Components"), Width: 520, Content: func(child *ui.Context, choose func(string)) {
 						ui.Row(child).Gap(16).FillWidth().Children(func() {
 							display.Avatar(child, display.AvatarProps{Fallback: "Go", Size: 48})
 							ui.Column(child).Grow(1).Gap(10).Children(func() {
 								display.CardHeader(child, "Composable by design", "Build native experiences from small, focused components.")
-								if control.Button(child, "Browse components", control.ButtonProps{Variant: control.Outline}).Clicked() {
+								if control.Button(child, tr(child, "Browse components"), control.ButtonProps{Variant: control.Outline}).Clicked() {
 									choose("buttons")
 								}
 							})
 						})
 					}},
-					{Key: "updates", Label: "Updates"},
+					{Key: "updates", Label: tr(c, "Updates")},
 				},
 			})
 		}
@@ -105,15 +105,15 @@ func (s *State) routePanelsPreview(c *ui.Context) {
 			s.popupError(c, err)
 		}
 		if s.navRoute != "" {
-			display.Typography(c, "Selected: "+s.navRoute, display.Muted)
+			display.Typography(c, tr(c, "Selected: ")+s.navRoute, display.Muted)
 		}
 	})
 }
 
 func (s *State) menubarPreview(c *ui.Context) {
 	menus := []overlay.MenubarItem{
-		{Key: "file", Label: "File", Items: []overlay.MenuItem{{Key: "new", Label: "New project"}, {Key: "open", Label: "Open project"}, projectExportMenuItem(), {Separator: true}, {Key: "close", Label: "Close project"}}},
-		{Key: "edit", Label: "Edit", Items: []overlay.MenuItem{{Key: "undo", Label: "Undo"}, {Key: "redo", Label: "Redo"}}},
+		{Key: "file", Label: tr(c, "File"), Items: []overlay.MenuItem{{Key: "new", Label: tr(c, "New project")}, {Key: "open", Label: tr(c, "Open project")}, projectExportMenuItem(), {Separator: true}, {Key: "close", Label: tr(c, "Close project")}}},
+		{Key: "edit", Label: tr(c, "Edit"), Items: []overlay.MenuItem{{Key: "undo", Label: tr(c, "Undo")}, {Key: "redo", Label: tr(c, "Redo")}}},
 	}
 	var chosen string
 	var err error

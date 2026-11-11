@@ -34,8 +34,8 @@ func (s *State) tableCompositionPreview(c *ui.Context) {
 	display.Card(c, func() {
 		s.cardHeader(c, "Table composition", "Select a row, change its status, edit a note or open its actions.")
 		ui.Row(c).Gap(12).Wrap().AlignItems(ui.Center).Children(func() {
-			control.Switch(c, &p.empty, control.SwitchProps{Label: "Show empty table"})
-			if control.Button(c, "Reverse invoice rows", control.ButtonProps{Variant: control.Outline, Size: control.Small}).Clicked() {
+			control.Switch(c, &p.empty, control.SwitchProps{Label: tr(c, "Show empty table")})
+			if control.Button(c, tr(c, "Reverse invoice rows"), control.ButtonProps{Variant: control.Outline, Size: control.Small}).Clicked() {
 				slices.Reverse(p.order)
 			}
 		})
@@ -56,13 +56,15 @@ func (s *State) tableCompositionPreview(c *ui.Context) {
 			total += amount
 			rows = append(rows, display.TableRow(display.TableRowProps{Key: id, Selected: record.selected},
 				display.TableCell("", display.TableCellProps{Key: "selected", Checkbox: true, Content: func(c *ui.Context) {
-					control.Checkbox(c, &record.selected, "Select "+id, control.CheckboxProps{Content: func(*ui.Context) {}})
+					control.Checkbox(c, &record.selected, tr(c, "Select ")+id, control.CheckboxProps{Content: func(*ui.Context) {}})
 				}}),
 				display.TableRowHead(id, display.TableCellProps{Key: "invoice"}),
 				display.TableCell("", display.TableCellProps{Key: "status", Content: func(c *ui.Context) {
-					props := control.SelectProps{Label: "Status " + id, Size: control.Small,
-						Options:        []control.Option{{Value: "Paid", Label: "Paid"}, {Value: "Pending", Label: "Pending"}, {Value: "Processing", Label: "Processing"}},
-						TriggerContent: func(c *ui.Context, option control.Option) { display.Badge(c, option.Label, display.BadgeSecondary) },
+					props := control.SelectProps{Label: tr(c, "Status ") + id, Size: control.Small,
+						Options: localizedOptions(c, []control.Option{{Value: "Paid", Label: "Paid"}, {Value: "Pending", Label: "Pending"}, {Value: "Processing", Label: "Processing"}}),
+						TriggerContent: func(c *ui.Context, option control.Option) {
+							display.Badge(c, tr(c, option.Label), display.BadgeSecondary)
+						},
 					}
 					if s.Config.NativeMenus {
 						desktop.NativeSelect(c, &record.status, props)
@@ -74,11 +76,11 @@ func (s *State) tableCompositionPreview(c *ui.Context) {
 				}}),
 				display.TableCell(fmt.Sprintf("$%.2f", amount), display.TableCellProps{Key: "amount"}),
 				display.TableCell("", display.TableCellProps{Key: "note", Content: func(c *ui.Context) {
-					control.Input(c, &record.note, control.InputProps{Label: "Note " + id, Placeholder: "Add a note", Size: control.Small}).Width(180)
+					control.Input(c, &record.note, control.InputProps{Label: tr(c, "Note ") + id, Placeholder: tr(c, "Add a note"), Size: control.Small}).Width(180)
 				}}),
 				display.TableCell("", display.TableCellProps{Key: "actions", Content: func(c *ui.Context) {
 					s.previewMenu(c, "table-actions-"+id, "Actions "+id, overlay.MenuProps{Items: []overlay.MenuItem{
-						{Key: "View invoice " + id, Label: "View invoice"}, {Key: "Download invoice " + id, Label: "Download receipt"},
+						{Key: "View invoice " + id, Label: tr(c, "View invoice")}, {Key: "Download invoice " + id, Label: tr(c, "Download receipt")},
 					}})
 				}}),
 			))
@@ -86,7 +88,7 @@ func (s *State) tableCompositionPreview(c *ui.Context) {
 		if p.empty {
 			rows = append(rows, display.TableRow(display.TableRowProps{Key: "empty"}, display.TableCell("No invoices to display.", display.TableCellProps{ColSpan: 6})))
 		}
-		display.TableWith(c, display.TableOptions{Label: "Editable invoices", Scroll: &p.scroll, Columns: []display.TableColumn{
+		display.TableWith(c, display.TableOptions{Label: tr(c, "Editable invoices"), Scroll: &p.scroll, Columns: []display.TableColumn{
 			{Key: "selected", Width: 64}, {Key: "invoice", Width: 100}, {Key: "status", Width: 168},
 			{Key: "amount", Width: 110, Align: ui.End}, {Key: "note", Width: 196}, {Key: "actions", Width: 160},
 		}}, display.TableHeader(display.TableRow(display.TableRowProps{Key: "header"},

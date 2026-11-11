@@ -79,12 +79,12 @@ func (p *labelCompositionPreviewState) view(c *ui.Context, h *desktop.Host, nati
 		}
 		p.native, p.popupError = native, ""
 	}
-	display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: "Label compositions"}, display.CardSlots{
-		Title: "Label compositions", Description: "Source standalone labels and actual native checkbox, input and multiline targets.",
+	display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: tr(c, "Label compositions")}, display.CardSlots{
+		Title: tr(c, "Label compositions"), Description: tr(c, "Source standalone labels and actual native checkbox, input and multiline targets."),
 		Content: func(child *ui.Context) {
-			p.choose(child, h, native, "source-label-config", &p.recipe, control.SelectProps{Label: "Label configuration", Options: labelCompositionRecipes})
+			p.choose(child, h, native, "source-label-config", &p.recipe, control.SelectProps{Label: tr(child, "Label configuration"), Options: localizedOptions(child, labelCompositionRecipes)})
 			if p.recipe == "rtl" {
-				p.choose(child, h, native, "source-label-language", &p.language, control.SelectProps{Label: "Label language", Options: statusLanguages()})
+				p.choose(child, h, native, "source-label-language", &p.language, control.SelectProps{Label: tr(child, "Label language"), Options: localizedOptions(child, statusLanguages())})
 			}
 			preview := ui.Column(child.Key("label-source:" + p.recipe)).FillWidth().MinWidth(0).AlignItems(ui.Center)
 			if p.recipe == "rtl" {
@@ -92,7 +92,7 @@ func (p *labelCompositionPreviewState) view(c *ui.Context, h *desktop.Host, nati
 			}
 			preview.Children(func() { p.draw(child, h, native) })
 			if p.action != "" {
-				ui.Text(child, p.action).FontSize(13).Role(ui.RoleStatus)
+				ui.Text(child, tr(child, p.action)).FontSize(13).Role(ui.RoleStatus)
 			}
 			if p.popupError != "" {
 				ui.Text(child, p.popupError).Role(ui.RoleAlert)
@@ -128,15 +128,15 @@ func (p *labelCompositionPreviewState) checkbox(c *ui.Context, label string, fie
 // native editor links back to that same label once constructed.
 func (p *labelCompositionPreviewState) plainField(c *ui.Context, label, placeholder string, multiline, disabled bool) {
 	control.FieldWith(c, control.FieldProps{}, func(f *control.FieldScope) {
-		caption := control.Label(c, label)
+		caption := control.Label(c, tr(c, label))
 		e := f.Control(c, func() ui.Element {
 			changed := func(string) { p.changes[p.recipe]++ }
 			if multiline {
-				return control.Textarea(c, p.text("value"), control.TextareaProps{Label: label, Placeholder: placeholder, Disabled: disabled, OnChange: changed})
+				return control.Textarea(c, p.text("value"), control.TextareaProps{Label: tr(c, label), Placeholder: tr(c, placeholder), Disabled: disabled, OnChange: changed})
 			}
-			return control.Input(c, p.text("value"), control.InputProps{Label: label, Placeholder: placeholder, Disabled: disabled, OnChange: changed})
+			return control.Input(c, p.text("value"), control.InputProps{Label: tr(c, label), Placeholder: tr(c, placeholder), Disabled: disabled, OnChange: changed})
 		})
-		e.Label(label).LabelledBy(caption)
+		e.Label(tr(c, label)).LabelledBy(caption)
 		if disabled {
 			caption.Opacity(.5).Cursor(ui.CursorNotAllowed)
 		}
@@ -157,12 +157,12 @@ func (p *labelCompositionPreviewState) draw(c *ui.Context, h *desktop.Host, nati
 		case "rtl":
 			p.checkbox(c, labelSourceTerms(p.language), false)
 		case "usage":
-			control.Label(c, "Your email address")
+			control.Label(c, tr(c, "Your email address"))
 		case "field-usage":
 			control.FieldWith(c, control.FieldProps{}, func(f *control.FieldScope) {
-				f.Label(c, control.FieldLabelProps{Text: "Your email address"}, nil)
+				f.Label(c, control.FieldLabelProps{Text: tr(c, "Your email address")}, nil)
 				f.Control(c, func() ui.Element {
-					return control.Input(c, p.text("value"), control.InputProps{Label: "Your email address", OnChange: func(string) { p.changes[p.recipe]++ }})
+					return control.Input(c, p.text("value"), control.InputProps{Label: tr(c, "Your email address"), OnChange: func(string) { p.changes[p.recipe]++ }})
 				})
 			})
 		case "create-checkbox":
@@ -182,22 +182,22 @@ func (p *labelCompositionPreviewState) draw(c *ui.Context, h *desktop.Host, nati
 func (p *labelCompositionPreviewState) paymentField(c *ui.Context, key, label, placeholder, description string, required, multiline bool) {
 	control.FieldWith(c.Key(key), control.FieldProps{Required: required}, func(f *control.FieldScope) {
 		// Required belongs to the real editor; the source caption has no star.
-		f.Label(c, control.FieldLabelProps{Label: label}, func() { ui.Text(c, label) })
+		f.Label(c, control.FieldLabelProps{Label: tr(c, label)}, func() { ui.Text(c, tr(c, label)) })
 		f.Control(c, func() ui.Element {
 			if multiline {
-				return control.Textarea(c, p.text(key), control.TextareaProps{Label: label, Placeholder: placeholder, OnChange: func(string) { p.changes[p.recipe]++ }})
+				return control.Textarea(c, p.text(key), control.TextareaProps{Label: tr(c, label), Placeholder: tr(c, placeholder), OnChange: func(string) { p.changes[p.recipe]++ }})
 			}
-			return control.Input(c, p.text(key), control.InputProps{Label: label, Placeholder: placeholder, OnChange: func(string) { p.changes[p.recipe]++ }})
+			return control.Input(c, p.text(key), control.InputProps{Label: tr(c, label), Placeholder: tr(c, placeholder), OnChange: func(string) { p.changes[p.recipe]++ }})
 		})
 		if description != "" {
-			f.Description(c, description)
+			f.Description(c, tr(c, description))
 		}
 	})
 }
 
 func (p *labelCompositionPreviewState) payment(c *ui.Context, h *desktop.Host, native bool) {
 	control.FieldGroup(c, func() {
-		control.FieldSetWith(c, control.FieldSetProps{Legend: "Payment Method", Description: "All transactions are secure and encrypted"}, control.FieldSetSlots{Content: func(child *ui.Context) {
+		control.FieldSetWith(c, control.FieldSetProps{Legend: "Payment Method", Description: tr(c, "All transactions are secure and encrypted")}, control.FieldSetSlots{Content: func(child *ui.Context) {
 			control.FieldGroup(child, func() {
 				p.paymentField(child, "name", "Name on Card", "Evil Rabbit", "", true, false)
 				p.paymentField(child, "number", "Card Number", "1234 5678 9012 3456", "Enter your 16-digit card number", true, false)
@@ -210,18 +210,18 @@ func (p *labelCompositionPreviewState) payment(c *ui.Context, h *desktop.Host, n
 							options = []control.Option{{Value: "", Label: "YYYY"}}
 							for year := 2024; year <= 2029; year++ {
 								value := fmt.Sprint(year)
-								options = append(options, control.Option{Value: value, Label: value})
+								options = append(options, control.Option{Value: value, Label: tr(child, value)})
 							}
 						} else {
 							for month := 1; month <= 12; month++ {
 								value := fmt.Sprintf("%02d", month)
-								options = append(options, control.Option{Value: value, Label: value})
+								options = append(options, control.Option{Value: value, Label: tr(child, value)})
 							}
 						}
 						control.FieldWith(child.Key(kind), control.FieldProps{}, func(f *control.FieldScope) {
-							f.Label(child, control.FieldLabelProps{Text: label}, nil)
+							f.Label(child, control.FieldLabelProps{Text: tr(child, label)}, nil)
 							f.Control(child, func() ui.Element {
-								return p.choose(child, h, native, "source-label-"+kind, p.text(kind), control.SelectProps{Label: label, Placeholder: placeholder, Options: options}).FillWidth()
+								return p.choose(child, h, native, "source-label-"+kind, p.text(kind), control.SelectProps{Label: tr(child, label), Placeholder: tr(child, placeholder), Options: localizedOptions(child, options)}).FillWidth()
 							})
 						})
 					}
@@ -230,13 +230,13 @@ func (p *labelCompositionPreviewState) payment(c *ui.Context, h *desktop.Host, n
 			})
 		}})
 		control.FieldSeparator(c, "")
-		control.FieldSetWith(c, control.FieldSetProps{Legend: "Billing Address", Description: "The billing address associated with your payment method"}, control.FieldSetSlots{Content: func(child *ui.Context) {
+		control.FieldSetWith(c, control.FieldSetProps{Legend: "Billing Address", Description: tr(c, "The billing address associated with your payment method")}, control.FieldSetSlots{Content: func(child *ui.Context) {
 			control.FieldGroup(child, func() {
 				control.FieldWith(child, control.FieldProps{Orientation: control.FieldHorizontal}, func(f *control.FieldScope) {
 					f.Control(child, func() ui.Element {
 						return control.Checkbox(child, p.checked("shipping", true), "", control.CheckboxProps{OnCheckedChange: func(bool) { p.changes[p.recipe]++ }})
 					})
-					f.Label(child, control.FieldLabelProps{Text: "Same as shipping address"}, nil).FontWeight(400)
+					f.Label(child, control.FieldLabelProps{Text: tr(child, "Same as shipping address")}, nil).FontWeight(400)
 				})
 			})
 		}})
@@ -244,7 +244,7 @@ func (p *labelCompositionPreviewState) payment(c *ui.Context, h *desktop.Host, n
 			control.FieldGroup(child, func() { p.paymentField(child, "comments", "Comments", "Add any additional comments", "", false, true) })
 		}})
 		control.FieldWith(c, control.FieldProps{Orientation: control.FieldHorizontal}, func(_ *control.FieldScope) {
-			if control.Button(c, "Submit", control.ButtonProps{}).Clicked() {
+			if control.Button(c, tr(c, "Submit"), control.ButtonProps{}).Clicked() {
 				if *p.text("name") == "" || *p.text("number") == "" || *p.text("cvv") == "" {
 					p.action = "Local Label validation: Complete the required payment fields."
 				} else {
@@ -257,7 +257,7 @@ func (p *labelCompositionPreviewState) payment(c *ui.Context, h *desktop.Host, n
 					p.action = "Local Label action: Submit"
 				}
 			}
-			if control.Button(c, "Cancel", control.ButtonProps{Variant: control.Outline}).Clicked() {
+			if control.Button(c, tr(c, "Cancel"), control.ButtonProps{Variant: control.Outline}).Clicked() {
 				p.action = "Local Label action: Cancel"
 			}
 		})

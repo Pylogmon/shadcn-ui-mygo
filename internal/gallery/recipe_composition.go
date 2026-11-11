@@ -38,28 +38,28 @@ func (s *State) recipeChoicesPreview(c *ui.Context) {
 		display.Card(c, func() {
 			s.cardHeader(c, "Choose a workspace plan", "Select the whole card or use the arrow keys.")
 			ui.RadioGroup(c, func() {
-				for _, option := range []control.Option{{Value: "plus", Label: "Plus", Description: "For individuals and small teams."}, {Value: "pro", Label: "Pro", Description: "For growing businesses."}, {Value: "enterprise", Label: "Enterprise", Description: "For large teams and enterprises."}} {
-					e := control.RadioWith(c.Key(option.Value), &p.plan, option.Value, option.Label, control.RadioProps{Description: option.Description, Content: func(child *ui.Context) {
+				for _, option := range []control.Option{{Value: "plus", Label: tr(c, "Plus"), Description: tr(c, "For individuals and small teams.")}, {Value: "pro", Label: tr(c, "Pro"), Description: tr(c, "For growing businesses.")}, {Value: "enterprise", Label: tr(c, "Enterprise"), Description: tr(c, "For large teams and enterprises.")}} {
+					e := control.RadioWith(c.Key(option.Value), &p.plan, option.Value, tr(c, option.Label), control.RadioProps{Description: tr(c, option.Description), Content: func(child *ui.Context) {
 						ui.Column(child).Gap(4).Children(func() {
-							ui.Text(child, option.Label).FontWeight(500)
-							ui.Text(child, option.Description).FontSize(12).TextColor(theme.TokensOf(child).MutedForeground)
+							ui.Text(child, tr(child, option.Label)).FontWeight(500)
+							ui.Text(child, tr(child, option.Description)).FontSize(12).TextColor(theme.TokensOf(child).MutedForeground)
 						})
 					}})
 					recipeRadioCard(c, e, p.plan == option.Value).Reverse().Justify(ui.SpaceBetween)
 				}
-			}).FillWidth().MaxWidth(384).Gap(8).Role(ui.RoleRadioGroup).Label("Workspace plan cards").FocusGroup(ui.Horizontal | ui.Vertical)
-			ui.Text(c, "Selected plan: "+recipePlanLabel(p.plan)).FontSize(12).Role(ui.RoleStatus)
+			}).FillWidth().MaxWidth(384).Gap(8).Role(ui.RoleRadioGroup).Label(tr(c, "Workspace plan cards")).FocusGroup(ui.Horizontal | ui.Vertical)
+			ui.Text(c, tr(c, "Selected plan: ")+recipePlanLabel(p.plan)).FontSize(12).Role(ui.RoleStatus)
 		})
 	}, func() {
 		display.Card(c, func() {
 			s.cardHeader(c, "Choose a size", "One radio group, arranged in two columns.")
 			ui.RadioGroup(c, func() {
-				for _, option := range []control.Option{{Value: "small", Label: "Small"}, {Value: "medium", Label: "Medium"}, {Value: "large", Label: "Large"}, {Value: "xlarge", Label: "X-Large"}} {
-					e := control.RadioWith(c.Key(option.Value), &p.size, option.Value, option.Label, control.RadioProps{})
+				for _, option := range []control.Option{{Value: "small", Label: tr(c, "Small")}, {Value: "medium", Label: tr(c, "Medium")}, {Value: "large", Label: tr(c, "Large")}, {Value: "xlarge", Label: tr(c, "X-Large")}} {
+					e := control.RadioWith(c.Key(option.Value), &p.size, option.Value, tr(c, option.Label), control.RadioProps{})
 					recipeRadioCard(c, e, p.size == option.Value).Padding(14, 12)
 				}
-			}).Grid().Columns(2).FillWidth().MaxWidth(384).Gap(8).Role(ui.RoleRadioGroup).Label("Preview size grid").FocusGroup(ui.Horizontal | ui.Vertical)
-			ui.Text(c, "Selected size: "+recipeSizeLabel(p.size)).FontSize(12).Role(ui.RoleStatus)
+			}).Grid().Columns(2).FillWidth().MaxWidth(384).Gap(8).Role(ui.RoleRadioGroup).Label(tr(c, "Preview size grid")).FocusGroup(ui.Horizontal | ui.Vertical)
+			ui.Text(c, tr(c, "Selected size: ")+recipeSizeLabel(p.size)).FontSize(12).Role(ui.RoleStatus)
 		})
 	})
 }
@@ -105,16 +105,16 @@ func (s *State) recipeProgressPreview(c *ui.Context) {
 		recipeLabeledProgress(c, "Upload progress", 56)
 		display.Separator(c, false)
 		recipeLabeledProgress(c, "Transfer progress", p.progress)
-		control.Slider(c, &p.progress, control.SliderProps{Min: 0, Max: 100, Step: 1, Label: "Adjust transfer progress"}).MaxWidth(384)
+		control.Slider(c, &p.progress, control.SliderProps{Min: 0, Max: 100, Step: 1, Label: tr(c, "Adjust transfer progress")}).MaxWidth(384)
 	})
 }
 func recipeLabeledProgress(c *ui.Context, label string, value float64) {
 	ui.Column(c).FillWidth().MaxWidth(384).Gap(8).Children(func() {
 		ui.Row(c).FillWidth().Justify(ui.SpaceBetween).Gap(12).Children(func() {
-			ui.Text(c, label).FontSize(14).FontWeight(500)
+			ui.Text(c, tr(c, label)).FontSize(14).FontWeight(500)
 			ui.Text(c, fmt.Sprintf("%.0f%%", value)).FontSize(14).Font("monospace").FontFeatures("tnum")
 		})
-		display.Progress(c, value/100, display.ProgressProps{Label: label})
+		display.Progress(c, value/100, display.ProgressProps{Label: tr(c, label)})
 	})
 }
 
@@ -141,7 +141,7 @@ func (s *State) recipeAvatarPreview(c *ui.Context) {
 	p.initialize()
 	display.Card(c, func() {
 		s.cardHeader(c, "Portrait color", "The same local portrait, in color or grayscale.")
-		control.Switch(c, &p.grayscale, control.SwitchProps{Label: "Grayscale portrait", Size: control.Small})
+		control.Switch(c, &p.grayscale, control.SwitchProps{Label: tr(c, "Grayscale portrait"), Size: control.Small})
 		var portrait ui.ImageSource = avatarPortrait
 		caption := "Color portrait"
 		if p.grayscale {
@@ -149,8 +149,8 @@ func (s *State) recipeAvatarPreview(c *ui.Context) {
 			caption = "Grayscale portrait"
 		}
 		ui.Row(c).Gap(16).AlignItems(ui.Center).Children(func() {
-			display.Avatar(c, display.AvatarProps{Key: "recipe-portrait", Image: portrait, Fallback: "SD", Label: "Sofia Davis portrait", Scale: display.AvatarLarge})
-			ui.Text(c, caption).FontSize(14)
+			display.Avatar(c, display.AvatarProps{Key: "recipe-portrait", Image: portrait, Fallback: "SD", Label: tr(c, "Sofia Davis portrait"), Scale: display.AvatarLarge})
+			ui.Text(c, tr(c, caption)).FontSize(14)
 		})
 	})
 }
@@ -158,11 +158,11 @@ func (s *State) recipeAvatarPreview(c *ui.Context) {
 func (s *State) recipeSkeletonPreview(c *ui.Context) {
 	display.Card(c, func() {
 		s.cardHeader(c, "Loading forms and tables", "Placeholders keep a familiar shape while content loads.")
-		control.Switch(c, &s.loadingStatic, control.SwitchProps{Label: "Pause skeleton animations", Size: control.Small})
+		control.Switch(c, &s.loadingStatic, control.SwitchProps{Label: tr(c, "Pause skeleton animations"), Size: control.Small})
 		ui.Row(c).FillWidth().Wrap().Gap(32).AlignItems(ui.Start).Children(func() {
 			ui.Column(c).Width(320).MaxWidthPercent(100).Gap(16).Children(func() {
-				ui.Text(c, "Form").FontSize(14).FontWeight(500)
-				ui.Column(c).FillWidth().Gap(28).Role(ui.RoleGroup).Label("Form loading preview").Busy(true).Children(func() {
+				ui.Text(c, tr(c, "Form")).FontSize(14).FontWeight(500)
+				ui.Column(c).FillWidth().Gap(28).Role(ui.RoleGroup).Label(tr(c, "Form loading preview")).Busy(true).Children(func() {
 					for _, labelWidth := range []float32{80, 96} {
 						ui.Column(c).FillWidth().Gap(12).Children(func() {
 							display.Skeleton(c, display.SkeletonProps{Width: labelWidth, Height: 16, Static: s.loadingStatic}).AccessHidden(true)
@@ -173,8 +173,8 @@ func (s *State) recipeSkeletonPreview(c *ui.Context) {
 				})
 			})
 			ui.Column(c).Width(384).MaxWidthPercent(100).Gap(16).Children(func() {
-				ui.Text(c, "Table").FontSize(14).FontWeight(500)
-				ui.Column(c).FillWidth().Gap(8).Role(ui.RoleGroup).Label("Table loading preview").Busy(true).Children(func() {
+				ui.Text(c, tr(c, "Table")).FontSize(14).FontWeight(500)
+				ui.Column(c).FillWidth().Gap(8).Role(ui.RoleGroup).Label(tr(c, "Table loading preview")).Busy(true).Children(func() {
 					for i := 0; i < 5; i++ {
 						ui.Row(c).FillWidth().Gap(16).Children(func() {
 							display.Skeleton(c, display.SkeletonProps{Height: 16, Static: s.loadingStatic}).Basis(0).Grow(1).MinWidth(0).AccessHidden(true)

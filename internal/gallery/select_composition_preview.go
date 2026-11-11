@@ -90,12 +90,12 @@ func (p *selectCompositionPreviewState) view(c *ui.Context, h *desktop.Host, nat
 		}
 		p.native, p.popupError = native, ""
 	}
-	display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: "Select compositions"}, display.CardSlots{
-		Title: "Select compositions", Description: "Source listboxes, grouped choices, rich plans and independent selections.",
+	display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: tr(c, "Select compositions")}, display.CardSlots{
+		Title: tr(c, "Select compositions"), Description: tr(c, "Source listboxes, grouped choices, rich plans and independent selections."),
 		Content: func(child *ui.Context) {
-			p.choose(child, h, native, "source-select-config", &p.recipe, control.SelectProps{Label: "Select configuration", Options: selectCompositionRecipes})
+			p.choose(child, h, native, "source-select-config", &p.recipe, control.SelectProps{Label: tr(child, "Select configuration"), Options: localizedOptions(child, selectCompositionRecipes)})
 			if p.recipe == "rtl" {
-				p.choose(child, h, native, "source-select-language", &p.language, control.SelectProps{Label: "Select language", Options: statusLanguages()})
+				p.choose(child, h, native, "source-select-language", &p.language, control.SelectProps{Label: tr(child, "Select language"), Options: localizedOptions(child, statusLanguages())})
 			}
 			box := ui.Column(child.Key("source-select:" + p.recipe)).FillWidth().MinWidth(0).AlignItems(ui.Center)
 			if p.recipe == "rtl" {
@@ -103,7 +103,7 @@ func (p *selectCompositionPreviewState) view(c *ui.Context, h *desktop.Host, nat
 			}
 			box.Children(func() { p.draw(child, p.draft()) })
 			if p.action != "" {
-				ui.Text(child, p.action).FontSize(13).Role(ui.RoleStatus).Label(p.action)
+				ui.Text(child, tr(child, p.action)).FontSize(13).Role(ui.RoleStatus).Label(tr(child, p.action))
 			}
 			if p.popupError != "" {
 				ui.Text(child, p.popupError).Role(ui.RoleAlert)
@@ -171,7 +171,7 @@ func selectSourcePlanVisual(c *ui.Context, key string) {
 		if plan.name == key {
 			ui.Column(c).FillWidth().MinWidth(0).Gap(0).Children(func() {
 				ui.Text(c, plan.name).FontSize(14).FontWeight(500).LineHeight(20.0 / 14)
-				ui.Text(c, plan.description).FontSize(12).FontWeight(400).LineHeight(4.0 / 3).TextColor(theme.TokensOf(c).MutedForeground)
+				ui.Text(c, tr(c, plan.description)).FontSize(12).FontWeight(400).LineHeight(4.0 / 3).TextColor(theme.TokensOf(c).MutedForeground)
 			})
 		}
 	}
@@ -189,7 +189,7 @@ func selectSourceIcon(c *ui.Context, key string) {
 func (p *selectCompositionPreviewState) selectView(c *ui.Context, d *selectCompositionDraft, props selectSourceProps) ui.Element {
 	state := d.choice(props.key)
 	var trigger ui.Element
-	control.SelectRoot(c.Key(props.key), state, control.SelectRootProps{Options: props.options, Disabled: props.disabled, Multiple: props.multiple, UnselectedValue: stringPointer(selectSourceNone),
+	control.SelectRoot(c.Key(props.key), state, control.SelectRootProps{Options: localizedOptions(c, props.options), Disabled: props.disabled, Multiple: props.multiple, UnselectedValue: stringPointer(selectSourceNone),
 		OnValueChange: func(next control.SelectSelection, _ *control.SelectChange) {
 			if next != state.Value {
 				d.changes++
@@ -201,7 +201,7 @@ func (p *selectCompositionPreviewState) selectView(c *ui.Context, d *selectCompo
 				p.action = "Local select choices: " + strings.Join(next, ", ")
 			}
 		}}, func(b *control.SelectScope) {
-		trigger = b.Trigger(c, control.SelectTriggerProps{Label: props.label, Size: props.size, Invalid: props.invalid}, func() {
+		trigger = b.Trigger(c, control.SelectTriggerProps{Label: tr(c, props.label), Size: props.size, Invalid: props.invalid}, func() {
 			var content func(control.SelectValueView)
 			if props.plan || props.icons || props.multiple {
 				content = func(v control.SelectValueView) {
@@ -227,10 +227,10 @@ func (p *selectCompositionPreviewState) selectView(c *ui.Context, d *selectCompo
 					if props.icons {
 						selectSourceIcon(c, key)
 					}
-					ui.Text(c, text).SingleLine()
+					ui.Text(c, tr(c, text)).SingleLine()
 				}
 			}
-			b.Value(c, control.SelectValueProps{Placeholder: props.placeholder}, content)
+			b.Value(c, control.SelectValueProps{Placeholder: tr(c, props.placeholder)}, content)
 		}).MinWidth(0)
 		if props.width > 0 {
 			trigger.Width(props.width).MaxWidthPercent(100)
@@ -258,7 +258,7 @@ func (p *selectCompositionPreviewState) selectView(c *ui.Context, d *selectCompo
 							if props.plan {
 								content = func() { selectSourcePlanVisual(c, o.Value) }
 							} else if props.icons {
-								content = func() { selectSourceIcon(c, o.Value); ui.Text(c, o.Label).SingleLine() }
+								content = func() { selectSourceIcon(c, o.Value); ui.Text(c, tr(c, o.Label)).SingleLine() }
 							}
 							b.Item(c, o.Value, control.SelectItemProps{}, content)
 						}
@@ -274,11 +274,11 @@ func (p *selectCompositionPreviewState) selectView(c *ui.Context, d *selectCompo
 func stringPointer(v string) *string { return &v }
 
 func (p *selectCompositionPreviewState) field(c *ui.Context, d *selectCompositionDraft, label, description, errorText string, props selectSourceProps) {
-	control.FieldWith(c.Key(props.key+":field"), control.FieldProps{Invalid: props.invalid, Error: errorText}, func(f *control.FieldScope) {
-		f.Label(c, control.FieldLabelProps{Text: label}, nil)
+	control.FieldWith(c.Key(props.key+":field"), control.FieldProps{Invalid: props.invalid, Error: tr(c, errorText)}, func(f *control.FieldScope) {
+		f.Label(c, control.FieldLabelProps{Text: tr(c, label)}, nil)
 		f.Control(c, func() ui.Element { return p.selectView(c, d, props) })
 		if description != "" {
-			f.Description(c, description)
+			f.Description(c, tr(c, description))
 		}
 		if errorText != "" {
 			f.Error(c)
@@ -316,10 +316,10 @@ func (p *selectCompositionPreviewState) draw(c *ui.Context, d *selectComposition
 		case "align":
 			control.FieldWith(c, control.FieldProps{Orientation: control.FieldHorizontal}, func(f *control.FieldScope) {
 				f.Content(c, func() {
-					f.Label(c, control.FieldLabelProps{Text: "Align Item"}, nil)
-					f.Description(c, "Toggle to align the item with the trigger.")
+					f.Label(c, control.FieldLabelProps{Text: tr(c, "Align Item")}, nil)
+					f.Description(c, tr(c, "Toggle to align the item with the trigger."))
 				})
-				f.Control(c, func() ui.Element { return control.Switch(c, &d.align, control.SwitchProps{Label: "Align Item"}) })
+				f.Control(c, func() ui.Element { return control.Switch(c, &d.align, control.SwitchProps{Label: tr(c, "Align Item")}) })
 			})
 			base.key, base.align = "aligned-demo", &d.align
 			p.selectView(c, d, base)
@@ -350,12 +350,12 @@ func (p *selectCompositionPreviewState) draw(c *ui.Context, d *selectComposition
 				base.options = selectSourceFruits(3, true, false)
 				if p.recipe == "create-icons" {
 					base.label, base.placeholder, base.icons = []string{"Small chart type", "Default chart type"}[i], "Chart Type", true
-					base.options = []control.Option{{Value: selectSourceNone, Label: "Chart Type"}, {Value: "line", Label: "Line"}, {Value: "bar", Label: "Bar"}, {Value: "pie", Label: "Pie"}}
+					base.options = []control.Option{{Value: selectSourceNone, Label: tr(c, "Chart Type")}, {Value: "line", Label: tr(c, "Line")}, {Value: "bar", Label: tr(c, "Bar")}, {Value: "pie", Label: tr(c, "Pie")}}
 				}
 				if p.recipe == "create-button" {
 					ui.Row(c.Key(i)).FillWidth().MinWidth(0).Gap(8).AlignItems(ui.Center).Children(func() {
 						p.selectView(c, d, base).Grow(1)
-						if control.Button(c, "Submit", control.ButtonProps{Variant: control.Outline, Size: size, Label: []string{"Submit small fruit", "Submit default fruit"}[i]}).Clicked() {
+						if control.Button(c, tr(c, "Submit"), control.ButtonProps{Variant: control.Outline, Size: size, Label: tr(c, []string{"Submit small fruit", "Submit default fruit"}[i])}).Clicked() {
 							d.submits++
 							d.submitted = nil
 							if v := d.choice(base.key).Value; v.Valid {
@@ -379,9 +379,9 @@ func (p *selectCompositionPreviewState) draw(c *ui.Context, d *selectComposition
 				}
 			})
 		case "create-large":
-			base.placeholder, base.options = "Select an item", []control.Option{{Value: selectSourceNone, Label: "Select an item"}}
+			base.placeholder, base.options = "Select an item", []control.Option{{Value: selectSourceNone, Label: tr(c, "Select an item")}}
 			for i := range 100 {
-				base.options = append(base.options, control.Option{Value: fmt.Sprintf("item-%d", i), Label: fmt.Sprintf("Item %d", i)})
+				base.options = append(base.options, control.Option{Value: fmt.Sprintf("item-%d", i), Label: fmt.Sprintf(tr(c, "Item %d"), i)})
 			}
 			p.selectView(c, d, base)
 		case "create-multiple":
@@ -390,7 +390,7 @@ func (p *selectCompositionPreviewState) draw(c *ui.Context, d *selectComposition
 		case "create-plan":
 			base.key, base.label, base.plan, base.options = "plan", "Subscription Plan", true, nil
 			for _, plan := range selectSourcePlans {
-				base.options = append(base.options, control.Option{Value: plan.name, Label: plan.name})
+				base.options = append(base.options, control.Option{Value: plan.name, Label: tr(c, plan.name)})
 			}
 			p.selectView(c, d, base)
 		case "create-field":
@@ -404,18 +404,18 @@ func (p *selectCompositionPreviewState) draw(c *ui.Context, d *selectComposition
 		case "create-inline":
 			ui.ScrollHorizontal(c).FillWidth().MinWidth(0).Children(func() {
 				ui.Row(c).MinWidth(328).FillWidth().Gap(8).AlignItems(ui.Center).Children(func() {
-					control.Input(c, &d.query, control.InputProps{Label: "Source inline search", Placeholder: "Search..."}).Grow(1).MinWidth(32)
+					control.Input(c, &d.query, control.InputProps{Label: tr(c, "Source inline search"), Placeholder: tr(c, "Search...")}).Grow(1).MinWidth(32)
 					base.label, base.placeholder, base.width = "Source filter", "Filter", 140
-					base.options = []control.Option{{Value: selectSourceNone, Label: "Filter"}, {Value: "all", Label: "All"}, {Value: "active", Label: "Active"}, {Value: "inactive", Label: "Inactive"}}
+					base.options = []control.Option{{Value: selectSourceNone, Label: tr(c, "Filter")}, {Value: "all", Label: tr(c, "All")}, {Value: "active", Label: tr(c, "Active")}, {Value: "inactive", Label: tr(c, "Inactive")}}
 					p.selectView(c, d, base).Shrink(0)
-					control.NativeSelect(c, &d.sort, control.SelectProps{Label: "Source sort order", Options: []control.Option{{Value: "", Label: "Sort by"}, {Value: "name", Label: "Name"}, {Value: "date", Label: "Date"}, {Value: "status", Label: "Status"}}}).MinWidth(0).Width(140).Shrink(0)
+					control.NativeSelect(c, &d.sort, control.SelectProps{Label: tr(c, "Source sort order"), Options: localizedOptions(c, []control.Option{{Value: "", Label: "Sort by"}, {Value: "name", Label: "Name"}, {Value: "date", Label: "Date"}, {Value: "status", Label: "Status"}})}).MinWidth(0).Width(140).Shrink(0)
 				})
 			})
 		case "create-dialog":
-			if control.Button(c, "Open Dialog", control.ButtonProps{Variant: control.Outline}).Clicked() {
+			if control.Button(c, tr(c, "Open Dialog"), control.ButtonProps{Variant: control.Outline}).Clicked() {
 				d.dialog = true
 			}
-			overlay.Dialog(c, &d.dialog, overlay.DialogProps{Title: "Select Example", Description: "Use the select below to choose a fruit."}, func() {
+			overlay.Dialog(c, &d.dialog, overlay.DialogProps{Title: tr(c, "Select Example"), Description: tr(c, "Use the select below to choose a fruit.")}, func() {
 				base.label = "Dialog fruit"
 				p.selectView(c, d, base)
 			})

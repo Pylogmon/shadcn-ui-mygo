@@ -41,9 +41,9 @@ func (p *questionnaireRecipesState) view(c *ui.Context) {
 	p.initialize()
 	display.Card(c, func() {
 		ui.Column(c).FillWidth().MinWidth(0).Gap(20).Children(func() {
-			display.Typography(c, "Questionnaire workflows", display.H3)
-			ui.Text(c, "Try a conditional plan, restore a saved migration, or validate a response policy.").TextColor(theme.TokensOf(c).MutedForeground)
-			control.Select(c, &p.recipe, control.SelectProps{Label: "Questionnaire configuration", Options: []control.Option{{Value: "conditional", Label: "Conditional execution plan"}, {Value: "resume", Label: "Resume saved migration"}, {Value: "validation", Label: "Validate response policy"}}}).MaxWidth(360)
+			display.Typography(c, tr(c, "Questionnaire workflows"), display.H3)
+			ui.Text(c, tr(c, "Try a conditional plan, restore a saved migration, or validate a response policy.")).TextColor(theme.TokensOf(c).MutedForeground)
+			control.Select(c, &p.recipe, control.SelectProps{Label: tr(c, "Questionnaire configuration"), Options: localizedOptions(c, []control.Option{{Value: "conditional", Label: "Conditional execution plan"}, {Value: "resume", Label: "Resume saved migration"}, {Value: "validation", Label: "Validate response policy"}})}).MaxWidth(360)
 			ui.Column(c.Key("questionnaire-recipe-" + p.recipe)).FillWidth().MaxWidth(448).MinWidth(0).Children(func() {
 				switch p.recipe {
 				case "resume":
@@ -55,7 +55,7 @@ func (p *questionnaireRecipesState) view(c *ui.Context) {
 				}
 			})
 		})
-	}).Role(ui.RoleGroup).Label("Questionnaire workflow examples")
+	}).Role(ui.RoleGroup).Label(tr(c, "Questionnaire workflow examples"))
 }
 func conditionalRecipeQuestions(answers map[string]conversation.Answer) []conversation.Question {
 	cloud := slices.Contains(answers["runtime"].Values, "cloud")
@@ -79,6 +79,7 @@ func validationRecipeQuestions() []conversation.Question {
 	}
 }
 func (m *questionnaireRecipeDraft) render(c *ui.Context, recipe string, questions []conversation.Question) {
+	questions = localizedQuestions(c, questions)
 	initial, progress, submit := "runtime", "Execution plan progress", "Save execution plan"
 	switch recipe {
 	case "resume":
@@ -125,14 +126,14 @@ func (m *questionnaireRecipeDraft) render(c *ui.Context, recipe string, question
 		}
 	}
 	conversation.QuestionnaireWith(c, &m.state, props, func(parts *conversation.QuestionnaireParts) {
-		parts.Root.Label("Questionnaire " + recipe)
-		parts.Progress(conversation.QuestionnaireProgressProps{Label: progress})
+		parts.Root.Label(tr(c, "Questionnaire ") + recipe)
+		localizedQuestionnaireProgress(c, parts, progress)
 		for _, question := range questions {
 			parts.Item(question.ID, func(item *conversation.QuestionnaireItemParts) {
 				item.Header(func(*ui.Context) {
-					item.Title(question.Title)
+					item.Title(tr(c, question.Title))
 					if question.Description != "" {
-						item.Description(question.Description)
+						item.Description(tr(c, question.Description))
 					}
 				})
 				item.Choices(func(*ui.Context) {
@@ -140,7 +141,7 @@ func (m *questionnaireRecipeDraft) render(c *ui.Context, recipe string, question
 						item.Choice(choice.Value)
 					}
 					if question.Freeform {
-						item.Input(conversation.QuestionnaireInputProps{Label: question.InputLabel})
+						item.Input(conversation.QuestionnaireInputProps{Label: tr(c, question.InputLabel)})
 					}
 				})
 				item.Error()
@@ -148,11 +149,11 @@ func (m *questionnaireRecipeDraft) render(c *ui.Context, recipe string, question
 		}
 		actions := parts.Actions(func(*ui.Context) {
 			if recipe == "resume" {
-				parts.Reset(conversation.QuestionnaireActionProps{Label: "Reset changes"})
+				parts.Reset(conversation.QuestionnaireActionProps{Label: tr(c, "Reset changes")})
 			}
-			parts.Previous()
-			parts.Next(conversation.QuestionnaireActionProps{Label: "Next"})
-			parts.Submit(conversation.QuestionnaireActionProps{Label: submit})
+			parts.Previous(conversation.QuestionnaireActionProps{Label: tr(c, "Previous")})
+			parts.Next(conversation.QuestionnaireActionProps{Label: tr(c, "Next")})
+			parts.Submit(conversation.QuestionnaireActionProps{Label: tr(c, submit)})
 		})
 		if recipe == "resume" {
 			actions.ColumnTracks(ui.Fr(1), ui.FitContent(), ui.FitContent(), ui.FitContent())

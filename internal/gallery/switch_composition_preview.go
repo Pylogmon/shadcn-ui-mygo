@@ -66,12 +66,12 @@ func (p *switchCompositionPreviewState) view(c *ui.Context, h *desktop.Host, nat
 		}
 		p.native, p.popupError = native, ""
 	}
-	display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: "Switch compositions"}, display.CardSlots{
-		Title: "Switch compositions", Description: "Source labels, descriptions, choice cards and native switch state.",
+	display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: tr(c, "Switch compositions")}, display.CardSlots{
+		Title: tr(c, "Switch compositions"), Description: tr(c, "Source labels, descriptions, choice cards and native switch state."),
 		Content: func(child *ui.Context) {
-			p.choose(child, h, native, "source-switch-config", &p.recipe, control.SelectProps{Label: "Switch configuration", Options: switchCompositionRecipes})
+			p.choose(child, h, native, "source-switch-config", &p.recipe, control.SelectProps{Label: tr(child, "Switch configuration"), Options: localizedOptions(child, switchCompositionRecipes)})
 			if p.recipe == "rtl" {
-				p.choose(child, h, native, "source-switch-language", &p.language, control.SelectProps{Label: "Switch language", Options: statusLanguages()})
+				p.choose(child, h, native, "source-switch-language", &p.language, control.SelectProps{Label: tr(child, "Switch language"), Options: localizedOptions(child, statusLanguages())})
 			}
 			preview := ui.Column(child.Key("switch-source:" + p.recipe)).FillWidth().MinWidth(0).AlignItems(ui.Center)
 			if p.recipe == "rtl" {
@@ -79,7 +79,7 @@ func (p *switchCompositionPreviewState) view(c *ui.Context, h *desktop.Host, nat
 			}
 			preview.Children(func() { p.draw(child) })
 			if p.action != "" {
-				ui.Text(child, p.action).FontSize(13).Role(ui.RoleStatus).Label(p.action)
+				ui.Text(child, tr(child, p.action)).FontSize(13).Role(ui.RoleStatus).Label(tr(child, p.action))
 			}
 			if p.popupError != "" {
 				ui.Text(child, p.popupError).Role(ui.RoleAlert)
@@ -172,18 +172,18 @@ func (p *switchCompositionPreviewState) row(c *ui.Context, row switchSourceRow) 
 		buildControl := func() { f.Control(c, func() ui.Element { return control.Switch(c, value, props) }) }
 		buildCaption := func() {
 			if row.description == "" {
-				f.Label(c, control.FieldLabelProps{Text: row.label}, nil)
+				f.Label(c, control.FieldLabelProps{Text: tr(c, row.label)}, nil)
 				return
 			}
 			f.Content(c, func() {
-				f.Label(c, control.FieldLabelProps{Text: row.label}, nil)
-				f.Description(c, row.description)
+				f.Label(c, control.FieldLabelProps{Text: tr(c, row.label)}, nil)
+				f.Description(c, tr(c, row.description))
 			})
 		}
 		if row.card {
-			f.Label(c, control.FieldLabelProps{Label: row.label, Choice: true, Selected: *value}, func() {
+			f.Label(c, control.FieldLabelProps{Label: tr(c, row.label), Choice: true, Selected: *value}, func() {
 				ui.Row(c).FillWidth().MinWidth(0).Gap(12).AlignItems(ui.Start).Children(func() {
-					f.Content(c, func() { control.FieldTitle(c, row.label); f.Description(c, row.description) })
+					f.Content(c, func() { control.FieldTitle(c, tr(c, row.label)); f.Description(c, tr(c, row.description)) })
 					buildControl()
 				})
 			})

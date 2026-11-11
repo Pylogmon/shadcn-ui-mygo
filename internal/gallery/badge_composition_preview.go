@@ -67,16 +67,16 @@ func (p *badgeCompositionPreviewState) view(c *ui.Context, h *desktop.Host, nati
 		p.native, p.popupError = native, ""
 	}
 	p.router.View(c, func(_ *ui.Route) {
-		display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: "Badge compositions"}, display.CardSlots{
-			Title: "Badge compositions", Description: "Source variants, icons, loading cues and native links.",
+		display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: tr(c, "Badge compositions")}, display.CardSlots{
+			Title: tr(c, "Badge compositions"), Description: tr(c, "Source variants, icons, loading cues and native links."),
 			Content: func(child *ui.Context) {
-				p.choose(child, h, native, "source-badge-config", &p.recipe, control.SelectProps{Label: "Badge configuration", Options: badgeCompositionRecipes})
+				p.choose(child, h, native, "source-badge-config", &p.recipe, control.SelectProps{Label: tr(child, "Badge configuration"), Options: localizedOptions(child, badgeCompositionRecipes)})
 				if p.recipe == "rtl" {
-					p.choose(child, h, native, "source-badge-language", &p.language, control.SelectProps{Label: "Badge language", Options: statusLanguages()})
+					p.choose(child, h, native, "source-badge-language", &p.language, control.SelectProps{Label: tr(child, "Badge language"), Options: localizedOptions(child, statusLanguages())})
 				}
 				p.draw(child.Key(p.recipe))
 				if p.action != "" {
-					ui.Text(child, p.action).FontSize(13).Role(ui.RoleStatus).Label(p.action)
+					ui.Text(child, tr(child, p.action)).FontSize(13).Role(ui.RoleStatus).Label(tr(child, p.action))
 				}
 				if p.popupError != "" {
 					ui.Text(child, p.popupError).FontSize(13).TextColor(theme.TokensOf(child).Destructive).Role(ui.RoleAlert)
@@ -204,7 +204,7 @@ func (p *badgeCompositionPreviewState) badge(c *ui.Context, spec badgeSourceSpec
 			p.lastVariant = spec.variant
 		}
 	}
-	b := display.BadgeWith(c, spec.text, props)
+	b := display.BadgeWith(c, tr(c, spec.text), props)
 	if spec.palette != "" {
 		bg, fg := badgeSourceColors(spec.palette, spec.solid, theme.TokensOf(c).Dark)
 		b.Background(bg).TextColor(fg)
@@ -215,7 +215,7 @@ func (p *badgeCompositionPreviewState) draw(c *ui.Context) {
 	if p.recipe == "create-long-text" {
 		// Source Badge is shrink-0/whitespace-nowrap. Keep that complete string
 		// reachable in a narrow native parent rather than clipping its label.
-		ui.ScrollHorizontal(c).FillWidth().MinWidth(0).Height(28).TrackScroll(&p.longScroll).Role(ui.RoleRegion).Label("Long badge viewport").Children(func() {
+		ui.ScrollHorizontal(c).FillWidth().MinWidth(0).Height(28).TrackScroll(&p.longScroll).Role(ui.RoleRegion).Label(tr(c, "Long badge viewport")).Children(func() {
 			p.badge(c, p.specs()[0])
 		})
 		return

@@ -25,7 +25,7 @@ func popupRevision[T comparable](anchor ui.Element, value T) uint64 {
 }
 
 func (s *State) previewDatePicker(c *ui.Context) {
-	p := desktop.DatePickerProps{Label: "Project date", Calendar: display.CalendarProps{Browse: true}}
+	p := desktop.DatePickerProps{Label: tr(c, "Project date"), Calendar: display.CalendarProps{Browse: true}}
 	var err error
 	if s.Config.NativeMenus {
 		_, err = desktop.NativeDatePicker(c, s.Popovers, "preview-project-date", &s.Date, p)
@@ -38,7 +38,7 @@ func (s *State) previewDatePicker(c *ui.Context) {
 }
 
 func (s *State) previewDateRangePicker(c *ui.Context) {
-	p := desktop.DatePickerProps{Label: "Booking dates", Calendar: display.CalendarProps{NumberOfMonths: 2, Min: 1, Browse: true}}
+	p := desktop.DatePickerProps{Label: tr(c, "Booking dates"), Calendar: display.CalendarProps{NumberOfMonths: 2, Min: 1, Browse: true}}
 	var err error
 	if s.Config.NativeMenus {
 		_, err = desktop.NativeDateRangePicker(c, s.Popovers, "preview-booking-dates", &s.DateRange, p)
@@ -61,12 +61,12 @@ func (s *State) previewTooltip(c *ui.Context, anchor ui.Element) {
 		build = desktop.NativeTooltipWith
 	}
 	err := build(c, s.Popovers, "preview-tooltip", anchor, desktop.TooltipProps{
-		Description: "Small details make a difference. Search components with " + shortcut + ".",
+		Description: trf(c, "Small details make a difference. Search components with %s.", shortcut),
 	}, func(child *ui.Context) {
 		ui.Column(child).Gap(6).Children(func() {
-			ui.Text(child, "Small details make a difference.")
+			ui.Text(child, tr(child, "Small details make a difference."))
 			ui.Row(child).Gap(6).AlignItems(ui.Center).Children(func() {
-				ui.Text(child, "Search components")
+				ui.Text(child, tr(child, "Search components"))
 				if native {
 					ui.Text(child, modifier+" K")
 				} else {
@@ -88,15 +88,15 @@ func (s *State) previewHoverCard(c *ui.Context, anchor ui.Element) {
 	content := func(child *ui.Context) {
 		if native {
 			ui.Text(child, "Sofia Davis").FontSize(18).FontWeight(600)
-			ui.Text(child, "Building native experiences with Go.")
-			ui.Checkbox(child, &s.Marketing, "Follow project updates")
+			ui.Text(child, tr(child, "Building native experiences with Go."))
+			ui.Checkbox(child, &s.Marketing, tr(child, "Follow project updates"))
 		} else {
 			display.Avatar(child, display.AvatarProps{Fallback: "SD", Size: 40})
 			s.cardHeader(child, "Sofia Davis", "Building native experiences with Go.")
-			control.Checkbox(child, &s.Marketing, "Follow project updates", control.CheckboxProps{})
+			control.Checkbox(child, &s.Marketing, tr(child, "Follow project updates"), control.CheckboxProps{})
 		}
 	}
-	p := desktop.HoverCardProps{Label: "Author preview", Description: "About Sofia Davis", Width: 320, Revision: popupRevision(anchor, s.Marketing)}
+	p := desktop.HoverCardProps{Label: tr(c, "Author preview"), Description: tr(c, "About Sofia Davis"), Width: 320, Revision: popupRevision(anchor, s.Marketing)}
 	var err error
 	if native {
 		err = desktop.NativeHoverCard(c, s.Popovers, "preview-author", anchor, p, content)

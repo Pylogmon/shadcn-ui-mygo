@@ -6,6 +6,8 @@
 
 Gallery 参考 [shadcn/create](https://ui.shadcn.com/create)：紧凑配置面板搭配独立实时预览，支持基础色、强调色、图表色、字体、圆角、外观、严格预设导入导出与撤销重做。默认菜单使用 shadcn Flyout，可切换系统原生样式。
 
+Gallery 支持中文和英文，点击顶部的「中文」／「English」切换，语言偏好会保留到下次启动。搜索同时接受中文名称与英文组件名；切换语言会保留当前页面、设计配置和输入草稿。也可使用 `go run ./cmd/gallery -lang zh-Hans` 启动中文界面，或添加 `-lang en` 使用英文；截图命令同样支持 `-lang`。
+
 需要 Go 1.27.3 或更新版本。
 
 ```sh

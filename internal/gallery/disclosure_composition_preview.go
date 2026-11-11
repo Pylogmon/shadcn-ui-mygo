@@ -82,18 +82,18 @@ func (p *disclosureCompositionPreviewState) view(c *ui.Context, h *desktop.Host,
 			h.Close("disclosure-composition-language")
 		}
 	}
-	display.CardWith(c, display.CardProps{Label: "Disclosure compositions", Size: display.CardSmall}, display.CardSlots{
-		Title: "Disclosure compositions", Description: "Independent triggers, persistent drafts and source question groups.",
+	display.CardWith(c, display.CardProps{Label: tr(c, "Disclosure compositions"), Size: display.CardSmall}, display.CardSlots{
+		Title: tr(c, "Disclosure compositions"), Description: tr(c, "Independent triggers, persistent drafts and source question groups."),
 		Content: func(child *ui.Context) {
-			p.choose(child, h, native, "disclosure-composition-recipe", &p.recipe, control.SelectProps{Label: "Disclosure configuration", Options: disclosureCompositionRecipes})
+			p.choose(child, h, native, "disclosure-composition-recipe", &p.recipe, control.SelectProps{Label: tr(child, "Disclosure configuration"), Options: localizedOptions(child, disclosureCompositionRecipes)})
 			if strings.HasSuffix(p.recipe, "-rtl") {
-				p.choose(child, h, native, "disclosure-composition-language", &p.language, control.SelectProps{Label: "Disclosure language", Options: []control.Option{{Value: "ar", Label: "العربية"}, {Value: "he", Label: "עברית"}, {Value: "en", Label: "English"}}})
+				p.choose(child, h, native, "disclosure-composition-language", &p.language, control.SelectProps{Label: tr(child, "Disclosure language"), Options: localizedOptions(child, []control.Option{{Value: "ar", Label: "العربية"}, {Value: "he", Label: "עברית"}, {Value: "en", Label: "English"}})})
 			}
 			ui.Column(child).FillWidth().MinWidth(0).AlignItems(ui.Center).Children(func() {
 				p.draw(child.Key("disclosure-source:" + p.recipe))
 			})
 			if p.action != "" {
-				ui.Text(child, p.action).FontSize(13).Role(ui.RoleStatus)
+				ui.Text(child, tr(child, p.action)).FontSize(13).Role(ui.RoleStatus)
 			}
 			if p.popupError != "" {
 				ui.Text(child, p.popupError).FontSize(13).TextColor(theme.TokensOf(child).Destructive).Role(ui.RoleAlert)
@@ -123,25 +123,25 @@ func disclosureIcon(c *ui.Context, icon *ui.SVG, size float32) ui.Element {
 
 func (p *disclosureCompositionPreviewState) settings(c *ui.Context) {
 	open := p.open("settings", false)
-	display.CardWith(c, display.CardProps{Label: "Radius settings card", Size: display.CardSmall}, display.CardSlots{
-		Title: "Radius", Description: "Set the corner radius of the element.",
+	display.CardWith(c, display.CardProps{Label: tr(c, "Radius settings card"), Size: display.CardSmall}, display.CardSlots{
+		Title: tr(c, "Radius"), Description: tr(c, "Set the corner radius of the element."),
 		Content: func(child *ui.Context) {
-			display.CollapsibleRoot(child, open, display.CollapsibleRootProps{Label: "Radius settings", KeepMounted: true}, func(s *display.CollapsibleScope) {
+			display.CollapsibleRoot(child, open, display.CollapsibleRootProps{Label: tr(child, "Radius settings"), KeepMounted: true}, func(s *display.CollapsibleScope) {
 				ui.Column(child).Grid().Columns(2).Grow(1).MinWidth(0).Gap(8).Children(func() {
 					for i, label := range []string{"Radius X", "Radius Y"} {
-						control.Input(child.Key(label), &p.radius[i], control.InputProps{Label: label, Placeholder: "0", Handle: &p.radiusHandles[i]}).FillWidth().MinWidth(0)
+						control.Input(child.Key(label), &p.radius[i], control.InputProps{Label: tr(child, label), Placeholder: "0", Handle: &p.radiusHandles[i]}).FillWidth().MinWidth(0)
 					}
 					// This panel is declared before the independent trigger. It shares
 					// the two-column input grid without turning an editor into a button.
-					parts := s.Content(child, display.CollapsibleContentProps{Label: "Additional radius values"}, func(panel *ui.Context) {
+					parts := s.Content(child, display.CollapsibleContentProps{Label: tr(child, "Additional radius values")}, func(panel *ui.Context) {
 						for i, label := range []string{"Expanded Radius X", "Expanded Radius Y"} {
-							control.Input(panel.Key(label), &p.radius[i+2], control.InputProps{Label: label, Placeholder: "0", Handle: &p.radiusHandles[i+2]}).FillWidth().MinWidth(0)
+							control.Input(panel.Key(label), &p.radius[i+2], control.InputProps{Label: tr(panel, label), Placeholder: "0", Handle: &p.radiusHandles[i+2]}).FillWidth().MinWidth(0)
 						}
 					})
 					parts.Root.ColumnSpan(2)
 					parts.Content.Grid().Columns(2).Gap(8)
 				})
-				s.Trigger(child, display.CollapsibleTriggerProps{Label: "Expand radius settings", Style: func(tr ui.Element) {
+				s.Trigger(child, display.CollapsibleTriggerProps{Label: tr(child, "Expand radius settings"), Style: func(tr ui.Element) {
 					control.StyleButton(child, tr, "", control.ButtonProps{Variant: control.Outline, Size: control.Icon})
 				}}, func(current *ui.Context) {
 					icon := outlined.OpenInFull()
@@ -157,18 +157,18 @@ func (p *disclosureCompositionPreviewState) settings(c *ui.Context) {
 
 func (p *disclosureCompositionPreviewState) product(c *ui.Context) {
 	open := p.open("product", false)
-	display.CardWith(c, display.CardProps{Label: "Product details card"}, display.CardSlots{Content: func(child *ui.Context) {
+	display.CardWith(c, display.CardProps{Label: tr(c, "Product details card")}, display.CardSlots{Content: func(child *ui.Context) {
 		t := theme.TokensOf(child)
-		root := display.CollapsibleRoot(child, open, display.CollapsibleRootProps{Label: "Product details"}, func(s *display.CollapsibleScope) {
-			s.Trigger(child, display.CollapsibleTriggerProps{Label: "Product details", Style: func(tr ui.Element) {
+		root := display.CollapsibleRoot(child, open, display.CollapsibleRootProps{Label: tr(child, "Product details")}, func(s *display.CollapsibleScope) {
+			s.Trigger(child, display.CollapsibleTriggerProps{Label: tr(child, "Product details"), Style: func(tr ui.Element) {
 				control.StyleButton(child, tr, "", control.ButtonProps{Variant: control.Ghost}).FillWidth().Justify(ui.Start)
 			}}, func(current *ui.Context) {
-				ui.Text(current, "Product details").Grow(1)
+				ui.Text(current, tr(current, "Product details")).Grow(1)
 				disclosureIcon(current, outlined.KeyboardArrowDown(), 16).Rotate(180 * s.Progress())
 			})
 			parts := s.Content(child, display.CollapsibleContentProps{}, func(panel *ui.Context) {
-				ui.Text(panel, "This panel can be expanded or collapsed to reveal additional content.").FontSize(14).LineHeight(1.5)
-				if control.Button(panel, "Learn More", control.ButtonProps{Size: control.ExtraSmall}).Clicked() {
+				ui.Text(panel, tr(panel, "This panel can be expanded or collapsed to reveal additional content.")).FontSize(14).LineHeight(1.5)
+				if control.Button(panel, tr(panel, "Learn More"), control.ButtonProps{Size: control.ExtraSmall}).Clicked() {
 					p.action = "Local product details preview"
 				}
 			})
@@ -196,18 +196,18 @@ func (p *disclosureCompositionPreviewState) order(c *ui.Context) {
 	}
 	ui.Column(c).FillWidth().MinWidth(0).MaxWidth(350).Direction(direction).Children(func() {
 		t := theme.TokensOf(c)
-		display.CollapsibleRoot(c, p.open(p.recipe, false), display.CollapsibleRootProps{Label: w.order}, func(s *display.CollapsibleScope) {
+		display.CollapsibleRoot(c, p.open(p.recipe, false), display.CollapsibleRootProps{Label: tr(c, w.order)}, func(s *display.CollapsibleScope) {
 			ui.Row(c).FillWidth().Justify(ui.SpaceBetween).Gap(16).PaddingX(16).AlignItems(ui.Center).Children(func() {
 				ui.Text(c, w.order).FontSize(14).FontWeight(600)
-				s.Trigger(c, display.CollapsibleTriggerProps{Label: "Toggle order details", Style: func(tr ui.Element) {
+				s.Trigger(c, display.CollapsibleTriggerProps{Label: tr(c, "Toggle order details"), Style: func(tr ui.Element) {
 					control.StyleButton(c, tr, "", control.ButtonProps{Variant: control.Ghost, Size: control.IconSmall})
 				}}, func(current *ui.Context) { disclosureIcon(current, outlined.UnfoldMore(), 16) })
 			})
 			ui.Row(c).FillWidth().Justify(ui.SpaceBetween).Gap(8).Radius(t.RadiusMD()).Border(1, t.Border).Padding(8, 16).Children(func() {
-				ui.Text(c, w.status).FontSize(14).TextColor(t.MutedForeground)
+				ui.Text(c, tr(c, w.status)).FontSize(14).TextColor(t.MutedForeground)
 				ui.Text(c, w.shipped).FontSize(14).FontWeight(500)
 			})
-			parts := s.Content(c, display.CollapsibleContentProps{Label: "Order detail content"}, func(panel *ui.Context) {
+			parts := s.Content(c, display.CollapsibleContentProps{Label: tr(c, "Order detail content")}, func(panel *ui.Context) {
 				for _, row := range [][2]string{{w.shipping, w.address}, {w.items, w.description}} {
 					ui.Column(panel).FillWidth().Radius(t.RadiusMD()).Border(1, t.Border).Padding(8, 16).Children(func() {
 						ui.Text(panel, row[0]).FontSize(14).FontWeight(500)
@@ -235,12 +235,12 @@ var disclosureFiles = []disclosureTreeNode{
 }
 
 func (p *disclosureCompositionPreviewState) fileTree(c *ui.Context) {
-	display.CardWith(c, display.CardProps{Label: "Source file explorer", Size: display.CardSmall, Spacing: 16}, display.CardSlots{
+	display.CardWith(c, display.CardProps{Label: tr(c, "Source file explorer"), Size: display.CardSmall, Spacing: 16}, display.CardSlots{
 		Header: func(current *ui.Context) {
-			navigation.TabsRoot(current, &p.treeTab, navigation.TabsRootProps{Label: "Explorer view"}, func(child *ui.Context) {
+			navigation.TabsRoot(current, &p.treeTab, navigation.TabsRootProps{Label: tr(current, "Explorer view")}, func(child *ui.Context) {
 				navigation.TabsList(child, navigation.TabsListProps{}, func(list *ui.Context) {
-					navigation.TabsTrigger(list, "explorer", navigation.TabsTriggerProps{Label: "Explorer"}).Grow(1)
-					navigation.TabsTrigger(list, "settings", navigation.TabsTriggerProps{Label: "Outline"}).Grow(1)
+					navigation.TabsTrigger(list, "explorer", navigation.TabsTriggerProps{Label: tr(list, "Explorer")}).Grow(1)
+					navigation.TabsTrigger(list, "settings", navigation.TabsTriggerProps{Label: tr(list, "Outline")}).Grow(1)
 				}).FillWidth()
 			}).FillWidth()
 		},
@@ -256,13 +256,13 @@ func (p *disclosureCompositionPreviewState) tree(c *ui.Context, parent string, n
 				path = parent + "/" + node.name
 			}
 			if node.children == nil {
-				control.Button(c.Key(path), node.name, control.ButtonProps{Label: "Open " + path, Variant: control.Link, Size: control.Small, Icon: outlined.Description()}).FillWidth().Justify(ui.Start).Gap(8).TextColor(theme.TokensOf(c).Foreground).OnClick(func() {
+				control.Button(c.Key(path), node.name, control.ButtonProps{Label: tr(c, "Open ") + path, Variant: control.Link, Size: control.Small, Icon: outlined.Description()}).FillWidth().Justify(ui.Start).Gap(8).TextColor(theme.TokensOf(c).Foreground).OnClick(func() {
 					p.selectedFile, p.action = path, "Local file preview: "+path
 				})
 				continue
 			}
-			display.CollapsibleRoot(c.Key(path), p.open("tree:"+path, false), display.CollapsibleRootProps{Label: "Folder " + path}, func(s *display.CollapsibleScope) {
-				s.Trigger(c, display.CollapsibleTriggerProps{Label: "Folder " + path, Style: func(tr ui.Element) {
+			display.CollapsibleRoot(c.Key(path), p.open("tree:"+path, false), display.CollapsibleRootProps{Label: tr(c, "Folder ") + path}, func(s *display.CollapsibleScope) {
+				s.Trigger(c, display.CollapsibleTriggerProps{Label: tr(c, "Folder ") + path, Style: func(tr ui.Element) {
 					control.StyleButton(c, tr, "", control.ButtonProps{Variant: control.Ghost, Size: control.Small}).FillWidth().Justify(ui.Start).Gap(8)
 				}}, func(current *ui.Context) {
 					icon := disclosureIcon(current, outlined.ChevronRight(), 16)
@@ -305,12 +305,12 @@ func (p *disclosureCompositionPreviewState) accordion(c *ui.Context) {
 	build := func(current *ui.Context) {
 		props := display.AccordionProps{Single: recipe != "accordion-multiple" && recipe != "create-multiple" && recipe != "create-card", Bordered: recipe == "create-borders", Loop: true}
 		for _, question := range questions {
-			props.Items = append(props.Items, display.AccordionItem{Key: question.key, Title: question.title, Open: p.open(recipe+":"+question.key, question.key == initial), Disabled: question.disabled, Content: func() {
+			props.Items = append(props.Items, display.AccordionItem{Key: question.key, Title: tr(current, question.title), Open: p.open(recipe+":"+question.key, question.key == initial), Disabled: question.disabled, Content: func() {
 				ui.Column(current).FillWidth().Gap(16).Children(func() {
 					for index, paragraph := range question.paragraphs {
 						if question.annualLink && index == 1 {
 							ui.RichText(current).FillWidth().FontSize(14).LineHeight(1.5).Children(func() {
-								ui.Link(current, "Annual billing is available", "").OnClick(func() { p.action = "Local annual-billing information" })
+								ui.Link(current, tr(current, "Annual billing is available"), "").OnClick(func() { p.action = "Local annual-billing information" })
 								ui.Text(current, strings.TrimPrefix(paragraph, "Annual billing is available"))
 							})
 						} else {
@@ -318,7 +318,7 @@ func (p *disclosureCompositionPreviewState) accordion(c *ui.Context) {
 						}
 					}
 					if question.plansButton {
-						if control.Button(current, "View plans", control.ButtonProps{Size: control.Small, Icon: outlined.NorthEast()}).AlignSelf(ui.Start).Clicked() {
+						if control.Button(current, tr(current, "View plans"), control.ButtonProps{Size: control.Small, Icon: outlined.NorthEast()}).AlignSelf(ui.Start).Clicked() {
 							p.action = "Local subscription-plan preview"
 						}
 					}
@@ -351,7 +351,7 @@ func (p *disclosureCompositionPreviewState) accordion(c *ui.Context) {
 			if recipe == "create-card" {
 				description = "Common questions about your account, plans, and payments"
 			}
-			card := display.CardWith(c, display.CardProps{Label: "Subscription & Billing"}, display.CardSlots{Title: "Subscription & Billing", Description: description, Content: build})
+			card := display.CardWith(c, display.CardProps{Label: tr(c, "Subscription & Billing")}, display.CardSlots{Title: tr(c, "Subscription & Billing"), Description: tr(c, description), Content: build})
 			if recipe == "create-card" {
 				card.Gap(16)
 			}

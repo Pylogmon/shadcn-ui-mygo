@@ -110,10 +110,10 @@ func (p *inputCompositionPreviewState) view(c *ui.Context, window *mygo.Window, 
 		}
 		p.native, p.popupError = native, ""
 	}
-	display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: "Input compositions"}, display.CardSlots{Title: "Input compositions", Description: "Source fields, native editors, typed values and local form drafts.", Content: func(child *ui.Context) {
-		p.choose(child, h, native, "source-input-config", &p.recipe, control.SelectProps{Label: "Input configuration", Options: inputCompositionRecipes})
+	display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: tr(c, "Input compositions")}, display.CardSlots{Title: tr(c, "Input compositions"), Description: tr(c, "Source fields, native editors, typed values and local form drafts."), Content: func(child *ui.Context) {
+		p.choose(child, h, native, "source-input-config", &p.recipe, control.SelectProps{Label: tr(child, "Input configuration"), Options: localizedOptions(child, inputCompositionRecipes)})
 		if p.recipe == "rtl" {
-			p.choose(child, h, native, "source-input-language", &p.language, control.SelectProps{Label: "Input language", Options: statusLanguages()})
+			p.choose(child, h, native, "source-input-language", &p.language, control.SelectProps{Label: tr(child, "Input language"), Options: localizedOptions(child, statusLanguages())})
 		}
 		box := ui.Column(child.Key("source-input:" + p.recipe)).FillWidth().MinWidth(0).AlignItems(ui.Center)
 		if p.recipe == "rtl" {
@@ -121,7 +121,7 @@ func (p *inputCompositionPreviewState) view(c *ui.Context, window *mygo.Window, 
 		}
 		box.Children(func() { p.draw(child, window, h, native) })
 		if p.action != "" {
-			ui.Text(child, p.action).FontSize(13).Role(ui.RoleStatus).Label(p.action)
+			ui.Text(child, tr(child, p.action)).FontSize(13).Role(ui.RoleStatus).Label(tr(child, p.action))
 		}
 		if p.popupError != "" {
 			ui.Text(child, p.popupError).Role(ui.RoleAlert).TextColor(theme.TokensOf(child).Destructive)
@@ -138,39 +138,39 @@ func (p *inputCompositionPreviewState) editor(c *ui.Context, window *mygo.Window
 	changed := func() { d.changes++; p.action = "Local input edit: " + s.label }
 	switch s.kind {
 	case "number":
-		return control.NumberInput(c, &d.number, control.NumberInputProps{Label: s.label, Placeholder: s.placeholder, Empty: &d.numberEmpty, OnEmptyChange: func(empty bool) {
+		return control.NumberInput(c, &d.number, control.NumberInputProps{Label: tr(c, s.label), Placeholder: tr(c, s.placeholder), Empty: &d.numberEmpty, OnEmptyChange: func(empty bool) {
 			if empty {
 				changed()
 			}
 		}, OnChange: func(float64) { changed() }})
 	case "date":
-		return control.DateInput(c, &d.date, control.DateInputProps{Label: s.label, OnChange: func(time.Time) { changed() }})
+		return control.DateInput(c, &d.date, control.DateInputProps{Label: tr(c, s.label), OnChange: func(time.Time) { changed() }})
 	case "time":
-		return control.TimeInput(c, &d.clock, control.TimeInputProps{Label: s.label, OnChange: func(time.Time) { changed() }})
+		return control.TimeInput(c, &d.clock, control.TimeInputProps{Label: tr(c, s.label), OnChange: func(time.Time) { changed() }})
 	case "file":
-		return control.FileInput(c, &d.files, control.FileInputProps{Label: s.label, Parent: window, Picker: p.picker, OnChange: func([]string) { changed() }, OnError: func(err error) { p.action = "File selection error: " + err.Error() }})
+		return control.FileInput(c, &d.files, control.FileInputProps{Label: tr(c, s.label), Parent: window, Picker: p.picker, OnChange: func([]string) { changed() }, OnError: func(err error) { p.action = "File selection error: " + err.Error() }})
 	}
-	return control.Input(c, d.text(s.key), control.InputProps{Label: s.label, Placeholder: s.placeholder, Disabled: s.disabled, Invalid: s.invalid, Password: s.kind == "password", Search: s.kind == "search", Handle: d.target(s.key), OnChange: func(string) { changed() }})
+	return control.Input(c, d.text(s.key), control.InputProps{Label: tr(c, s.label), Placeholder: tr(c, s.placeholder), Disabled: s.disabled, Invalid: s.invalid, Password: s.kind == "password", Search: s.kind == "search", Handle: d.target(s.key), OnChange: func(string) { changed() }})
 }
 func (p *inputCompositionPreviewState) field(c *ui.Context, window *mygo.Window, d *inputCompositionDraft, s inputSourceField) {
 	control.FieldWith(c.Key(s.key), control.FieldProps{Required: s.required, Disabled: s.fieldDisabled, Invalid: s.invalid}, func(f *control.FieldScope) {
 		if s.badge || s.required {
-			f.Label(c, control.FieldLabelProps{Label: s.label}, func() {
-				ui.Text(c, s.label).FontSize(14).FontWeight(500)
+			f.Label(c, control.FieldLabelProps{Label: tr(c, s.label)}, func() {
+				ui.Text(c, tr(c, s.label)).FontSize(14).FontWeight(500)
 				if s.requiredMarker {
 					ui.Text(c, "*").FontSize(14).TextColor(theme.TokensOf(c).Destructive)
 				}
 				if s.badge {
 					ui.Box(c).Grow(1)
-					display.Badge(c, "Beta", display.BadgeSecondary)
+					display.Badge(c, tr(c, "Beta"), display.BadgeSecondary)
 				}
 			})
 		} else {
-			f.Label(c, control.FieldLabelProps{Text: s.label}, nil)
+			f.Label(c, control.FieldLabelProps{Text: tr(c, s.label)}, nil)
 		}
 		f.Control(c, func() ui.Element { return p.editor(c, window, d, s) })
 		if s.description != "" {
-			f.Description(c, s.description)
+			f.Description(c, tr(c, s.description))
 		}
 	})
 }
@@ -230,8 +230,8 @@ func (p *inputCompositionPreviewState) draw(c *ui.Context, window *mygo.Window, 
 				p.field(c, window, d, inputSourceField{key: "last", label: "Last Name", placeholder: "Lee"})
 			})
 		case "input-group":
-			control.FieldWith(c, control.FieldProps{Label: "Website URL"}, func(f *control.FieldScope) {
-				f.Label(c, control.FieldLabelProps{Text: "Website URL"}, nil)
+			control.FieldWith(c, control.FieldProps{Label: tr(c, "Website URL")}, func(f *control.FieldScope) {
+				f.Label(c, control.FieldLabelProps{Text: tr(c, "Website URL")}, nil)
 				f.Control(c, func() ui.Element {
 					return control.InputGroup(c, control.InputGroupProps{Prefix: "https://", InlineEnd: func() { ui.Icon(c, outlined.Info()).Size(16, 16).AccessHidden(true) }}, func() ui.Element {
 						return p.editor(c, window, d, inputSourceField{key: "website", label: "Website URL", placeholder: "example.com"})
@@ -239,13 +239,13 @@ func (p *inputCompositionPreviewState) draw(c *ui.Context, window *mygo.Window, 
 				})
 			})
 		case "button-group":
-			control.FieldWith(c, control.FieldProps{Label: "Search"}, func(f *control.FieldScope) {
-				f.Label(c, control.FieldLabelProps{Text: "Search"}, nil)
+			control.FieldWith(c, control.FieldProps{Label: tr(c, "Search")}, func(f *control.FieldScope) {
+				f.Label(c, control.FieldLabelProps{Text: tr(c, "Search")}, nil)
 				control.ButtonGroup(c, func() {
 					f.Control(c, func() ui.Element {
 						return p.editor(c, window, d, inputSourceField{key: "search", label: "Search", placeholder: "Type to search..."}).Grow(1).MinWidth(0)
 					})
-					if control.Button(c, "Search", control.ButtonProps{Variant: control.Outline}).Clicked() {
+					if control.Button(c, tr(c, "Search"), control.ButtonProps{Variant: control.Outline}).Clicked() {
 						p.search(d, "search")
 					}
 				}).FillWidth()
@@ -257,19 +257,19 @@ func (p *inputCompositionPreviewState) draw(c *ui.Context, window *mygo.Window, 
 			}
 			ui.Row(c).FillWidth().MinWidth(0).Gap(gap).Children(func() {
 				p.editor(c, window, d, inputSourceField{key: "search", label: "Search query", placeholder: "Search...", kind: "search"}).Grow(1).MinWidth(0)
-				if control.Button(c, "Search", control.ButtonProps{}).Clicked() {
+				if control.Button(c, tr(c, "Search"), control.ButtonProps{}).Clicked() {
 					p.search(d, "search")
 				}
 			})
 		case "create-select":
 			ui.Row(c).FillWidth().MinWidth(0).Gap(8).Children(func() {
 				p.editor(c, window, d, inputSourceField{key: "amount", label: "Amount", placeholder: "Enter amount"}).Grow(1).MinWidth(0)
-				p.choose(c, h, native, "source-input-currency", &d.choice, control.SelectProps{Label: "Currency", Options: []control.Option{{Value: "usd", Label: "USD"}, {Value: "eur", Label: "EUR"}, {Value: "gbp", Label: "GBP"}}}).Width(128).Shrink(0)
+				p.choose(c, h, native, "source-input-currency", &d.choice, control.SelectProps{Label: tr(c, "Currency"), Options: localizedOptions(c, []control.Option{{Value: "usd", Label: "USD"}, {Value: "eur", Label: "EUR"}, {Value: "gbp", Label: "GBP"}})}).Width(128).Shrink(0)
 			})
 		case "create-native-select":
 			ui.Row(c).FillWidth().MinWidth(0).Gap(8).Children(func() {
 				p.editor(c, window, d, inputSourceField{key: "phone", label: "Phone", placeholder: "(555) 123-4567", kind: "tel"}).Grow(1).MinWidth(0)
-				control.NativeSelect(c, &d.choice, control.SelectProps{Label: "Phone country code", Options: []control.Option{{Value: "+1", Label: "+1"}, {Value: "+44", Label: "+44"}, {Value: "+46", Label: "+46"}}}).Shrink(0)
+				control.NativeSelect(c, &d.choice, control.SelectProps{Label: tr(c, "Phone country code"), Options: localizedOptions(c, []control.Option{{Value: "+1", Label: "+1"}, {Value: "+44", Label: "+44"}, {Value: "+46", Label: "+46"}})}).Shrink(0)
 			})
 		case "fieldgroup":
 			p.simpleForm(c, window, d)
@@ -283,10 +283,10 @@ func (p *inputCompositionPreviewState) draw(c *ui.Context, window *mygo.Window, 
 			})
 		}
 		if d.error != "" {
-			ui.Text(c, d.error).FontSize(13).TextColor(theme.TokensOf(c).Destructive).Role(ui.RoleAlert)
+			ui.Text(c, tr(c, d.error)).FontSize(13).TextColor(theme.TokensOf(c).Destructive).Role(ui.RoleAlert)
 		}
 		if d.saved != nil {
-			ui.Text(c, "Saved input values: "+inputSavedSummary(d.saved)).FontSize(12).Role(ui.RoleStatus)
+			ui.Text(c, tr(c, "Saved input values: ")+inputSavedSummary(d.saved)).FontSize(12).Role(ui.RoleStatus)
 		}
 	})
 }
@@ -331,7 +331,7 @@ func (p *inputCompositionPreviewState) simpleForm(c *ui.Context, window *mygo.Wi
 	p.field(c, window, d, inputSourceField{key: "name", label: "Name", placeholder: "Jordan Lee"})
 	p.field(c, window, d, inputSourceField{key: "email", label: "Email", placeholder: "name@example.com", description: "We'll send updates to this address.", kind: "email"})
 	ui.Row(c).Gap(12).Children(func() {
-		if control.Button(c, "Reset", control.ButtonProps{Variant: control.Outline}).Clicked() {
+		if control.Button(c, tr(c, "Reset"), control.ButtonProps{Variant: control.Outline}).Clicked() {
 			for _, v := range d.texts {
 				*v = ""
 			}
@@ -339,7 +339,7 @@ func (p *inputCompositionPreviewState) simpleForm(c *ui.Context, window *mygo.Wi
 			d.error = ""
 			p.action = "Local input action: Reset"
 		}
-		if control.Button(c, "Submit", control.ButtonProps{}).Clicked() {
+		if control.Button(c, tr(c, "Submit"), control.ButtonProps{}).Clicked() {
 			p.save(d, false)
 		}
 	})
@@ -353,19 +353,19 @@ func (p *inputCompositionPreviewState) form(c *ui.Context, window *mygo.Window, 
 	p.field(c, window, d, inputSourceField{key: "email", label: "Email", placeholder: "john@example.com", description: "We'll never share your email with anyone.", kind: "email"})
 	ui.Column(c).FillWidth().MinWidth(0).Grid().Columns(2).Gap(16).Children(func() {
 		p.field(c, window, d, inputSourceField{key: "phone", label: "Phone", placeholder: "+1 (555) 123-4567", kind: "tel"})
-		control.FieldWith(c, control.FieldProps{Label: "Country"}, func(f *control.FieldScope) {
-			f.Label(c, control.FieldLabelProps{Text: "Country"}, nil)
+		control.FieldWith(c, control.FieldProps{Label: tr(c, "Country")}, func(f *control.FieldScope) {
+			f.Label(c, control.FieldLabelProps{Text: tr(c, "Country")}, nil)
 			f.Control(c, func() ui.Element {
-				return p.choose(c, h, native, "source-input-country", &d.choice, control.SelectProps{Label: "Country", Options: []control.Option{{Value: "us", Label: "United States"}, {Value: "uk", Label: "United Kingdom"}, {Value: "ca", Label: "Canada"}}})
+				return p.choose(c, h, native, "source-input-country", &d.choice, control.SelectProps{Label: tr(c, "Country"), Options: localizedOptions(c, []control.Option{{Value: "us", Label: "United States"}, {Value: "uk", Label: "United Kingdom"}, {Value: "ca", Label: "Canada"}})})
 			})
 		})
 	})
 	p.field(c, window, d, inputSourceField{key: "address", label: "Address", placeholder: "123 Main St"})
 	ui.Row(c).Gap(12).Children(func() {
-		if control.Button(c, "Cancel", control.ButtonProps{Variant: control.Outline}).Clicked() {
+		if control.Button(c, tr(c, "Cancel"), control.ButtonProps{Variant: control.Outline}).Clicked() {
 			p.action = "Local input action: Cancel"
 		}
-		if control.Button(c, "Submit", control.ButtonProps{}).Clicked() {
+		if control.Button(c, tr(c, "Submit"), control.ButtonProps{}).Clicked() {
 			p.save(d, p.recipe == "form")
 		}
 	})

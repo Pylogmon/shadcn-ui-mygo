@@ -87,22 +87,22 @@ func (p *cardCompositionPreviewState) view(c *ui.Context, host *desktop.Host, na
 			host.Close("card-composition-language")
 		}
 	}
-	display.CardWith(c, display.CardProps{Label: "Card compositions", Size: display.CardSmall}, display.CardSlots{
-		Title: "Card compositions", Description: "Source layouts, real editors and independent actions.",
+	display.CardWith(c, display.CardProps{Label: tr(c, "Card compositions"), Size: display.CardSmall}, display.CardSlots{
+		Title: tr(c, "Card compositions"), Description: tr(c, "Source layouts, real editors and independent actions."),
 		Content: func(child *ui.Context) {
-			p.choose(child, host, native, "card-composition-recipe", &p.recipe, control.SelectProps{Label: "Card configuration", Options: cardCompositionRecipes})
+			p.choose(child, host, native, "card-composition-recipe", &p.recipe, control.SelectProps{Label: tr(child, "Card configuration"), Options: localizedOptions(child, cardCompositionRecipes)})
 			if p.recipe == "rtl" {
-				p.choose(child, host, native, "card-composition-language", &p.language, control.SelectProps{Label: "Card language", Options: []control.Option{{Value: "ar", Label: "العربية"}, {Value: "he", Label: "עברית"}, {Value: "en", Label: "English"}}})
+				p.choose(child, host, native, "card-composition-language", &p.language, control.SelectProps{Label: tr(child, "Card language"), Options: localizedOptions(child, []control.Option{{Value: "ar", Label: "العربية"}, {Value: "he", Label: "עברית"}, {Value: "en", Label: "English"}})})
 			}
 			if p.recipe == "spacing" || p.recipe == "docs-spacing" {
 				p.spacingControl(child)
 			}
 			ui.Column(child).FillWidth().MinWidth(0).AlignItems(ui.Center).Children(func() { p.card(child.Key("source-card:" + p.recipe)) })
 			if p.action != "" {
-				ui.Text(child, p.action).FontSize(13).Role(ui.RoleStatus)
+				ui.Text(child, tr(child, p.action)).FontSize(13).Role(ui.RoleStatus)
 			}
 			if p.error != "" {
-				ui.Text(child, p.error).FontSize(13).TextColor(theme.TokensOf(child).Destructive).Role(ui.RoleAlert)
+				ui.Text(child, tr(child, p.error)).FontSize(13).TextColor(theme.TokensOf(child).Destructive).Role(ui.RoleAlert)
 			}
 		},
 	})
@@ -110,8 +110,8 @@ func (p *cardCompositionPreviewState) view(c *ui.Context, host *desktop.Host, na
 
 func (p *cardCompositionPreviewState) spacingControl(c *ui.Context) {
 	previous := append([]string(nil), p.spacing...)
-	control.ToggleGroup(c, &p.spacing, control.ToggleGroupProps{Label: "Card spacing", Outline: true, Size: control.Small,
-		Items: []control.Option{{Value: "16", Label: "16px"}, {Value: "20", Label: "20px"}, {Value: "24", Label: "24px"}, {Value: "32", Label: "32px"}},
+	control.ToggleGroup(c, &p.spacing, control.ToggleGroupProps{Label: tr(c, "Card spacing"), Outline: true, Size: control.Small,
+		Items: localizedOptions(c, []control.Option{{Value: "16", Label: "16px"}, {Value: "20", Label: "20px"}, {Value: "24", Label: "24px"}, {Value: "32", Label: "32px"}}),
 		OnValueChange: func(v []string) {
 			if len(v) == 0 {
 				p.spacing = previous
@@ -126,15 +126,15 @@ func (p *cardCompositionPreviewState) card(c *ui.Context) {
 	if small {
 		size, buttonSize = display.CardSmall, control.Small
 	}
-	props := display.CardProps{Label: "Source card", Size: size}
+	props := display.CardProps{Label: tr(c, "Source card"), Size: size}
 	slots := display.CardSlots{}
 	maxWidth := float32(384)
 	paragraph := func(text string) func(*ui.Context) {
-		return func(child *ui.Context) { ui.Text(child, text).FontSize(14).LineHeight(1.5) }
+		return func(child *ui.Context) { ui.Text(child, tr(child, text)).FontSize(14).LineHeight(1.5) }
 	}
 	action := func(text, label, result string, variant control.Variant) func(*ui.Context) {
 		return func(child *ui.Context) {
-			if control.Button(child, text, control.ButtonProps{Label: label, Size: buttonSize, Variant: variant}).FillWidth().Clicked() {
+			if control.Button(child, tr(child, text), control.ButtonProps{Label: tr(child, label), Size: buttonSize, Variant: variant}).FillWidth().Clicked() {
 				p.action = result
 			}
 		}
@@ -181,7 +181,7 @@ func (p *cardCompositionPreviewState) card(c *ui.Context) {
 		slots.Title, slots.Description = "Beautiful Landscape", "A stunning view that captures the essence of natural beauty."
 		slots.Media = func(child *ui.Context) { p.landscape(child) }
 		slots.Footer = func(child *ui.Context) {
-			if control.Button(child, "Button", control.ButtonProps{Label: "Add landscape", Size: buttonSize, Icon: outlined.Add()}).FillWidth().Clicked() {
+			if control.Button(child, tr(child, "Button"), control.ButtonProps{Label: tr(child, "Add landscape"), Size: buttonSize, Icon: outlined.Add()}).FillWidth().Clicked() {
 				p.landscapes++
 				p.action = fmt.Sprintf("Local landscape actions: %d", p.landscapes)
 			}
@@ -189,21 +189,21 @@ func (p *cardCompositionPreviewState) card(c *ui.Context) {
 	case "notes":
 		slots.Title, slots.Description = "Meeting Notes", "Transcript from the meeting with the client."
 		slots.Action = func(child *ui.Context) {
-			if control.Button(child, "Transcribe", control.ButtonProps{Variant: control.Outline, Size: control.Small, Icon: outlined.ClosedCaption()}).Clicked() {
+			if control.Button(child, tr(child, "Transcribe"), control.ButtonProps{Variant: control.Outline, Size: control.Small, Icon: outlined.ClosedCaption()}).Clicked() {
 				p.transcribed = true
 				p.action = "Local transcript preview shown"
 			}
 		}
 		slots.Content = func(child *ui.Context) {
-			ui.Text(child, "Client requested dashboard redesign with focus on mobile responsiveness.").FontSize(14).LineHeight(1.5)
-			ui.Column(child).FillWidth().Gap(8).Padding(4, 0, 0).PaddingStart(24).Role(ui.RoleList).Label("Meeting agenda").Children(func() {
+			ui.Text(child, tr(child, "Client requested dashboard redesign with focus on mobile responsiveness.")).FontSize(14).LineHeight(1.5)
+			ui.Column(child).FillWidth().Gap(8).Padding(4, 0, 0).PaddingStart(24).Role(ui.RoleList).Label(tr(child, "Meeting agenda")).Children(func() {
 				for i, text := range []string{"New analytics widgets for daily/weekly metrics", "Simplified navigation menu", "Dark mode support", "Timeline: 6 weeks", "Follow-up meeting scheduled for next Tuesday"} {
-					ui.Text(child, fmt.Sprintf("%d. %s", i+1, text)).FontSize(14).LineHeight(1.5).Role(ui.RoleListItem).Label(text).PositionInSet(i+1, 5)
+					ui.Text(child, fmt.Sprintf("%d. %s", i+1, text)).FontSize(14).LineHeight(1.5).Role(ui.RoleListItem).Label(tr(child, text)).PositionInSet(i+1, 5)
 				}
 			})
 		}
 		slots.Footer = func(child *ui.Context) {
-			display.AvatarGroup(child, display.AvatarGroupProps{Label: "Meeting participants", Max: 3, Total: 11, Items: cardMeetingParticipants()})
+			display.AvatarGroup(child, display.AvatarGroupProps{Label: tr(child, "Meeting participants"), Max: 3, Total: 11, Items: cardMeetingParticipants()})
 		}
 	case "login", "docs-login", "docs-spacing", "rtl":
 		index := map[string]int{"login": 0, "docs-login": 1, "docs-spacing": 2, "rtl": 3}[p.recipe]
@@ -215,13 +215,13 @@ func (p *cardCompositionPreviewState) card(c *ui.Context) {
 		maxWidth = 320
 		slots.Title, slots.Description = "Scheduled reports", "Weekly snapshots. No more manual exports."
 		slots.Content = func(child *ui.Context) {
-			ui.Column(child).FillWidth().Gap(8).PaddingY(8).Role(ui.RoleList).Label("Scheduled report features").Children(func() {
+			ui.Column(child).FillWidth().Gap(8).PaddingY(8).Role(ui.RoleList).Label(tr(child, "Scheduled report features")).Children(func() {
 				for i, text := range []string{"Choose a schedule (daily, or weekly).", "Send to channels or specific teammates.", "Include charts, tables, and key metrics."} {
-					ui.Row(child).FillWidth().Gap(8).AlignItems(ui.Start).Role(ui.RoleListItem).Label(text).PositionInSet(i+1, 3).Children(func() {
+					ui.Row(child).FillWidth().Gap(8).AlignItems(ui.Start).Role(ui.RoleListItem).Label(tr(child, text)).PositionInSet(i+1, 3).Children(func() {
 						ui.Column(child).Shrink(0).Padding(2, 0, 0).AccessHidden(true).Children(func() {
 							material.Icon(child, outlined.ChevronRight(), material.Props{Size: 16}).TextColor(theme.TokensOf(child).MutedForeground)
 						})
-						ui.Text(child, text).MinWidth(0).Grow(1).FontSize(14).LineHeight(1.5).AccessHidden(true)
+						ui.Text(child, tr(child, text)).MinWidth(0).Grow(1).FontSize(14).LineHeight(1.5).AccessHidden(true)
 					})
 				}
 			})
@@ -234,13 +234,13 @@ func (p *cardCompositionPreviewState) card(c *ui.Context) {
 		}
 	case "event":
 		slots.Title, slots.Description = "Design systems meetup", "A practical talk on component APIs, accessibility, and shipping faster."
-		slots.Action = func(child *ui.Context) { display.Badge(child, "Featured", display.BadgeSecondary) }
+		slots.Action = func(child *ui.Context) { display.Badge(child, tr(child, "Featured"), display.BadgeSecondary) }
 		slots.Media = func(child *ui.Context) {
 			cover := cardEventLight
 			if theme.TokensOf(child).Dark {
 				cover = cardEventDark
 			}
-			ui.Image(child, cover).FillWidth().AspectRatio(16.0 / 9).Fit(ui.Cover).Role(ui.RoleImage).Label("Event cover")
+			ui.Image(child, cover).FillWidth().AspectRatio(16.0 / 9).Fit(ui.Cover).Role(ui.RoleImage).Label(tr(child, "Event cover"))
 		}
 		slots.Footer = action("View Event", "View Event", "Local event preview: Design systems meetup", control.Default)
 	}
@@ -281,7 +281,7 @@ func (p *cardCompositionPreviewState) termsActions(child *ui.Context) {
 			text    string
 			variant control.Variant
 		}{{"Decline", control.Outline}, {"Accept", control.Default}} {
-			if control.Button(child, x.text, control.ButtonProps{Variant: x.variant}).Clicked() {
+			if control.Button(child, tr(child, x.text), control.ButtonProps{Variant: x.variant}).Clicked() {
 				p.termsDecision = x.text
 				p.action = "Local agreement decision: " + x.text
 			}
@@ -294,7 +294,7 @@ func (p *cardCompositionPreviewState) termsContent(c *ui.Context) {
 	ui.Scroll(c).FillWidth().MaxHeight(192).TrackScroll(&p.terms).Scrollbars(true).Background(t.Muted.Alpha(.5)).Border(1, t.Border).BorderWidth(1, 0, 0).Children(func() {
 		ui.Column(c).FillWidth().Padding(16, 24).Gap(16).Children(func() {
 			for _, text := range cardTerms {
-				ui.Text(c, text).FontSize(14).LineHeight(1.625)
+				ui.Text(c, tr(c, text)).FontSize(14).LineHeight(1.625)
 			}
 		})
 	})
@@ -325,7 +325,7 @@ func (p *cardCompositionPreviewState) loginSlots(d *cardLoginDraft, headerAction
 	}
 	slots.Content = func(c *ui.Context) {
 		ui.Column(c.Key("login-fields")).FillWidth().Gap(24).Children(func() {
-			control.Field(c, control.FieldProps{Label: w.email, Required: true, Error: d.error}, func() ui.Element {
+			control.Field(c, control.FieldProps{Label: tr(c, w.email), Required: true, Error: tr(c, d.error)}, func() ui.Element {
 				return control.Input(c, &d.email, control.InputProps{Placeholder: "m@example.com", OnSubmit: func(string) { p.submitLogin(d) }})
 			})
 			ui.Column(c).FillWidth().Gap(8).Children(func() {
@@ -337,7 +337,7 @@ func (p *cardCompositionPreviewState) loginSlots(d *cardLoginDraft, headerAction
 						p.action = "Local password-recovery preview"
 					}
 				})
-				password = control.Input(c, &d.password, control.InputProps{Label: w.password, Password: true, OnSubmit: func(string) { p.submitLogin(d) }})
+				password = control.Input(c, &d.password, control.InputProps{Label: tr(c, w.password), Password: true, OnSubmit: func(string) { p.submitLogin(d) }})
 				password.LabelledBy(label)
 			})
 		})
@@ -352,8 +352,8 @@ func (p *cardCompositionPreviewState) loginSlots(d *cardLoginDraft, headerAction
 			}
 			if !headerAction {
 				ui.Row(c).FillWidth().Justify(ui.Center).Gap(4).Padding(16, 0, 0).Wrap().Children(func() {
-					ui.Text(c, "Don't have an account?").FontSize(14)
-					if control.Button(c, "Sign up", control.ButtonProps{Variant: control.Link, Size: control.Small}).Height(20).Padding(0).Clicked() {
+					ui.Text(c, tr(c, "Don't have an account?")).FontSize(14)
+					if control.Button(c, tr(c, "Sign up"), control.ButtonProps{Variant: control.Link, Size: control.Small}).Height(20).Padding(0).Clicked() {
 						p.action = "Local sign-up preview"
 					}
 				})

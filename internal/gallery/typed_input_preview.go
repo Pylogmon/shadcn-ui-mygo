@@ -64,31 +64,31 @@ func (p *typedInputPreviewState) view(c *ui.Context, window *mygo.Window) {
 	t := theme.TokensOf(c)
 	display.Card(c.Key("booking-inputs"), func() {
 		ui.Column(c).FillWidth().Gap(18).Children(func() {
-			display.Typography(c, "Plan a booking", display.H3)
-			ui.Text(c, "Set a budget and departure, attach an itinerary, then save your booking.").TextColor(t.MutedForeground)
+			display.Typography(c, tr(c, "Plan a booking"), display.H3)
+			ui.Text(c, tr(c, "Set a budget and departure, attach an itinerary, then save your booking.")).TextColor(t.MutedForeground)
 			ui.Row(c).FillWidth().Wrap().Gap(24).AlignItems(ui.Start).Children(func() {
 				ui.Column(c).Basis(0).Grow(1).MinWidth(260).Gap(16).Children(func() {
-					control.Field(c, control.FieldProps{Label: "Booking amount", Description: "USD; use the arrow keys to adjust by 0.50."}, func() ui.Element {
+					control.Field(c, control.FieldProps{Label: tr(c, "Booking amount"), Description: tr(c, "USD; use the arrow keys to adjust by 0.50.")}, func() ui.Element {
 						return control.InputGroup(c, control.InputGroupProps{Prefix: "$", Suffix: "USD"}, func() ui.Element {
 							minimum := float64(0)
 							return control.NumberInput(c, &p.amount, control.NumberInputProps{Min: &minimum, Step: .5, OnSubmit: func(float64) { p.feedback = fmt.Sprintf("Budget updated to $%.2f.", p.amount) }})
 						})
 					})
-					control.Field(c, control.FieldProps{Label: "Booking date"}, func() ui.Element {
+					control.Field(c, control.FieldProps{Label: tr(c, "Booking date")}, func() ui.Element {
 						return control.DateInput(c, &p.date, control.DateInputProps{OnChange: func(time.Time) {
 							p.restoreDateDraft()
 							p.feedback = "Departure date updated."
 						}})
 					})
-					control.Field(c, control.FieldProps{Label: "Booking time", Description: "Uses your local hour format."}, func() ui.Element {
+					control.Field(c, control.FieldProps{Label: tr(c, "Booking time"), Description: tr(c, "Uses your local hour format.")}, func() ui.Element {
 						return control.TimeInput(c, &p.date, control.TimeInputProps{OnChange: func(time.Time) {
 							p.restoreDateDraft()
 							p.feedback = "Departure time updated."
 						}})
 					})
-					control.Field(c, control.FieldProps{Label: "Booking attachment", Description: "Choose documents from your computer.", Error: p.fileError}, func() ui.Element {
+					control.Field(c, control.FieldProps{Label: tr(c, "Booking attachment"), Description: tr(c, "Choose documents from your computer."), Error: tr(c, p.fileError)}, func() ui.Element {
 						return control.FileInput(c, &p.paths, control.FileInputProps{
-							Parent: window, Picker: p.picker, Title: "Attach booking documents", ChooseLabel: "Choose documents", Multiple: true,
+							Parent: window, Picker: p.picker, Title: tr(c, "Attach booking documents"), ChooseLabel: "Choose documents", Multiple: true,
 							Filters: []mygo.FileFilter{{Name: "Documents", Extensions: []string{"txt", "pdf", "csv"}}},
 							OnChange: func(paths []string) {
 								p.fileError = ""
@@ -102,10 +102,10 @@ func (p *typedInputPreviewState) view(c *ui.Context, window *mygo.Window) {
 					})
 				})
 				ui.Column(c).Basis(0).Grow(1).MinWidth(260).Gap(16).Children(func() {
-					control.Field(c, control.FieldProps{Label: "Departure calendar", Description: "Choose how the popup displays the same departure date."}, func() ui.Element {
-						return control.NativeSelect(c, &p.calendar, control.SelectProps{Options: []control.Option{{Value: "gregorian", Label: "Gregorian"}, {Value: "persian", Label: "Persian / Jalali"}}})
+					control.Field(c, control.FieldProps{Label: tr(c, "Departure calendar"), Description: tr(c, "Choose how the popup displays the same departure date.")}, func() ui.Element {
+						return control.NativeSelect(c, &p.calendar, control.SelectProps{Options: localizedOptions(c, []control.Option{{Value: "gregorian", Label: "Gregorian"}, {Value: "persian", Label: "Persian / Jalali"}})})
 					})
-					control.Field(c, control.FieldProps{Label: "Departure query", Description: "Type an exact date or press ArrowDown to browse.", Error: p.draft.Error}, func() ui.Element {
+					control.Field(c, control.FieldProps{Label: tr(c, "Departure query"), Description: tr(c, "Type an exact date or press ArrowDown to browse."), Error: tr(c, p.draft.Error)}, func() ui.Element {
 						system := display.CalendarGregorian
 						if p.calendar == "persian" {
 							system = display.CalendarPersian
@@ -120,7 +120,7 @@ func (p *typedInputPreviewState) view(c *ui.Context, window *mygo.Window) {
 							OnChange: func(time.Time) { p.feedback = "Departure date updated." },
 						}).Root
 					})
-					if control.Button(c, "Restore departure", control.ButtonProps{Variant: control.Outline, Disabled: p.draft.Text == bookingDateText(p.date) && p.draft.Error == ""}).Clicked() {
+					if control.Button(c, tr(c, "Restore departure"), control.ButtonProps{Variant: control.Outline, Disabled: p.draft.Text == bookingDateText(p.date) && p.draft.Error == ""}).Clicked() {
 						p.restoreDateDraft()
 						p.draft.Open = false
 						p.feedback = "Restored the accepted departure date."
@@ -130,24 +130,24 @@ func (p *typedInputPreviewState) view(c *ui.Context, window *mygo.Window) {
 					}
 				})
 			})
-			ui.Text(c, "Current booking: "+p.summary()).FontWeight(500)
+			ui.Text(c, tr(c, "Current booking: ")+p.summary()).FontWeight(500)
 			if len(p.paths) > 0 {
 				names := make([]string, len(p.paths))
 				for i, path := range p.paths {
 					names[i] = filepath.Base(path)
 				}
-				ui.Text(c, "Documents: "+strings.Join(names, ", ")).TextColor(t.MutedForeground)
+				ui.Text(c, tr(c, "Documents: ")+strings.Join(names, ", ")).TextColor(t.MutedForeground)
 			}
-			if control.Button(c, "Save booking", control.ButtonProps{Disabled: p.draft.Error != ""}).Clicked() {
+			if control.Button(c, tr(c, "Save booking"), control.ButtonProps{Disabled: p.draft.Error != ""}).Clicked() {
 				p.saved = p.summary()
 				p.feedback = "Booking saved."
 			}
 			if p.saved != "" {
-				ui.Text(c, "Booking saved: "+p.saved).Role(ui.RoleStatus)
+				ui.Text(c, tr(c, "Booking saved: ")+p.saved).Role(ui.RoleStatus)
 			}
 			if p.feedback != "" {
 				ui.Text(c, p.feedback).Role(ui.RoleStatus)
 			}
 		})
-	}).Role(ui.RoleGroup).Label("Booking planner")
+	}).Role(ui.RoleGroup).Label(tr(c, "Booking planner"))
 }

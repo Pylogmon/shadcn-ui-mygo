@@ -17,8 +17,10 @@ type creatorMenu struct {
 }
 
 func (s *State) previewMenu(c *ui.Context, key, label string, p overlay.MenuProps) {
+	label = tr(c, label)
+	p.Items = localizedMenuItems(c, p.Items)
 	trigger := func(b ui.Element) {
-		control.StyleButton(c, b, label, control.ButtonProps{Variant: control.Outline, Size: control.Small})
+		control.StyleButton(c, b, tr(c, label), control.ButtonProps{Variant: control.Outline, Size: control.Small})
 	}
 	if s.Config.NativeMenus {
 		chosen, err := desktop.NativeMenu(c, p, trigger)
@@ -30,7 +32,7 @@ func (s *State) previewMenu(c *ui.Context, key, label string, p overlay.MenuProp
 		}
 		return
 	}
-	anchor := control.Button(c, label, control.ButtonProps{Variant: control.Outline, Size: control.Small})
+	anchor := control.Button(c, tr(c, label), control.ButtonProps{Variant: control.Outline, Size: control.Small})
 	if s.Popovers == nil {
 		if anchor.Clicked() {
 			s.popupError(c, errNoDesktopWindow)
@@ -45,7 +47,7 @@ func (s *State) previewMenu(c *ui.Context, key, label string, p overlay.MenuProp
 		state = &creatorMenu{}
 		s.menuStates[key] = state
 	}
-	_, err := desktop.Menu(c, s.Popovers, key, anchor, &state.Open, &state.Menu, desktop.MenuProps{Items: p.Items, Width: p.Width, Label: label, OnChoose: func(chosen string) { s.pendingMenuAction = chosen }})
+	_, err := desktop.Menu(c, s.Popovers, key, anchor, &state.Open, &state.Menu, desktop.MenuProps{Items: p.Items, Width: p.Width, Label: tr(c, label), OnChoose: func(chosen string) { s.pendingMenuAction = chosen }})
 	if err != nil {
 		s.popupError(c, err)
 	}
@@ -58,21 +60,21 @@ func (s *State) previewPopover(c *ui.Context, anchor ui.Element) {
 		}
 		return
 	}
-	p := desktop.PopoverProps{Label: "Dimensions", Placement: mygo.PlacementBottomStart, Width: 320, Height: 220, FitContent: true, Revision: popupRevision(anchor, s.Name)}
+	p := desktop.PopoverProps{Label: tr(c, "Dimensions"), Placement: mygo.PlacementBottomStart, Width: 320, Height: 220, FitContent: true, Revision: popupRevision(anchor, s.Name)}
 	var err error
 	if s.Config.NativeMenus {
 		err = desktop.NativePopover(c, s.Popovers, "preview-popover", anchor, &s.Popover, p, func(child *ui.Context) {
 			ui.Column(child).Gap(10).Children(func() {
-				ui.Text(child, "Dimensions").FontSize(16).FontWeight(600)
-				ui.Text(child, "Set the dimensions for the layer.")
-				ui.TextInput(child, &s.Name).Label("Layer name")
+				ui.Text(child, tr(child, "Dimensions")).FontSize(16).FontWeight(600)
+				ui.Text(child, tr(child, "Set the dimensions for the layer."))
+				ui.TextInput(child, &s.Name).Label(tr(child, "Layer name"))
 			})
 		})
 	} else {
 		err = desktop.Popover(c, s.Popovers, "preview-popover", anchor, &s.Popover, p, func(child *ui.Context) {
 			ui.Column(child).Gap(12).Children(func() {
 				s.cardHeader(child, "Dimensions", "Set the dimensions for the layer.")
-				control.Input(child, &s.Name, control.InputProps{Label: "Layer name"})
+				control.Input(child, &s.Name, control.InputProps{Label: tr(child, "Layer name")})
 			})
 		})
 	}

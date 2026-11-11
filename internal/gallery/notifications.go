@@ -34,22 +34,22 @@ func (s *State) notificationsPreview(c *ui.Context) {
 	}
 	display.Card(c, func() {
 		s.cardHeader(c, "Notifications", "Stack a few updates, choose a position and try an action.")
-		control.RadioGroup(c, &s.toastKind, control.RadioGroupProps{Label: "Notification type", Horizontal: true,
-			Options: []control.Option{{Value: "normal", Label: "Normal"}, {Value: "success", Label: "Success"}, {Value: "info", Label: "Info"}, {Value: "warning", Label: "Warning"}, {Value: "error", Label: "Error"}, {Value: "loading", Label: "Loading"}},
+		control.RadioGroup(c, &s.toastKind, control.RadioGroupProps{Label: tr(c, "Notification type"), Horizontal: true,
+			Options: localizedOptions(c, []control.Option{{Value: "normal", Label: "Normal"}, {Value: "success", Label: "Success"}, {Value: "info", Label: "Info"}, {Value: "warning", Label: "Warning"}, {Value: "error", Label: "Error"}, {Value: "loading", Label: "Loading"}}),
 		}).Wrap()
-		control.RadioGroup(c, &s.toastPosition, control.RadioGroupProps{Label: "Notification position", Horizontal: true,
-			Options: []control.Option{{Value: string(overlay.ToastTopLeft), Label: "Top left"}, {Value: string(overlay.ToastTopCenter), Label: "Top center"}, {Value: string(overlay.ToastTopRight), Label: "Top right"}, {Value: string(overlay.ToastBottomLeft), Label: "Bottom left"}, {Value: string(overlay.ToastBottomCenter), Label: "Bottom center"}, {Value: string(overlay.ToastBottomRight), Label: "Bottom right"}},
+		control.RadioGroup(c, &s.toastPosition, control.RadioGroupProps{Label: tr(c, "Notification position"), Horizontal: true,
+			Options: localizedOptions(c, []control.Option{{Value: string(overlay.ToastTopLeft), Label: "Top left"}, {Value: string(overlay.ToastTopCenter), Label: "Top center"}, {Value: string(overlay.ToastTopRight), Label: "Top right"}, {Value: string(overlay.ToastBottomLeft), Label: "Bottom left"}, {Value: string(overlay.ToastBottomCenter), Label: "Bottom center"}, {Value: string(overlay.ToastBottomRight), Label: "Bottom right"}}),
 		}).Wrap()
 		ui.Row(c).Wrap().Gap(16).Children(func() {
-			control.Switch(c, &s.toastRich, control.SwitchProps{Label: "Rich notification colors", Size: control.Small})
-			control.Switch(c, &s.toastClose, control.SwitchProps{Label: "Show notification close button", Size: control.Small})
-			control.Switch(c, &s.toastExpand, control.SwitchProps{Label: "Expand notifications", Size: control.Small})
+			control.Switch(c, &s.toastRich, control.SwitchProps{Label: tr(c, "Rich notification colors"), Size: control.Small})
+			control.Switch(c, &s.toastClose, control.SwitchProps{Label: tr(c, "Show notification close button"), Size: control.Small})
+			control.Switch(c, &s.toastExpand, control.SwitchProps{Label: tr(c, "Expand notifications"), Size: control.Small})
 		})
-		control.Checkbox(c, &s.toastKeepOpen, "Keep open after action", control.CheckboxProps{})
+		control.Checkbox(c, &s.toastKeepOpen, tr(c, "Keep open after action"), control.CheckboxProps{})
 		ui.Row(c).Wrap().Gap(8).Children(func() {
-			if control.Button(c, "Show notification", control.ButtonProps{Size: control.Small}).Bind(&s.toastShow).Clicked() {
+			if control.Button(c, tr(c, "Show notification"), control.ButtonProps{Size: control.Small}).Bind(&s.toastShow).Clicked() {
 				s.toastReturnFocus = &s.toastShow
-				s.toastPreview.Show(ui.Toast{Title: notificationTitle(s.toastKind), Description: "Your workspace has a new update.", Type: s.toastKind, Action: "Review"}, overlay.ToastOptions{
+				s.toastPreview.Show(ui.Toast{Title: tr(c, notificationTitle(s.toastKind)), Description: tr(c, "Your workspace has a new update."), Type: s.toastKind, Action: "Review"}, overlay.ToastOptions{
 					Cancel: "Later", OnCancel: func() { s.toastResult = "Notification postponed" },
 					Action: func(event *overlay.ToastActionEvent) {
 						s.toastResult = "Notification action selected"
@@ -59,19 +59,19 @@ func (s *State) notificationsPreview(c *ui.Context) {
 					},
 				})
 			}
-			if control.Button(c, "Stack three updates", control.ButtonProps{Variant: control.Outline, Size: control.Small}).Bind(&s.toastStack).Clicked() {
+			if control.Button(c, tr(c, "Stack three updates"), control.ButtonProps{Variant: control.Outline, Size: control.Small}).Bind(&s.toastStack).Clicked() {
 				s.toastReturnFocus = &s.toastStack
 				for i := 1; i <= 3; i++ {
-					s.toastPreview.Show(ui.Toast{Title: fmt.Sprintf("Workspace update %d", i), Description: "A little progress, one step at a time.", Type: "success"})
+					s.toastPreview.Show(ui.Toast{Title: fmt.Sprintf(tr(c, "Workspace update %d"), i), Description: tr(c, "A little progress, one step at a time."), Type: "success"})
 				}
 			}
-			if control.Button(c, "Start upload", control.ButtonProps{Variant: control.Outline, Size: control.Small}).Bind(&s.toastStart).Clicked() {
+			if control.Button(c, tr(c, "Start upload"), control.ButtonProps{Variant: control.Outline, Size: control.Small}).Bind(&s.toastStart).Clicked() {
 				s.toastReturnFocus = &s.toastStart
-				s.toastUploadID = s.toastPreview.Show(ui.Toast{ID: "gallery-upload", Title: "Uploading your file", Description: "You can keep working while this finishes.", Type: "loading"})
+				s.toastUploadID = s.toastPreview.Show(ui.Toast{ID: "gallery-upload", Title: tr(c, "Uploading your file"), Description: tr(c, "You can keep working while this finishes."), Type: "loading"})
 			}
-			if control.Button(c, "Complete upload", control.ButtonProps{Variant: control.Outline, Size: control.Small, Disabled: s.toastUploadID == ""}).Bind(&s.toastComplete).Clicked() {
+			if control.Button(c, tr(c, "Complete upload"), control.ButtonProps{Variant: control.Outline, Size: control.Small, Disabled: s.toastUploadID == ""}).Bind(&s.toastComplete).Clicked() {
 				s.toastReturnFocus = &s.toastStart
-				if s.toastPreview.Update(s.toastUploadID, ui.Toast{Title: "Upload complete", Description: "Your file is ready to share.", Type: "success"}) {
+				if s.toastPreview.Update(s.toastUploadID, ui.Toast{Title: tr(c, "Upload complete"), Description: tr(c, "Your file is ready to share."), Type: "success"}) {
 					s.toastResult = "Upload notification updated"
 				}
 				s.toastUploadID = ""
@@ -79,7 +79,7 @@ func (s *State) notificationsPreview(c *ui.Context) {
 					s.toastStart.Focus(c)
 				}
 			}
-			if control.Button(c, "Clear preview notifications", control.ButtonProps{Variant: control.Ghost, Size: control.Small}).Clicked() {
+			if control.Button(c, tr(c, "Clear preview notifications"), control.ButtonProps{Variant: control.Ghost, Size: control.Small}).Clicked() {
 				s.toastPreview.Dismiss("")
 				c.CloseToast("")
 				s.toastUploadID = ""

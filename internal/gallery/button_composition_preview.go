@@ -81,12 +81,12 @@ func (p *buttonCompositionPreviewState) view(c *ui.Context, h *desktop.Host, nat
 		}
 		p.native, p.popupError = native, ""
 	}
-	display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: "Button compositions"}, display.CardSlots{
-		Title: "Button compositions", Description: "Source variants, sizes, icon positions and native button or link targets.",
+	display.CardWith(c, display.CardProps{Size: display.CardSmall, Label: tr(c, "Button compositions")}, display.CardSlots{
+		Title: tr(c, "Button compositions"), Description: tr(c, "Source variants, sizes, icon positions and native button or link targets."),
 		Content: func(child *ui.Context) {
-			p.choose(child, h, native, "button-source-configuration", &p.recipe, control.SelectProps{Label: "Button configuration", Options: buttonCompositionRecipes})
+			p.choose(child, h, native, "button-source-configuration", &p.recipe, control.SelectProps{Label: tr(child, "Button configuration"), Options: localizedOptions(child, buttonCompositionRecipes)})
 			if p.recipe == "rtl" {
-				p.choose(child, h, native, "button-source-language", &p.language, control.SelectProps{Label: "Button language", Options: statusLanguages()})
+				p.choose(child, h, native, "button-source-language", &p.language, control.SelectProps{Label: tr(child, "Button language"), Options: localizedOptions(child, statusLanguages())})
 			}
 			p.action = p.actions[p.recipe]
 			ui.Column(child.Key("button-source:" + p.recipe)).FillWidth().MinWidth(0).Gap(8).AlignItems(ui.Center).Children(func() {
@@ -97,7 +97,7 @@ func (p *buttonCompositionPreviewState) view(c *ui.Context, h *desktop.Host, nat
 				}
 			})
 			if p.action != "" {
-				ui.Text(child, p.action).Role(ui.RoleStatus).FontSize(13)
+				ui.Text(child, tr(child, p.action)).Role(ui.RoleStatus).FontSize(13)
 			}
 			if p.popupError != "" {
 				ui.Text(child, p.popupError).Role(ui.RoleAlert).TextColor(theme.TokensOf(child).Destructive)
@@ -128,7 +128,7 @@ func buttonCompositionContent(c *ui.Context, s buttonCompositionSpec) {
 		drawIcon()
 	}
 	if s.text != "" {
-		text := ui.Text(c, s.text).SingleLine().AccessHidden(true)
+		text := ui.Text(c, tr(c, s.text)).SingleLine().AccessHidden(true)
 		if s.underlined {
 			text.Underline().UnderlineOffset(4)
 		}
@@ -153,7 +153,7 @@ func (p *buttonCompositionPreviewState) button(c *ui.Context, key string, s butt
 	if label == "" {
 		label = s.text
 	}
-	props := control.ButtonProps{Variant: s.variant, Size: s.size, Label: label, Disabled: s.disabled, Invalid: s.invalid}
+	props := control.ButtonProps{Variant: s.variant, Size: s.size, Label: tr(c, label), Disabled: s.disabled, Invalid: s.invalid}
 	if s.link {
 		return p.link(c.Key(key), s, props)
 	}
@@ -193,7 +193,7 @@ func (p *buttonCompositionPreviewState) link(c *ui.Context, s buttonCompositionS
 	owner.Children(func() {
 		(*router).View(c, func(_ *ui.Route) {
 			ui.Box(c).AlignSelf(ui.Start).Children(func() {
-				target := control.StyleButton(c.Key("target"), ui.Link(c.Key("target"), "", "#"), "", props).Absolute().Fill().Label(s.text)
+				target := control.StyleButton(c.Key("target"), ui.Link(c.Key("target"), "", "#"), "", props).Absolute().Fill().Label(tr(c, s.text))
 				control.StyleButton(c.Key("face"), ui.Row(c.Key("face")), "", props).Background(ui.Transparent).Border(0, ui.Transparent).
 					ZIndex(1).IgnoreInput(true).AccessHidden(true).Disabled(true).DimDisabled(false).Children(func() { buttonCompositionContent(c, s) })
 				if target.Clicked() {

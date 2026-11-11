@@ -35,7 +35,7 @@ func (p *chartPreviewState) initialize() {
 func (p *chartPreviewState) props(c *ui.Context) display.ChartProps {
 	radius := float32(5)
 	props := display.ChartProps{
-		Kind: display.BarChart, Label: "Visitor comparison", Height: 260,
+		Kind: display.BarChart, Label: tr(c, "Visitor comparison"), Height: 260,
 		Labels: []string{"January", "February", "March", "April", "May", "June"},
 		Series: []display.ChartSeries{
 			{Name: "Desktop", Values: []float64{186, 305, 237, 73, 209, 214}},
@@ -86,14 +86,14 @@ func (p *chartPreviewState) props(c *ui.Context) display.ChartProps {
 			props.Series[0].Values = []float64{302, 218, 192, 185, 96}
 		}
 	}
-	return props
+	return localizedChart(c, props)
 }
 
 func (s *State) chartCompositionPreview(c *ui.Context) {
 	p := &s.chartPreview
 	p.initialize()
 	ui.Column(c).FillWidth().MinWidth(0).Shrink(0).Gap(20).Children(func() {
-		control.Switch(c, &p.animate, control.SwitchProps{Label: "Animate chart changes", Size: control.Small})
+		control.Switch(c, &p.animate, control.SwitchProps{Label: tr(c, "Animate chart changes"), Size: control.Small})
 		s.chartBarPreview(c)
 		s.chartFamilyPreview(c)
 	})
@@ -104,31 +104,31 @@ func (s *State) chartBarPreview(c *ui.Context) {
 	display.Card(c, func() {
 		s.cardHeader(c, "A different view of the numbers", "Compare visitors, explore a change and inspect the values that matter.")
 		control.RadioGroup(c, &p.orientation, control.RadioGroupProps{
-			Label: "Bar orientation", Horizontal: true,
-			Options: []control.Option{{Value: "horizontal", Label: "Horizontal bars"}, {Value: "vertical", Label: "Vertical bars"}},
+			Label: tr(c, "Bar orientation"), Horizontal: true,
+			Options: localizedOptions(c, []control.Option{{Value: "horizontal", Label: "Horizontal bars"}, {Value: "vertical", Label: "Vertical bars"}}),
 		}).Wrap().MinWidth(0)
 		control.RadioGroup(c, &p.mode, control.RadioGroupProps{
-			Label: "Visitor view", Horizontal: true,
-			Options: []control.Option{
+			Label: tr(c, "Visitor view"), Horizontal: true,
+			Options: localizedOptions(c, []control.Option{
 				{Value: "single", Label: "Desktop only"}, {Value: "grouped", Label: "Side by side"},
 				{Value: "stacked", Label: "Stacked totals"}, {Value: "normalized", Label: "Share of total"},
 				{Value: "browsers", Label: "Browsers"},
-			},
+			}),
 		}).Wrap().MinWidth(0)
 		ui.Row(c).Wrap().Gap(16).AlignItems(ui.Center).Children(func() {
-			control.Switch(c, &p.values, control.SwitchProps{Label: "Show axis values", Size: control.Small})
-			control.Switch(c, &p.grid, control.SwitchProps{Label: "Show grid", Size: control.Small})
-			control.Switch(c, &p.legend, control.SwitchProps{Label: "Show chart legend", Size: control.Small})
-			control.Switch(c, &p.change, control.SwitchProps{Label: "Month-to-month change", Size: control.Small, Disabled: p.mode == "browsers"})
+			control.Switch(c, &p.values, control.SwitchProps{Label: tr(c, "Show axis values"), Size: control.Small})
+			control.Switch(c, &p.grid, control.SwitchProps{Label: tr(c, "Show grid"), Size: control.Small})
+			control.Switch(c, &p.legend, control.SwitchProps{Label: tr(c, "Show chart legend"), Size: control.Small})
+			control.Switch(c, &p.change, control.SwitchProps{Label: tr(c, "Month-to-month change"), Size: control.Small, Disabled: p.mode == "browsers"})
 		})
 		props := p.props(c)
-		display.Chart(c, props).Shrink(0)
+		display.Chart(c, localizedChart(c, props)).Shrink(0)
 		ui.Row(c).Wrap().Gap(12).AlignItems(ui.Center).Children(func() {
-			if control.Button(c, "Update visitor counts", control.ButtonProps{Variant: control.Outline, Size: control.Small, Disabled: p.updated}).Clicked() {
+			if control.Button(c, tr(c, "Update visitor counts"), control.ButtonProps{Variant: control.Outline, Size: control.Small, Disabled: p.updated}).Clicked() {
 				p.updated = true
 				c.Invalidate()
 			}
-			if control.Button(c, "Restore visitor counts", control.ButtonProps{Variant: control.Ghost, Size: control.Small, Disabled: !p.updated}).Clicked() {
+			if control.Button(c, tr(c, "Restore visitor counts"), control.ButtonProps{Variant: control.Ghost, Size: control.Small, Disabled: !p.updated}).Clicked() {
 				p.updated = false
 				c.Invalidate()
 			}
@@ -143,8 +143,8 @@ func (s *State) chartBarPreview(c *ui.Context) {
 			}
 			text = props.Labels[p.selected] + " · " + strings.Join(values, " · ")
 		}
-		ui.Text(c, text).FontSize(12).TextColor(theme.TokensOf(c).MutedForeground)
-	}).Label("Visitor explorer")
+		ui.Text(c, tr(c, text)).FontSize(12).TextColor(theme.TokensOf(c).MutedForeground)
+	}).Label(tr(c, "Visitor explorer"))
 }
 
 func (s *State) chartFamilyPreview(c *ui.Context) {
@@ -152,15 +152,15 @@ func (s *State) chartFamilyPreview(c *ui.Context) {
 	display.Card(c, func() {
 		s.cardHeader(c, "Find the shape of the story", "Follow a trend, compare a share or see how the months fit together.")
 		control.RadioGroup(c, &p.family, control.RadioGroupProps{
-			Label: "More chart styles", Horizontal: true,
-			Options: []control.Option{
+			Label: tr(c, "More chart styles"), Horizontal: true,
+			Options: localizedOptions(c, []control.Option{
 				{Value: "line", Label: "Line"}, {Value: "area", Label: "Area"},
 				{Value: "pie", Label: "Pie"}, {Value: "donut", Label: "Donut"},
 				{Value: "radar", Label: "Radar"}, {Value: "radial", Label: "Radial"},
-			},
+			}),
 		}).Wrap().MinWidth(0)
 		props := display.ChartProps{
-			Kind: display.LineChart, Label: "Visitor story", Height: 240, Legend: true,
+			Kind: display.LineChart, Label: tr(c, "Visitor story"), Height: 240, Legend: true,
 			Animation: display.ChartAnimationProps{Disabled: !p.animate},
 			Selected:  &p.familySelected,
 			Labels:    []string{"January", "February", "March", "April", "May", "June"},
@@ -197,14 +197,14 @@ func (s *State) chartFamilyPreview(c *ui.Context) {
 		}
 		display.Chart(c, props).Shrink(0)
 		ui.Row(c).Wrap().Gap(12).AlignItems(ui.Center).Children(func() {
-			if control.Button(c, "Update story counts", control.ButtonProps{Variant: control.Outline, Size: control.Small, Disabled: p.storyUpdated}).Clicked() {
+			if control.Button(c, tr(c, "Update story counts"), control.ButtonProps{Variant: control.Outline, Size: control.Small, Disabled: p.storyUpdated}).Clicked() {
 				p.storyUpdated = true
 				c.Invalidate()
 			}
-			if control.Button(c, "Restore story counts", control.ButtonProps{Variant: control.Ghost, Size: control.Small, Disabled: !p.storyUpdated}).Clicked() {
+			if control.Button(c, tr(c, "Restore story counts"), control.ButtonProps{Variant: control.Ghost, Size: control.Small, Disabled: !p.storyUpdated}).Clicked() {
 				p.storyUpdated = false
 				c.Invalidate()
 			}
 		})
-	}).Label("Chart style explorer")
+	}).Label(tr(c, "Chart style explorer"))
 }

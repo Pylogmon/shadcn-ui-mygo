@@ -15,13 +15,13 @@ func (s *State) avatarsPreview(c *ui.Context) {
 	owner := ui.Column(c).FillWidth()
 	mode := ui.Local(owner, "avatar-image-mode", func() int { return 0 })
 	owner.Children(func() {
-		display.CardWith(c, display.CardProps{Label: "Profile portraits", Size: display.CardSmall}, display.CardSlots{
-			Title: "Avatars", Description: "Portraits, initials, status and a few more people.",
+		display.CardWith(c, display.CardProps{Label: tr(c, "Profile portraits"), Size: display.CardSmall}, display.CardSlots{
+			Title: tr(c, "Avatars"), Description: tr(c, "Portraits, initials, status and a few more people."),
 			Content: func(child *ui.Context) {
 				ui.Row(child).Gap(16).AlignItems(ui.Center).Children(func() {
 					for _, scale := range []display.AvatarSize{display.AvatarSmall, display.AvatarDefault, display.AvatarLarge} {
 						p := display.AvatarProps{Key: string(rune('a' + scale)), Image: avatarPortrait, Fallback: "SD", Label: "Sofia Davis", Scale: scale,
-							Badge: &display.AvatarBadgeProps{Label: "Online", Icon: avatarCheck}}
+							Badge: &display.AvatarBadgeProps{Label: tr(child, "Online"), Icon: avatarCheck}}
 						switch *mode {
 						case 1:
 							p.Image = nil
@@ -36,7 +36,7 @@ func (s *State) avatarsPreview(c *ui.Context) {
 				ui.Row(child).Wrap().Gap(6).Children(func() {
 					for i, label := range []string{"Image", "Initials", "Loading", "Unavailable"} {
 						selected := *mode == i
-						if control.Toggle(child.Key(i), &selected, label, control.ToggleProps{}).Height(28).PaddingX(8).FontSize(12).Changed() {
+						if control.Toggle(child.Key(i), &selected, tr(child, label), control.ToggleProps{}).Height(28).PaddingX(8).FontSize(12).Changed() {
 							*mode = i
 							child.Invalidate()
 						}
@@ -45,7 +45,7 @@ func (s *State) avatarsPreview(c *ui.Context) {
 				ui.Text(child, []string{"Image ready", "Showing initials", "Loading image…", "Image unavailable — showing initials"}[*mode]).FontSize(12).Role(ui.RoleStatus)
 			},
 			Footer: func(child *ui.Context) {
-				display.AvatarGroup(child, display.AvatarGroupProps{Label: "Project team", Max: 3, Total: 6, Items: []display.AvatarProps{
+				display.AvatarGroup(child, display.AvatarGroupProps{Label: tr(child, "Project team"), Max: 3, Total: 6, Items: []display.AvatarProps{
 					{Key: "sofia", Label: "Sofia Davis", Image: avatarPortrait},
 					{Key: "jackson", Label: "Jackson Lee", Fallback: "JL"},
 					{Key: "olivia", Label: "Olivia Martin", Fallback: "OM"},

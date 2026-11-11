@@ -18,15 +18,15 @@ func (s *State) composedProjectTabs(c *ui.Context) {
 	// The existing application model remains authoritative. TabsRoot consumes
 	// the current value only during this synchronous build and retains no pointer.
 	value := items[s.lineTab].value
-	navigation.TabsRoot(c, &value, navigation.TabsRootProps{Key: "project-tabs", Label: "Project view"}, func(c *ui.Context) {
+	navigation.TabsRoot(c, &value, navigation.TabsRootProps{Key: "project-tabs", Label: tr(c, "Project view")}, func(c *ui.Context) {
 		ui.Row(c).FillWidth().Wrap().Gap(12).AlignItems(ui.Center).Children(func() {
 			navigation.TabsList(c, navigation.TabsListProps{Variant: navigation.TabsLine}, func(c *ui.Context) {
 				for _, item := range items {
-					navigation.TabsTrigger(c, item.value, navigation.TabsTriggerProps{Label: item.label})
+					navigation.TabsTrigger(c, item.value, navigation.TabsTriggerProps{Label: tr(c, item.label)})
 				}
 			})
 			ui.Box(c).Grow(1).MinWidth(0)
-			if control.Button(c, "Show current view", control.ButtonProps{Variant: control.Outline, Size: control.Small}).Clicked() {
+			if control.Button(c, tr(c, "Show current view"), control.ButtonProps{Variant: control.Outline, Size: control.Small}).Clicked() {
 				for _, item := range items {
 					if item.value == value {
 						s.status = "Current view: " + item.label
@@ -36,7 +36,7 @@ func (s *State) composedProjectTabs(c *ui.Context) {
 		})
 		for _, item := range items {
 			navigation.TabsContent(c, item.value, navigation.TabsContentProps{}, func(c *ui.Context) {
-				ui.Text(c, item.content).Padding(12)
+				ui.Text(c, tr(c, item.content)).Padding(12)
 			})
 		}
 	})
