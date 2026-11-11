@@ -81,7 +81,7 @@ func Tabs(c *ui.Context, selected *int, p TabsProps, panel func(int)) ui.Element
 				if item.Key != "" {
 					key = item.Key
 				}
-				tab := motion.ApplyTransition(c, ui.ButtonBase(c.Key(key)).Role(ui.RoleTab).Label(item.Label).Disabled(item.Disabled).Checked(i == *selected).
+				tab := motion.ApplyTransition(c, ui.ButtonBase(c.Key(key)).Role(ui.RoleTab).Label(item.Label).Disabled(item.Disabled).Checked(i == *selected).Cursor(ui.CursorPointer).
 					Height(30).PaddingX(12).Gap(6).Radius(t.RadiusMD()).FontSize(14).FontWeight(500).TextColor(t.MutedForeground))
 				tabs[i] = tab
 				back, forth := ui.KeyLeft, ui.KeyRight
@@ -108,7 +108,7 @@ func Tabs(c *ui.Context, selected *int, p TabsProps, panel func(int)) ui.Element
 					*selected = focus
 				}
 				if item.Disabled {
-					tab.DimDisabled(false).Opacity(.5)
+					tab.DimDisabled(false).Opacity(.5).Cursor(ui.CursorNotAllowed)
 				}
 				tab.Children(func() {
 					if i == *selected {

@@ -155,7 +155,7 @@ func TabsTrigger(c *ui.Context, value string, p TabsTriggerProps) ui.Element {
 		key = p.Key
 	}
 	t := theme.TokensOf(c)
-	tab := motion.ApplyTransition(c, ui.ButtonBase(c.Key(tabsCompositionTriggerKey(key))).Role(ui.RoleTab).Label(label).Disabled(p.Disabled).Checked(value == *b.value).Height(30).PaddingX(12).Gap(6).Radius(t.RadiusMD()).FontSize(14).FontWeight(500).TextColor(t.MutedForeground))
+	tab := motion.ApplyTransition(c, ui.ButtonBase(c.Key(tabsCompositionTriggerKey(key))).Role(ui.RoleTab).Label(label).Disabled(p.Disabled).Checked(value == *b.value).Cursor(ui.CursorPointer).Height(30).PaddingX(12).Gap(6).Radius(t.RadiusMD()).FontSize(14).FontWeight(500).TextColor(t.MutedForeground))
 	if b.props.Vertical {
 		tab.Justify(ui.Start)
 	}
@@ -184,7 +184,7 @@ func TabsTrigger(c *ui.Context, value string, p TabsTriggerProps) ui.Element {
 			b.userChanged = true
 		}
 	} else {
-		tab.DimDisabled(false).Opacity(.5)
+		tab.DimDisabled(false).Opacity(.5).Cursor(ui.CursorNotAllowed)
 	}
 	tab.Children(func() {
 		if value == *b.value {
