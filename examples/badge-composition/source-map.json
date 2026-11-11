@@ -157,6 +157,7 @@
     }
   ],
   "adaptation": {
+    "softVariant": "The public API replaces BadgeDestructive with BadgeSoft and optional BadgeProps.Color. Original Destructive labels, loading badges and link recipes retain their source appearance through BadgeSoft with the current theme Destructive color.",
     "body": "Existing native Vega BadgeWith API; static spans stay non-interactive. Only source anchor recipes create native Links. Global Native/Flyout changes selectors, not a nonexistent OS badge.",
     "icons": {
       "BadgeCheck": "Material Symbols outlined.Verified",

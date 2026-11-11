@@ -12,15 +12,18 @@ const (
 	BadgeDefault BadgeVariant = iota
 	BadgeSecondary
 	BadgeOutline
-	BadgeDestructive
+	BadgeSoft
 	BadgeGhost
 	BadgeLink
 )
 
 type BadgeProps struct {
 	// AlignSelf positions the whole badge across its parent's axis; zero is Start.
-	AlignSelf          ui.Align
-	Variant            BadgeVariant
+	AlignSelf ui.Align
+	Variant   BadgeVariant
+	// Color overrides BadgeSoft's foreground, tinted background and focus feedback.
+	// Nil uses the current theme's Primary color. Other variants ignore Color.
+	Color              *ui.Color
 	Label, Description string
 	Icon, EndIcon      *ui.SVG
 	// Leading and Trailing replace their icons inside 12-DIP visual slots.
@@ -127,7 +130,7 @@ func BadgeWith(c *ui.Context, text string, p BadgeProps) ui.Element {
 		target.Cursor(ui.CursorPointer)
 	}
 	disabled = disabled || root.IsDisabled()
-	badgeAppearance(c, root, target, p.Variant, p.Invalid, disabled)
+	badgeAppearance(c, root, target, p.Variant, p.Color, p.Invalid, disabled)
 	if target.Valid() && target.Clicked() && !disabled {
 		root.SetChanged()
 		if p.OnActivate != nil {
@@ -137,25 +140,29 @@ func BadgeWith(c *ui.Context, text string, p BadgeProps) ui.Element {
 	return root
 }
 
-func badgeAppearance(c *ui.Context, root, target ui.Element, variant BadgeVariant, invalid, disabled bool) {
+func badgeAppearance(c *ui.Context, root, target ui.Element, variant BadgeVariant, color *ui.Color, invalid, disabled bool) {
 	t := theme.TokensOf(c)
+	softColor := t.Primary
+	if color != nil {
+		softColor = *color
+	}
 	bg, fg, border := t.Primary, t.PrimaryForeground, ui.Transparent
 	switch variant {
 	case BadgeSecondary:
 		bg, fg = t.Secondary, t.SecondaryForeground
 	case BadgeOutline:
 		bg, fg, border = ui.Transparent, t.Foreground, t.Border
-	case BadgeDestructive:
-		bg, fg = t.Destructive.Alpha(.1), t.Destructive
+	case BadgeSoft:
+		bg, fg = softColor.Alpha(.1), softColor
 		if t.Dark {
-			bg = t.Destructive.Alpha(.2)
+			bg = softColor.Alpha(.2)
 		}
 	case BadgeGhost:
 		bg, fg = ui.Transparent, t.Foreground
 	case BadgeLink:
 		bg, fg = ui.Transparent, t.Primary
 	}
-	hovered := !disabled && (target.Valid() && target.Hovered() || !target.Valid() && root.Hovered())
+	hovered := !disabled && (target.Valid() && (target.Hovered() || target.Pressed()) || !target.Valid() && root.Hovered())
 	if hovered {
 		switch variant {
 		case BadgeGhost:
@@ -174,8 +181,11 @@ func badgeAppearance(c *ui.Context, root, target ui.Element, variant BadgeVarian
 				switch variant {
 				case BadgeOutline:
 					bg, fg = t.Muted, t.MutedForeground
-				case BadgeDestructive:
-					bg = t.Destructive.Alpha(.2)
+				case BadgeSoft:
+					bg = softColor.Alpha(.2)
+					if t.Dark {
+						bg = softColor.Alpha(.3)
+					}
 				case BadgeSecondary:
 					bg = t.Secondary.Alpha(.8)
 				default:
@@ -190,15 +200,16 @@ func badgeAppearance(c *ui.Context, root, target ui.Element, variant BadgeVarian
 	}
 	if target.Valid() && target.FocusVisible() {
 		ring := t.Ring.Alpha(.5)
-		if variant == BadgeDestructive || invalid {
-			ring = t.Destructive.Alpha(.2)
-			if t.Dark {
-				ring = t.Destructive.Alpha(.4)
-			}
-		}
 		border := t.Ring
-		if invalid {
-			border = t.Destructive
+		if variant == BadgeSoft || invalid {
+			color := softColor
+			if invalid {
+				color = t.Destructive
+			}
+			ring, border = color.Alpha(.2), color.Alpha(.4)
+			if t.Dark {
+				ring = color.Alpha(.4)
+			}
 		}
 		root.Border(1, border).Shadow(0, 0, 0, 3, ring)
 	}

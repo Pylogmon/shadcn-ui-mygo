@@ -6,6 +6,13 @@ The module preserves all seven docs examples and seven Create sections as
 14 separate configurations at shadcn/ui revision
 `8ab27715521cbd4f87ae6886cd989cbb678f6de7`.
 
+The public API replaces Destructive with `display.BadgeSoft`. Soft uses the
+current theme's Primary color by default and accepts `BadgeProps.Color`.
+These fixed source recipes retain their original Destructive labels and
+appearance through Soft with `Color: &tokens.Destructive`. Gallery's Badges
+overview demonstrates default Soft; Themes shows custom success/warning/danger colors.
+See [Badge colors and migration](../../docs/badge.md) for usage.
+
 | Configuration | Source content retained |
 | --- | --- |
 | Demo | Four centered source labels and variants |

@@ -1,9 +1,21 @@
 # Badge
 
-`Badge(c,text,variant)` 是内容自适应的静态徽章；`BadgeWith` 增加图标、原生动作和自定义视觉槽位。六种变体为Default、Secondary、Outline、Destructive、Ghost、Link；保留原四种常量的数值。
+`Badge(c,text,variant)` 是内容自适应的静态徽章；`BadgeWith` 增加图标、原生动作和自定义视觉槽位。六种变体为 Default、Secondary、Outline、Soft、Ghost、Link。
 
 ```go
 display.Badge(c, "New", display.BadgeSecondary)
+// Soft 默认使用当前主题的 Primary 色。
+display.Badge(c, "Ready", display.BadgeSoft)
+// 自定义颜色同时用于文字、图标、浅色背景、悬停及焦点反馈。
+green := ui.RGB(22, 163, 74)
+display.BadgeWith(c, "Success", display.BadgeProps{
+    Variant: display.BadgeSoft, Color: &green,
+})
+// 危险状态通过 Soft + 主题危险色表达。
+tokens := theme.TokensOf(c)
+display.BadgeWith(c, "Deleting", display.BadgeProps{
+    Variant: display.BadgeSoft, Color: &tokens.Destructive,
+})
 display.BadgeWith(c, "Remove filter", display.BadgeProps{
     Variant: display.BadgeOutline, EndIcon: closeIcon, Button: true,
     OnActivate: func() { removeFilter() },
@@ -12,6 +24,10 @@ display.BadgeWith(c, "Documentation", display.BadgeProps{
     Variant: display.BadgeLink, URL: "https://ui.shadcn.com/docs/components/badge",
 })
 ```
+
+`BadgeProps.Color` 类型为 `*ui.Color`，仅作用于 `BadgeSoft`；nil 跟随当前作用域的主题主色，也可显式指定黑色、透明色或半透明色。与按钮的 Soft 一致，背景透明度在亮色主题下为 10%，交互徽标悬停／按下为 20%；暗色主题下分别为 20%／30%，与颜色自身的透明度相乘。焦点边框和光环使用相同颜色，`Invalid` 优先使用主题危险色。
+
+原 `display.BadgeDestructive` 已替换为 `display.BadgeSoft`，枚举位置不变。旧用法迁移为 `BadgeWith(c, text, BadgeProps{Variant: display.BadgeSoft, Color: &tokens.Destructive})`，可保留危险状态外观。Gallery 的 Badges 展示默认 Soft，Themes 页演示成功、警告、危险色；固定源组合中的 Destructive 示例也通过此方式保留。
 
 `BadgeLink` 单独只选择视觉样式；提供URL才使用实际MyGo Link，保留系统URL/Router和Enter-only激活。Button或OnActivate请求原生按钮，URL优先。返回Element是整个徽章容器，可继续设置样式；`Handle` 绑定真实按钮/Link。`OnActivate` 与Element.Changed是两条可选通知路径。
 

@@ -13,17 +13,17 @@ import (
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/theme"
 )
 
-func TestBadgeLegacyUsesVegaHeightAndSoftDestructiveFill(t *testing.T) {
+func TestBadgeLegacyUsesVegaHeightAndSoftPrimaryFill(t *testing.T) {
 	var reference ui.Rect
 	r := ui.NewTester(func(c *ui.Context) {
 		theme.Apply(c)
 		tokens := theme.TokensOf(c)
 		ui.Column(c).Fill().Padding(20).Gap(12).Background(tokens.Background).Children(func() {
-			Badge(c, "Danger", BadgeDestructive).Label("Danger badge")
-			ui.Box(c).Size(60, 20).Background(tokens.Destructive.Alpha(.1)).Draw(func(_ *ui.Painter, bounds ui.Rect) { reference = bounds })
+			Badge(c, "Soft", BadgeSoft).Label("Soft badge")
+			ui.Box(c).Size(60, 20).Background(tokens.Primary.Alpha(.1)).Draw(func(_ *ui.Painter, bounds ui.Rect) { reference = bounds })
 		})
 	}, 240, 120)
-	box, ok := r.Find("Danger badge")
+	box, ok := r.Find("Soft badge")
 	if !ok || box.H != 20 {
 		t.Fatalf("Vega badge should be exactly 20 DIPs high: %+v", box)
 	}
@@ -31,7 +31,7 @@ func TestBadgeLegacyUsesVegaHeightAndSoftDestructiveFill(t *testing.T) {
 	got := image.RGBAAt(int(box.X+box.W/2), int(box.Y+3))
 	want := image.RGBAAt(int(reference.X+reference.W/2), int(reference.Y+3))
 	if got != want {
-		t.Fatalf("destructive fill should be the soft themed tone: got=%v want=%v", got, want)
+		t.Fatalf("soft fill should use the theme primary tone: got=%v want=%v", got, want)
 	}
 }
 
@@ -47,14 +47,18 @@ func TestBadgeAllVariantsFitTextAndUseThemedTones(t *testing.T) {
 				appearance.Apply(c)
 				tokens = theme.TokensOf(c)
 				ui.Column(c).Fill().Padding(20).Gap(12).Background(tokens.Background).Children(func() {
-					for _, variant := range []BadgeVariant{BadgeDefault, BadgeSecondary, BadgeOutline, BadgeDestructive, BadgeGhost, BadgeLink} {
-						Badge(c.Key(variant), "Ready", variant).Label(fmt.Sprint("badge-", variant))
+					for _, variant := range []BadgeVariant{BadgeDefault, BadgeSecondary, BadgeOutline, BadgeSoft, BadgeGhost, BadgeLink} {
+						props := BadgeProps{Variant: variant, Color: new(ui.RGB(20, 160, 80))}
+						if variant == BadgeSoft {
+							props.Color = nil
+						}
+						BadgeWith(c.Key(variant), "Ready", props).Label(fmt.Sprint("badge-", variant))
 					}
 				})
 			}, 300, 250)
-			want := []ui.Color{tokens.Primary, tokens.Secondary, tokens.Background, tokens.Destructive.Alpha(.1), tokens.Background, tokens.Background}
+			want := []ui.Color{tokens.Primary, tokens.Secondary, tokens.Background, tokens.Primary.Alpha(.1), tokens.Background, tokens.Background}
 			if dark {
-				want[3] = tokens.Destructive.Alpha(.2)
+				want[3] = tokens.Primary.Alpha(.2)
 			}
 			for variant, tone := range want {
 				box, ok := r.Find(fmt.Sprint("badge-", variant))
@@ -73,6 +77,100 @@ func TestBadgeAllVariantsFitTextAndUseThemedTones(t *testing.T) {
 				}
 			}
 		})
+	}
+}
+
+func TestBadgeSoftColorsAndInteraction(t *testing.T) {
+	for _, dark := range []bool{false, true} {
+		tokens := theme.Preset("blue", dark)
+		for _, tc := range []struct {
+			name  string
+			color *ui.Color
+		}{
+			{name: "theme"},
+			{name: "green", color: new(ui.RGB(20, 160, 80))},
+			{name: "destructive", color: &tokens.Destructive},
+			{name: "black", color: new(ui.RGB(0, 0, 0))},
+			{name: "transparent", color: new(ui.Transparent)},
+			{name: "translucent", color: new(ui.RGBA(120, 40, 220, .5))},
+		} {
+			for _, mode := range []string{"static", "button", "url"} {
+				t.Run(fmt.Sprintf("dark=%v/%s/%s", dark, tc.name, mode), func(t *testing.T) {
+					calls := 0
+					p := BadgeProps{Variant: BadgeSoft, Color: tc.color, Icon: badgeTestIcon, Label: "Soft badge", Button: mode == "button"}
+					if mode != "static" {
+						p.OnActivate = func() { calls++ }
+					}
+					if mode == "url" {
+						p.URL = "https://example.com/soft"
+					}
+					r := ui.NewTesterWith(func(c *ui.Context) {
+						theme.Scope(c, tokens).Fill().Padding(20).Background(tokens.Background).Children(func() {
+							BadgeWith(c, "", p)
+						})
+					}, 180, 100, ui.TesterOptions{Preferences: ui.Preferences{ReduceMotion: true}})
+					box, ok := r.Find(p.Label)
+					if !ok {
+						t.Fatal("missing Soft badge")
+					}
+					x, y := box.X+box.W/2, box.Y+box.H/2
+					base := color.RGBA{R: tokens.Background.R, G: tokens.Background.G, B: tokens.Background.B, A: 255}
+					over := func(bg color.RGBA, fg ui.Color) color.RGBA {
+						a := float32(fg.A) / 255
+						channel := func(b, f uint8) uint8 { return uint8(float32(b)*(1-a) + float32(f)*a + .5) }
+						return color.RGBA{R: channel(bg.R, fg.R), G: channel(bg.G, fg.G), B: channel(bg.B, fg.B), A: 255}
+					}
+					pixel := func(name string, y float32, want color.RGBA) {
+						t.Helper()
+						got := r.Image().RGBAAt(int(x), int(y))
+						near := func(a, b uint8) bool { return int(a)-int(b) >= -1 && int(a)-int(b) <= 1 }
+						if !near(got.R, want.R) || !near(got.G, want.G) || !near(got.B, want.B) || got.A != want.A {
+							t.Fatalf("%s pixel=%v want %v", name, got, want)
+						}
+					}
+					chosen := tokens.Primary
+					if p.Color != nil {
+						chosen = *p.Color
+					}
+					quietAlpha, activeAlpha, focusAlpha := float32(.1), float32(.2), float32(.2)
+					if dark {
+						quietAlpha, activeAlpha, focusAlpha = .2, .3, .4
+					}
+					quiet := over(base, chosen.Alpha(quietAlpha))
+					pixel("quiet fill", box.Y+3, quiet)
+					pixel("inherited icon", y, over(quiet, chosen))
+					r.Move(x, y)
+					if mode == "static" {
+						pixel("static hover fill", box.Y+3, quiet)
+					} else {
+						pixel("hover fill", box.Y+3, over(base, chosen.Alpha(activeAlpha)))
+						r.Press(x, y)
+						pixel("pressed fill", box.Y+3, over(base, chosen.Alpha(activeAlpha)))
+						r.Release(x, y)
+						r.Move(170, 90)
+						r.Key(0, ui.KeyTab)
+						if !r.Focused(p.Label) {
+							t.Fatal("Soft badge lost keyboard focus")
+						}
+						pixel("custom focus ring", box.Y-2, over(base, chosen.Alpha(focusAlpha)))
+						r.Key(0, ui.KeyEnter)
+						if calls != 2 {
+							t.Fatalf("pointer and keyboard activations=%d want 2", calls)
+						}
+						p.Invalid = true
+						r.Frame()
+						pixel("invalid focus ring", box.Y-2, over(base, tokens.Destructive.Alpha(focusAlpha)))
+						p.Invalid = false
+					}
+					p.Color = new(ui.RGB(40, 180, 210))
+					r.Frame()
+					pixel("updated fill", box.Y+3, over(base, p.Color.Alpha(quietAlpha)))
+					if mode != "static" {
+						pixel("updated focus ring", box.Y-2, over(base, p.Color.Alpha(focusAlpha)))
+					}
+				})
+			}
+		}
 	}
 }
 
@@ -108,7 +206,7 @@ func TestBadgeLogicalIconSlotsAndSingleAccessibleName(t *testing.T) {
 
 func TestBadgeButtonNativeKeyboardDisabledBusyAndChanged(t *testing.T) {
 	count, changes := 0, 0
-	var p = BadgeProps{Label: "Status action", Button: true, OnActivate: func() { count++ }}
+	var p = BadgeProps{Label: "Status action", Variant: BadgeSoft, Color: new(ui.RGB(20, 160, 80)), Button: true, OnActivate: func() { count++ }}
 	r := displayTester(func(c *ui.Context) {
 		if BadgeWith(c, "Review", p).Changed() {
 			changes++

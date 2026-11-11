@@ -100,7 +100,7 @@ var badgeSourceVariants = []struct {
 	variant display.BadgeVariant
 }{
 	{"Default", display.BadgeDefault}, {"Secondary", display.BadgeSecondary},
-	{"Destructive", display.BadgeDestructive}, {"Outline", display.BadgeOutline},
+	{"Destructive", display.BadgeSoft}, {"Outline", display.BadgeOutline},
 	{"Ghost", display.BadgeGhost}, {"Link", display.BadgeLink},
 }
 
@@ -124,7 +124,7 @@ func (p *badgeCompositionPreviewState) specs() []badgeSourceSpec {
 		}
 		result := []badgeSourceSpec{
 			{text: words[0]}, {text: words[1], variant: display.BadgeSecondary},
-			{text: words[2], variant: display.BadgeDestructive}, {text: words[3], variant: display.BadgeOutline},
+			{text: words[2], variant: display.BadgeSoft}, {text: words[3], variant: display.BadgeOutline},
 		}
 		if p.recipe == "rtl" {
 			result = append(result, badgeSourceSpec{text: words[4], variant: display.BadgeSecondary, icon: outlined.Verified()}, badgeSourceSpec{text: words[5], variant: display.BadgeOutline, endIcon: outlined.Bookmark()})
@@ -133,7 +133,7 @@ func (p *badgeCompositionPreviewState) specs() []badgeSourceSpec {
 	case "icon":
 		return []badgeSourceSpec{{text: "Verified", variant: display.BadgeSecondary, icon: outlined.Verified()}, {text: "Bookmark", variant: display.BadgeOutline, endIcon: outlined.Bookmark()}}
 	case "spinner":
-		return []badgeSourceSpec{{text: "Deleting", variant: display.BadgeDestructive, spinnerStart: true}, {text: "Generating", variant: display.BadgeSecondary, spinnerEnd: true}}
+		return []badgeSourceSpec{{text: "Deleting", variant: display.BadgeSoft, spinnerStart: true}, {text: "Generating", variant: display.BadgeSecondary, spinnerEnd: true}}
 	case "link":
 		return []badgeSourceSpec{{text: "Open Link", url: "#link", endIcon: outlined.ArrowOutward()}}
 	case "colors", "create-colors":
@@ -149,7 +149,7 @@ func (p *badgeCompositionPreviewState) specs() []badgeSourceSpec {
 		return result
 	case "create-link":
 		result := []badgeSourceSpec{}
-		for _, variant := range []display.BadgeVariant{display.BadgeDefault, display.BadgeSecondary, display.BadgeDestructive, display.BadgeGhost} {
+		for _, variant := range []display.BadgeVariant{display.BadgeDefault, display.BadgeSecondary, display.BadgeSoft, display.BadgeGhost} {
 			result = append(result, badgeSourceSpec{text: "Link", variant: variant, url: "#", endIcon: outlined.ArrowOutward()})
 		}
 		return result
@@ -190,6 +190,10 @@ func badgeSourceColors(palette string, solid, dark bool) (ui.Color, ui.Color) {
 
 func (p *badgeCompositionPreviewState) badge(c *ui.Context, spec badgeSourceSpec) {
 	props := display.BadgeProps{Variant: spec.variant, Icon: spec.icon, EndIcon: spec.endIcon, URL: spec.url, Busy: spec.spinnerStart || spec.spinnerEnd}
+	if spec.variant == display.BadgeSoft {
+		// Fixed source recipes retain their original Destructive appearance.
+		props.Color = &theme.TokensOf(c).Destructive
+	}
 	spinner := func(child *ui.Context) { display.Spinner(child, display.SpinnerProps{Size: 12, Decorative: true}) }
 	if spec.spinnerStart {
 		props.Leading = spinner

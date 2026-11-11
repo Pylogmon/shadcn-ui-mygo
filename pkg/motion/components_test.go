@@ -25,12 +25,13 @@ func TestComponentsApplyReducedMotionDuringRunningFeedback(t *testing.T) {
 			view := func(c *ui.Context) {
 				theme.Scope(c, tokens).Fill().Background(tokens.Background).Children(func() {
 					ui.Column(c).Fill().Padding(16).Gap(16).Children(func() {
-						buttonProps, badgeVariant := control.ButtonProps{}, display.BadgeDefault
+						buttonProps, badgeProps := control.ButtonProps{}, display.BadgeProps{}
 						if invalid {
-							buttonProps, badgeVariant = control.ButtonProps{Variant: control.Soft, Color: &tokens.Destructive}, display.BadgeDestructive
+							buttonProps = control.ButtonProps{Variant: control.Soft, Color: &tokens.Destructive}
+							badgeProps = display.BadgeProps{Variant: display.BadgeSoft, Color: &tokens.Destructive}
 						}
 						control.Button(c, "Action", buttonProps)
-						display.Badge(c, "Status", badgeVariant)
+						display.BadgeWith(c, "Status", badgeProps)
 						control.Input(c, &text, control.InputProps{Label: "Name", Invalid: invalid})
 						control.InputOTP(c, &code, control.InputOTPProps{Length: 4, Invalid: invalid})
 						navigation.Tabs(c, &selected, navigation.TabsProps{Variant: navigation.TabsLine, Items: []navigation.TabItem{{Label: "First"}, {Label: "Second"}}}, nil)

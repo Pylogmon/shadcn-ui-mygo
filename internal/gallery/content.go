@@ -26,7 +26,7 @@ func (s *State) contents(c *ui.Context) {
 			Header: s.contentHeader("Badges", "Small details for status and navigation."),
 			Content: func(child *ui.Context) {
 				ui.Row(child).Wrap().Gap(8).Children(func() {
-					for i, label := range []string{"Default", "Secondary", "Outline", "Destructive", "Ghost", "Link"} {
+					for i, label := range []string{"Default", "Secondary", "Outline", "Soft", "Ghost", "Link"} {
 						display.Badge(child.Key(i), tr(child, label), display.BadgeVariant(i))
 					}
 				})

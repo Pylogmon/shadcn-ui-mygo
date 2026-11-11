@@ -96,6 +96,15 @@ func TestBadgeCompositionsSourceWorkflow(t *testing.T) {
 	if access(ui.RoleText, "Badge").Focusable {
 		t.Fatal("a source span became an interactive badge")
 	}
+	checkDanger := func(name string) {
+		t.Helper()
+		a := access(ui.RoleText, name)
+		pixel := r.Image().RGBAAt(int(a.Bounds.X+a.Bounds.W/2), int(a.Bounds.Y+3))
+		if pixel.R <= pixel.G || pixel.R <= pixel.B {
+			t.Fatalf("source %s lost its danger color: %v", name, pixel)
+		}
+	}
+	checkDanger("Destructive")
 	for _, recipe := range badgeCompositionRecipes {
 		choose("Badge configuration", recipe.Label)
 		if p.recipe != recipe.Value {
@@ -124,7 +133,7 @@ func TestBadgeCompositionsSourceWorkflow(t *testing.T) {
 		t.Fatal("source hash href did not remain a local native router action")
 	}
 	choose("Badge configuration", "Create: asChild Links")
-	for i, variant := range []display.BadgeVariant{display.BadgeDefault, display.BadgeSecondary, display.BadgeDestructive, display.BadgeGhost} {
+	for i, variant := range []display.BadgeVariant{display.BadgeDefault, display.BadgeSecondary, display.BadgeSoft, display.BadgeGhost} {
 		links := []ui.AccessInfo{}
 		for _, a := range r.AccessAll() {
 			if a.Role == ui.RoleLink && a.Name == "Link" {
@@ -156,6 +165,7 @@ func TestBadgeCompositionsSourceWorkflow(t *testing.T) {
 	r.SetPreferences(ui.Preferences{ReduceMotion: true})
 	dark = true
 	r.Frame()
+	checkDanger("Deleting")
 	badgeCompositionSnapshot(t, r, "badge-loading-dark")
 	choose("Badge configuration", "Create: Custom Colors")
 	checkColors := func() {
