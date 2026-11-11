@@ -31,7 +31,7 @@ conversation.MessageScrollerWith(c, &scroll, conversation.MessageScrollerProvide
 
 `Scrollable()`区分两端是否还有真实内容，排除回合尾部占位；Following期间也会抑制流式追加尚未追上的短暂End缺口。`Visibility()`按阅读线返回当前锚点及可见消息ID。`Mode()`报告Following、Free、Anchored或Jumping，`Pending()`、`AutoScrolling()`及`TailSpace()`提供对应状态。跳转按钮默认平滑滚动，可设置Instant；OnClick返回false取消默认跳转。按钮离场动画期间已退出输入、Tab及无障碍导航。
 
-Content默认32DIP行间距。请通过`MessageScrollerContentProps`声明Gap、PaddingStart、PaddingEnd，命令会纳入这些值；原生公开API没有计算后样式读取入口，fluent覆盖这些几何值不会同步到控制器。内容继承祖先字体和颜色。滚动条共享`display.ScrollBar`和真实原生ScrollState；CSS thin映射为当前MyGo主题的细滚动条宽度，在逻辑末端保留稳定轨道。自动滚动暂时隐藏thumb，操作目标仍可用。动态减少动画会停止本组件已知目标的平滑滚动。
+Content默认32DIP行间距。请通过`MessageScrollerContentProps`声明Gap、PaddingStart、PaddingEnd，命令会纳入这些值；原生公开API没有计算后样式读取入口，fluent覆盖这些几何值不会同步到控制器。内容继承祖先字体和颜色。Viewport直接使用`ui.Scroll`及其标准滚动条，颜色、宽度、RTL位置、悬停显示和拖拽均遵循MyGo，不保留额外轨道留白，也不在自动滚动时单独改变滚动条样式。动态减少动画会停止本组件已知目标的平滑滚动。
 
 Viewport默认保留嵌套原生滚动与常规链式滚动。仅在没有嵌套Scroll的平面正文中，可显式设置`ContainScrollAtEdges`阻止边缘事件向外传播。MyGo先向祖先分发自定义输入，再执行子Scroll默认行为，公开API没有CSS overscroll-behavior或已处理wheel查询，不能对任意嵌套正文自动复刻该CSS规则。
 

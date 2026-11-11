@@ -154,7 +154,7 @@ func TestCreatorLoadingToggleRetainsDraftAndBecomesIdle(t *testing.T) {
 	}
 }
 
-func TestCreatorNotesScrollForRealAndRetainPlaceAcrossStylesAndPages(t *testing.T) {
+func TestCreatorNotesScrollForRealAndRetainPlaceAcrossPages(t *testing.T) {
 	s := New()
 	s.Page = "text-layout"
 	r := textLayoutTester(s, "scroll")
@@ -168,9 +168,8 @@ func TestCreatorNotesScrollForRealAndRetainPlaceAcrossStylesAndPages(t *testing.
 	if lastPlace <= 0 || lastPlace != s.articleScroll.MaxY || after.Y >= first.Y {
 		t.Fatal("end action changed an indicator without moving native content")
 	}
-	advancedClick(t, r, "Use MyGo scrollbars")
-	if !s.nativeScrollbars || s.articleScroll.Y != lastPlace {
-		t.Fatal("scrollbar style change reset the accepted native offset")
+	if _, ok := r.AccessByRole(ui.RoleSwitch, "Use MyGo scrollbars"); ok {
+		t.Fatal("scroll preview still offers a separate scrollbar style")
 	}
 	s.Page = "content"
 	r.Frame()

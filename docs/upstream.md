@@ -10,7 +10,7 @@
 
 Marker另核对同一固定提交的primitive（Git blob `4fcf772c96f7649cea01ad6f7a688a521a817a42`）、registry组合示例（`d9eb82ae1ee3b405040716140b88991cea2c4a03`）、base文档，以及demo、variants、border、separator、icon、status、shimmer、link-button八个独立示例，共11份原始文件。Git blob与SHA-256记录在[upstream.json](upstream.json)；样式对照Vega的Marker段，不将独立示例中的base-rhea导入路径误作本阶段视觉基线。静态/显式状态语义与原生链接组合差异见[Marker指南](marker.md)。
 
-MessageScroller行为另外核对同一提交的`packages/react/src/message-scroller`完整15份primitive、几何、命令、控制器、类型、测试与说明，原文及MIT许可归档于`pkg/conversation/testdata/message-scroller`。连同registry包装/组合示例、base/react文档和12个独立示例，共31份固定Git blob与SHA-256记录在[upstream.json](upstream.json)。Jump箭头为上述固定Lucide提交的ArrowDown，单独SVG/manifest在`pkg/conversation/assets`。CSS的thin滚动条映射为当前MyGo主题的细条宽度，源渐隐采用同提交共享CSS；原生嵌套滚动、ARIA和虚拟化边界见[Message Scroller](message-scroller.md)。
+MessageScroller行为另外核对同一提交的`packages/react/src/message-scroller`完整15份primitive、几何、命令、控制器、类型、测试与说明，原文及MIT许可归档于`pkg/conversation/testdata/message-scroller`。连同registry包装/组合示例、base/react文档和12个独立示例，共31份固定Git blob与SHA-256记录在[upstream.json](upstream.json)。Jump箭头为上述固定Lucide提交的ArrowDown，单独SVG/manifest在`pkg/conversation/assets`。滚动条统一使用`ui.Scroll`的MyGo标准实现，源渐隐采用同提交共享CSS；原生嵌套滚动、ARIA和虚拟化边界见[Message Scroller](message-scroller.md)。
 
 Questionnaire另核对同一提交的`packages/react/src/questionnaire`完整14份primitive、collection、hooks、类型、测试与说明；原文和MIT许可归档于`pkg/conversation/testdata/questionnaire`。连同registry包装/组合示例、base/react文档和14个独立示例，共32份Git blob与SHA-256记录在[upstream.json](upstream.json)。Go公开API、成功控件数据、草稿/受控输入及浏览器校验差异见[Questionnaire](questionnaire.md)；未把仅包装组件的registry文件当作完整行为源。
 

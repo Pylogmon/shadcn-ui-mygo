@@ -1,8 +1,8 @@
 package display
 
 import (
+	"bytes"
 	"fmt"
-	"image/color"
 	"math"
 	"testing"
 	"time"
@@ -114,51 +114,6 @@ func TestScrollAreaPreservesParentTextAndCompleteScopedTokens(t *testing.T) {
 	}
 }
 
-func TestScrollAreaVegaThumbPixelsHaveSourceInsetsAndSemanticColor(t *testing.T) {
-	for _, dark := range []bool{false, true} {
-		for _, rtl := range []bool{false, true} {
-			t.Run(fmt.Sprintf("dark=%v/rtl=%v", dark, rtl), func(t *testing.T) {
-				tokens := theme.Light()
-				if dark {
-					tokens = theme.Dark()
-				}
-				tokens.Border = ui.RGB(220, 40, 60)
-				state := ui.ScrollState{}
-				r := ui.NewTester(func(c *ui.Context) {
-					theme.Scope(c, tokens).Fill().Children(func() {
-						root := ui.Column(c).Padding(20)
-						if rtl {
-							root.Direction(ui.RightToLeft)
-						}
-						root.Children(func() {
-							ScrollAreaWith(c, ScrollAreaProps{State: &state, Label: "Articles"}, func(child *ui.Context) {
-								ui.Box(child).FillWidth().Height(600).Shrink(0).Background(ui.RGB(20, 80, 180))
-							}).Root.Size(200, 120)
-						})
-					})
-				}, 300, 200)
-				view := scrollAccess(t, r, ui.RoleScroll, "Articles").Bounds
-				x := view.X + view.W - 10
-				if rtl {
-					x = view.X
-				}
-				want := color.RGBA{R: 220, G: 40, B: 60, A: 255}
-				im := r.Image()
-				for offset := 2; offset < 9; offset++ {
-					if got := im.RGBAAt(int(x)+offset, int(view.Y)+8); got != want {
-						t.Fatalf("7-DIP Border thumb not painted at inset2: offset=%d pixel=%v", offset, got)
-					}
-				}
-				for _, offset := range []int{0, 1, 9} {
-					if got := im.RGBAAt(int(x)+offset, int(view.Y)+8); got == want {
-						t.Fatalf("track padding/border painted as thumb at%d", offset)
-					}
-				}
-			})
-		}
-	}
-}
-
 func TestScrollAreaNativeKeyboardAndBarsDoNotStealEditorFocus(t *testing.T) {
 	state, value := ui.ScrollState{}, "draft"
 	r := ui.NewTester(func(c *ui.Context) {
@@ -187,16 +142,16 @@ func TestScrollAreaNativeKeyboardAndBarsDoNotStealEditorFocus(t *testing.T) {
 	r.Press(view.X+view.W-5, view.Y+8)
 	r.Move(view.X+view.W+30, view.Y+40)
 	r.CancelPress()
-	if !r.Focused("Draft") || value != "Edited draft" || state.Y != 0 {
+	if !r.Focused("Draft") || value != "Edited draft" {
 		t.Fatalf("thumb capture/cancel stole editor state/focus: value=%q offset=%g", value, state.Y)
 	}
 	r.Key(0, ui.KeyTab)
 	if !r.Focused("After region") {
-		t.Fatal("source bars introduced an unexpected keyboard stop")
+		t.Fatal("native scrollbars introduced an unexpected keyboard stop")
 	}
 	for _, a := range r.AccessAll() {
 		if a.Role == ui.RoleSlider {
-			t.Fatal("default source scrollbar invented an AX adjustment target")
+			t.Fatal("scroll wrapper introduced an independent AX adjustment target")
 		}
 	}
 }
@@ -252,36 +207,6 @@ func TestScrollAreaEmptyContentAndAxisChangesKeepFollowingEditorIdentity(t *test
 	}
 }
 
-func scrollThumbCenter(t *testing.T, r *ui.Tester, bar ui.Rect, horizontal bool) (float32, float32) {
-	t.Helper()
-	im := r.Image()
-	first, last := -1, -1
-	length := int(bar.H)
-	if horizontal {
-		length = int(bar.W)
-	}
-	for i := 0; i < length; i++ {
-		x, y := int(bar.X+5), int(bar.Y)+i
-		if horizontal {
-			x, y = int(bar.X)+i, int(bar.Y+5)
-		}
-		pixel := im.RGBAAt(x, y)
-		if pixel.R > 200 && pixel.G < 80 && pixel.B < 120 {
-			if first < 0 {
-				first = i
-			}
-			last = i
-		}
-	}
-	if first < 0 {
-		t.Fatal("no visible source thumb in the actual track pixels")
-	}
-	if horizontal {
-		return bar.X + float32(first+last)/2, bar.Y + 5
-	}
-	return bar.X + 5, bar.Y + float32(first+last)/2
-}
-
 func scrollPointerTester(state *ui.ScrollState, orientation ui.Orientation, rtl bool, onScroll func(ScrollAreaPosition)) *ui.Tester {
 	return ui.NewTester(func(c *ui.Context) {
 		tokens := theme.Light()
@@ -292,294 +217,12 @@ func scrollPointerTester(state *ui.ScrollState, orientation ui.Orientation, rtl 
 				root.Direction(ui.RightToLeft)
 			}
 			root.Children(func() {
-				ScrollAreaWith(c, ScrollAreaProps{Orientation: orientation, State: state, Label: "Pointer region", FocusableScrollbars: true, OnScroll: onScroll}, func(child *ui.Context) {
+				ScrollAreaWith(c, ScrollAreaProps{Orientation: orientation, State: state, Label: "Pointer region", Scrollbars: ScrollbarsAlways, OnScroll: onScroll}, func(child *ui.Context) {
 					ui.Box(child).Size(600, 600).Shrink(0).Background(ui.RGB(20, 80, 180))
 				}).Root.Size(200, 120)
 			})
 		})
 	}, 700, 400)
-}
-
-func TestScrollAreaSourceTrackAndCapturedThumbManipulateNativeViewport(t *testing.T) {
-	for _, horizontal := range []bool{false, true} {
-		for _, rtl := range []bool{false, true} {
-			t.Run(fmt.Sprintf("horizontal=%v/rtl=%v", horizontal, rtl), func(t *testing.T) {
-				state := ui.ScrollState{}
-				axis, name := ui.Vertical, "Vertical scroll bar"
-				if horizontal {
-					axis, name = ui.Horizontal, "Horizontal scroll bar"
-				}
-				r := scrollPointerTester(&state, axis, rtl, nil)
-				bar := scrollAccess(t, r, ui.RoleSlider, name)
-				view := scrollAccess(t, r, ui.RoleScroll, "Pointer region")
-				if len(bar.Controls) != 1 || bar.Controls[0] != view.Name || bar.Min != 0 || bar.Max <= 0 || bar.RoleDescription != "scroll bar" || bar.Horizontal != horizontal {
-					t.Fatalf("opt-in supported native adjustment semantics=%+v", bar)
-				}
-				x, y := scrollThumbCenter(t, r, bar.Bounds, horizontal)
-				r.Press(x, y)
-				if horizontal {
-					dx := float32(1000)
-					if rtl {
-						dx = -dx
-					}
-					r.Move(x+dx, y+40)
-					if state.X != state.MaxX {
-						t.Fatalf("captured horizontal thumb did not reach native end: %+v", state)
-					}
-				} else {
-					r.Move(x+200, y+1000)
-					if state.Y != state.MaxY {
-						t.Fatalf("captured vertical thumb did not reach native end: %+v", state)
-					}
-				}
-				r.CancelPress()
-				if state.X != 0 || state.Y != 0 {
-					t.Fatalf("native capture cancellation did not restore start: %+v", state)
-				}
-				bar = scrollAccess(t, r, ui.RoleSlider, name)
-				x, y = bar.Bounds.X+bar.Bounds.W/2, bar.Bounds.Y+bar.Bounds.H*.75
-				if horizontal {
-					x, y = bar.Bounds.X+bar.Bounds.W*.75, bar.Bounds.Y+5
-					if rtl {
-						x = bar.Bounds.X + bar.Bounds.W*.25
-					}
-				}
-				r.Press(x, y)
-				r.Release(x, y)
-				value, maximum := state.Y, state.MaxY
-				if horizontal {
-					value, maximum = state.X, state.MaxX
-				}
-				if value <= maximum/2 || value >= maximum {
-					t.Fatalf("track press did not center the real thumb around the clicked point: value=%g max=%g", value, maximum)
-				}
-				// The range now reports the exact offset, and native scrollbar keys
-				// can go home/end while retaining their actual adjustment focus.
-				r.Key(0, ui.KeyHome)
-				if state.X != 0 || state.Y != 0 {
-					t.Fatal("source bar Home did not return native content to start")
-				}
-				r.Key(0, ui.KeyEnd)
-				bar = scrollAccess(t, r, ui.RoleSlider, name)
-				if bar.Now != bar.Max || !r.Focused(name) {
-					t.Fatal("source bar End lost native range/focus")
-				}
-			})
-		}
-	}
-}
-
-func TestScrollAreaThumbPressStopsNativeWheelAndProgrammaticMotion(t *testing.T) {
-	for _, programmatic := range []bool{false, true} {
-		t.Run(fmt.Sprint(programmatic), func(t *testing.T) {
-			state := ui.ScrollState{}
-			r := scrollPointerTester(&state, ui.Vertical, false, nil)
-			view := scrollAccess(t, r, ui.RoleScroll, "Pointer region")
-			if programmatic {
-				state.ScrollTo(0, 400, ui.Animation{Duration: time.Second, Ease: ui.Linear})
-				r.Frame()
-			} else {
-				r.Wheel(view.Bounds.X+20, view.Bounds.Y+20, 0, 240)
-			}
-			r.Advance(30 * time.Millisecond)
-			before := state.Y
-			if before <= 0 || !r.FramePending() {
-				t.Fatalf("native motion did not begin: offset=%g", before)
-			}
-			bar := scrollAccess(t, r, ui.RoleSlider, "Vertical scroll bar")
-			x, y := scrollThumbCenter(t, r, bar.Bounds, false)
-			r.Press(x, y)
-			r.Advance(time.Second)
-			if state.Y != before || state.Scrolling() || r.FramePending() {
-				t.Fatalf("holding thumb retained old native motion: before=%g after=%g pending=%v", before, state.Y, r.FramePending())
-			}
-			r.Move(x, y+30)
-			if state.Y <= before {
-				t.Fatal("canceling native motion also canceled the real capture")
-			}
-			r.CancelPress()
-			if state.Y != before {
-				t.Fatal("canceled hold did not restore its accepted native offset")
-			}
-		})
-	}
-}
-
-func TestScrollAreaBothAxesLeaveSourceCornerAndPreserveNativeLogicalX(t *testing.T) {
-	for _, rtl := range []bool{false, true} {
-		t.Run(fmt.Sprint(rtl), func(t *testing.T) {
-			state := ui.ScrollState{}
-			r := scrollPointerTester(&state, ui.Horizontal|ui.Vertical, rtl, nil)
-			view := scrollAccess(t, r, ui.RoleScroll, "Pointer region").Bounds
-			vertical := scrollAccess(t, r, ui.RoleSlider, "Vertical scroll bar").Bounds
-			horizontal := scrollAccess(t, r, ui.RoleSlider, "Horizontal scroll bar").Bounds
-			if vertical.W != 10 || vertical.H != view.H-10 || horizontal.H != 10 || horizontal.W != view.W-10 {
-				t.Fatalf("source corner dimensions: view=%+v v=%+v h=%+v", view, vertical, horizontal)
-			}
-			if !rtl && (vertical.X != view.X+view.W-10 || horizontal.X != view.X) || rtl && (vertical.X != view.X || horizontal.X != view.X+10) {
-				t.Fatal("RTL source bars/corner were not mirrored")
-			}
-			state.X, state.Y = math.MaxFloat32, math.MaxFloat32
-			r.Frame()
-			if state.X != 400 || state.Y != 480 {
-				t.Fatalf("corner changed the actual native viewport range: %+v", state)
-			}
-			x, _ := scrollThumbCenter(t, r, horizontal, true)
-			if !rtl && x < horizontal.X+horizontal.W/2 || rtl && x > horizontal.X+horizontal.W/2 {
-				t.Fatal("logical end did not put the actual thumb at the correct side")
-			}
-			r.Scroll(horizontal.X+horizontal.W/2, horizontal.Y+5, 50, 0)
-			want := float32(400)
-			if rtl {
-				want = 350
-			}
-			if state.X != want || state.Y != 480 {
-				t.Fatalf("wheel over horizontal source track used the wrong native axis/direction: %+v", state)
-			}
-		})
-	}
-}
-
-func TestScrollAreaStyleVisibilityChangesPreserveEditorAndRealScrollState(t *testing.T) {
-	state := ui.ScrollState{}
-	native, visibility, initialized := false, ScrollbarsAlways, 0
-	value := "draft"
-	r := ui.NewTester(func(c *ui.Context) {
-		theme.Apply(c)
-		ui.Column(c).Padding(20).Children(func() {
-			ScrollAreaWith(c, ScrollAreaProps{State: &state, Label: "Stateful region", NativeScrollbars: native, Scrollbars: visibility}, func(child *ui.Context) {
-				owner := ui.Column(child)
-				ui.Local(owner, "lifecycle", func() bool { initialized++; return true })
-				owner.Children(func() {
-					control.Input(child, &value, control.InputProps{Label: "Persistent editor"})
-					ui.Box(child).Height(600).Shrink(0)
-				})
-			}).Root.Size(240, 140)
-		})
-	}, 400, 300)
-	displayClick(t, r, "Persistent editor")
-	r.Type("!")
-	for _, nextNative := range []bool{true, false} {
-		for _, nextVisibility := range []ScrollbarVisibility{ScrollbarsAuto, ScrollbarsHidden, ScrollbarsAlways} {
-			native, visibility = nextNative, nextVisibility
-			r.Frame()
-			if initialized != 1 || !r.Focused("Persistent editor") || value != "!draft" && value != "draft!" {
-				t.Fatal("presentation change replaced the native editor or focus")
-			}
-			view := scrollAccess(t, r, ui.RoleScroll, "Stateful region").Bounds
-			r.Scroll(view.X+30, view.Y+60, 0, 40)
-			if state.Y <= 0 {
-				t.Fatal("hidden/native indicator mode disabled actual scrolling")
-			}
-			state.Y = 0
-			r.Frame()
-		}
-	}
-	r.Advance(time.Second)
-	if r.FramePending() {
-		t.Fatal("indicator switches retained idle animation frames")
-	}
-}
-
-func TestScrollAreaAutoBarsKeepCaptureThenHideWithoutNewKeyboardStops(t *testing.T) {
-	state := ui.ScrollState{}
-	r := ui.NewTester(func(c *ui.Context) {
-		tokens := theme.Light()
-		tokens.Border = ui.RGB(230, 30, 70)
-		theme.Scope(c, tokens).Fill().Children(func() {
-			ui.Column(c).Padding(20).Children(func() {
-				ScrollAreaWith(c, ScrollAreaProps{State: &state, Label: "Auto region", Scrollbars: ScrollbarsAuto}, func(child *ui.Context) {
-					ui.Box(child).FillWidth().Height(600).Shrink(0).Background(ui.RGB(20, 80, 180))
-				}).Root.Size(200, 120)
-			})
-		})
-	}, 500, 400)
-	view := scrollAccess(t, r, ui.RoleScroll, "Auto region").Bounds
-	if got := r.Image().RGBAAt(int(view.X+195), int(view.Y+8)); got.R > 200 && got.G < 80 {
-		t.Fatal("auto thumb showed before hover")
-	}
-	r.Move(view.X+100, view.Y+60)
-	x, y := scrollThumbCenter(t, r, ui.Rect{X: view.X + view.W - 10, Y: view.Y, W: 10, H: view.H}, false)
-	r.Press(x, y)
-	r.Move(x+150, y+30)
-	if state.Y <= 0 {
-		t.Fatal("auto hiding interrupted captured pointer movement")
-	}
-	r.Release(x+150, y+30)
-	if got := r.Image().RGBAAt(int(view.X+195), int(view.Y+8)); got.R > 200 && got.G < 80 {
-		t.Fatal("auto bar retained its hover after capture outside the region")
-	}
-	r.Advance(time.Second)
-	if r.FramePending() {
-		t.Fatal("auto bars scheduled idle frames")
-	}
-}
-
-func TestScrollAreaQueuedScrollbarKeysAccumulateBeforeNextNativeLayout(t *testing.T) {
-	state := ui.ScrollState{}
-	var handler *scrollBarRuntime
-	r := ui.NewTester(func(c *ui.Context) {
-		theme.Apply(c)
-		ui.Column(c).Padding(20).Children(func() {
-			parts := ScrollAreaWith(c, ScrollAreaProps{State: &state, FocusableScrollbars: true}, func(child *ui.Context) {
-				ui.Box(child).FillWidth().Height(600).Shrink(0)
-			})
-			parts.Root.Size(200, 120)
-			handler = ui.Local(parts.VerticalBar, scrollBarRuntimeKey{}, func() scrollBarRuntime { return scrollBarRuntime{} })
-		})
-	}, 400, 300)
-	for _, key := range []ui.Key{ui.KeyDown, ui.KeyDown, ui.KeyUp} {
-		if !handler.input(ui.InputEvent{Kind: ui.InputKeyDown, Key: key}) {
-			t.Fatal("queued native adjustment key was not handled")
-		}
-	}
-	if state.Y != 40 {
-		t.Fatalf("queued keys lost cumulative native request: %g", state.Y)
-	}
-	r.Frame()
-	if state.Y != 40 || state.Scrolling() || scrollAccess(t, r, ui.RoleSlider, "Vertical scroll bar").Now != 40 {
-		t.Fatal("a native motion cancel overwrote the final coalesced keyboard target")
-	}
-}
-
-func TestScrollAreaInvalidBarParametersAndTinyTracksRemainFinite(t *testing.T) {
-	for _, thickness := range []float32{float32(math.NaN()), float32(math.Inf(1)), -1, 3, 0} {
-		state := ui.ScrollState{}
-		value := ""
-		r := ui.NewTester(func(c *ui.Context) {
-			theme.Apply(c)
-			ui.Column(c).Padding(20).Children(func() {
-				ScrollAreaWith(c, ScrollAreaProps{State: &state, Thickness: thickness, FocusableScrollbars: true}, func(child *ui.Context) {
-					control.Input(child, &value, control.InputProps{Label: "Usable native editor"})
-					ui.Box(child).Height(500).Shrink(0)
-				}).Root.Size(200, 60)
-			})
-		}, 400, 250)
-		bar := scrollAccess(t, r, ui.RoleSlider, "Vertical scroll bar")
-		if bar.Bounds.W != 10 || math.IsNaN(bar.Max) || math.IsInf(bar.Max, 0) || thickness != 0 && (!bar.Disabled || !bar.Invalid) {
-			t.Fatalf("invalid parameter leaked nonfinite geometry/range: thickness=%g bar=%+v", thickness, bar)
-		}
-		displayClick(t, r, "Usable native editor")
-		r.Type("Native")
-		if value != "Native" {
-			t.Fatal("invalid scrollbar parameters disabled the actual editor")
-		}
-	}
-	state := ui.ScrollState{}
-	r := ui.NewTester(func(c *ui.Context) {
-		ui.Column(c).Padding(20).Children(func() {
-			ScrollAreaWith(c, ScrollAreaProps{State: &state, FocusableScrollbars: true}, func(child *ui.Context) {
-				ui.Box(child).Height(600).Shrink(0)
-			}).Root.Size(80, 8)
-		})
-	}, 200, 100)
-	bar := scrollAccess(t, r, ui.RoleSlider, "Vertical scroll bar")
-	r.Press(bar.Bounds.X+5, bar.Bounds.Y+4)
-	r.Move(bar.Bounds.X+5, bar.Bounds.Y+100)
-	r.Release(bar.Bounds.X+5, bar.Bounds.Y+100)
-	if state.Y != 0 || math.IsNaN(float64(state.Y)) || math.IsInf(float64(state.Y), 0) {
-		t.Fatal("a track shorter than the source thumb floor divided by zero")
-	}
 }
 
 func TestScrollAreaCallbackOverrideUsesNextAcceptedNativeOffset(t *testing.T) {
@@ -602,151 +245,6 @@ func TestScrollAreaCallbackOverrideUsesNextAcceptedNativeOffset(t *testing.T) {
 	}
 }
 
-func TestScrollAreaReconfigurationNeverReplaysOldCapturedOffset(t *testing.T) {
-	for _, change := range []string{"native", "hidden", "axis", "state", "direction"} {
-		t.Run(change, func(t *testing.T) {
-			first, replacement := ui.ScrollState{Y: 100}, ui.ScrollState{Y: 60}
-			state := &first
-			native, rtl, visibility, axis := false, false, ScrollbarsAlways, ui.Vertical
-			r := ui.NewTester(func(c *ui.Context) {
-				tokens := theme.Light()
-				tokens.Border = ui.RGB(230, 30, 70)
-				theme.Scope(c, tokens).Fill().Children(func() {
-					root := ui.Column(c).Padding(20)
-					if rtl {
-						root.Direction(ui.RightToLeft)
-					}
-					root.Children(func() {
-						ScrollAreaWith(c, ScrollAreaProps{State: state, Label: "Reconfigured region", Orientation: axis, NativeScrollbars: native, Scrollbars: visibility, FocusableScrollbars: true}, func(child *ui.Context) {
-							ui.Box(child).Size(600, 600).Shrink(0).Background(ui.RGB(20, 80, 180))
-						}).Root.Size(200, 120)
-					})
-				})
-			}, 700, 400)
-			bar := scrollAccess(t, r, ui.RoleSlider, "Vertical scroll bar")
-			x, y := scrollThumbCenter(t, r, bar.Bounds, false)
-			r.Press(x, y)
-			r.Move(x, y+20)
-			accepted := state.Y
-			switch change {
-			case "native":
-				native = true
-			case "hidden":
-				visibility = ScrollbarsHidden
-			case "axis":
-				axis, accepted = ui.Horizontal, 0
-			case "state":
-				state, accepted = &replacement, 60
-			case "direction":
-				rtl = true
-			}
-			r.Frame()
-			r.Move(x+20, y+80)
-			r.Release(x+20, y+80)
-			if state.Y != accepted {
-				t.Fatalf("%s replayed old capture after reconfiguration: offset=%g accepted=%g", change, state.Y, accepted)
-			}
-		})
-	}
-}
-
-func TestScrollAreaCornerThumbUsesUsableTrackForNativeDragRatio(t *testing.T) {
-	for _, horizontal := range []bool{false, true} {
-		for _, rtl := range []bool{false, true} {
-			t.Run(fmt.Sprintf("horizontal=%v/rtl=%v", horizontal, rtl), func(t *testing.T) {
-				state := ui.ScrollState{}
-				r := scrollPointerTester(&state, ui.Horizontal|ui.Vertical, rtl, nil)
-				name, viewportSize, maximum := "Vertical scroll bar", float32(120), state.MaxY
-				if horizontal {
-					name, viewportSize, maximum = "Horizontal scroll bar", 200, state.MaxX
-				}
-				bar := scrollAccess(t, r, ui.RoleSlider, name).Bounds
-				track := bar.H
-				if horizontal {
-					track = bar.W
-				}
-				// The native physical travel excludes both one-DIP track paddings.
-				// Moving half that travel must show half of the scrollable content.
-				usable := track - 2
-				thumb := usable * viewportSize / (viewportSize + maximum)
-				distance := (usable - thumb) / 2
-				x, y := scrollThumbCenter(t, r, bar, horizontal)
-				r.Press(x, y)
-				if horizontal {
-					if rtl {
-						distance = -distance
-					}
-					r.Move(x+distance, y)
-				} else {
-					r.Move(x, y+distance)
-				}
-				value := state.Y
-				if horizontal {
-					value = state.X
-				}
-				if math.Abs(float64(value-maximum/2)) > .001 {
-					t.Fatalf("corner track mapped physical half-travel to %g instead of %g", value, maximum/2)
-				}
-				r.CancelPress()
-			})
-		}
-	}
-}
-
-func TestScrollAreaAutoBarRemainsVisibleForKeyboardFocusInsideRegion(t *testing.T) {
-	state := ui.ScrollState{}
-	r := ui.NewTester(func(c *ui.Context) {
-		theme.Apply(c)
-		ui.Column(c).Padding(20).Children(func() {
-			ScrollAreaWith(c, ScrollAreaProps{State: &state, Label: "Auto keyboard region", Scrollbars: ScrollbarsAuto, FocusableScrollbars: true}, func(child *ui.Context) {
-				ui.Box(child).FillWidth().Height(600).Shrink(0)
-			}).Root.Size(200, 120)
-		})
-	}, 500, 400)
-	r.Key(0, ui.KeyTab)
-	if !r.Focused("Auto keyboard region") {
-		t.Fatal("source viewport was not keyboard reachable")
-	}
-	r.Key(0, ui.KeyTab)
-	if !r.Focused("Vertical scroll bar") {
-		t.Fatal("opt-in scrollbar lost focus when the pointer was outside")
-	}
-	if _, ok := r.AccessByRole(ui.RoleSlider, "Vertical scroll bar"); !ok {
-		t.Fatal("auto visibility removed the focused native adjustment target")
-	}
-	r.Key(0, ui.KeyDown)
-	if state.Y != 40 {
-		t.Fatal("focused auto scrollbar stopped accepting native adjustment keys")
-	}
-}
-
-func TestScrollAreaSwitchFromFocusedCustomBarRestoresNativeViewport(t *testing.T) {
-	state := ui.ScrollState{}
-	native := false
-	r := ui.NewTester(func(c *ui.Context) {
-		theme.Apply(c)
-		ui.Column(c).Padding(20).Children(func() {
-			ScrollAreaWith(c, ScrollAreaProps{State: &state, Label: "Restored region", NativeScrollbars: native, FocusableScrollbars: true}, func(child *ui.Context) {
-				ui.Box(child).Height(600).Shrink(0)
-			}).Root.Size(200, 120)
-		})
-	}, 400, 300)
-	r.Key(0, ui.KeyTab)
-	r.Key(0, ui.KeyTab)
-	if !r.Focused("Vertical scroll bar") {
-		t.Fatal("custom native adjustment target was not focused")
-	}
-	native = true
-	r.Frame()
-	if !r.Focused("Restored region") {
-		t.Fatal("presentation switch discarded keyboard navigation focus")
-	}
-	r.Key(0, ui.KeyDown)
-	if state.Y != 40 {
-		t.Fatal("restored native viewport did not receive the next navigation key")
-	}
-}
-
 func TestScrollAreaInvalidOrientationMarksRealViewportWithoutDisablingContent(t *testing.T) {
 	state, value := ui.ScrollState{}, ""
 	r := ui.NewTester(func(c *ui.Context) {
@@ -766,5 +264,142 @@ func TestScrollAreaInvalidOrientationMarksRealViewportWithoutDisablingContent(t 
 	r.Type("still editable")
 	if value != "still editable" {
 		t.Fatal("invalid scroll configuration disabled independent content")
+	}
+}
+
+func TestScrollAreaMatchesMyGoScrollbarPixelsAndInput(t *testing.T) {
+	for _, dark := range []bool{false, true} {
+		for _, rtl := range []bool{false, true} {
+			for _, axis := range []ui.Orientation{ui.Vertical, ui.Horizontal, ui.Horizontal | ui.Vertical} {
+				for _, visibility := range []ScrollbarVisibility{ScrollbarsAuto, ScrollbarsAlways, ScrollbarsHidden} {
+					t.Run(fmt.Sprintf("dark=%v/rtl=%v/axis=%d/visibility=%d", dark, rtl, axis, visibility), func(t *testing.T) {
+						var states [2]ui.ScrollState
+						render := func(reference bool, state *ui.ScrollState) *ui.Tester {
+							return ui.NewTester(func(c *ui.Context) {
+								tokens := theme.Light()
+								if dark {
+									tokens = theme.Dark()
+								}
+								native := tokens.Theme()
+								native.Scrollbar, native.ScrollbarWidth = ui.RGB(210, 20, 120), 8
+								ui.Themed(c, native).Fill().Background(native.Background).Children(func() {
+									root := ui.Column(c).Padding(20)
+									if rtl {
+										root.Direction(ui.RightToLeft)
+									}
+									root.Children(func() {
+										content := func(c *ui.Context) { ui.Box(c).Size(600, 500).Shrink(0).Background(ui.RGB(20, 80, 180)) }
+										if !reference {
+											ScrollAreaWith(c, ScrollAreaProps{Orientation: axis, State: state, Scrollbars: visibility, Label: "Parity viewport"}, content).Root.Size(200, 120)
+											return
+										}
+										ui.Box(c).Size(200, 120).Clip().Children(func() {
+											var viewport ui.Element
+											switch axis {
+											case ui.Horizontal:
+												viewport = ui.ScrollHorizontal(c)
+											case ui.Horizontal | ui.Vertical:
+												viewport = ui.ScrollBoth(c)
+											default:
+												viewport = ui.Scroll(c)
+											}
+											viewport.Fill().MinWidth(0).MinHeight(0).TrackScroll(state).FocusRing(false).Label("Parity viewport").
+												Scrollbars(visibility != ScrollbarsHidden).KeepScrollbars(visibility == ScrollbarsAlways).
+												Children(func() { content(c) })
+										})
+									})
+								})
+							}, 300, 200)
+						}
+						actual, reference := render(false, &states[0]), render(true, &states[1])
+						view := scrollAccess(t, actual, ui.RoleScroll, "Parity viewport").Bounds
+						hoverX, hoverY := view.X+view.W/2, view.Y+view.H/2
+						check := func(stage string) {
+							t.Helper()
+							if states[0].X != states[1].X || states[0].Y != states[1].Y || states[0].MaxX != states[1].MaxX || states[0].MaxY != states[1].MaxY || !bytes.Equal(actual.Image().Pix, reference.Image().Pix) {
+								t.Fatalf("%s differs from ui.Scroll: actual=%+v reference=%+v", stage, states[0], states[1])
+							}
+						}
+						check("initial")
+						actual.Move(hoverX, hoverY)
+						reference.Move(hoverX, hoverY)
+						check("hover")
+						dx := float32(70)
+						if rtl {
+							dx = -dx
+						}
+						actual.Scroll(hoverX, hoverY, dx, 50)
+						reference.Scroll(hoverX, hoverY, dx, 50)
+						check("wheel")
+						if visibility != ScrollbarsHidden {
+							for i := range states {
+								states[i].X, states[i].Y = 0, 0
+							}
+							actual.Frame()
+							reference.Frame()
+							x, y := view.X+view.W-6, view.Y+8
+							if rtl {
+								x = view.X + 6
+							}
+							if axis == ui.Horizontal {
+								x, y = view.X+10, view.Y+view.H-6
+								if rtl {
+									x = view.X + view.W - 10
+								}
+							}
+							actual.Press(x, y)
+							reference.Press(x, y)
+							check("press")
+							actual.Move(x+dx, y+30)
+							reference.Move(x+dx, y+30)
+							check("drag")
+							if states[0].X == 0 && states[0].Y == 0 {
+								t.Fatal("native thumb did not move the content")
+							}
+							actual.Release(x+dx, y+30)
+							reference.Release(x+dx, y+30)
+							check("release")
+						}
+					})
+				}
+			}
+		}
+	}
+}
+
+func TestScrollAreaVisibilityChangesPreserveEditorAndScrollState(t *testing.T) {
+	var state ui.ScrollState
+	visibility, initialized := ScrollbarsAuto, 0
+	value := "draft"
+	r := ui.NewTester(func(c *ui.Context) {
+		theme.Apply(c)
+		ScrollAreaWith(c, ScrollAreaProps{State: &state, Label: "Stateful region", Scrollbars: visibility}, func(child *ui.Context) {
+			owner := ui.Column(child)
+			ui.Local(owner, "lifecycle", func() bool { initialized++; return true })
+			owner.Children(func() {
+				control.Input(child, &value, control.InputProps{Label: "Persistent editor"})
+				ui.Box(child).Height(600).Shrink(0)
+			})
+		}).Root.Size(240, 140)
+	}, 400, 300)
+	displayClick(t, r, "Persistent editor")
+	r.Key(ui.Cmd, ui.KeyA)
+	r.Type("edited")
+	for _, next := range []ScrollbarVisibility{ScrollbarsHidden, ScrollbarsAlways, ScrollbarsAuto} {
+		visibility = next
+		r.Frame()
+		if initialized != 1 || !r.Focused("Persistent editor") || value != "edited" {
+			t.Fatal("visibility change replaced the editor or lost focus")
+		}
+		r.Scroll(30, 60, 0, 40)
+		if state.Y <= 0 {
+			t.Fatal("visibility policy disabled native scrolling")
+		}
+		state.Y = 0
+		r.Frame()
+	}
+	r.Advance(time.Second)
+	if r.FramePending() {
+		t.Fatal("settled native viewport retained animation frames")
 	}
 }

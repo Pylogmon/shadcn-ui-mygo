@@ -35,7 +35,7 @@ func TestMessageScrollerCompoundNativeFontInheritancePixelsAndVegaGap(t *testing
 							}
 							if reference {
 								ui.Column(c).Fill().MinWidth(0).MinHeight(0).Clip().Children(func() {
-									ui.Scroll(c).Fill().MinWidth(0).MinHeight(0).Scrollbars(false).PaddingEnd(9).Children(func() {
+									ui.Scroll(c).Fill().MinWidth(0).MinHeight(0).Children(func() {
 										ui.Column(c).FillWidth().MinWidth(0).MinHeightPercent(100).Shrink(0).Gap(32).Children(func() { items(c) })
 									})
 								})
@@ -62,14 +62,16 @@ func TestMessageScrollerCompoundNativeFontInheritancePixelsAndVegaGap(t *testing
 	}
 }
 
-func TestMessageScrollerCompoundSourceThumbTokenAndAutoTransparencyPixels(t *testing.T) {
+func TestMessageScrollerCompoundUsesMyGoScrollbarThemeAndVisibility(t *testing.T) {
 	var s MessageScrollerState
 	zero := float32(0)
 	tokens := theme.Light()
-	tokens.Border = ui.RGB(190, 20, 130)
+	tokens.Border = ui.RGB(20, 190, 130)
+	native := tokens.Theme()
+	native.Scrollbar = ui.RGB(190, 20, 130)
 	tokens.Background = ui.RGB(250, 245, 240)
 	r := ui.NewTesterWith(func(c *ui.Context) {
-		theme.Scope(c, tokens).Fill().Background(tokens.Background).Children(func() {
+		ui.Themed(c, native).Fill().Background(tokens.Background).Children(func() {
 			MessageScrollerWith(c, &s, MessageScrollerProviderProps{DefaultScrollPosition: MessageScrollerStart}, func(c *ui.Context) {
 				MessageScrollerViewport(c, MessageScrollerViewportProps{}, func(c *ui.Context) {
 					MessageScrollerContent(c, MessageScrollerContentProps{Gap: &zero}, func(c *ui.Context) {
@@ -81,26 +83,30 @@ func TestMessageScrollerCompoundSourceThumbTokenAndAutoTransparencyPixels(t *tes
 			})
 		})
 	}, 320, 200, ui.TesterOptions{Preferences: ui.Preferences{ReduceMotion: true}})
+	if got := r.Image().RGBAAt(315, 20); got != (color.RGBA{250, 245, 240, 255}) {
+		t.Fatalf("native auto scrollbar showed before hover: %v", got)
+	}
+	r.Move(100, 50)
 	if got := r.Image().RGBAAt(315, 20); got != (color.RGBA{190, 20, 130, 255}) {
-		t.Fatalf("source Border thumb=%v", got)
+		t.Fatalf("native theme scrollbar=%v", got)
 	}
 	s.ScrollToEnd()
 	r.Frame()
 	if !s.AutoScrolling() {
-		t.Fatal("auto transparency flag absent")
+		t.Fatal("automatic scroll status absent")
 	}
-	if got := r.Image().RGBAAt(315, 170); got != (color.RGBA{250, 245, 240, 255}) {
-		t.Fatalf("auto thumb did not become transparent: %v", got)
+	if got := r.Image().RGBAAt(315, 170); got != (color.RGBA{190, 20, 130, 255}) {
+		t.Fatalf("automatic scrolling changed native scrollbar visibility: %v", got)
 	}
 	r.Advance(181 * time.Millisecond)
 	r.Frame()
 	if got := r.Image().RGBAAt(315, 170); got != (color.RGBA{190, 20, 130, 255}) {
-		t.Fatalf("settled thumb token=%v", got)
+		t.Fatalf("settled native scrollbar=%v", got)
 	}
 	scrollerIdle(t, r)
 }
 
-func TestMessageScrollerCompoundFluentRTLRetainsLogicalGutterAndBar(t *testing.T) {
+func TestMessageScrollerCompoundFluentRTLUsesNativeOverlayWithoutGutter(t *testing.T) {
 	var s MessageScrollerState
 	zero := float32(0)
 	r := ui.NewTesterWith(func(c *ui.Context) {
@@ -114,12 +120,9 @@ func TestMessageScrollerCompoundFluentRTLRetainsLogicalGutterAndBar(t *testing.T
 			})
 		}).Direction(ui.RightToLeft)
 	}, 320, 200, ui.TesterOptions{Preferences: ui.Preferences{ReduceMotion: true}})
-	if s.bar.X != 0 {
-		t.Fatalf("fluent RTL bar=%v", s.bar)
-	}
 	first, _ := r.Find("0")
-	if first.X != 9 || first.W != 311 {
-		t.Fatalf("fluent RTL stable gutter=%v", first)
+	if first.X != 0 || first.W != 320 {
+		t.Fatalf("native overlay reserved a custom RTL gutter=%v", first)
 	}
 	scrollerIdle(t, r)
 }

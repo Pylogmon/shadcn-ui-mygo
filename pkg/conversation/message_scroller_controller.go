@@ -128,9 +128,11 @@ func (s *MessageScrollerState) reconcile() {
 	threshold := scrollerValue(s.props.ScrollEdgeThreshold, 8)
 	rawEnd := bottom-s.Scroll.Y-s.height > threshold
 	scrolledUp := s.Scroll.Y < s.lastY-.5
-	if s.props.AutoScroll && !s.barPressed && !rawEnd && s.spacer == 0 && s.mode != MessageScrollerAnchored && s.mode != MessageScrollerJumping {
+	if s.props.AutoScroll && !rawEnd && s.spacer == 0 && s.mode != MessageScrollerAnchored && s.mode != MessageScrollerJumping {
 		s.mode = MessageScrollerFollowing
-	} else if s.mode == MessageScrollerFollowing && rawEnd && scrolledUp && !s.AutoScrolling() {
+	} else if s.mode == MessageScrollerFollowing && rawEnd && scrolledUp && (!s.AutoScrolling() || !s.Scroll.Scrolling()) {
+		// A native thumb drag cancels ScrollTo before reporting its offset,
+		// even while the previous automatic-scroll status is still active.
 		s.userIntent()
 	}
 	command := false

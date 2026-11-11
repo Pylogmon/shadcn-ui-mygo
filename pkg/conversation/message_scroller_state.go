@@ -129,8 +129,6 @@ type MessageScrollerState struct {
 	handled                                       map[*messageScrollerItem]bool
 	lastHeight, lastBottom                        float32
 	lastAcceptedY, lastMaxY                       float32
-	viewport                                      ui.Rect
-	root                                          ui.Rect
 	content                                       ui.Rect
 	owner                                         *messageScrollerOwner
 	move                                          *float32
@@ -140,8 +138,6 @@ type MessageScrollerState struct {
 	viewportMounted                               bool
 	viewportOwner                                 *messageScrollerViewportOwner
 	contentOwner                                  *messageScrollerContentOwner
-	bar                                           ui.Rect
-	barPressed                                    bool
 	invalid                                       bool
 	autoChanged                                   bool
 }

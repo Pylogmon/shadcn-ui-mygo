@@ -111,7 +111,7 @@ type State struct {
 	readAccess, writeAccess, quietNotifications                                    bool
 	bioResize                                                                      control.TextareaResizeState
 	loadingStatic, codeWrap, codeCompact                                           bool
-	codeDiff, articleDetails, nativeScrollbars                                     bool
+	codeDiff, articleDetails                                                       bool
 	codeLanguage, codeCopied, layoutDraft                                          string
 	codeExample                                                                    display.CodeBlockState
 	articleScroll                                                                  ui.ScrollState

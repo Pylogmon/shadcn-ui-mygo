@@ -9,7 +9,7 @@ import (
 	"github.com/egoist/mygo/ui"
 )
 
-func TestMessageScrollerCompoundSourceBarDragCancelAndAutoTransparentInput(t *testing.T) {
+func TestMessageScrollerCompoundNativeScrollbarDragAndFollowInterruption(t *testing.T) {
 	for _, rtl := range []bool{false, true} {
 		t.Run(fmt.Sprint(rtl), func(t *testing.T) {
 			var s MessageScrollerState
@@ -19,45 +19,53 @@ func TestMessageScrollerCompoundSourceBarDragCancelAndAutoTransparentInput(t *te
 			if rtl {
 				r.SetDirection(ui.RightToLeft)
 			}
-			wantX := float32(311)
+			x := float32(314)
 			if rtl {
-				wantX = 0
+				x = 6
 			}
-			if s.bar.X != wantX || s.bar.H != 200 || s.bar.W != 9 {
-				t.Fatalf("stable thin bar %v", s.bar)
-			}
-			// The native viewport owns actual geometry; the source thumb has no
-			// independent fake position. Drag its current first thumb by 40DIP.
-			x := s.bar.X + 4
+			r.Move(x, 20)
+			// A native thumb press must supersede an older queued command.
+			s.ScrollToEnd()
 			r.Press(x, 20)
+			if s.Scroll.Y != 0 || s.Mode() != MessageScrollerFree {
+				t.Fatalf("queued command overrode native thumb intent: y=%v mode=%v", s.Scroll.Y, s.Mode())
+			}
 			r.Move(x, 60)
-			want := float32(40 * 440 / (198 - 198*200/640.0))
+			bar := ui.Scrollbar{Box: ui.Rect{W: 320, H: 200}, View: 200, Content: 640}
+			start, _ := bar.Thumb()
+			want := bar.OffsetAt(start + 40)
 			if math.Abs(float64(s.Scroll.Y-want)) > .02 || s.Mode() != MessageScrollerFree {
-				t.Fatalf("bar drag y%v want%v mode%v", s.Scroll.Y, want, s.Mode())
+				t.Fatalf("native drag y=%v want=%v mode=%v", s.Scroll.Y, want, s.Mode())
 			}
 			r.CancelPress()
-			if s.Scroll.Y != 0 || s.Scroll.Scrolling() {
-				t.Fatalf("cancel y%v moving%v", s.Scroll.Y, s.Scroll.Scrolling())
+			if math.Abs(float64(s.Scroll.Y-want)) > .02 || s.Scroll.Scrolling() {
+				t.Fatalf("cancel did not retain MyGo's accepted offset: y=%v moving=%v", s.Scroll.Y, s.Scroll.Scrolling())
 			}
 			s.ScrollToEnd()
 			r.Frame()
 			r.Scroll(x, 100, 0, -50)
-			if s.Scroll.Y != 390 || s.Mode() != MessageScrollerFree || !s.AutoScrolling() {
-				t.Fatalf("transparent bar wheel y%v mode%v auto%v", s.Scroll.Y, s.Mode(), s.AutoScrolling())
+			if s.Scroll.Y != 390 || s.Mode() != MessageScrollerFree {
+				t.Fatalf("native track wheel y=%v mode=%v", s.Scroll.Y, s.Mode())
 			}
-			s.ScrollToEnd(MessageScrollerScrollOptions{Smooth: true})
 			r.SetPreferences(ui.Preferences{})
+			s.ScrollToEnd(MessageScrollerScrollOptions{Smooth: true})
 			r.Frame()
-			if !s.AutoScrolling() {
-				t.Fatal("missing source auto flag")
-			}
-			// A transparent source thumb remains an actual input target. This
-			// press must cancel the native glide and release the follow mode.
-			r.Press(x, 80)
-			r.Move(x, 90)
-			r.Release(x, 90)
+			r.Advance(30 * time.Millisecond)
+			bar.Offset = s.Scroll.Y
+			start, length := bar.Thumb()
+			y := start + length/2
+			r.Move(x, y)
+			r.Press(x, y)
+			r.Move(x, y-20)
+			r.Release(x, y-20)
 			if s.Scroll.Scrolling() || s.Mode() != MessageScrollerFree {
-				t.Fatalf("transparent bar did not interrupt glide mode%v moving%v", s.Mode(), s.Scroll.Scrolling())
+				t.Fatalf("native drag did not interrupt glide: mode=%v moving=%v", s.Mode(), s.Scroll.Scrolling())
+			}
+			accepted := s.Scroll.Y
+			messages[len(messages)-1].height += 60
+			r.Frame()
+			if s.Scroll.Y != accepted || s.Mode() != MessageScrollerFree {
+				t.Fatal("streaming resumed following after manual native scrolling")
 			}
 			scrollerIdle(t, r)
 		})

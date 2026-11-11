@@ -122,8 +122,7 @@ func (s *State) loadingPreview(c *ui.Context) {
 
 func (s *State) scrollPreview(c *ui.Context) {
 	display.Card(c, func() {
-		s.cardHeader(c, "A window onto your content", "Native wheel and keyboard scrolling with your choice of scrollbar style.")
-		control.Switch(c, &s.nativeScrollbars, control.SwitchProps{Label: tr(c, "Use MyGo scrollbars"), Size: control.Small})
+		s.cardHeader(c, "A window onto your content", "Native wheel and keyboard scrolling with MyGo scrollbars.")
 		ui.Row(c).Gap(8).Children(func() {
 			start := control.Button(c, tr(c, "Start"), control.ButtonProps{Variant: control.Outline, Size: control.Small, Label: tr(c, "Scroll to start")}).Clicked()
 			end := control.Button(c, tr(c, "End"), control.ButtonProps{Variant: control.Outline, Size: control.Small, Label: tr(c, "Scroll to end")}).Clicked()
@@ -136,7 +135,7 @@ func (s *State) scrollPreview(c *ui.Context) {
 		})
 		columns(c, func() {
 			t := theme.TokensOf(c)
-			display.ScrollAreaWith(c, display.ScrollAreaProps{State: &s.articleScroll, Label: tr(c, "Preview notes"), NativeScrollbars: s.nativeScrollbars}, func(child *ui.Context) {
+			display.ScrollAreaWith(c, display.ScrollAreaProps{State: &s.articleScroll, Label: tr(c, "Preview notes")}, func(child *ui.Context) {
 				ui.Column(child).FillWidth().Padding(16).Gap(12).Children(func() {
 					for i := 1; i <= 20; i++ {
 						ui.Text(child, fmt.Sprintf(tr(child, "Note %02d · Make room for your next idea."), i)).FontSize(14)

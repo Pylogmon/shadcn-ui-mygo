@@ -5,9 +5,7 @@ import (
 	"time"
 
 	"github.com/egoist/mygo/ui"
-	"github.com/pylogmon/shadcn-ui-mygo/pkg/display"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/motion"
-	"github.com/pylogmon/shadcn-ui-mygo/pkg/theme"
 )
 
 type messageScrollerScopeKey struct{}
@@ -99,7 +97,6 @@ func MessageScrollerRoot(c *ui.Context, content func(*ui.Context)) ui.Element {
 	}
 	s.owner = owner
 	s.mounted = true
-	s.root = root.LayoutBounds()
 	root.Children(func() {
 		if content != nil {
 			content(c)
@@ -116,25 +113,15 @@ func MessageScrollerViewport(c *ui.Context, p MessageScrollerViewportProps, cont
 		label = "Messages"
 	}
 	s.preserve = p.PreserveScrollOnPrepend == nil || *p.PreserveScrollOnPrepend
-	viewport := ui.Scroll(c).Fill().MinWidth(0).MinHeight(0).TrackScroll(&s.Scroll).Role(ui.RoleRegion).Label(label).Focusable().FocusRing(false).Scrollbars(false)
+	viewport := ui.Scroll(c).Fill().MinWidth(0).MinHeight(0).TrackScroll(&s.Scroll).Role(ui.RoleRegion).Label(label).Focusable().FocusRing(false)
 	owner := ui.Local(viewport, messageScrollerViewportOwnerKey{}, func() messageScrollerViewportOwner { return messageScrollerViewportOwner{} })
 	if owner.state != s {
 		owner.Close()
 		owner.state = s
 	}
 	s.viewportOwner = owner
-	// CSS "thin" leaves dimensions to the UA. Map its thumb to the current
-	// MyGo backend's thin width and reserve the matching track at logical end.
-	// This source-mapped bar controls Scroll directly and keeps its hit target
-	// when programmatic scrolling makes the thumb transparent.
-	thumbWidth := c.Theme().ScrollbarWidth
-	if !scrollerFinite(thumbWidth) || thumbWidth <= 0 {
-		thumbWidth = 6
-	}
-	trackWidth := max(float32(4), thumbWidth+3)
-	viewport.PaddingEnd(trackWidth)
-	s.viewport = viewport.LayoutBounds()
-	s.width, s.height = s.viewport.W, s.viewport.H
+	bounds := viewport.LayoutBounds()
+	s.width, s.height = bounds.W, bounds.H
 	if s.pending {
 		viewport.Opacity(0).IgnoreInput(true).AccessHidden(true)
 	}
@@ -160,13 +147,12 @@ func MessageScrollerViewport(c *ui.Context, p MessageScrollerViewportProps, cont
 		return p.ContainScrollAtEdges && ev.Kind == ui.InputScroll && (ev.DY < 0 && s.Scroll.Y <= 0 || ev.DY > 0 && s.Scroll.Y >= s.Scroll.MaxY)
 	})
 	viewport.ObserveInput(func(ev ui.InputEvent) {
-		if ev.Kind == ui.InputKeyDown && messageScrollerScrollKey(ev.Key) {
+		// ObserveInput runs before MyGo handles its overlay scrollbar press.
+		// Leave painting, hit testing and capture to the native viewport.
+		if ev.Kind == ui.InputKeyDown && messageScrollerScrollKey(ev.Key) || ev.Kind == ui.InputPointerDown && ev.Button == 0 {
 			s.userIntent()
 		}
 	})
-	// Prepare captured bar input before reconciling content: the public bar
-	// may restore a queued accepted offset while canceling a native glide.
-	bar := messageScrollerBar(c, s, trackWidth)
 	viewport.Children(func() {
 		if content != nil {
 			content(c)
@@ -202,33 +188,7 @@ func MessageScrollerViewport(c *ui.Context, p MessageScrollerViewportProps, cont
 			s.move = nil
 		}
 	}
-	if s.AutoScrolling() {
-		bar.Opacity(0)
-	}
 	return viewport
-}
-func messageScrollerBar(c *ui.Context, s *MessageScrollerState, trackWidth float32) ui.Element {
-	color := theme.TokensOf(c).Border
-	var bar ui.Element
-	ui.Box(c.Key(messageScrollerBarKey{})).Absolute().End(0).Top(s.viewport.Y-s.root.Y).Size(trackWidth, s.height).Role(ui.RoleNone).PassThrough().HandleInput(func(ev ui.InputEvent) bool {
-		if ev.Kind != ui.InputScroll {
-			return false
-		}
-		s.userIntent()
-		return ev.DY < 0 && s.Scroll.Y <= 0 || ev.DY > 0 && s.Scroll.Y >= s.Scroll.MaxY
-	}).Children(func() {
-		bar = display.ScrollBar(c, &s.Scroll, display.ScrollBarProps{Thickness: trackWidth, ViewportSize: s.height, ThumbColor: &color, OnScrollIntent: s.userIntent})
-		bar.ObserveInput(func(ev ui.InputEvent) {
-			if ev.Kind == ui.InputPointerDown && ev.Button == 0 {
-				s.barPressed = true
-			}
-			if ev.Kind == ui.InputPointerUp && ev.Button == 0 {
-				s.barPressed = false
-			}
-		})
-		s.bar = bar.LayoutBounds()
-	})
-	return bar
 }
 
 func MessageScrollerContent(c *ui.Context, p MessageScrollerContentProps, content func(*ui.Context)) ui.Element {
@@ -291,7 +251,6 @@ func MessageScrollerItem(c *ui.Context, p MessageScrollerItemProps, content func
 }
 
 type messageScrollerItemKey struct{}
-type messageScrollerBarKey struct{}
 type messageScrollerSpacerKey struct{}
 type messageScrollerOwnerKey struct{}
 type messageScrollerOwner struct{ state *MessageScrollerState }
@@ -338,7 +297,6 @@ func (s *MessageScrollerState) unmountViewport() {
 	s.clearContent()
 	s.mode = MessageScrollerFree
 	s.scrollable = MessageScrollerScrollable{}
-	s.barPressed = false
 	s.request = nil
 	s.Scroll = ui.ScrollState{Handle: s.Scroll.Handle, X: s.Scroll.X, Y: s.Scroll.Y, MaxX: s.Scroll.MaxX, MaxY: s.Scroll.MaxY}
 }
