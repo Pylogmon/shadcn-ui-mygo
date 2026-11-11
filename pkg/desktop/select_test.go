@@ -13,6 +13,7 @@ func TestFlyoutSelectCommitsFromIndependentWindow(t *testing.T) {
 	h := NewHostWithBackend(b)
 	selected := "one"
 	changes := 0
+	callbacks := 0
 	disabled := false
 	var selectErr error
 	parent := ui.NewTester(func(c *ui.Context) {
@@ -21,7 +22,12 @@ func TestFlyoutSelectCommitsFromIndependentWindow(t *testing.T) {
 		defer h.EndFrame()
 		ui.Column(c).Padding(16).Children(func() {
 			var anchor ui.Element
-			anchor, selectErr = Select(c, h, "plan", &selected, control.SelectProps{Label: "Plan", Disabled: disabled, Options: []control.Option{{Value: "one", Label: "One"}, {Value: "blocked", Label: "Unavailable", Disabled: true}, {Value: "two", Label: "Two"}}, ItemContent: func(child *ui.Context, o control.Option) { ui.Text(child, "Custom "+o.Label) }})
+			anchor, selectErr = Select(c, h, "plan", &selected, control.SelectProps{Label: "Plan", Disabled: disabled, Options: []control.Option{{Value: "one", Label: "One"}, {Value: "blocked", Label: "Unavailable", Disabled: true}, {Value: "two", Label: "Two"}}, ItemContent: func(child *ui.Context, o control.Option) { ui.Text(child, "Custom "+o.Label) }, OnChange: func(value string) {
+				if selected != value {
+					t.Fatal("OnChange ran before updating selected storage")
+				}
+				callbacks++
+			}})
 			if anchor.Changed() {
 				changes++
 			}
@@ -43,8 +49,20 @@ func TestFlyoutSelectCommitsFromIndependentWindow(t *testing.T) {
 	if !child.HasText("Custom Two") {
 		t.Fatal("custom option renderer was dropped")
 	}
+	if a, ok := parent.AccessByRole(ui.RoleComboBox, "Plan"); !ok || a.HasPopup != ui.PopupListBox || !a.Expanded {
+		t.Fatalf("select trigger did not own listbox semantics: %+v", a)
+	}
+	if _, ok := child.AccessByRole(ui.RoleListBox, "Plan"); !ok {
+		t.Fatal("select popup did not own listbox semantics")
+	}
+	if a, ok := child.AccessByRole(ui.RoleOption, "One"); !ok || !a.Selected {
+		t.Fatalf("selected option semantics missing: %+v", a)
+	}
 	child.Key(0, ui.KeyEnd)
 	child.Key(0, ui.KeyEnter)
+	if selected != "two" || callbacks != 1 || changes != 0 {
+		t.Fatalf("async selection did not notify before parent rebuild: selected=%q callbacks=%d changes=%d", selected, callbacks, changes)
+	}
 	parent.Frame()
 	if selected != "two" || changes != 1 {
 		t.Fatalf("selected=%q change events=%d", selected, changes)
@@ -53,7 +71,7 @@ func TestFlyoutSelectCommitsFromIndependentWindow(t *testing.T) {
 		t.Fatal("select stayed open after commit")
 	}
 	parent.Frame()
-	if changes != 1 {
+	if changes != 1 || callbacks != 1 {
 		t.Fatal("selection change was emitted twice")
 	}
 	disabled = true

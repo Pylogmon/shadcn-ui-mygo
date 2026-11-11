@@ -9,16 +9,20 @@ import (
 	"github.com/egoist/mygo"
 	"github.com/egoist/mygo/ui"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/overlay"
+	"github.com/pylogmon/shadcn-ui-mygo/pkg/theme"
 )
 
 type MenuProps struct {
+	selectList       bool
 	Items            []overlay.MenuItem
 	Label            string
 	Width, MaxHeight float32
 	// ItemHeight is the full height of each themed row, including ItemContent.
-	// Non-positive or non-finite values keep the standard 32 DIP row. NativeMenu
+	// Non-positive or non-finite values use a font-aware row of at least 32 DIPs. NativeMenu
 	// uses the operating system's own metrics and has no custom row-height path.
-	ItemHeight       float32
+	ItemHeight float32
+	// FontSize overrides all themed row text in unscaled DIPs.
+	FontSize         float32
 	Placement        mygo.Placement
 	Gap              int
 	Revision         uint64
@@ -31,6 +35,7 @@ type MenuProps struct {
 type menuItemLayoutKey struct{ key string }
 type menuItemLayout struct {
 	height   float32
+	fontSize float32
 	stamp    uint64
 	revision uint64
 }
@@ -52,6 +57,7 @@ func menu(c *ui.Context, h *Host, key string, anchor ui.Element, open *bool, sta
 	if open == nil || state == nil {
 		return "", errors.New("desktop: Menu needs caller-owned open state and MenuState")
 	}
+	h = resolveHost(c, h)
 	result := state.Chosen
 	state.Chosen = ""
 	if !menuDimensionsFinite(p.Width, p.MaxHeight, p.Items) {
@@ -94,7 +100,7 @@ func menu(c *ui.Context, h *Host, key string, anchor ui.Element, open *bool, sta
 			state.wasOpen = false
 			return result, errors.New("desktop: opening a themed Menu requires a parent-bound Host; create desktop.NewHost(parentWindow)")
 		}
-		anchor.HasPopup(ui.PopupMenu).Expanded(false)
+		anchor.HasPopup(menuPopup(p)).Expanded(false)
 		return result, nil
 	}
 	width, maxHeight := p.Width, p.MaxHeight
@@ -104,16 +110,19 @@ func menu(c *ui.Context, h *Host, key string, anchor ui.Element, open *bool, sta
 	if maxHeight <= 0 {
 		maxHeight = 480
 	}
-	itemHeight := menuItemHeight(p.ItemHeight)
+	fontSize := theme.ControlFontSize(c, 14, p.FontSize)
+	itemHeight := themedMenuItemHeight(p.ItemHeight, fontSize)
+	groupHeight := menuGroupHeight(fontSize)
 	stamp := menuItemsStamp(p.Items)
 	layout := ui.Local(anchor, menuItemLayoutKey{key}, func() menuItemLayout { return menuItemLayout{height: itemHeight, stamp: stamp} })
-	if layout.height != itemHeight || layout.stamp != stamp {
+	if layout.height != itemHeight || layout.fontSize != fontSize || layout.stamp != stamp {
 		layout.height = itemHeight
+		layout.fontSize = fontSize
 		layout.stamp = stamp
 		layout.revision++
 	}
 	zero := float32(0)
-	props := PopoverProps{menuMotion: menuMotionPopup, menuContext: manual, Label: p.Label, Placement: p.Placement, Width: int(math.Ceil(float64(width))), Height: int(math.Ceil(float64(menuPanelHeight(p.Items, itemHeight, maxHeight)))), Gap: p.Gap, FitContent: true, MaxHeight: int(math.Ceil(float64(maxHeight))), Plain: true, ManualTrigger: manual, Revision: p.Revision + layout.revision, ContentPadding: &zero, ContentRole: ui.RoleGroup,
+	props := PopoverProps{menuMotion: menuMotionPopup, menuContext: manual, Label: p.Label, Placement: p.Placement, Width: int(math.Ceil(float64(width))), Height: int(math.Ceil(float64(menuPanelHeight(p.Items, itemHeight, maxHeight, groupHeight)))), Gap: p.Gap, FitContent: true, MaxHeight: int(math.Ceil(float64(maxHeight))), Plain: true, ManualTrigger: manual, Revision: p.Revision + layout.revision, ContentPadding: &zero, ContentRole: ui.RoleGroup,
 		OnDismiss: func() {
 			state.wasOpen = false
 			if manual {
@@ -140,7 +149,7 @@ func menu(c *ui.Context, h *Host, key string, anchor ui.Element, open *bool, sta
 			closeMenu()
 			return
 		}
-		MenuContent(child, state, p.Items, MenuContentProps{Label: p.Label, Width: width, MaxHeight: maxHeight, ItemHeight: itemHeight, KeepOpenOnSelect: p.KeepOpenOnSelect, ItemContent: p.ItemContent,
+		MenuContent(child, state, p.Items, MenuContentProps{selectList: p.selectList, fontSize: fontSize, Label: p.Label, Width: width, MaxHeight: maxHeight, ItemHeight: itemHeight, KeepOpenOnSelect: p.KeepOpenOnSelect, ItemContent: p.ItemContent,
 			OnChoose: func(value string) {
 				chose = true
 				if p.OnChoose != nil {
@@ -149,11 +158,18 @@ func menu(c *ui.Context, h *Host, key string, anchor ui.Element, open *bool, sta
 				h.backend.InvalidateParent()
 			}, OnClose: closeMenu})
 	})
-	anchor.HasPopup(ui.PopupMenu).Expanded(*open)
+	anchor.HasPopup(menuPopup(p)).Expanded(*open)
 	if err != nil {
 		state.wasOpen = false
 	}
 	return result, err
+}
+
+func menuPopup(p MenuProps) ui.Popup {
+	if p.selectList {
+		return ui.PopupListBox
+	}
+	return ui.PopupMenu
 }
 
 func menuDimensionsFinite(width, height float32, items []overlay.MenuItem) bool {

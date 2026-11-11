@@ -73,7 +73,7 @@ func MultiSelect(c *ui.Context, selected *[]string, p SelectProps) ui.Element {
 	selectRoot(c, nil, &state, SelectRootProps{Options: p.Options, Multiple: true, Disabled: p.Disabled}, true, true, func(b *SelectScope) {
 		trigger = selectTemplate(c, b, SelectWithProps{
 			Root:    SelectRootProps{Options: p.Options, Multiple: true, Disabled: p.Disabled},
-			Trigger: SelectTriggerProps{Label: p.Label, Size: p.Size, Invalid: p.Invalid},
+			Trigger: SelectTriggerProps{Label: p.Label, Size: p.Size, FontSize: p.FontSize, Invalid: p.Invalid},
 			Content: p.Content, Placeholder: p.Placeholder, ItemContent: p.ItemContent,
 			ValueContent: p.ValuesContent,
 		})

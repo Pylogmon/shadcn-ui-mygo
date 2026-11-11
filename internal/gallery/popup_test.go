@@ -279,7 +279,7 @@ func TestCreatorFlyoutThemeChoiceChangesLivePreviewAndDismisses(t *testing.T) {
 	r := ui.NewTester(s.View, 1280, 900)
 	field, ok := r.AccessByRole(ui.RoleMenuButton, "Theme")
 	if !ok {
-		field, ok = r.AccessByRole(ui.RoleButton, "Theme")
+		field, ok = r.AccessByRole(ui.RoleComboBox, "Theme")
 	}
 	if !ok {
 		t.Fatal("theme selector missing")
@@ -318,7 +318,7 @@ func TestCreatorMenuStyleSwitchesBetweenFlyoutAndSystemAdapters(t *testing.T) {
 	r := ui.NewTester(s.View, 1280, 900)
 	field, ok := r.AccessByRole(ui.RoleMenuButton, "Menu style")
 	if !ok {
-		field, ok = r.AccessByRole(ui.RoleButton, "Menu style")
+		field, ok = r.AccessByRole(ui.RoleComboBox, "Menu style")
 	}
 	if !ok {
 		t.Fatal("menu style selector missing")

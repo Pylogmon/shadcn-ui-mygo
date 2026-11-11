@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/egoist/mygo/ui"
+	"github.com/pylogmon/shadcn-ui-mygo/internal/tooltip"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/motion"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/theme"
 )
@@ -91,26 +92,9 @@ type TooltipProps struct {
 // InWindowTooltip also describes the trigger to assistive technology, and
 // opens on focus unless HoverOnly is set.
 func InWindowTooltip(c *ui.Context, anchor ui.Element, text string, p TooltipProps) ui.Element {
-	if text == "" {
-		return ui.Element{}
-	}
-	anchor.Description(text)
-	hovered := anchor.Hovered()
-	t := theme.TokensOf(c)
-	var tip ui.Element
-	ui.TooltipBase(c, anchor, func(panel ui.Element) {
-		// Keep native tooltip registration and timers alive even while focus
-		// alone is ignored. The inactive visual has no input or AX surface.
-		if p.HoverOnly && !hovered {
-			panel.Size(0, 0).AccessHidden(true)
-			return
-		}
-		tip = panel
+	return tooltip.InWindow(c, anchor, text, p.HoverOnly, func(panel ui.Element) {
 		attach(panel, anchor, p.Placement, 6)
-		panel.Padding(6, 12).Radius(t.Radius).MaxWidth(320).Background(t.Primary).
-			TextColor(t.PrimaryForeground).FontSize(12).Transition(motion.Popup(c)).Children(func() { ui.Text(c, text) })
 	})
-	return tip
 }
 
 type HoverCardProps struct {

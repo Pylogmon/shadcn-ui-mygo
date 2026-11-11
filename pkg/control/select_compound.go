@@ -51,6 +51,7 @@ type SelectRootProps struct {
 type SelectTriggerProps struct {
 	Label             string
 	Size              Size
+	FontSize          float32
 	Disabled, Invalid bool
 	// Render supplies an actual native button. The slot installs select roles,
 	// input and focus behavior; its visuals still belong to the application.
@@ -89,8 +90,10 @@ type SelectContentProps struct {
 	AlignItemWithTrigger *bool
 	AlignOffset          float32
 	Width, MaxHeight     float32
-	Anchor               *ui.Handle
-	Style                func(ui.Element)
+	// FontSize overrides styled list text; zero follows the trigger's font.
+	FontSize float32
+	Anchor   *ui.Handle
+	Style    func(ui.Element)
 }
 
 type SelectListProps struct {
@@ -158,22 +161,23 @@ type selectValueFrame struct {
 	placeholder string
 }
 type selectFrame struct {
-	c                   *ui.Context
-	s                   *selectRuntime
-	state               *SelectState
-	p                   SelectRootProps
-	alive, manual       bool
-	changed             bool
-	trigger, value      ui.Element
-	panel, list         ui.Element
-	group               ui.Element
-	options             []Option
-	items               []selectItemFrame
-	values              []selectValueFrame
-	inContent, inList   bool
-	content             SelectContentProps
-	scroll              *ui.ScrollState
-	itemAligned, hidden bool
+	c                         *ui.Context
+	s                         *selectRuntime
+	state                     *SelectState
+	p                         SelectRootProps
+	alive, manual             bool
+	changed                   bool
+	trigger, value            ui.Element
+	panel, list               ui.Element
+	group                     ui.Element
+	options                   []Option
+	items                     []selectItemFrame
+	values                    []selectValueFrame
+	inContent, inList         bool
+	content                   SelectContentProps
+	scroll                    *ui.ScrollState
+	itemAligned, hidden       bool
+	fontSize, contentFontSize float32
 }
 
 // SelectRoot is layout-transparent. A zero-size, inaccessible native mount
@@ -552,9 +556,10 @@ func (b *SelectScope) Trigger(c *ui.Context, p SelectTriggerProps, children func
 		h = 32
 	}
 	t := theme.TokensOf(c)
+	f.fontSize = theme.ControlFontSize(c, selectReferenceFont(p.Size), p.FontSize)
 	invalid := fieldInputInvalid(c, p.Invalid)
 	if p.Render == nil {
-		motion.ApplyTransition(c, tr.MinHeight(h).Padding(4, 8).PaddingStart(10).Gap(6).AlignItems(ui.Center).Radius(t.RadiusMD()).FontSize(14).LineHeight(20.0/14).Background(ui.Transparent).TextColor(t.Foreground))
+		motion.ApplyTransition(c, tr.MinHeight(h).Padding(4, 8).PaddingStart(10).Gap(6).AlignItems(ui.Center).Radius(t.RadiusMD()).FontSize(f.fontSize).LineHeight(20.0/14).Background(ui.Transparent).TextColor(t.Foreground))
 		if t.Dark {
 			tr.Background(t.Input.Alpha(.3))
 		}
@@ -660,8 +665,12 @@ func (b *SelectScope) Content(c *ui.Context, p SelectContentProps, children func
 	}
 	menu := theme.MenuOf(c).ForScene()
 	t := &menu.Tokens
+	f.contentFontSize = f.fontSize
+	if f.contentFontSize <= 0 || p.FontSize > 0 && finiteNumber(float64(p.FontSize)) {
+		f.contentFontSize = theme.ControlFontSize(c, 14, p.FontSize)
+	}
 	build := func() {
-		panel := ui.Themed(c, menu.Theme()).Key(f.s).Role(ui.RolePopup).Radius(t.RadiusMD()).Border(1, t.Foreground.Alpha(.1)).Background(t.Popover).TextColor(t.PopoverForeground).Shadow(0, 4, 12, 0, ui.RGBA(0, 0, 0, .12)).Clip().IgnoreInput(!f.s.open).AccessHidden(!f.s.open)
+		panel := ui.Themed(c, menu.Theme()).Key(f.s).Role(ui.RolePopup).FontSize(f.contentFontSize).Radius(t.RadiusMD()).Border(1, t.Foreground.Alpha(.1)).Background(t.Popover).TextColor(t.PopoverForeground).Shadow(0, 4, 12, 0, ui.RGBA(0, 0, 0, .12)).Clip().IgnoreInput(!f.s.open).AccessHidden(!f.s.open)
 		menu.Surface(c, panel)
 		f.panel = panel
 		panel.Clicked()
@@ -842,7 +851,7 @@ func (b *SelectScope) Label(c *ui.Context, text string) ui.Element {
 	if !b.f.group.Valid() {
 		panic("control.SelectScope: Label belongs inside Group")
 	}
-	label := ui.Text(c, text).Padding(6, 8).FontSize(12).LineHeight(4.0 / 3).TextColor(theme.TokensOf(c).MutedForeground)
+	label := ui.Text(c, text).Padding(6, 8).FontSize(b.f.contentFontSize * 12 / 14).LineHeight(4.0 / 3).TextColor(theme.TokensOf(c).MutedForeground)
 	b.f.group.LabelledBy(label)
 	return label
 }
@@ -899,7 +908,7 @@ func (b *SelectScope) Item(c *ui.Context, value string, p SelectItemProps, child
 	}
 	menu := theme.MenuOf(c).ForScene()
 	t := &menu.Tokens
-	item := ui.ButtonBase(c.Key(selectItemKey{value})).Role(ui.RoleOption).Label(optionLabel(o)).TabStop(false).MinHeight(32).Padding(6, 8).PaddingEnd(32).Gap(8).AlignSelf(ui.Stretch).AlignItems(ui.Center).Radius(t.RadiusSM()).FontSize(14).LineHeight(20.0 / 14).AccessDisabled(o.Disabled).DimDisabled(false).FocusRing(false).Cursor(ui.CursorDefault)
+	item := ui.ButtonBase(c.Key(selectItemKey{value})).Role(ui.RoleOption).Label(optionLabel(o)).TabStop(false).MinHeight(32).Padding(6, 8).PaddingEnd(32).Gap(8).AlignSelf(ui.Stretch).AlignItems(ui.Center).Radius(t.RadiusSM()).LineHeight(20.0 / 14).AccessDisabled(o.Disabled).DimDisabled(false).FocusRing(false).Cursor(ui.CursorDefault)
 	item.HandleInput(f.s.input)
 	if o.Disabled {
 		item.Opacity(.5)

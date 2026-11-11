@@ -14,7 +14,14 @@ type SelectProps struct {
 	Options            []Option
 	Placeholder, Label string
 	Size               Size
-	Disabled, Invalid  bool
+	// FontSize overrides both trigger and styled option text in unscaled DIPs.
+	// NativeSelect's OS-owned popup keeps the system's typography.
+	FontSize          float32
+	Disabled, Invalid bool
+	// OnChange runs once for a different user-selected value, after storage is
+	// updated. desktop.Select calls it directly in the independent child UI
+	// event; Changed remains available on the next parent build.
+	OnChange func(string)
 	// ItemContent customizes option content without replacing native option
 	// behavior or its accessible text label.
 	ItemContent    func(*ui.Context, Option)
@@ -32,6 +39,7 @@ func Select(c *ui.Context, selected *string, p SelectProps) ui.Element {
 	if selected == nil {
 		panic("control.Select: selected is required")
 	}
+	before := *selected
 	state := SelectState{Value: SelectSelection{Value: *selected}}
 	for _, o := range p.Options {
 		if !o.Separator && o.Value == *selected {
@@ -53,12 +61,15 @@ func Select(c *ui.Context, selected *string, p SelectProps) ui.Element {
 			}
 		}
 		trigger = selectTemplate(c, b, SelectWithProps{
-			Trigger: SelectTriggerProps{Label: p.Label, Size: p.Size, Invalid: p.Invalid},
+			Trigger: SelectTriggerProps{Label: p.Label, Size: p.Size, FontSize: p.FontSize, Invalid: p.Invalid},
 			Content: p.Content, Placeholder: p.Placeholder, ItemContent: p.ItemContent, ValueContent: valueContent,
 		})
 	})
 	if state.Value.Valid {
 		*selected = state.Value.Value
+	}
+	if *selected != before && p.OnChange != nil {
+		p.OnChange(*selected)
 	}
 	return trigger
 }
@@ -69,9 +80,13 @@ func Select(c *ui.Context, selected *string, p SelectProps) ui.Element {
 // for this control without changing its caller's menu policy. Native options use text, groups and
 // selected marks; arbitrary ItemContent belongs to the styled Select instead.
 func NativeSelect(c *ui.Context, selected *string, p SelectProps) ui.Element {
+	if selected == nil {
+		panic("control.NativeSelect: selected is required")
+	}
 	t := theme.TokensOf(c)
 	h, px := metrics(p.Size)
-	tr := motion.ApplyTransition(c, ui.ButtonBase(c).MinHeight(h).PaddingX(min(px, 12)).Gap(8).AlignItems(ui.Center).Radius(t.RadiusMD()).Background(t.Background).TextColor(t.Foreground).FontSize(14).Border(1, t.Input).Disabled(p.Disabled).Invalid(p.Invalid).Cursor(ui.CursorPointer))
+	font := theme.ControlFontSize(c, selectReferenceFont(p.Size), p.FontSize)
+	tr := motion.ApplyTransition(c, ui.ButtonBase(c).Role(ui.RoleMenuButton).MinHeight(h).Padding(4, min(px, 12)).Gap(8).AlignItems(ui.Center).Radius(t.RadiusMD()).Background(t.Background).TextColor(t.Foreground).FontSize(font).LineHeight(20.0/14).Border(1, t.Input).Disabled(p.Disabled).Invalid(p.Invalid).Cursor(ui.CursorPointer))
 	if p.Disabled {
 		tr.Opacity(.5).Cursor(ui.CursorNotAllowed)
 	}
@@ -126,12 +141,22 @@ func NativeSelect(c *ui.Context, selected *string, p SelectProps) ui.Element {
 				if *selected != o.Value {
 					*selected = o.Value
 					tr.SetChanged()
+					if p.OnChange != nil {
+						p.OnChange(o.Value)
+					}
 				}
 			}
 		}
 	})
 	c.SetMenuPresentation(previousPresentation)
 	return ButtonGroupItem(c, tr)
+}
+
+func selectReferenceFont(size Size) float32 {
+	if size == ExtraSmall || size == IconExtraSmall {
+		return 12
+	}
+	return 14
 }
 
 type ComboboxProps struct {

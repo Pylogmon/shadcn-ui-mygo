@@ -363,7 +363,7 @@ func (f *comboFrame) input(c *ui.Context, p ComboboxInputProps) ComboboxInputPar
 	}
 	height, _ := metrics(p.Size)
 	scale := comboTextScale(c)
-	height = max(height, inputFont(c, p.Size)*inputLineHeight(p.Size)*scale+2)
+	height = max(height, inputFont(c, p.Size)*inputLineHeight(p.Size)+2)
 	root.MinHeight(height).Padding(0)
 	if f.inContent {
 		root.Margin(4, 4, 0, 4).MinHeight(max(float32(32), 20*scale+12)).Height(max(float32(32), 20*scale+12)).Padding(0).Background(t.Input.Alpha(.3)).Border(1, t.Input.Alpha(.3)).NoShadow()
@@ -462,7 +462,7 @@ func (f *comboFrame) editor(c *ui.Context, p ComboboxInputProps, inPopup, chips 
 	input.Bind(&f.s.input).Role(ui.RoleComboBox).HasPopup(ui.PopupListBox).AutoComplete(ui.AutoCompleteList).Expanded(f.s.open).Grow(1).MinWidth(0).HandleInput(f.s.inputEvent).ObserveInput(f.s.observe)
 	if !f.hosted.native {
 		height, _ := metrics(p.Size)
-		height = max(height, inputFont(c, p.Size)*inputLineHeight(p.Size)*comboTextScale(c)+2)
+		height = max(height, inputFont(c, p.Size)*inputLineHeight(p.Size)+2)
 		input.Height(height - 2)
 		if !chips && !inPopup {
 			input.Padding(4, 6, 4, 10)

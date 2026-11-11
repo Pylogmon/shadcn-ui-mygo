@@ -74,13 +74,9 @@ func textareaResizeLimits(c *ui.Context, p TextareaResizeProps) (minimum, maximu
 		minimum = 64
 		valid = false
 	}
-	scale := c.Preferences().TextScale
-	if !textareaResizeFinite(scale) || scale <= 0 {
-		scale = 1
-	}
 	// Padding and border match the actual Textarea native editor. A larger
 	// system text size must still fit a caret in an explicitly sized editor.
-	line := float64(inputFont(c, DefaultSize))*1.5*float64(scale) + 18
+	line := float64(inputFont(c, DefaultSize))*1.5 + 18
 	if line > math.MaxFloat32 {
 		line = 64
 		valid = false

@@ -124,6 +124,7 @@ type entry struct {
 	menu                                     theme.MenuSnapshot
 	nativeTheme                              *ui.Theme
 	reduced                                  bool
+	fontSize                                 float32
 	anchor                                   ui.Handle
 	surface                                  Surface
 	generation                               uint64
@@ -168,6 +169,7 @@ func (h *Host) EndFrame() {
 // callback must build using the child Context parameter; never close over and
 // reuse the parent's Context. Normal Go app state may be shared on the UI thread.
 func (h *Host) Popover(c *ui.Context, key string, anchor ui.Element, open *bool, p PopoverProps, content func(*ui.Context)) error {
+	h = resolveHost(c, h)
 	if h == nil || h.backend == nil {
 		return errors.New("desktop: popover needs a parent-bound Host")
 	}
@@ -264,12 +266,14 @@ func (h *Host) Popover(c *ui.Context, key string, anchor ui.Element, open *bool,
 	}
 	presentation := c.MenuPresentation()
 	menuSnapshot := theme.MenuOf(c)
-	changed := e.nativeTheme == nil || previousMenu != menuSnapshot || e.tokens != tokens || e.reduced != reduced || e.props.Label != p.Label || e.props.Revision != p.Revision || e.props.SystemStyle != p.SystemStyle || e.padding != padding || e.props.ContentRole != p.ContentRole || e.props.menuMotion != p.menuMotion || e.props.menuIdentity != p.menuIdentity || e.props.menuContext != p.menuContext || e.direction != c.Direction() || !p.SystemStyle && e.presentation != presentation
+	fontSize := theme.ControlFontSize(c, 14, 0)
+	changed := e.nativeTheme == nil || e.fontSize != fontSize || previousMenu != menuSnapshot || e.tokens != tokens || e.reduced != reduced || e.props.Label != p.Label || e.props.Revision != p.Revision || e.props.SystemStyle != p.SystemStyle || e.padding != padding || e.props.ContentRole != p.ContentRole || e.props.menuMotion != p.menuMotion || e.props.menuIdentity != p.menuIdentity || e.props.menuContext != p.menuContext || e.direction != c.Direction() || !p.SystemStyle && e.presentation != presentation
 	if e.nativeTheme == nil || e.tokens != tokens || previousMenu != menuSnapshot {
 		e.tokens = tokens
 		e.nativeTheme = tokens.ThemeWithMenus(menuSnapshot.ForNativeWindow())
 	}
 	e.reduced = reduced
+	e.fontSize = fontSize
 	e.padding, e.presentation = padding, presentation
 	e.direction = c.Direction()
 	// Changing immutable window options needs a fresh native surface. Anchor,
@@ -393,7 +397,7 @@ func (h *Host) view(c *ui.Context, e *entry, generation uint64) {
 		c.DisableAnimations()
 	}
 	t := e.tokens
-	root := ui.Column(c).Gap(12).Padding(e.padding).Background(t.Popover).TextColor(t.PopoverForeground).Radius(t.Radius).Direction(e.direction)
+	root := ui.Column(c).Gap(12).Padding(e.padding).Background(t.Popover).TextColor(t.PopoverForeground).FontSize(e.fontSize).Radius(t.Radius).Direction(e.direction)
 	frame := menuFrame{}
 	if e.props.menuMotion != menuMotionNone && !e.props.SystemStyle && !e.spec.SystemPopover {
 		root.Background(ui.Transparent).Gap(0).Padding(0)
@@ -456,7 +460,7 @@ func (h *Host) view(c *ui.Context, e *entry, generation uint64) {
 	}
 	if e.props.SystemStyle {
 		native := c.Theme()
-		root.Background(native.Surface).TextColor(native.Text).Radius(native.Radius)
+		root.Background(native.Surface).TextColor(native.Text).FontSize(native.FontSize).Radius(native.Radius)
 	}
 	if e.props.tooltipSurface {
 		root.Background(ui.Transparent).Radius(0).Gap(0).IgnoreInput(true).Disabled(true).DimDisabled(false)

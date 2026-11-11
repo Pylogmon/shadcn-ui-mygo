@@ -103,7 +103,7 @@ func TestButtonCompositionsSourceWorkflow(t *testing.T) {
 		}
 		role := ui.RoleMenuButton
 		if !native {
-			role = ui.RoleButton
+			role = ui.RoleComboBox
 		}
 		click(role, "Button configuration")
 		if native {

@@ -75,6 +75,7 @@ func hostedCombobox[T any](c *ui.Context, h *Host, key string, state *control.Co
 	if c == nil || !c.Valid() || key == "" || state == nil || view == nil {
 		return ui.Element{}, errors.New("desktop: Combobox needs a live Context, stable key, state and window-owned view")
 	}
+	h = resolveHost(c, h)
 	root := ui.Column(c.Key("desktop-combobox:" + key)).FillWidth().MinWidth(0)
 	s := ui.Local(root, "hosted-combobox", func() comboHostState[T] { return comboHostState[T]{owner: state} })
 	if s.owner != state {

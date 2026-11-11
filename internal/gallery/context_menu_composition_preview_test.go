@@ -87,7 +87,7 @@ func TestContextMenuCompositionsSourceWorkflow(t *testing.T) {
 	}
 	choose := func(selector, label string) {
 		t.Helper()
-		role := ui.RoleButton
+		role := ui.RoleComboBox
 		if native {
 			role = ui.RoleMenuButton
 		}

@@ -94,7 +94,7 @@ func TestInputCompositionsSourceWorkflow(t *testing.T) {
 		t.Helper()
 		role := ui.RoleMenuButton
 		if !native {
-			role = ui.RoleButton
+			role = ui.RoleComboBox
 		}
 		click(role, "Input configuration")
 		if native {

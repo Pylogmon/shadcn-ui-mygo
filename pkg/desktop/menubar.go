@@ -103,6 +103,7 @@ func (s *MenubarState) restore() {
 // OnChoose runs in the child event; the return reports the result once on the
 // next parent build. Applications should dispatch using one of these paths.
 func Menubar(c *ui.Context, h *Host, key string, s *MenubarState, p MenubarProps) (string, error) {
+	h = resolveHost(c, h)
 	if c == nil || !c.Valid() || key == "" || s == nil {
 		return "", errors.New("desktop: Menubar needs a live parent context, stable key and caller-owned state")
 	}

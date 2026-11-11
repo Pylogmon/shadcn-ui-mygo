@@ -37,12 +37,15 @@ type MenuState struct {
 func (s *MenuState) Reset() { *s = MenuState{focus: true} }
 
 type MenuContentProps struct {
+	selectList       bool
+	fontSize         float32
 	Label            string
 	Width, MaxHeight float32
 	// ItemHeight is the full row height in DIPs, including custom ItemContent.
-	// Positive finite values override the default 32; group labels/separators
+	// Positive finite values override the font-aware default (at least 32); group labels/separators
 	// keep their own metrics. Match the height to the content's native layout.
 	ItemHeight  float32
+	FontSize    float32
 	NoAutoFocus bool
 	// KeepOpenOnSelect prevents closing for every row. By default actions close
 	// and checkbox/radio rows stay open; MenuItem.CloseOnSelect overrides a row.
@@ -352,7 +355,12 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 	if maxHeight <= 0 {
 		maxHeight = 480
 	}
-	itemHeight := menuItemHeight(p.ItemHeight)
+	fontSize := p.fontSize
+	if fontSize <= 0 {
+		fontSize = theme.ControlFontSize(c, 14, p.FontSize)
+	}
+	itemHeight := themedMenuItemHeight(p.ItemHeight, fontSize)
+	groupHeight := menuGroupHeight(fontSize)
 	viewportHeight := menuViewportHeight(maxHeight)
 	label := p.Label
 	if label == "" {
@@ -423,7 +431,11 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 				panelLabel = listLabel(items, path, depth)
 			}
 			panelWidth := menuPathWidth(items, path, width)
-			panel := ui.Column(c.Key(menuPanelKey(menuPathKey(path)))).Width(panelWidth).Padding(4).Radius(t.RadiusMD()).Background(t.Popover).TextColor(t.PopoverForeground).Border(1, t.Border).Role(ui.RoleMenu).Label(panelLabel).InputMethod(live).TabStop(live && depth == state.ActiveDepth)
+			role := ui.RoleMenu
+			if p.selectList {
+				role = ui.RoleListBox
+			}
+			panel := ui.Column(c.Key(menuPanelKey(menuPathKey(path)))).Width(panelWidth).Padding(4).Radius(t.RadiusMD()).Background(t.Popover).TextColor(t.PopoverForeground).Border(1, t.Border).Role(role).Label(panelLabel).InputMethod(live).TabStop(live && depth == state.ActiveDepth)
 			menu.Surface(c, panel)
 			if live {
 				panel.Focusable()
@@ -442,7 +454,7 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 						geometry.content.W, geometry.content.H = bounds.W*c.Zoom(), bounds.H*c.Zoom()
 					} else {
 						geometry.content.W = width * c.Zoom()
-						geometry.content.H = menuPanelHeight(list, itemHeight, maxHeight) * c.Zoom()
+						geometry.content.H = menuPanelHeight(list, itemHeight, maxHeight, groupHeight) * c.Zoom()
 						if rtl {
 							geometry.content.X += frame.geometry.content.W - geometry.content.W
 						}
@@ -469,7 +481,7 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 				attachment := subAttachment
 				content := presence.bounds
 				if content.W <= 0 {
-					content = ui.Rect{X: rootPanelBounds.X, Y: rootPanelBounds.Y, W: panelWidth, H: menuPanelHeight(list, itemHeight, maxHeight)}
+					content = ui.Rect{X: rootPanelBounds.X, Y: rootPanelBounds.Y, W: panelWidth, H: menuPanelHeight(list, itemHeight, maxHeight, groupHeight)}
 					if rtl {
 						for level := 1; level <= depth; level++ {
 							content.X -= menuPathWidth(items, path[:level], width) + 4
@@ -504,7 +516,7 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 				panel.Focus()
 			}
 			panel.Children(func() {
-				height := menuContentHeight(list, itemHeight)
+				height := menuContentHeight(list, itemHeight, groupHeight)
 				body := ui.Column(c).Width(max(0, panelWidth-8))
 				if height > viewportHeight {
 					body = ui.Scroll(c).Width(max(0, panelWidth-8)).Height(viewportHeight)
@@ -519,7 +531,7 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 						}
 						if item.Group != "" && item.Group != group {
 							group = item.Group
-							caption := ui.Text(c, group).Padding(6, 8).FontSize(12).FontWeight(500).TextColor(t.MutedForeground)
+							caption := ui.Text(c, group).Padding(6, 8).FontSize(fontSize * 12 / 14).LineHeight(4.0 / 3).FontWeight(500).TextColor(t.MutedForeground)
 							if item.GroupInset {
 								caption.PaddingStart(32)
 							}
@@ -530,7 +542,10 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 						} else if item.Radio {
 							role = ui.RoleMenuItemRadio
 						}
-						row := ui.Row(c.Key(key)).FillWidth().Height(itemHeight).PaddingX(8).Gap(8).Radius(max(2, t.Radius-2)).AlignItems(ui.Center).Role(role).Label(item.Label).Disabled(item.Disabled).FontSize(14).TextColor(t.PopoverForeground)
+						if p.selectList {
+							role = ui.RoleOption
+						}
+						row := ui.Row(c.Key(key)).FillWidth().Height(itemHeight).PaddingX(8).Gap(8).Radius(max(2, t.Radius-2)).AlignItems(ui.Center).Role(role).Label(item.Label).Disabled(item.Disabled).FontSize(fontSize).LineHeight(20.0 / 14).TextColor(t.PopoverForeground)
 						if item.Inset {
 							row.PaddingStart(32)
 						}
@@ -551,7 +566,9 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 								}
 							}
 						}
-						if item.Checked != nil {
+						if p.selectList {
+							row.Selected(item.Selected)
+						} else if item.Checked != nil {
 							row.Checked(*item.Checked)
 						} else if item.Radio {
 							row.Checked(item.Selected)
@@ -594,7 +611,7 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 								if item.Destructive && menu.Translucent() {
 									shortcutColor = t.AccentForeground
 								}
-								ui.Text(c, item.Shortcut).FontSize(12).TextColor(shortcutColor)
+								ui.Text(c, item.Shortcut).FontSize(fontSize * 12 / 14).TextColor(shortcutColor)
 							}
 							if len(item.Children) > 0 {
 								angle := float32(-90)
@@ -634,7 +651,7 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 			for _, presence := range panels.panels {
 				if len(presence.path) == depth {
 					list := menuAtPath(items, presence.path, depth)
-					height = max(height, menuPanelHeight(list, itemHeight, maxHeight))
+					height = max(height, menuPanelHeight(list, itemHeight, maxHeight, groupHeight))
 				}
 			}
 			ui.Box(c.Key(menuDepthKey(depth))).Width(depthWidths[depth]).Height(height).Children(func() {
@@ -687,22 +704,30 @@ func listLabel(items []overlay.MenuItem, path []string, depth int) string {
 	}
 	return label
 }
-func menuItemHeight(value float32) float32 {
-	if value <= 0 || math.IsNaN(float64(value)) || math.IsInf(float64(value), 0) {
-		return 32
+func themedMenuItemHeight(value, fontSize float32) float32 {
+	if value > 0 && !math.IsNaN(float64(value)) && !math.IsInf(float64(value), 0) {
+		return value
 	}
-	return value
+	return max(float32(32), fontSize*(20.0/14)+12)
+}
+
+func menuGroupHeight(fontSize float32) float32 {
+	return fontSize*(12.0/14)*(4.0/3) + 12
 }
 
 // A panel adds four DIP padding and a one DIP border on each vertical edge.
 func menuViewportHeight(maxHeight float32) float32 { return max(1, maxHeight-10) }
 
-func menuPanelHeight(items []overlay.MenuItem, itemHeight, maxHeight float32) float32 {
-	return min(menuContentHeight(items, itemHeight), menuViewportHeight(maxHeight)) + 10
+func menuPanelHeight(items []overlay.MenuItem, itemHeight, maxHeight float32, groupHeight ...float32) float32 {
+	return min(menuContentHeight(items, itemHeight, groupHeight...), menuViewportHeight(maxHeight)) + 10
 }
 
-func menuContentHeight(items []overlay.MenuItem, itemHeight float32) float32 {
+func menuContentHeight(items []overlay.MenuItem, itemHeight float32, groupHeight ...float32) float32 {
 	height := float32(0)
+	captionHeight := float32(28)
+	if len(groupHeight) > 0 {
+		captionHeight = groupHeight[0]
+	}
 	group := ""
 	for _, item := range items {
 		if item.Separator {
@@ -711,7 +736,7 @@ func menuContentHeight(items []overlay.MenuItem, itemHeight float32) float32 {
 		}
 		if item.Group != "" && item.Group != group {
 			group = item.Group
-			height += 28
+			height += captionHeight
 		}
 		height += itemHeight
 	}

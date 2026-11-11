@@ -134,7 +134,7 @@ func TestDialogCompositionsSourceWorkflow(t *testing.T) {
 		if index < 0 {
 			t.Fatal("missing recipe")
 		}
-		click(ui.RoleButton, "Dialog configuration")
+		click(ui.RoleComboBox, "Dialog configuration")
 		s := b.surfaces[len(b.surfaces)-1]
 		s.tester.Key(0, ui.KeyHome)
 		for range index {

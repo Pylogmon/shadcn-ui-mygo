@@ -33,3 +33,5 @@ Root 不添加视觉布局，Scope 只在当前构建回调中有效。手写 Co
 运行 `go run ./examples/select-composition` 或 `make selects-app`，三个操作区覆盖22份固定源例的实际配置及提交、Dialog、NativeSelect 流程。来源映射与边界见 [示例](../examples/select-composition/README.md)。
 
 Gallery另有逐项映射的22个源配置。源列表使用当前窗口中的完整组合API；配置／语言菜单随Gallery Flyout／Native切换。`desktop.Select`目前仍是单字符串菜单适配器，不提供富多选或逐项对齐的跨窗槽位，这一缺口未计为完成。
+
+便捷入口支持 `SelectProps.FontSize`，同时覆盖触发器和列表；`Content.FontSize` 可单独覆盖列表。`SelectProps.OnChange` 在存储更新后通知不同的用户选值；`desktop.Select` 从独立弹窗中立即通知，原 `Changed()` 继续在下一帧报告。窗口可用 `desktop.BindHost(c, host)` 绑定 Host，并对 Select 传 nil 继承；完整代码及生命周期约定见 [通用控件能力](control-capabilities.md)。

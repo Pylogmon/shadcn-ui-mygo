@@ -247,7 +247,7 @@ func TestCreatorNamedFontsKeepNativeDraftHistoryAndWindowRoles(t *testing.T) {
 	r.Frame()
 	trigger, found := r.AccessByRole(ui.RoleMenuButton, "Font")
 	if !found {
-		trigger = advancedAccess(t, r, ui.RoleButton, "Font")
+		trigger = advancedAccess(t, r, ui.RoleComboBox, "Font")
 	}
 	r.ClickAt(trigger.Bounds.X+trigger.Bounds.W/2, trigger.Bounds.Y+trigger.Bounds.H/2)
 	if len(b.surfaces) != 3 || b.surfaces[2].spec.SystemPopover {

@@ -11,6 +11,8 @@ import (
 
 	"github.com/egoist/mygo"
 	"github.com/egoist/mygo/ui"
+	"github.com/pylogmon/shadcn-ui-mygo/internal/tooltip"
+	"github.com/pylogmon/shadcn-ui-mygo/pkg/theme"
 )
 
 // StyleInput applies the kit's input appearance to a real native editor. It
@@ -18,16 +20,25 @@ import (
 func StyleInput(c *ui.Context, e ui.Element, p InputProps) ui.Element {
 	e = styleInput(c, e, p)
 	height, _ := metrics(p.Size)
-	scale := c.Preferences().TextScale
-	if scale <= 0 || math.IsNaN(float64(scale)) || math.IsInf(float64(scale), 0) {
-		scale = 1
-	}
-	return e.Height(max(height, inputFont(c, p.Size)*inputLineHeight(p.Size)*scale+2*inputPaddingY(p.Size)+2))
+	return e.Height(max(height, theme.ControlFontSize(c, inputReferenceFont(c, p.Size), p.FontSize)*inputLineHeight(p.Size)+2*inputPaddingY(p.Size)+2))
+}
+
+// NumberInputStepperProps opts into two native buttons beside the editor.
+// Button props configure variants, icons and accessible Label values; omitted
+// icons use minus/plus text and omitted labels use Decrease/Increase value.
+// Tooltips are explicit in-window hints and also describe each button.
+type NumberInputStepperProps struct {
+	Decrement, Increment               ButtonProps
+	DecrementTooltip, IncrementTooltip string
 }
 
 type NumberInputProps struct {
-	Label, Placeholder, Description        string
-	Size                                   Size
+	Label, Placeholder, Description string
+	Size                            Size
+	// FontSize reaches the actual editor, independently of the layout root.
+	FontSize float32
+	// Stepper nil preserves the original editor-only layout and keyboard API.
+	Stepper                                *NumberInputStepperProps
 	Disabled, Invalid, ReadOnly, AutoFocus bool
 	Handle                                 *ui.Handle
 	Min, Max                               *float64
@@ -49,6 +60,7 @@ type numberInputState struct {
 	focused       bool
 }
 type numberInputEditorKey struct{}
+type numberInputStepKey int
 
 func finiteNumber(v float64) bool { return !math.IsNaN(v) && !math.IsInf(v, 0) }
 func numberLimits(p NumberInputProps) (lo, hi, step float64, valid bool) {
@@ -70,6 +82,18 @@ func parseInputNumber(text string, lo, hi float64) (float64, bool) {
 }
 func formatInputNumber(n float64) string { return strconv.FormatFloat(n, 'f', -1, 64) }
 
+func nextInputNumber(value float64, empty bool, lo, hi, delta float64) (float64, bool) {
+	base := value
+	if empty {
+		base = 0
+	}
+	if !finiteNumber(base) {
+		return value, false
+	}
+	next := math.Max(lo, math.Min(hi, base+delta))
+	return next, finiteNumber(next) && (empty || next != value)
+}
+
 // NumberInput is a finite typed adapter around the same native text/IME editor
 // as Input. Editable draft and committed numeric value are separate. Incomplete
 // or out-of-range text keeps the last value; Submit/blur canonicalizes it. Handle
@@ -81,6 +105,9 @@ func NumberInput(c *ui.Context, value *float64, p NumberInputProps) ui.Element {
 		panic("control: NumberInput requires numeric state")
 	}
 	root := ui.Box(c).FillWidth().MinWidth(0)
+	if p.Stepper != nil {
+		root.Row().Gap(4).AlignItems(ui.Center)
+	}
 	isEmpty := func() bool { return p.Empty != nil && *p.Empty }
 	modelText := func() string {
 		if isEmpty() {
@@ -105,6 +132,7 @@ func NumberInput(c *ui.Context, value *float64, p NumberInputProps) ui.Element {
 		// draft/selection state when several controls share the same numeric model.
 		changed := editor.Changed()
 		composing := editor.Composing()
+		editable := configurationValid && !p.Disabled && !p.ReadOnly && !editor.IsDisabled() && !composing
 		remember := func() { s.previous, s.previousEmpty = *value, isEmpty() }
 		setEmpty := func(empty bool) {
 			if p.Empty == nil || *p.Empty == empty {
@@ -136,7 +164,19 @@ func NumberInput(c *ui.Context, value *float64, p NumberInputProps) ui.Element {
 			}
 			remember()
 		}
-		if changed && !composing && configurationValid && !p.Disabled && !p.ReadOnly {
+		stepBy := func(delta float64) {
+			if !editable {
+				return
+			}
+			if n, ok := nextInputNumber(*value, isEmpty(), lo, hi, delta); finiteNumber(n) {
+				if ok {
+					commit(n)
+				}
+				s.draft = modelText()
+				c.Invalidate()
+			}
+		}
+		if changed && editable {
 			if p.Empty != nil && strings.TrimSpace(s.draft) == "" {
 				setEmpty(true)
 				if !isEmpty() {
@@ -147,24 +187,11 @@ func NumberInput(c *ui.Context, value *float64, p NumberInputProps) ui.Element {
 				commit(n)
 			}
 		}
-		if !composing && configurationValid && !p.Disabled && !p.ReadOnly {
-			delta := 0.
+		if editable {
 			if editor.Shortcut(0, ui.KeyUp) {
-				delta = step
+				stepBy(step)
 			} else if editor.Shortcut(0, ui.KeyDown) {
-				delta = -step
-			}
-			if delta != 0 {
-				base := *value
-				if isEmpty() {
-					base = 0
-				}
-				n := math.Max(lo, math.Min(hi, base+delta))
-				if finiteNumber(n) {
-					commit(n)
-					s.draft = modelText()
-					c.Invalidate()
-				}
+				stepBy(-step)
 			}
 		}
 		focused := editor.Focused()
@@ -175,10 +202,10 @@ func NumberInput(c *ui.Context, value *float64, p NumberInputProps) ui.Element {
 		s.focused = focused
 		_, draftValid := parseInputNumber(s.draft, lo, hi)
 		invalid := p.Invalid || !configurationValid || (!isEmpty() && !finiteNumber(*value)) || (!composing && strings.TrimSpace(s.draft) != "" && !draftValid)
-		common := InputProps{Label: p.Label, Placeholder: p.Placeholder, Description: p.Description, Size: p.Size, Disabled: p.Disabled, Invalid: invalid, ReadOnly: p.ReadOnly || !configurationValid, AutoFocus: p.AutoFocus, Handle: p.Handle}
+		common := InputProps{Label: p.Label, Placeholder: p.Placeholder, Description: p.Description, Size: p.Size, FontSize: p.FontSize, Disabled: p.Disabled, Invalid: invalid, ReadOnly: p.ReadOnly || !configurationValid, AutoFocus: p.AutoFocus, Handle: p.Handle}
 		common.OnSubmit = func(string) {
 			n, ok := parseInputNumber(s.draft, lo, hi)
-			if ok && configurationValid && !p.Disabled && !p.ReadOnly {
+			if ok && editable {
 				commit(n)
 				s.draft = modelText()
 				if !isEmpty() && p.OnSubmit != nil {
@@ -196,11 +223,59 @@ func NumberInput(c *ui.Context, value *float64, p NumberInputProps) ui.Element {
 		}
 		handle := ui.Local(root, "shadcn.control.editor-target", func() ui.Handle { return ui.Handle{} })
 		editor.Bind(handle)
+		if p.Stepper != nil {
+			editor.Grow(1)
+			ui.Row(c).Shrink(0).Gap(2).Children(func() {
+				stepButton := func(direction numberInputStepKey, props ButtonProps, hint string) {
+					delta, text, label := step, "+", "Increase value"
+					if direction < 0 {
+						delta, text, label = -step, "−", "Decrease value"
+					}
+					_, canStep := nextInputNumber(*value, isEmpty(), lo, hi, delta)
+					props.Disabled = props.Disabled || !editable || !canStep
+					if props.Label == "" {
+						props.Label = label
+					}
+					if props.Size == DefaultSize {
+						props.Size = numberStepperSize(p.Size)
+					}
+					if props.FontSize == 0 {
+						props.FontSize = p.FontSize
+					}
+					if props.Icon != nil {
+						text = ""
+					}
+					button := Button(c.Key(direction), text, props)
+					if hint != "" {
+						tooltip.InWindow(c, button, hint, false, nil)
+					}
+					if button.Clicked() && !button.IsDisabled() {
+						stepBy(delta)
+						editor.Focus()
+					}
+				}
+				stepButton(-1, p.Stepper.Decrement, p.Stepper.DecrementTooltip)
+				stepButton(1, p.Stepper.Increment, p.Stepper.IncrementTooltip)
+			})
+		}
 	})
 	if isEmpty() != beforeEmpty || *value != before && !(math.IsNaN(*value) && math.IsNaN(before)) {
 		root.SetChanged()
 	}
 	return root
+}
+
+func numberStepperSize(size Size) Size {
+	switch size {
+	case ExtraSmall, IconExtraSmall:
+		return IconExtraSmall
+	case Small, IconSmall:
+		return IconSmall
+	case Large, IconLarge:
+		return IconLarge
+	default:
+		return Icon
+	}
 }
 
 // DateInputProps configures a native localized date field.

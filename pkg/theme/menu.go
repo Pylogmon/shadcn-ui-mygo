@@ -74,6 +74,7 @@ type MenuSnapshot struct {
 	Tokens                    Tokens
 	inverted                  Tokens
 	hasInverted, nativeWindow bool
+	textScale                 float32
 }
 
 func (m MenuSnapshot) Translucent() bool {
@@ -105,7 +106,7 @@ func MenuOf(c *ui.Context) MenuSnapshot {
 			return m
 		}
 	}
-	return MenuSnapshot{Color: MenuDefault, Accent: MenuSubtle, Tokens: *TokensOf(c), Fonts: FontsOf(c)}
+	return MenuSnapshot{Color: MenuDefault, Accent: MenuSubtle, Tokens: *TokensOf(c), Fonts: FontsOf(c), textScale: TextScale(c)}
 }
 func menuTheme(c *ui.Context, t *Tokens, options []MenuOptions) *ui.Theme {
 	return menuThemeFrom(t, MenuOf(c), options)
@@ -118,6 +119,11 @@ func (t *Tokens) MenuTheme(options MenuOptions) *ui.Theme {
 
 func menuThemeFrom(t *Tokens, m MenuSnapshot, options []MenuOptions) *ui.Theme {
 	root := *t
+	// Explicit tokens describe a fresh logical size. Controller records its
+	// applied preference after building the theme; copied menu snapshots keep it.
+	if root.FontSize != m.scopeTokens.FontSize {
+		m.textScale = 0
+	}
 	if len(options) > 1 {
 		panic("theme: at most one MenuOptions is allowed")
 	}

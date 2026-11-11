@@ -206,6 +206,7 @@ func tooltip(c *ui.Context, h *Host, key string, anchor ui.Element, text string,
 	if err := hoverArgs(c, key, anchor); err != nil {
 		return err
 	}
+	h = resolveHost(c, h)
 	anchor.Description(text)
 	placement, err := tooltipPlacement(p, c.Direction())
 	if err != nil {
@@ -297,6 +298,7 @@ func hoverCard(c *ui.Context, h *Host, key string, anchor ui.Element, p HoverCar
 	if err := hoverArgs(c, key, anchor); err != nil {
 		return err
 	}
+	h = resolveHost(c, h)
 	s := ui.Local(anchor, hoverKey{"hover-card", key}, func() hoverFlyoutState { return hoverFlyoutState{} })
 	anchor.Bind(&s.anchor)
 	s.onOpenChange = p.OnOpenChange

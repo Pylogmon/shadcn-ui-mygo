@@ -61,6 +61,8 @@ func view(c *ui.Context) {
 
 桌面弹出组件显式使用 `desktop.NewHost(parentWindow)`。`Menu` 使用统一 shadcn 样式的独立 Flyout；`NativeMenu` 使用系统菜单。没有 Host 时不会默默退回父窗口内绘制。窗口内旧组件以 `InWindow*` 明确命名；API、平台范围与迁移说明见 [原生浮层适配](docs/native-adaptation.md)，完整示例见 [native-popups](examples/native-popups/main.go)。
 
+窗口可在 view 开头通过 `desktop.BindHost(c, host)` 绑定 Host，随后 Select、Tooltip、Menu 等传 nil 即继承；显式 Host 仍优先。Button、Select 和 NumberInput 支持主题字号、系统文字缩放及 `FontSize` 局部覆盖；数字输入还可用 `Stepper` 启用图标步进按钮。直接运行 [通用控件示例](examples/control-capabilities/README.md)，完整规则见 [控件字号与窗口上下文](docs/control-capabilities.md)。
+
 Gallery 的 Navigation 页展示菜单栏、可切换尺寸的导航内容面板和响应式侧栏，Forms 页展示范围/多拇指滑块，Data 页包含保留状态的折叠内容和嵌套可调整面板。导航面板的子 Context、路由回传和 Tab 边界用法见 [导航 API](docs/navigation.md)。
 
 Forms 页也包含 [原生文本输入](docs/text-input.md)、[可调整高度的 Textarea](docs/textarea.md)、[分组 OTP](docs/input-otp.md) 与 [三态/单多选控件](docs/choices.md)。Bio 草稿和高度、验证码与选择状态跨页保留；Navigation 页的面包屑可切换独立 Flyout／系统菜单，并展示有界的大页数分页。

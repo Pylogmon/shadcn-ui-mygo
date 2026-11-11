@@ -9,8 +9,10 @@ import (
 )
 
 type InputProps struct {
-	Placeholder, Label, Description       string
-	Size                                  Size
+	Placeholder, Label, Description string
+	Size                            Size
+	// FontSize reaches the native editor; zero uses the theme and Size ratio.
+	FontSize                              float32
 	Disabled, Invalid, ReadOnly, Password bool
 	Search, AutoFocus                     bool
 	// MaxLength uses the native editor's UTF-16 limit for typed/pasted/IME text.
@@ -53,7 +55,7 @@ func fieldEditor(c *ui.Context, invalid bool, build func() ui.Element) ui.Elemen
 	return build()
 }
 
-func inputFont(c *ui.Context, size Size) float32 {
+func inputReferenceFont(c *ui.Context, size Size) float32 {
 	if size == ExtraSmall || size == IconExtraSmall {
 		return 12
 	}
@@ -68,6 +70,10 @@ func inputFont(c *ui.Context, size Size) float32 {
 		return 14
 	}
 	return 16
+}
+
+func inputFont(c *ui.Context, size Size) float32 {
+	return theme.ControlFontSize(c, inputReferenceFont(c, size), 0)
 }
 
 func inputLineHeight(size Size) float32 {
@@ -117,7 +123,7 @@ func styleInput(c *ui.Context, e ui.Element, p InputProps) ui.Element {
 		*invalid = *invalid || p.Invalid
 	}
 	motion.ApplyTransition(c, e.FillWidth().MinWidth(0).Padding(inputPaddingY(p.Size), 10).Radius(t.RadiusMD()).
-		FontSize(inputFont(c, p.Size)).LineHeight(inputLineHeight(p.Size)).TextAlign(ui.Start).Background(bg).TextColor(t.Foreground).
+		FontSize(theme.ControlFontSize(c, inputReferenceFont(c, p.Size), p.FontSize)).LineHeight(inputLineHeight(p.Size)).TextAlign(ui.Start).Background(bg).TextColor(t.Foreground).
 		PlaceholderColor(t.MutedForeground).Placeholder(p.Placeholder).Disabled(p.Disabled).DimDisabled(false).ReadOnly(p.ReadOnly).
 		Invalid(p.Invalid).Cursor(ui.CursorText))
 	if p.Label != "" {
@@ -183,12 +189,8 @@ func configureTextInput(c *ui.Context, e ui.Element, value *string, p InputProps
 func Input(c *ui.Context, value *string, p InputProps) ui.Element {
 	e := styleInput(c, ui.TextInputBase(c, value), p)
 	height, _ := metrics(p.Size)
-	scale := c.Preferences().TextScale
-	if scale <= 0 || math.IsNaN(float64(scale)) || math.IsInf(float64(scale), 0) {
-		scale = 1
-	}
 	// Preserve exact default heights while leaving room for larger native text.
-	height = max(height, inputFont(c, p.Size)*inputLineHeight(p.Size)*scale+2*inputPaddingY(p.Size)+2)
+	height = max(height, theme.ControlFontSize(c, inputReferenceFont(c, p.Size), p.FontSize)*inputLineHeight(p.Size)+2*inputPaddingY(p.Size)+2)
 	e.Height(height)
 	if p.Password {
 		e.Password()

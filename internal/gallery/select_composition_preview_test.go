@@ -87,7 +87,7 @@ func TestSelectCompositionsSourceWorkflow(t *testing.T) {
 				t.Fatalf("configuration %s: %v", recipe, err)
 			}
 		} else {
-			click(ui.RoleButton, "Select configuration")
+			click(ui.RoleComboBox, "Select configuration")
 			child := b.surfaces[len(b.surfaces)-1]
 			child.tester.Key(0, ui.KeyHome)
 			for range index {

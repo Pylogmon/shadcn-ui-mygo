@@ -162,6 +162,7 @@ func (s *Controller) Apply(c *ui.Context) {
 			m = value.(themeMetadata).menu
 		}
 		m.Fonts = fonts
+		m.textScale = TextScale(c)
 		metadata.Store(weak.Make(s.native), themeMetadata{tokens: *t, menu: m, fonts: fonts})
 	}
 	c.SetTheme(s.native)
@@ -171,7 +172,7 @@ func (s *Controller) Apply(c *ui.Context) {
 }
 
 func applyPreferences(t *Tokens, p ui.Preferences) {
-	if p.TextScale > 0 {
+	if positiveFontSize(p.TextScale) {
 		t.FontSize *= p.TextScale
 	}
 	if p.HighContrast {

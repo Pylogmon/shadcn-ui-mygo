@@ -1,6 +1,10 @@
 package theme
 
-import "github.com/egoist/mygo/ui"
+import (
+	"weak"
+
+	"github.com/egoist/mygo/ui"
+)
 
 // FromNative maps the current platform UI theme onto semantic color roles. It
 // never loads shadcn palette values or mutates the supplied native theme.
@@ -45,5 +49,10 @@ func NativeScope(c *ui.Context) ui.Element {
 	}
 	copy := *native
 	remember(&copy, FromNative(native))
+	key := weak.Make(&copy)
+	value, _ := metadata.Load(key)
+	m := value.(themeMetadata)
+	m.menu.textScale = TextScale(c)
+	metadata.Store(key, m)
 	return ui.Themed(c, &copy)
 }

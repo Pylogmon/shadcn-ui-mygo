@@ -35,8 +35,10 @@ const (
 )
 
 type ButtonProps struct {
-	Variant           Variant
-	Size              Size
+	Variant Variant
+	Size    Size
+	// FontSize overrides the theme/Size font in unscaled DIPs. Zero inherits.
+	FontSize          float32
 	Disabled, Invalid bool
 	// Loading exposes busy state, replaces the leading icon with a spinner and
 	// suppresses activation without changing the accessible label.
@@ -75,11 +77,17 @@ func Button(c *ui.Context, label string, p ButtonProps) ui.Element {
 func StyleButton(c *ui.Context, b ui.Element, label string, p ButtonProps) ui.Element {
 	t := theme.TokensOf(c)
 	h, px := metrics(p.Size)
-	motion.ApplyTransition(c, b.Height(h).PaddingX(px).Gap(6).Radius(t.RadiusMD()).FontSize(14).FontWeight(500).
+	reference, lineHeight := float32(14), float32(20.0/14)
+	if p.Size == ExtraSmall || p.Size == IconExtraSmall {
+		reference, lineHeight = 12, 4.0/3
+	}
+	font := theme.ControlFontSize(c, reference, p.FontSize)
+	h = max(h, font*lineHeight+8)
+	motion.ApplyTransition(c, b.Height(h).PaddingX(px).Gap(6).Radius(t.RadiusMD()).FontSize(font).LineHeight(lineHeight).FontWeight(500).
 		AlignItems(ui.Center).Justify(ui.Center).Cursor(ui.CursorPointer).
 		Disabled(p.Disabled || p.Loading).Busy(p.Loading).Invalid(p.Invalid).FocusRing(false))
 	if p.Size == ExtraSmall || p.Size == IconExtraSmall {
-		b.FontSize(12).Gap(4).Radius(min(t.RadiusMD(), 8))
+		b.Gap(4).Radius(min(t.RadiusMD(), 8))
 	} else if p.Size == Small || p.Size == IconSmall {
 		b.Radius(min(t.RadiusMD(), 10))
 		if p.Size == Small {

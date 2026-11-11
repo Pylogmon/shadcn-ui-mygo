@@ -118,6 +118,7 @@ func NativeDateRangePicker(c *ui.Context, h *Host, key string, date *display.Dat
 }
 
 func datePicker(c *ui.Context, h *Host, key string, date *time.Time, dates *display.DateRange, p DatePickerProps, native bool) (ui.Element, error) {
+	h = resolveHost(c, h)
 	if c == nil || !c.Valid() || key == "" || date == nil && dates == nil {
 		return ui.Element{}, errors.New("desktop: date picker needs a live context, stable key and caller-owned value")
 	}
