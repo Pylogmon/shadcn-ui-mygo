@@ -59,7 +59,7 @@ func (b *nativeBackend) Open(s Spec, view func(*ui.Context), onClosed func()) (s
 		}
 	}()
 	anchor := nativeRect(s.Anchor)
-	w := mygo.NewFlyout(mygo.FlyoutOptions{Parent: b.parent, Anchor: anchor, Placement: s.Placement, Width: s.Width, Height: s.Height, Gap: s.Gap, FitContent: s.FitContent, MinWidth: s.MinWidth, MinHeight: s.MinHeight, MaxWidth: s.MaxWidth, MaxHeight: s.MaxHeight, Focusable: s.Focusable, Popover: s.SystemPopover, Vibrancy: s.Vibrancy, CornerRadius: s.CornerRadius, Shadow: true, Hidden: true, Content: ui.View(view)})
+	w := mygo.NewFlyout(nativeFlyoutOptions(b.parent, s, view))
 	created = w
 	native := &nativeSurface{window: w, anchor: anchor}
 	w.OnClose(func(event *mygo.CloseEvent) {
@@ -81,6 +81,17 @@ func (b *nativeBackend) Open(s Spec, view func(*ui.Context), onClosed func()) (s
 	}
 	return native, nil
 }
+
+func nativeFlyoutOptions(parent *mygo.Window, s Spec, view func(*ui.Context)) mygo.FlyoutOptions {
+	return mygo.FlyoutOptions{
+		Parent: parent, Anchor: nativeRect(s.Anchor), Placement: s.Placement,
+		Width: s.Width, Height: s.Height, Gap: s.Gap, FitContent: s.FitContent,
+		MinWidth: s.MinWidth, MinHeight: s.MinHeight, MaxWidth: s.MaxWidth, MaxHeight: s.MaxHeight,
+		Focusable: s.Focusable, Popover: s.SystemPopover, Vibrancy: s.Vibrancy,
+		CornerRadius: s.CornerRadius, Shadow: !s.DisableShadow, Hidden: true, Content: ui.View(view),
+	}
+}
+
 func (s *nativeSurface) SetDismissHandler(handler func() bool) { s.dismiss = handler }
 func (b *nativeBackend) InvalidateParent() {
 	if b.parent != nil && !b.parent.IsDestroyed() {

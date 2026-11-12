@@ -3,6 +3,7 @@ package desktop
 import (
 	"errors"
 	"math"
+	"runtime"
 	"slices"
 	"strconv"
 
@@ -298,6 +299,9 @@ func buildHostedCombobox[T any](c *ui.Context, state *control.ComboboxState[T], 
 			})
 		})
 		if frame.active && !p.native {
+			if runtime.GOOS == "windows" && theme.MenuOf(c).Backdrop(c) == theme.MenuOpaque {
+				panel.Shadow(0, 4, 12, 0, ui.RGBA(0, 0, 0, .12))
+			}
 			menuApplyPose(panel, frame.pose, frame.attachment)
 		}
 	})

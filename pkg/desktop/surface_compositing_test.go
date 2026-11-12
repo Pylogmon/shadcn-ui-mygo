@@ -2,6 +2,7 @@ package desktop
 
 import (
 	"image"
+	"runtime"
 	"testing"
 	"time"
 
@@ -86,6 +87,10 @@ func TestFlyoutFamiliesCompositeOnlyTheirVisibleSurface(t *testing.T) {
 				t.Fatalf("opened %d surfaces", len(backend.surfaces))
 			}
 			surface := backend.surfaces[0]
+			options := nativeFlyoutOptions(nil, surface.spec, surface.view)
+			if options.Shadow != (runtime.GOOS != "windows") {
+				t.Fatal("styled flyout can retain a native outline after its content fades")
+			}
 			child := ui.NewTester(surface.view, 680, 420)
 			if alpha := paintedAlpha(child.Image()); alpha != 0 {
 				t.Errorf("invisible entry painted an opaque backing: total alpha=%d", alpha)
@@ -209,6 +214,9 @@ func TestNativeFlyoutFamiliesKeepThemeWrappersClear(t *testing.T) {
 					t.Fatalf("opened %d native surfaces", len(backend.surfaces))
 				}
 				surface := backend.surfaces[0]
+				if !nativeFlyoutOptions(nil, surface.spec, surface.view).Shadow {
+					t.Fatal("native flyout lost its platform window decorations")
+				}
 				child := ui.NewTesterWith(surface.view, 680, 420, ui.TesterOptions{Dark: dark})
 				child.SetVibrancy(true)
 				x, y := 1, 20

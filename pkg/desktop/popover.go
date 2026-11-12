@@ -8,6 +8,7 @@ import (
 	"errors"
 	"fmt"
 	"math"
+	"runtime"
 	"time"
 
 	"github.com/egoist/mygo"
@@ -63,6 +64,9 @@ type Spec struct {
 	IgnoreMouseEvents, ShowInactive          bool
 	CornerRadius                             int
 	Vibrancy                                 mygo.Vibrancy
+	// DisableShadow keeps Windows from outlining the rectangular native window
+	// around styled content, including transparent gutters and fading pixels.
+	DisableShadow bool
 }
 
 type PopoverProps struct {
@@ -86,7 +90,8 @@ type PopoverProps struct {
 	// leaves initial keyboard focus in the parent while permitting later focus.
 	IgnoreMouseEvents, ShowInactive bool
 	// Plain opts out of macOS's material, arrow and system popover animation.
-	// A plain flyout still has its own native window and system shadow. On
+	// A plain flyout still has its own native window. Windows styled flyouts
+	// omit the system shadow and outline so only their content animates. On
 	// Windows/Linux the system-popover option has no effect.
 	Plain bool
 	// SystemStyle keeps the independent child's platform theme instead of
@@ -398,6 +403,13 @@ func (h *Host) view(c *ui.Context, e *entry, generation uint64) {
 	}
 	t := e.tokens
 	root := ui.Column(c).Gap(12).Padding(e.padding).Background(t.Popover).TextColor(t.PopoverForeground).FontSize(e.fontSize).Radius(t.Radius).Direction(e.direction)
+	if e.spec.DisableShadow && !e.props.tooltipSurface && e.props.menuMotion == menuMotionNone {
+		// These surfaces previously relied on the Windows window outline.
+		// Paint their boundary on the same node as the animated background.
+		border, radius := t.Border, t.Radius
+		root.DrawOver(func(p *ui.Painter, r ui.Rect) { p.Stroke(r, border, radius, 1) }).
+			Shadow(0, 4, 12, 0, ui.RGBA(0, 0, 0, .12))
+	}
 	frame := menuFrame{}
 	if e.props.menuMotion != menuMotionNone && !e.props.SystemStyle && !e.spec.SystemPopover {
 		root.Background(ui.Transparent).Gap(0).Padding(0)
@@ -565,7 +577,8 @@ func normalize(p PopoverProps, anchor ui.Rect, radius float32) (Spec, error) {
 	if gap == 0 {
 		gap = 4
 	}
-	return Spec{Anchor: anchor, Placement: placement, Width: width, Height: height, Gap: gap, FitContent: p.FitContent, MinWidth: p.MinWidth, MinHeight: p.MinHeight, MaxWidth: p.MaxWidth, MaxHeight: p.MaxHeight, Focusable: !p.NonFocusable, SystemPopover: !p.Plain && !p.NonFocusable, IgnoreMouseEvents: p.IgnoreMouseEvents, ShowInactive: p.ShowInactive, CornerRadius: max(0, int(math.Round(float64(radius))))}, nil
+	systemPopover := !p.Plain && !p.NonFocusable
+	return Spec{Anchor: anchor, Placement: placement, Width: width, Height: height, Gap: gap, FitContent: p.FitContent, MinWidth: p.MinWidth, MinHeight: p.MinHeight, MaxWidth: p.MaxWidth, MaxHeight: p.MaxHeight, Focusable: !p.NonFocusable, SystemPopover: systemPopover, IgnoreMouseEvents: p.IgnoreMouseEvents, ShowInactive: p.ShowInactive, CornerRadius: max(0, int(math.Round(float64(radius)))), DisableShadow: runtime.GOOS == "windows" && !p.SystemStyle && !systemPopover}, nil
 }
 
 // beginClose returns whether native destruction is being retained for an exit.

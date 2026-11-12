@@ -1,6 +1,7 @@
 package desktop
 
 import (
+	"runtime"
 	"testing"
 	"time"
 
@@ -291,7 +292,7 @@ func TestSystemPopoverDoesNotInterceptOSOwnedDismissal(t *testing.T) {
 	}
 }
 
-func TestNonFocusableStyleSwitchUpdatesDismissalCapabilityInPlace(t *testing.T) {
+func TestNonFocusableStyleSwitchUpdatesSurfaceAndDismissalCapability(t *testing.T) {
 	b := &presenceBackend{}
 	h := NewHostWithBackend(b)
 	open, native := true, true
@@ -316,9 +317,20 @@ func TestNonFocusableStyleSwitchUpdatesDismissalCapabilityInPlace(t *testing.T) 
 	native = false
 	parent.Frame()
 	child.Frame()
+	if runtime.GOOS == "windows" {
+		// Shadow selects the Win32 window class and rounded outline at creation.
+		// Switching to styled content must replace that decorated window.
+		if len(b.surfaces) != 2 || f.closes != 1 || f.onDismiss != nil || paintedAlpha(child.Image()) != 0 {
+			t.Fatal("style switch retained a decorated window or its obsolete content")
+		}
+		f = b.surfaces[1]
+		child = ui.NewTester(f.view, 288, 200)
+	} else if len(b.surfaces) != 1 {
+		t.Fatal("style switch recreated equal native configuration")
+	}
 	child.Advance(250 * time.Millisecond)
-	if len(b.surfaces) != 1 || f.onDismiss == nil {
-		t.Fatal("style switch failed to install interception without recreating equal native configuration")
+	if f.onDismiss == nil {
+		t.Fatal("style switch failed to install dismissal interception")
 	}
 	f.dismiss()
 	child.Frame()

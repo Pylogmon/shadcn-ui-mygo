@@ -3,6 +3,7 @@ package desktop
 import (
 	"fmt"
 	"math"
+	"runtime"
 	"slices"
 	"strings"
 	"time"
@@ -437,6 +438,9 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 			}
 			panel := ui.Column(c.Key(menuPanelKey(menuPathKey(path)))).Width(panelWidth).Padding(4).Radius(t.RadiusMD()).Background(t.Popover).TextColor(t.PopoverForeground).Border(1, t.Border).Role(role).Label(panelLabel).InputMethod(live).TabStop(live && depth == state.ActiveDepth)
 			menu.Surface(c, panel)
+			if runtime.GOOS == "windows" && frame.active && menu.Backdrop(c) == theme.MenuOpaque {
+				panel.Shadow(0, 4, 12, 0, ui.RGBA(0, 0, 0, .12))
+			}
 			if live {
 				panel.Focusable()
 				panel.HandleInput(func(ev ui.InputEvent) bool { return menuInput(state, items, depth, p, rtl, ev) })

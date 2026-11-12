@@ -2,6 +2,7 @@ package gallery
 
 import (
 	"fmt"
+	"runtime"
 	"testing"
 	"time"
 
@@ -136,6 +137,7 @@ func TestCreatorHoverCardRefreshesSharedValueAcrossStylesAndClosesOnNavigation(t
 				t.Fatalf("hover surfaces=%d", len(b.surfaces))
 			}
 			popup := b.surfaces[0]
+			previousMode, wantSurfaces := native, 1
 			for _, mode := range []bool{native, !native, native} {
 				p := s.Config
 				p.NativeMenus = mode
@@ -143,10 +145,19 @@ func TestCreatorHoverCardRefreshesSharedValueAcrossStylesAndClosesOnNavigation(t
 					t.Fatal(err)
 				}
 				parent.Frame()
-				popup.tester.Advance(time.Second)
-				if len(b.surfaces) != 1 || !s.Popovers.IsOpen("preview-author") {
-					t.Fatal("style change replaced or closed the inactive hover window")
+				if runtime.GOOS == "windows" && mode != previousMode {
+					// Win32 shadow and outline settings belong to the window class.
+					if !popup.didClose {
+						t.Fatal("style change retained the previous window decorations")
+					}
+					wantSurfaces++
 				}
+				popup = b.surfaces[len(b.surfaces)-1]
+				popup.tester.Advance(time.Second)
+				if len(b.surfaces) != wantSurfaces || !s.Popovers.IsOpen("preview-author") {
+					t.Fatal("style change failed to preserve the open hover card with matching window decorations")
+				}
+				previousMode = mode
 				if popup.tester.HasText("SD") == mode {
 					t.Fatalf("native=%v did not refresh the matching content", mode)
 				}
