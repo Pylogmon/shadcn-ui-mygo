@@ -22,9 +22,14 @@ type BadgeProps struct {
 	AlignSelf ui.Align
 	Variant   BadgeVariant
 	// Color overrides BadgeDefault, BadgeOutline, BadgeSoft, BadgeLink and
-	// BadgeGhost colors, including hover and focus feedback. Nil preserves theme
+	// BadgeGhost colors, including hover and focus feedback. Nil uses theme
 	// styles; BadgeSecondary ignores it.
-	Color              *ui.Color
+	Color *ui.Color
+	// Surface overrides the carrying background; nil inherits its surface scope.
+	Surface *ui.Color
+	// InheritForeground lets inert Outline/Ghost/Link content share its parent
+	// action's state foreground, including icons and custom visual slots.
+	InheritForeground  bool
 	Label, Description string
 	Icon, EndIcon      *ui.SVG
 	// Leading and Trailing replace their icons inside 12-DIP visual slots.
@@ -131,7 +136,7 @@ func BadgeWith(c *ui.Context, text string, p BadgeProps) ui.Element {
 		target.Cursor(ui.CursorPointer)
 	}
 	disabled = disabled || root.IsDisabled()
-	badgeAppearance(c, root, target, p.Variant, p.Color, p.Invalid, disabled)
+	badgeAppearance(c, root, target, p, disabled)
 	if target.Valid() && target.Clicked() && !disabled {
 		root.SetChanged()
 		if p.OnActivate != nil {
@@ -141,7 +146,8 @@ func BadgeWith(c *ui.Context, text string, p BadgeProps) ui.Element {
 	return root
 }
 
-func badgeAppearance(c *ui.Context, root, target ui.Element, variant BadgeVariant, color *ui.Color, invalid, disabled bool) {
+func badgeAppearance(c *ui.Context, root, target ui.Element, p BadgeProps, disabled bool) {
+	variant, color, invalid := p.Variant, p.Color, p.Invalid
 	t := theme.TokensOf(c)
 	accent := t.Primary
 	if color != nil {
@@ -220,15 +226,42 @@ func badgeAppearance(c *ui.Context, root, target ui.Element, variant BadgeVarian
 			}
 		}
 	}
+	surface := theme.ResolveSurface(c, p.Surface)
+	if variant == BadgeSoft || variant == BadgeLink || customColor && (variant == BadgeGhost || variant == BadgeOutline) {
+		quiet, active := ui.Transparent, ui.Transparent
+		if variant != BadgeLink {
+			tint := float32(.1)
+			if t.Dark {
+				tint = .2
+			}
+			active = accent.Alpha(tint)
+			if variant == BadgeSoft {
+				quiet, active = active, accent.Alpha(tint+.1)
+			}
+		}
+		if !target.Valid() && variant != BadgeGhost {
+			active = quiet
+		}
+		backgrounds := []ui.Color{theme.Composite(bg, surface), theme.Composite(quiet, surface), theme.Composite(active, surface)}
+		fg = theme.ReadableForeground(c, accent, backgrounds...)
+		for _, background := range backgrounds {
+			if theme.Contrast(theme.Composite(fg, background), background) < 4.5 {
+				root.Transition(ui.ElementTransition{Duration: -1, Colors: true})
+			}
+		}
+	}
 	if customColor && variant == BadgeDefault {
 		// Choose readable text against the fill composited over the theme page.
-		fill := theme.Mix(t.Background, ui.RGB(bg.R, bg.G, bg.B), float32(bg.A)/255)
+		fill := theme.Composite(bg, surface)
 		fg = ui.RGB(255, 255, 255)
 		if theme.Contrast(ui.RGB(0, 0, 0), fill) > theme.Contrast(fg, fill) {
 			fg = ui.RGB(0, 0, 0)
 		}
 	}
-	root.Background(bg).TextColor(fg).Border(1, border)
+	root.Background(bg).Border(1, border)
+	if !p.InheritForeground || variant != BadgeOutline && variant != BadgeGhost && variant != BadgeLink {
+		root.TextColor(fg)
+	}
 	if invalid {
 		root.Border(1, t.Destructive)
 	}
@@ -244,6 +277,9 @@ func badgeAppearance(c *ui.Context, root, target ui.Element, variant BadgeVarian
 			if t.Dark {
 				ring = color.Alpha(.4)
 			}
+		}
+		if c.Preferences().HighContrast && !invalid {
+			border, ring = t.Ring, t.Ring.Alpha(.5)
 		}
 		root.Border(1, border).Shadow(0, 0, 0, 3, ring)
 	}

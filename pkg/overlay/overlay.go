@@ -78,7 +78,7 @@ func InWindowPopover(c *ui.Context, anchor ui.Element, open *bool, p PopoverProp
 		} else {
 			panel.Width(288)
 		}
-		panel.MaxWidthPercent(100).Children(content)
+		panel.MaxWidthPercent(100).Children(func() { theme.WithSurface(c, theme.TokensOf(c).Popover, content) })
 	})
 }
 
@@ -155,7 +155,7 @@ func InWindowHoverCard(c *ui.Context, anchor ui.Element, p HoverCardProps, conte
 		if width <= 0 {
 			width = 320
 		}
-		panel.Width(width).Children(content)
+		panel.Width(width).Children(func() { theme.WithSurface(c, theme.TokensOf(c).Popover, content) })
 		s.panelHover = panel.Hovered() || panel.FocusWithin()
 	})
 	if wasOpen && !s.open {

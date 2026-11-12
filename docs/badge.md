@@ -28,15 +28,15 @@ display.BadgeWith(c, "Documentation", display.BadgeProps{
 })
 ```
 
-`BadgeProps.Color` 类型为 `*ui.Color`，支持主要（BadgeDefault）、描边（BadgeOutline）、柔和（BadgeSoft）、链接（BadgeLink）和幽灵（BadgeGhost）变体。nil 保留各变体原有主题外观；BadgeSecondary 继续使用主题次要色。可显式指定黑色、透明色或半透明色，静态、按钮和 URL 徽章均支持。
+`BadgeProps.Color` 类型为 `*ui.Color`，支持主要（BadgeDefault）、描边（BadgeOutline）、柔和（BadgeSoft）、链接（BadgeLink）和幽灵（BadgeGhost）变体。nil 使用各变体主题配色，彩色文字仍参与可读性校正；BadgeSecondary 继续使用主题次要色。可显式指定黑色、透明色或半透明色，静态、按钮和 URL 徽章均支持。
 
 | 变体 | 自定义颜色的作用 |
 | --- | --- |
 | BadgeDefault | 填充背景；交互徽章悬停／按下为颜色自身透明度的 80%；文字和图标根据填充色与主题背景的合成结果，自动选择对比度较高的黑色或白色 |
-| BadgeOutline | 文字、图标和描边；交互徽章悬停／按下使用同色浅背景，亮色主题为 10%，暗色主题为 20% |
-| BadgeSoft | 文字、图标和浅色背景；亮色主题背景为 10%，交互徽章悬停／按下为 20%；暗色主题分别为 20%／30% |
-| BadgeLink | 文字和图标；保留透明背景与悬停下划线 |
-| BadgeGhost | 文字和图标；默认透明背景，悬停使用同色浅背景，亮色主题为 10%，暗色主题为 20% |
+| BadgeOutline | 派生可读文字、图标及原始色描边；交互徽章悬停／按下使用同色浅背景，亮色主题为 10%，暗色主题为 20% |
+| BadgeSoft | 派生可读文字、图标及原始色浅背景；亮色主题背景为 10%，交互徽章悬停／按下为 20%；暗色主题分别为 20%／30% |
+| BadgeLink | 派生可读文字和图标；保留透明背景与悬停下划线 |
+| BadgeGhost | 派生可读文字和图标；默认透明背景，悬停使用同色浅背景，亮色主题为 10%，暗色主题为 20% |
 
 上述透明度与自定义颜色自身的透明度相乘。交互徽章的焦点边框和焦点环均跟随自定义颜色：边框透明度为 40%，焦点环在亮色主题下为 20%、暗色主题下为 40%。`Invalid` 优先使用主题危险色。
 
@@ -51,3 +51,5 @@ display.BadgeWith(c, "Documentation", display.BadgeProps{
 Link变体悬停为默认和自定义文字提供继承下划线。原生字体采用1 DIP基线偏移；照搬CSS的4 DIP偏移会让下划线被20 DIP容器裁掉，此处按原生绘制适配。
 
 Gallery 的 Content & feedback 页提供[完整源组合](../examples/badge-composition/README.md)，包括7份文档和7个Create分区。14个配置保留双侧图标、加载、明暗颜色、原始长文本横滚与RTL。示例原链接#／#link通过局部原生Router激活本地状态；当前Router仅保留path／query，不提供HTML锚点滚动或fragment历史。
+
+彩色文字通过 `theme.ReadableForeground` 针对实际承载面达到默认 4.5:1 目标。`BadgeProps.Surface` 可显式提供承载背景；内嵌静态 Outline/Ghost/Link 徽标可设 `InheritForeground: true`，与父动作的文字、图标共享状态前景。原始 Color 仍用于填充、边框及普通焦点反馈。完整策略及原生扩展边界见 [可读彩色文字与 Sidebar](readable-color.md)。

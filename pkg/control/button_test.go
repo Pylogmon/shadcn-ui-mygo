@@ -65,7 +65,10 @@ func TestButtonSoftColorsAndInteraction(t *testing.T) {
 				}
 				quiet := blend(base, chosen.Alpha(quietAlpha))
 				pixel("quiet fill", x, box.Y+4, quiet)
-				pixel("inherited icon", x, y, blend(quiet, chosen))
+				iconPixel := r.Image().RGBAAt(int(x), int(y))
+				if theme.Contrast(ui.RGB(iconPixel.R, iconPixel.G, iconPixel.B), ui.RGB(quiet.R, quiet.G, quiet.B)) < 4.5 {
+					t.Fatal("unreadable inherited icon")
+				}
 				r.Move(x, y)
 				pixel("hover fill", x, box.Y+4, blend(base, chosen.Alpha(activeAlpha)))
 				r.Press(x, y)

@@ -30,3 +30,5 @@ _ = err // 按应用约定显示错误
 图标模式的Tooltip使用显式 `desktop.Host` 的独立shadcn Flyout，可越出父窗口；必须在父View中调用Host.BeginFrame/EndFrame。没有Host而实际请求打开Tooltip会返回错误，不伪造窗口内替代品。主面板和移动Sheet本身在当前窗口中布局。
 
 首次未显示的offcanvas内容延迟构建以避免AutoFocus抢主区焦点。已经保留的隐藏内容中动态插入显式Focus/AutoFocus仍受MyGo的祖先禁用检查限制，应先检查 `element.IsDisabled()`，详见 [parity.md](parity.md)。
+
+独立 `SidebarMenuButton` / `StyleSidebarMenuButton` 支持自定义非交互内容、字号、active 与禁用状态。nil Color 遵循官方 SidebarForeground / SidebarAccent / SidebarAccentForeground；显式 Color 提供原生彩色选中态，Muted 用于免费版状态文字。固定图标列、居中文字区域由调用方配置。见 [公开 API、MangGo 消费示例与视觉验证](readable-color.md) 和 [可运行示例](../examples/sidebar-composition/README.md)。

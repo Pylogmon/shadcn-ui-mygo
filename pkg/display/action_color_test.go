@@ -87,7 +87,10 @@ func TestActionVariantCustomColors(t *testing.T) {
 						checkForeground := func(fill color.RGBA) {
 							t.Helper()
 							if variant.button != control.Default {
-								pixel("inherited icon", y, colorOver(fill, selected))
+								actual := r.Image().RGBAAt(int(x), int(y))
+								if ratio := theme.Contrast(ui.RGB(actual.R, actual.G, actual.B), ui.RGB(fill.R, fill.G, fill.B)); ratio < 4.5 {
+									t.Fatalf("unreadable colored icon: %v on %v = %.5f", actual, fill, ratio)
+								}
 								return
 							}
 							// Filled actions must keep readable text for light, dark,
@@ -101,12 +104,7 @@ func TestActionVariantCustomColors(t *testing.T) {
 						}
 						base := color.RGBA{R: tokens.Background.R, G: tokens.Background.G, B: tokens.Background.B, A: 255}
 						quiet := variant.quiet
-						if mode == "button" && variant.button == control.Outline {
-							quiet = tokens.Background
-							if dark {
-								quiet = tokens.Input.Alpha(.3)
-							}
-						}
+
 						quietFill := colorOver(base, quiet)
 						pixel("quiet fill", fillY, quietFill)
 						checkForeground(quietFill)

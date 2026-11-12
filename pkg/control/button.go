@@ -38,8 +38,12 @@ type ButtonProps struct {
 	Variant Variant
 	Size    Size
 	// Color overrides Default, Outline, Soft, Link and Ghost colors, including
-	// hover and focus feedback. Nil preserves theme styles; Secondary ignores it.
+	// hover and focus feedback. Nil uses theme styles; Secondary ignores it.
+	// Colored text is derived separately from the unmodified fill/border accent.
 	Color *ui.Color
+	// Surface overrides the carrying background for contrast calculation.
+	// Nil inherits the enclosing library/theme.WithSurface scope.
+	Surface *ui.Color
 	// FontSize overrides the theme/Size font in unscaled DIPs. Zero inherits.
 	FontSize          float32
 	Disabled, Invalid bool
@@ -124,7 +128,7 @@ func StyleButton(c *ui.Context, b ui.Element, label string, p ButtonProps) ui.El
 			bg, border = t.Input.Alpha(.3), t.Input
 		}
 		if customColor {
-			fg, border = accent, accent
+			bg, fg, border = ui.Transparent, accent, accent
 		}
 	case Ghost:
 		bg, fg = ui.Transparent, t.Foreground
@@ -139,7 +143,7 @@ func StyleButton(c *ui.Context, b ui.Element, label string, p ButtonProps) ui.El
 	case Link:
 		bg, fg = ui.Transparent, accent
 	}
-	if !p.Disabled && !p.Loading && (b.Hovered() || b.Pressed()) {
+	if !b.IsDisabled() && (b.Hovered() || b.Pressed()) {
 		switch p.Variant {
 		case Outline, Ghost:
 			if customColor {
@@ -169,9 +173,32 @@ func StyleButton(c *ui.Context, b ui.Element, label string, p ButtonProps) ui.El
 			bg = bg.Alpha(.8)
 		}
 	}
+	surface := theme.ResolveSurface(c, p.Surface)
+	if p.Variant == Soft || p.Variant == Link || customColor && (p.Variant == Ghost || p.Variant == Outline) {
+		quiet, active := ui.Transparent, ui.Transparent
+		if p.Variant != Link {
+			tint := float32(.1)
+			if t.Dark {
+				tint = .2
+			}
+			active = accent.Alpha(tint)
+			if p.Variant == Soft {
+				quiet, active = active, accent.Alpha(tint+.1)
+			}
+		}
+		backgrounds := []ui.Color{theme.Composite(bg, surface), theme.Composite(quiet, surface), theme.Composite(active, surface)}
+		fg = theme.ReadableForeground(c, accent, backgrounds...)
+		for _, background := range backgrounds {
+			if theme.Contrast(theme.Composite(fg, background), background) < 4.5 {
+				// Opposite-polarity custom surfaces cannot share readable text.
+				// Show their state fill immediately using the native transition.
+				b.Transition(ui.ElementTransition{Duration: -1, Colors: true})
+			}
+		}
+	}
 	if customColor && p.Variant == Default {
 		// Choose readable text against the fill composited over the theme page.
-		fill := theme.Mix(t.Background, ui.RGB(bg.R, bg.G, bg.B), float32(bg.A)/255)
+		fill := theme.Composite(bg, surface)
 		fg = ui.RGB(255, 255, 255)
 		if theme.Contrast(ui.RGB(0, 0, 0), fill) > theme.Contrast(fg, fill) {
 			fg = ui.RGB(0, 0, 0)
@@ -195,6 +222,9 @@ func StyleButton(c *ui.Context, b ui.Element, label string, p ButtonProps) ui.El
 			if t.Dark {
 				ring = color.Alpha(.4)
 			}
+		}
+		if c.Preferences().HighContrast && !p.Invalid {
+			border, ring = t.Ring, t.Ring.Alpha(.5)
 		}
 		b.Border(1, border).Shadow(0, 0, 0, 3, ring)
 	}

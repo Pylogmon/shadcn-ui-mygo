@@ -492,11 +492,13 @@ func (h *Host) view(c *ui.Context, e *entry, generation uint64) {
 		}
 	}).Children(func() {
 		if e.content != nil {
-			if frame.active {
-				withMenuFrame(c, frame, func() { e.content(c) })
-			} else {
-				e.content(c)
-			}
+			theme.WithSurface(c, t.Popover, func() {
+				if frame.active {
+					withMenuFrame(c, frame, func() { e.content(c) })
+				} else {
+					e.content(c)
+				}
+			})
 		}
 	})
 	// Native input arrives before controls process their Clicked/Changed

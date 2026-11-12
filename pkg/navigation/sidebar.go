@@ -29,24 +29,26 @@ func Sidebar(c *ui.Context, selected *string, p SidebarProps, footer func()) ui.
 	}
 	root := ui.Column(c).Width(width).Gap(8).Padding(8).Background(t.Sidebar).TextColor(t.SidebarForeground).Border(1, t.SidebarBorder).Role(ui.RoleNavigation).Label(p.Label)
 	root.Children(func() {
-		if p.Collapsed != nil {
-			label := "Collapse sidebar"
-			if collapsed {
-				label = "Expand sidebar"
+		theme.WithSurface(c, t.Sidebar, func() {
+			if p.Collapsed != nil {
+				label := "Collapse sidebar"
+				if collapsed {
+					label = "Expand sidebar"
+				}
+				b := ui.ButtonBase(c.Key("collapse")).Label(label).Height(32).Width(32).Radius(t.Radius).Center()
+				if b.Hovered() {
+					b.Background(t.SidebarAccent).TextColor(t.SidebarAccentForeground)
+				}
+				b.Children(func() { ui.Text(c, "☰").FontSize(16) })
+				if b.Clicked() {
+					*p.Collapsed = !*p.Collapsed
+				}
 			}
-			b := ui.ButtonBase(c.Key("collapse")).Label(label).Height(32).Width(32).Radius(t.Radius).Center()
-			if b.Hovered() {
-				b.Background(t.SidebarAccent).TextColor(t.SidebarAccentForeground)
+			ui.Scroll(c).Grow(1).Gap(2).Children(func() { sidebarItems(c, selected, p.Items, collapsed, 0) })
+			if footer != nil {
+				ui.Column(c).Padding(8, 0, 0, 0).Children(footer)
 			}
-			b.Children(func() { ui.Text(c, "☰").FontSize(16) })
-			if b.Clicked() {
-				*p.Collapsed = !*p.Collapsed
-			}
-		}
-		ui.Scroll(c).Grow(1).Gap(2).Children(func() { sidebarItems(c, selected, p.Items, collapsed, 0) })
-		if footer != nil {
-			ui.Column(c).Padding(8, 0, 0, 0).Children(footer)
-		}
+		})
 	})
 	return root
 }

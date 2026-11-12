@@ -134,7 +134,10 @@ func TestBadgeSoftColorsAndInteraction(t *testing.T) {
 					}
 					quiet := over(base, chosen.Alpha(quietAlpha))
 					pixel("quiet fill", box.Y+3, quiet)
-					pixel("inherited icon", y, over(quiet, chosen))
+					iconPixel := r.Image().RGBAAt(int(x), int(y))
+					if theme.Contrast(ui.RGB(iconPixel.R, iconPixel.G, iconPixel.B), ui.RGB(quiet.R, quiet.G, quiet.B)) < 4.5 {
+						t.Fatal("unreadable inherited icon")
+					}
 					r.Move(x, y)
 					if mode == "static" {
 						pixel("static hover fill", box.Y+3, quiet)

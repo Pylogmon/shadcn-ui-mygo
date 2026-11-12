@@ -98,7 +98,7 @@ Gallery的Data & display页可切换Carousel布局、间距、循环和项目顺
 Forms & controls页已接入框架搜索、国家分组/城市描述过滤、Office弹层搜索、多选技术标签与表单状态示例。
 同页可切换 [ButtonGroup 的13种组合](examples/control-compounds/README.md)，Data页提供同模块的Avatar下拉菜单；组内编辑与菜单动作随全局Flyout／Native模式切换。
 Forms 页的 [Button 源组合](examples/button-composition/README.md) 提供20个配置，包含四尺寸／六变体矩阵、左右图标、独立原生链接、禁用／加载／Invalid、圆角与翻译RTL。
-Button 的[主要、描边、柔和、链接和幽灵变体](docs/button.md)可通过 `ButtonProps.Color` 自定义颜色；nil 保留主题外观。原 Destructive 用法迁移为 Soft 并显式传入主题危险色。
+Button 的[主要、描边、柔和、链接和幽灵变体](docs/button.md)可通过 `ButtonProps.Color` 自定义颜色；nil 使用主题配色。原 Destructive 用法迁移为 Soft 并显式传入主题危险色。彩色小字已支持按实际 Sidebar/Card/Popover 表面校正；独立 SidebarMenuButton 与 MangGo 侧栏/底部状态用法见 [可读彩色文字](docs/readable-color.md)。
 同页的 [Switch 源组合](examples/switch-composition/README.md) 提供12个配置，保留两尺寸、前置说明、整卡选择、禁用／错误状态和译文，操作真实原生Switch。
 该页的 [Checkbox 源组合](examples/checkbox-composition/README.md) 提供15个配置，包含独立默认值、描述／整卡、分组、禁用／错误、真实表格选择和RTL；表格全选保持源布尔规则。
 同页的 [RadioGroup 源组合](examples/radio-composition/README.md) 提供13个配置，包含原生键盘互斥、整卡计划、价格／Fieldset、两列网格、单项／整组禁用、错误与翻译RTL。

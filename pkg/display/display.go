@@ -15,7 +15,7 @@ import (
 func Card(c *ui.Context, content func()) ui.Element {
 	t := theme.TokensOf(c)
 	return ui.Column(c).FillWidth().Gap(24).Padding(24).Radius(t.Radius*1.4).
-		Background(t.Card).TextColor(t.CardForeground).Border(1, t.Border).Children(content)
+		Background(t.Card).TextColor(t.CardForeground).Border(1, t.Border).Children(func() { theme.WithSurface(c, t.Card, content) })
 }
 func CardHeader(c *ui.Context, title, description string) ui.Element {
 	return ui.Column(c).Gap(6).Children(func() {

@@ -63,66 +63,68 @@ func CardWith(c *ui.Context, p CardProps, slots CardSlots) ui.Element {
 		root.Role(ui.RoleGroup).Label(p.Label)
 	}
 	root.Children(func() {
-		media := func() {
-			ui.Box(c.Key("media")).FillWidth().MinWidth(0).Clip().Children(func() { slots.Media(c) })
-		}
-		if slots.Media != nil && !p.MediaBottom {
-			media()
-		}
-		if slots.Header != nil || slots.Title != "" || slots.Description != "" || slots.Action != nil {
-			ui.Column(c.Key("header")).FillWidth().MinWidth(0).Children(func() {
-				header := ui.Row(c).FillWidth().MinWidth(0).PaddingX(spacing).Gap(12).AlignItems(ui.Start)
-				if p.HeaderBorder {
-					header.Padding(0, spacing, spacing)
-				}
-				header.Children(func() {
-					if slots.Header != nil || slots.Title != "" || slots.Description != "" {
-						ui.Column(c.Key("heading")).Basis(0).Grow(1).MinWidth(0).Gap(4).Children(func() {
-							if slots.Header != nil {
-								slots.Header(c)
-							} else {
-								if slots.Title != "" {
-									CardTitle(c, slots.Title, p.Size)
-								}
-								if slots.Description != "" {
-									CardDescription(c, slots.Description)
-								}
-							}
-						})
-					} else {
-						ui.Box(c.Key("heading")).Grow(1)
+		theme.WithSurface(c, t.Card, func() {
+			media := func() {
+				ui.Box(c.Key("media")).FillWidth().MinWidth(0).Clip().Children(func() { slots.Media(c) })
+			}
+			if slots.Media != nil && !p.MediaBottom {
+				media()
+			}
+			if slots.Header != nil || slots.Title != "" || slots.Description != "" || slots.Action != nil {
+				ui.Column(c.Key("header")).FillWidth().MinWidth(0).Children(func() {
+					header := ui.Row(c).FillWidth().MinWidth(0).PaddingX(spacing).Gap(12).AlignItems(ui.Start)
+					if p.HeaderBorder {
+						header.Padding(0, spacing, spacing)
 					}
-					if slots.Action != nil {
-						CardAction(c.Key("action"), func(child *ui.Context) { slots.Action(child) })
+					header.Children(func() {
+						if slots.Header != nil || slots.Title != "" || slots.Description != "" {
+							ui.Column(c.Key("heading")).Basis(0).Grow(1).MinWidth(0).Gap(4).Children(func() {
+								if slots.Header != nil {
+									slots.Header(c)
+								} else {
+									if slots.Title != "" {
+										CardTitle(c, slots.Title, p.Size)
+									}
+									if slots.Description != "" {
+										CardDescription(c, slots.Description)
+									}
+								}
+							})
+						} else {
+							ui.Box(c.Key("heading")).Grow(1)
+						}
+						if slots.Action != nil {
+							CardAction(c.Key("action"), func(child *ui.Context) { slots.Action(child) })
+						}
+					})
+					if p.HeaderBorder {
+						Separator(c, false)
 					}
 				})
-				if p.HeaderBorder {
-					Separator(c, false)
-				}
-			})
-		}
-		if slots.Content != nil {
-			body := ui.Column(c.Key("content")).FillWidth().MinWidth(0).Gap(12)
-			if !p.ContentBleed {
-				body.PaddingX(spacing)
 			}
-			body.Children(func() { slots.Content(c) })
-		}
-		if slots.Footer != nil {
-			ui.Column(c.Key("footer")).FillWidth().MinWidth(0).Children(func() {
-				if p.FooterBorder {
-					Separator(c, false)
+			if slots.Content != nil {
+				body := ui.Column(c.Key("content")).FillWidth().MinWidth(0).Gap(12)
+				if !p.ContentBleed {
+					body.PaddingX(spacing)
 				}
-				footer := ui.Row(c).FillWidth().MinWidth(0).PaddingX(spacing).Gap(8).AlignItems(ui.Center)
-				if p.FooterBorder {
-					footer.Padding(spacing, spacing, 0)
-				}
-				footer.Children(func() { slots.Footer(c) })
-			})
-		}
-		if slots.Media != nil && p.MediaBottom {
-			media()
-		}
+				body.Children(func() { slots.Content(c) })
+			}
+			if slots.Footer != nil {
+				ui.Column(c.Key("footer")).FillWidth().MinWidth(0).Children(func() {
+					if p.FooterBorder {
+						Separator(c, false)
+					}
+					footer := ui.Row(c).FillWidth().MinWidth(0).PaddingX(spacing).Gap(8).AlignItems(ui.Center)
+					if p.FooterBorder {
+						footer.Padding(spacing, spacing, 0)
+					}
+					footer.Children(func() { slots.Footer(c) })
+				})
+			}
+			if slots.Media != nil && p.MediaBottom {
+				media()
+			}
+		})
 	})
 	return root
 }

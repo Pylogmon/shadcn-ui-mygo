@@ -468,13 +468,15 @@ func SidebarWith(c *ui.Context, host *desktop.Host, key string, selected *string
 }
 
 func sidebarBody(c *ui.Context, host *desktop.Host, key string, s *SidebarState, selected *string, p SidebarLayoutProps, icon, left bool, popupErr *error) {
-	if p.Header != nil {
-		ui.Column(c.Key("header")).Padding(8).Gap(8).Children(func() { p.Header(c) })
-	}
-	ui.Scroll(c.Key("items")).Grow(1).MinHeight(0).Gap(4).Padding(8).Children(func() { sidebarTree(c, host, key, s, selected, p, p.Items, icon, left, false, 0, popupErr) })
-	if p.Footer != nil {
-		ui.Column(c.Key("footer")).Padding(8).Gap(8).Children(func() { p.Footer(c) })
-	}
+	theme.WithSurface(c, theme.TokensOf(c).Sidebar, func() {
+		if p.Header != nil {
+			ui.Column(c.Key("header")).Padding(8).Gap(8).Children(func() { p.Header(c) })
+		}
+		ui.Scroll(c.Key("items")).Grow(1).MinHeight(0).Gap(4).Padding(8).Children(func() { sidebarTree(c, host, key, s, selected, p, p.Items, icon, left, false, 0, popupErr) })
+		if p.Footer != nil {
+			ui.Column(c.Key("footer")).Padding(8).Gap(8).Children(func() { p.Footer(c) })
+		}
+	})
 }
 
 func sidebarTree(c *ui.Context, host *desktop.Host, key string, s *SidebarState, selected *string, p SidebarLayoutProps, items []SidebarItem, icon, left, disabled bool, depth int, popupErr *error) {
