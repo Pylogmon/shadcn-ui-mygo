@@ -3,10 +3,8 @@
 package main
 
 import (
-	"archive/zip"
 	"bufio"
 	"bytes"
-	"compress/flate"
 	"compress/gzip"
 	"crypto/sha1"
 	"crypto/sha256"
@@ -25,6 +23,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/pylogmon/shadcn-ui-mygo/pkg/icons/material/internal/materialarchive"
 )
 
 const (
@@ -337,33 +337,6 @@ func generatedGo(style string, names []nameMapping, svgs map[string][]byte) ([]b
 	return format.Source(b.Bytes())
 }
 
-func catalogZIP(svgs map[string][]byte) ([]byte, error) {
-	var b bytes.Buffer
-	w := zip.NewWriter(&b)
-	w.RegisterCompressor(zip.Deflate, func(w io.Writer) (io.WriteCloser, error) { return flate.NewWriter(w, flate.BestCompression) })
-	keys := make([]string, 0, len(svgs))
-	for key := range svgs {
-		keys = append(keys, key)
-	}
-	sort.Strings(keys)
-	for _, key := range keys {
-		h := zip.FileHeader{Name: key, Method: zip.Deflate}
-		h.SetModTime(time.Date(1980, 1, 1, 0, 0, 0, 0, time.UTC))
-		h.SetMode(0644)
-		f, err := w.CreateHeader(&h)
-		if err != nil {
-			return nil, err
-		}
-		if _, err = f.Write(svgs[key]); err != nil {
-			return nil, err
-		}
-	}
-	if err := w.Close(); err != nil {
-		return nil, err
-	}
-	return b.Bytes(), nil
-}
-
 func gzipJSON(value any) ([]byte, error) {
 	var b bytes.Buffer
 	w, err := gzip.NewWriterLevel(&b, gzip.BestCompression)
@@ -431,7 +404,7 @@ func generate(repo, out string) error {
 			return err
 		}
 	}
-	outputs["all/catalog.zip"], err = catalogZIP(svgs)
+	outputs["all/catalog.zip"], err = materialarchive.Encode(svgs)
 	if err != nil {
 		return err
 	}

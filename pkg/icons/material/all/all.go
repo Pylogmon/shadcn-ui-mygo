@@ -4,12 +4,10 @@
 package all
 
 import (
-	"archive/zip"
-	"bytes"
 	_ "embed"
 	"errors"
 	"fmt"
-	"io"
+	"io/fs"
 	"slices"
 	"sort"
 	"strings"
@@ -17,6 +15,7 @@ import (
 
 	"github.com/egoist/mygo/ui"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/icons/material"
+	"github.com/pylogmon/shadcn-ui-mygo/pkg/icons/material/internal/materialarchive"
 	"github.com/pylogmon/shadcn-ui-mygo/pkg/icons/material/internal/materialsvg"
 )
 
@@ -28,21 +27,19 @@ var ErrVariant = errors.New("material: invalid symbol variant")
 
 var resolved sync.Map
 
-var index = sync.OnceValues(func() (map[string]*zip.File, []string) {
-	r, err := zip.NewReader(bytes.NewReader(catalog), int64(len(catalog)))
+var index = sync.OnceValues(func() (*materialarchive.Catalog, []string) {
+	r, err := materialarchive.Open(catalog)
 	if err != nil {
 		panic(fmt.Errorf("material: embedded catalog: %w", err))
 	}
-	files := make(map[string]*zip.File, len(r.File))
 	names := []string{}
-	for _, file := range r.File {
-		files[file.Name] = file
-		if strings.HasPrefix(file.Name, "outlined/") && strings.HasSuffix(file.Name, ".svg") && !strings.HasSuffix(file.Name, ".fill.svg") {
-			names = append(names, strings.TrimSuffix(strings.TrimPrefix(file.Name, "outlined/"), ".svg"))
+	for _, key := range r.Keys() {
+		if strings.HasPrefix(key, "outlined/") && strings.HasSuffix(key, ".svg") && !strings.HasSuffix(key, ".fill.svg") {
+			names = append(names, strings.TrimSuffix(strings.TrimPrefix(key, "outlined/"), ".svg"))
 		}
 	}
 	sort.Strings(names)
-	return files, names
+	return r, names
 })
 
 // Names returns an independent alphabetically sorted list of symbol names.
@@ -79,17 +76,11 @@ func Lookup(name string, variants ...material.Variant) (*ui.SVG, error) {
 		return svg.(*ui.SVG), nil
 	}
 	files, _ := index()
-	file := files[key]
-	if file == nil {
+	b, err := files.Read(key)
+	if errors.Is(err, fs.ErrNotExist) {
 		return nil, fmt.Errorf("%w: %q", ErrNotFound, name)
 	}
-	r, err := file.Open()
 	if err != nil {
-		return nil, fmt.Errorf("material: read %q: %w", name, err)
-	}
-	b, readErr := io.ReadAll(r)
-	closeErr := r.Close()
-	if err := errors.Join(readErr, closeErr); err != nil {
 		return nil, fmt.Errorf("material: read %q: %w", name, err)
 	}
 	svg := materialsvg.Parse(string(b))

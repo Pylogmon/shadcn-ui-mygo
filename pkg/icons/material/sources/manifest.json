@@ -16654,8 +16654,8 @@
   "generatedFiles": [
     {
       "path": "all/catalog.zip",
-      "sha256": "6c308d122ee6b134afc23146901582840174aee89371e3beadaa41007e3a6a4f",
-      "bytes": 11186521
+      "sha256": "9adf7351355ccafebc7d365b5dbcf45acb404a1e2aac312ac89bebd045e7d940",
+      "bytes": 2158709
     },
     {
       "path": "outlined/icons_gen.go",
