@@ -6,6 +6,8 @@ Checkbox and radio rows reserve logical end padding 32 pixels. The selected stat
 
 Styled desktop action rows close after activation. Checkbox and radio rows remain open by default, following Base UI 1.6.0 `closeOnClick=false`. `CloseOnSelect *bool` can override an individual row. `MenuContentProps.KeepOpenOnSelect` (and corresponding Menu/Menubar props) takes priority over any request to close. `desktop.Select` explicitly closes its internal radio-backed options when it commits a value.
 
+Keyboard navigation and typeahead reveal the highlighted row once. Pointer hover and clicks update the highlight without requesting a reveal, so long menus and `desktop.Select` preserve manual scrolling even when the previous highlight is offscreen.
+
 NativeOS menus and legacy `overlay.InWindow*` menus retain MyGo's menu-selection tracking; `CloseOnSelect` does not override that lifecycle. Legacy styled rows share the inset and indicator geometry. Business actions should update application-owned data through the current callback. Persist models and public handles; never retain a frame Context or Element.
 
 The source defaults and originals are recorded in `pkg/desktop/testdata/shadcn-menu/close-on-click/manifest.json`. This API adds no font dependency.

@@ -124,7 +124,7 @@ func menuAtPath(items []overlay.MenuItem, path []string, depth int) []overlay.Me
 	}
 	return items
 }
-func menuHighlight(state *MenuState, depth int, key string) {
+func menuHighlight(state *MenuState, depth int, key string, reveal bool) {
 	for len(state.Highlighted) <= depth {
 		state.Highlighted = append(state.Highlighted, "")
 	}
@@ -134,7 +134,10 @@ func menuHighlight(state *MenuState, depth int, key string) {
 		state.Path = state.Path[:depth]
 		state.Highlighted = state.Highlighted[:depth+1]
 	}
-	state.focus, state.reveal = true, true
+	// Pointer targets are already under the pointer. Only keyboard navigation
+	// should scroll: a hover can precede the old highlighted row in this build,
+	// which would otherwise reveal that stale row and undo the user's scroll.
+	state.focus, state.reveal = true, reveal
 }
 func menuOpenChild(state *MenuState, items []overlay.MenuItem, depth int, focus bool) {
 	list := menuAtPath(items, state.Path, depth)
@@ -247,7 +250,7 @@ func menuInput(state *MenuState, items []overlay.MenuItem, depth int, p MenuCont
 		for offset := range len(list) {
 			index := (max(0, start) + offset) % len(list)
 			if menuEnabled(list[index]) && strings.HasPrefix(strings.ToLower(list[index].Label), prefix) {
-				menuHighlight(state, depth, menuItemKey(list[index], index))
+				menuHighlight(state, depth, menuItemKey(list[index], index), true)
 				break
 			}
 		}
@@ -276,7 +279,7 @@ func menuInput(state *MenuState, items []overlay.MenuItem, depth int, p MenuCont
 		for range len(list) {
 			index = (index + delta + len(list)) % len(list)
 			if menuEnabled(list[index]) {
-				menuHighlight(state, depth, menuItemKey(list[index], index))
+				menuHighlight(state, depth, menuItemKey(list[index], index), true)
 				break
 			}
 		}
@@ -289,7 +292,7 @@ func menuInput(state *MenuState, items []overlay.MenuItem, depth int, p MenuCont
 		}
 		for index >= 0 && index < len(list) {
 			if menuEnabled(list[index]) {
-				menuHighlight(state, depth, menuItemKey(list[index], index))
+				menuHighlight(state, depth, menuItemKey(list[index], index), true)
 				break
 			}
 			index += delta
@@ -627,7 +630,7 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 						})
 						hovered := row.Hovered()
 						if live && moved && hovered && !item.Disabled {
-							menuHighlight(state, depth, key)
+							menuHighlight(state, depth, key, false)
 							if len(item.Children) > 0 {
 								menuOpenChild(state, items, depth, false)
 							} else if len(state.Path) > depth {
@@ -636,7 +639,7 @@ func MenuContent(c *ui.Context, state *MenuState, items []overlay.MenuItem, p Me
 							c.Invalidate()
 						}
 						if live && row.Clicked() && !item.Disabled {
-							menuHighlight(state, depth, key)
+							menuHighlight(state, depth, key, false)
 							panel.Focus()
 							menuActivate(state, items, depth, p)
 							c.Invalidate()
